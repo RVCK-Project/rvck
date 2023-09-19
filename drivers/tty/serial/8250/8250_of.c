@@ -87,15 +87,11 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
 	if (of_property_read_u32(np, "clock-frequency", &clk)) {
 
 		/* Get clk rate through clk driver if present */
-		info->clk = devm_clk_get(&ofdev->dev, NULL);
+		info->clk = devm_clk_get_enabled(dev, NULL);
 		if (IS_ERR(info->clk)) {
 			ret = dev_err_probe(dev, PTR_ERR(info->clk), "failed to get clock\n");
 			goto err_pmruntime;
 		}
-
-		ret = clk_prepare_enable(info->clk);
-		if (ret < 0)
-			goto err_pmruntime;
 
 		clk = clk_get_rate(info->clk);
 	}
@@ -106,7 +102,7 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
 	ret = of_address_to_resource(np, 0, &resource);
 	if (ret) {
 		dev_err_probe(dev, ret, "invalid address\n");
-		goto err_unprepare;
+		goto err_pmruntime;
 	}
 
 	port->flags = UPF_SHARE_IRQ | UPF_BOOT_AUTOCONF | UPF_FIXED_PORT |
@@ -125,7 +121,7 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
 			if (prop >= port->mapsize) {
 				ret = dev_err_probe(dev, -EINVAL, "reg-offset %u exceeds region size %pa\n",
 						    prop, &port->mapsize);
-				goto err_unprepare;
+				goto err_pmruntime;
 			}
 
 			port->mapbase += prop;
@@ -148,7 +144,7 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
 			default:
 				ret = dev_err_probe(dev, -EINVAL, "unsupported reg-io-width (%u)\n",
 						    prop);
-				goto err_unprepare;
+				goto err_pmruntime;
 			}
 		}
 		port->flags |= UPF_IOREMAP;
@@ -175,7 +171,7 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
 	if (irq < 0) {
 		if (irq == -EPROBE_DEFER) {
 			ret = -EPROBE_DEFER;
-			goto err_unprepare;
+			goto err_pmruntime;
 		}
 		/* IRQ support not mandatory */
 		irq = 0;
@@ -186,12 +182,12 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
 	info->rst = devm_reset_control_get_optional_shared(&ofdev->dev, NULL);
 	if (IS_ERR(info->rst)) {
 		ret = PTR_ERR(info->rst);
-		goto err_unprepare;
+		goto err_pmruntime;
 	}
 
 	ret = reset_control_deassert(info->rst);
 	if (ret)
-		goto err_unprepare;
+		goto err_pmruntime;
 
 	port->type = type;
 	port->uartclk = clk;
@@ -210,6 +206,7 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
 		ret = rt288x_setup(port);
 		if (ret)
 			goto err_unprepare;
+			goto err_pmruntime;
 		break;
 	case PORT_LPC3220:
 		port->handle_irq = lpc32xx_handle_irq;
@@ -224,8 +221,6 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
 	}
 
 	return 0;
-err_unprepare:
-	clk_disable_unprepare(info->clk);
 err_pmruntime:
 	pm_runtime_put_sync(&ofdev->dev);
 	pm_runtime_disable(&ofdev->dev);
@@ -292,7 +287,6 @@ err_dispose:
 	irq_dispose_mapping(port8250.port.irq);
 	pm_runtime_put_sync(&ofdev->dev);
 	pm_runtime_disable(&ofdev->dev);
-	clk_disable_unprepare(info->clk);
 err_free:
 	kfree(info);
 	return ret;
@@ -310,7 +304,6 @@ static int of_platform_serial_remove(struct platform_device *ofdev)
 	reset_control_assert(info->rst);
 	pm_runtime_put_sync(&ofdev->dev);
 	pm_runtime_disable(&ofdev->dev);
-	clk_disable_unprepare(info->clk);
 	kfree(info);
 	return 0;
 }
