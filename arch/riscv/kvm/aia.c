@@ -15,7 +15,7 @@
 #include <linux/kvm_host.h>
 #include <linux/percpu.h>
 #include <linux/spinlock.h>
-#include <asm/hwcap.h>
+#include <asm/cpufeature.h>
 
 struct aia_hgei_control {
 	raw_spinlock_t lock;
