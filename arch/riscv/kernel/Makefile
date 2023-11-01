@@ -65,6 +65,7 @@ obj-y	+= patch.o
 obj-y	+= vendor_extensions.o
 obj-y	+= vendor_extensions/
 obj-y	+= probes/
+obj-y	+= tests/
 obj-$(CONFIG_MMU) += vdso.o vdso/
 obj-$(CONFIG_RISCV_USER_CFI) += vdso_cfi/
 
