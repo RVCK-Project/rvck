@@ -436,6 +436,9 @@ static const char *isa_ext_single_id_to_str(__u64 reg_off)
 		KVM_ISA_EXT_ARR(ZBA),
 		KVM_ISA_EXT_ARR(ZBB),
 		KVM_ISA_EXT_ARR(ZBC),
+		KVM_ISA_EXT_ARR(ZBKB),
+		KVM_ISA_EXT_ARR(ZBKC),
+		KVM_ISA_EXT_ARR(ZBKX),
 		KVM_ISA_EXT_ARR(ZBS),
 		KVM_ISA_EXT_ARR(ZCLSD),
 		KVM_ISA_EXT_ARR(ZICBOM),
@@ -448,6 +451,13 @@ static const char *isa_ext_single_id_to_str(__u64 reg_off)
 		KVM_ISA_EXT_ARR(ZIHINTPAUSE),
 		KVM_ISA_EXT_ARR(ZIHPM),
 		KVM_ISA_EXT_ARR(ZILSD),
+		KVM_ISA_EXT_ARR(ZKND),
+		KVM_ISA_EXT_ARR(ZKNE),
+		KVM_ISA_EXT_ARR(ZKNH),
+		KVM_ISA_EXT_ARR(ZKR),
+		KVM_ISA_EXT_ARR(ZKSED),
+		KVM_ISA_EXT_ARR(ZKSH),
+		KVM_ISA_EXT_ARR(ZKT),
 	};
 
 	if (reg_off >= ARRAY_SIZE(kvm_isa_ext_reg_name))
@@ -949,6 +959,9 @@ KVM_ISA_EXT_SIMPLE_CONFIG(svpbmt, SVPBMT);
 KVM_ISA_EXT_SIMPLE_CONFIG(zba, ZBA);
 KVM_ISA_EXT_SIMPLE_CONFIG(zbb, ZBB);
 KVM_ISA_EXT_SIMPLE_CONFIG(zbc, ZBC);
+KVM_ISA_EXT_SIMPLE_CONFIG(zbkb, ZBKB);
+KVM_ISA_EXT_SIMPLE_CONFIG(zbkc, ZBKC);
+KVM_ISA_EXT_SIMPLE_CONFIG(zbkx, ZBKX);
 KVM_ISA_EXT_SIMPLE_CONFIG(zbs, ZBS);
 KVM_ISA_EXT_SIMPLE_CONFIG(zclsd, ZCLSD);
 KVM_ISA_EXT_SUBLIST_CONFIG(zicbom, ZICBOM);
@@ -961,6 +974,13 @@ KVM_ISA_EXT_SIMPLE_CONFIG(zifencei, ZIFENCEI);
 KVM_ISA_EXT_SIMPLE_CONFIG(zihintpause, ZIHINTPAUSE);
 KVM_ISA_EXT_SIMPLE_CONFIG(zihpm, ZIHPM);
 KVM_ISA_EXT_SIMPLE_CONFIG(zilsd, ZILSD);
+KVM_ISA_EXT_SIMPLE_CONFIG(zknd, ZKND);
+KVM_ISA_EXT_SIMPLE_CONFIG(zkne, ZKNE);
+KVM_ISA_EXT_SIMPLE_CONFIG(zknh, ZKNH);
+KVM_ISA_EXT_SIMPLE_CONFIG(zkr, ZKR);
+KVM_ISA_EXT_SIMPLE_CONFIG(zksed, ZKSED);
+KVM_ISA_EXT_SIMPLE_CONFIG(zksh, ZKSH);
+KVM_ISA_EXT_SIMPLE_CONFIG(zkt, ZKT);
 
 struct vcpu_reg_list *vcpu_configs[] = {
 	&config_sbi_base,
@@ -983,6 +1003,9 @@ struct vcpu_reg_list *vcpu_configs[] = {
 	&config_zba,
 	&config_zbb,
 	&config_zbc,
+	&config_zbkb,
+	&config_zbkc,
+	&config_zbkx,
 	&config_zbs,
 	&config_zclsd,
 	&config_zicbom,
@@ -995,5 +1018,12 @@ struct vcpu_reg_list *vcpu_configs[] = {
 	&config_zihintpause,
 	&config_zihpm,
 	&config_zilsd,
+	&config_zknd,
+	&config_zkne,
+	&config_zknh,
+	&config_zkr,
+	&config_zksed,
+	&config_zksh,
+	&config_zkt,
 };
 int vcpu_configs_n = ARRAY_SIZE(vcpu_configs);
