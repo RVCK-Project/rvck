@@ -551,8 +551,9 @@ void print_reg(const char *prefix, __u64 id)
 		reg_size = "KVM_REG_SIZE_U128";
 		break;
 	default:
-		printf("\tKVM_REG_RISCV | (%lld << KVM_REG_SIZE_SHIFT) | 0x%llx /* UNKNOWN */,",
-		       (id & KVM_REG_SIZE_MASK) >> KVM_REG_SIZE_SHIFT, id & REG_MASK);
+		printf("\tKVM_REG_RISCV | (%lld << KVM_REG_SIZE_SHIFT) | 0x%llx /* UNKNOWN */,\n",
+		       (id & KVM_REG_SIZE_MASK) >> KVM_REG_SIZE_SHIFT, id & ~REG_MASK);
+		return;
 	}
 
 	switch (id & KVM_REG_RISCV_TYPE_MASK) {
@@ -593,8 +594,9 @@ void print_reg(const char *prefix, __u64 id)
 				reg_size, sbi_id_to_str(prefix, id));
 		break;
 	default:
-		printf("\tKVM_REG_RISCV | %s | 0x%llx /* UNKNOWN */,",
-				reg_size, id & REG_MASK);
+		printf("\tKVM_REG_RISCV | %s | 0x%llx /* UNKNOWN */,\n",
+				reg_size, id & ~REG_MASK);
+		return;
 	}
 }
 
