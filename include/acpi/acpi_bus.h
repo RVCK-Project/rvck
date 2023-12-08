@@ -16,7 +16,7 @@
 #define ACPI_MAX_HANDLES	10
 struct acpi_handle_list {
 	u32 count;
-	acpi_handle* handles;
+	acpi_handle *handles;
 };
 
 /* acpi_utils.h */
