@@ -1032,59 +1032,34 @@ static inline unsigned long num_isa_ext_regs(const struct kvm_vcpu *vcpu)
 	return copy_isa_ext_reg_indices(vcpu, NULL);;
 }
 
-static inline unsigned long num_sbi_ext_regs(void)
+static int copy_sbi_ext_reg_indices(struct kvm_vcpu *vcpu, u64 __user *uindices)
 {
-	/*
-	 * number of KVM_REG_RISCV_SBI_SINGLE +
-	 * 2 x (number of KVM_REG_RISCV_SBI_MULTI)
-	 */
-	return KVM_RISCV_SBI_EXT_MAX + 2*(KVM_REG_RISCV_SBI_MULTI_REG_LAST+1);
-}
+	unsigned int n = 0;
 
-static int copy_sbi_ext_reg_indices(u64 __user *uindices)
-{
-	int n;
-
-	/* copy KVM_REG_RISCV_SBI_SINGLE */
-	n = KVM_RISCV_SBI_EXT_MAX;
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < KVM_RISCV_SBI_EXT_MAX; i++) {
 		u64 size = IS_ENABLED(CONFIG_32BIT) ?
 			   KVM_REG_SIZE_U32 : KVM_REG_SIZE_U64;
 		u64 reg = KVM_REG_RISCV | size | KVM_REG_RISCV_SBI_EXT |
 			  KVM_REG_RISCV_SBI_SINGLE | i;
 
+		if (!riscv_vcpu_supports_sbi_ext(vcpu, i))
+			continue;
+
 		if (uindices) {
 			if (put_user(reg, uindices))
 				return -EFAULT;
 			uindices++;
 		}
+
+		n++;
 	}
 
-	/* copy KVM_REG_RISCV_SBI_MULTI */
-	n = KVM_REG_RISCV_SBI_MULTI_REG_LAST + 1;
-	for (int i = 0; i < n; i++) {
-		u64 size = IS_ENABLED(CONFIG_32BIT) ?
-			   KVM_REG_SIZE_U32 : KVM_REG_SIZE_U64;
-		u64 reg = KVM_REG_RISCV | size | KVM_REG_RISCV_SBI_EXT |
-			  KVM_REG_RISCV_SBI_MULTI_EN | i;
+	return n;
+}
 
-		if (uindices) {
-			if (put_user(reg, uindices))
-				return -EFAULT;
-			uindices++;
-		}
-
-		reg = KVM_REG_RISCV | size | KVM_REG_RISCV_SBI_EXT |
-			  KVM_REG_RISCV_SBI_MULTI_DIS | i;
-
-		if (uindices) {
-			if (put_user(reg, uindices))
-				return -EFAULT;
-			uindices++;
-		}
-	}
-
-	return num_sbi_ext_regs();
+static unsigned long num_sbi_ext_regs(struct kvm_vcpu *vcpu)
+{
+	return copy_sbi_ext_reg_indices(vcpu, NULL);
 }
 
 /*
@@ -1103,7 +1078,7 @@ unsigned long kvm_riscv_vcpu_num_regs(struct kvm_vcpu *vcpu)
 	res += num_fp_f_regs(vcpu);
 	res += num_fp_d_regs(vcpu);
 	res += num_isa_ext_regs(vcpu);
-	res += num_sbi_ext_regs();
+	res += num_sbi_ext_regs(vcpu);
 
 	return res;
 }
@@ -1151,7 +1126,7 @@ int kvm_riscv_vcpu_copy_reg_indices(struct kvm_vcpu *vcpu,
 		return ret;
 	uindices += ret;
 
-	ret = copy_sbi_ext_reg_indices(uindices);
+	ret = copy_sbi_ext_reg_indices(vcpu, uindices);
 	if (ret < 0)
 		return ret;
 
