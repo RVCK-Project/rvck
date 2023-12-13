@@ -12,12 +12,12 @@
 
 #define REG_MASK (KVM_REG_ARCH_MASK | KVM_REG_SIZE_MASK)
 
-static bool isa_ext_cant_disable[KVM_RISCV_ISA_EXT_MAX];
-
 enum {
 	VCPU_FEATURE_ISA_EXT = 0,
 	VCPU_FEATURE_SBI_EXT,
 };
+
+static bool isa_ext_cant_disable[KVM_RISCV_ISA_EXT_MAX];
 
 bool filter_reg(__u64 reg)
 {
@@ -132,12 +132,12 @@ bool check_reject_set(int err)
 	return err == EINVAL;
 }
 
-static inline bool vcpu_has_ext(struct kvm_vcpu *vcpu, int ext)
+static bool vcpu_has_ext(struct kvm_vcpu *vcpu, uint64_t ext_id)
 {
 	int ret;
 	unsigned long value;
 
-	ret = __vcpu_get_reg(vcpu, RISCV_ISA_EXT_REG(ext), &value);
+	ret = __vcpu_get_reg(vcpu, ext_id, &value);
 	return (ret) ? false : !!value;
 }
 
@@ -145,6 +145,7 @@ void finalize_vcpu(struct kvm_vcpu *vcpu, struct vcpu_reg_list *c)
 {
 	unsigned long isa_ext_state[KVM_RISCV_ISA_EXT_MAX] = { 0 };
 	struct vcpu_reg_sublist *s;
+	uint64_t feature;
 	int rc;
 
 	for (int i = 0; i < KVM_RISCV_ISA_EXT_MAX; i++)
@@ -160,15 +161,31 @@ void finalize_vcpu(struct kvm_vcpu *vcpu, struct vcpu_reg_list *c)
 			isa_ext_cant_disable[i] = true;
 	}
 
+	for (int i = 0; i < KVM_RISCV_SBI_EXT_MAX; i++) {
+		rc = __vcpu_set_reg(vcpu, RISCV_SBI_EXT_REG(i), 0);
+		TEST_ASSERT(!rc || (rc == -1 && errno == ENOENT), "Unexpected error");
+	}
+
 	for_each_sublist(c, s) {
 		if (!s->feature)
 			continue;
 
+		switch (s->feature_type) {
+		case VCPU_FEATURE_ISA_EXT:
+			feature = RISCV_ISA_EXT_REG(s->feature);
+			break;
+		case VCPU_FEATURE_SBI_EXT:
+			feature = RISCV_SBI_EXT_REG(s->feature);
+			break;
+		default:
+			TEST_FAIL("Unknown feature type");
+		}
+
 		/* Try to enable the desired extension */
-		__vcpu_set_reg(vcpu, RISCV_ISA_EXT_REG(s->feature), 1);
+		__vcpu_set_reg(vcpu, feature, 1);
 
 		/* Double check whether the desired extension was enabled */
-		__TEST_REQUIRE(vcpu_has_ext(vcpu, s->feature),
+		__TEST_REQUIRE(vcpu_has_ext(vcpu, feature),
 			       "%s not available, skipping tests\n", s->name);
 	}
 }
@@ -712,7 +729,6 @@ static __u64 sbi_base_regs[] = {
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_HSM,
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_EXPERIMENTAL,
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_VENDOR,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_DBCN,
 };
 
 static __u64 sbi_sta_regs[] = {
