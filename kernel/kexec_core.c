@@ -53,6 +53,8 @@ atomic_t __kexec_lock = ATOMIC_INIT(0);
 bool kexec_in_progress = false;
 EXPORT_SYMBOL(kexec_in_progress);
 
+bool kexec_file_dbg_print;
+
 /* Location of the reserved area for the crash kernel */
 struct resource crashk_res = {
 	.name  = "Crash kernel",
