@@ -117,5 +117,6 @@ static inline bool check_unaligned_access_emulated(int cpu)
 
 static inline void unaligned_emulation_finish(void) {}
 #endif
+DECLARE_STATIC_KEY_FALSE(fast_misaligned_access_speed_key);
 
 #endif
