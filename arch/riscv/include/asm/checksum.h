@@ -12,6 +12,17 @@
 
 #define ip_fast_csum ip_fast_csum
 
+extern unsigned int do_csum(const unsigned char *buff, int len);
+#define do_csum do_csum
+
+/* Default version is sufficient for 32 bit */
+#ifndef CONFIG_32BIT
+#define _HAVE_ARCH_IPV6_CSUM
+__sum16 csum_ipv6_magic(const struct in6_addr *saddr,
+			const struct in6_addr *daddr,
+			__u32 len, __u8 proto, __wsum sum);
+#endif
+
 /* Define riscv versions of functions before importing asm-generic/checksum.h */
 #include <asm-generic/checksum.h>
 
@@ -42,7 +53,7 @@ static inline __sum16 ip_fast_csum(const void *iph, unsigned int ihl)
 	    IS_ENABLED(CONFIG_RISCV_ALTERNATIVE)) {
 		unsigned long fold_temp;
 
-		asm_volatile_goto(ALTERNATIVE("j %l[no_zbb]", "nop", 0,
+		asm goto(ALTERNATIVE("j %l[no_zbb]", "nop", 0,
 					      RISCV_ISA_EXT_ZBB, 1)
 		    :
 		    :
