@@ -287,7 +287,6 @@ struct pwm_ops {
  * @base: number of first PWM controlled by this chip
  * @npwm: number of PWMs controlled by this chip
  * @of_xlate: request a PWM device given a device tree PWM specifier
- * @of_pwm_n_cells: number of cells expected in the device tree PWM specifier
  * @list: list node for internal use
  * @pwms: array of PWM devices allocated by the framework
  */
@@ -300,7 +299,6 @@ struct pwm_chip {
 
 	struct pwm_device * (*of_xlate)(struct pwm_chip *chip,
 					const struct of_phandle_args *args);
-	unsigned int of_pwm_n_cells;
 
 	/* only used internally by the PWM framework */
 	struct list_head list;
