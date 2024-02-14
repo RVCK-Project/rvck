@@ -162,6 +162,7 @@ MODULE_DEVICE_TABLE(of, pwm_of_match);
 static int pwm_probe(struct platform_device *pdev)
 {
 	const struct platform_device_id *id = platform_get_device_id(pdev);
+	struct pwm_chip *chip;
 	struct pxa_pwm_chip *pc;
 	int ret = 0;
 
@@ -174,6 +175,7 @@ static int pwm_probe(struct platform_device *pdev)
 	pc = devm_kzalloc(&pdev->dev, sizeof(*pc), GFP_KERNEL);
 	if (pc == NULL)
 		return -ENOMEM;
+	chip = &pc->chip;
 
 	pc->clk = devm_clk_get(&pdev->dev, NULL);
 	if (IS_ERR(pc->clk))
@@ -183,12 +185,12 @@ static int pwm_probe(struct platform_device *pdev)
 	if (!IS_ERR(pc->reset))
 		reset_control_deassert(pc->reset);
 
-	pc->chip.dev = &pdev->dev;
-	pc->chip.ops = &pxa_pwm_ops;
-	pc->chip.npwm = (id->driver_data & HAS_SECONDARY_PWM) ? 2 : 1;
+	chip->dev = &pdev->dev;
+	chip->ops = &pxa_pwm_ops;
+	chip->npwm = (id->driver_data & HAS_SECONDARY_PWM) ? 2 : 1;
 
 	if (IS_ENABLED(CONFIG_OF))
-		pc->chip.of_xlate = of_pwm_single_xlate;
+		chip->of_xlate = of_pwm_single_xlate;
 
 	pc->mmio_base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(pc->mmio_base)) {
@@ -196,7 +198,7 @@ static int pwm_probe(struct platform_device *pdev)
 		goto err_rst;
 	}
 
-	ret = devm_pwmchip_add(&pdev->dev, &pc->chip);
+	ret = devm_pwmchip_add(&pdev->dev, chip);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "pwmchip_add() failed: %d\n", ret);
 		goto err_rst;
