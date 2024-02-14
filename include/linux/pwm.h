@@ -290,6 +290,7 @@ struct pwm_ops {
  * @of_pwm_n_cells: number of cells expected in the device tree PWM specifier
  * @atomic: can the driver's ->apply() be called in atomic context
  * @list: list node for internal use
+ * @driver_data: Private pointer for driver specific info
  * @pwms: array of PWM devices allocated by the framework
  */
 struct pwm_chip {
@@ -306,12 +307,31 @@ struct pwm_chip {
 
 	/* only used internally by the PWM framework */
 	struct list_head list;
+	void *driver_data;
 	struct pwm_device *pwms;
 };
 
 static inline struct device *pwmchip_parent(const struct pwm_chip *chip)
 {
 	return chip->dev;
+}
+
+static inline void *pwmchip_get_drvdata(struct pwm_chip *chip)
+{
+	/*
+	 * After pwm_chip got a dedicated struct device, this can be replaced by
+	 * dev_get_drvdata(&chip->dev);
+	 */
+	return chip->driver_data;
+}
+
+static inline void pwmchip_set_drvdata(struct pwm_chip *chip, void *data)
+{
+	/*
+	 * After pwm_chip got a dedicated struct device, this can be replaced by
+	 * dev_set_drvdata(&chip->dev, data);
+	 */
+	chip->driver_data = data;
 }
 
 #if IS_ENABLED(CONFIG_PWM)
