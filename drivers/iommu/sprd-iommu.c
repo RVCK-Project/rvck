@@ -403,7 +403,8 @@ static struct iommu_group *sprd_iommu_device_group(struct device *dev)
 	return iommu_group_ref_get(sdev->group);
 }
 
-static int sprd_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+static int sprd_iommu_of_xlate(struct device *dev,
+			       const struct of_phandle_args *args)
 {
 	struct platform_device *pdev;
 
