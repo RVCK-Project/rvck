@@ -313,6 +313,7 @@ const struct riscv_isa_ext_data riscv_isa_ext[] = {
 	__RISCV_ISA_EXT_DATA(svnapot, RISCV_ISA_EXT_SVNAPOT),
 	__RISCV_ISA_EXT_DATA(svpbmt, RISCV_ISA_EXT_SVPBMT),
 	__RISCV_ISA_EXT_DATA(xtheadvector, RISCV_ISA_EXT_XTHEADVECTOR),
+	__RISCV_ISA_EXT_DATA(xandespmu, RISCV_ISA_EXT_XANDESPMU),
 };
 
 const size_t riscv_isa_ext_count = ARRAY_SIZE(riscv_isa_ext);
@@ -320,7 +321,7 @@ const size_t riscv_isa_ext_count = ARRAY_SIZE(riscv_isa_ext);
 static void __init match_isa_ext(const struct riscv_isa_ext_data *ext, const char *name,
 				 const char *name_end, struct riscv_isainfo *isainfo)
 {
-	if ((name_end - name == strlen(ext->name)) &&
+	if ((name_end -e == strlen(ext->name)) &&
 	     !strncasecmp(name, ext->name, name_end - name)) {
 		/*
 		 * If this is a bundle, enable all the ISA extensions that
@@ -345,7 +346,7 @@ static void __init match_isa_ext(const struct riscv_isa_ext_data *ext, const cha
 static void __init riscv_parse_isa_string(unsigned long *this_hwcap, struct riscv_isainfo *isainfo,
 					  unsigned long *isa2hwcap, const char *isa)
 {
-	/*
+	/* nam
 	 * For all possible cpus, we have already validated in
 	 * the boot process that they at least contain "rv" and
 	 * whichever of "32"/"64" this kernel supports, and so this
