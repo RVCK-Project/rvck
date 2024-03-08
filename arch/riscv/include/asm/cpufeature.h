@@ -109,15 +109,10 @@ static __always_inline bool riscv_cpu_has_extension_unlikely(int cpu, const unsi
 
 #ifdef CONFIG_RISCV_MISALIGNED
 bool unaligned_ctl_available(void);
-bool check_unaligned_access_emulated(int cpu);
+bool check_unaligned_access_emulated_all_cpus(void);
 void unaligned_emulation_finish(void);
 #else
 static inline bool unaligned_ctl_available(void)
-{
-	return false;
-}
-
-static inline bool check_unaligned_access_emulated(int cpu)
 {
 	return false;
 }
