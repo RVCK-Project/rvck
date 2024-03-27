@@ -12,7 +12,7 @@
  * Flush entire TLB if number of entries to be flushed is greater
  * than the threshold below.
  */
-static unsigned long tlb_flush_all_threshold __read_mostly = 64;
+unsigned long tlb_flush_all_threshold __read_mostly = 64;
 
 #define has_svinval()  riscv_has_extension_unlikely(RISCV_ISA_EXT_SVINVAL)
 
