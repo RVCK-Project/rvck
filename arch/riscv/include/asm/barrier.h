@@ -11,6 +11,7 @@
 #define _ASM_RISCV_BARRIER_H
 
 #ifndef __ASSEMBLY__
+#include <asm/cmpxchg.h>
 #include <asm/fence.h>
 
 #define nop()		__asm__ __volatile__ ("nop")
@@ -27,43 +28,6 @@
 #define __smp_mb()	RISCV_FENCE(rw,rw)
 #define __smp_rmb()	RISCV_FENCE(r,r)
 #define __smp_wmb()	RISCV_FENCE(w,w)
-
-#ifdef CONFIG_ARCH_SOPHGO
-#define __smp_store_release(p, v)					\
-do {									\
-	compiletime_assert_atomic_type(*p);				\
-	RISCV_FENCE(rw,w);						\
-	WRITE_ONCE(*p, v);						\
-	RISCV_FENCE(w,rw);						\
-} while (0)
-#else
-#define __smp_store_release(p, v)					\
-do {									\
-	compiletime_assert_atomic_type(*p);				\
-	RISCV_FENCE(rw,w);						\
-	WRITE_ONCE(*p, v);						\
-} while (0)
-#endif
-
-#define __smp_load_acquire(p)						\
-({									\
-	typeof(*p) ___p1 = READ_ONCE(*p);				\
-	compiletime_assert_atomic_type(*p);				\
-	RISCV_FENCE(r,rw);						\
-	___p1;								\
-})
-
-#define smp_cond_load_acquire(ptr, cond_expr) ({			\
-	typeof(ptr) __PTR = (ptr);					\
-	__unqual_scalar_typeof(*ptr) VAL;				\
-	for (;;) {							\
-		VAL = __smp_load_acquire(__PTR);			\
-		if (cond_expr)						\
-			break;						\
-		cpu_relax();						\
-	}								\
-	(typeof(*ptr))VAL;						\
-})
 
 /*
  * This is a very specific barrier: it's currently only used in two places in
@@ -91,6 +55,45 @@ do {									\
  * the new hart.
  */
 #define smp_mb__after_spinlock()	RISCV_FENCE(iorw,iorw)
+
+#ifdef CONFIG_ARCH_SOPHGO
+#define __smp_store_release(p, v)					\
+do {									\
+	compiletime_assert_atomic_type(*p);				\
+	RISCV_FENCE(rw,w);						\
+	WRITE_ONCE(*p, v);						\
+	RISCV_FENCE(w,rw);						\
+} while (0)
+#else
+#define __smp_store_release(p, v)					\
+do {									\
+	compiletime_assert_atomic_type(*p);				\
+	RISCV_FENCE(rw,w);						\
+	WRITE_ONCE(*p, v);						\
+} while (0)
+#endif
+
+#define __smp_load_acquire(p)						\
+({									\
+	typeof(*p) ___p1 = READ_ONCE(*p);				\
+	compiletime_assert_atomic_type(*p);				\
+	RISCV_FENCE(r, rw);						\
+	___p1;								\
+})
+
+#ifdef CONFIG_RISCV_ISA_ZAWRS
+#define smp_cond_load_relaxed(ptr, cond_expr) ({			\
+	typeof(ptr) __PTR = (ptr);					\
+	__unqual_scalar_typeof(*ptr) VAL;				\
+	for (;;) {							\
+		VAL = READ_ONCE(*__PTR);				\
+		if (cond_expr)						\
+			break;						\
+		__cmpwait_relaxed(ptr, VAL);				\
+	}								\
+	(typeof(*ptr))VAL;						\
+})
+#endif
 
 #include <asm-generic/barrier.h>
 
