@@ -1,4 +1,4 @@
-img_basedir := $(srctree)/$(src)
+img_basedir := $(src)
 include $(img_basedir)/config_kernel.mk
 
 obj-$(CONFIG_DRM_POWERVR_ROGUE) += pvrsrvkm.o

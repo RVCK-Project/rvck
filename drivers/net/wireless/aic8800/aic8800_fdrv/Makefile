@@ -221,8 +221,8 @@ ccflags-$(CONFIG_COEX) += -DCONFIG_COEX
 
 ccflags-y += -DCONFIG_RWNX_FULLMAC
 ccflags-y += -I$(srctree)
-ccflags-y += -I$(srctree)/$(src)
-ccflags-y += -I$(srctree)/$(src)/../aic8800_bsp
+ccflags-y += -I$(src)
+ccflags-y += -I$(src)/../aic8800_bsp
 ccflags-y += -DCONFIG_AIC_FW_PATH=\"$(CONFIG_AIC_FW_PATH)\"
 ccflags-$(CONFIG_RWNX_RADAR) += -DCONFIG_RWNX_RADAR
 ccflags-$(CONFIG_RWNX_MON_DATA) += -DCONFIG_RWNX_MON_DATA
