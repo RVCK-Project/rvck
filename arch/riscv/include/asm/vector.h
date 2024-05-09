@@ -26,7 +26,7 @@ bool riscv_v_first_use_handler(struct pt_regs *regs);
 
 static __always_inline bool has_vector(void)
 {
-	return riscv_has_extension_unlikely(RISCV_ISA_EXT_v) ||
+return riscv_has_extension_unlikely(RISCV_ISA_EXT_ZVE32X) ||
 	  riscv_has_extension_unlikely(RISCV_ISA_EXT_XTHEADVECTOR);
 }
 
@@ -126,7 +126,7 @@ static __always_inline void __vstate_csr_restore(struct __riscv_v_ext_state *src
 
 	asm volatile (ALTERNATIVE(
 		".option push\n\t"
-		".option arch, +v\n\t"
+		".option arch, +zve32x\n\t"
 		"vsetvl	 x0, %2, %1\n\t"
 		".option pop\n\t"
 		"csrw	" __stringify(CSR_VSTART) ", %0\n\t"
@@ -160,7 +160,7 @@ static inline void __riscv_v_vstate_save(struct __riscv_v_ext_state *save_to,
 	asm volatile (ALTERNATIVE(
 		"nop\n\t"
 		".option push\n\t"
-		".option arch, +v\n\t"
+		".option arch, +zve32x\n\t"
 		"vsetvli	%0, x0, e8, m8, ta, ma\n\t"
 		"vse8.v		v0, (%1)\n\t"
 		"add		%1, %1, %0\n\t"
@@ -193,7 +193,7 @@ static inline void __riscv_v_vstate_restore(struct __riscv_v_ext_state *restore_
 	asm volatile (ALTERNATIVE(
 		"nop\n\t"
 		".option push\n\t"
-		".option arch, +v\n\t"
+		".option arch, +zve32x\n\t"
 		"vsetvli	%0, x0, e8, m8, ta, ma\n\t"
 		"vle8.v		v0, (%1)\n\t"
 		"add		%1, %1, %0\n\t"
@@ -225,7 +225,7 @@ static inline void __riscv_v_vstate_discard(void)
 	riscv_v_enable();
 	asm volatile (ALTERNATIVE(
 		".option push\n\t"
-		".option arch, +v\n\t"
+		".option arch, +zve32x\n\t"
 		"vsetvli	%0, x0, e8, m8, ta, ma\n\t"
 		"vmv.v.i	v0, -1\n\t"
 		"vmv.v.i	v8, -1\n\t"
