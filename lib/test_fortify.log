@@ -1,0 +1,555 @@
+ok: unsafe memchr() usage correctly detected with '__read_overflow' in lib/test_fortify/read_overflow-memchr.c
+lib/test_fortify/test_fortify.h: In function 'do_fortify_tests':
+lib/test_fortify/read_overflow-memchr.c:3:9: error: statement with no effect [-Werror=unused-value]
+    3 |         memchr(small, 0x7A, sizeof(small) + 1)
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+lib/test_fortify/test_fortify.h:34:9: note: in expansion of macro 'TEST'
+   34 |         TEST;
+      |         ^~~~
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow-memchr.c:5:
+In function 'memchr',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:751:17: error: call to '__read_overflow' declared with attribute error: detected read beyond size of object (1st parameter)
+  751 |                 __read_overflow();
+      |                 ^~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memchr_inv() usage correctly detected with '__read_overflow' in lib/test_fortify/read_overflow-memchr_inv.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow-memchr_inv.c:5:
+In function 'memchr_inv',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:763:17: error: call to '__read_overflow' declared with attribute error: detected read beyond size of object (1st parameter)
+  763 |                 __read_overflow();
+      |                 ^~~~~~~~~~~~~~~~~
+ok: unsafe memcmp() usage correctly detected with '__read_overflow' in lib/test_fortify/read_overflow-memcmp.c
+lib/test_fortify/test_fortify.h: In function 'do_fortify_tests':
+lib/test_fortify/read_overflow-memcmp.c:3:9: error: statement with no effect [-Werror=unused-value]
+    3 |         memcmp(small, large, sizeof(small) + 1)
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+lib/test_fortify/test_fortify.h:34:9: note: in expansion of macro 'TEST'
+   34 |         TEST;
+      |         ^~~~
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow-memcmp.c:5:
+In function 'memcmp',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:736:25: error: call to '__read_overflow' declared with attribute error: detected read beyond size of object (1st parameter)
+  736 |                         __read_overflow();
+      |                         ^~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memscan() usage correctly detected with '__read_overflow' in lib/test_fortify/read_overflow-memscan.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow-memscan.c:5:
+In function 'memscan',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:722:17: error: call to '__read_overflow' declared with attribute error: detected read beyond size of object (1st parameter)
+  722 |                 __read_overflow();
+      |                 ^~~~~~~~~~~~~~~~~
+ok: unsafe memcmp() usage correctly detected with '__read_overflow2' in lib/test_fortify/read_overflow2-memcmp.c
+lib/test_fortify/test_fortify.h: In function 'do_fortify_tests':
+lib/test_fortify/read_overflow2-memcmp.c:3:9: error: statement with no effect [-Werror=unused-value]
+    3 |         memcmp(large, small, sizeof(small) + 1)
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+lib/test_fortify/test_fortify.h:34:9: note: in expansion of macro 'TEST'
+   34 |         TEST;
+      |         ^~~~
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow2-memcmp.c:5:
+In function 'memcmp',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:738:25: error: call to '__read_overflow2' declared with attribute error: detected read beyond size of object (2nd parameter)
+  738 |                         __read_overflow2();
+      |                         ^~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memcpy() usage correctly detected with '__read_overflow2' in lib/test_fortify/read_overflow2-memcpy.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow2-memcpy.c:5:
+In function 'fortify_memcpy_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:593:25: error: call to '__read_overflow2' declared with attribute error: detected read beyond size of object (2nd parameter)
+  593 |                         __read_overflow2();
+      |                         ^~~~~~~~~~~~~~~~~~
+./include/linux/fortify-string.h:606:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  606 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memmove() usage correctly detected with '__read_overflow2' in lib/test_fortify/read_overflow2-memmove.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow2-memmove.c:5:
+In function 'fortify_memcpy_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:593:25: error: call to '__read_overflow2' declared with attribute error: detected read beyond size of object (2nd parameter)
+  593 |                         __read_overflow2();
+      |                         ^~~~~~~~~~~~~~~~~~
+./include/linux/fortify-string.h:606:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  606 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memcpy() usage correctly detected with '__read_overflow2_field' in lib/test_fortify/read_overflow2_field-memcpy.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow2_field-memcpy.c:5:
+In function 'fortify_memcpy_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:606:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  606 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memmove() usage correctly detected with '__read_overflow2_field' in lib/test_fortify/read_overflow2_field-memmove.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/read_overflow2_field-memmove.c:5:
+In function 'fortify_memcpy_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:606:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  606 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memcpy() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-memcpy.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-memcpy.c:5:
+In function 'fortify_memcpy_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:590:25: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  590 |                         __write_overflow();
+      |                         ^~~~~~~~~~~~~~~~~~
+./include/linux/fortify-string.h:597:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  597 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memmove() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-memmove.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-memmove.c:5:
+In function 'fortify_memcpy_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:590:25: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  590 |                         __write_overflow();
+      |                         ^~~~~~~~~~~~~~~~~~
+./include/linux/fortify-string.h:597:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  597 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memset() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-memset.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-memset.c:5:
+In function 'fortify_memset_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:503:25: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  503 |                         __write_overflow();
+      |                         ^~~~~~~~~~~~~~~~~~
+./include/linux/fortify-string.h:507:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  507 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe strcpy() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-strcpy-lit.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-strcpy-lit.c:5:
+In function 'strcpy',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:812:17: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  812 |                 __write_overflow();
+      |                 ^~~~~~~~~~~~~~~~~~
+ok: unsafe strcpy() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-strcpy.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-strcpy.c:5:
+In function 'strcpy',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:812:17: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  812 |                 __write_overflow();
+      |                 ^~~~~~~~~~~~~~~~~~
+ok: unsafe strlcpy() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-strlcpy-src.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-strlcpy-src.c:5:
+In function 'strlcpy',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:269:25: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  269 |                         __write_overflow();
+      |                         ^~~~~~~~~~~~~~~~~~
+ok: unsafe strlcpy() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-strlcpy.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-strlcpy.c:5:
+In function 'strlcpy',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:269:25: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  269 |                         __write_overflow();
+      |                         ^~~~~~~~~~~~~~~~~~
+ok: unsafe strncpy() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-strncpy-src.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-strncpy-src.c:5:
+In function 'strncpy',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:162:17: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  162 |                 __write_overflow();
+      |                 ^~~~~~~~~~~~~~~~~~
+ok: unsafe strncpy() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-strncpy.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-strncpy.c:5:
+In function 'strncpy',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:162:17: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  162 |                 __write_overflow();
+      |                 ^~~~~~~~~~~~~~~~~~
+ok: unsafe strscpy() usage correctly detected with '__write_overflow' in lib/test_fortify/write_overflow-strscpy.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow-strscpy.c:5:
+In function 'strscpy',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:322:17: error: call to '__write_overflow' declared with attribute error: detected write beyond size of object (1st parameter)
+  322 |                 __write_overflow();
+      |                 ^~~~~~~~~~~~~~~~~~
+ok: unsafe memcpy() usage correctly detected with '__write_overflow_field' in lib/test_fortify/write_overflow_field-memcpy.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow_field-memcpy.c:5:
+In function 'fortify_memcpy_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:597:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  597 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memmove() usage correctly detected with '__write_overflow_field' in lib/test_fortify/write_overflow_field-memmove.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow_field-memmove.c:5:
+In function 'fortify_memcpy_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:597:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  597 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+ok: unsafe memset() usage correctly detected with '__write_overflow_field' in lib/test_fortify/write_overflow_field-memset.c
+In file included from ./include/linux/string.h:307,
+                 from ./include/linux/bitmap.h:11,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:23,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:9,
+                 from ./include/linux/preempt.h:79,
+                 from ./include/linux/spinlock.h:56,
+                 from ./include/linux/mmzone.h:8,
+                 from ./include/linux/gfp.h:7,
+                 from ./include/linux/slab.h:16,
+                 from lib/test_fortify/test_fortify.h:4,
+                 from lib/test_fortify/write_overflow_field-memset.c:5:
+In function 'fortify_memset_chk',
+    inlined from 'do_fortify_tests' at lib/test_fortify/test_fortify.h:34:2:
+./include/linux/fortify-string.h:507:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  507 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
