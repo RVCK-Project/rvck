@@ -507,7 +507,6 @@ DEFINE_MUTEX(iommu_probe_device_lock);
 static int __iommu_probe_device(struct device *dev, struct list_head *group_list)
 {
 	const struct iommu_ops *ops;
-	struct iommu_fwspec *fwspec;
 	struct iommu_group *group;
 	struct group_device *gdev;
 	int ret;
@@ -520,12 +519,7 @@ static int __iommu_probe_device(struct device *dev, struct list_head *group_list
 	 * be present, and that any of their registered instances has suitable
 	 * ops for probing, and thus cheekily co-opt the same mechanism.
 	 */
-	fwspec = dev_iommu_fwspec_get(dev);
-	if (fwspec && fwspec->ops)
-		ops = fwspec->ops;
-	else
-		ops = iommu_ops_from_fwnode(NULL);
-
+	ops = iommu_fwspec_ops(dev_iommu_fwspec_get(dev));
 	if (!ops)
 		return -ENODEV;
 	/*
@@ -3004,7 +2998,7 @@ int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode)
 		return -EPROBE_DEFER;
 
 	if (fwspec)
-		return ops == fwspec->ops ? 0 : -EINVAL;
+		return ops == iommu_fwspec_ops(fwspec) ? 0 : -EINVAL;
 
 	if (!dev_iommu_get(dev))
 		return -ENOMEM;
@@ -3016,7 +3010,6 @@ int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode)
 
 	fwnode_handle_get(iommu_fwnode);
 	fwspec->iommu_fwnode = iommu_fwnode;
-	fwspec->ops = ops;
 	dev_iommu_fwspec_set(dev, fwspec);
 	return 0;
 }
