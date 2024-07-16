@@ -1846,6 +1846,7 @@ static int __init parallel_bringup_parse_param(char *arg)
 }
 early_param("cpuhp.parallel", parallel_bringup_parse_param);
 
+#ifdef CONFIG_HOTPLUG_SMT
 static inline bool cpuhp_smt_aware(void)
 {
 	return cpu_smt_max_threads > 1;
@@ -1855,6 +1856,16 @@ static inline const struct cpumask *cpuhp_get_primary_thread_mask(void)
 {
 	return cpu_primary_thread_mask;
 }
+#else
+static inline bool cpuhp_smt_aware(void)
+{
+	return false;
+}
+static inline const struct cpumask *cpuhp_get_primary_thread_mask(void)
+{
+	return cpu_none_mask;
+}
+#endif
 
 /*
  * On architectures which have enabled parallel bringup this invokes all BP
