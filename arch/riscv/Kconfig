@@ -319,6 +319,7 @@ config AS_HAS_OPTION_ARCH
 
 source "arch/riscv/Kconfig.socs"
 source "arch/riscv/Kconfig.errata"
+source "arch/riscv/Kconfig.vendor"
 
 menu "Platform type"
 
