@@ -145,26 +145,75 @@ static void hwprobe_isa_ext0(struct riscv_hwprobe *pair,
 	for_each_cpu(cpu, cpus) {
 		struct riscv_isainfo *isainfo = &hart_isa[cpu];
 
-		if (riscv_isa_extension_available(isainfo->isa, ZBA))
-			pair->value |= RISCV_HWPROBE_EXT_ZBA;
-		else
-			missing |= RISCV_HWPROBE_EXT_ZBA;
+#define EXT_KEY(ext)									\
+	do {										\
+		if (__riscv_isa_extension_available(isainfo->isa, RISCV_ISA_EXT_##ext))	\
+			pair->value |= RISCV_HWPROBE_EXT_##ext;				\
+		else									\
+			missing |= RISCV_HWPROBE_EXT_##ext;				\
+	} while (false)
 
-		if (riscv_isa_extension_available(isainfo->isa, ZBB))
-			pair->value |= RISCV_HWPROBE_EXT_ZBB;
-		else
-			missing |= RISCV_HWPROBE_EXT_ZBB;
+		/*
+		 * Only use EXT_KEY() for extensions which can be exposed to userspace,
+		 * regardless of the kernel's configuration, as no other checks, besides
+		 * presence in the hart_isa bitmap, are made.
+		 */
+		EXT_KEY(ZBA);
+		EXT_KEY(ZBB);
+		EXT_KEY(ZBS);
+		EXT_KEY(ZICBOZ);
+		EXT_KEY(ZBC);
 
-		if (riscv_isa_extension_available(isainfo->isa, ZBS))
-			pair->value |= RISCV_HWPROBE_EXT_ZBS;
-		else
-			missing |= RISCV_HWPROBE_EXT_ZBS;
+		EXT_KEY(ZBKB);
+		EXT_KEY(ZBKC);
+		EXT_KEY(ZBKX);
+		EXT_KEY(ZKND);
+		EXT_KEY(ZKNE);
+		EXT_KEY(ZKNH);
+		EXT_KEY(ZKSED);
+		EXT_KEY(ZKSH);
+		EXT_KEY(ZKT);
+		EXT_KEY(ZIHINTNTL);
+		EXT_KEY(ZTSO);
+		EXT_KEY(ZACAS);
+		EXT_KEY(ZICOND);
+		EXT_KEY(ZIHINTPAUSE);
+
+		if (has_vector()) {
+			EXT_KEY(ZVBB);
+			EXT_KEY(ZVBC);
+			EXT_KEY(ZVKB);
+			EXT_KEY(ZVKG);
+			EXT_KEY(ZVKNED);
+			EXT_KEY(ZVKNHA);
+			EXT_KEY(ZVKNHB);
+			EXT_KEY(ZVKSED);
+			EXT_KEY(ZVKSH);
+			EXT_KEY(ZVKT);
+			EXT_KEY(ZVFH);
+			EXT_KEY(ZVFHMIN);
+		}
+
+		if (has_fpu()) {
+			EXT_KEY(ZFH);
+			EXT_KEY(ZFHMIN);
+			EXT_KEY(ZFA);
+		}
+#undef EXT_KEY
 	}
 
 	/* Now turn off reporting features if any CPU is missing it. */
 	pair->value &= ~missing;
 }
 
+static bool hwprobe_ext0_has(const struct cpumask *cpus, unsigned long ext)
+{
+	struct riscv_hwprobe pair;
+
+	hwprobe_isa_ext0(&pair, cpus);
+	return (pair.value & ext);
+}
+// tag -
 static u64 hwprobe_misaligned(const struct cpumask *cpus)
 {
 	int cpu;
@@ -215,6 +264,12 @@ static void hwprobe_one_pair(struct riscv_hwprobe *pair,
 		pair->value = hwprobe_misaligned(cpus);
 		break;
 
+	case RISCV_HWPROBE_KEY_ZICBOZ_BLOCK_SIZE:
+		pair->value = 0;
+		if (hwprobe_ext0_has(cpus, RISCV_HWPROBE_EXT_ZICBOZ))
+			pair->value = riscv_cboz_block_size;
+		break;
+
 	/*
 	 * For forward compatibility, unknown keys don't fail the whole
 	 * call, but get their element key set to -1 and value set to 0
@@ -227,10 +282,11 @@ static void hwprobe_one_pair(struct riscv_hwprobe *pair,
 	}
 }
 
-static int do_riscv_hwprobe(struct riscv_hwprobe __user *pairs,
-			    size_t pair_count, size_t cpu_count,
-			    unsigned long __user *cpus_user,
-			    unsigned int flags)
+
+static int hwprobe_get_values(struct riscv_hwprobe __user *pairs,
+			      size_t pair_count, size_t cpusetsize,
+			      unsigned long __user *cpus_user,
+			      unsigned int flags)
 {
 	size_t out;
 	int ret;
@@ -246,13 +302,13 @@ static int do_riscv_hwprobe(struct riscv_hwprobe __user *pairs,
 	 * 0 as a shortcut to all online CPUs.
 	 */
 	cpumask_clear(&cpus);
-	if (!cpu_count && !cpus_user) {
+	if (!cpusetsize && !cpus_user) {
 		cpumask_copy(&cpus, cpu_online_mask);
 	} else {
-		if (cpu_count > cpumask_size())
-			cpu_count = cpumask_size();
+		if (cpusetsize > cpumask_size())
+			cpusetsize = cpumask_size();
 
-		ret = copy_from_user(&cpus, cpus_user, cpu_count);
+		ret = copy_from_user(&cpus, cpus_user, cpusetsize);
 		if (ret)
 			return -EFAULT;
 
@@ -283,6 +339,94 @@ static int do_riscv_hwprobe(struct riscv_hwprobe __user *pairs,
 
 	return 0;
 }
+
+
+static int hwprobe_get_cpus(struct riscv_hwprobe __user *pairs,
+			    size_t pair_count, size_t cpusetsize,
+			    unsigned long __user *cpus_user,
+			    unsigned int flags)
+{
+	cpumask_t cpus, one_cpu;
+	bool clear_all = false;
+	size_t i;
+	int ret;
+
+	if (flags != RISCV_HWPROBE_WHICH_CPUS)
+		return -EINVAL;
+
+	if (!cpusetsize || !cpus_user)
+		return -EINVAL;
+
+	if (cpusetsize > cpumask_size())
+		cpusetsize = cpumask_size();
+
+	ret = copy_from_user(&cpus, cpus_user, cpusetsize);
+	if (ret)
+		return -EFAULT;
+
+	if (cpumask_empty(&cpus))
+		cpumask_copy(&cpus, cpu_online_mask);
+
+	cpumask_and(&cpus, &cpus, cpu_online_mask);
+
+	cpumask_clear(&one_cpu);
+
+	for (i = 0; i < pair_count; i++) {
+		struct riscv_hwprobe pair, tmp;
+		int cpu;
+
+		ret = copy_from_user(&pair, &pairs[i], sizeof(pair));
+		if (ret)
+			return -EFAULT;
+
+		if (!riscv_hwprobe_key_is_valid(pair.key)) {
+			clear_all = true;
+			pair = (struct riscv_hwprobe){ .key = -1, };
+			ret = copy_to_user(&pairs[i], &pair, sizeof(pair));
+			if (ret)
+				return -EFAULT;
+		}
+
+		if (clear_all)
+			continue;
+
+		tmp = (struct riscv_hwprobe){ .key = pair.key, };
+
+		for_each_cpu(cpu, &cpus) {
+			cpumask_set_cpu(cpu, &one_cpu);
+
+			hwprobe_one_pair(&tmp, &one_cpu);
+
+			if (!riscv_hwprobe_pair_cmp(&tmp, &pair))
+				cpumask_clear_cpu(cpu, &cpus);
+
+			cpumask_clear_cpu(cpu, &one_cpu);
+		}
+	}
+
+	if (clear_all)
+		cpumask_clear(&cpus);
+
+	ret = copy_to_user(cpus_user, &cpus, cpusetsize);
+	if (ret)
+		return -EFAULT;
+
+	return 0;
+}
+
+static int do_riscv_hwprobe(struct riscv_hwprobe __user *pairs,
+			    size_t pair_count, size_t cpusetsize,
+			    unsigned long __user *cpus_user,
+			    unsigned int flags)
+{
+	if (flags & RISCV_HWPROBE_WHICH_CPUS)
+		return hwprobe_get_cpus(pairs, pair_count, cpusetsize,
+					cpus_user, flags);
+
+	return hwprobe_get_values(pairs, pair_count, cpusetsize,
+				  cpus_user, flags);
+}
+
 
 #ifdef CONFIG_MMU
 
@@ -329,10 +473,10 @@ arch_initcall_sync(init_hwprobe_vdso_data);
 #endif /* CONFIG_MMU */
 
 SYSCALL_DEFINE5(riscv_hwprobe, struct riscv_hwprobe __user *, pairs,
-		size_t, pair_count, size_t, cpu_count, unsigned long __user *,
+		size_t, pair_count, size_t, cpusetsize, unsigned long __user *,
 		cpus, unsigned int, flags)
 {
-	return do_riscv_hwprobe(pairs, pair_count, cpu_count,
+	return do_riscv_hwprobe(pairs, pair_count, cpusetsize,
 				cpus, flags);
 }
 
