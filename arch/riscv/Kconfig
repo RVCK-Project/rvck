@@ -154,7 +154,7 @@ config RISCV
 	select PCI_MSI if PCI
 	select RISCV_ALTERNATIVE if !XIP_KERNEL
 	select RISCV_INTC
-	select RISCV_TIMER if RISCV_SBI
+	select RISCV_TIMER if RISCV_SBI && !SOPHGO_MULTI_CHIP_CLOCK_SYNC
 	select SIFIVE_PLIC
 	select SPARSE_IRQ
 	select SYSCTL_EXCEPTION_TRACE
@@ -400,6 +400,15 @@ config TUNE_GENERIC
 
 endchoice
 
+config HIGHMEM
+	bool "High Memory Support"
+	depends on MMU
+	select KMAP_LOCAL
+	default y
+	help
+	  Enable high memory support on riscv64 which uses supports
+	  max 39-bit virtual address spaces.
+
 # Common NUMA Features
 config NUMA
 	bool "NUMA Memory Allocation and Scheduler Support"
@@ -499,7 +508,7 @@ config RISCV_ISA_V
 	depends on TOOLCHAIN_HAS_V
 	depends on FPU
 	select DYNAMIC_SIGFRAME
-	default y
+	default n
 	help
 	  Say N here if you want to disable all vector related procedure
 	  in the kernel.
