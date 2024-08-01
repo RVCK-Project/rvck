@@ -17,6 +17,7 @@
 #include <dt-bindings/soc/xuantie,th1520-iopmp.h>
 #include <dt-bindings/power/thead,th1520-power.h>
 #include <dt-bindings/reset/thead,th1520-reset.h>
+#include <dt-bindings/clock/thead,th1520-clk-ap.h>
 
 / {
 	compatible = "thead,th1520";
@@ -842,6 +843,13 @@
 			};
 		};
 
+		clk: clock-controller@ffef010000 {
+			compatible = "thead,th1520-clk-ap";
+			reg = <0xff 0xef010000 0x0 0x1000>;
+			clocks = <&osc>;
+			#clock-cells = <1>;
+		};
+
 		dmac0: dma-controller@ffefc00000 {
 			compatible = "xuantie,th1520-axi-dma";
 			reg = <0xff 0xefc00000 0x0 0x1000>;
@@ -1282,15 +1290,6 @@
 		audio_cpr: audio_cpr@ffcb000000 {
 			compatible = "thead,th1520-audio-cpr-reg", "syscon";
 			reg = <0xff 0xcb000000 0x0 0x1000>;
-			status = "okay";
-		};
-
-		clk: clock-controller@ffef010000 {
-			compatible = "thead,th1520-fm-ree-clk";
-			reg = <0xff 0xef010000 0x0 0x1000>;
-			#clock-cells = <1>;
-			clocks = <&osc_32k>, <&osc>, <&rc_24m>;
-			clock-names = "osc_32k", "osc_24m", "rc_24m";
 			status = "okay";
 		};
 
