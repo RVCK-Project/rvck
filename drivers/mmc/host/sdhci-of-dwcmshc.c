@@ -998,6 +998,51 @@ static unsigned int th1520_sdhci_get_ro(struct sdhci_host *host)
 	return is_readonly;
 }
 
+static int th1520_sdhci_get_priv_props(struct device *dev, bool is_emmc,
+				       struct th1520_priv *th_priv);
+
+static int th1520_init(struct device *dev,
+		       struct sdhci_host *host,
+		       struct dwcmshc_priv *dwc_priv)
+{
+	u32 emmc_caps = MMC_CAP2_NO_SD | MMC_CAP2_NO_SDIO;
+	struct th1520_priv *th_priv;
+
+	dwc_priv->delay_line = PHY_SDCLKDL_DC_DEFAULT;
+
+	if (device_property_read_bool(dev, "mmc-ddr-1_8v") ||
+	    device_property_read_bool(dev, "mmc-hs200-1_8v") ||
+	    device_property_read_bool(dev, "mmc-hs400-1_8v") ||
+	    device_property_read_bool(dev, "io_fixed_1v8"))
+		dwc_priv->flags |= FLAG_IO_FIXED_1V8;
+	else
+		dwc_priv->flags &= ~FLAG_IO_FIXED_1V8;
+
+	th_priv = devm_kzalloc(dev, sizeof(*th_priv), GFP_KERNEL);
+	if (!th_priv)
+		return -ENOMEM;
+
+	th1520_sdhci_get_priv_props(dev,
+			(host->mmc->caps2 & emmc_caps) == emmc_caps, th_priv);
+	dwc_priv->th_priv = th_priv;
+
+	/*
+	 * start_signal_voltage_switch() will try 3.3V first
+	 * then 1.8V. Use SDHCI_SIGNALING_180 rather than
+	 * SDHCI_SIGNALING_330 to avoid setting voltage to 3.3V
+	 * in sdhci_start_signal_voltage_switch().
+	 */
+	if (dwc_priv->flags & FLAG_IO_FIXED_1V8) {
+		host->flags &= ~SDHCI_SIGNALING_330;
+		host->flags |=  SDHCI_SIGNALING_180;
+	}
+
+	sdhci_enable_v4_mode(host);
+	host->mmc_host_ops.hs400_complete = th1520_sdhci_hs400_complete;
+
+	return 0;
+}
+
 static void cv18xx_sdhci_reset(struct sdhci_host *host, u8 mask)
 {
 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
@@ -1501,41 +1546,9 @@ static int dwcmshc_probe(struct platform_device *pdev)
 	}
 
 	if (pltfm_data == &sdhci_dwcmshc_th1520_pdata) {
-		priv->delay_line = PHY_SDCLKDL_DC_DEFAULT;
-
-		if ((device_property_read_bool(dev, "mmc-ddr-1_8v")) |
-		    (device_property_read_bool(dev, "mmc-hs200-1_8v")) |
-		    (device_property_read_bool(dev, "mmc-hs400-1_8v")) |
-			(device_property_read_bool(dev, "io_fixed_1v8")))
-			priv->flags |= FLAG_IO_FIXED_1V8;
-		else
-			priv->flags &= ~FLAG_IO_FIXED_1V8;
-
-		u32 emmc_caps = MMC_CAP2_NO_SD | MMC_CAP2_NO_SDIO;
-		struct th1520_priv *th_priv;
-		th_priv = devm_kzalloc(&pdev->dev, sizeof(struct th1520_priv), GFP_KERNEL);
-		if (!th_priv) {
-			err = -ENOMEM;
+		err = th1520_init(dev, host, priv);
+		if (err)
 			goto err_clk;
-		}
-
-		th1520_sdhci_get_priv_props(&pdev->dev,
-					(host->mmc->caps2 & emmc_caps) == emmc_caps,th_priv);
-		priv->th_priv = th_priv;
-		/*
-		 * start_signal_voltage_switch() will try 3.3V first
-		 * then 1.8V. Use SDHCI_SIGNALING_180 rather than
-		 * SDHCI_SIGNALING_330 to avoid setting voltage to 3.3V
-		 * in sdhci_start_signal_voltage_switch().
-		 */
-		if (priv->flags & FLAG_IO_FIXED_1V8) {
-			host->flags &= ~SDHCI_SIGNALING_330;
-			host->flags |=  SDHCI_SIGNALING_180;
-		}
-
-		sdhci_enable_v4_mode(host);
-
-		host->mmc_host_ops.hs400_complete = th1520_sdhci_hs400_complete;
 	}
 
 #ifdef CONFIG_ACPI
