@@ -637,6 +637,17 @@ config PWM_TEGRA
 	  To compile this driver as a module, choose M here: the module
 	  will be called pwm-tegra.
 
+config PWM_XUANTIE
+	tristate "XuanTie PWM support"
+	depends on ARCH_XUANTIE || COMPILE_TEST
+	depends on HAS_IOMEM
+	help
+	  Generic PWM framework driver for the PWFM controller found on XuanTie
+	  SoCs.
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called pwm-xuantie.
+
 config PWM_TIECAP
 	tristate "ECAP PWM support"
 	depends on ARCH_OMAP2PLUS || ARCH_DAVINCI_DA8XX || ARCH_KEYSTONE || ARCH_K3 || COMPILE_TEST

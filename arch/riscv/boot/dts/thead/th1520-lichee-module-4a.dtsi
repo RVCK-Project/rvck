@@ -17,6 +17,182 @@
 	};
 };
 
+&cpus {
+	c910_0: cpu@0 {
+		dvdd-supply = <&dvdd_cpu_reg>;
+		dvddm-supply = <&dvddm_cpu_reg>;
+
+		operating-points = <
+			/* kHz    uV */
+			300000  600000
+			400000  700000
+			500000  700000
+			600000  700000
+			702000  700000
+			800000  700000
+			900000  800000
+			1000000 800000
+			1104000 800000
+			1200000 800000
+			1296000 800000
+			1404000 800000
+			1500000 800000
+			1608000 1000000
+			1704000 1000000
+			1848000 1000000
+		>;
+		th1520,dvddm-operating-points = <
+			/* kHz   uV */
+			300000  800000
+			400000  800000
+			500000  800000
+			600000  800000
+			702000  800000
+			800000  800000
+			900000  800000
+			1000000 800000
+			1104000 800000
+			1200000 800000
+			1296000 800000
+			1404000 800000
+			1500000 800000
+			1608000 1000000
+			1704000 1000000
+			1848000 1000000
+		>;
+	};
+	c910_1: cpu@1 {
+		dvdd-supply = <&dvdd_cpu_reg>;
+		dvddm-supply = <&dvddm_cpu_reg>;
+
+		operating-points = <
+			/* kHz    uV */
+			300000  600000
+			400000  700000
+			500000  700000
+			600000  700000
+			702000  700000
+			800000  700000
+			900000  800000
+			1000000 800000
+			1104000 800000
+			1200000 800000
+			1296000 800000
+			1404000 800000
+			1500000 800000
+			1608000 1000000
+			1704000 1000000
+			1848000 1000000
+		>;
+		th1520,dvddm-operating-points = <
+			/* kHz   uV */
+			300000  800000
+			400000  800000
+			500000  800000
+			600000  800000
+			702000  800000
+			800000  800000
+			900000  800000
+			1000000 800000
+			1104000 800000
+			1200000 800000
+			1296000 800000
+			1404000 800000
+			1500000 800000
+			1608000 1000000
+			1704000 1000000
+			1848000 1000000
+		>;
+	};
+	c910_2: cpu@2 {
+		dvdd-supply = <&dvdd_cpu_reg>;
+		dvddm-supply = <&dvddm_cpu_reg>;
+
+		operating-points = <
+			/* kHz    uV */
+			300000  600000
+			400000  700000
+			500000  700000
+			600000  700000
+			702000  700000
+			800000  700000
+			900000  800000
+			1000000 800000
+			1104000 800000
+			1200000 800000
+			1296000 800000
+			1404000 800000
+			1500000 800000
+			1608000 1000000
+			1704000 1000000
+			1848000 1000000
+		>;
+		th1520,dvddm-operating-points = <
+			/* kHz   uV */
+			300000  800000
+			400000  800000
+			500000  800000
+			600000  800000
+			702000  800000
+			800000  800000
+			900000  800000
+			1000000 800000
+			1104000 800000
+			1200000 800000
+			1296000 800000
+			1404000 800000
+			1500000 800000
+			1608000 1000000
+			1704000 1000000
+			1848000 1000000
+		>;
+	};
+	c910_3: cpu@3 {
+		dvdd-supply = <&dvdd_cpu_reg>;
+		dvddm-supply = <&dvddm_cpu_reg>;
+
+		operating-points = <
+			/* kHz    uV */
+			300000  600000
+			400000  700000
+			500000  700000
+			600000  700000
+			702000  700000
+			800000  700000
+			900000  800000
+			1000000 800000
+			1104000 800000
+			1200000 800000
+			1296000 800000
+			1404000 800000
+			1500000 800000
+			1608000 1000000
+			1704000 1000000
+			1848000 1000000
+		>;
+		th1520,dvddm-operating-points = <
+			/* kHz   uV */
+			300000  800000
+			400000  800000
+			500000  800000
+			600000  800000
+			702000  800000
+			800000  800000
+			900000  800000
+			1000000 800000
+			1104000 800000
+			1200000 800000
+			1296000 800000
+			1404000 800000
+			1500000 800000
+			1608000 1000000
+			1704000 1000000
+			1848000 1000000
+		>;
+	};
+};
+
+
 &osc {
 	clock-frequency = <24000000>;
 };
@@ -25,14 +201,275 @@
 	clock-frequency = <32768>;
 };
 
+&rc_24m {
+	clock-frequency = <24000000>;
+};
+
+&aonsys_clk {
+	clock-frequency = <73728000>;
+};
+
+&audiosys_clk {
+	clock-frequency = <294912000>;
+};
+
 &apb_clk {
 	clock-frequency = <62500000>;
+};
+
+&sdhci_clk {
+	clock-frequency = <198000000>;
 };
 
 &uart_sclk {
 	clock-frequency = <100000000>;
 };
 
+&aogpio {
+	gpio-line-names = "", "", "",
+			  "GPIO00",
+			  "GPIO04";
+};
+
+&gmac_clk {
+	clock-frequency = <500000000>;
+};
+
+&gmac_axi_clk {
+	clock-frequency = <100000000>;
+};
+
+&aon {
+	dvdd_cpu_reg: appcpu_dvdd {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "appcpu_dvdd";
+		regulator-min-microvolt = <300000>;
+		regulator-max-microvolt = <1570000>;
+		regulator-type = "dvdd";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	dvddm_cpu_reg: appcpu_dvddm {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "appcpu_dvddm";
+		regulator-min-microvolt = <300000>;
+		regulator-max-microvolt = <1570000>;
+		regulator-type = "dvddm";
+		regulator-dual-rail;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_dvdd18_aon_reg: soc_dvdd18_aon {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dvdd18_aon";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_avdd33_usb3_reg: soc_avdd33_usb3 {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_avdd33_usb3";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_dvdd08_aon_reg: soc_dvdd08_aon {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dvdd08_aon";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_dvdd08_ddr_reg: soc_dvdd08_ddr {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dvdd08_ddr";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_vdd_ddr_1v8_reg: soc_vdd_ddr_1v8 {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_vdd_ddr_1v8";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_vdd_ddr_1v1_reg: soc_vdd_ddr_1v1 {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_vdd_ddr_1v1";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_vdd_ddr_0v6_reg: soc_vdd_ddr_0v6 {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_vdd_ddr_0v6";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_dvdd18_ap_reg: soc_dvdd18_ap {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dvdd18_ap";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_dvdd08_ap_reg: soc_dvdd08_ap {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dvdd08_ap";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_avdd08_mipi_hdmi_reg: soc_avdd08_mipi_hdmi {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_avdd08_mipi_hdmi";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_avdd18_mipi_hdmi_reg: soc_avdd18_mipi_hdmi {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_avdd18_mipi_hdmi";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_vdd33_emmc_reg: soc_vdd33_emmc {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dvdd33_emmc";
+		regulator-type = "common";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_vdd18_emmc_reg: soc_vdd18_emmc {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dvdd18_emmc";
+		regulator-type = "gpio";
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	soc_dovdd18_scan_reg: soc_dovdd18_scan {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dovdd18_scan";
+		regulator-type = "common";
+		regulator-min-microvolt = <900000>;
+		regulator-max-microvolt = <3600000>;
+	};
+
+	soc_dvdd12_scan_reg: soc_dvdd12_scan {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_dvdd12_scan";
+		regulator-type = "common";
+		regulator-min-microvolt = <900000>;
+		regulator-max-microvolt = <3600000>;
+	};
+
+	soc_avdd28_scan_en_reg: soc_avdd28_scan_en {
+		compatible = "xuantie,th1520-aon-pmic";
+		regulator-name = "soc_avdd28_scan_en";
+		regulator-type = "common";
+		regulator-min-microvolt = <900000>;
+		regulator-max-microvolt = <3600000>;
+	};
+};
+
 &dmac0 {
 	status = "okay";
+};
+
+&dmac2 {
+	status = "okay";
+};
+
+&emmc {
+       bus-width = <8>;
+       max-frequency = <198000000>;
+       mmc-hs400-1_8v;
+       non-removable;
+       no-sdio;
+       no-sd;
+       status = "okay";
+};
+
+&padctrl0_apsys {
+	sdio0_pins: sdio0-0 {
+		detn-pins {
+			pins = "SDIO0_DETN";
+			function = "sdio";
+			bias-disable; /* external pull-up */
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+};
+
+&sdio0 {
+       pinctrl-names = "default";
+       pinctrl-0 = <&sdio0_pins>;
+       bus-width = <4>;
+       max-frequency = <198000000>;
+       status = "okay";
+};
+
+&gpio0 {
+	gpio-line-names = "", "", "", "", "", "", "", "", "", "",
+			  "", "", "", "", "", "", "", "", "", "",
+			  "", "", "", "",
+			  "GPIO07",
+			  "GPIO08",
+			  "",
+			  "GPIO01",
+			  "GPIO02";
+};
+
+&gpio1 {
+	gpio-line-names = "", "", "",
+			  "GPIO11",
+			  "GPIO12",
+			  "GPIO13",
+			  "GPIO14",
+			  "", "", "", "", "", "", "", "", "", "",
+			  "", "", "", "", "",
+			  "GPIO06";
+};
+
+&gpio2 {
+	gpio-line-names = "GPIO03",
+			  "GPIO05";
+};
+
+&gpio3 {
+	gpio-line-names = "", "",
+			  "GPIO09",
+			  "GPIO10";
+};
+
+&npu {
+	vha_clk_rate = <1000000000>;
+	status = "okay";
+};
+
+&npu_opp_table {
+	opp-1000000000 {
+		opp-suspend;
+	};
 };
