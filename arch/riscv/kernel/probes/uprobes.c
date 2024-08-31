@@ -177,6 +177,6 @@ void arch_uprobe_copy_ixol(struct page *page, unsigned long vaddr,
 		*(uprobe_opcode_t *)dst = __BUG_INSN_32;
 	}
 
-	flush_icache_range(start, start + len);
+	flush_icache_range(kaddr, kaddr + len);
 	kunmap_atomic(kaddr);
 }
