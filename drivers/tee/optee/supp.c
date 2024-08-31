@@ -6,6 +6,7 @@
 #include <linux/slab.h>
 #include <linux/uaccess.h>
 #include "optee_private.h"
+#include <linux/freezer.h>
 
 struct optee_supp_req {
 	struct list_head link;
@@ -161,6 +162,7 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
 
 		mutex_unlock(&supp->mutex);
 	} else {
+		try_to_freeze();
 		ret = req->ret;
 	}
 
