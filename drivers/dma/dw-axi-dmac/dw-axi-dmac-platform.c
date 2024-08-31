@@ -531,7 +531,7 @@ static void dma_chan_free_chan_resources(struct dma_chan *dchan)
 		 "%s: free resources, descriptor still allocated: %u\n",
 		 axi_chan_name(chan), atomic_read(&chan->descs_allocated));
 
-	pm_runtime_put(chan->chip->dev);
+	pm_runtime_put_sync(chan->chip->dev);
 }
 
 static void dw_axi_dma_set_hw_channel(struct axi_dma_chan *chan, bool set)
