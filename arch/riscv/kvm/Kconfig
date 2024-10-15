@@ -33,6 +33,7 @@ config KVM
 	select MMU_NOTIFIER
 	select PREEMPT_NOTIFIERS
 	select SCHED_INFO
+	select GUEST_PERF_EVENTS if PERF_EVENTS
 	help
 	  Support hosting virtualized guest machines.
 
