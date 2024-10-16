@@ -24,7 +24,14 @@ typedef struct {
 	unsigned long exec_fdpic_loadmap;
 	unsigned long interp_fdpic_loadmap;
 #endif
+	unsigned long flags;
+#ifdef CONFIG_RISCV_ISA_SUPM
+	u8 pmlen;
+#endif
 } mm_context_t;
+
+/* Lock the pointer masking mode because this mm is multithreaded */
+#define MM_CONTEXT_LOCK_PMLEN	0
 
 void __meminit create_pgd_mapping(pgd_t *pgdp, uintptr_t va, phys_addr_t pa, phys_addr_t sz,
 				  pgprot_t prot);
