@@ -14,7 +14,7 @@
 #include <asm/cpufeature.h>
 #include <asm/errata_list.h>
 #include <asm/hwprobe.h>
-#include <asm/patch.h>
+#include <asm/text-patching.h>
 #include <asm/vector.h>
 #include <asm/vendorid_list.h>
 #include <asm/vendor_extensions.h>

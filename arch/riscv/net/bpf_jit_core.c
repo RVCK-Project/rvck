@@ -9,7 +9,7 @@
 #include <linux/bpf.h>
 #include <linux/filter.h>
 #include <linux/memory.h>
-#include <asm/patch.h>
+#include <asm/text-patching.h>
 #include "bpf_jit.h"
 
 /* Number of iterations to try until offsets converge. */

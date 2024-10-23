@@ -10,7 +10,7 @@
 #include <linux/filter.h>
 #include <linux/memory.h>
 #include <linux/stop_machine.h>
-#include <asm/patch.h>
+#include <asm/text-patching.h>
 #include "bpf_jit.h"
 
 #define RV_FENTRY_NINSNS 2

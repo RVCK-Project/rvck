@@ -22,6 +22,7 @@ generic-y += sockios.h
 generic-y += termbits.h
 generic-y += poll.h
 generic-y += param.h
+generic-y += text-patching.h
 generic-y += posix_types.h
 generic-y += resource.h
 generic-y += kvm_para.h

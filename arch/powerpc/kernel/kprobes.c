@@ -21,7 +21,7 @@
 #include <linux/slab.h>
 #include <linux/moduleloader.h>
 #include <linux/set_memory.h>
-#include <asm/code-patching.h>
+#include <asm/text-patching.h>
 #include <asm/cacheflush.h>
 #include <asm/sstep.h>
 #include <asm/sections.h>
