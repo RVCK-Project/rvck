@@ -1,18 +1,196 @@
-Linux kernel
+补丁合入规范
 ============
 
-There are several guides for kernel developers and users. These guides can
-be rendered in a number of formats, like HTML and PDF. Please read
-Documentation/admin-guide/README.rst first.
+### 第一部分 RISC-V 同源内核开发
 
-In order to build the documentation, use ``make htmldocs`` or
-``make pdfdocs``.  The formatted documentation can also be read online at:
+在设计上，我们的开发树分支保留了原汁原味的上游提交记录，git log很清晰，上游所有的tag都完美滚动下来，然后riscv支持补丁井然有序的打在最上面，就像蛋糕一样，下面是一层层的社区补丁，上面是riscv支持补丁，如下所示：
 
-    https://www.kernel.org/doc/html/latest/
+```
+...
+part3
+part2
+part1
+tag 6.6.54
+tag 6.6.53
+tag 6.6.52
+6.6.y base
+```
 
-There are various text files in the Documentation/ subdirectory,
-several of them using the Restructured Text markup notation.
+这种结构的开发树优点是显而易见的，即保证riscv支持补丁高可维护性的同时，兼顾了社区补丁的可维护性。缺点是维护工作量最大，不仅要完整的backport上游的tag，每次还要重新移植所有的riscv支持补丁，因此对补丁的审阅会比较严格。
 
-Please read the Documentation/process/changes.rst file, as it contains the
-requirements for building and running the kernel, and information about
-the problems which may result by upgrading your kernel.
+
+RISC-V 同源内核开发大致分为三种场景：
+1. 批量移植补丁集
+2. 新特性开发与问题修复
+3. 主线 Linux 内核补丁移植
+
+以下规范内容除总体要求之外按照上面三种场景分别描述。
+
+#### 总体要求
+
+- rvck-6.6 分支会每周先回退到Linux-6.6.y原始状态，然后拉取Linux-6.6.y的代码更新，最后重新打上所有的riscv补丁，因此要不停的移植补丁，解决更新后补丁打不上的问题，该工作由维护者负责，提交者须知悉。
+- 提交pr之前，务必把仓库的分支同步到最新状态，并进行编译测试和启动测试以及补丁的功能性测试。
+- 在移植补丁集时难免有代码冲突，解决冲突时请优先修改自己的补丁，如需修改仓库里面的代码，请单独提交修改补丁；
+- 确保每个补丁都能通过编译和启动测试，只有整个补丁集需要通过功能验证测试；
+- 如果某笔提交会影响其他架构或模块，比如修改了某个公共框架，在不确定对其它架构的影响前，请务必使用编译开关进行条件判断；
+- 每个新硬件支持需要一份独立的内核配置最简集合，便于内核配置的合并及维护。
+
+##### 提交pr的步骤
+
+1. 基于 RVCK-Project/rvck-OLK/rvck-6.6 新建开发分支
+2. 批量移植补丁集
+3. 补充代码注释
+4. 进行补丁拆分，确保每个补丁都能编译过
+5. 进行编译测试和启动测试以及补丁的功能性测试
+6. 编写subject和commit message
+7. 通过checkpatch.pl测试
+8. 提交合并请求
+9. 通过CI门禁并积极回复审阅意见
+10. 更新issue，补丁被合并
+
+#### 批量移植补丁集
+
+如果厂商内核本身就是基于 Linux-6.6.y 开发，并且已经有可以启动和使用的内核，欢迎批量移植针对新硬件的支持补丁，该方式对提交说明部分采用较为宽松的要求。
+
+关于宽松要求的解释：
+- 步骤3和步骤4可以2选1；
+- 步骤6可以省略，但是必须在对应issue中详细介绍整个补丁集合，并回复审阅者的提问；
+- 步骤7可以允许有warning，但是不能有error，请把所有的tab缩进改为8字符长度；
+- 步骤9可以跳过门禁先进行代码审阅，然后由审阅者辅导修改补丁，通过门禁；
+- 如果代码实现和补丁要求大体上接近预期，maintianer最终会进行调整和优化。
+
+
+#### 新特性开发与问题修复
+
+如果开发者基于 rvck-OLK/rvck-6.6 分支来进行新特性开发或者提交问题修复补丁，需要注意以下要求：
+
+- 编码格式与提交信息格式遵照主线 Linux 贡献相关要求；
+- 如果针对特定硬件平台，需要在提交信息标题部分标明，如 `sg2042: Add XXX support`；
+- 如果代码实现方面拿不准，可以先在github提交issue，然后大家讨论一下。
+
+#### 主线 Linux 内核补丁移植
+
+如果是对来自主线 Linux 高版本内核进行移植，请注意以下要求：
+
+- 在每个补丁的签名栏加入自己的签名；
+- 签名栏带有Fixes标签的补丁不需要移植，我们会自动滚动更新；
+- 移植过程中如需要修改公共框架，建议根据6.6的框架修改补丁，如修改难度大，请追踪到上游改公共框架对应的补丁，分别移植。
+
+#### 补丁制作规范
+----------------------------
+
+##### 来自开源社区的 SoC 支持补丁
+
+riscv-kernel 在合入新的 RISC-V SoC 支持补丁过程中，会有来自对应的厂商内核仓库、开源社区等补丁合入。这些补丁格式统一规范如下：
+
+###### 格式定义
+
+```
+$SoC-name: $commit-title
+
+commit message
+
+Bug-url: <issue link>
+Reference：<patch link>
+Signed-off-by:$yourname <$yourname@xxx.com>
+```
+
+###### 具体说明
+
+- $SoC-name
+
+该补丁用于支持的 SoC 名称，如 sg2042, th1520 等。
+
+- $commit-title
+
+原补丁的 commit 标题，建议保留原标题的关键信息，优化格式，如删除重复的 SoC 信息、riscv前缀等。
+
+- $commit message
+
+保留原内容，适当地将issue中的讨论提炼后补充进来。每行长度不超过72个字符。
+
+- $Reference
+
+补丁地来源，请指向一个永久地址。
+
+- $Bug-url
+
+每个补丁都需要有对应的 bugzilla/issue 相关联。通常是新增特性的需求issue、缺陷报告issue等。对应的补丁或补丁集合入后会关闭相关联的 issue，作为便于后期追踪的信息归档。这种方式将方便我们进行任务管理和进展跟踪，使得内核维护过程清晰可见。补丁合入时，关联的 issue 中需要更新以下内容：
+
+1. 准确描述该任务的目标/要修复的缺陷
+2. 对应补丁的测试过程和验证结果
+3. 如果涉及内核 config 修改，需要标出具体变化
+
+- Signed-off-by
+
+在保留原始签名信息的基础上，您也需要在最后加上您的签名。使用您的真实姓名，请勿使用化名或匿名贡献。
+
+###### 示例
+
+```
+sg2042: driver: pcie: Add sg2042 soc support
+
+The SG2042 processor is a 64-core server-grade chip based on the RISC-V
+instruction set architecture. The following is a detailed introduction:
+
+Basic Parameters
+- Number of Cores and Frequency: It has 64 high-performance CPU cores
+  with a main frequency of 2 GHz.
+- Cache Design: Each core is equipped with 64 KB of L1-D and 64 KB of
+  L1-I first-level caches. Each cluster shares 1 MB of second-level
+  cache, and the system also has 64 MB of third-level cache.
+- Memory Support: It integrates 4 DDR4-3200 controllers, supporting
+  RDIMM, ECC, and UDIMM memories, which can provide high-speed and
+  stable memory access performance to meet the server's requirements
+  for large-capacity memory and high bandwidth.
+
+Chip Architecture
+- Multi-core Architecture: It adopts a design of 16 clusters, with
+  each cluster containing 4 RISC-V cores. This architecture is
+  conducive to improving parallel processing capabilities and is
+  suitable for high-performance computing scenarios with multi-tasking
+  and multi-threading.
+- Instruction Set Architecture: Based on the RISC-V instruction set,
+  which is characterized by simplicity, modularity, and
+  customizability. Users can add custom extension instruction sets
+  according to their own needs, providing flexibility for the expansion
+  and optimization of the chip's functions, and better meeting the
+  specific requirements of different application scenarios.
+
+External Interfaces
+- PCIe Gen4.0 Interfaces: It has 32 PCIe Gen4.0 interfaces, which can
+  provide high-speed data transmission channels, facilitating the
+  connection of various external devices such as graphics cards,
+  network cards, and storage devices to meet the server's need for the
+  expansion of different types of high-speed peripherals.
+- Other Interfaces: It also integrates eMMC 5.1, SDIO 3.0, SPI x2,
+  I2C x4, UART x4, and Gigabit Ethernet MAC, etc. The rich interface
+  types enable the chip to be conveniently connected with various
+  storage devices, sensors, communication modules, etc., enhancing
+  the universality and extensibility of the system.
+
+Reference: https://github.com/xmzzz/linux-riscv/commit/b3ccc12920772a10791da1b32422d2242c8b7d79
+Bug-url: https://gitee.com/openeuler/riscv-kernel/issues/I9DRVT
+Signed-off-by: Xiaoguang Xing <xiaoguang.xing@sophgo.com>
+Signed-off-by: Mingzheng Xing <xingmingzheng@iscas.ac.cn>
+```
+
+###### 补丁代码的编码风格
+
+请参考<https://www.kernel.org/doc/html/latest/translations/zh_CN/process/coding-style.html#linux>
+checkpatch.pl会按照这个文档进行检测，编码风格不对，会输出error和warning。
+
+#### 审阅过程
+
+提交pr并不意味着补丁会被合并，请确保至少间隔每48小时查看一下pr，如果有人评论，请及时做出回应，线上的讨论记录将作为结果永久存档，供之后查阅，请尽量减少线下沟通。
+
+一般来说，我们的响应时间是工作日48小时，非工作日72小时，审阅工作一般会在提交之后的第一个响应周期内开始，但是一般情况下只会在您的补丁通过CI门禁之后才会开始评论。
+
+补丁达到合并状态的标准是拿到不低于两个approve，如果被合并，最底部会出现一条applied的评论。
+
+#### 补丁合并
+
+该分支维护方式与主流的社区仓库不同，一个最大的特点就是没有merge节点，所以您的补丁不会像传统意义上的被merge，而是直接由maintianer先打到他本地的仓库分支，然后在确认被合并的一周内，推送到github。
+
+maintainer在合并时，有权利对commit message进行二次编辑和对代码添加注释；有权利在不改变代码语义的前提下，对补丁进行二次拆分，以适用二分法。
+
