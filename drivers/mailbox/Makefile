@@ -64,3 +64,5 @@ obj-$(CONFIG_QCOM_IPCC)		+= qcom-ipcc.o
 obj-$(CONFIG_APPLE_MAILBOX)	+= apple-mailbox.o
 
 obj-$(CONFIG_RISCV_SBI_MPXY_MBOX)	+= riscv-sbi-mpxy-mbox.o
+
+obj-$(CONFIG_THEAD_TH1520_MBOX)	+= mailbox-th1520.o
