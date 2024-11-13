@@ -4,4 +4,5 @@ endif
 obj-$(CONFIG_VHA) += vha/ img_mem/
 obj-$(CONFIG_LOKI) += fenrir_loki/
 
-subdir-ccflags-y += -I$(srctree)/$(src)/include
+ccflags-y += -I$(srctree)/$(src)/include
+
