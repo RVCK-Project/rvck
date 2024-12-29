@@ -1131,7 +1131,7 @@ static int allocate_cmdbuf(struct noncache_mem*  new_cmdbuf_addr,struct noncache
       new_status_cmdbuf_addr->mmu_bus_address=vcmd_status_buf_mem_pool.mmu_bus_address + cmdbuf_used_pos*CMDBUF_MAX_SIZE;
       new_status_cmdbuf_addr->size=CMDBUF_MAX_SIZE;
       new_status_cmdbuf_addr->cmdbuf_id = cmdbuf_used_pos;
-      global_cmdbuf_node[cmdbuf_used_pos]=0x55555555; //temp set it,for another thread not hit  cmdbuf_used[x] set but global_cmdbuf_node[x] is null
+      global_cmdbuf_node[cmdbuf_used_pos]=(struct bi_list_node *)0x55555555; //temp set it,for another thread not hit  cmdbuf_used[x] set but global_cmdbuf_node[x] is null
       cmdbuf_used_pos++;
       if(cmdbuf_used_pos>=TOTAL_DISCRETE_CMDBUF_NUM)
         cmdbuf_used_pos=0;
