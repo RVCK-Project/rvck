@@ -13,7 +13,7 @@
 
 	memory@0 {
 		device_type = "memory";
-		reg = <0x0 0x00000000 0x2 0x00000000>;
+		reg = <0x0 0x200000 0x1 0xffe00000>;
 	};
 };
 
@@ -427,6 +427,7 @@
        pinctrl-0 = <&sdio0_pins>;
        bus-width = <4>;
        max-frequency = <198000000>;
+       no-sdio;
        status = "okay";
 };
 

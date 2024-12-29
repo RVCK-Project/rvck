@@ -15,11 +15,48 @@
 #include <dt-bindings/reset/xuantie,th1520-reset.h>
 #include <dt-bindings/firmware/xuantie/rsrc.h>
 #include <dt-bindings/thermal/thermal.h>
+#include <dt-bindings/soc/xuantie,th1520-iopmp.h>
 
 / {
 	compatible = "thead,th1520";
 	#address-cells = <2>;
 	#size-cells = <2>;
+
+	aliases {
+		ethernet0 = &gmac0;
+		ethernet1 = &gmac1;
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+		gpio2 = &gpio2;
+		gpio3 = &gpio3;
+		i2c0 = &i2c0;
+		i2c1 = &i2c1;
+		i2c2 = &i2c2;
+		i2c3 = &i2c3;
+		i2c4 = &i2c4;
+		i2c5 = &audio_i2c0;
+		i2c6 = &audio_i2c1;
+		mmc0 = &emmc;
+		mmc1 = &sdio0;
+		mmc2 = &sdio1;
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+		serial3 = &uart3;
+		serial4 = &uart4;
+		serial5 = &uart5;
+		spi0 = &spi;
+		spi1 = &qspi0;
+		spi2 = &qspi1;
+		ap_i2s = &ap_i2s;
+		i2s0 = &i2s0;
+		i2s1 = &i2s1;
+		i2s2 = &i2s2;
+	};
+
+	system_monitor: system-monitor {
+		compatible = "th1520,system-monitor";
+	};
 
 	cpus: cpus {
 		#address-cells = <1>;
@@ -39,6 +76,8 @@
 			d-cache-sets = <512>;
 			next-level-cache = <&l2_cache>;
 			mmu-type = "riscv,sv39";
+			video-4k-minfreq = <1848000000>;
+			qos-mid-minfreq = <750000000>;
 			#cooling-cells = <2>;
 			dynamic-power-coefficient = <500>;
 
@@ -246,7 +285,7 @@
 			<0x00000000 0x00000029 0xffffffff 0xffffffff 0x0007fff8>,
 			<0x00000000 0x0000002a 0xffffffff 0xffffffff 0x0007fff8>;
 	};
-
+	
 	osc: oscillator {
 		compatible = "fixed-clock";
 		clock-output-names = "osc_24m";
@@ -318,6 +357,7 @@
 		compatible = "xuantie,th1520-aon";
 		mbox-names = "aon";
 		mboxes = <&mbox_910t 1 0>;
+		opensbi-mboxes = <&mbox_910r>;
 		status = "okay";
 
 		pd: th1520-aon-pd {
@@ -407,6 +447,20 @@
 						<&npu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
 						contribution = <1024>;
 				};
+
+				dsp0_devfreq {
+					trip = <&dev_target>;
+					cooling-device =
+						<&xtensa_dsp0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+						contribution = <1024>;
+				};
+
+				dsp1_devfreq {
+					trip = <&dev_target>;
+					cooling-device =
+						<&xtensa_dsp1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+						contribution = <1024>;
+				};
 			};
 		};
 	};
@@ -478,9 +532,21 @@
 			reg = <0xff 0xcb01a000 0x0 0x1000>;
 			clocks = <&apb_clk>;
 			interrupts = <182 IRQ_TYPE_LEVEL_HIGH>;
+			clock-frequency = <100000>;
+			i2c_mode = "dma";
+			dmas = <&dmac2 21>, <&dmac2 20>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			ss_hcnt = /bits/ 16 <0x82>;
+			ss_lcnt = /bits/ 16 <0x78>;
+			fs_hcnt = /bits/ 16 <0x37>;
+			fs_lcnt = /bits/ 16 <0x42>;
+			fp_hcnt = /bits/ 16 <0x14>;
+			fp_lcnt = /bits/ 16 <0x1a>;
+			hs_hcnt = /bits/ 16 <0x5>;
+			hs_lcnt = /bits/ 16 <0x15>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
 		};
 
 		audio_i2c1: i2c@ffcb01b000 {
@@ -488,9 +554,22 @@
 			reg = <0xff 0xcb01b000 0x0 0x1000>;
 			clocks = <&apb_clk>;
 			interrupts = <183 IRQ_TYPE_LEVEL_HIGH>;
+			clock-frequency = <100000>;
+			i2c_mode = "dma";
+			dmas = <&dmac2 23>, <&dmac2 22>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			ss_hcnt = /bits/ 16 <0x82>;
+			ss_lcnt = /bits/ 16 <0x78>;
+			fs_hcnt = /bits/ 16 <0x37>;
+			fs_lcnt = /bits/ 16 <0x42>;
+			fp_hcnt = /bits/ 16 <0x14>;
+			fp_lcnt = /bits/ 16 <0x1a>;
+			hs_hcnt = /bits/ 16 <0x5>;
+			hs_lcnt = /bits/ 16 <0x15>;
+			status = "disabled";
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
 		};
 
 		ap_i2s: ap-i2s@ffe7034000 {
@@ -612,6 +691,182 @@
 			status = "disabled";
 		};
 
+		tdm_slot1: tdm1@ffcb012000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-tdm";
+			reg = <0xff 0xcb012000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			th1520,tdm_slots = <8>;
+			th1520,tdm_slot_num = <1>;
+			interrupts = <178 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 28>;
+			dma-names = "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_TDM>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_TDM>;
+			status = "disabled";
+		};
+
+		tdm_slot2: tdm2@ffcb012000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-tdm";
+			reg = <0xff 0xcb012000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			th1520,tdm_slots = <8>;
+			th1520,tdm_slot_num = <2>;
+			interrupts = <178 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 29>;
+			dma-names = "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_TDM>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_TDM>;
+			status = "disabled";
+		};
+
+		tdm_slot3: tdm3@ffcb012000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-tdm";
+			reg = <0xff 0xcb012000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			th1520,tdm_slots = <8>;
+			th1520,tdm_slot_num = <3>;
+			interrupts = <178 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 30>;
+			dma-names = "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_TDM>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_TDM>;
+			status = "disabled";
+		};
+
+		tdm_slot4: tdm4@ffcb012000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-tdm";
+			reg = <0xff 0xcb012000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			th1520,tdm_slots = <8>;
+			th1520,tdm_slot_num = <4>;
+			interrupts = <178 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 31>;
+			dma-names = "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_TDM>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_TDM>;
+			status = "disabled";
+		};
+
+		tdm_slot5: tdm5@ffcb012000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-tdm";
+			reg = <0xff 0xcb012000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			th1520,tdm_slots = <8>;
+			th1520,tdm_slot_num = <5>;
+			interrupts = <178 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 32>;
+			dma-names = "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_TDM>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_TDM>;
+			status = "disabled";
+		};
+
+		tdm_slot6: tdm6@ffcb012000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-tdm";
+			reg = <0xff 0xcb012000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			th1520,tdm_slots = <8>;
+			th1520,tdm_slot_num = <6>;
+			interrupts = <178 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 33>;
+			dma-names = "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_TDM>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_TDM>;
+			status = "disabled";
+		};
+
+		tdm_slot7: tdm7@ffcb012000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-tdm";
+			reg = <0xff 0xcb012000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			th1520,tdm_slots = <8>;
+			th1520,tdm_slot_num = <7>;
+			interrupts = <178 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 34>;
+			dma-names = "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_TDM>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_TDM>;
+			status = "disabled";
+		};
+
+		tdm_slot8: tdm8@ffcb012000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-tdm";
+			reg = <0xff 0xcb012000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			th1520,tdm_slots = <8>;
+			th1520,tdm_slot_num = <8>;
+			interrupts = <178 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 35>;
+			dma-names = "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_TDM>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_TDM>;
+			status = "disabled";
+		};
+
+		spdif0: spdif@ffcb018000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-spdif";
+			reg = <0xff 0xcb018000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			interrupts = <179 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 25>, <&dmac2 24>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_SPDIF0>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_SPDIF0>;
+			status = "disabled";
+		};
+
+		spdif1: spdif@ffcb019000 {
+			#sound-dai-cells = <0>;
+			compatible = "xuantie,th1520-spdif";
+			reg = <0xff 0xcb019000 0x0 0x1000>;
+			audio-cpr-regmap = <&audio_cpr>;
+			pinctrl-names = "default";
+			interrupts = <180 IRQ_TYPE_LEVEL_HIGH>;
+			dmas = <&dmac2 27>, <&dmac2 26>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			clocks = <&audiosys_clk_gate TH1520_CLKGEN_AUDIO_SPDIF1>;
+			clock-names = "pclk";
+			resets = <&audiosys_rst TH1520_RESET_AUD_SPDIF1>;
+			status = "disabled";
+		};
+
 		plic: interrupt-controller@ffd8000000 {
 			compatible = "thead,th1520-plic", "thead,c900-plic";
 			reg = <0xff 0xd8000000 0x0 0x01000000>;
@@ -632,6 +887,35 @@
 					      <&cpu1_intc 3>, <&cpu1_intc 7>,
 					      <&cpu2_intc 3>, <&cpu2_intc 7>,
 					      <&cpu3_intc 3>, <&cpu3_intc 7>;
+		};
+
+		aclint_sswi: aclint-sswi@ffdc00c000 {
+			compatible = "riscv,aclint-sswi";
+			reg = <0xff 0xdc00c000 0x0 0x00010000>;
+			interrupt-controller;
+		};
+
+		secsys_reg: secsys-reg@ffff200000 {
+			compatible = "syscon";
+			reg = <0xff 0xff200000 0x0 0x10000>;
+		};
+
+		nvmem_controller: efuse@ffff210000 {
+			compatible = "xuantie,th1520-efuse", "syscon";
+			reg = <0xff 0xff210000 0x0 0x10000>;
+			xuantie,secsys = <&secsys_reg>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			clocks = <&miscsys_clk_gate CLKGEN_MISCSYS_EFUSE_PCLK>;
+			clock-names = "pclk";
+
+			gmac0_mac_address: mac-address@176 {
+				reg = <0xb0 6>;
+			};
+
+			gmac1_mac_address: mac-address@184 {
+				reg = <0xb8 6>;
+			};
 		};
 
 		gmac0: ethernet@ffe7070000 {
@@ -747,51 +1031,119 @@
 		i2c0: i2c@ffe7f20000 {
 			compatible = "snps,designware-i2c";
 			reg = <0xff 0xe7f20000 0x0 0x1000>;
-			clocks = <&clk CLKGEN_I2C0_PCLK>;
 			interrupts = <44 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk CLKGEN_I2C0_PCLK>;
+			clock-names = "pclk";
+			clock-frequency = <100000>;
+			i2c_mode = "dma";
+			dmas = <&dmac0 12>, <&dmac0 13>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			ss_hcnt = /bits/ 16 <0x104>;
+			ss_lcnt = /bits/ 16 <0xec>;
+			fs_hcnt = /bits/ 16 <0x37>;
+			fs_lcnt = /bits/ 16 <0x42>;
+			fp_hcnt = /bits/ 16 <0x14>;
+			fp_lcnt = /bits/ 16 <0x1a>;
+			hs_hcnt = /bits/ 16 <0x9>;
+			hs_lcnt = /bits/ 16 <0x11>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
 		};
 
 		i2c1: i2c@ffe7f24000 {
 			compatible = "snps,designware-i2c";
 			reg = <0xff 0xe7f24000 0x0 0x1000>;
-			clocks = <&clk CLKGEN_I2C1_PCLK>;
 			interrupts = <45 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk CLKGEN_I2C1_PCLK>;
+			clock-names = "pclk";
+			clock-frequency = <100000>;
+			i2c_mode = "dma";
+			dmas = <&dmac0 14>, <&dmac0 15>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			ss_hcnt = /bits/ 16 <0x104>;
+			ss_lcnt = /bits/ 16 <0xec>;
+			fs_hcnt = /bits/ 16 <0x37>;
+			fs_lcnt = /bits/ 16 <0x42>;
+			fp_hcnt = /bits/ 16 <0x14>;
+			fp_lcnt = /bits/ 16 <0x1a>;
+			hs_hcnt = /bits/ 16 <0x9>;
+			hs_lcnt = /bits/ 16 <0x11>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
 		};
 
 		i2c2: i2c@ffec00c000 {
 			compatible = "snps,designware-i2c";
 			reg = <0xff 0xec00c000 0x0 0x1000>;
-			clocks = <&clk CLKGEN_I2C2_PCLK>;
 			interrupts = <46 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk CLKGEN_I2C2_PCLK>;
+			clock-names = "pclk";
+			clock-frequency = <100000>;
+			i2c_mode = "dma";
+			dmas = <&dmac0 16>, <&dmac0 17>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			ss_hcnt = /bits/ 16 <0x104>;
+			ss_lcnt = /bits/ 16 <0xec>;
+			fs_hcnt = /bits/ 16 <0x37>;
+			fs_lcnt = /bits/ 16 <0x42>;
+			fp_hcnt = /bits/ 16 <0x14>;
+			fp_lcnt = /bits/ 16 <0x1a>;
+			hs_hcnt = /bits/ 16 <0x9>;
+			hs_lcnt = /bits/ 16 <0x11>;
+			status = "disabled";
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
 		};
 
 		i2c3: i2c@ffec014000 {
 			compatible = "snps,designware-i2c";
 			reg = <0xff 0xec014000 0x0 0x1000>;
-			clocks = <&clk CLKGEN_I2C3_PCLK>;
 			interrupts = <47 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk CLKGEN_I2C3_PCLK>;
+			clock-names = "pclk";
+			clock-frequency = <100000>;
+			i2c_mode = "dma";
+			dmas = <&dmac0 18>, <&dmac0 19>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			ss_hcnt = /bits/ 16 <0x104>;
+			ss_lcnt = /bits/ 16 <0xec>;
+			fs_hcnt = /bits/ 16 <0x37>;
+			fs_lcnt = /bits/ 16 <0x42>;
+			fp_hcnt = /bits/ 16 <0x14>;
+			fp_lcnt = /bits/ 16 <0x1a>;
+			hs_hcnt = /bits/ 16 <0x9>;
+			hs_lcnt = /bits/ 16 <0x11>;
+			status = "disabled";
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
 		};
 
 		i2c4: i2c@ffe7f28000 {
 			compatible = "snps,designware-i2c";
 			reg = <0xff 0xe7f28000 0x0 0x1000>;
-			clocks = <&clk CLKGEN_I2C4_PCLK>;
 			interrupts = <48 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk CLKGEN_I2C4_PCLK>;
+			clock-names = "pclk";
+			clock-frequency = <100000>;
+			i2c_mode = "dma";
+			dmas = <&dmac0 20>, <&dmac0 21>;
+			dma-names = "tx", "rx";
+			#dma-cells = <1>;
+			ss_hcnt = /bits/ 16 <0x104>;
+			ss_lcnt = /bits/ 16 <0xec>;
+			fs_hcnt = /bits/ 16 <0x37>;
+			fs_lcnt = /bits/ 16 <0x42>;
+			fp_hcnt = /bits/ 16 <0x14>;
+			fp_lcnt = /bits/ 16 <0x1a>;
+			hs_hcnt = /bits/ 16 <0x9>;
+			hs_lcnt = /bits/ 16 <0x11>;
+			status = "disabled";
 			#address-cells = <1>;
 			#size-cells = <0>;
-			status = "disabled";
 		};
 
 		audio_mbox: audio_mbox@0xffefc48000 {
@@ -805,6 +1157,9 @@
 			reg = <0xff 0xe7f34000 0x0 0x1000>;
 			#address-cells = <1>;
 			#size-cells = <0>;
+			clocks = <&clk CLKGEN_GPIO2_PCLK>,
+					<&clk CLKGEN_GPIO2_DBCLK>;
+			clock-names = "bus", "db";
 
 			gpio2: gpio-controller@0 {
 				compatible = "snps,dw-apb-gpio-port";
@@ -824,6 +1179,9 @@
 			reg = <0xff 0xe7f38000 0x0 0x1000>;
 			#address-cells = <1>;
 			#size-cells = <0>;
+			clocks = <&clk CLKGEN_GPIO3_PCLK>,
+					<&clk CLKGEN_GPIO3_DBCLK>;
+			clock-names = "bus", "db";
 
 			gpio3: gpio-controller@0 {
 				compatible = "snps,dw-apb-gpio-port";
@@ -841,7 +1199,8 @@
 		padctrl1_apsys: pinctrl@ffe7f3c000 {
 			compatible = "thead,th1520-group2-pinctrl";
 			reg = <0xff 0xe7f3c000 0x0 0x1000>;
-			clocks = <&apb_clk>;
+			clocks = <&clk CLKGEN_PADCTRL1_APSYS_PCLK>;
+			clock-names = "pclk";
 		};
 
 		gmac0_apb: syscon@ffec003000 {
@@ -859,6 +1218,9 @@
 			reg = <0xff 0xec005000 0x0 0x1000>;
 			#address-cells = <1>;
 			#size-cells = <0>;
+			clocks = <&clk CLKGEN_GPIO0_PCLK>,
+					<&clk CLKGEN_GPIO0_DBCLK>;
+			clock-names = "bus", "db";
 
 			gpio0: gpio-controller@0 {
 				compatible = "snps,dw-apb-gpio-port";
@@ -878,6 +1240,9 @@
 			reg = <0xff 0xec006000 0x0 0x1000>;
 			#address-cells = <1>;
 			#size-cells = <0>;
+			clocks = <&clk CLKGEN_GPIO1_PCLK>,
+					<&clk CLKGEN_GPIO1_DBCLK>;
+			clock-names = "bus", "db";
 
 			gpio1: gpio-controller@0 {
 				compatible = "snps,dw-apb-gpio-port";
@@ -895,7 +1260,8 @@
 		padctrl0_apsys: pinctrl@ffec007000 {
 			compatible = "thead,th1520-group3-pinctrl";
 			reg = <0xff 0xec007000 0x0 0x1000>;
-			clocks = <&apb_clk>;
+			clocks = <&clk CLKGEN_PADCTRL0_APSYS_PCLK>;
+			clock-names = "pclk";
 		};
 
 		pwm: pwm@ffec01c000 {
@@ -929,6 +1295,7 @@
 				reg = <0xff 0xe7040000 0x0 0x10000>;
 				interrupts = <68 IRQ_TYPE_LEVEL_HIGH>;
 				dr_mode = "host";
+				snps,dis_u2_susphy_quirk;
 				snps,usb3_lpm_capable;
 				status = "disabled";
 			};
@@ -989,8 +1356,9 @@
 			compatible = "xuantie,th1520-dwcmshc";
 			reg = <0xff 0xe7080000 0x0 0x10000>;
 			interrupts = <62 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&sdhci_clk>;
-			clock-names = "core";
+			clocks = <&clk CLKGEN_EMMC_SDIO_REF_CLK>,
+					 <&miscsys_clk_gate CLKGEN_MISCSYS_EMMC_CLK>;
+			clock-names = "core", "bus";
 			status = "disabled";
 		};
 
@@ -998,8 +1366,9 @@
 			compatible = "xuantie,th1520-dwcmshc";
 			reg = <0xff 0xe7090000 0x0 0x10000>;
 			interrupts = <64 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&sdhci_clk>;
-			clock-names = "core";
+			clocks = <&clk CLKGEN_EMMC_SDIO_REF_CLK>,
+					 <&miscsys_clk_gate CLKGEN_MISCSYS_EMMC_CLK>;
+			clock-names = "core", "bus";
 			status = "disabled";
 		};
 
@@ -1007,8 +1376,9 @@
 			compatible = "xuantie,th1520-dwcmshc";
 			reg = <0xff 0xe70a0000 0x0 0x10000>;
 			interrupts = <71 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&sdhci_clk>;
-			clock-names = "core";
+			clocks = <&clk CLKGEN_EMMC_SDIO_REF_CLK>,
+					 <&miscsys_clk_gate CLKGEN_MISCSYS_EMMC_CLK>;
+			clock-names = "core", "bus";
 			status = "disabled";
 		};
 
@@ -1160,6 +1530,16 @@
 			};
 		};
 
+		bmu: ddr-pmu@ffff008000 {
+			compatible = "xuantie,th1520-ddr-pmu";
+			reg = <0xff 0xff008000 0x0 0x800
+				0xff 0xff008800 0x0 0x800
+				0xff 0xff009000 0x0 0x800
+				0xff 0xff009800 0x0 0x800
+				0xff 0xff00a000 0x0 0x800>;
+				interrupts = <87 IRQ_TYPE_LEVEL_HIGH>;
+		};
+
 		mbox_910t: mbox@ffffc38000 {
 			compatible = "xuantie,th1520-mbox";
 			reg = <0xff 0xffc38000 0x0 0x4000>,
@@ -1175,6 +1555,23 @@
 			clocks = <&apb_clk>;
 			clock-names = "ipg";
 			icu_cpu_id = <0>;
+			#mbox-cells = <2>;
+		};
+
+		mbox_910r: mbox@ffefc53000 {
+			compatible = "xuantie,th1520-mbox-r";
+			reg = <0xff 0xefc53000 0x0 0x4000>,
+			      <0xff 0xefc3f000 0x0 0x1000>,
+			      <0xff 0xefc47000 0x0 0x1000>,
+			      <0xff 0xefc4f000 0x0 0x1000>;
+			reg-names = "local_base",
+				    "remote_icu0",
+				    "remote_icu1",
+				    "remote_icu2";
+			interrupt-controller;
+			clocks = <&apb_clk>;
+			clock-names = "ipg";
+			icu_cpu_id = <3>;
 			#mbox-cells = <2>;
 		};
 
@@ -1357,7 +1754,7 @@
 			reg = <0xff 0xec02c000 0x0 0x1000>;
 			status = "okay";
 		};
-
+ 
 		tee_miscsys_reg: tee_miscsys-reg@fffc02d000 {
 			compatible = "xuantie,th1520-miscsys-reg", "syscon";
 			reg = <0xff 0xfc02d000 0x0 0x1000>;
@@ -1505,6 +1902,400 @@
 			status = "okay";
 		};
 
+		regdump: th1520-regdump {
+			compatible = "xuantie,th1520-regdump";
+			status = "disabled";
+		};
+
+		vdec_opp_table: opp_table_vdec {
+			compatible = "operating-points-v2";
+			video-4k-minfreq = <594000000>;
+			qos-mid-minfreq = <297000000>;
+
+			opp00 {
+				opp-hz = /bits/ 64 <158400000>;
+				opp-microvolt = <875000>;
+			};
+			opp01 {
+				opp-hz = /bits/ 64 <198000000>;
+				opp-microvolt = <875000>;
+			};
+			opp02 {
+				opp-hz = /bits/ 64 <237600000>;
+				opp-microvolt = <875000>;
+			};
+			opp03 {
+				opp-hz = /bits/ 64 <264000000>;
+				opp-microvolt = <887500>;
+			};
+			opp04 {
+				opp-hz = /bits/ 64 <297000000>;
+				opp-microvolt = <937500>;
+			};
+			opp05 {
+				opp-hz = /bits/ 64 <396000000>;
+				opp-microvolt = <1012500>;
+			};
+			opp06 {
+				opp-hz = /bits/ 64 <475200000>;
+				opp-microvolt = <1037500>;
+			};
+			opp07 {
+				opp-hz = /bits/ 64 <594000000>;
+				opp-microvolt = <1050000>;
+			};
+		};
+
+		venc_opp_table: opp_table_venc {
+			compatible = "operating-points-v2";
+			qos-mid-minfreq = <250000000>;
+
+			opp00 {
+				opp-hz = /bits/ 64 <200000000>;
+			};
+			opp01 {
+				opp-hz = /bits/ 64 <250000000>;
+			};
+			opp02 {
+				opp-hz = /bits/ 64 <333300000>;
+			};
+			opp03 {
+				opp-hz = /bits/ 64 <500000000>;
+			};
+		};
+
+		vdec: vdec@ffecc00000 {
+			compatible = "xuantie,th1520-vc8000d";
+			reg = <0xff 0xecc00000 0x0 0x8000>;
+			interrupts = <131 IRQ_TYPE_LEVEL_HIGH>;
+			power-domains = <&pd TH1520_AON_VDEC_PD>;
+			clocks = <&vpsys_clk_gate TH1520_VPSYS_VDEC_ACLK>,
+				<&vpsys_clk_gate TH1520_VPSYS_VDEC_CCLK>,
+				<&vpsys_clk_gate TH1520_VPSYS_VDEC_PCLK>;
+			clock-names = "aclk", "cclk", "pclk";
+			operating-points-v2 = <&vdec_opp_table>;
+			status = "okay";
+		};
+
+		venc: venc@ffecc10000 {
+			compatible = "xuantie,th1520-vc8000e";
+			reg = <0xff 0xecc10000 0x0 0x8000>;
+			interrupts = <133 IRQ_TYPE_LEVEL_HIGH>;
+			power-domains = <&pd TH1520_AON_VENC_PD>;
+			clocks = <&vpsys_clk_gate TH1520_VPSYS_VENC_ACLK>,
+				<&vpsys_clk_gate TH1520_VPSYS_VENC_CCLK>,
+				<&vpsys_clk_gate TH1520_VPSYS_VENC_PCLK>;
+			clock-names = "aclk", "cclk", "pclk";
+			operating-points-v2 =<&venc_opp_table>;
+			status = "okay";
+		};
+
+		g2d_opp_table:g2d-opp-table {
+			compatible = "operating-points-v2";
+			video-4k-minfreq = <396000000>;
+			qos-mid-minfreq = <198000000>;
+
+			opp-49500000 {
+      			opp-hz = /bits/ 64 <49500000>;
+    		};
+			opp-99000000 {
+      			opp-hz = /bits/ 64 <99000000>;
+    		};
+			opp-198000000 {
+      			opp-hz = /bits/ 64 <198000000>;
+    		};
+			opp-396000000 {
+      			opp-hz = /bits/ 64 <396000000>;
+    		};
+		};
+
+		g2d: gc620@ffecc80000 {
+			compatible = "vivante,gc";
+			reg = <0xff 0xecc80000 0x0 0x40000>;
+			interrupt-parent = <&plic>;
+			interrupts = <101 IRQ_TYPE_LEVEL_HIGH>;
+
+			clocks = <&vpsys_clk_gate TH1520_VPSYS_G2D_PCLK>,
+				 <&vpsys_clk_gate TH1520_VPSYS_G2D_ACLK>,
+				 <&vpsys_clk_gate TH1520_VPSYS_G2D_CCLK>;
+			clock-names = "bus", "core", "shader";
+			operating-points-v2 = <&g2d_opp_table>;
+			status = "okay";
+		};
+
+		vidmem: vidmem@ffecc08000 {
+			compatible = "xuantie,th1520-vidmem";
+			reg = <0xff 0xecc08000 0x0 0x1000>;
+			status = "okay";
+		};
+
+		bm_visys: bm_visys@ffe4040000 {
+			compatible = "xuantie,th1520-bm-visys";
+			reg = <0xff 0xe4040000 0x0 0x1000>;
+			status = "disabled";
+		};
+
+		bm_csi0: csi@ffe4000000{ //CSI2
+			compatible = "xuantie,th1520-bm-csi";
+			reg = < 0xff 0xe4000000 0x0 0x10000>;
+			interrupt-parent = <&plic>;
+			interrupts = <128 IRQ_TYPE_LEVEL_HIGH>;
+			dphyglueiftester = <0x180>;
+			sysreg_mipi_csi_ctrl = <0x140>;
+			clocks = <&visys_clk_gate TH1520_CLKGEN_MIPI_CSI0_PCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI0_PIXCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI0_CFG_CLK>;
+			clock-names = "pclk", "pixclk", "cfg_clk";
+			phy_name = "CSI_4LANE";
+			status = "disabled";
+		};
+
+		csia_reg: visys-reg@ffe4020000 {
+			compatible = "xuantie,th1520-visys-reg", "syscon";
+			reg = < 0xff 0xe4020000 0x0 0x10000>;
+			status = "okay";
+		};
+
+		csib_reg: visys-reg@ffe4010000{
+			compatible = "xuantie,th1520-visys-reg", "syscon";
+			reg = < 0xff 0xe4010000 0x0 0x10000>;
+			status = "okay";
+		};
+
+		bm_csi1: csi@ffe4010000{ //CSI2X2_B
+			compatible = "xuantie,th1520-bm-csi";
+			reg = < 0xff 0xe4010000 0x0 0x10000>;
+			interrupt-parent = <&plic>;
+			interrupts = <126 IRQ_TYPE_LEVEL_HIGH>; // 110 + 16 int_mipi_csi2x2_int0
+			dphyglueiftester = <0x182>; // for FPGA PHY only. ASIC not needed.
+			sysreg_mipi_csi_ctrl = <0x148>;
+			visys-regmap = <&visys_reg>;
+			csia-regmap = <&csia_reg>;
+			clocks = <&visys_clk_gate TH1520_CLKGEN_MIPI_CSI1_PCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI1_PIXCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI1_CFG_CLK>;
+			clock-names = "pclk", "pixclk", "cfg_clk";
+			phy_name = "CSI_B";
+			status = "disabled";
+		};
+
+		bm_csi2: csi@ffe4020000{ //CSI2X2_A
+			compatible = "xuantie,th1520-bm-csi";
+			reg = < 0xff 0xe4020000 0x0 0x10000>;
+			interrupt-parent = <&plic>;
+			interrupts = <127 IRQ_TYPE_LEVEL_HIGH>;
+			dphyglueiftester = <0x184>;
+			sysreg_mipi_csi_ctrl = <0x144>;
+			sysreg_mipi_csi_fifo_ctrl = <0x14c>;
+			csib-regmap = <&csib_reg>;
+			clocks = <&visys_clk_gate TH1520_CLKGEN_MIPI_CSI2_PCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI2_PIXCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI2_CFG_CLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI1_PCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI1_PIXCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_MIPI_CSI1_CFG_CLK>;
+			clock-names = "pclk", "pixclk", "cfg_clk", "pclk1", "pixclk1", "cfg_clk1";
+			phy_name = "CSI_A";
+			status = "disabled";
+		};
+
+		isp0: isp@ffe4100000 {
+			compatible = "xuantie,th1520-isp";
+			reg = <0xff 0xe4100000 0x0 0x10000>;
+			interrupt-parent = <&plic>;
+			interrupts = <117 IRQ_TYPE_LEVEL_HIGH>,<118 IRQ_TYPE_LEVEL_HIGH>;
+			clocks =  <&visys_clk_gate TH1520_CLKGEN_ISP0_ACLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP0_HCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP0_PIXELCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP0_CLK>;
+			clock-names = "aclk", "hclk", "isp0_pclk", "cclk";
+			status = "disabled";
+		};
+
+		isp1: isp@ffe4110000 {
+			compatible = "xuantie,th1520-isp";
+			reg = <0xff 0xe4110000 0x0 0x10000>;
+			interrupt-parent = <&plic>;
+			interrupts = <120 IRQ_TYPE_LEVEL_HIGH>,<121 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&visys_clk_gate TH1520_CLKGEN_ISP0_ACLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP0_HCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP0_PIXELCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP1_CLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP1_PIXELCLK>;
+			clock-names = "aclk", "hclk", "isp0_pclk", "cclk", "isp1_pclk";
+			status = "disabled";
+		};
+
+		isp_ry0: isp_ry@ffe4120000 {
+			compatible = "xuantie,th1520-isp_ry";
+			reg = <0xff 0xe4120000 0x0 0x10000>;
+			interrupt-parent = <&plic>;
+			interrupts = <123 IRQ_TYPE_LEVEL_HIGH>,<124 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&visys_clk_gate TH1520_CLKGEN_ISP_RY_ACLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP_RY_HCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_ISP_RY_CCLK>;
+			clock-names = "aclk", "hclk", "cclk";
+			status = "disabled";
+		};
+
+		dewarp: dewarp@ffe4130000 {
+			compatible = "xuantie,th1520-dewarp";
+			reg = <0xff 0xe4130000 0x0 0x10000>;
+			interrupt-parent = <&plic>;
+			interrupts = <98 IRQ_TYPE_LEVEL_HIGH>,<99 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&visys_clk_gate TH1520_CLKGEN_DW200_ACLK>,
+					<&visys_clk_gate TH1520_CLKGEN_DW200_HCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_DW200_CLK_VSE>,
+					<&visys_clk_gate TH1520_CLKGEN_DW200_CLK_DWE>;
+			clock-names = "aclk", "hclk", "vseclk", "dweclk";
+			status = "disabled";
+		};
+
+		dec400_isp0: dec400@ffe4060000 {
+			compatible = "xuantie,th1520-dec400";
+			reg = <0xff 0xe4060000 0x0 0x8000>;
+			status = "disabled";
+		};
+
+		dec400_isp1: dec400@ffe4068000 {
+			compatible = "xuantie,th1520-dec400";
+			reg = <0xff 0xe4068000 0x0 0x8000>;
+			status = "disabled";
+		};
+
+		dec400_isp2: dec400@ffe4070000 {
+			compatible = "xuantie,th1520-dec400";
+			reg = <0xff 0xe4070000 0x0 0x8000>;
+			status = "disabled";
+		};
+
+
+		vi_pre: vi_pre@ffe4030000 {
+			compatible = "xuantie,th1520-vi_pre";
+			reg = <0xff 0xe4030000 0x0 0x1000>;
+			interrupt-parent = <&plic>;
+			interrupts = <134 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&visys_clk_gate TH1520_CLKGEN_VIPRE_ACLK>,
+					<&visys_clk_gate TH1520_CLKGEN_VIPRE_PCLK>,
+					<&visys_clk_gate TH1520_CLKGEN_VIPRE_PIXELCLK>;
+			clock-names ="aclk", "pclk", "pixclk";
+			status = "disabled";
+		};
+
+		xtensa_dsp: dsp@01{
+			compatible = "xuantie,dsp-hw-common";
+			reg = <0xff 0xef040000 0x0 0x001000 >;   /*DSP_SYSREG(0x0000-0xFFF) */
+			status = "disabled";
+		};
+
+		xtensa_dsp0: dsp@0 {
+			compatible = "cdns,xrp-hw-simple";
+			reg = <0xff 0xe4040190 0x0 0x000010   /* host irq DSP->CPU INT Register  */
+					0xff 0xe40401e0 0x0 0x000010   /* device irq CPU->DSP INT Register  */
+					0xff 0xef048000 0x0 0x008000  /* DSP shared memory */
+					0xff 0xe0180000 0x0 0x040000>; /* DSP TCM*/
+			dsp = <0>;
+			dspsys-rst-bit = <8>;           /*bit# in DSP_SYSREG*/
+			dspsys-bus-offset = <0x90>;   /*in DSP_SYSREG*/
+			device-irq = <0x4 1 24>; /*0xff 0xe40401e4 offset to clear DSP I]RQ, bit#, IRQ# */
+			device-irq-host-offset = <0x8>;  /*0xff 0xe40401e8 offset to trigger DSP IRQ*/
+			device-irq-mode = <1>; /*level trigger*/
+			host-irq = <0x4 1>; /*0xff 0xe4040194 offset to clear, bit# */
+			host-irq-mode = <1>;   /*level trigger */
+			host-irq-offset = <0x8>;  /* 0xff 0xe4040198 offset to trigger ,device side*/
+			interrupt-parent = <&plic>;
+			interrupts = <156 IRQ_TYPE_LEVEL_HIGH>;
+			#cooling-cells = <2>;
+			firmware-name = "xrp0.elf";
+			clocks = <&dspsys_clk_gate CLKGEN_DSP0_PCLK>,
+			<&dspsys_clk_gate CLKGEN_DSP0_CCLK>;
+			clock-names = "pclk", "cclk";
+			status = "disabled";
+			operating-points-v2 = <&dsp_opp_table>;
+			dynamic-power-coefficient = <1000>;
+			#address-cells = <2>;
+			#size-cells = <1>;
+			ranges = <0x00 0x00000000 0x00 0x00000000 0xe0180000
+					0x00 0xe01c0000 0x00 0xe01c0000 0x19E40000
+					0x00 0xfa000000 0xff 0xe0000000 0x00180000
+					0x00 0xe0180000 0xff 0xe0180000 0x00040000
+					0x00 0xffc00000 0xff 0xe4000000 0x00200000 >;  /* VISYS_R */
+			dsp@0 {
+				ranges = <0x00 0x00000000 0x00 0x00000000 0xe0180000
+						0x00 0xe01c0000 0x00 0xe01c0000 0x19E40000
+						0x00 0xfa000000 0xff 0xe0000000 0x00180000
+						0x00 0xe0180000 0xff 0xe0180000 0x00040000
+						0x00 0xffc00000 0xff 0xe4000000 0x00200000 >;  /* VISYS_R */
+			};
+		};
+
+		xtensa_dsp1: dsp@1 {
+			compatible = "cdns,xrp-hw-simple";
+			reg = <0xff 0xe40401a0 0x0 0x000010   /* host irq DSP->CPU INT Register  */
+				0xff 0xe40401d0 0x0 0x000010   /* device irq CPU->DSP INT Register  */
+				0xff 0xef050000 0x0 0x008000  /* DSP shared memory */
+				0xff 0xe01C0000 0x0 0x040000>;/* DSP TCM*/
+			dsp = <1>;
+			dspsys-rst-bit = <8>;           /*bit# in DSP_SYSREG*/
+			dspsys-bus-offset = <0x90>;   /*in DSP_SYSREG*/
+			device-irq = <0x4 1 24>; /*0xff 0xe40401e4 offset to clear DSP I]RQ, bit#, IRQ# */
+			device-irq-host-offset = <0x8>;  /*0xff 0xe40401e8 offset to trigger DSP IRQ*/
+			device-irq-mode = <1>; /*level trigger*/
+			host-irq = <0x4 1>; /*0xff 0xe4040194 offset to clear, bit# */
+			host-irq-mode = <1>;   /*level trigger */
+			host-irq-offset = <0x8>;  /* 0xff 0xe4040198 offset to trigger ,device side*/
+			interrupt-parent = <&plic>;
+			interrupts = <157 IRQ_TYPE_LEVEL_HIGH>;
+			firmware-name = "xrp1.elf";
+			#cooling-cells = <2>;
+			clocks = <&dspsys_clk_gate CLKGEN_DSP1_PCLK>,
+			<&dspsys_clk_gate CLKGEN_DSP1_CCLK>;
+			clock-names = "pclk", "cclk";
+			status = "disabled";
+			operating-points-v2 = <&dsp_opp_table>;
+			dynamic-power-coefficient = <1000>;
+			#address-cells = <2>;
+			#size-cells = <1>;
+			ranges = <0x00 0x00000000 0x00 0x00000000 0xe0180000
+					0x00 0xe01c0000 0x00 0xe01c0000 0x19E40000
+					0x00 0xfa000000 0xff 0xe0000000 0x00180000
+					0x00 0xe0180000 0xff 0xe01C0000 0x00040000
+					0x00 0xffc00000 0xff 0xe4000000 0x00200000 >;  /* VISYS_R */
+			dsp@0 {
+				ranges = <0x00 0x00000000 0x00 0x00000000 0xe0180000
+						0x00 0xe01c0000 0x00 0xe01c0000 0x19E40000
+						0x00 0xfa000000 0xff 0xe0000000 0x00180000
+						0x00 0xe0180000 0xff 0xe01C0000 0x00040000
+						0x00 0xffc00000 0xff 0xe4000000 0x00200000 >;  /* VISYS_R */
+			};
+		};
+
+
+		dsp_opp_table: dsp_opp_table {
+			compatible = "operating-points-v2";
+			qos-mid-minfreq = <500000000>;
+
+			opp-125000000 {
+				opp-hz = /bits/ 64 <125000000>;
+				opp-microvolt = <800000>;
+			};
+
+			opp-250000000 {
+				opp-hz = /bits/ 64 <250000000>;
+				opp-microvolt = <800000>;
+			};
+
+			opp-500000000 {
+				opp-hz = /bits/ 64 <500000000>;
+				opp-microvolt = <800000>;
+			};
+			opp-1000000000 {
+				opp-hz = /bits/ 64 <1000000000>;
+				opp-microvolt = <800000>;
+				opp-suspend;
+			};
+		};
+
 		npu: vha@fffc800000 {
 			compatible = "img,ax3386-nna";
 			reg = <0xff 0xfc800000 0x0 0x100000>;
@@ -1531,6 +2322,7 @@
 
 		npu_opp_table: opp-table {
 			compatible = "operating-points-v2";
+			qos-mid-minfreq = <594000000>;
 
 			opp-1000000000 {
 				opp-hz = /bits/ 64 <1000000000>;
@@ -1552,6 +2344,34 @@
 				opp-hz = /bits/ 64 <396000000>;
 				opp-microvolt = <800000>;
 			};
+		};
+
+		iso7816: iso7816-card@fff7f30000 {
+			compatible = "xuantie,th1520-iso7816-card";
+			reg = <0xff 0xf7f30000 0x0 0x4000>;
+			interrupts = <69 IRQ_TYPE_LEVEL_HIGH>;
+			status = "disabled";
+		};
+
+		eip_28: eip-28@ffff300000 {
+			compatible = "xlnx,sunrise-fpga-1.0", "safexcel-eip-28";
+			reg = <0xff 0xff300000 0x0 0x40000>;
+			interrupts = <144 IRQ_TYPE_LEVEL_HIGH>,
+						<145 IRQ_TYPE_LEVEL_HIGH>,
+						<146 IRQ_TYPE_LEVEL_HIGH>,
+						<147 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&miscsys_clk_gate CLKGEN_MISCSYS_EIP120SI_CLK>,
+					<&miscsys_clk_gate CLKGEN_MISCSYS_EIP120SII_CLK>,
+					<&miscsys_clk_gate CLKGEN_MISCSYS_EIP120SIII_CLK>,
+					<&miscsys_clk_gate CLKGEN_MISCSYS_EIP150B_HCLK>;
+			clock-names = "120si_clk","120sii_clk","120siii_clk","hclk";
+			status = "disabled";
+		};
+
+		hwspinlock: hwspinlock@ffefc10000 {
+			compatible = "th1520,hwspinlock";
+			reg = <0xff 0xefc10000 0x0 0x10000>;
+			status = "disabled";
 		};
 	};
 };

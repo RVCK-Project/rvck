@@ -14,21 +14,6 @@
 	model = "BeagleV Ahead";
 	compatible = "beagle,beaglev-ahead", "thead,th1520";
 
-	aliases {
-		ethernet0 = &gmac0;
-		gpio0 = &gpio0;
-		gpio1 = &gpio1;
-		gpio2 = &gpio2;
-		gpio3 = &gpio3;
-		gpio4 = &gpio4;
-		gpio5 = &aogpio;
-		serial0 = &uart0;
-		serial1 = &uart1;
-		serial2 = &uart2;
-		serial3 = &uart3;
-		serial4 = &uart4;
-		serial5 = &uart5;
-	};
 
 	chosen {
 		stdout-path = "serial0:115200n8";
@@ -36,7 +21,7 @@
 
 	memory@0 {
 		device_type = "memory";
-		reg = <0x0  0x00000000  0x1 0x00000000>;
+		reg = <0x0 0x200000 0x0 0xffe00000>;
 	};
 
 	leds {
@@ -260,6 +245,8 @@
 	pinctrl-0 = <&sdio0_pins>;
 	bus-width = <4>;
 	max-frequency = <198000000>;
+	wprtn_ignore;
+	no-sdio;
 	status = "okay";
 };
 
