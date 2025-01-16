@@ -141,6 +141,13 @@ properties:
             to enable privilege mode filtering for cycle and instret counters as
             ratified in the 20240326 version of the privileged ISA specification.
 
+        - const: smctr
+          description: |
+            The standard Smctr supervisor-level extension for the machine mode
+            to enable recording limited branch history in a register-accessible
+            internal core storage. Smctr depend on both the implementation of
+            S-mode and the Sscsrind extension.
+
         - const: smcsrind
           description: |
             The standard Smcsrind machine-level extension extends the
@@ -196,6 +203,13 @@ properties:
             extension allows other ISA extensions to use indirect CSR access
             mechanism in S-mode as ratified in the 20240326 version of the
             privileged ISA specification.
+
+        - const: ssctr
+          description: |
+            The standard Ssctr supervisor-level extension enables recording of
+            limited branch history in a register-accessible internal core
+            storage. Ssctr depend on both the implementation of S-mode and the
+            Sscsrind extension.
 
         - const: ssnpm
           description: |
