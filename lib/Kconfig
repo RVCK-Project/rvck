@@ -267,10 +267,6 @@ config CRC32_SLICEBY4
 	bool
 	default y if CRC32_IMPL_SLICEBY4
 
-config CRC32_SARWATE
-	bool
-	default y if CRC32_IMPL_SLICEBY1 || CRC32_IMPL_ARCH_PLUS_SLICEBY1
-
 config CRC32_BIT
 	bool
 	default y if CRC32_IMPL_BIT
