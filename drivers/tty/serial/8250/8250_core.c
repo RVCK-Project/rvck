@@ -833,13 +833,11 @@ static int serial8250_platform_probe(struct platform_device *pdev)
 	struct device *dev = &pdev->dev;
 	struct uart_8250_port uart = { 0 };
 	struct resource *regs;
-	unsigned char iotype;
 	int ret, line;
 
 	regs = platform_get_resource(pdev, IORESOURCE_IO, 0);
 	if (regs) {
 		uart.port.iobase = regs->start;
-		iotype = UPIO_PORT;
 	} else {
 		regs = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 		if (!regs) {
@@ -850,7 +848,6 @@ static int serial8250_platform_probe(struct platform_device *pdev)
 		uart.port.mapbase = regs->start;
 		uart.port.mapsize = resource_size(regs);
 		uart.port.flags = UPF_IOREMAP;
-		iotype = UPIO_MEM;
 	}
 
 	/* Default clock frequency*/
@@ -870,12 +867,6 @@ static int serial8250_platform_probe(struct platform_device *pdev)
 		if (!uart.port.membase)
 			return -ENOMEM;
 	}
-
-	/*
-	 * The previous call may not set iotype correctly when reg-io-width
-	 * property is absent and it doesn't support IO port resource.
-	 */
-	uart.port.iotype = iotype;
 
 	line = serial8250_register_8250_port(&uart);
 	if (line < 0)
