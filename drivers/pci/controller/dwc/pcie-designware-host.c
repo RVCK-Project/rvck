@@ -684,6 +684,48 @@ static struct pci_ops dw_pcie_ops = {
 #endif
 };
 
+/**
+ * dw_pcie_prog_outbound_atu_dp1000 - Program multiple outbound ATU windows of DP1000
+ * @pci: PCIe controller instance
+ * @entry: resource entry to program
+ * @index: pointer to the current ATU index, updated on success
+ *
+ * This function programs multiple outbound ATU windows for a given resource
+ * entry, splitting it into smaller windows if necessary.
+ *
+ * Returns 0 on success, or a negative error code on failure.
+ */
+static int dw_pcie_prog_outbound_atu_dp1000(struct dw_pcie *pci,
+					    struct resource_entry *entry,
+					    int *index)
+{
+	resource_size_t res_start, res_size, window_size;
+	int i, ret;
+
+	res_start = entry->res->start;
+	res_size = resource_size(entry->res);
+
+	i = *index;
+	while (res_size > 0) {
+		window_size = res_size > (pci->region_limit + 1) ?
+				(pci->region_limit + 1) : res_size;
+
+		ret = dw_pcie_prog_outbound_atu(pci, ++i, PCIE_ATU_TYPE_MEM,
+						res_start,
+						res_start - entry->offset,
+						window_size);
+		if (ret)
+			return ret;
+
+		res_start += window_size;
+		res_size -= window_size;
+	}
+
+	*index = i;
+
+	return 0;
+}
+
 static int dw_pcie_iatu_setup(struct dw_pcie_rp *pp)
 {
 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
@@ -714,10 +756,14 @@ static int dw_pcie_iatu_setup(struct dw_pcie_rp *pp)
 		if (pci->num_ob_windows <= ++i)
 			break;
 
+#if IS_ENABLED(CONFIG_PCIE_ULTRARISC)
+		ret = dw_pcie_prog_outbound_atu_dp1000(pci, entry, &i);
+#else
 		ret = dw_pcie_prog_outbound_atu(pci, i, PCIE_ATU_TYPE_MEM,
 						entry->res->start,
 						entry->res->start - entry->offset,
 						resource_size(entry->res));
+#endif
 		if (ret) {
 			dev_err(pci->dev, "Failed to set MEM range %pr\n",
 				entry->res);
