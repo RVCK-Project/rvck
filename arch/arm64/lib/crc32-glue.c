@@ -10,7 +10,7 @@ asmlinkage u32 crc32_le_arm64(u32 crc, unsigned char const *p, size_t len);
 asmlinkage u32 crc32c_le_arm64(u32 crc, unsigned char const *p, size_t len);
 asmlinkage u32 crc32_be_arm64(u32 crc, unsigned char const *p, size_t len);
 
-u32 __pure crc32_le_arch(u32 crc, const u8 *p, size_t len)
+u32 crc32_le_arch(u32 crc, const u8 *p, size_t len)
 {
 	if (!alternative_has_cap_likely(ARM64_HAS_CRC32))
 		return crc32_le_base(crc, p, len);
@@ -19,7 +19,7 @@ u32 __pure crc32_le_arch(u32 crc, const u8 *p, size_t len)
 }
 EXPORT_SYMBOL(crc32_le_arch);
 
-u32 __pure crc32c_le_arch(u32 crc, const u8 *p, size_t len)
+u32 crc32c_le_arch(u32 crc, const u8 *p, size_t len)
 {
 	if (!alternative_has_cap_likely(ARM64_HAS_CRC32))
 		return crc32c_le_base(crc, p, len);
@@ -28,7 +28,7 @@ u32 __pure crc32c_le_arch(u32 crc, const u8 *p, size_t len)
 }
 EXPORT_SYMBOL(crc32c_le_arch);
 
-u32 __pure crc32_be_arch(u32 crc, const u8 *p, size_t len)
+u32 crc32_be_arch(u32 crc, const u8 *p, size_t len)
 {
 	if (!alternative_has_cap_likely(ARM64_HAS_CRC32))
 		return crc32_be_base(crc, p, len);
