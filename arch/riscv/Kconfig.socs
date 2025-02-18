@@ -132,4 +132,41 @@ config SOC_CANAAN_K210_DTB_SOURCE
 
 endif # ARCH_CANAAN
 
+config SOC_SPACEMIT
+	bool "Spacemit SoCs"
+	select SIFIVE_PLIC
+	help
+	  This enables support for Spacemit SoCs platform hardware.
+
+if SOC_SPACEMIT
+
+choice
+	prompt "Spacemit SoCs platform"
+	default SOC_SPACEMIT_K1
+	help
+	  choice Spacemit Soc platform
+
+	config SOC_SPACEMIT_K1
+		bool "k1"
+		help
+		  select Spacemit k1 Platform SoCs.
+endchoice
+
+if SOC_SPACEMIT_K1
+
+choice
+	prompt "Spacemit K1 serial SoCs"
+	default SOC_SPACEMIT_K1X
+	help
+	  choice Spacemit K1 SoC platform
+
+	config SOC_SPACEMIT_K1X
+		bool "k1-x"
+		help
+		  This enables support for Spacemit k1-x Platform Hardware.
+endchoice
+
+endif
+endif
+
 endmenu # "SoC selection"
