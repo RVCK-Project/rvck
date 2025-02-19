@@ -315,12 +315,12 @@ static int unified_vmap_dmabuf(struct dma_buf *buf, struct iosys_map *map)
 	struct heap *heap;
 
 	if (!buffer)
-		return NULL;
+		return -ENOMEM;
 
 	heap = buffer->heap;
 
 	if (unified_map_km(heap, buffer))
-		return NULL;
+		return -ENOMEM;
 
 	pr_debug("%s:%d buffer %d kptr 0x%p\n", __func__, __LINE__,
 		buffer->id, buffer->kptr);
