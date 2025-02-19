@@ -383,6 +383,13 @@
 		};
 	};
 
+	aon: aon {
+		compatible = "thead,th1520-aon";
+		mboxes = <&mbox_910t 1 0>;
+		mbox-names = "aon";
+		#power-domain-cells = <1>;
+	};
+
 	aon_iram: aon-iram@ffffef8000 {
 		compatible = "syscon";
 		reg = <0xff 0xffef8000 0x0 0x10000>;
@@ -1851,7 +1858,7 @@
 			compatible = "xuantie,th1520-vc8000d";
 			reg = <0xff 0xecc00000 0x0 0x8000>;
 			interrupts = <131 IRQ_TYPE_LEVEL_HIGH>;
-			power-domains = <&pd TH1520_AON_VDEC_PD>;
+			power-domains = <&aon TH1520_AON_VDEC_PD>;
 			clocks = <&vpsys_clk_gate TH1520_VPSYS_VDEC_ACLK>,
 				<&vpsys_clk_gate TH1520_VPSYS_VDEC_CCLK>,
 				<&vpsys_clk_gate TH1520_VPSYS_VDEC_PCLK>;
@@ -1864,7 +1871,7 @@
 			compatible = "xuantie,th1520-vc8000e";
 			reg = <0xff 0xecc10000 0x0 0x8000>;
 			interrupts = <133 IRQ_TYPE_LEVEL_HIGH>;
-			power-domains = <&pd TH1520_AON_VENC_PD>;
+			power-domains = <&aon TH1520_AON_VENC_PD>;
 			clocks = <&vpsys_clk_gate TH1520_VPSYS_VENC_ACLK>,
 				<&vpsys_clk_gate TH1520_VPSYS_VENC_CCLK>,
 				<&vpsys_clk_gate TH1520_VPSYS_VENC_PCLK>;
@@ -2182,7 +2189,7 @@
 			interrupt-names = "npuirq";
 			#cooling-cells = <2>;
 			dynamic-power-coefficient = <1600>;
-			power-domains = <&pd TH1520_AON_NPU_PD>;
+			power-domains = <&aon TH1520_AON_NPU_PD>;
 			clocks = <&clk CLKGEN_TOP_APB_SX_PCLK>,
 				<&clk CLKGEN_TOP_AXI4S_ACLK>,
 				<&clk NPU_CCLK>,
