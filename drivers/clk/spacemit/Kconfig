@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0
+# common clock support for SPACEMIT SoC family.
+
+config SPACEMIT_K1X_CCU
+        tristate "Clock support for Spacemit k1x SoCs"
+        depends on SOC_SPACEMIT_K1X
+        help
+          Build the driver for Spacemit K1x Clock Driver.
+
