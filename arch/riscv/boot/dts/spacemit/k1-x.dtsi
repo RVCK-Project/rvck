@@ -10,6 +10,18 @@
 	#address-cells = <2>;
 	#size-cells = <2>;
 
+	aliases {
+		serial0 = &uart0;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		serial3 = &uart4;
+		serial4 = &uart5;
+		serial5 = &uart6;
+		serial6 = &uart7;
+		serial7 = &uart8;
+		serial8 = &uart9;
+	};
+
 	cpus: cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -495,6 +507,107 @@
 			range: gpio-range {
 				#pinctrl-single,gpio-range-cells = <3>;
 			};
+		};
+
+		uart0: serial@d4017000 {
+			compatible = "spacemit,k1x-uart";
+			reg = <0x0 0xd4017000 0x0 0x100>;
+			interrupt-parent = <&intc>;
+			interrupts = <42>;
+			clocks = <&ccu CLK_UART1>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART1>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			status = "disabled";
+		};
+
+		uart2: uart@d4017100 {
+			compatible = "spacemit,k1x-uart";
+			reg = <0x0 0xd4017100 0x0 0x100>;
+			interrupt-parent = <&intc>;
+			interrupts = <44>;
+			clocks = <&ccu CLK_UART2>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART2>;
+			status = "disabled";
+		};
+
+		uart3: uart@d4017200 {
+			compatible = "spacemit,k1x-uart";
+			reg = <0x0 0xd4017200 0x0 0x100>;
+			interrupt-parent = <&intc>;
+			interrupts = <45>;
+			clocks = <&ccu CLK_UART3>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART3>;
+			status = "disabled";
+		};
+
+		uart4: uart@d4017300 {
+			compatible = "spacemit,k1x-uart";
+			interrupt-parent = <&intc>;
+			reg = <0x0 0xd4017300 0x0 0x100>;
+			interrupts = <46>;
+			clocks = <&ccu CLK_UART4>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART4>;
+			status = "disabled";
+		};
+
+		uart5: uart@d4017400 {
+			compatible = "spacemit,k1x-uart";
+			interrupt-parent = <&intc>;
+			reg = <0x0 0xd4017400 0x0 0x100>;
+			interrupts = <47>;
+			clocks = <&ccu CLK_UART5>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART5>;
+			status = "disabled";
+		};
+
+		uart6: uart@d4017500 {
+			compatible = "spacemit,k1x-uart";
+			interrupt-parent = <&intc>;
+			reg = <0x0 0xd4017500 0x0 0x100>;
+			interrupts = <48>;
+			clocks = <&ccu CLK_UART6>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART6>;
+			status = "disabled";
+		};
+
+		uart7: uart@d4017600 {
+			compatible = "spacemit,k1x-uart";
+			interrupt-parent = <&intc>;
+			reg = <0x0 0xd4017600 0x0 0x100>;
+			interrupts = <49>;
+			clocks = <&ccu CLK_UART7>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART7>;
+			status = "disabled";
+		};
+
+		uart8: uart@d4017700 {
+			compatible = "spacemit,k1x-uart";
+			interrupt-parent = <&intc>;
+			reg = <0x0 0xd4017700 0x0 0x100>;
+			interrupts = <50>;
+			clocks = <&ccu CLK_UART8>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART8>;
+			status = "disabled";
+		};
+
+		uart9: uart@d4017800 {
+			compatible = "spacemit,k1x-uart";
+			interrupt-parent = <&intc>;
+			reg = <0x0 0xd4017800 0x0 0x100>;
+			interrupts = <51>;
+			clocks = <&ccu CLK_UART9>, <&ccu CLK_SLOW_UART>;
+			clock-names = "func", "gate";
+			resets = <&reset RESET_UART9>;
+			status = "disabled";
 		};
 
 		gpio: gpio@d4019000 {
