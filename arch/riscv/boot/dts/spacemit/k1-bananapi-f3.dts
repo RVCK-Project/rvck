@@ -20,7 +20,8 @@
 	};
 
 	chosen {
-		bootargs = "earlycon=sbi loglevel=8 rdinit=/init";
+		bootargs = "earlycon=sbi console=ttySP0,115200n8 loglevel=8 rdinit=/init";
+		stdout-path = "serial0:115200n8";
 	};
 };
 
@@ -72,4 +73,10 @@
 		&pinctrl 118 GPIO_118 1
 		&pinctrl 123 GPIO_123 5
 	>;
+};
+
+&uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_uart0_2>;
+	status = "okay";
 };
