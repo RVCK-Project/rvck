@@ -4,6 +4,7 @@
 /dts-v1/;
 
 #include "k1-x.dtsi"
+#include "k1-x_pinctrl.dtsi"
 
 / {
 	model = "Banana Pi BPI-F3";
