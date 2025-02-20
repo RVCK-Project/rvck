@@ -1,0 +1,2101 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Generic device tree based pinctrl driver for one register per pin
+ * type pinmux controllers
+ *
+ * Copyright (C) 2012 Texas Instruments, Inc.
+ * Copyright (C) 2023 Spacemit Co., Ltd.
+ *
+ * This file is licensed under the terms of the GNU General Public
+ * License version 2. This program is licensed "as is" without any
+ * warranty of any kind, whether express or implied.
+ */
+
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/io.h>
+#include <linux/platform_device.h>
+#include <linux/slab.h>
+#include <linux/err.h>
+#include <linux/list.h>
+#include <linux/interrupt.h>
+#include <linux/irqchip/chained_irq.h>
+#include <linux/of.h>
+#include <linux/of_irq.h>
+#include <linux/seq_file.h>
+
+#include <linux/pinctrl/pinconf-generic.h>
+#include <linux/pinctrl/pinconf.h>
+#include <linux/pinctrl/pinctrl.h>
+#include <linux/pinctrl/pinmux.h>
+
+#include <linux/platform_data/pinctrl-single.h>
+#include <linux/pm_wakeirq.h>
+#include <linux/reset.h>
+#include <linux/clk.h>
+#include <linux/syscore_ops.h>
+
+#include "core.h"
+#include "devicetree.h"
+#include "pinconf.h"
+#include "pinmux.h"
+
+#define DRIVER_NAME		"pinctrl-single"
+#define PCS_OFF_DISABLED	~0U
+
+#define EDGE_CLEAR		6
+#define EDGE_FALL_EN		5
+#define EDGE_RISE_EN		4
+
+#define PCS_CONTEXT_LOSS_OFF	BIT(3)
+#define PCS_QUIRK_SHARED_IRQ	BIT(2)
+#define PCS_FEAT_IRQ		BIT(1)
+#define PCS_FEAT_PINCONF	BIT(0)
+
+#define PCS_QUIRK_HAS_SHARED_IRQ(_pcs)	(_pcs->flags & PCS_QUIRK_SHARED_IRQ)
+#define PCS_HAS_IRQ(_pcs)		(_pcs->flags & PCS_FEAT_IRQ)
+#define PCS_HAS_PINCONF(_pcs)		(_pcs->flags & PCS_FEAT_PINCONF)
+
+/**
+ * struct pcs_func_vals - mux function register offset and value pair
+ * @reg:	register virtual address
+ * @val:	register value
+ * @mask:	mask
+ */
+struct pcs_func_vals {
+	void __iomem *reg;
+	unsigned int val;
+	unsigned int mask;
+};
+
+/**
+ * struct pcs_conf_vals - pinconf parameter, pinconf register offset
+ * and value, enable, disable, mask
+ * @param:	config parameter
+ * @val:	user input bits in the pinconf register
+ * @enable:	enable bits in the pinconf register
+ * @disable:	disable bits in the pinconf register
+ * @mask:	mask bits in the register value
+ */
+struct pcs_conf_vals {
+	enum pin_config_param param;
+	unsigned int val;
+	unsigned int enable;
+	unsigned int disable;
+	unsigned int mask;
+};
+
+/**
+ * struct pcs_conf_type - pinconf property name, pinconf param pair
+ * @name:	property name in DTS file
+ * @param:	config parameter
+ */
+struct pcs_conf_type {
+	const char *name;
+	enum pin_config_param param;
+};
+
+/**
+ * struct pcs_function - pinctrl function
+ * @name:	pinctrl function name
+ * @vals:	register and vals array
+ * @nvals:	number of entries in vals array
+ * @pgnames:	array of pingroup names the function uses
+ * @npgnames:	number of pingroup names the function uses
+ * @conf:	array of pin configurations
+ * @nconfs:	number of pin configurations available
+ * @node:	list node
+ */
+struct pcs_function {
+	const char *name;
+	struct pcs_func_vals *vals;
+	unsigned int nvals;
+	const char **pgnames;
+	int npgnames;
+	struct pcs_conf_vals *conf;
+	int nconfs;
+	struct list_head node;
+};
+
+/**
+ * struct pcs_gpiofunc_range - pin ranges with same mux value of gpio function
+ * @offset:	offset base of pins
+ * @npins:	number pins with the same mux value of gpio function
+ * @gpiofunc:	mux value of gpio function
+ * @node:	list node
+ */
+struct pcs_gpiofunc_range {
+	unsigned int offset;
+	unsigned int npins;
+	unsigned int gpiofunc;
+	struct list_head node;
+};
+
+/**
+ * struct pcs_data - wrapper for data needed by pinctrl framework
+ * @pa:		pindesc array
+ * @cur:	index to current element
+ *
+ * REVISIT: We should be able to drop this eventually by adding
+ * support for registering pins individually in the pinctrl
+ * framework for those drivers that don't need a static array.
+ */
+struct pcs_data {
+	struct pinctrl_pin_desc *pa;
+	int cur;
+};
+
+/**
+ * struct pcs_soc_data - SoC specific settings
+ * @flags:	initial SoC specific PCS_FEAT_xxx values
+ * @irq:	optional interrupt for the controller
+ * @irq_enable_mask:	optional SoC specific interrupt enable mask
+ * @irq_status_mask:	optional SoC specific interrupt status mask
+ * @rearm:	optional SoC specific wake-up rearm function
+ */
+struct pcs_soc_data {
+	unsigned int flags;
+	int irq;
+	unsigned int irq_enable_mask;
+	unsigned int irq_status_mask;
+	void (*rearm)(void);
+};
+
+/**
+ * struct pcs_device - pinctrl device instance
+ * @res:	resources
+ * @base:	virtual address of the controller
+ * @saved_vals: saved values for the controller
+ * @size:	size of the ioremapped area
+ * @dev:	device entry
+ * @np:		device tree node
+ * @pctl:	pin controller device
+ * @flags:	mask of PCS_FEAT_xxx values
+ * @missing_nr_pinctrl_cells: for legacy binding, may go away
+ * @socdata:	soc specific data
+ * @lock:	spinlock for register access
+ * @mutex:	mutex protecting the lists
+ * @width:	bits per mux register
+ * @fmask:	function register mask
+ * @fshift:	function register shift
+ * @foff:	value to turn mux off
+ * @fmax:	max number of functions in fmask
+ * @bits_per_mux: number of bits per mux
+ * @bits_per_pin: number of bits per pin
+ * @pins:	physical pins on the SoC
+ * @gpiofuncs:	list of gpio functions
+ * @irqs:	list of interrupt registers
+ * @chip:	chip container for this instance
+ * @domain:	IRQ domain for this instance
+ * @desc:	pin controller descriptor
+ * @read:	register read function to use
+ * @write:	register write function to use
+ */
+struct pcs_device {
+	struct resource *res;
+	void __iomem *base;
+	struct resource *gedge_flag_res;
+	void __iomem *gedge_flag_base;
+	unsigned int gedge_flag_size;
+	struct resource gpio_res;
+	void __iomem *gpio_base;
+	unsigned int gpio_size;
+	void *saved_vals;
+	unsigned int size;
+	struct device *dev;
+	struct device_node *np;
+	struct pinctrl_dev *pctl;
+	unsigned int flags;
+	struct property *missing_nr_pinctrl_cells;
+	struct pcs_soc_data socdata;
+	raw_spinlock_t lock;
+	struct mutex mutex;
+	unsigned int width;
+	unsigned int fmask;
+	unsigned int fshift;
+	unsigned int foff;
+	unsigned int fmax;
+	bool bits_per_mux;
+	unsigned int bits_per_pin;
+	struct pcs_data pins;
+	struct list_head gpiofuncs;
+	struct list_head irqs;
+	struct irq_chip chip;
+	struct irq_domain *domain;
+	struct pinctrl_desc desc;
+	unsigned int (*read)(void __iomem *reg);
+	void (*write)(unsigned int val, void __iomem *reg);
+};
+
+static int pcs_pinconf_get(struct pinctrl_dev *pctldev, unsigned int pin,
+			   unsigned long *config);
+static int pcs_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
+			   unsigned long *configs, unsigned int num_configs);
+
+static enum pin_config_param pcs_bias[] = {
+	PIN_CONFIG_BIAS_PULL_DOWN,
+	PIN_CONFIG_BIAS_PULL_UP,
+};
+
+/*
+ * This lock class tells lockdep that irqchip core that this single
+ * pinctrl can be in a different category than its parents, so it won't
+ * report false recursion.
+ */
+static struct lock_class_key pcs_lock_class;
+
+/* Class for the IRQ request mutex */
+static struct lock_class_key pcs_request_class;
+
+/*
+ * REVISIT: Reads and writes could eventually use regmap or something
+ * generic. But at least on omaps, some mux registers are performance
+ * critical as they may need to be remuxed every time before and after
+ * idle. Adding tests for register access width for every read and
+ * write like regmap is doing is not desired, and caching the registers
+ * does not help in this case.
+ */
+
+static unsigned int __maybe_unused pcs_readb(void __iomem *reg)
+{
+	return readb(reg);
+}
+
+static unsigned int __maybe_unused pcs_readw(void __iomem *reg)
+{
+	return readw(reg);
+}
+
+static unsigned int __maybe_unused pcs_readl(void __iomem *reg)
+{
+	return readl(reg);
+}
+
+static void __maybe_unused pcs_writeb(unsigned int val, void __iomem *reg)
+{
+	writeb(val, reg);
+}
+
+static void __maybe_unused pcs_writew(unsigned int val, void __iomem *reg)
+{
+	writew(val, reg);
+}
+
+static void __maybe_unused pcs_writel(unsigned int val, void __iomem *reg)
+{
+	writel(val, reg);
+}
+
+static unsigned int pcs_pin_reg_offset_get(struct pcs_device *pcs,
+					   unsigned int pin)
+{
+	unsigned int pin_offset_bytes;
+	unsigned int mux_bytes = pcs->width / BITS_PER_BYTE;
+
+	if (pcs->bits_per_mux) {
+		pin_offset_bytes = (pcs->bits_per_pin * pin) / BITS_PER_BYTE;
+		return (pin_offset_bytes / mux_bytes) * mux_bytes;
+	}
+
+	return pin * mux_bytes;
+}
+
+static unsigned int pcs_pin_shift_reg_get(struct pcs_device *pcs,
+					  unsigned int pin)
+{
+	return (pin % (pcs->width / pcs->bits_per_pin)) * pcs->bits_per_pin;
+}
+
+static void pcs_pin_dbg_show(struct pinctrl_dev *pctldev,
+			     struct seq_file *s,
+			     unsigned int pin)
+{
+	struct pcs_device *pcs;
+	unsigned int val;
+	unsigned long offset;
+	size_t pa;
+
+	pcs = pinctrl_dev_get_drvdata(pctldev);
+
+	offset = pcs_pin_reg_offset_get(pcs, pin);
+	val = pcs->read(pcs->base + offset);
+
+	if (pcs->bits_per_mux)
+		val &= pcs->fmask << pcs_pin_shift_reg_get(pcs, pin);
+
+	pa = pcs->res->start + offset;
+
+	seq_printf(s, "%zx %08x %s ", pa, val, DRIVER_NAME);
+}
+
+static void pcs_dt_free_map(struct pinctrl_dev *pctldev, struct pinctrl_map *map,
+			    unsigned int num_maps)
+{
+	struct pcs_device *pcs;
+
+	pcs = pinctrl_dev_get_drvdata(pctldev);
+	devm_kfree(pcs->dev, map);
+}
+
+static int pcs_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node *np_config,
+			      struct pinctrl_map **map, unsigned int *num_maps);
+
+static const struct pinctrl_ops pcs_pinctrl_ops = {
+	.get_groups_count = pinctrl_generic_get_group_count,
+	.get_group_name = pinctrl_generic_get_group_name,
+	.get_group_pins = pinctrl_generic_get_group_pins,
+	.pin_dbg_show = pcs_pin_dbg_show,
+	.dt_node_to_map = pcs_dt_node_to_map,
+	.dt_free_map = pcs_dt_free_map,
+};
+
+static int pcs_get_function(struct pinctrl_dev *pctldev, unsigned int pin,
+			    struct pcs_function **func)
+{
+	unsigned int fselector;
+	struct function_desc *function;
+	const struct pinctrl_setting_mux *setting;
+	struct pin_desc *pdesc = pin_desc_get(pctldev, pin);
+	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
+
+	/* If pin is not described in DTS & enabled, mux_setting is NULL. */
+	setting = pdesc->mux_setting;
+	if (!setting)
+		return -EOPNOTSUPP;
+	fselector = setting->func;
+	function = pinmux_generic_get_function(pctldev, fselector);
+	if (!function)
+		return -EINVAL;
+	*func = function->data;
+	if (!(*func)) {
+		dev_err(pcs->dev, "%s could not find function%i\n",
+			__func__, fselector);
+		return -EOPNOTSUPP;
+	}
+	return 0;
+}
+
+static int pcs_set_mux(struct pinctrl_dev *pctldev, unsigned int fselector, unsigned int group)
+{
+	int i;
+	unsigned long flags;
+	unsigned int val, mask;
+	struct pcs_device *pcs;
+	struct pcs_function *func;
+	struct pcs_func_vals *vals;
+	struct function_desc *function;
+
+	pcs = pinctrl_dev_get_drvdata(pctldev);
+	/* If function mask is null, needn't enable it. */
+	if (!pcs->fmask)
+		return 0;
+	function = pinmux_generic_get_function(pctldev, fselector);
+	if (!function)
+		return -EINVAL;
+	func = function->data;
+	if (!func)
+		return -EINVAL;
+
+	dev_dbg(pcs->dev, "enabling %s function%i\n",
+		func->name, fselector);
+
+	for (i = 0; i < func->nvals; i++) {
+		vals = &func->vals[i];
+		raw_spin_lock_irqsave(&pcs->lock, flags);
+		val = pcs->read(vals->reg);
+
+		if (pcs->bits_per_mux)
+			mask = vals->mask;
+		else
+			mask = pcs->fmask;
+
+		val &= ~mask;
+		val |= (vals->val & mask);
+		pcs->write(val, vals->reg);
+		raw_spin_unlock_irqrestore(&pcs->lock, flags);
+	}
+
+	return 0;
+}
+
+static int pcs_request_gpio(struct pinctrl_dev *pctldev,
+			    struct pinctrl_gpio_range *range, unsigned int pin)
+{
+	u32 offset;
+	int pin_shift;
+	unsigned int data;
+	struct list_head *pos, *tmp;
+	struct pcs_gpiofunc_range *frange = NULL;
+	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
+
+	/* If function mask is null, return directly. */
+	if (!pcs->fmask)
+		return -EOPNOTSUPP;
+
+	list_for_each_safe(pos, tmp, &pcs->gpiofuncs) {
+		frange = list_entry(pos, struct pcs_gpiofunc_range, node);
+		if (pin >= frange->offset + frange->npins ||
+		    pin < frange->offset)
+			continue;
+
+		offset = pcs_pin_reg_offset_get(pcs, pin);
+
+		if (pcs->bits_per_mux) {
+			pin_shift = pcs_pin_shift_reg_get(pcs, pin);
+			data = pcs->read(pcs->base + offset);
+			data &= ~(pcs->fmask << pin_shift);
+			data |= frange->gpiofunc << pin_shift;
+			pcs->write(data, pcs->base + offset);
+		} else {
+			data = pcs->read(pcs->base + offset);
+			data &= ~pcs->fmask;
+			data |= frange->gpiofunc;
+			pcs->write(data, pcs->base + offset);
+		}
+		break;
+	}
+	return 0;
+}
+
+static const struct pinmux_ops pcs_pinmux_ops = {
+	.get_functions_count = pinmux_generic_get_function_count,
+	.get_function_name = pinmux_generic_get_function_name,
+	.get_function_groups = pinmux_generic_get_function_groups,
+	.set_mux = pcs_set_mux,
+	.gpio_request_enable = pcs_request_gpio,
+};
+
+/* Clear BIAS value */
+static void pcs_pinconf_clear_bias(struct pinctrl_dev *pctldev, unsigned int pin)
+{
+	int i;
+	unsigned long config;
+
+	for (i = 0; i < ARRAY_SIZE(pcs_bias); i++) {
+		config = pinconf_to_config_packed(pcs_bias[i], 0);
+		pcs_pinconf_set(pctldev, pin, &config, 1);
+	}
+}
+
+/*
+ * Check whether PIN_CONFIG_BIAS_DISABLE is valid.
+ * It's depend on that PULL_DOWN & PULL_UP configs are all invalid.
+ */
+static bool pcs_pinconf_bias_disable(struct pinctrl_dev *pctldev, unsigned int pin)
+{
+	int i;
+	unsigned long config;
+
+	for (i = 0; i < ARRAY_SIZE(pcs_bias); i++) {
+		config = pinconf_to_config_packed(pcs_bias[i], 0);
+		if (!pcs_pinconf_get(pctldev, pin, &config))
+			goto out;
+	}
+	return true;
+out:
+	return false;
+}
+
+static int pcs_pinconf_get(struct pinctrl_dev *pctldev, unsigned int pin, unsigned long *config)
+{
+	struct pcs_function *func;
+	enum pin_config_param param;
+	unsigned int offset = 0, data = 0, i, j, ret;
+	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
+
+	ret = pcs_get_function(pctldev, pin, &func);
+	if (ret)
+		return ret;
+
+	for (i = 0; i < func->nconfs; i++) {
+		param = pinconf_to_config_param(*config);
+		if (param == PIN_CONFIG_BIAS_DISABLE) {
+			if (pcs_pinconf_bias_disable(pctldev, pin)) {
+				*config = 0;
+				return 0;
+			} else {
+				return -EOPNOTSUPP;
+			}
+		} else if (param != func->conf[i].param) {
+			continue;
+		}
+
+		offset = pin * (pcs->width / BITS_PER_BYTE);
+		data = pcs->read(pcs->base + offset) & func->conf[i].mask;
+		switch (func->conf[i].param) {
+		/* 4 parameters */
+		case PIN_CONFIG_BIAS_PULL_DOWN:
+		case PIN_CONFIG_BIAS_PULL_UP:
+		case PIN_CONFIG_INPUT_SCHMITT_ENABLE:
+			if (data != func->conf[i].enable || data == func->conf[i].disable)
+				return -EOPNOTSUPP;
+			*config = 0;
+			break;
+		/* 2 parameters */
+		case PIN_CONFIG_INPUT_SCHMITT:
+			for (j = 0; j < func->nconfs; j++) {
+				switch (func->conf[j].param) {
+				case PIN_CONFIG_INPUT_SCHMITT_ENABLE:
+					if (data != func->conf[j].enable)
+						return -EOPNOTSUPP;
+					break;
+				default:
+					break;
+				}
+			}
+			*config = data;
+			break;
+		case PIN_CONFIG_DRIVE_STRENGTH:
+		case PIN_CONFIG_SLEW_RATE:
+		case PIN_CONFIG_MODE_LOW_POWER:
+		case PIN_CONFIG_INPUT_ENABLE:
+		default:
+			*config = data;
+			break;
+		}
+		return 0;
+	}
+	return -EOPNOTSUPP;
+}
+
+static int pin_to_gpio_number[] = {
+	0,   1,   2,   3,   4,   5,   6,   7,
+	8,   9,   10,  11,  12,  13,  14,  15,
+	16,  17,  18,  19,  20,  21,  22,  23,
+	24,  25,  26,  27,  28,  29,  30,  31,
+	32,  33,  34,  35,  36,  37,  38,  39,
+	40,  41,  42,  43,  44,  45,  46,  47,
+	48,  49,  50,  51,  52,  53,  54,  55,
+	56,  57,  58,  59,  60,  61,  62,  63,
+	64,  65,  66,  67,  68,  69,  70,  71,
+	72,  73,  74,  75,  76,  77,  78,  79,
+	80,  81,  82,  83,  84,  85,  0,   0,
+	0,   101, 100, 99,  98,  103, 102, 0,
+	0,   0,   0,   0,   0,   0,   0,   0,
+	0,   0,   0,   0,   0,   104, 105, 106,
+	107, 108, 109, 110, 93,  94,  95,  96,
+	97,  0,   86,  87,  88,  89,  90,  91,
+	92,  0,   111, 112, 113, 114, 115, 116,
+	117, 118, 119, 120, 121, 122, 123, 124,
+	125, 126, 127
+};
+
+static int pcs_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
+			   unsigned long *configs, unsigned int num_configs)
+{
+	int i, j, ret, gpio_number;
+	unsigned int arg, data, offset = 0, shift = 0;
+	void __iomem *gpio_base;
+	struct pcs_function *func;
+	struct pcs_device *pcs = pinctrl_dev_get_drvdata(pctldev);
+
+	ret = pcs_get_function(pctldev, pin, &func);
+	if (ret)
+		return ret;
+
+	for (j = 0; j < num_configs; j++) {
+		for (i = 0; i < func->nconfs; i++) {
+			if (pinconf_to_config_param(configs[j]) != func->conf[i].param)
+				continue;
+
+			offset = pin * (pcs->width / BITS_PER_BYTE);
+			data = pcs->read(pcs->base + offset);
+			arg = pinconf_to_config_argument(configs[j]);
+
+			switch (func->conf[i].param) {
+			/* 2 parameters */
+			case PIN_CONFIG_OUTPUT_ENABLE:
+				gpio_number = pin_to_gpio_number[pin - 1];
+				switch (gpio_number) {
+				case 0 ... 31:
+					gpio_base = pcs->gpio_base + 0xc;
+					offset = gpio_number;
+					break;
+				case 32 ... 63:
+					gpio_base = pcs->gpio_base + 0x4 + 0xc;
+					offset = gpio_number - 32;
+					break;
+				case 64 ... 95:
+					gpio_base = pcs->gpio_base + 0x8 + 0xc;
+					offset = gpio_number - 64;
+					break;
+				case 96 ... 127:
+					gpio_base = pcs->gpio_base + 0x100 + 0xc;
+					offset = gpio_number - 96;
+					break;
+				default:
+					pr_err("Bad pin number\n");
+					break;
+				}
+
+				data = pcs->read(gpio_base);
+				data |= (arg << offset);
+				pcs->write(data, gpio_base);
+
+				break;
+			case PIN_CONFIG_OUTPUT:
+				gpio_number = pin_to_gpio_number[pin - 1];
+				switch (gpio_number) {
+				case 0 ... 31:
+					gpio_base = pcs->gpio_base +
+						((arg == 1) ? 0x18 : 0x24);
+					offset = gpio_number;
+					break;
+				case 32 ... 63:
+					gpio_base = pcs->gpio_base + 0x4 +
+						((arg == 1) ? 0x18 : 0x24);
+					offset = gpio_number - 32;
+					break;
+				case 64 ... 95:
+					gpio_base = pcs->gpio_base + 0x8 +
+						((arg == 1) ? 0x18 : 0x24);
+					offset = gpio_number - 64;
+					break;
+				case 96 ... 127:
+					gpio_base = pcs->gpio_base + 0x100 +
+						((arg == 1) ? 0x18 : 0x24);
+					offset = gpio_number - 96;
+					break;
+				default:
+					pr_err("Bad pin number\n");
+					break;
+				}
+
+				/*
+				 * if we want to set output low,
+				 * we should set the arg to 1
+				 *
+				 */
+				if (arg == 0)
+					arg = 1;
+
+				data = 0;
+				data |= (arg << offset);
+				pcs->write(data, gpio_base);
+				break;
+			case PIN_CONFIG_INPUT_SCHMITT:
+			case PIN_CONFIG_DRIVE_STRENGTH:
+			case PIN_CONFIG_SLEW_RATE:
+			case PIN_CONFIG_MODE_LOW_POWER:
+			case PIN_CONFIG_INPUT_ENABLE:
+				shift = ffs(func->conf[i].mask) - 1;
+				data &= ~func->conf[i].mask;
+				data |= (arg << shift) & func->conf[i].mask;
+				pcs->write(data, pcs->base + offset);
+				break;
+			/* 4 parameters */
+			case PIN_CONFIG_BIAS_DISABLE:
+				pcs_pinconf_clear_bias(pctldev, pin);
+				pcs->write(data, pcs->base + offset);
+				break;
+			case PIN_CONFIG_BIAS_PULL_DOWN:
+			case PIN_CONFIG_BIAS_PULL_UP:
+				if (arg)
+					pcs_pinconf_clear_bias(pctldev, pin);
+				fallthrough;
+			case PIN_CONFIG_INPUT_SCHMITT_ENABLE:
+				data &= ~func->conf[i].mask;
+				if (arg)
+					data |= func->conf[i].enable;
+				else
+					data |= func->conf[i].disable;
+				pcs->write(data, pcs->base + offset);
+				break;
+			default:
+				return -EOPNOTSUPP;
+			}
+
+			break;
+		}
+		if (i >= func->nconfs)
+			return -EOPNOTSUPP;
+	}
+
+	return 0;
+}
+
+static int pcs_pinconf_group_get(struct pinctrl_dev *pctldev, unsigned int group,
+				 unsigned long *config)
+{
+	int i, ret;
+	const unsigned int *pins;
+	unsigned int npins, old = 0;
+
+	ret = pinctrl_generic_get_group_pins(pctldev, group, &pins, &npins);
+	if (ret)
+		return ret;
+	for (i = 0; i < npins; i++) {
+		if (pcs_pinconf_get(pctldev, pins[i], config))
+			return -EOPNOTSUPP;
+		/* configs do not match between two pins */
+		if (i && old != *config)
+			return -EOPNOTSUPP;
+		old = *config;
+	}
+	return 0;
+}
+
+static int pcs_pinconf_group_set(struct pinctrl_dev *pctldev,
+				 unsigned int group, unsigned long *configs,
+				 unsigned int num_configs)
+{
+	int i, ret;
+	unsigned int npins;
+	const unsigned int *pins;
+
+	ret = pinctrl_generic_get_group_pins(pctldev, group, &pins, &npins);
+	if (ret)
+		return ret;
+	for (i = 0; i < npins; i++) {
+		if (pcs_pinconf_set(pctldev, pins[i], configs, num_configs))
+			return -EOPNOTSUPP;
+	}
+	return 0;
+}
+
+static void pcs_pinconf_dbg_show(struct pinctrl_dev *pctldev,
+				 struct seq_file *s, unsigned int pin)
+{
+}
+
+static void pcs_pinconf_group_dbg_show(struct pinctrl_dev *pctldev,
+				       struct seq_file *s,
+				       unsigned int selector)
+{
+}
+
+static void pcs_pinconf_config_dbg_show(struct pinctrl_dev *pctldev,
+					struct seq_file *s,
+					unsigned long config)
+{
+	pinconf_generic_dump_config(pctldev, s, config);
+}
+
+static const struct pinconf_ops pcs_pinconf_ops = {
+	.pin_config_get = pcs_pinconf_get,
+	.pin_config_set = pcs_pinconf_set,
+	.pin_config_group_get = pcs_pinconf_group_get,
+	.pin_config_group_set = pcs_pinconf_group_set,
+	.pin_config_dbg_show = pcs_pinconf_dbg_show,
+	.pin_config_group_dbg_show = pcs_pinconf_group_dbg_show,
+	.pin_config_config_dbg_show = pcs_pinconf_config_dbg_show,
+	.is_generic = true,
+};
+
+/**
+ * pcs_add_pin() - add a pin to the static per controller pin array
+ * @pcs: pcs driver instance
+ * @offset: register offset from base
+ */
+static int pcs_add_pin(struct pcs_device *pcs, unsigned int offset)
+{
+	int i;
+	unsigned int val;
+	struct pinctrl_pin_desc *pin;
+	struct pcs_soc_data *pcs_soc = &pcs->socdata;
+
+	i = pcs->pins.cur;
+	if (i >= pcs->desc.npins) {
+		dev_err(pcs->dev, "too many pins, max %i\n", pcs->desc.npins);
+		return -ENOMEM;
+	}
+
+	if (pcs_soc->irq_enable_mask) {
+		val = pcs->read(pcs->base + offset);
+		if (val & pcs_soc->irq_enable_mask) {
+			dev_dbg(pcs->dev, "irq enabled at boot for pin at %lx (%x), clearing\n",
+				(unsigned long)pcs->res->start + offset, val);
+			val &= ~pcs_soc->irq_enable_mask;
+			pcs->write(val, pcs->base + offset);
+		}
+	}
+
+	pin = &pcs->pins.pa[i];
+	pin->number = i;
+	pcs->pins.cur++;
+
+	return i;
+}
+
+/**
+ * pcs_allocate_pin_table() - adds all the pins for the pinctrl driver
+ * @pcs: pcs driver instance
+ *
+ * In case of errors, resources are freed in pcs_free_resources.
+ *
+ * If your hardware needs holes in the address space, then just set
+ * up multiple driver instances.
+ */
+static int pcs_allocate_pin_table(struct pcs_device *pcs)
+{
+	int i, res, mux_bytes, nr_pins;
+	unsigned int offset;
+
+	mux_bytes = pcs->width / BITS_PER_BYTE;
+
+	if (pcs->bits_per_mux && pcs->fmask) {
+		pcs->bits_per_pin = fls(pcs->fmask);
+		nr_pins = (pcs->size * BITS_PER_BYTE) / pcs->bits_per_pin;
+	} else {
+		nr_pins = pcs->size / mux_bytes;
+	}
+
+	dev_dbg(pcs->dev, "allocating %i pins\n", nr_pins);
+	pcs->pins.pa = devm_kcalloc(pcs->dev, nr_pins, sizeof(*pcs->pins.pa),
+				    GFP_KERNEL);
+	if (!pcs->pins.pa)
+		return -ENOMEM;
+
+	pcs->desc.pins = pcs->pins.pa;
+	pcs->desc.npins = nr_pins;
+
+	for (i = 0; i < pcs->desc.npins; i++) {
+		offset = pcs_pin_reg_offset_get(pcs, i);
+		res = pcs_add_pin(pcs, offset);
+		if (res < 0) {
+			dev_err(pcs->dev, "error adding pins: %i\n", res);
+			return res;
+		}
+	}
+
+	return 0;
+}
+
+/**
+ * pcs_add_function() - adds a new function to the function list
+ * @pcs: pcs driver instance
+ * @fcn: new function allocated
+ * @name: name of the function
+ * @vals: array of mux register value pairs used by the function
+ * @nvals: number of mux register value pairs
+ * @pgnames: array of pingroup names for the function
+ * @npgnames: number of pingroup names
+ *
+ * Caller must take care of locking.
+ */
+static int pcs_add_function(struct pcs_device *pcs, struct pcs_function **fcn,
+			    const char *name, struct pcs_func_vals *vals,
+			    unsigned int nvals, const char **pgnames,
+			    unsigned int npgnames)
+{
+	int selector;
+	struct pcs_function *function;
+
+	function = devm_kzalloc(pcs->dev, sizeof(*function), GFP_KERNEL);
+	if (!function)
+		return -ENOMEM;
+
+	function->vals = vals;
+	function->nvals = nvals;
+	function->name = name;
+
+	selector = pinmux_generic_add_function(pcs->pctl, name, pgnames, npgnames, function);
+	if (selector < 0) {
+		devm_kfree(pcs->dev, function);
+		*fcn = NULL;
+	} else {
+		*fcn = function;
+	}
+
+	return selector;
+}
+
+/**
+ * pcs_get_pin_by_offset() - get a pin index based on the register offset
+ * @pcs: pcs driver instance
+ * @offset: register offset from the base
+ *
+ * Note that this is OK as long as the pins are in a static array.
+ */
+static int pcs_get_pin_by_offset(struct pcs_device *pcs, unsigned int offset)
+{
+	unsigned int index;
+
+	if (offset >= pcs->size) {
+		dev_err(pcs->dev, "mux offset out of range: 0x%x (0x%x)\n", offset, pcs->size);
+		return -EINVAL;
+	}
+
+	if (pcs->bits_per_mux)
+		index = (offset * BITS_PER_BYTE) / pcs->bits_per_pin;
+	else
+		index = offset / (pcs->width / BITS_PER_BYTE);
+
+	return index;
+}
+
+/*
+ * check whether data matches enable bits or disable bits
+ * Return value: 1 for matching enable bits, 0 for matching disable bits,
+ *               and negative value for matching failure.
+ */
+static int pcs_config_match(unsigned int data, unsigned int enable, unsigned int disable)
+{
+	int ret = -EINVAL;
+
+	if (data == enable)
+		ret = 1;
+	else if (data == disable)
+		ret = 0;
+	return ret;
+}
+
+static void add_config(struct pcs_conf_vals **conf,
+		       enum pin_config_param param,
+		       unsigned int value, unsigned int enable,
+		       unsigned int disable, unsigned int mask)
+{
+	(*conf)->param = param;
+	(*conf)->val = value;
+	(*conf)->enable = enable;
+	(*conf)->disable = disable;
+	(*conf)->mask = mask;
+	(*conf)++;
+}
+
+static void add_setting(unsigned long **setting, enum pin_config_param param, unsigned int arg)
+{
+	**setting = pinconf_to_config_packed(param, arg);
+	(*setting)++;
+}
+
+/* add pinconf setting with 2 parameters */
+static void pcs_add_conf2(struct pcs_device *pcs, struct device_node *np,
+			  const char *name, enum pin_config_param param,
+			  struct pcs_conf_vals **conf, unsigned long **settings)
+{
+	int ret;
+	unsigned int value[2], shift;
+
+	ret = of_property_read_u32_array(np, name, value, 2);
+	if (ret)
+		return;
+	/* set value & mask */
+	value[0] &= value[1];
+	shift = ffs(value[1]) - 1;
+	/* skip enable & disable */
+	add_config(conf, param, value[0], 0, 0, value[1]);
+	add_setting(settings, param, value[0] >> shift);
+}
+
+/* add pinconf setting with 4 parameters */
+static void pcs_add_conf4(struct pcs_device *pcs, struct device_node *np,
+			  const char *name, enum pin_config_param param,
+			  struct pcs_conf_vals **conf, unsigned long **settings)
+{
+	int ret;
+	unsigned int value[4];
+
+	/* value to set, enable, disable, mask */
+	ret = of_property_read_u32_array(np, name, value, 4);
+	if (ret)
+		return;
+	if (!value[3]) {
+		dev_err(pcs->dev, "mask field of the property can't be 0\n");
+		return;
+	}
+	value[0] &= value[3];
+	value[1] &= value[3];
+	value[2] &= value[3];
+	ret = pcs_config_match(value[0], value[1], value[2]);
+	if (ret < 0)
+		dev_dbg(pcs->dev, "failed to match enable or disable bits\n");
+	add_config(conf, param, value[0], value[1], value[2], value[3]);
+	add_setting(settings, param, ret);
+}
+
+static int pcs_parse_pinconf(struct pcs_device *pcs, struct device_node *np,
+			     struct pcs_function *func,
+			     struct pinctrl_map **map)
+
+{
+	int i = 0, nconfs = 0;
+	struct pinctrl_map *m = *map;
+	unsigned long *settings = NULL, *s = NULL;
+	struct pcs_conf_vals *conf = NULL;
+	static const struct pcs_conf_type prop2[] = {
+		{ "pinctrl-single,drive-strength", PIN_CONFIG_DRIVE_STRENGTH, },
+		{ "pinctrl-single,slew-rate", PIN_CONFIG_SLEW_RATE, },
+		{ "pinctrl-single,input-enable", PIN_CONFIG_INPUT_ENABLE, },
+		{ "pinctrl-single,input-schmitt", PIN_CONFIG_INPUT_SCHMITT, },
+		{ "pinctrl-single,output-enable", PIN_CONFIG_OUTPUT_ENABLE, },
+		{ "pinctrl-single,output", PIN_CONFIG_OUTPUT, },
+		{ "pinctrl-single,low-power-mode", PIN_CONFIG_MODE_LOW_POWER, },
+	};
+	static const struct pcs_conf_type prop4[] = {
+		{ "pinctrl-single,bias-pullup", PIN_CONFIG_BIAS_PULL_UP, },
+		{ "pinctrl-single,bias-pulldown", PIN_CONFIG_BIAS_PULL_DOWN, },
+		{ "pinctrl-single,input-schmitt-enable",
+			PIN_CONFIG_INPUT_SCHMITT_ENABLE, },
+	};
+
+	/* If pinconf isn't supported, don't parse properties in below. */
+	if (!PCS_HAS_PINCONF(pcs))
+		return -EOPNOTSUPP;
+
+	/* cacluate how much properties are supported in current node */
+	for (i = 0; i < ARRAY_SIZE(prop2); i++) {
+		if (of_property_present(np, prop2[i].name))
+			nconfs++;
+	}
+	for (i = 0; i < ARRAY_SIZE(prop4); i++) {
+		if (of_property_present(np, prop4[i].name))
+			nconfs++;
+	}
+	if (!nconfs)
+		return -EOPNOTSUPP;
+
+	func->conf = devm_kcalloc(pcs->dev, nconfs, sizeof(struct pcs_conf_vals), GFP_KERNEL);
+	if (!func->conf)
+		return -ENOMEM;
+	func->nconfs = nconfs;
+	conf = &func->conf[0];
+	m++;
+	settings = devm_kcalloc(pcs->dev, nconfs, sizeof(unsigned long), GFP_KERNEL);
+	if (!settings)
+		return -ENOMEM;
+	s = &settings[0];
+
+	for (i = 0; i < ARRAY_SIZE(prop2); i++)
+		pcs_add_conf2(pcs, np, prop2[i].name, prop2[i].param,
+			      &conf, &s);
+	for (i = 0; i < ARRAY_SIZE(prop4); i++)
+		pcs_add_conf4(pcs, np, prop4[i].name, prop4[i].param,
+			      &conf, &s);
+	m->type = PIN_MAP_TYPE_CONFIGS_GROUP;
+	m->data.configs.group_or_pin = np->name;
+	m->data.configs.configs = settings;
+	m->data.configs.num_configs = nconfs;
+	return 0;
+}
+
+/**
+ * pcs_parse_one_pinctrl_entry() - parses a device tree mux entry
+ * @pcs: pinctrl driver instance
+ * @np: device node of the mux entry
+ * @map: map entry
+ * @num_maps: number of map
+ * @pgnames: pingroup names
+ *
+ * Note that this binding currently supports only sets of one register + value.
+ *
+ * Also note that this driver tries to avoid understanding pin and function
+ * names because of the extra bloat they would cause especially in the case of
+ * a large number of pins. This driver just sets what is specified for the board
+ * in the .dts file. Further user space debugging tools can be developed to
+ * decipher the pin and function names using debugfs.
+ *
+ * If you are concerned about the boot time, set up the static pins in
+ * the bootloader, and only set up selected pins as device tree entries.
+ */
+static int pcs_parse_one_pinctrl_entry(struct pcs_device *pcs,
+				       struct device_node *np,
+				       struct pinctrl_map **map,
+				       unsigned int *num_maps,
+				       const char **pgnames)
+{
+	unsigned int offset;
+	struct pcs_func_vals *vals;
+	int i, fsel, gsel, pin, rows, *pins, found = 0, res = -ENOMEM;
+	struct pcs_function *function = NULL;
+	struct of_phandle_args pinctrl_spec;
+	const char *name = "pinctrl-single,pins";
+
+	rows = pinctrl_count_index_with_args(np, name);
+	if (rows <= 0) {
+		dev_err(pcs->dev, "Invalid number of rows: %d\n", rows);
+		return -EINVAL;
+	}
+
+	vals = devm_kcalloc(pcs->dev, rows, sizeof(*vals), GFP_KERNEL);
+	if (!vals)
+		return -ENOMEM;
+
+	pins = devm_kcalloc(pcs->dev, rows, sizeof(*pins), GFP_KERNEL);
+	if (!pins)
+		goto free_vals;
+
+	for (i = 0; i < rows; i++) {
+		res = pinctrl_parse_index_with_args(np, name, i, &pinctrl_spec);
+		if (res)
+			return res;
+
+		if (pinctrl_spec.args_count < 2 || pinctrl_spec.args_count > 3) {
+			dev_err(pcs->dev, "invalid args_count for spec: %i\n",
+				pinctrl_spec.args_count);
+			break;
+		}
+
+		offset = pinctrl_spec.args[0];
+		vals[found].reg = pcs->base + offset;
+
+		switch (pinctrl_spec.args_count) {
+		case 2:
+			vals[found].val = pinctrl_spec.args[1];
+			break;
+		case 3:
+			vals[found].val = (pinctrl_spec.args[1] | pinctrl_spec.args[2]);
+			break;
+		default:
+			break;
+		}
+
+		dev_dbg(pcs->dev, "%pOFn index: 0x%x value: 0x%x\n",
+			pinctrl_spec.np, offset, vals[found].val);
+
+		pin = pcs_get_pin_by_offset(pcs, offset);
+		if (pin < 0) {
+			dev_err(pcs->dev,
+				"could not add functions for %pOFn %ux\n",
+				np, offset);
+			break;
+		}
+		pins[found++] = pin;
+	}
+
+	pgnames[0] = np->name;
+	mutex_lock(&pcs->mutex);
+	fsel = pcs_add_function(pcs, &function, np->name, vals, found, pgnames, 1);
+	if (fsel < 0) {
+		res = fsel;
+		goto free_pins;
+	}
+
+	gsel = pinctrl_generic_add_group(pcs->pctl, np->name, pins, found, pcs);
+	if (gsel < 0) {
+		res = gsel;
+		goto free_function;
+	}
+
+	(*map)->type = PIN_MAP_TYPE_MUX_GROUP;
+	(*map)->data.mux.group = np->name;
+	(*map)->data.mux.function = np->name;
+
+	if (PCS_HAS_PINCONF(pcs) && function) {
+		res = pcs_parse_pinconf(pcs, np, function, map);
+		if (res == 0)
+			*num_maps = 2;
+		else if (res == -EOPNOTSUPP)
+			*num_maps = 1;
+		else
+			goto free_pingroups;
+	} else {
+		*num_maps = 1;
+	}
+	mutex_unlock(&pcs->mutex);
+
+	return 0;
+
+free_pingroups:
+	pinctrl_generic_remove_group(pcs->pctl, gsel);
+	*num_maps = 1;
+free_function:
+	pinmux_generic_remove_function(pcs->pctl, fsel);
+free_pins:
+	mutex_unlock(&pcs->mutex);
+	devm_kfree(pcs->dev, pins);
+
+free_vals:
+	devm_kfree(pcs->dev, vals);
+
+	return res;
+}
+
+static int pcs_parse_bits_in_pinctrl_entry(struct pcs_device *pcs,
+					   struct device_node *np,
+					   struct pinctrl_map **map,
+					   unsigned int *num_maps,
+					   const char **pgnames)
+{
+	const char *name = "pinctrl-single,bits";
+	struct pcs_func_vals *vals;
+	int i, fsel, pin, rows, *pins, npins_in_row, found = 0, res = -ENOMEM;
+	struct pcs_function *function = NULL;
+	struct of_phandle_args pinctrl_spec;
+	unsigned int offset, val, pin_num_from_lsb;
+	unsigned int mask, bit_pos, val_pos, mask_pos, submask;
+
+	rows = pinctrl_count_index_with_args(np, name);
+	if (rows <= 0) {
+		dev_err(pcs->dev, "Invalid number of rows: %d\n", rows);
+		return -EINVAL;
+	}
+
+	if (PCS_HAS_PINCONF(pcs)) {
+		dev_err(pcs->dev, "pinconf not supported\n");
+		return -EOPNOTSUPP;
+	}
+
+	npins_in_row = pcs->width / pcs->bits_per_pin;
+
+	vals = devm_kzalloc(pcs->dev,
+			    array3_size(rows, npins_in_row, sizeof(*vals)),
+			    GFP_KERNEL);
+	if (!vals)
+		return -ENOMEM;
+
+	pins = devm_kzalloc(pcs->dev,
+			    array3_size(rows, npins_in_row, sizeof(*pins)),
+			    GFP_KERNEL);
+	if (!pins)
+		goto free_vals;
+
+	for (i = 0; i < rows; i++) {
+		res = pinctrl_parse_index_with_args(np, name, i, &pinctrl_spec);
+		if (res)
+			return res;
+
+		if (pinctrl_spec.args_count < 3) {
+			dev_err(pcs->dev, "invalid args_count for spec: %i\n",
+				pinctrl_spec.args_count);
+			break;
+		}
+
+		/* Index plus two value cells */
+		offset = pinctrl_spec.args[0];
+		val = pinctrl_spec.args[1];
+		mask = pinctrl_spec.args[2];
+
+		dev_dbg(pcs->dev, "%pOFn index: 0x%x value: 0x%x mask: 0x%x\n",
+			pinctrl_spec.np, offset, val, mask);
+
+		/* Parse pins in each row from LSB */
+		while (mask) {
+			bit_pos = __ffs(mask);
+			pin_num_from_lsb = bit_pos / pcs->bits_per_pin;
+			mask_pos = ((pcs->fmask) << bit_pos);
+			val_pos = val & mask_pos;
+			submask = mask & mask_pos;
+
+			if ((mask & mask_pos) == 0) {
+				dev_err(pcs->dev,
+					"Invalid mask for %pOFn at 0x%x\n",
+					np, offset);
+				break;
+			}
+
+			mask &= ~mask_pos;
+
+			if (submask != mask_pos) {
+				dev_warn(pcs->dev,
+					 "Invalid submask 0x%x for %pOFn at 0x%x\n",
+					 submask, np, offset);
+				continue;
+			}
+
+			vals[found].mask = submask;
+			vals[found].reg = pcs->base + offset;
+			vals[found].val = val_pos;
+
+			pin = pcs_get_pin_by_offset(pcs, offset);
+			if (pin < 0) {
+				dev_err(pcs->dev,
+					"could not add functions for %pOFn %ux\n",
+					np, offset);
+				break;
+			}
+			pins[found++] = pin + pin_num_from_lsb;
+		}
+	}
+
+	pgnames[0] = np->name;
+	mutex_lock(&pcs->mutex);
+	fsel = pcs_add_function(pcs, &function, np->name, vals, found, pgnames, 1);
+	if (fsel < 0) {
+		res = fsel;
+		goto free_pins;
+	}
+
+	res = pinctrl_generic_add_group(pcs->pctl, np->name, pins, found, pcs);
+	if (res < 0)
+		goto free_function;
+
+	(*map)->type = PIN_MAP_TYPE_MUX_GROUP;
+	(*map)->data.mux.group = np->name;
+	(*map)->data.mux.function = np->name;
+
+	*num_maps = 1;
+	mutex_unlock(&pcs->mutex);
+
+	return 0;
+
+free_function:
+	pinmux_generic_remove_function(pcs->pctl, fsel);
+free_pins:
+	mutex_unlock(&pcs->mutex);
+	devm_kfree(pcs->dev, pins);
+
+free_vals:
+	devm_kfree(pcs->dev, vals);
+
+	return res;
+}
+
+/**
+ * pcs_dt_node_to_map() - allocates and parses pinctrl maps
+ * @pctldev: pinctrl instance
+ * @np_config: device tree pinmux entry
+ * @map: array of map entries
+ * @num_maps: number of maps
+ */
+static int pcs_dt_node_to_map(struct pinctrl_dev *pctldev,
+			      struct device_node *np_config,
+			      struct pinctrl_map **map, unsigned int *num_maps)
+{
+	int ret;
+	const char **pgnames;
+	struct pcs_device *pcs;
+
+	pcs = pinctrl_dev_get_drvdata(pctldev);
+
+	/* create 2 maps. One is for pinmux, and the other is for pinconf. */
+	*map = devm_kcalloc(pcs->dev, 2, sizeof(**map), GFP_KERNEL);
+	if (!*map)
+		return -ENOMEM;
+
+	*num_maps = 0;
+
+	pgnames = devm_kzalloc(pcs->dev, sizeof(*pgnames), GFP_KERNEL);
+	if (!pgnames) {
+		ret = -ENOMEM;
+		goto free_map;
+	}
+
+	if (pcs->bits_per_mux) {
+		ret = pcs_parse_bits_in_pinctrl_entry(pcs, np_config, map,
+						      num_maps, pgnames);
+		if (ret < 0) {
+			dev_err(pcs->dev, "no pins entries for %pOFn\n",
+				np_config);
+			goto free_pgnames;
+		}
+	} else {
+		ret = pcs_parse_one_pinctrl_entry(pcs, np_config, map,
+						  num_maps, pgnames);
+		if (ret < 0) {
+			dev_err(pcs->dev, "no pins entries for %pOFn\n",
+				np_config);
+			goto free_pgnames;
+		}
+	}
+
+	return 0;
+
+free_pgnames:
+	devm_kfree(pcs->dev, pgnames);
+free_map:
+	devm_kfree(pcs->dev, *map);
+
+	return ret;
+}
+
+/**
+ * pcs_irq_free() - free interrupt
+ * @pcs: pcs driver instance
+ */
+static void pcs_irq_free(struct pcs_device *pcs)
+{
+	struct pcs_soc_data *pcs_soc = &pcs->socdata;
+
+	if (pcs_soc->irq < 0)
+		return;
+
+	if (pcs->domain)
+		irq_domain_remove(pcs->domain);
+
+	if (PCS_QUIRK_HAS_SHARED_IRQ(pcs))
+		free_irq(pcs_soc->irq, pcs_soc);
+	else
+		irq_set_chained_handler(pcs_soc->irq, NULL);
+}
+
+/**
+ * pcs_free_resources() - free memory used by this driver
+ * @pcs: pcs driver instance
+ */
+static void pcs_free_resources(struct pcs_device *pcs)
+{
+	pcs_irq_free(pcs);
+
+#if IS_BUILTIN(CONFIG_PINCTRL_SINGLE)
+	if (pcs->missing_nr_pinctrl_cells)
+		of_remove_property(pcs->np, pcs->missing_nr_pinctrl_cells);
+#endif
+}
+
+static int pcs_add_gpio_func(struct device_node *node, struct pcs_device *pcs)
+{
+	int ret, i;
+	struct of_phandle_args gpiospec;
+	struct pcs_gpiofunc_range *range;
+	const char *propname = "pinctrl-single,gpio-range";
+	const char *cellname = "#pinctrl-single,gpio-range-cells";
+
+	for (i = 0; ; i++) {
+		ret = of_parse_phandle_with_args(node, propname, cellname,
+						 i, &gpiospec);
+		/* Do not treat it as error. Only treat it as end condition. */
+		if (ret) {
+			ret = 0;
+			break;
+		}
+		range = devm_kzalloc(pcs->dev, sizeof(*range), GFP_KERNEL);
+		if (!range) {
+			ret = -ENOMEM;
+			break;
+		}
+		range->offset = gpiospec.args[0];
+		range->npins = gpiospec.args[1];
+		range->gpiofunc = gpiospec.args[2];
+		mutex_lock(&pcs->mutex);
+		list_add_tail(&range->node, &pcs->gpiofuncs);
+		mutex_unlock(&pcs->mutex);
+	}
+	return ret;
+}
+
+/**
+ * struct pcs_interrupt
+ * @reg:	virtual address of interrupt register
+ * @hwirq:	hardware irq number
+ * @irq:	virtual irq number
+ * @node:	list node
+ */
+struct pcs_interrupt {
+	void __iomem *reg;
+	irq_hw_number_t hwirq;
+	unsigned int irq;
+	struct list_head node;
+};
+
+/**
+ * pcs_irq_set() - enables or disables an interrupt
+ * @pcs_soc: SoC specific settings
+ * @irq: interrupt
+ * @enable: enable or disable the interrupt
+ *
+ * Note that this currently assumes one interrupt per pinctrl
+ * register that is typically used for wake-up events.
+ */
+static inline void pcs_irq_set(struct pcs_soc_data *pcs_soc, int irq, const bool enable)
+{
+	struct pcs_device *pcs;
+	struct list_head *pos;
+	unsigned int mask, soc_mask;
+	struct pcs_interrupt *pcswi;
+
+	pcs = container_of(pcs_soc, struct pcs_device, socdata);
+	list_for_each(pos, &pcs->irqs) {
+		pcswi = list_entry(pos, struct pcs_interrupt, node);
+		if (irq != pcswi->irq)
+			continue;
+
+		soc_mask = pcs_soc->irq_enable_mask;
+		raw_spin_lock(&pcs->lock);
+		mask = pcs->read(pcswi->reg);
+		if (enable)
+			mask |= soc_mask;
+		else
+			mask &= ~soc_mask;
+		pcs->write(mask, pcswi->reg);
+
+		/* flush posted write */
+		mask = pcs->read(pcswi->reg);
+		raw_spin_unlock(&pcs->lock);
+	}
+
+	if (pcs_soc->rearm)
+		pcs_soc->rearm();
+}
+
+/**
+ * pcs_irq_mask() - mask pinctrl interrupt
+ * @d: interrupt data
+ */
+static void pcs_irq_mask(struct irq_data *d)
+{
+	struct pcs_soc_data *pcs_soc = irq_data_get_irq_chip_data(d);
+
+	pcs_irq_set(pcs_soc, d->irq, true);
+}
+
+/**
+ * pcs_irq_unmask() - unmask pinctrl interrupt
+ * @d: interrupt data
+ */
+static void pcs_irq_unmask(struct irq_data *d)
+{
+	struct pcs_soc_data *pcs_soc = irq_data_get_irq_chip_data(d);
+
+	pcs_irq_set(pcs_soc, d->irq, false);
+}
+
+/**
+ * pcs_irq_set_wake() - toggle the suspend and resume wake up
+ * @d: interrupt data
+ * @state: wake-up state
+ *
+ * Note that this should be called only for suspend and resume.
+ * For runtime PM, the wake-up events should be enabled by default.
+ */
+static int pcs_irq_set_wake(struct irq_data *d, unsigned int state)
+{
+	if (state)
+		pcs_irq_unmask(d);
+	else
+		pcs_irq_mask(d);
+
+	return 0;
+}
+
+static inline void _pcs_irq_set_type(struct pcs_soc_data *pcs_soc, int irq, int flow_type)
+{
+	struct pcs_device *pcs;
+	struct list_head *pos;
+	unsigned int mask, soc_mask;
+	struct pcs_interrupt *pcswi;
+
+	pcs = container_of(pcs_soc, struct pcs_device, socdata);
+	list_for_each(pos, &pcs->irqs) {
+		pcswi = list_entry(pos, struct pcs_interrupt, node);
+		if (irq != pcswi->irq)
+			continue;
+
+		soc_mask = pcs_soc->irq_enable_mask;
+		raw_spin_lock(&pcs->lock);
+		mask = pcs->read(pcswi->reg);
+
+		if (flow_type == IRQ_TYPE_EDGE_RISING)
+			mask |= (1 << EDGE_RISE_EN);
+		else
+			mask &= ~(1 << EDGE_RISE_EN);
+
+		if (flow_type == IRQ_TYPE_EDGE_FALLING)
+			mask |= (1 << EDGE_FALL_EN);
+		else
+			mask &= ~(1 << EDGE_FALL_EN);
+
+		pcs->write(mask, pcswi->reg);
+
+		/* flush posted write */
+		mask = pcs->read(pcswi->reg);
+		raw_spin_unlock(&pcs->lock);
+	}
+}
+
+static int pcs_irq_set_type(struct irq_data *d, unsigned int flow_type)
+{
+	struct pcs_soc_data *pcs_soc = irq_data_get_irq_chip_data(d);
+
+	_pcs_irq_set_type(pcs_soc, d->irq, flow_type);
+
+	return 0;
+}
+
+/**
+ * pcs_irq_handle() - common interrupt handler
+ * @pcs_soc: SoC specific settings
+ *
+ * Note that this currently assumes we have one interrupt bit per
+ * mux register. This interrupt is typically used for wake-up events.
+ * For more complex interrupts different handlers can be specified.
+ */
+static int pcs_irq_handle(struct pcs_soc_data *pcs_soc)
+{
+	int count = 0;
+	struct list_head *pos;
+	struct pcs_device *pcs;
+	struct pcs_interrupt *pcswi;
+	unsigned int mask, reg_offset, bit_offset;
+
+	pcs = container_of(pcs_soc, struct pcs_device, socdata);
+	list_for_each(pos, &pcs->irqs) {
+		pcswi = list_entry(pos, struct pcs_interrupt, node);
+		reg_offset = (pcswi->hwirq / 4 - 1) / 32 * 4;
+		bit_offset = (pcswi->hwirq / 4 - 1) - reg_offset / 4 * 32;
+
+		raw_spin_lock(&pcs->lock);
+		mask = pcs->read(pcs->gedge_flag_base + reg_offset);
+		raw_spin_unlock(&pcs->lock);
+
+		if (mask & (1 << bit_offset)) {
+			generic_handle_domain_irq(pcs->domain, pcswi->hwirq);
+			count++;
+		}
+	}
+
+	return count;
+}
+
+/**
+ * pcs_irq_handler() - handler for the shared interrupt case
+ * @irq: interrupt
+ * @d: data
+ *
+ * Use this for cases where multiple instances of
+ * pinctrl-single share a single interrupt like on omaps.
+ */
+static irqreturn_t pcs_irq_handler(int irq, void *d)
+{
+	struct pcs_soc_data *pcs_soc = d;
+
+	return pcs_irq_handle(pcs_soc) ? IRQ_HANDLED : IRQ_NONE;
+}
+
+/**
+ * pcs_irq_chain_handler() - handler for the dedicated chained interrupt case
+ * @desc: interrupt descriptor
+ *
+ * Use this if you have a separate interrupt for each
+ * pinctrl-single instance.
+ */
+static void pcs_irq_chain_handler(struct irq_desc *desc)
+{
+	struct irq_chip *chip;
+	struct pcs_soc_data *pcs_soc = irq_desc_get_handler_data(desc);
+
+	chip = irq_desc_get_chip(desc);
+	chained_irq_enter(chip, desc);
+	pcs_irq_handle(pcs_soc);
+	chained_irq_exit(chip, desc);
+}
+
+static int pcs_irqdomain_map(struct irq_domain *d, unsigned int irq, irq_hw_number_t hwirq)
+{
+	struct pcs_device *pcs;
+	struct pcs_interrupt *pcswi;
+	struct pcs_soc_data *pcs_soc = d->host_data;
+
+	pcs = container_of(pcs_soc, struct pcs_device, socdata);
+	pcswi = devm_kzalloc(pcs->dev, sizeof(*pcswi), GFP_KERNEL);
+	if (!pcswi)
+		return -ENOMEM;
+
+	pcswi->reg = pcs->base + hwirq;
+	pcswi->hwirq = hwirq;
+	pcswi->irq = irq;
+
+	mutex_lock(&pcs->mutex);
+	list_add_tail(&pcswi->node, &pcs->irqs);
+	mutex_unlock(&pcs->mutex);
+
+	irq_set_chip_data(irq, pcs_soc);
+	irq_set_chip_and_handler(irq, &pcs->chip,
+				 handle_level_irq);
+	irq_set_lockdep_class(irq, &pcs_lock_class, &pcs_request_class);
+	irq_set_noprobe(irq);
+
+	return 0;
+}
+
+static const struct irq_domain_ops pcs_irqdomain_ops = {
+	.map = pcs_irqdomain_map,
+	.xlate = irq_domain_xlate_onecell,
+};
+
+/**
+ * pcs_irq_init_chained_handler() - set up a chained interrupt handler
+ * @pcs: pcs driver instance
+ * @np: device node pointer
+ */
+static int pcs_irq_init_chained_handler(struct pcs_device *pcs, struct device_node *np)
+{
+	int num_irqs;
+	const char *name = "pinctrl";
+	struct pcs_soc_data *pcs_soc = &pcs->socdata;
+
+	if (!pcs_soc->irq_enable_mask || !pcs_soc->irq_status_mask) {
+		pcs_soc->irq = -1;
+		return -EINVAL;
+	}
+
+	INIT_LIST_HEAD(&pcs->irqs);
+	pcs->chip.name = name;
+	pcs->chip.irq_ack = pcs_irq_mask;
+	pcs->chip.irq_mask = pcs_irq_mask;
+	pcs->chip.irq_unmask = pcs_irq_unmask;
+	pcs->chip.irq_set_wake = pcs_irq_set_wake;
+	pcs->chip.flags = IRQCHIP_SKIP_SET_WAKE;
+	pcs->chip.irq_set_type = pcs_irq_set_type;
+
+	if (PCS_QUIRK_HAS_SHARED_IRQ(pcs)) {
+		int res;
+
+		res = request_irq(pcs_soc->irq, pcs_irq_handler,
+				  IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_NO_THREAD,
+				  name, pcs_soc);
+		if (res) {
+			pcs_soc->irq = -1;
+			return res;
+		}
+	} else {
+		irq_set_chained_handler_and_data(pcs_soc->irq,
+						 pcs_irq_chain_handler,
+						 pcs_soc);
+	}
+
+	/*
+	 * We can use the register offset as the hardirq
+	 * number as irq_domain_add_simple maps them lazily.
+	 * This way we can easily support more than one
+	 * interrupt per function if needed.
+	 */
+	num_irqs = pcs->size;
+
+	pcs->domain = irq_domain_add_simple(np, num_irqs, 0,
+					    &pcs_irqdomain_ops,
+					    pcs_soc);
+	if (!pcs->domain) {
+		irq_set_chained_handler(pcs_soc->irq, NULL);
+		return -EINVAL;
+	}
+
+	return 0;
+}
+
+#ifdef CONFIG_PM_SLEEP
+static struct pcs_device *pinctrl_pcs;
+
+static int pinctrl_syscore_suspend(void)
+{
+	pinctrl_force_sleep(pinctrl_pcs->pctl);
+
+	return 0;
+}
+
+static void pinctrl_syscore_resume(void)
+{
+	pinctrl_force_default(pinctrl_pcs->pctl);
+}
+
+static struct syscore_ops pinctrl_syscore_ops = {
+	.suspend = pinctrl_syscore_suspend,
+	.resume = pinctrl_syscore_resume,
+};
+#endif
+
+/**
+ * pcs_quirk_missing_pinctrl_cells - handle legacy binding
+ * @pcs: pinctrl driver instance
+ * @np: device tree node
+ * @cells: number of cells
+ *
+ * Handle legacy binding with no #pinctrl-cells. This should be
+ * always two pinctrl-single,bit-per-mux and one for others.
+ * At some point we may want to consider removing this.
+ */
+static int pcs_quirk_missing_pinctrl_cells(struct pcs_device *pcs,
+					   struct device_node *np,
+					   int cells)
+{
+	u32 val;
+	int error;
+	struct property *p;
+	const char *name = "#pinctrl-cells";
+
+	error = of_property_read_u32(np, name, &val);
+	if (!error)
+		return 0;
+
+	dev_warn(pcs->dev, "please update dts to use %s = <%i>\n", name, cells);
+
+	p = devm_kzalloc(pcs->dev, sizeof(*p), GFP_KERNEL);
+	if (!p)
+		return -ENOMEM;
+
+	p->length = sizeof(__be32);
+	p->value = devm_kzalloc(pcs->dev, sizeof(__be32), GFP_KERNEL);
+	if (!p->value)
+		return -ENOMEM;
+	*(__be32 *)p->value = cpu_to_be32(cells);
+
+	p->name = devm_kstrdup(pcs->dev, name, GFP_KERNEL);
+	if (!p->name)
+		return -ENOMEM;
+
+	pcs->missing_nr_pinctrl_cells = p;
+
+#if IS_BUILTIN(CONFIG_PINCTRL_SINGLE)
+	error = of_add_property(np, pcs->missing_nr_pinctrl_cells);
+#endif
+
+	return error;
+}
+
+static struct clk *psc_clk;
+static struct reset_control *psc_rst;
+
+static int pcs_probe(struct platform_device *pdev)
+{
+	int ret;
+	u32 regval, i;
+	void __iomem *base;
+	struct pcs_pdata *pdata;
+	struct resource *res;
+	struct pcs_device *pcs;
+	const struct pcs_soc_data *soc;
+	struct device_node *np = pdev->dev.of_node;
+
+	soc = of_device_get_match_data(&pdev->dev);
+	if (WARN_ON(!soc))
+		return -EINVAL;
+
+	psc_rst = devm_reset_control_get_exclusive(&pdev->dev, "aib_rst");
+	if (IS_ERR(psc_rst)) {
+		ret = PTR_ERR(psc_rst);
+		dev_err(&pdev->dev, "Failed to get reset: %d\n", ret);
+		return -EINVAL;
+	}
+
+	/* deasser clk  */
+	ret = reset_control_deassert(psc_rst);
+	if (ret) {
+		dev_err(&pdev->dev, "Failed to deassert reset: %d\n", ret);
+		return -EINVAL;
+	}
+
+	psc_clk = devm_clk_get(&pdev->dev, NULL);
+	if (IS_ERR(psc_clk)) {
+		dev_err(&pdev->dev, "Fail to get pinctrl clock, error %ld.\n",
+			PTR_ERR(psc_clk));
+		return PTR_ERR(psc_clk);
+	}
+
+	ret = clk_prepare_enable(psc_clk);
+	if (ret) {
+		dev_err(&pdev->dev, "Fail to enable pinctrl clock, error %d.\n", ret);
+		return ret;
+	}
+
+	pcs = devm_kzalloc(&pdev->dev, sizeof(*pcs), GFP_KERNEL);
+	if (!pcs)
+		return -ENOMEM;
+
+	pcs->dev = &pdev->dev;
+	pcs->np = np;
+	raw_spin_lock_init(&pcs->lock);
+	mutex_init(&pcs->mutex);
+	INIT_LIST_HEAD(&pcs->gpiofuncs);
+	pcs->flags = soc->flags;
+	memcpy(&pcs->socdata, soc, sizeof(*soc));
+
+	ret = of_property_read_u32(np, "pinctrl-single,register-width", &pcs->width);
+	if (ret) {
+		dev_err(pcs->dev, "register width not specified\n");
+
+		return ret;
+	}
+
+	ret = of_property_read_u32(np, "pinctrl-single,function-mask", &pcs->fmask);
+	if (!ret) {
+		pcs->fshift = __ffs(pcs->fmask);
+		pcs->fmax = pcs->fmask >> pcs->fshift;
+	} else {
+		/* If mask property doesn't exist, function mux is invalid. */
+		pcs->fmask = 0;
+		pcs->fshift = 0;
+		pcs->fmax = 0;
+	}
+
+	ret = of_property_read_u32(np, "pinctrl-single,function-off", &pcs->foff);
+	if (ret)
+		pcs->foff = PCS_OFF_DISABLED;
+
+	pcs->bits_per_mux = of_property_read_bool(np, "pinctrl-single,bit-per-mux");
+	ret = pcs_quirk_missing_pinctrl_cells(pcs, np, pcs->bits_per_mux ? 2 : 1);
+	if (ret) {
+		dev_err(&pdev->dev, "unable to patch #pinctrl-cells\n");
+
+		return ret;
+	}
+
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	if (!res) {
+		dev_err(pcs->dev, "could not get resource\n");
+		return -ENODEV;
+	}
+
+	pcs->res = devm_request_mem_region(pcs->dev, res->start,
+					   resource_size(res), DRIVER_NAME);
+	if (!pcs->res) {
+		dev_err(pcs->dev, "could not get mem_region\n");
+		return -EBUSY;
+	}
+
+	pcs->size = resource_size(pcs->res);
+	pcs->base = devm_ioremap(pcs->dev, pcs->res->start, pcs->size);
+	if (!pcs->base) {
+		dev_err(pcs->dev, "could not ioremap\n");
+		return -ENODEV;
+	}
+
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+	if (!res) {
+		dev_err(pcs->dev, "could not get resource\n");
+		return -ENODEV;
+	}
+
+	pcs->gedge_flag_res = devm_request_mem_region(pcs->dev, res->start,
+						      resource_size(res),
+						      DRIVER_NAME);
+	if (!pcs->gedge_flag_res) {
+		dev_err(pcs->dev, "could not get mem_region\n");
+		return -EBUSY;
+	}
+
+	pcs->gedge_flag_size = resource_size(pcs->gedge_flag_res);
+	pcs->gedge_flag_base = devm_ioremap(pcs->dev, pcs->gedge_flag_res->start,
+					    pcs->gedge_flag_size);
+	if (!pcs->gedge_flag_base) {
+		dev_err(pcs->dev, "could not ioremap\n");
+		return -ENODEV;
+	}
+
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
+	if (!res) {
+		dev_err(pcs->dev, "could not get resource\n");
+		return -ENODEV;
+	}
+
+	pcs->gpio_base = ioremap(res->start, resource_size(res));
+	if (!pcs->gpio_base) {
+		dev_err(pcs->dev, "could not ioremap\n");
+		return -ENODEV;
+	}
+
+	platform_set_drvdata(pdev, pcs);
+
+	switch (pcs->width) {
+	case 8:
+		pcs->read = pcs_readb;
+		pcs->write = pcs_writeb;
+		break;
+	case 16:
+		pcs->read = pcs_readw;
+		pcs->write = pcs_writew;
+		break;
+	case 32:
+		pcs->read = pcs_readl;
+		pcs->write = pcs_writel;
+		break;
+	default:
+		break;
+	}
+
+	pcs->desc.name = DRIVER_NAME;
+	pcs->desc.pctlops = &pcs_pinctrl_ops;
+	pcs->desc.pmxops = &pcs_pinmux_ops;
+	if (PCS_HAS_PINCONF(pcs))
+		pcs->desc.confops = &pcs_pinconf_ops;
+	pcs->desc.owner = THIS_MODULE;
+
+	for (i = 4, base = pcs->base + 4; i < pcs->size; i += 4, base += 4) {
+		regval = pcs->read((void __iomem *)base);
+		regval |= (1 << EDGE_CLEAR);
+		regval &= ~(1 << EDGE_FALL_EN);
+		regval &= ~(1 << EDGE_RISE_EN);
+		pcs->write(regval, (void __iomem *)base);
+	}
+
+	ret = pcs_allocate_pin_table(pcs);
+	if (ret < 0)
+		goto free;
+
+	ret = devm_pinctrl_register_and_init(pcs->dev, &pcs->desc, pcs, &pcs->pctl);
+	if (ret) {
+		dev_err(pcs->dev, "could not register single pinctrl driver\n");
+		goto free;
+	}
+
+	ret = pcs_add_gpio_func(np, pcs);
+	if (ret < 0)
+		goto free;
+
+	pcs->socdata.irq = irq_of_parse_and_map(np, 0);
+	if (pcs->socdata.irq)
+		pcs->flags |= PCS_FEAT_IRQ;
+
+	/* We still need auxdata for some omaps for PRM interrupts */
+	pdata = dev_get_platdata(&pdev->dev);
+	if (pdata) {
+		if (pdata->rearm)
+			pcs->socdata.rearm = pdata->rearm;
+		if (pdata->irq) {
+			pcs->socdata.irq = pdata->irq;
+			pcs->flags |= PCS_FEAT_IRQ;
+		}
+	}
+
+	if (PCS_HAS_IRQ(pcs)) {
+		ret = pcs_irq_init_chained_handler(pcs, np);
+		if (ret < 0)
+			dev_warn(pcs->dev, "initialized with no interrupts\n");
+	}
+
+	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
+
+	dev_pm_set_wake_irq(&pdev->dev, pcs->socdata.irq);
+	device_init_wakeup(&pdev->dev, true);
+
+#ifdef CONFIG_PM_SLEEP
+	pinctrl_pcs = pcs;
+	register_syscore_ops(&pinctrl_syscore_ops);
+#endif
+
+	ret = pinctrl_enable(pcs->pctl);
+	if (ret)
+		goto free;
+
+	return 0;
+free:
+	pcs_free_resources(pcs);
+
+	return ret;
+}
+
+static int pcs_remove(struct platform_device *pdev)
+{
+	struct pcs_device *pcs = platform_get_drvdata(pdev);
+
+	if (!pcs)
+		return 0;
+
+	pcs_free_resources(pcs);
+	clk_disable_unprepare(psc_clk);
+	reset_control_assert(psc_rst);
+
+	return 0;
+}
+
+static const struct pcs_soc_data pinctrl_spacemit_k1x = {
+	.flags = PCS_QUIRK_SHARED_IRQ | PCS_FEAT_PINCONF,
+	.irq_enable_mask = (1 << EDGE_CLEAR), /* WAKEUPENABLE */
+	.irq_status_mask = (1 << EDGE_CLEAR), /* WAKEUPENABLE */
+};
+
+static const struct of_device_id pcs_of_match[] = {
+	{ .compatible = "pinctrl-spacemit-k1x", .data = &pinctrl_spacemit_k1x },
+	{ },
+};
+MODULE_DEVICE_TABLE(of, pcs_of_match);
+
+static struct platform_driver pcs_driver = {
+	.probe		= pcs_probe,
+	.remove		= pcs_remove,
+	.driver = {
+		.name		= DRIVER_NAME,
+		.of_match_table	= pcs_of_match,
+	},
+};
+
+static int __init pcs_driver_init(void)
+{
+	return platform_driver_register(&pcs_driver);
+}
+postcore_initcall(pcs_driver_init);
+
+static void __exit pcs_driver_exit(void)
+{
+	platform_driver_unregister(&pcs_driver);
+}
+module_exit(pcs_driver_exit);
