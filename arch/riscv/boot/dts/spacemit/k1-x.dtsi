@@ -496,5 +496,34 @@
 				#pinctrl-single,gpio-range-cells = <3>;
 			};
 		};
+
+		gpio: gpio@d4019000 {
+			compatible = "spacemit,k1x-gpio";
+			reg = <0x0 0xd4019000 0x0 0x800>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			interrupts = <58>;
+			clocks = <&ccu CLK_GPIO>;
+			interrupt-names = "gpio_mux";
+			interrupt-parent = <&intc>;
+			interrupt-controller;
+			#interrupt-cells = <2>;
+
+			gcb0: gpio0 {
+				reg-offset = <0x0>;
+			};
+
+			gcb1: gpio1 {
+				reg-offset = <0x4>;
+			};
+
+			gcb2: gpio2 {
+				reg-offset = <0x8>;
+			};
+
+			gcb3: gpio3 {
+				reg-offset = <0x100>;
+			};
+		};
 	};
 };
