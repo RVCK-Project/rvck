@@ -411,7 +411,8 @@ config SERIAL_PXA
 	depends on ARCH_PXA || ARCH_MMP
 	select SERIAL_CORE
 	select SERIAL_8250_PXA if SERIAL_8250=y
-	select SERIAL_PXA_NON8250 if !SERIAL_8250=y
+	select SERIAL_PXA_NON8250 if !SERIAL_8250=y && !SOC_SPACEMIT_K1X
+	select SERIAL_PXA_K1X if !SERIAL_8250=y && SOC_SPACEMIT_K1X
 	help
 	  If you have a machine based on an Intel XScale PXA2xx CPU you
 	  can enable its onboard serial ports by enabling this option.
@@ -441,6 +442,22 @@ config SERIAL_PXA_CONSOLE
 
 	  Unless you have a specific need, you should use SERIAL_8250_PXA
 	  and SERIAL_8250_CONSOLE instead of this.
+
+config SERIAL_SPACEMIT_K1X
+	bool "Spacemit k1x serial port support"
+	depends on SOC_SPACEMIT_K1X
+	depends on SERIAL_CORE
+	help
+	  If you have a machine based on Spacemit k1x soc,
+	  can enable its onboard serial port by enabling this option.
+
+config SERIAL_SPACEMIT_K1X_CONSOLE
+	bool "Console on spacemit k1x serial port"
+	depends on SERIAL_SPACEMIT_K1X
+	depends on SERIAL_CORE_CONSOLE
+	help
+	  If you have enabled the serial port on the Spacemit k1 chip,
+	  you can make it the console by answering Y to this option.
 
 config SERIAL_SA1100
 	bool "SA1100 serial port support"
