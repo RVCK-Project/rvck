@@ -1568,7 +1568,7 @@ unsigned long pxa_clk_freq;
 struct clk *pxa_clk_parent;
 #endif
 
-static int serial_pxa_suspend(struct device *dev)
+static int __maybe_unused serial_pxa_suspend(struct device *dev)
 {
 	struct uart_pxa_port *sport = dev_get_drvdata(dev);
 	struct uart_pxa_dma *pxa_dma = &sport->uart_dma;
@@ -1638,15 +1638,13 @@ static int serial_pxa_suspend(struct device *dev)
 #endif
 	}
 
-#ifdef CONFIG_PM
 	if (del_timer_sync(&sport->pxa_timer))
 		_pxa_timer_handler(sport);
-#endif
 
 	return 0;
 }
 
-static int serial_pxa_resume(struct device *dev)
+static int __maybe_unused serial_pxa_resume(struct device *dev)
 {
 	struct uart_pxa_port *sport = dev_get_drvdata(dev);
 	struct uart_pxa_dma *pxa_dma = &sport->uart_dma;
@@ -1681,9 +1679,7 @@ static int serial_pxa_resume(struct device *dev)
 }
 
 static SIMPLE_DEV_PM_OPS(serial_pxa_pm_ops, serial_pxa_suspend, serial_pxa_resume);
-#endif
 
-#ifdef CONFIG_PM
 static void _pxa_timer_handler(struct uart_pxa_port *up)
 {
 #if SUPPORT_POWER_QOS
