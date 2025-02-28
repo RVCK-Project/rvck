@@ -3392,6 +3392,11 @@ int iommu_group_claim_dma_owner(struct iommu_group *group, void *owner)
 		return -EINVAL;
 
 	mutex_lock(&group->mutex);
+	/* We may race against bus_iommu_probe() finalising groups here */
+	if (!group->default_domain) {
+		ret = -EPROBE_DEFER;
+		goto unlock_out;
+	}
 	if (group->owner_cnt) {
 		ret = -EPERM;
 		goto unlock_out;
