@@ -27,6 +27,11 @@ void acpi_arch_dma_setup(struct device *dev)
 	else
 		size = 1ULL << 32;
 
+	if (dev->dma_range_map) {
+		dev_dbg(dev, "dma_range_map already set\n");
+		return;
+	}
+
 	ret = acpi_dma_get_range(dev, &map);
 	if (!ret && map) {
 		const struct bus_dma_region *r = map;
