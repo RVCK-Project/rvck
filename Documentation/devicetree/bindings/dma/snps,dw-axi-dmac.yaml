@@ -80,6 +80,8 @@ properties:
     minimum: 1
     maximum: 16
 
+  dma-noncoherent: true
+
   resets:
     minItems: 1
     maxItems: 2
