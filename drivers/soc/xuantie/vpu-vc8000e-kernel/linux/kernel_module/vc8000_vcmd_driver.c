@@ -3721,7 +3721,7 @@ static int vcmd_init(struct platform_device *pdev)
     }
     pr_info("Init: vcmd_buf_mem_pool.virtualAddress=0x%llx.\n",(long long unsigned int)vcmd_buf_mem_pool.virtualAddress);
 
-    vcmd_status_buf_mem_pool.busAddress = (void *)vcmd_buf_mem_pool.busAddress+CMDBUF_POOL_TOTAL_SIZE;
+    vcmd_status_buf_mem_pool.busAddress = (unsigned long long)vcmd_buf_mem_pool.busAddress+CMDBUF_POOL_TOTAL_SIZE;
     vcmd_status_buf_mem_pool.virtualAddress = (void *)vcmd_buf_mem_pool.virtualAddress+CMDBUF_POOL_TOTAL_SIZE;
     vcmd_status_buf_mem_pool.size =CMDBUF_POOL_TOTAL_SIZE;
     pr_info("Init: vcmd_status_buf_mem_pool.busAddress=0x%llx.\n",(long long unsigned int)vcmd_status_buf_mem_pool.busAddress);
@@ -3732,7 +3732,7 @@ static int vcmd_init(struct platform_device *pdev)
     }
     pr_info("Init: vcmd_status_buf_mem_pool.virtualAddress=0x%llx.\n",(long long unsigned int)vcmd_status_buf_mem_pool.virtualAddress);
 
-    vcmd_registers_mem_pool.busAddress = (void *)vcmd_buf_mem_pool.busAddress+CMDBUF_POOL_TOTAL_SIZE*2;
+    vcmd_registers_mem_pool.busAddress = (unsigned long long)vcmd_buf_mem_pool.busAddress+CMDBUF_POOL_TOTAL_SIZE*2;
     vcmd_registers_mem_pool.virtualAddress = (void *)vcmd_buf_mem_pool.virtualAddress+CMDBUF_POOL_TOTAL_SIZE*2;
     vcmd_registers_mem_pool.size =CMDBUF_VCMD_REGISTER_TOTAL_SIZE;
     pr_info("Init: vcmd_registers_mem_pool.busAddress=0x%llx.\n",(long long unsigned int)vcmd_registers_mem_pool.busAddress);
