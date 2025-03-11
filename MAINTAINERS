@@ -18589,6 +18589,7 @@ F:	drivers/firmware/thead,th1520-aon.c
 F:	drivers/mailbox/mailbox-th1520.c
 F:	drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c
 F:	drivers/pinctrl/pinctrl-th1520.c
+F:	drivers/pmdomain/thead/
 F:	drivers/usb/dwc3/dwc3-thead.c
 F:	include/linux/firmware/thead/thead,th1520-aon.h
 
