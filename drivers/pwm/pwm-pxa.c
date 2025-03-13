@@ -164,28 +164,29 @@ static int pwm_probe(struct platform_device *pdev)
 	const struct platform_device_id *id = platform_get_device_id(pdev);
 	struct pwm_chip *chip;
 	struct pxa_pwm_chip *pc;
+	struct device *dev = &pdev->dev;
 	int ret = 0;
 
 	if (IS_ENABLED(CONFIG_OF) && id == NULL)
-		id = of_device_get_match_data(&pdev->dev);
+		id = of_device_get_match_data(dev);
 
 	if (id == NULL)
 		return -EINVAL;
 
-	pc = devm_kzalloc(&pdev->dev, sizeof(*pc), GFP_KERNEL);
+	pc = devm_kzalloc(dev, sizeof(*pc), GFP_KERNEL);
 	if (pc == NULL)
 		return -ENOMEM;
 	chip = &pc->chip;
 
-	pc->clk = devm_clk_get(&pdev->dev, NULL);
+	pc->clk = devm_clk_get(dev, NULL);
 	if (IS_ERR(pc->clk))
-		return PTR_ERR(pc->clk);
+		return dev_err_probe(dev, PTR_ERR(pc->clk), "Failed to get clock\n");
 
-	pc->reset = devm_reset_control_get_optional(&pdev->dev, NULL);
+	pc->reset = devm_reset_control_get_optional(dev, NULL);
 	if (!IS_ERR(pc->reset))
 		reset_control_deassert(pc->reset);
 
-	chip->dev = &pdev->dev;
+	chip->dev = dev;
 	chip->ops = &pxa_pwm_ops;
 	chip->npwm = (id->driver_data & HAS_SECONDARY_PWM) ? 2 : 1;
 
@@ -198,11 +199,9 @@ static int pwm_probe(struct platform_device *pdev)
 		goto err_rst;
 	}
 
-	ret = devm_pwmchip_add(&pdev->dev, chip);
-	if (ret < 0) {
-		dev_err(&pdev->dev, "pwmchip_add() failed: %d\n", ret);
-		goto err_rst;
-	}
+	ret = devm_pwmchip_add(dev, chip);
+	if (ret < 0)
+		return dev_err_probe(dev, ret, "pwmchip_add() failed\n");
 
 	return 0;
 
