@@ -338,6 +338,9 @@
 #define RISCV_PAUSE	".4byte 0x100000f"
 #define ZAWRS_WRS_NTO	".4byte 0x00d00073"
 #define ZAWRS_WRS_STO	".4byte 0x01d00073"
+#define RISCV_NOP4	".4byte 0x00000013"
+
+#define RISCV_INSN_NOP4	_AC(0x00000013, U)
 
 #ifndef __ASSEMBLY__
 #define nop()           __asm__ __volatile__ ("nop")
