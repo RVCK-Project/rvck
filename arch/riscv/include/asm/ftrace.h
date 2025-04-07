@@ -137,6 +137,9 @@ struct ftrace_regs {
 	unsigned long sp;
 	unsigned long s0;
 	unsigned long t1;
+#ifdef CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
+	unsigned long direct_tramp;
+#endif
 	union {
 		unsigned long args[8];
 		struct {
@@ -206,10 +209,13 @@ void ftrace_graph_func(unsigned long ip, unsigned long parent_ip,
 		       struct ftrace_ops *op, struct ftrace_regs *fregs);
 #define ftrace_graph_func ftrace_graph_func
 
+#ifdef CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
 static inline void arch_ftrace_set_direct_caller(struct ftrace_regs *fregs, unsigned long addr)
 {
 	fregs->t1 = addr;
 }
+#endif /* CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS */
+
 #endif /* CONFIG_DYNAMIC_FTRACE_WITH_ARGS */
 
 #endif /* __ASSEMBLY__ */
