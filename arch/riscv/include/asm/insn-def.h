@@ -260,4 +260,10 @@
 #define ZAWRS_WRS_NTO	".4byte 0x00d00073"
 #define ZAWRS_WRS_STO	".4byte 0x01d00073"
 
+#ifndef __ASSEMBLY__
+#define nop()           __asm__ __volatile__ ("nop")
+#define __nops(n)       ".rept  " #n "\nnop\n.endr\n"
+#define nops(n)         __asm__ __volatile__ (__nops(n))
+#endif
+
 #endif /* __ASM_INSN_DEF_H */
