@@ -26,6 +26,7 @@
 #include <linux/io.h>
 #include <linux/pwm.h>
 #include <linux/of.h>
+#include <linux/reset.h>
 
 #include <asm/div64.h>
 
@@ -54,9 +55,13 @@ struct pxa_pwm_chip {
 	struct device	*dev;
 
 	struct clk	*clk;
-	struct reset_control	*reset;
 	void __iomem	*mmio_base;
 };
+
+static void pxa_pwm_reset_assert(void *data)
+{
+	reset_control_assert(data);
+}
 
 static inline struct pxa_pwm_chip *to_pxa_pwm_chip(struct pwm_chip *chip)
 {
@@ -165,6 +170,7 @@ static int pwm_probe(struct platform_device *pdev)
 	struct pwm_chip *chip;
 	struct pxa_pwm_chip *pc;
 	struct device *dev = &pdev->dev;
+	struct reset_control *rst;
 	int ret = 0;
 
 	if (IS_ENABLED(CONFIG_OF) && id == NULL)
@@ -182,9 +188,20 @@ static int pwm_probe(struct platform_device *pdev)
 	if (IS_ERR(pc->clk))
 		return dev_err_probe(dev, PTR_ERR(pc->clk), "Failed to get clock\n");
 
-	pc->reset = devm_reset_control_get_optional(dev, NULL);
-	if (!IS_ERR(pc->reset))
-		reset_control_deassert(pc->reset);
+	rst = devm_reset_control_get_optional(dev, NULL);
+	if (IS_ERR(rst))
+		return dev_err_probe(&pdev->dev, PTR_ERR(rst),
+				     "Reset controller error\n");
+
+	ret = reset_control_deassert(rst);
+	if (ret)
+		return dev_err_probe(dev, ret, "Failed to deassert reset\n");
+
+	if (rst) {
+		ret = devm_add_action_or_reset(dev, pxa_pwm_reset_assert, rst);
+		if (ret)
+			return dev_err_probe(dev, ret, "Failed to register reset action\n");
+	}
 
 	chip->dev = dev;
 	chip->ops = &pxa_pwm_ops;
@@ -194,22 +211,14 @@ static int pwm_probe(struct platform_device *pdev)
 		chip->of_xlate = of_pwm_single_xlate;
 
 	pc->mmio_base = devm_platform_ioremap_resource(pdev, 0);
-	if (IS_ERR(pc->mmio_base)) {
-		ret = PTR_ERR(pc->mmio_base);
-		goto err_rst;
-	}
+	if (IS_ERR(pc->mmio_base))
+		return PTR_ERR(pc->mmio_base);
 
 	ret = devm_pwmchip_add(dev, chip);
 	if (ret < 0)
 		return dev_err_probe(dev, ret, "pwmchip_add() failed\n");
 
 	return 0;
-
-err_rst:
-	if (!IS_ERR(pc->reset))
-		reset_control_assert(pc->reset);
-
-	return ret;
 }
 
 
