@@ -1,4 +1,4 @@
-name: revyos-kernel-build
+name: rvck-kernel-build
 
 on:
   push:
@@ -43,7 +43,7 @@ jobs:
         run: |
               mkdir -p output
               pushd kernel
-                make revyos_defconfig
+                make defconfig
                 export KDEB_PKGVERSION="$(make kernelversion)-$(date "+%Y.%m.%d.%H.%M")+$(git rev-parse --short HEAD)"
                 make -j$(nproc) bindeb-pkg LOCALVERSION="-${board}"
                 make -j$(nproc) dtbs
