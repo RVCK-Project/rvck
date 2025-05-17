@@ -405,6 +405,53 @@
 		dma-noncoherent;
 		ranges;
 
+		/*
+		 * dram mapping for dma/usb/sdh for ex,
+		 * only 2GB available for devices.
+		 */
+		dram_range0: dram_range@0 {
+			compatible = "spacemit-dram-bus";
+			#address-cells = <2>;
+			#size-cells = <2>;
+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>;
+			#interconnect-cells = <0>;
+			status = "okay";
+		};
+
+		/*
+		 * dram mapping for vpu/gpu/dpu/v2d/isp/csi/vi/cpp,
+		 * and eth/crypto/jpu for ex.
+		 * 4GB space is available for devices, and the mapping is:
+		 * 0~2GB of device's address space is mapping to 0~2GB of cpu's
+		 * 2~4GB of device's address space is mapping to 4~6GB of cpu's
+		 */
+		dram_range1: dram_range@1 {
+			compatible = "spacemit-dram-bus";
+			#address-cells = <2>;
+			#size-cells = <2>;
+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
+				     <0x0 0x80000000 0x1 0x00000000 0x0 0x80000000>;
+			#interconnect-cells = <0>;
+			status = "okay";
+		};
+
+		/*
+		 * dram mapping for pcie0/pcie1/pcie2 for ex.
+		 * 14GB space is available for devices, and the mapping is:
+		 * 0~2GB of device's address space is mapping to 0~2GB of cpu's
+		 * 4~16GB of device's address space is mapping to 6~16GB of cpu's
+		 * the 2~4GB of devcie's address space is io area
+		 */
+		dram_range2: dram_range@2 {
+			compatible = "spacemit-dram-bus";
+			#address-cells = <2>;
+			#size-cells = <2>;
+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
+				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
+			#interconnect-cells = <0>;
+			status = "okay";
+		};
+
 		clint0: clint@e4000000 {
 			compatible = "riscv,clint0";
 			interrupts-extended = <
