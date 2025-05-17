@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menu "Spacemit SoC drivers"
+	depends on SOC_SPACEMIT
+
+config SPACEMIT_MEM_RANGE
+	bool "add memory range support for DMA device's."
+	help
+	  This driver add memory range process for the devices whose address
+	  space access is restricted, such as not full memory area supportted,
+	  or address space is not same as cpu's.
+
+endmenu
