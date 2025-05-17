@@ -489,6 +489,13 @@ config OWL_DMA
 	help
 	  Enable support for the Actions Semi Owl SoCs DMA controller.
 
+config SPACEMIT_K1_DMA
+	bool "Spacemit k1 SoCs DMA support"
+	depends on SOC_SPACEMIT_K1X
+	depends on DMA_ENGINE
+	help
+	  Enable support for the Spacemit k1 SoCs DMA controller.
+
 config PCH_DMA
 	tristate "Intel EG20T PCH / LAPIS Semicon IOH(ML7213/ML7223/ML7831) DMA"
 	depends on PCI && (X86_32 || COMPILE_TEST)
