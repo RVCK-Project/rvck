@@ -2218,6 +2218,18 @@ config MFD_QCOM_PM8008
 	  under it in the device tree. Additional drivers must be enabled in
 	  order to use the functionality of the device.
 
+config MFD_SPACEMIT_P1
+	tristate "Spacemit P1 Power Management IC"
+	depends on I2C && OF
+	select MFD_CORE
+	select REGMAP_I2C
+	select REGMAP_IRQ
+	help
+	  Select this option to get support for the Spacemit P1 Power Management IC.
+	  P1 is a dedicated PMIC that integrates voltage supply, gpio, rtc and adc
+	  functions in to a single chip. This driver provides common support for
+	  accessing the device.
+
 menu "Multimedia Capabilities Port drivers"
 	depends on ARCH_SA1100
 
