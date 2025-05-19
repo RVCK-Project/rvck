@@ -965,6 +965,13 @@ config SPI_SN_F_OSPI
 	  for connecting an SPI Flash memory over up to 8-bit wide bus.
 	  It supports indirect access mode only.
 
+config SPI_SPACEMIT_K1
+	tristate "Spacemit K1 SPI Controller Platform Driver Support"
+	depends on SOC_SPACEMIT_K1X
+	help
+	  This enables support for the SPI master controller in the Spacemit
+	  k1 SOC.
+
 config SPI_SPRD
 	tristate "Spreadtrum SPI controller"
 	depends on ARCH_SPRD || COMPILE_TEST
