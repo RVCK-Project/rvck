@@ -5,6 +5,8 @@
 
 #include <dt-bindings/reset/spacemit-k1x-reset.h>
 #include <dt-bindings/clock/spacemit-k1x-clock.h>
+#include <dt-bindings/dma/spacemit-k1-dma.h>
+
 / {
 	compatible = "spacemit,k1-x";
 	#address-cells = <2>;
@@ -554,6 +556,22 @@
 			range: gpio-range {
 				#pinctrl-single,gpio-range-cells = <3>;
 			};
+		};
+
+		pdma0: pdma@d4000000 {
+			compatible = "spacemit,k1-pdma";
+			reg = <0x0 0xd4000000 0x0 0x4000>;
+			interrupts = <72>;
+			interrupt-parent = <&intc>;
+			clocks = <&ccu CLK_DMA>;
+			resets = <&reset RESET_DMA>;
+			#dma-cells= <2>;
+			#dma-channels = <16>;
+			max-burst-size = <64>;
+			reserved-channels = <15 45>;
+			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "ok";
 		};
 
 		uart0: serial@d4017000 {
