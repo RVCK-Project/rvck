@@ -42,7 +42,7 @@
 #include <linux/delay.h>
 
 #include <uapi/vha.h>
-#include "vha_common.h"
+#include "../vha_common.h"
 #include "vha_plat.h"
 #include <vha_regs.h>
 
