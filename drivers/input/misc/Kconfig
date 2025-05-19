@@ -939,4 +939,14 @@ config INPUT_STPMIC1_ONKEY
 	  To compile this driver as a module, choose M here: the
 	  module will be called stpmic1_onkey.
 
+config INPUT_SPACEMIT_P1_PWRKEY
+	tristate "Spacemit p1 power-key support"
+	depends on MFD_SPACEMIT_P1
+	help
+	  Support the power-key of Spacemit P1 PMICs as an input device
+	  reporting power button status.
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called spacemit-p1-pwrkey.
+
 endif
