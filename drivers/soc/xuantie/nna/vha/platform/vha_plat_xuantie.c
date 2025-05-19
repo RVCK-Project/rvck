@@ -22,7 +22,7 @@
 #include <linux/version.h>
 
 #include <img_mem_man.h>
-#include "vha_common.h"
+#include "../vha_common.h"
 #include "uapi/version.h"
 #include "vha_plat.h"
 #include "vha_plat_dt.h"
