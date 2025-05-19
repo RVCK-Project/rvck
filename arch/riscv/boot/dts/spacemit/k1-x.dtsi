@@ -827,6 +827,63 @@
 			status = "disabled";
 		};
 
+		spi0: spi@d4026000 {
+			compatible = "spacemit,k1-spi";
+			reg = <0x0 0xd4026000 0x0 0x30>;
+			k1,spi-id = <0>;
+			k1,spi-clock-rate = <26000000>;
+			dmas = <&pdma0 DMA_SSPA0_RX 1
+				&pdma0 DMA_SSPA0_TX 1>;
+			dma-names = "rx", "tx";
+			interrupt-parent = <&intc>;
+			interrupts = <56>;
+			clocks = <&ccu CLK_SSPA0>;
+			resets = <&reset RESET_SSPA0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
+		};
+
+		spi1: spi@d4026800 {
+			compatible = "spacemit,k1-spi";
+			reg = <0x0 0xd4026800 0x0 0x30>;
+			k1,spi-id = <1>;
+			k1,spi-clock-rate = <26000000>;
+			dmas = <&pdma0 DMA_SSPA1_RX 1
+				&pdma0 DMA_SSPA1_TX 1>;
+			dma-names = "rx", "tx";
+			interrupt-parent = <&intc>;
+			interrupts = <57>;
+			clocks = <&ccu CLK_SSPA1>;
+			resets = <&reset RESET_SSPA1>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
+		};
+
+		spi3: spi@d401c000 {
+			compatible = "spacemit,k1-spi";
+			reg = <0x0 0xd401c000 0x0 0x30>;
+			k1,spi-id = <3>;
+			k1,spi-clock-rate = <26000000>;
+			dmas = <&pdma0 DMA_SSP3_RX 1
+				&pdma0 DMA_SSP3_TX 1>;
+			dma-names = "rx", "tx";
+			interrupt-parent = <&intc>;
+			interrupts = <55>;
+			clocks = <&ccu CLK_SSP3>;
+			resets = <&reset RESET_SSP3>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
+		};
+
 		gpio: gpio@d4019000 {
 			compatible = "spacemit,k1x-gpio";
 			reg = <0x0 0xd4019000 0x0 0x800>;
