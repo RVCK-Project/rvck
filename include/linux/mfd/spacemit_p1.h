@@ -1,0 +1,250 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later */
+/*
+ * Spacemit P1 multi-function-device interface
+ * Copyright (c) 2023, SPACEMIT Co., Ltd
+ */
+#ifndef __SPACEMIT_P1_H__
+#define __SPACEMIT_P1_H__
+
+#include <linux/regulator/machine.h>
+#include <linux/regmap.h>
+
+enum SPM_P1_reg {
+	SPM_P1_ID_DCDC1,
+	SPM_P1_ID_DCDC2,
+	SPM_P1_ID_DCDC3,
+	SPM_P1_ID_DCDC4,
+	SPM_P1_ID_DCDC5,
+	SPM_P1_ID_DCDC6,
+	SPM_P1_ID_LDO1,
+	SPM_P1_ID_LDO2,
+	SPM_P1_ID_LDO3,
+	SPM_P1_ID_LDO4,
+	SPM_P1_ID_LDO5,
+	SPM_P1_ID_LDO6,
+	SPM_P1_ID_LDO7,
+	SPM_P1_ID_LDO8,
+	SPM_P1_ID_LDO9,
+	SPM_P1_ID_LDO10,
+	SPM_P1_ID_LDO11,
+	SPM_P1_ID_SWITCH1,
+};
+
+/* irq description */
+enum IRQ_line {
+	/* reg: 0x91 */
+	SPM_P1_E_GPI0,
+	SPM_P1_E_GPI1,
+	SPM_P1_E_GPI2,
+	SPM_P1_E_GPI3,
+	SPM_P1_E_GPI4,
+	SPM_P1_E_GPI5,
+
+	/* reg: 0x92 */
+	SPM_P1_E_ADC_TEMP,
+	SPM_P1_E_ADC_EOC,
+	SPM_P1_E_ADC_EOS,
+	SPM_P1_E_WDT_TO,
+	SPM_P1_E_ALARM,
+	SPM_P1_E_TICK,
+
+	/* reg: 0x93 */
+	SPM_P1_E_LDO_OV,
+	SPM_P1_E_LDO_UV,
+	SPM_P1_E_LDO_SC,
+	SPM_P1_E_SW_SC,
+	SPM_P1_E_TEMP_WARN,
+	SPM_P1_E_TEMP_SEVERE,
+	SPM_P1_E_TEMP_CRIT,
+
+	/* reg: 0x94 */
+	SPM_P1_E_BUCK1_OV,
+	SPM_P1_E_BUCK2_OV,
+	SPM_P1_E_BUCK3_OV,
+	SPM_P1_E_BUCK4_OV,
+	SPM_P1_E_BUCK5_OV,
+	SPM_P1_E_BUCK6_OV,
+
+	/* reg: 0x95 */
+	SPM_P1_E_BUCK1_UV,
+	SPM_P1_E_BUCK2_UV,
+	SPM_P1_E_BUCK3_UV,
+	SPM_P1_E_BUCK4_UV,
+	SPM_P1_E_BUCK5_UV,
+	SPM_P1_E_BUCK6_UV,
+
+	/* reg: 0x96 */
+	SPM_P1_E_BUCK1_SC,
+	SPM_P1_E_BUCK2_SC,
+	SPM_P1_E_BUCK3_SC,
+	SPM_P1_E_BUCK4_SC,
+	SPM_P1_E_BUCK5_SC,
+	SPM_P1_E_BUCK6_SC,
+
+	/* reg: 0x97 */
+	SPM_P1_E_PWRON_RINTR,
+	SPM_P1_E_PWRON_FINTR,
+	SPM_P1_E_PWRON_SINTR,
+	SPM_P1_E_PWRON_LINTR,
+	SPM_P1_E_PWRON_SDINTR,
+	SPM_P1_E_VSYS_OV,
+};
+
+#define SPM_P1_MAX_REG			0xB0
+
+#define SPM_P1_VERSION_ID_REG		0xa1
+
+#define SPM_P1_BUCK_VSEL_MASK		0xff
+#define SMP8821_BUCK_EN_MASK		0x1
+
+#define SPM_P1_BUCK1_CTRL_REG		0x47
+#define SPM_P1_BUCK2_CTRL_REG		0x4a
+#define SPM_P1_BUCK3_CTRL_REG		0x4d
+#define SPM_P1_BUCK4_CTRL_REG		0x50
+#define SPM_P1_BUCK5_CTRL_REG		0x53
+#define SPM_P1_BUCK6_CTRL_REG		0x56
+
+#define SPM_P1_BUCK1_VSEL_REG		0x48
+#define SPM_P1_BUCK2_VSEL_REG		0x4b
+#define SPM_P1_BUCK3_VSEL_REG		0x4e
+#define SPM_P1_BUCK4_VSEL_REG		0x51
+#define SPM_P1_BUCK5_VSEL_REG		0x54
+#define SPM_P1_BUCK6_VSEL_REG		0x57
+
+#define SPM_P1_ALDO1_CTRL_REG		0x5b
+#define SPM_P1_ALDO2_CTRL_REG		0x5e
+#define SPM_P1_ALDO3_CTRL_REG		0x61
+#define SPM_P1_ALDO4_CTRL_REG		0x64
+
+#define SPM_P1_ALDO1_VOLT_REG		0x5c
+#define SPM_P1_ALDO2_VOLT_REG		0x5f
+#define SPM_P1_ALDO3_VOLT_REG		0x62
+#define SPM_P1_ALDO4_VOLT_REG		0x65
+
+#define SPM_P1_ALDO_EN_MASK		0x1
+#define SPM_P1_ALDO_VSEL_MASK		0x7f
+
+#define SPM_P1_DLDO1_CTRL_REG		0x67
+#define SPM_P1_DLDO2_CTRL_REG		0x6a
+#define SPM_P1_DLDO3_CTRL_REG		0x6d
+#define SPM_P1_DLDO4_CTRL_REG		0x70
+#define SPM_P1_DLDO5_CTRL_REG		0x73
+#define SPM_P1_DLDO6_CTRL_REG		0x76
+#define SPM_P1_DLDO7_CTRL_REG		0x79
+
+#define SPM_P1_DLDO1_VOLT_REG		0x68
+#define SPM_P1_DLDO2_VOLT_REG		0x6b
+#define SPM_P1_DLDO3_VOLT_REG		0x6e
+#define SPM_P1_DLDO4_VOLT_REG		0x71
+#define SPM_P1_DLDO5_VOLT_REG		0x74
+#define SPM_P1_DLDO6_VOLT_REG		0x77
+#define SPM_P1_DLDO7_VOLT_REG		0x7a
+
+#define SPM_P1_DLDO_EN_MASK		0x1
+#define SPM_P1_DLDO_VSEL_MASK		0x7f
+
+#define SPM_P1_SWITCH_CTRL_REG		0x59
+#define SPM_P1_SWTICH_EN_MASK		0x1
+
+#define SPM_P1_PWR_CTRL2		0x7e
+#define SPM_P1_SW_SHUTDOWN_BIT_MSK	0x4
+#define SPM_P1_SW_RESET_BIT_MSK	0x2
+
+#define SPM_P1_NON_RESET_REG		0xAB
+#define SPM_P1_RESTART_CFG_BIT_MSK	0x7
+
+#define SPM_P1_SLEEP_REG_OFFSET	0x1
+
+#define SPM_P1_ADC_AUTO_REG		0x22
+#define SPM_P1_ADC_AUTO_BIT_MSK	0x7f
+
+#define SPM_P1_ADC_CTRL_REG		0x1e
+#define SPM_P1_ADC_CTRL_BIT_MSK	0x3
+#define SPM_P1_ADC_CTRL_EN_BIT_OFFSET	0x0
+#define SPM_P1_ADC_CTRL_GO_BIT_OFFSET	0x1
+
+#define SPM_P1_ADC_CFG1_REG		0x20
+
+#define SPM_P1_ADC_CFG1_ADC_CHOP_EN_BIT_OFFSET		0x6
+#define SPM_P1_ADC_CFG1_ADC_CHOP_EN_BIT_MSK		0x40
+
+#define SPM_P1_ADC_CFG1_ADC_CHNNL_SEL_BIT_OFFSET	0x3
+#define SPM_P1_ADC_CFG1_ADC_CHNNL_SEL_BIT_MSK		0x38
+
+#define SPM_P1_ADC_CFG2_REG				0x21
+#define SPM_P1_ADC_CFG2_REF_SEL_BIT_OFFSET		0x0
+#define SPM_P1_ADC_CFG2_REF_SEL_BIT_MSK		0x3
+#define SPM_P1_ADC_CFG2_3V3_REF			0x2
+
+#define SPM_P1_ADC_CFG2_7_DEB_NUM			0x7
+#define SPM_P1_ADC_CFG2_DEB_NUM_BIT_MSK		0x70
+#define SPM_P1_ADC_CFG2_DEB_NUM_BIT_OFFSET		0x4
+
+#define SPM_P1_ADC_EXTERNAL_CHANNEL_OFFSET		2
+
+#define SPM_P1_ADCIN0_RES_H_REG			0x2a
+#define SPM_P1_ADCIN0_RES_L_REG			0x2b
+#define SPM_P1_ADCIN0_REG_L_BIT_MSK			0xf0
+
+#define SPM_P1_E_GPI0_MSK	BIT(0)
+#define SPM_P1_E_GPI1_MSK	BIT(1)
+#define SPM_P1_E_GPI2_MSK	BIT(2)
+#define SPM_P1_E_GPI3_MSK	BIT(3)
+#define SPM_P1_E_GPI4_MSK	BIT(4)
+#define SPM_P1_E_GPI5_MSK	BIT(5)
+
+#define SPM_P1_E_ADC_TEMP_MSK	BIT(0)
+#define SPM_P1_E_ADC_EOC_MSK	BIT(1)
+#define SPM_P1_E_ADC_EOS_MSK	BIT(2)
+#define SPM_P1_E_WDT_TO_MSK	BIT(3)
+#define SPM_P1_E_ALARM_MSK	BIT(4)
+#define SPM_P1_E_TICK_MSK	BIT(5)
+
+#define SPM_P1_E_LDO_OV_MSK	BIT(0)
+#define SPM_P1_E_LDO_UV_MSK	BIT(1)
+#define SPM_P1_E_LDO_SC_MSK	BIT(2)
+#define SPM_P1_E_SW_SC_MSK	BIT(3)
+#define SPM_P1_E_TEMP_WARN_MSK	BIT(4)
+#define SPM_P1_E_TEMP_SEVERE_MSK	BIT(5)
+#define SPM_P1_E_TEMP_CRIT_MSK		BIT(6)
+
+#define SPM_P1_E_BUCK1_OV_MSK	BIT(0)
+#define SPM_P1_E_BUCK2_OV_MSK	BIT(1)
+#define SPM_P1_E_BUCK3_OV_MSK	BIT(2)
+#define SPM_P1_E_BUCK4_OV_MSK	BIT(3)
+#define SPM_P1_E_BUCK5_OV_MSK	BIT(4)
+#define SPM_P1_E_BUCK6_OV_MSK	BIT(5)
+
+#define SPM_P1_E_BUCK1_UV_MSK	BIT(0)
+#define SPM_P1_E_BUCK2_UV_MSK	BIT(1)
+#define SPM_P1_E_BUCK3_UV_MSK	BIT(2)
+#define SPM_P1_E_BUCK4_UV_MSK	BIT(3)
+#define SPM_P1_E_BUCK5_UV_MSK	BIT(4)
+#define SPM_P1_E_BUCK6_UV_MSK	BIT(5)
+
+#define SPM_P1_E_BUCK1_SC_MSK	BIT(0)
+#define SPM_P1_E_BUCK2_SC_MSK	BIT(1)
+#define SPM_P1_E_BUCK3_SC_MSK	BIT(2)
+#define SPM_P1_E_BUCK4_SC_MSK	BIT(3)
+#define SPM_P1_E_BUCK5_SC_MSK	BIT(4)
+#define SPM_P1_E_BUCK6_SC_MSK	BIT(5)
+
+#define SPM_P1_E_PWRON_RINTR_MSK	BIT(0)
+#define SPM_P1_E_PWRON_FINTR_MSK	BIT(1)
+#define SPM_P1_E_PWRON_SINTR_MSK	BIT(2)
+#define SPM_P1_E_PWRON_LINTR_MSK	BIT(3)
+#define SPM_P1_E_PWRON_SDINTR_MSK	BIT(4)
+#define SPM_P1_E_VSYS_OV_MSK		BIT(5)
+
+#define SPM_P1_E_STATUS_REG_BASE	0x91
+#define SPM_P1_E_EN_REG_BASE		0x98
+
+struct spacemit_pmic {
+	struct i2c_client		*i2c;
+	struct regmap_irq_chip_data	*irq_data;
+	struct regmap			*regmap;
+	const struct regmap_config	*regmap_cfg;
+	const struct regmap_irq_chip	*regmap_irq_chip;
+};
+
+#endif /* __SPACEMIT_P1_H__ */
