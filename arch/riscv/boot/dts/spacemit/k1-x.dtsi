@@ -884,6 +884,38 @@
 			status = "disabled";
 		};
 
+		qspi: spi@d420c000 {
+			compatible = "spacemit,k1-qspi";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x0 0xd420c000 0x0 0x1000>,
+			      <0x0 0xb8000000 0x0 0xc00000>;
+			reg-names = "qspi-base", "qspi-mmap";
+			k1,qspi-sfa1ad = <0x4000000>;
+			k1,qspi-sfa2ad = <0x100000>;
+			k1,qspi-sfb1ad = <0x100000>;
+			k1,qspi-sfb2ad = <0x100000>;
+			clocks = <&ccu CLK_QSPI>,
+				 <&ccu CLK_QSPI_BUS>;
+			clock-names = "qspi_clk", "qspi_bus_clk";
+			resets = <&reset RESET_QSPI>,
+				 <&reset RESET_QSPI_BUS>;
+			reset-names = "qspi_reset", "qspi_bus_reset";
+			k1,qspi-pmuap-reg = <0xd4282860>;
+			k1,qspi-mpmu-acgr-reg = <0xd4051024>;
+			k1,qspi-freq = <26500000>;
+			k1,qspi-id = <4>;
+			interrupts = <117>;
+			interrupt-parent = <&intc>;
+			k1,qspi-tx-dma = <1>;
+			k1,qspi-rx-dma = <1>;
+			dmas = <&pdma0 DMA_QSPI_TX 1>;
+			dma-names = "tx-dma";
+			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
+		};
+
 		gpio: gpio@d4019000 {
 			compatible = "spacemit,k1x-gpio";
 			reg = <0x0 0xd4019000 0x0 0x800>;
