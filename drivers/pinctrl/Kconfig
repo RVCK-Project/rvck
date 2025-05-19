@@ -427,6 +427,20 @@ config PINCTRL_SINGLE
 	help
 	  This selects the device tree based generic pinctrl driver.
 
+config PINCTRL_SPACEMIT_P1
+	tristate "Spacemit P1 PMIC pinctrl and GPIO Support"
+	depends on MFD_SPACEMIT_P1
+	depends on OF
+	select PINMUX
+	select GENERIC_PINCONF
+	select GPIOLIB
+	help
+	  P1 PMICs provides multiple GPIOs that can be muxed for different
+	  functions. This driver bundles a pinctrl driver to select the function
+	  muxing and a GPIO driver to handle the GPIO when the GPIO function is
+	  selected.
+	  Say Y to enable pinctrl and GPIO support for the P1 PMIC.
+
 config PINCTRL_ST
 	bool
 	depends on OF
