@@ -114,3 +114,9 @@
 	pinctrl-0 = <&pinctrl_i2c8>;
 	status = "okay";
 };
+
+&pwm7 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_pwm7_0>;
+	status = "okay";
+};
