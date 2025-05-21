@@ -80,3 +80,16 @@
 	pinctrl-0 = <&pinctrl_uart0_2>;
 	status = "okay";
 };
+
+&i2c2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c2_0>;
+	spacemit,i2c-fast-mode;
+	status = "okay";
+};
+
+&i2c8 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c8>;
+	status = "okay";
+};
