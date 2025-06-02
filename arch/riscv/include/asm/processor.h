@@ -107,7 +107,7 @@ struct thread_struct {
 	unsigned long envcfg;
 	u32 riscv_v_flags;
 	u32 vstate_ctrl;
-	unsigned long status;
+	unsigned long sum;
 	struct __riscv_v_ext_state vstate;
 	struct __riscv_v_ext_state kernel_vstate;
 	unsigned long align_ctl;
