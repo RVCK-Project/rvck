@@ -16,6 +16,7 @@
 #include <dt-bindings/thermal/thermal.h>
 #include <dt-bindings/soc/xuantie,th1520-iopmp.h>
 #include <dt-bindings/power/thead,th1520-power.h>
+#include <dt-bindings/reset/thead,th1520-reset.h>
 
 / {
 	compatible = "thead,th1520";
@@ -379,6 +380,8 @@
 		mboxes = <&mbox_910t 1 0>;
 		mbox-names = "aon";
 		opensbi-mboxes = <&mbox_910r>;
+		resets = <&rst TH1520_RESET_ID_GPU_CLKGEN>;
+		reset-names = "gpu-clkgen";
 		status = "okay";
 		#power-domain-cells = <1>;
 	};
