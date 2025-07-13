@@ -10,24 +10,7 @@
 #include <asm/hwcap.h>
 #include <asm/vendorid_list.h>
 #include <asm/vendor_extensions/mips.h>
-
-#ifdef CONFIG_ERRATA_ANDES
-#define ERRATA_ANDES_NO_IOCP 0
-#define ERRATA_ANDES_NUMBER 1
-#endif
-
-#ifdef CONFIG_ERRATA_SIFIVE
-#define	ERRATA_SIFIVE_CIP_453 0
-#define	ERRATA_SIFIVE_CIP_1200 1
-#define	ERRATA_SIFIVE_NUMBER 2
-#endif
-
-#ifdef CONFIG_ERRATA_THEAD
-#define	ERRATA_THEAD_MAE 0
-#define	ERRATA_THEAD_PMU 1
-#define	ERRATA_THEAD_GHOSTWRITE 2
-#define	ERRATA_THEAD_NUMBER 3
-#endif
+#include <asm/errata_list_vendors.h>
 
 #ifdef CONFIG_ERRATA_MIPS
 #define	ERRATA_MIPS_P8700_PAUSE_OPCODE 0
