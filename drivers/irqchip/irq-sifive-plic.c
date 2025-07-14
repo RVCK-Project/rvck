@@ -680,4 +680,5 @@ static int __init plic_early_probe(struct device_node *node,
 	return plic_probe(&node->fwnode);
 }
 
+IRQCHIP_DECLARE(thead_c900_plic, "thead,c900-plic", plic_early_probe);
 IRQCHIP_DECLARE(riscv, "allwinner,sun20i-d1-plic", plic_early_probe);
