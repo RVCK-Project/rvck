@@ -48,6 +48,10 @@ properties:
               - starfive,jh7100-hsuart
               - starfive,jh7100-uart
           - const: snps,dw-apb-uart
+      - items:
+          - enum:
+              - ultrarisc,dp1000-uart
+          - const: snps,dw-apb-uart
       - const: snps,dw-apb-uart
 
   reg:
