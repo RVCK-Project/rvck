@@ -9,7 +9,6 @@
 #include <linux/kexec.h>
 
 const struct kexec_file_ops * const kexec_file_loaders[] = {
-	&image_kexec_ops,
 	&elf_kexec_ops,
 	NULL
 };
