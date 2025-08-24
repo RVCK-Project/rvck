@@ -1255,14 +1255,9 @@ static void k1_spi_shutdown(struct platform_device *pdev)
 		dev_err(&pdev->dev, "shutdown failed with %d\n", status);
 }
 
-static const struct dev_pm_ops k1_spi_pm_ops = {
-	SET_SYSTEM_SLEEP_PM_OPS(k1_spi_suspend, k1_spi_resume)
-};
-
 static struct platform_driver driver = {
 	.driver = {
 		.name	= "k1-spi",
-		.pm	= &k1_spi_pm_ops,
 		.of_match_table = k1_spi_dt_ids,
 	},
 	.probe = k1_spi_probe,
