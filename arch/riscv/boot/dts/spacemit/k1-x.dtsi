@@ -6,6 +6,7 @@
 #include <dt-bindings/reset/spacemit-k1x-reset.h>
 #include <dt-bindings/clock/spacemit-k1x-clock.h>
 #include <dt-bindings/dma/spacemit-k1-dma.h>
+#include <dt-bindings/mmc/spacemit-k1-sdhci.h>
 
 / {
 	compatible = "spacemit,k1-x";
@@ -22,6 +23,9 @@
 		serial6 = &uart7;
 		serial7 = &uart8;
 		serial8 = &uart9;
+		mmc0 = &sdhci0;
+		mmc1 = &sdhci1;
+		mmc2 = &sdhci2;
 	};
 
 	cpus: cpus {
@@ -1123,6 +1127,55 @@
 			gcb3: gpio3 {
 				reg-offset = <0x100>;
 			};
+		};
+
+		sdhci0: sdh@d4280000 {
+			compatible = "spacemit,k1-sdhci";
+			reg = <0x0 0xd4280000 0x0 0x200>;
+			interrupts = <99>;
+			interrupt-parent = <&intc>;
+			resets = <&reset RESET_SDH_AXI>,
+				 <&reset RESET_SDH0>;
+			reset-names = "sdh_axi", "sdh0";
+			clocks = <&ccu CLK_SDH0>,
+				 <&ccu CLK_SDH_AXI>,
+				 <&ccu CLK_AIB>;
+			clock-names = "sdh-io", "sdh-core","aib-clk";
+			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
+		};
+
+		sdhci1: sdh@d4280800 {
+			compatible = "spacemit,k1-sdhci";
+			reg = <0x0 0xd4280800 0x0 0x200>;
+			interrupts = <100>;
+			interrupt-parent = <&intc>;
+			resets = <&reset RESET_SDH_AXI>,
+				  <&reset RESET_SDH1>;
+			reset-names = "sdh_axi", "sdh1";
+			clocks = <&ccu CLK_SDH1>,
+				 <&ccu CLK_SDH_AXI>;
+			clock-names = "sdh-io", "sdh-core";
+			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
+		};
+
+		sdhci2: sdh@d4281000 {
+			compatible = "spacemit,k1-sdhci";
+			reg = <0x0 0xd4281000 0x0 0x200>;
+			interrupts = <101>;
+			interrupt-parent = <&intc>;
+			resets = <&reset RESET_SDH_AXI>,
+				 <&reset RESET_SDH2>;
+			reset-names = "sdh_axi", "sdh2";
+			clocks = <&ccu CLK_SDH2>,
+				 <&ccu CLK_SDH_AXI>;
+			clock-names = "sdh-io", "sdh-core";
+			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
 		};
 	};
 };
