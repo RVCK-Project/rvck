@@ -1,0 +1,24 @@
+config NET_VENDOR_SPACEMIT
+	bool "Spacemit devices"
+	default y
+	depends on SOC_SPACEMIT
+	help
+	  If you have a network (Ethernet) chipset belonging to this class,
+	  say Y.
+
+	  Note that the answer to this question does not directly affect
+	  the kernel: saying N will just cause the configurator to skip all
+	  the questions regarding Spacemit chipsets. If you say Y, you will
+	  be asked for your specific chipset/driver in the following questions.
+
+if NET_VENDOR_SPACEMIT
+
+config K1_EMAC
+	tristate "k1 Emac Driver"
+	depends on SOC_SPACEMIT_K1
+	select PHYLIB
+	help
+	  This Driver support Spacemit k1 Ethernet MAC
+	  Say Y to enable support for the Spacemit Ethernet.
+
+endif # NET_VENDOR_SPACEMIT
