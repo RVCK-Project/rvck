@@ -26,6 +26,8 @@
 		mmc0 = &sdhci0;
 		mmc1 = &sdhci1;
 		mmc2 = &sdhci2;
+		ethernet0 = &eth0;
+		ethernet1 = &eth1;
 	};
 
 	cpus: cpus {
@@ -1174,6 +1176,44 @@
 				 <&ccu CLK_SDH_AXI>;
 			clock-names = "sdh-io", "sdh-core";
 			interconnects = <&dram_range0>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
+		};
+
+		eth0: ethernet@cac80000 {
+			compatible = "spacemit,k1-emac";
+			reg = <0x0 0xCAC80000 0x0 0x420>;
+			k1,apmu-base-reg = <0xD4282800>;
+			ctrl-reg = <0x3e4>;
+			dline-reg = <0x3e8>;
+			clocks = <&ccu CLK_EMAC0_BUS>, <&ccu CLK_EMAC0_PTP>;
+			clock-names = "emac-clk", "ptp-clk";
+			resets = <&reset RESET_EMAC0>;
+			reset-names = "emac-reset";
+			interrupts-extended = <&intc 131>;
+			mac-address = [ 00 00 00 00 00 00 ];
+			ptp-support;
+			ptp-clk-rate = <10000000>;
+			interconnects = <&dram_range1>;
+			interconnect-names = "dma-mem";
+			status = "disabled";
+		};
+
+		eth1: ethernet@cac81000 {
+			compatible = "spacemit,k1-emac";
+			reg = <0x0 0xCAC81000 0x0 0x420>;
+			k1,apmu-base-reg = <0xD4282800>;
+			ctrl-reg = <0x3ec>;
+			dline-reg = <0x3f0>;
+			clocks = <&ccu CLK_EMAC1_BUS>, <&ccu CLK_EMAC1_PTP>;
+			clock-names = "emac-clk", "ptp-clk";
+			resets = <&reset RESET_EMAC1>;
+			reset-names = "emac-reset";
+			interrupts-extended = <&intc 133>;
+			mac-address = [ 00 00 00 00 00 00 ];
+			ptp-support;
+			ptp-clk-rate = <10000000>;
+			interconnects = <&dram_range1>;
 			interconnect-names = "dma-mem";
 			status = "disabled";
 		};
