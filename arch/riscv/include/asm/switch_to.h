@@ -91,6 +91,19 @@ static inline void __switch_to_envcfg(struct task_struct *next)
 			:: "r" (next->thread.envcfg) : "memory");
 }
 
+#ifdef CONFIG_RISCV_SSE
+DECLARE_PER_CPU(struct task_struct *, __sse_entry_task);
+
+static inline void __switch_sse_entry_task(struct task_struct *next)
+{
+	__this_cpu_write(__sse_entry_task, next);
+}
+#else
+static inline void __switch_sse_entry_task(struct task_struct *next)
+{
+}
+#endif
+
 extern struct task_struct *__switch_to(struct task_struct *,
 				       struct task_struct *);
 
@@ -103,6 +116,7 @@ do {							\
 	if (has_vector())					\
 		__switch_to_vector(__prev, __next);	\
 	__switch_to_envcfg(__next);			\
+	__switch_sse_entry_task(__next);			\
 	((last) = __switch_to(__prev, __next));		\
 } while (0)
 
