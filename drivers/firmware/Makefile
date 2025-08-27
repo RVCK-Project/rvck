@@ -35,6 +35,7 @@ obj-$(CONFIG_GOOGLE_FIRMWARE)	+= google/
 obj-y				+= efi/
 obj-y				+= imx/
 obj-y				+= psci/
+obj-y				+= riscv/
 obj-y				+= smccc/
 obj-y				+= tegra/
 obj-y				+= xilinx/
