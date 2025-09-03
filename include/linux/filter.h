@@ -916,6 +916,8 @@ bool bpf_jit_supports_subprog_tailcalls(void);
 bool bpf_jit_supports_kfunc_call(void);
 bool bpf_jit_supports_far_kfunc_call(void);
 bool bpf_helper_changes_pkt_data(enum bpf_func_id func_id);
+bool bpf_jit_supports_exceptions(void);
+void arch_bpf_stack_walk(bool (*consume_fn)(void *cookie, u64 ip, u64 sp, u64 bp), void *cookie);
 
 static inline bool bpf_dump_raw_ok(const struct cred *cred)
 {
