@@ -95,7 +95,7 @@ ENTRY(__asm_copy_from_user)
 	fixup REG_S   t4,  7*SZREG(a0), 10f
 	addi	a0, a0, 8*SZREG
 	addi	a1, a1, 8*SZREG
-	bltu	a0, t0, 2b
+	bleu	a0, t0, 2b
 
 	addi	t0, t0, 8*SZREG /* revert to original value */
 	j	.Lbyte_copy_tail
