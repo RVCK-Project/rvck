@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
+#include <unistd.h>
 #include <test_progs.h>
 #include <network_helpers.h>
+#include "tailcall_poke.skel.h"
+
 
 /* test_tailcall_1 checks basic functionality by patching multiple locations
  * in a single program for a single tail call slot with nop->jmp, jmp->nop
@@ -884,6 +887,218 @@ out:
 	tailcall_bpf2bpf6__destroy(obj);
 }
 
+/* test_tailcall_bpf2bpf_fentry checks that the count value of the tail call
+ * limit enforcement matches with expectations when tailcall is preceded with
+ * bpf2bpf call, and the bpf2bpf call is traced by fentry.
+ */
+static void test_tailcall_bpf2bpf_fentry(void)
+{
+	test_tailcall_count("tailcall_bpf2bpf2.bpf.o", true, false);
+}
+
+/* test_tailcall_bpf2bpf_fexit checks that the count value of the tail call
+ * limit enforcement matches with expectations when tailcall is preceded with
+ * bpf2bpf call, and the bpf2bpf call is traced by fexit.
+ */
+static void test_tailcall_bpf2bpf_fexit(void)
+{
+	test_tailcall_count("tailcall_bpf2bpf2.bpf.o", false, true);
+}
+
+/* test_tailcall_bpf2bpf_fentry_fexit checks that the count value of the tail
+ * call limit enforcement matches with expectations when tailcall is preceded
+ * with bpf2bpf call, and the bpf2bpf call is traced by both fentry and fexit.
+ */
+static void test_tailcall_bpf2bpf_fentry_fexit(void)
+{
+	test_tailcall_count("tailcall_bpf2bpf2.bpf.o", true, true);
+}
+
+/* test_tailcall_bpf2bpf_fentry_entry checks that the count value of the tail
+ * call limit enforcement matches with expectations when tailcall is preceded
+ * with bpf2bpf call, and the bpf2bpf caller is traced by fentry.
+ */
+static void test_tailcall_bpf2bpf_fentry_entry(void)
+{
+	struct bpf_object *tgt_obj = NULL, *fentry_obj = NULL;
+	int err, map_fd, prog_fd, data_fd, i, val;
+	struct bpf_map *prog_array, *data_map;
+	struct bpf_link *fentry_link = NULL;
+	struct bpf_program *prog;
+	char buff[128] = {};
+
+	LIBBPF_OPTS(bpf_test_run_opts, topts,
+		.data_in = buff,
+		.data_size_in = sizeof(buff),
+		.repeat = 1,
+	);
+
+	err = bpf_prog_test_load("tailcall_bpf2bpf2.bpf.o",
+				 BPF_PROG_TYPE_SCHED_CLS,
+				 &tgt_obj, &prog_fd);
+	if (!ASSERT_OK(err, "load tgt_obj"))
+		return;
+
+	prog_array = bpf_object__find_map_by_name(tgt_obj, "jmp_table");
+	if (!ASSERT_OK_PTR(prog_array, "find jmp_table map"))
+		goto out;
+
+	map_fd = bpf_map__fd(prog_array);
+	if (!ASSERT_FALSE(map_fd < 0, "find jmp_table map fd"))
+		goto out;
+
+	prog = bpf_object__find_program_by_name(tgt_obj, "classifier_0");
+	if (!ASSERT_OK_PTR(prog, "find classifier_0 prog"))
+		goto out;
+
+	prog_fd = bpf_program__fd(prog);
+	if (!ASSERT_FALSE(prog_fd < 0, "find classifier_0 prog fd"))
+		goto out;
+
+	i = 0;
+	err = bpf_map_update_elem(map_fd, &i, &prog_fd, BPF_ANY);
+	if (!ASSERT_OK(err, "update jmp_table"))
+		goto out;
+
+	fentry_obj = bpf_object__open_file("tailcall_bpf2bpf_fentry.bpf.o",
+					   NULL);
+	if (!ASSERT_OK_PTR(fentry_obj, "open fentry_obj file"))
+		goto out;
+
+	prog = bpf_object__find_program_by_name(fentry_obj, "fentry");
+	if (!ASSERT_OK_PTR(prog, "find fentry prog"))
+		goto out;
+
+	err = bpf_program__set_attach_target(prog, prog_fd, "classifier_0");
+	if (!ASSERT_OK(err, "set_attach_target classifier_0"))
+		goto out;
+
+	err = bpf_object__load(fentry_obj);
+	if (!ASSERT_OK(err, "load fentry_obj"))
+		goto out;
+
+	fentry_link = bpf_program__attach_trace(prog);
+	if (!ASSERT_OK_PTR(fentry_link, "attach_trace"))
+		goto out;
+
+	err = bpf_prog_test_run_opts(prog_fd, &topts);
+	ASSERT_OK(err, "tailcall");
+	ASSERT_EQ(topts.retval, 1, "tailcall retval");
+
+	data_map = bpf_object__find_map_by_name(tgt_obj, "tailcall.bss");
+	if (!ASSERT_FALSE(!data_map || !bpf_map__is_internal(data_map),
+			  "find tailcall.bss map"))
+		goto out;
+
+	data_fd = bpf_map__fd(data_map);
+	if (!ASSERT_FALSE(data_fd < 0, "find tailcall.bss map fd"))
+		goto out;
+
+	i = 0;
+	err = bpf_map_lookup_elem(data_fd, &i, &val);
+	ASSERT_OK(err, "tailcall count");
+	ASSERT_EQ(val, 34, "tailcall count");
+
+	data_map = bpf_object__find_map_by_name(fentry_obj, ".bss");
+	if (!ASSERT_FALSE(!data_map || !bpf_map__is_internal(data_map),
+			  "find tailcall_bpf2bpf_fentry.bss map"))
+		goto out;
+
+	data_fd = bpf_map__fd(data_map);
+	if (!ASSERT_FALSE(data_fd < 0,
+			  "find tailcall_bpf2bpf_fentry.bss map fd"))
+		goto out;
+
+	i = 0;
+	err = bpf_map_lookup_elem(data_fd, &i, &val);
+	ASSERT_OK(err, "fentry count");
+	ASSERT_EQ(val, 1, "fentry count");
+
+out:
+	bpf_link__destroy(fentry_link);
+	bpf_object__close(fentry_obj);
+	bpf_object__close(tgt_obj);
+}
+
+#define JMP_TABLE "/sys/fs/bpf/jmp_table"
+
+static int poke_thread_exit;
+
+static void *poke_update(void *arg)
+{
+	__u32 zero = 0, prog1_fd, prog2_fd, map_fd;
+	struct tailcall_poke *call = arg;
+
+	map_fd = bpf_map__fd(call->maps.jmp_table);
+	prog1_fd = bpf_program__fd(call->progs.call1);
+	prog2_fd = bpf_program__fd(call->progs.call2);
+
+	while (!poke_thread_exit) {
+		bpf_map_update_elem(map_fd, &zero, &prog1_fd, BPF_ANY);
+		bpf_map_update_elem(map_fd, &zero, &prog2_fd, BPF_ANY);
+	}
+
+	return NULL;
+}
+
+/*
+ * We are trying to hit prog array update during another program load
+ * that shares the same prog array map.
+ *
+ * For that we share the jmp_table map between two skeleton instances
+ * by pinning the jmp_table to same path. Then first skeleton instance
+ * periodically updates jmp_table in 'poke update' thread while we load
+ * the second skeleton instance in the main thread.
+ */
+static void test_tailcall_poke(void)
+{
+	struct tailcall_poke *call, *test;
+	int err, cnt = 10;
+	pthread_t thread;
+
+	unlink(JMP_TABLE);
+
+	call = tailcall_poke__open_and_load();
+	if (!ASSERT_OK_PTR(call, "tailcall_poke__open"))
+		return;
+
+	err = bpf_map__pin(call->maps.jmp_table, JMP_TABLE);
+	if (!ASSERT_OK(err, "bpf_map__pin"))
+		goto out;
+
+	err = pthread_create(&thread, NULL, poke_update, call);
+	if (!ASSERT_OK(err, "new toggler"))
+		goto out;
+
+	while (cnt--) {
+		test = tailcall_poke__open();
+		if (!ASSERT_OK_PTR(test, "tailcall_poke__open"))
+			break;
+
+		err = bpf_map__set_pin_path(test->maps.jmp_table, JMP_TABLE);
+		if (!ASSERT_OK(err, "bpf_map__pin")) {
+			tailcall_poke__destroy(test);
+			break;
+		}
+
+		bpf_program__set_autoload(test->progs.test, true);
+		bpf_program__set_autoload(test->progs.call1, false);
+		bpf_program__set_autoload(test->progs.call2, false);
+
+		err = tailcall_poke__load(test);
+		tailcall_poke__destroy(test);
+		if (!ASSERT_OK(err, "tailcall_poke__load"))
+			break;
+	}
+
+	poke_thread_exit = 1;
+	ASSERT_OK(pthread_join(thread, NULL), "pthread_join");
+
+out:
+	bpf_map__unpin(call->maps.jmp_table, JMP_TABLE);
+	tailcall_poke__destroy(call);
+}
+
 void test_tailcalls(void)
 {
 	if (test__start_subtest("tailcall_1"))
@@ -910,4 +1125,14 @@ void test_tailcalls(void)
 		test_tailcall_bpf2bpf_4(true);
 	if (test__start_subtest("tailcall_bpf2bpf_6"))
 		test_tailcall_bpf2bpf_6();
+	if (test__start_subtest("tailcall_bpf2bpf_fentry"))
+		test_tailcall_bpf2bpf_fentry();
+	if (test__start_subtest("tailcall_bpf2bpf_fexit"))
+		test_tailcall_bpf2bpf_fexit();
+	if (test__start_subtest("tailcall_bpf2bpf_fentry_fexit"))
+		test_tailcall_bpf2bpf_fentry_fexit();
+	if (test__start_subtest("tailcall_bpf2bpf_fentry_entry"))
+		test_tailcall_bpf2bpf_fentry_entry();
+	if (test__start_subtest("tailcall_poke"))
+		test_tailcall_poke();
 }
