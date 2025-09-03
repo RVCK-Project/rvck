@@ -311,6 +311,7 @@ struct bpf_func_state {
 	 *                           | number of simulations is tracked in frame N
 	 */
 	u32 callback_depth;
+	bool in_exception_callback_fn;
 
 	/* The following fields should be last. See copy_func_state() */
 	int acquired_refs;
