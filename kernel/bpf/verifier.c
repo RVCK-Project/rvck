@@ -9402,6 +9402,7 @@ static int push_callback_call(struct bpf_verifier_env *env, struct bpf_insn *ins
 	 * interested in validating only BPF helpers that can call subprogs as
 	 * callbacks
 	 */
+	env->subprog_info[subprog].is_cb = true;
 	if (bpf_pseudo_kfunc_call(insn) &&
 	    !is_sync_callback_calling_kfunc(insn->imm)) {
 		verbose(env, "verifier bug: kfunc %s#%d not marked as callback-calling\n",
