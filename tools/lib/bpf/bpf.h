@@ -51,9 +51,10 @@ struct bpf_map_create_opts {
 
 	__u32 numa_node;
 	__u32 map_ifindex;
+	__s32 value_type_btf_obj_fd;
 
 	__u32 token_fd;
-	size_t :0;
+	size_t:0;
 };
 #define bpf_map_create_opts__last_field token_fd
 
