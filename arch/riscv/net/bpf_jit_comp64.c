@@ -1807,3 +1807,8 @@ bool bpf_jit_supports_kfunc_call(void)
 {
 	return true;
 }
+
+bool bpf_jit_supports_ptr_xchg(void)
+{
+	return true;
+}
