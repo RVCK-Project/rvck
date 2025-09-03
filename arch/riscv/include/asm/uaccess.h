@@ -176,7 +176,7 @@ do {									\
 		err = 0;						\
 		break;							\
 __gu_failed:								\
-		x = 0;							\
+		x = (__typeof__(x))0;					\
 		err = -EFAULT;						\
 } while (0)
 
