@@ -245,4 +245,7 @@
 /* Sunplus UART */
 #define PORT_SUNPLUS	123
 
+/* LRW UART */
+#define PORT_LRW	124
+
 #endif /* _UAPILINUX_SERIAL_CORE_H */
