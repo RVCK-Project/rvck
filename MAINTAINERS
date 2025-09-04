@@ -12524,6 +12524,13 @@ S:	Supported
 F:	drivers/net/pcs/pcs-lynx.c
 F:	include/linux/pcs-lynx.h
 
+LRW SERIAL DEVICE TREE SUPPORT
+M:	Wenhong Liu <liu.wenhong35@zte.com.cn>
+R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
+L:	devicetree@vger.kernel.org
+S:	Maintained
+F:	Documentation/devicetree/bindings/serial/lrw,lrw-uart.yaml
+
 M68K ARCHITECTURE
 M:	Geert Uytterhoeven <geert@linux-m68k.org>
 L:	linux-m68k@lists.linux-m68k.org
