@@ -1469,6 +1469,7 @@ struct bpf_prog_aux {
 	bool changes_pkt_data;
 	bool exception_cb;
 	bool exception_boundary;
+	struct bpf_arena *arena;
 	/* BTF_KIND_FUNC_PROTO for valid attach_btf_id */
 	const struct btf_type *attach_func_proto;
 	/* function name for valid attach_btf_id */
