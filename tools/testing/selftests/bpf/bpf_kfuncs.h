@@ -41,4 +41,19 @@ extern bool bpf_dynptr_is_rdonly(const struct bpf_dynptr *ptr) __ksym;
 extern __u32 bpf_dynptr_size(const struct bpf_dynptr *ptr) __ksym;
 extern int bpf_dynptr_clone(const struct bpf_dynptr *ptr, struct bpf_dynptr *clone__init) __ksym;
 
+/* Description
+ *  Modify the address of a AF_UNIX sockaddr.
+ * Returns__bpf_kfunc
+ *  -EINVAL if the address size is too big or, 0 if the sockaddr was successfully modified.
+ */
+extern int bpf_sock_addr_set_sun_path(struct bpf_sock_addr_kern *sa_kern,
+				      const __u8 *sun_path, __u32 sun_path__sz) __ksym;
+
+void *bpf_cast_to_kern_ctx(void *) __ksym;
+
+void *bpf_rdonly_cast(void *obj, __u32 btf_id) __ksym;
+
+extern int bpf_get_file_xattr(struct file *file, const char *name,
+			      struct bpf_dynptr *value_ptr) __ksym;
+extern int bpf_get_fsverity_digest(struct file *file, struct bpf_dynptr *digest_ptr) __ksym;
 #endif
