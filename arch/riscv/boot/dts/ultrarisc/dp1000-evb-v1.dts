@@ -28,6 +28,14 @@
 &spi0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&spi0_pins>;
+
+	mmc0: mmc@0 {
+		compatible = "mmc-spi-slot";
+		spi-max-frequency = <15625000>;
+		reg = <0x00>;
+		voltage-ranges = <3300 3300>;
+		disable-wp;
+	};
 };
 
 &spi1 {
