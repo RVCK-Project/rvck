@@ -248,6 +248,8 @@ static bool imsic_init_dev_msi_info(struct device *dev,
 		info->chip->irq_set_affinity = imsic_irq_set_affinity;
 #endif
 		break;
+	case DOMAIN_BUS_MSI_REMAP:
+		break;
 	default:
 		WARN_ON_ONCE(1);
 		return false;
