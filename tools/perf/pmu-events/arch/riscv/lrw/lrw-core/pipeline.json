@@ -1,0 +1,132 @@
+[
+    {
+        "EventName": "STALL_FRONTEND",
+        "EventCode": "0x00000106",
+        "BriefDescription": "Frontend stall"
+    },
+    {
+        "EventName": "STALL_BACKEND",
+        "EventCode": "0x00000206",
+        "BriefDescription": "Backend stall"
+    },
+    {
+        "EventName": "STALL",
+        "EventCode": "0x00000406",
+        "BriefDescription": "Stall"
+    },
+    {
+        "EventName": "STALL_SLOT_BACKEND",
+        "EventCode": "0x00000806",
+        "BriefDescription": "Backend stall slot"
+    },
+    {
+        "EventName": "STALL_SLOT_FRONTEND",
+        "EventCode": "0x00001006",
+        "BriefDescription": "Frontend stall slot"
+    },
+    {
+        "EventName": "STALL_SLOT",
+        "EventCode": "0x00002006",
+        "BriefDescription": "Stall slot"
+    },
+    {
+        "EventName": "STALL_BACKEND_MEM",
+        "EventCode": "0x00004006",
+        "BriefDescription": "Backend stall due to memory"
+    },
+    {
+        "EventName": "IDR_STALL_IXU_SCHED",
+        "EventCode": "0x00008006",
+        "BriefDescription": "IXU scheduler stall"
+    },
+    {
+        "EventName": "VX_IQ_STALL",
+        "EventCode": "0x00010006",
+        "BriefDescription": "Dispatch stall due to VX scheduler entries"
+    },
+    {
+        "EventName": "MCQ_FULL_STALL",
+        "EventCode": "0x00020006",
+        "BriefDescription": "Dispatch stall due to MCQ entries"
+    },
+    {
+        "EventName": "STALL_FRONTED_FLUSH",
+        "EventCode": "0x00040006",
+        "BriefDescription": "Dispatch stall due to fronted flush"
+    },
+    {
+        "EventName": "STALL_BACKEND_CACHE",
+        "EventCode": "0x00080006",
+        "BriefDescription": "Dispatch stall due to L1 data cache miss"
+    },
+    {
+        "EventName": "STALL_BACKEND_TLB",
+        "EventCode": "0x00100006",
+        "BriefDescription": "Dispatch stall due to L1 data TLB miss"
+    },
+    {
+        "EventName": "STALL_BACKEND_RESOURCE",
+        "EventCode": "0x00200006",
+        "BriefDescription": "Dispatch stall due to lack of any core resource"
+    },
+    {
+        "EventName": "FSU_ISSUED",
+        "EventCode": "0x00400006",
+        "BriefDescription": "Uops issued by the FSU scheduler"
+    },
+    {
+        "EventName": "IXU_NUM_UOP_ISSUED",
+        "EventCode": "0x00800006",
+        "BriefDescription": "Instructions issued by the IXU scheduler"
+    },
+    {
+        "EventName": "FLAG_DISP_STALL",
+        "EventCode": "0x01000006",
+        "BriefDescription": "Dispatch stall due to mop flag miss"
+    },
+    {
+        "EventName": "GEN_DISP_STALL",
+        "EventCode": "0x02000006",
+        "BriefDescription": "Dispatch stall due to general register miss"
+    },
+    {
+        "EventName": "VEC_DISP_STALL",
+        "EventCode": "0x04000006",
+        "BriefDescription": "Dispatch stall due to vector register miss"
+    },
+    {
+        "EventName": "SX_IQ_STALL",
+        "EventCode": "0x08000006",
+        "BriefDescription": "Stall due to sx issue queue full"
+    },
+    {
+        "EventName": "MX_IQ_STALL",
+        "EventCode": "0x10000006",
+        "BriefDescription": "Stall due to mx issue queue full"
+    },
+    {
+        "EventName": "LS_IQ_STALL",
+        "EventCode": "0x20000006",
+        "BriefDescription": "Stall due to ls queue full"
+    },
+    {
+        "EventName": "STALL_FRONTEND_TLB",
+        "EventCode": "0x80000006",
+        "BriefDescription": "No operation issued due to the frontend TLB"
+    },
+    {
+        "EventName": "STALL_FRONTEND_CACHE",
+        "EventCode": "0x100000006",
+        "BriefDescription": "No operation issued due to the front cache"
+    },
+    {
+        "EventName": "FPG",
+        "EventCode": "0x200000006",
+        "BriefDescription": "Front-End Pipeline Gating"
+    },
+    {
+        "EventName": "VTYPE_FLUSH",
+        "EventCode": "0x400000006",
+        "BriefDescription": "Flush due to fialed prediction of writing vtype csr"
+    }
+]
