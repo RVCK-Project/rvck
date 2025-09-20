@@ -1,0 +1,182 @@
+[
+  {
+    "EventName": "MEM_ACCESS",
+    "EventCode": "0x00000105",
+    "BriefDescription": "Memory access"
+  },
+  {
+    "EventName": "BUS_ACCESS",
+    "EventCode": "0x00000205",
+    "BriefDescription": "Bus access"
+  },
+  {
+    "EventName": "MEMORY_ERROR",
+    "EventCode": "0x00000405",
+    "BriefDescription": "Memory error"
+  },
+  {
+    "EventName": "REMOTE_ACCESS",
+    "EventCode": "0x00000805",
+    "BriefDescription": "Remote access"
+  },
+  {
+    "EventName": "BUS_ACCESS_RD",
+    "EventCode": "0x00001005",
+    "BriefDescription": "Bus access read"
+  },
+  {
+    "EventName": "BUS_ACCESS_WR",
+    "EventCode": "0x00002005",
+    "BriefDescription": "Bus access write"
+  },
+  {
+    "EventName": "MEM_ACCESS_RD",
+    "EventCode": "0x00004005",
+    "BriefDescription": "Memory access read"
+  },
+  {
+    "EventName": "MEM_ACCESS_WR",
+    "EventCode": "0x00008005",
+    "BriefDescription": "Memory access write"
+  },
+  {
+    "EventName": "LDST_ALIGN_LAT",
+    "EventCode": "0x00010005",
+    "BriefDescription": "Load/store align latency"
+  },
+  {
+    "EventName": "LD_ALIGN_LAT",
+    "EventCode": "0x00020005",
+    "BriefDescription": "Load align latency"
+  },
+  {
+    "EventName": "ST_ALIGN_LAT",
+    "EventCode": "0x00040005",
+    "BriefDescription": "Store align latency"
+  },
+  {
+    "EventName": "BUS_REQUEST_REQ",
+    "EventCode": "0x000400005",
+    "BriefDescription": "CHI Bus Request Sent"
+  },
+  {
+    "EventName": "BUS_REQUEST_RETRY",
+    "EventCode": "0x000800005",
+    "BriefDescription": "CHI Bus Request Retried"
+  },
+  {
+    "EventName": "BUS_REQUEST_SN",
+    "EventCode": "0x001000005",
+    "BriefDescription": "CHI Snoop Request Sent to L2"
+  },
+  {
+    "EventName": "L2TLB_PF_REFILL",
+    "EventCode": "0x002000005",
+    "BriefDescription": "L2 TLB Prefetch-Induced Leaf Page Refill"
+  },
+  {
+    "EventName": "TBW",
+    "EventCode": "0x004000005",
+    "BriefDescription": "Page Table Walk"
+  },
+  {
+    "EventName": "TBW_DESC",
+    "EventCode": "0x008000005",
+    "BriefDescription": "Page Table Walk Descriptor"
+  },
+  {
+    "EventName": "S1L2_HIT",
+    "EventCode": "0x010000005",
+    "BriefDescription": "Stage1 level 2 page table hit"
+  },
+  {
+    "EventName": "S1L1_HIT",
+    "EventCode": "0x020000005",
+    "BriefDescription": "Stage 1 level 1 page table hit"
+  },
+  {
+    "EventName": "S1L0_HIT",
+    "EventCode": "0x040000005",
+    "BriefDescription": "Stage 1 level 0 page table hit"
+  },
+  {
+    "EventName": "S2L2_HIT",
+    "EventCode": "0x080000005",
+    "BriefDescription": "Stage 2 level 2 page table hit"
+  },
+  {
+    "EventName": "IPA_REQ",
+    "EventCode": "0x100000005",
+    "BriefDescription": "Intermediate physical address request"
+  },
+  {
+    "EventName": "IPA_REFILL",
+    "EventCode": "0x200000005",
+    "BriefDescription": "Intermediate physical address refill"
+  },
+  {
+    "EventName": "S1_FLT",
+    "EventCode": "0x400000005",
+    "BriefDescription": "Stage 1 fault"
+  },
+  {
+    "EventName": "S2_FLT",
+    "EventCode": "0x800000005",
+    "BriefDescription": "Stage 2 fault"
+  },
+  {
+    "EventName": "COLT_REFILL",
+    "EventCode": "0x1000000005",
+    "BriefDescription": "Coalescing translation refill"
+  },
+  {
+    "EventName": "PMP_PLT",
+    "EventCode": "0x2000000005",
+    "BriefDescription": "Physical memory protection fault"
+  },
+  {
+    "EventName": "MTT_REQ",
+    "EventCode": "0x4000000005",
+    "BriefDescription": "Memory tracking table request"
+  },
+  {
+    "EventName": "MTT_L3_HIT",
+    "EventCode": "0x8000000005",
+    "BriefDescription": "Memory tracking table  level 3 hit"
+  },
+  {
+    "EventName": "MTT_L2_HIT",
+    "EventCode": "0x10000000005",
+    "BriefDescription": "Memory tracking table level 2 hit"
+  },
+  {
+    "EventName": "MTT_L1_HIT",
+    "EventCode": "0x20000000005",
+    "BriefDescription": "Memory tracking table level 1 hit"
+  },
+  {
+    "EventName": "MTT_LEAFPAGE_HIT",
+    "EventCode": "0x40000000005",
+    "BriefDescription": "Memory tracking table leaf page hit"
+  },
+  {
+    "EventName": "MTT_WLK",
+    "EventCode": "0x80000000005",
+    "BriefDescription": "Memory tracking table walk"
+  },
+  {
+    "EventName": "MTTCACHE_REFILL",
+    "EventCode": "0x100000000005",
+    "BriefDescription": "Memory tracking table cache refill"
+  },
+  {
+    "EventName": "MTT_FLT",
+    "EventCode": "0x200000000005",
+    "BriefDescription": "Memory tracking table fault"
+  },
+  {
+    "EventName": "MTTSIZE_LESS_THAN_PTESIZE",
+    "EventCode": "0x400000000005",
+    "BriefDescription": "Memory tracking table size less than pte size"
+  }
+]

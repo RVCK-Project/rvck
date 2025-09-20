@@ -1,0 +1,77 @@
+[
+    {
+        "EventName": "BR_MIS_PRED",
+        "EventCode": "0x00000109",
+        "BriefDescription": "Mispredicted or not predicted branch speculatively executed"
+    },
+    {
+        "EventName": "BR_PRED",
+        "EventCode": "0x00000209",
+        "BriefDescription": "Predictable branch speculatively executed"
+    },
+    {
+        "EventName": "BR_RETIRED",
+        "EventCode": "0x00000409",
+        "BriefDescription": "Branch instruction architecturally executed"
+    },
+    {
+        "EventName": "BR_MIS_PRED_RETIRED",
+        "EventCode": "0x00000809",
+        "BriefDescription": "Mispredicted branch instruction architecturally executed"
+    },
+    {
+        "EventName": "BR_IMMED_SPEC",
+        "EventCode": "0x00001009",
+        "BriefDescription": "Branch immediate instructions speculatively executed"
+    },
+    {
+        "EventName": "BR_RETURN_SPEC",
+        "EventCode": "0x00002009",
+        "BriefDescription": "Procedure return instruction speculatively executed"
+    },
+    {
+        "EventName": "BR_INDIRECT_SPEC",
+        "EventCode": "0x00004009",
+        "BriefDescription": "Indirect branch instruction speculatively executed"
+    },
+    {
+        "EventName": "BR_PRED_BTB_RGN_UPDATE",
+        "EventCode": "0x00008009",
+        "BriefDescription": "Branch prediction branch target buffer region update"
+    },
+    {
+        "EventName": "SPEC_RET_STACK_FULL",
+        "EventCode": "0x00010009",
+        "BriefDescription": "Speculative return stack full"
+    },
+    {
+        "EventName": "FETCH_FQ_EMPTY",
+        "EventCode": "0x00020009",
+        "BriefDescription": "Fetch queue empty"
+    },
+    {
+        "EventName": "FETCH_MCACHE_INVALIDATE",
+        "EventCode": "0x00040009",
+        "BriefDescription": "Fetch mopcache invalidate"
+    },
+    {
+        "EventName": "FETCH_MCACHE_ICACHE_SWITCH",
+        "EventCode": "0x00080009",
+        "BriefDescription": "Fetch mopcache instruction cache switch"
+    },
+    {
+        "EventName": "FETCH_MCACHE_ICACHE_SWITCH_PENALTY",
+        "EventCode": "0x00100009",
+        "BriefDescription": "Fetch mopcache instruction cache switch penalty"
+    },
+    {
+        "EventName": "BR_PRED_BTB_RGN_UPDATE_NREADY",
+        "EventCode": "0x00200009",
+        "BriefDescription": "Branch prediction branch target buffer region update not ready"
+    },
+    {
+        "EventName": "BR_PRED_BTB_CTX_UPDATE",
+        "EventCode": "0x00400009",
+        "BriefDescription": "Branch prediction branch target buffer context update"
+    }
+]

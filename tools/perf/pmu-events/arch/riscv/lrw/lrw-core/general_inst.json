@@ -1,0 +1,57 @@
+[
+    {
+        "EventName": "INST_RETIRED",
+        "EventCode": "0x00000108",
+        "BriefDescription": "Instruction architecturally executed"
+    },
+    {
+        "EventName": "INST_SPEC",
+        "EventCode": "0x00000208",
+        "BriefDescription": "Instruction speculatively executed"
+    },
+    {
+        "EventName": "DP_SPEC",
+        "EventCode": "0x00000408",
+        "BriefDescription": "Integer data-processing instruction speculatively executed"
+    },
+    {
+        "EventName": "PC_WRITE_SPEC",
+        "EventCode": "0x00000808",
+        "BriefDescription": "PC write instruction speculatively executed"
+    },
+    {
+        "EventName": "CRYPTO_SPEC",
+        "EventCode": "0x00001008",
+        "BriefDescription": "Crypto instruction speculatively executed"
+    },
+    {
+        "EventName": "FENCE.i_SPEC",
+        "EventCode": "0x00002008",
+        "BriefDescription": "FENCE.i speculatively executed"
+    },
+    {
+        "EventName": "OP_RETIRED",
+        "EventCode": "0x00004008",
+        "BriefDescription": "Micro-operation architecturally executed"
+    },
+    {
+        "EventName": "OP_SPEC",
+        "EventCode": "0x00008008",
+        "BriefDescription": "Micro-operation speculatively executed"
+    },
+    {
+        "EventName": "DECODE_MOP",
+        "EventCode": "0x00010008",
+        "BriefDescription": "decode mop"
+    },
+    {
+        "EventName": "TPE_SPEC",
+        "EventCode": "0x00020008",
+        "BriefDescription": "TPE Instruction speculatively executed"
+    },
+    {
+        "EventName": "FUSION_SPEC",
+        "EventCode": "0x00040008",
+        "BriefDescription": "Fusion Instruction speculatively executed"
+    }
+]

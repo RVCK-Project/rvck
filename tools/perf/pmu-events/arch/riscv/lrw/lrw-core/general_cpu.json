@@ -1,0 +1,12 @@
+[
+    {
+        "EventName": "CID_WRITE_RETIRED",
+        "EventCode": "0x0000020b",
+        "BriefDescription": "CONTEXTIDR register write"
+    },
+    {
+        "EventName": "CPU_CYCLES",
+        "EventCode": "0x0000040b",
+        "BriefDescription": "cycles"
+    }
+]
