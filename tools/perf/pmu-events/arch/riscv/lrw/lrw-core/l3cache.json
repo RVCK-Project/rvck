@@ -1,0 +1,32 @@
+[
+    {
+        "EventName": "L3_CACHE_ALLOCATE",
+        "EventCode": "0x00000104",
+        "BriefDescription": "Attributable L 3 data cache allocation without refill"
+    },
+    {
+        "EventName": "L3_CACHE_REFILL",
+        "EventCode": "0x00000204",
+        "BriefDescription": "Attributable L3 unified cache refill"
+    },
+    {
+        "EventName": "L3_CACHE",
+        "EventCode": "0x00000404",
+        "BriefDescription": "Attributable Level 3 unified cache access"
+    },
+    {
+        "EventName": "LL_CACHE_RD",
+        "EventCode": "0x00000804",
+        "BriefDescription": "Last level cache access, read"
+    },
+    {
+        "EventName": "LL_CACHE_MISS_RD",
+        "EventCode": "0x00001004",
+        "BriefDescription": "Last level cache miss, read"
+    },
+    {
+        "EventName": "L3_CACHE_RD",
+        "EventCode": "0x00002004",
+        "BriefDescription": "L3 cache read"
+    }
+]

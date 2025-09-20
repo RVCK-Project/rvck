@@ -1,0 +1,67 @@
+[
+    {
+        "EventName": "UNALIGNED_LD_SPEC",
+        "EventCode": "0x00000107",
+        "BriefDescription": "Unaligned load speculation"
+    },
+    {
+        "EventName": "UNALIGNED_ST_SPEC",
+        "EventCode": "0x00000207",
+        "BriefDescription": "Unaligned store speculation"
+    },
+    {
+        "EventName": "UNALIGNED_LDST_SPEC",
+        "EventCode": "0x00000407",
+        "BriefDescription": "Unaligned load/store speculation"
+    },
+    {
+        "EventName": "LD_SPEC",
+        "EventCode": "0x00000807",
+        "BriefDescription": "Load speculation"
+    },
+    {
+        "EventName": "ST_SPEC",
+        "EventCode": "0x00001007",
+        "BriefDescription": "Store speculation"
+    },
+    {
+        "EventName": "SFENCE_SPEC",
+        "EventCode": "0x00002007",
+        "BriefDescription": "SFENCE speculatively executed"
+    },
+    {
+        "EventName": "FENCE_SPEC",
+        "EventCode": "0x00004007",
+        "BriefDescription": "FENCE speculatively executed"
+    },
+    {
+        "EventName": "RC_LD_SPEC",
+        "EventCode": "0x00008007",
+        "BriefDescription": "RC load speculation"
+    },
+    {
+        "EventName": "RC_ST_SPEC",
+        "EventCode": "0x00010007",
+        "BriefDescription": "RC store speculation"
+    },
+    {
+        "EventName": "LR_SPEC",
+        "EventCode": "0x00020007",
+        "BriefDescription": "Load-Reserved speculatively executed"
+    },
+    {
+        "EventName": "SC_PASS_SPEC",
+        "EventCode": "0x00040007",
+        "BriefDescription": "Successful store-condiitional speculatively executed"
+    },
+    {
+        "EventName": "SC_FAlL_SPEC",
+        "EventCode": "0x00080007",
+        "BriefDescription": "Failed store-condiitional speculatively executed"
+    },
+    {
+        "EventName": "SC_SPEC",
+        "EventCode": "0x00100007",
+        "BriefDescription": "Store-condiitional  speculatively executed"
+    }
+]
