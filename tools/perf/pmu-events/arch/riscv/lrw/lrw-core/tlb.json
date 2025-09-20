@@ -1,0 +1,82 @@
+[
+    {
+        "EventName": "L1I_TLB_REFILL",
+        "EventCode": "0x00000100",
+        "BriefDescription": "L1 instruction TLB refill"
+    },
+    {
+        "EventName": "L1D_TLB_REFILL",
+        "EventCode": "0x00000200",
+        "BriefDescription": "L1 data TLB refill"
+    },
+    {
+        "EventName": "L1D_TLB",
+        "EventCode": "0x00000800",
+        "BriefDescription": "L1 data TLB access"
+    },
+    {
+        "EventName": "L1I_TLB",
+        "EventCode": "0x00001000",
+        "BriefDescription": "L1 instruction TLB access"
+    },
+    {
+        "EventName": "L2_TLB_REFILL",
+        "EventCode": "0x00002000",
+        "BriefDescription": "Atrributable L2 unified TLB refill"
+    },
+    {
+        "EventName": "L2_TLB",
+        "EventCode": "0x00004000",
+        "BriefDescription": "Attributable L2 unified TLB access"
+    },
+    {
+        "EventName": "DTLB_WALK",
+        "EventCode": "0x00008000",
+        "BriefDescription": "Access to data TLB that caused a translation (or page) table walk"
+    },
+    {
+        "EventName": "ITLB_WALK",
+        "EventCode": "0x00010000",
+        "BriefDescription": "Access to instruction TLB that caused a page table walk"
+    },
+    {
+        "EventName": "L1D_TLB_REFILL_RD",
+        "EventCode": "0x00020000",
+        "BriefDescription": "L1 data TLB refill read"
+    },
+    {
+        "EventName": "L1D_TLB_REFILL_WR",
+        "EventCode": "0x00040000",
+        "BriefDescription": "L1 data TLB refill write"
+    },
+    {
+        "EventName": "L1D_TLB_RD",
+        "EventCode": "0x00080000",
+        "BriefDescription": "L1 data TLB read"
+    },
+    {
+        "EventName": "L1D_TLB_WR",
+        "EventCode": "0x00100000",
+        "BriefDescription": "L1 data TLB write"
+    },
+    {
+        "EventName": "L2_TLB_REFILL_RD",
+        "EventCode": "0x00200000",
+        "BriefDescription": "L2 unified TLB refill, read"
+    },
+    {
+        "EventName": "L2_TLB_REFILL_WR",
+        "EventCode": "0x00400000",
+        "BriefDescription": "L2 unified TLB refill, write"
+    },
+    {
+        "EventName": "L2_TLB_RD",
+        "EventCode": "0x00800000",
+        "BriefDescription": "L2 unified TLB access, read"
+    },
+    {
+        "EventName": "L2_TLB_WR",
+        "EventCode": "0x01000000",
+        "BriefDescription": "L2 unified TLB access, write"
+    }
+]
