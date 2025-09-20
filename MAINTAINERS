@@ -12424,6 +12424,12 @@ S:	Maintained
 F:	Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
 F:	drivers/thermal/loongson2_thermal.c
 
+LRW CORE PERF PMU EVENTS (RISC-V)
+M:	Lin Shen <shen.lin1@zte.com.cn>
+R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
+S:	Maintained
+F:	tools/perf/pmu-events/arch/riscv/lrw/
+
 LSILOGIC MPT FUSION DRIVERS (FC/SAS/SPI)
 M:	Sathya Prakash <sathya.prakash@broadcom.com>
 M:	Sreekanth Reddy <sreekanth.reddy@broadcom.com>
