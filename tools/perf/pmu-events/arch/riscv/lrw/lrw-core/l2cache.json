@@ -1,0 +1,112 @@
+[
+  {
+      "EventName": "L2_CACHE",
+      "EventCode": "0x00000103",
+      "BriefDescription": "L2 cache access"
+  },
+  {
+      "EventName": "L2_CACHE_REFILL",
+      "EventCode": "0x00000203",
+      "BriefDescription": "L2cache refill"
+  },
+  {
+      "EventName": "L2_CACHE_WB",
+      "EventCode": "0x00000403",
+      "BriefDescription": "L2 cache write-back"
+  },
+  {
+      "EventName": "L2_CACHE_RD",
+      "EventCode": "0x00000803",
+      "BriefDescription": "L2 cache access, read"
+  },
+  {
+      "EventName": "L2_CACHE_WR",
+      "EventCode": "0x00001003",
+      "BriefDescription": "L2 cache access, write"
+  },
+  {
+      "EventName": "L2_CACHE_REFILL_RD",
+      "EventCode": "0x00002003",
+      "BriefDescription": "L2 cache refill, read"
+  },
+  {
+      "EventName": "L2_CACHE_WB_VICTIM",
+      "EventCode": "0x00004003",
+      "BriefDescription": "L2 cache write-back, victim"
+  },
+  {
+      "EventName": "L2_CACHE_WB_CLEAN",
+      "EventCode": "0x00008003",
+      "BriefDescription": "L2 cache write-back, cleaning and coherency"
+  },
+  {
+      "EventName": "L2_CACHE_INVAL",
+      "EventCode": "0x00010003",
+      "BriefDescription": "L2 cache invalidate"
+  },
+  {
+      "EventName": "L2_CACHE_LMISS_RD",
+      "EventCode": "0x00020003",
+      "BriefDescription": "L2 cache long latency miss"
+  },
+  {
+      "EventName": "CACHE_IF_REFILL",
+      "EventCode": "0x00080003",
+      "BriefDescription": "L2 cache refill due to ifu read"
+  },
+  {
+      "EventName": "CACHE_LS_REFILL",
+      "EventCode": "0x00100003",
+      "BriefDescription": "L2 cache refill due to ls read"
+  },
+  {
+      "EventName": "CACHE_TBW_REFILL",
+      "EventCode": "0x00200003",
+      "BriefDescription": "L2 cache refill due to MMU read"
+  },
+  {
+      "EventName": "CACHE_PF_REFILL",
+      "EventCode": "0x00400003",
+      "BriefDescription": "L2 cache refill due to prefetch"
+  },
+  {
+      "EventName": "CACHE_PF_LATE_REFILL",
+      "EventCode": "0x00800003",
+      "BriefDescription": "L2 cache refill due to prefetch late"
+  },
+  {
+      "EventName": "CACHE_PF",
+      "EventCode": "0x01000003",
+      "BriefDescription": "L2 cache prefetch"
+  },
+  {
+      "EventName": "CACHE_PF_HIT",
+      "EventCode": "0x02000003",
+      "BriefDescription": "L2 cache prefetch hit"
+  },
+  {
+      "EventName": "CACHE_INNER_REFILL",
+      "EventCode": "0x04000003",
+      "BriefDescription": "L2 cache refill due to inner read request"
+  },
+  {
+      "EventName": "CACHE_OUTER_REFILL",
+      "EventCode": "0x08000003",
+      "BriefDescription": "L2 cache refill due to outer read request"
+  },
+  {
+      "EventName": "L2_CACHE_ALLOCATE",
+      "EventCode": "0x10000003",
+      "BriefDescription": "L2 cache allocate"
+  },
+  {
+      "EventName": "BUS_ACCESS_TRACE",
+      "EventCode": "0x20000003",
+      "BriefDescription": "Bus access trace request"
+  },
+  {
+      "EventName": "BUS_REQUEST_RETRYNOCRD",
+      "EventCode": "0x40000003",
+      "BriefDescription": "Bus request retrynocrd"
+  }
+]
