@@ -1,0 +1,97 @@
+[
+    {
+        "EventName": "L1I_CACHE_REFILL",
+        "EventCode": "0x00000102",
+        "BriefDescription": "L1 instruction cache refill"
+    },
+    {
+        "EventName": "L1I_CACHE",
+        "EventCode": "0x00000202",
+        "BriefDescription": "Level 1 instruction cache access"
+    },
+    {
+        "EventName": "L1I_CACHE_LMISS",
+        "EventCode": "0x00000402",
+        "BriefDescription": "L1 instruction cache long latency miss"
+    },
+    {
+        "EventName": "UNUSED_PF",
+        "EventCode": "0x00000802",
+        "BriefDescription": "Unused prefetch data"
+    },
+    {
+        "EventName": "PFT_SENT",
+        "EventCode": "0x00001002",
+        "BriefDescription": "Number of the prefetch target request"
+    },
+    {
+        "EventName": "PFT_USEFUL",
+        "EventCode": "0x00002002",
+        "BriefDescription": "Useful prefetch target"
+    },
+    {
+        "EventName": "PFT_DROP",
+        "EventCode": "0x00004002",
+        "BriefDescription": "drop prefetch target"
+    },
+    {
+        "EventName": "TQ_FULL",
+        "EventCode": "0x00008002",
+        "BriefDescription": "TQ entry is full"
+    },
+    {
+        "EventName": "STASH_DROP",
+        "EventCode": "0x00010002",
+        "BriefDescription": "Drop stash request"
+    },
+    {
+        "EventName": "L1I_CACH_INVAL_ALL",
+        "EventCode": "0x00020002",
+        "BriefDescription": "Level 1 Instruction Cache Invalidate All"
+    },
+    {
+        "EventName": "TXDAT_LCRD_BLOCK",
+        "EventCode": "0x00040002",
+        "BriefDescription": "Transmit Data Link Credit Block"
+    },
+    {
+        "EventName": "TXRSP_LCRD_BLOCK",
+        "EventCode": "0x00080002",
+        "BriefDescription": "Transmit Response Link Credit Block"
+    },
+    {
+        "EventName": "TXREQ_LCRD_BLOCK",
+        "EventCode": "0x00100002",
+        "BriefDescription": "Transmit Request Link Credit Block"
+    },
+    {
+        "EventName": "L1I_CACH_INVAL_ALL_LOCAL",
+        "EventCode": "0x00200002",
+        "BriefDescription": "Level 1 Instruction Cache Invalidate All (Local)"
+    },
+    {
+        "EventName": "L1I_CACH_INVAL_ALL_REMOTE",
+        "EventCode": "0x00400002",
+        "BriefDescription": "Level 1 Instruction Cache Invalidate All (Remote)"
+    },
+    {
+        "EventName": "L1I_CACH_INVAL_VA_LOCAL",
+        "EventCode": "0x00800002",
+        "BriefDescription": "Level 1 Instruction Cache Invalidate Virtual Address (Local)"
+    },
+    {
+        "EventName": "L1I_CACH_INVAL_VA_REMOTE",
+        "EventCode": "0x01000002",
+        "BriefDescription": "Level 1 Instruction Cache Invalidate Virtual Address (Remote)"
+    },
+    {
+        "EventName": "DEADBLOCK",
+        "EventCode": "0x04000002",
+        "BriefDescription": "Dead Block"
+    },
+    {
+        "EventName": "L2_CACHE_HIT_LINE_PF",
+        "EventCode": "0x08000002",
+        "BriefDescription": "Level 2 Cache Hit Line Prefetch"
+    }
+]

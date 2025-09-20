@@ -1,0 +1,197 @@
+[
+  {
+      "EventName": "L1D_CACHE_REFILL",
+      "EventCode": "0x00000101",
+      "BriefDescription": "L1 data cache refill"
+  },
+  {
+      "EventName": "L1D_CACHE",
+      "EventCode": "0x00000201",
+      "BriefDescription": "L1 data cache access"
+  },
+  {
+      "EventName": "L1D_CACHE_WB",
+      "EventCode": "0x00000401",
+      "BriefDescription": "L1 data cache write-back"
+  },
+  {
+      "EventName": "L1D_CACHE_LMISS_RD",
+      "EventCode": "0x00000801",
+      "BriefDescription": "Level 1 data cache long-latency miss"
+  },
+  {
+      "EventName": "L1D_CACHE_RD",
+      "EventCode": "0x00001001",
+      "BriefDescription": "L1 data cache read"
+  },
+  {
+      "EventName": "L1D_CACHE_WR",
+      "EventCode": "0x00002001",
+      "BriefDescription": "L1 data cache write"
+  },
+  {
+      "EventName": "L1D_CACHE_REFILL_RD",
+      "EventCode": "0x00004001",
+      "BriefDescription": "L1 data cache refill read"
+  },
+  {
+      "EventName": "L1D_CACHE_REFILL_WR",
+      "EventCode": "0x00008001",
+      "BriefDescription": "L1 data cache refill write"
+  },
+  {
+      "EventName": "L1D_CACHE_REFILL_INNER",
+      "EventCode": "0x00010001",
+      "BriefDescription": "L1 data cache refill inner"
+  },
+  {
+      "EventName": "L1D_CACHE_REFILL_OUTER",
+      "EventCode": "0x00020001",
+      "BriefDescription": "L1 data cache refill outer"
+  },
+  {
+      "EventName": "L1D_CACHE_WB_VICTIM",
+      "EventCode": "0x00040001",
+      "BriefDescription": "L1 data cache write-back victim"
+  },
+  {
+      "EventName": "L1D_CACHE_WB_CLEAN",
+      "EventCode": "0x00080001",
+      "BriefDescription": "L1 data cache write-back clean"
+  },
+  {
+      "EventName": "L1D_CACHE_INVAL",
+      "EventCode": "0x00100001",
+      "BriefDescription": "L1 data cache invalidate"
+  },
+  {
+      "EventName": "LDST_L1_PF_REFILL",
+      "EventCode": "0x00200001",
+      "BriefDescription": "L1 refill due to load store prefetch miss"
+  },
+  {
+      "EventName": "LDST_L1_PF_LATE",
+      "EventCode": "0x00400001",
+      "BriefDescription": "Load store hit prefetch"
+  },
+  {
+      "EventName": "L1D_CACHE_REFILL_INER_L2",
+      "EventCode": "0x00800001",
+      "BriefDescription": "L1 data cache refill iner L2"
+  },
+  {
+      "EventName": "L1D_CACHE_REFILL_INER_L3",
+      "EventCode": "0x01000001",
+      "BriefDescription": "L1 data cache refill iner L3"
+  },
+  {
+      "EventName": "L1D_TLB_REFILL_RD_PF",
+      "EventCode": "0x02000001",
+      "BriefDescription": "L1 data TLB refill with read prefetch"
+  },
+  {
+      "EventName": "STORE_STREAM",
+      "EventCode": "0x04000001",
+      "BriefDescription": "store stream"
+  },
+  {
+      "EventName": "LDST_NUKE_RAR",
+      "EventCode": "0x08000001",
+      "BriefDescription": "Load/Store nuke due to read after read"
+  },
+  {
+      "EventName": "LDST_NUKE_RAW",
+      "EventCode": "0x10000001",
+      "BriefDescription": "Load/Store nuke due to read after write"
+  },
+  {
+      "EventName": "LDST_L1_PF_GEN_PAGE",
+      "EventCode": "0x20000001",
+      "BriefDescription": "Load/Store L1 cache pager prefetch"
+  },
+  {
+      "EventName": "LDST_L1_PF_GEN_STRIDE",
+      "EventCode": "0x40000001",
+      "BriefDescription": "Load/Store L1 cahce stride prefetch"
+  },
+  {
+      "EventName": "LDST_L2_PF_GEN_LD",
+      "EventCode": "0x80000001",
+      "BriefDescription": "L2 cache prefetch load"
+  },
+  {
+      "EventName": "LDST_L2_PF_GEN_ST",
+      "EventCode": "0x100000001",
+      "BriefDescription": "L2 cache prefetch store"
+  },
+  {
+      "EventName": "LS_PF_TRAIN_TABLE_ALLOC",
+      "EventCode": "0x200000001",
+      "BriefDescription": "prefetch training table allocation"
+  },
+  {
+      "EventName": "LS_PF_PHT_LOOKUP",
+      "EventCode": "0x400000001",
+      "BriefDescription": "Pattern History Table prefetch lookup"
+  },
+  {
+      "EventName": "LS_PF_PHT_LOOKUP_HIT",
+      "EventCode": "0x800000001",
+      "BriefDescription": "Pattern History Table prefetch lookup hit"
+  },
+  {
+      "EventName": "LS_PF_GEN_TABLE_ALLOC",
+      "EventCode": "0x1000000001",
+      "BriefDescription": "Load/Store Prefetch Generated Page Table Allocation"
+  },
+  {
+      "EventName": "LS_PF_GEN_TABLE_ALLOC_PF_PEND",
+      "EventCode": "0x2000000001",
+      "BriefDescription": "Load/Store Prefetch Generated Page Table Allocation Pending Due to Full Queue"
+  },
+  {
+      "EventName": "LS_PF_PRQ_ALLOC_PF_PEND",
+      "EventCode": "0x4000000001",
+      "BriefDescription": "Load/Store Prefetch Request Queue Allocation Pending Prefetch"
+  },
+  {
+      "EventName": "LDST_L1_PF",
+      "EventCode": "0x8000000001",
+      "BriefDescription": "Load/Store L1 Software Prefetch Count"
+  },
+  {
+      "EventName": "LDST_L1_PF_HIT",
+      "EventCode": "0x10000000001",
+      "BriefDescription": "Load/Store L1 Software Prefetch Hit Count"
+  },
+  {
+      "EventName": "LDST_LRQ_FULL",
+      "EventCode": "0x20000000001",
+      "BriefDescription": "Load/Store Load Request Queue Full Count"
+  },
+  {
+      "EventName": "MAX_POWER_THROTTLE_ACTIVE",
+      "EventCode": "0x80000000001",
+      "BriefDescription": "Maximum Power Throttle Active Event"
+  },
+  {
+      "EventName": "DIDT_THROTTLE_ACTIVE",
+      "EventCode": "0x100000000001",
+      "BriefDescription": "Dynamic Instruction Deferral Throttle Active Event"
+  },
+  {
+      "EventName": "NEAR_CAS",
+      "EventCode": "0x200000000001",
+      "BriefDescription": "Compare-And-Swap Near Address Event Count"
+  },
+  {
+      "EventName": "NEAR_CAS_PASS",
+      "EventCode": "0x400000000001",
+      "BriefDescription": "Compare-And-Swap Near Address Passed Event Count"
+  },
+  {
+      "EventName": "FAR_CAS",
+      "EventCode": "0x800000000001",
+      "BriefDescription": "Compare-And-Swap Far Address Event Count"
+  }
+]

@@ -1,0 +1,82 @@
+[
+    {
+        "EventName": "VFP_SPEC",
+        "EventCode": "0x0000010c",
+        "BriefDescription": "Floating point operation speculatively executed"
+    },
+    {
+        "EventName": "VEC_INST_SPEC",
+        "EventCode": "0x0000020c",
+        "BriefDescription": "Vector instrution speculatively executed"
+    },
+    {
+        "EventName": "FP_HP_SPEC",
+        "EventCode": "0x0000040c",
+        "BriefDescription": "Half-precision floating-point operation speculatively executed"
+    },
+    {
+        "EventName": "FP_SP_SPEC",
+        "EventCode": "0x0000080c",
+        "BriefDescription": "Single-precision floating-point operation speculatively executed"
+    },
+    {
+        "EventName": "FP_DP_SPEC",
+        "EventCode": "0x0000100c",
+        "BriefDescription": "Double-precision floating-point operation speculatively executed"
+    },
+    {
+        "EventName": "VX_MASKED_OP",
+        "EventCode": "0x0000200c",
+        "BriefDescription": "Vector masked operation"
+    },
+    {
+        "EventName": "VX_EMPTY_MASKED_OP",
+        "EventCode": "0x0000400c",
+        "BriefDescription": "Vector mask empty operation"
+    },
+    {
+        "EventName": "VX_FULL_MASKED_OP",
+        "EventCode": "0x0000800c",
+        "BriefDescription": "Vector mask full operation"
+    },
+    {
+        "EventName": "VX_PARTIAL_MASKED_OP",
+        "EventCode": "0x0001000c",
+        "BriefDescription": "Vector mask partial operation"
+    },
+    {
+        "EventName": "VX_NOT_FULL_MASKED_OP",
+        "EventCode": "0x0002000c",
+        "BriefDescription": "Vector mask not full operation"
+    },
+    {
+        "EventName": "FP_VEC_SPEC",
+        "EventCode": "0x010000c",
+        "BriefDescription": "Vector floating-point element operations speculatively executed"
+    },
+    {
+        "EventName": "FP_SCALE_SPEC",
+        "EventCode": "0x020000c",
+        "BriefDescription": "Scalable floating-point element operations speculatively executed"
+    },
+    {
+        "EventName": "VEC_INT08_SPEC",
+        "EventCode": "0x040000c",
+        "BriefDescription": "Operation counted by VEC_INT_SPEC where the largest type is 8-bit integer"
+    },
+    {
+        "EventName": "VEC_INT16_SPEC",
+        "EventCode": "0x080000c",
+        "BriefDescription": "Operation counted by ASE_SVE_INT_SPEC where the largest type is 16-bit integer"
+    },
+    {
+        "EventName": "VEC_INT32_SPEC",
+        "EventCode": "0x100000c",
+        "BriefDescription": "Operation counted by ASE_SVE_INT_SPEC where the largest type is 32-bit integer"
+    },
+    {
+        "EventName": "VEC_INT64_SPEC",
+        "EventCode": "0x200000c",
+        "BriefDescription": "Operation counted by ASE_SVE_INT_SPEC where the largest type is 64-bit integer"
+    }
+]
