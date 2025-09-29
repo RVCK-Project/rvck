@@ -1,0 +1,99 @@
+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/i2c/lrw-i2c.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: LRW I2C
+
+maintainers:
+  - Fei Liu <liu.fei16@zte.com.cn>
+  - Xiaowei Han <han.xiaowei1@zte.com.cn>
+  - Qingtao Liu <liu.qingtao2@zte.com.cn>
+
+description: |
+  Should be something similar to "lrw,<chip>-i2c"
+  for the I2C as integrated on a particular chip, It supports
+  multiple CPU architectures, currently including e.g. RISC-V and ARM.
+
+properties:
+  compatible:
+    const: lrw,sc-i2c
+
+  reg:
+    maxItems: 1
+
+  interrupts:
+    maxItems: 1
+
+  clocks:
+    maxItems: 1
+
+  clock-frequency:
+    description: |
+    frequency of the bus clock in Hz defaults to 100 kHz when not specified
+
+  fs_hcnt:
+    description: |
+      High-level duration count in Standard/Fast Mode (100kHz / 400kHz / 1MHz)
+      Represents the number of clock cycles (clk cycles) that the signal remains at high level
+      during Standard or Fast Mode communication
+
+  fs_lcnt:
+    description: |
+      Low-level duration count in Standard/Fast Mode (100kHz / 400kHz / 1MHz)
+      Represents the number of clock cycles (clk cycles) that the signal remains at low level
+      during Standard or Fast Mode communication
+
+  hs_hcnt:
+    description: |
+      High-level duration count in High-Speed Mode (>1MHz).
+      Represents the number of clock cycles (clk cycles) that the signal remains at high level
+      during High-Speed Mode communication (baud rate greater than 1MHz)
+
+  hs_lcnt:
+    description: |
+      Low-level duration count in High-Speed Mode (>1MHz).
+      Represents the number of clock cycles (clk cycles) that the signal remains at low level
+      during High-Speed Mode communication (baud rate greater than 1MHz)
+
+  sda_hold_time:
+    description: |
+      Hold time configuration for SDA signal, in clock cycles (clk cycles)
+      The value is a 32-bit integer with bitfield division:
+      - Bits [23:16]: Hold time in RX mode (SDA signal hold duration when receiving data)
+      - Bits [15:0]: Hold time in TX mode (SDA signal hold duration when transmitting data)
+
+  sda_stuck_at_low_timeout:
+    description: |
+      Timeout threshold when SDA signal is stuck at low level, in clock cycles (clk cycles).
+      When the SDA signal remains low for a duration exceeding this count, the I2C controller
+      will trigger the bus recovery mechanism to restore normal communication
+
+required:
+  - compatible
+  - interrupts
+  - reg
+  - clock-frequency
+  - clocks
+
+additionalProperties: false
+
+examples:
+  - |
+    i2c@825e822000 {
+      compatible = "lrw,sc-i2c";
+      interrupt-parent = <&iod1_socbar_s0_aplic>;
+      interrupts = <0x77 0x4>;
+      reg = <0x82 0x08121000 0x00 0x1000>;
+      clocks = <&sc_i2c_clk>;
+      clock-frequency = <100000>;
+      fs_hcnt = <0x1ef>;
+      fs_lcnt = <0x1f4>;
+      hs_hcnt = <0x2d>;
+      hs_lcnt = <0x33>;
+      sda_hold_time = <0x10008>;
+      sda_stuck_at_low_timeout = <0x262599>;
+    };
+
