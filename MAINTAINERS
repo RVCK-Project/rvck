@@ -12544,6 +12544,14 @@ L:	linux-serial@vger.kernel.org
 S:	Maintained
 F:	drivers/tty/serial/lrw_uart.c
 
+LRW I2C DEVICE TREE SUPPORT
+M:	Fei Liu <liu.fei16@zte.com.cn>
+M:	Xiaowei Han <han.xiaowei1@zte.com.cn>
+R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
+L:	devicetree@vger.kernel.org
+S:	Maintained
+F:	Documentation/devicetree/bindings/i2c/lrw,lrw-i2c.yaml
+
 M68K ARCHITECTURE
 M:	Geert Uytterhoeven <geert@linux-m68k.org>
 L:	linux-m68k@lists.linux-m68k.org
