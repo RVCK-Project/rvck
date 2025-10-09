@@ -284,11 +284,10 @@ void __attribute__((weak)) kvm_arch_irq_bypass_start(
 {
 }
 
-int  __attribute__((weak)) kvm_arch_update_irqfd_routing(struct kvm_kernel_irqfd *irqfd,
+void  __attribute__((weak)) kvm_arch_update_irqfd_routing(struct kvm_kernel_irqfd *irqfd,
                                         struct kvm_kernel_irq_routing_entry *old,
                                         struct kvm_kernel_irq_routing_entry *new)
 {
-	return 0;
 }
 
 bool __attribute__((weak)) kvm_arch_irqfd_route_changed(
@@ -641,9 +640,7 @@ void kvm_irq_routing_update(struct kvm *kvm)
 #ifdef CONFIG_HAVE_KVM_IRQ_BYPASS
 		if (irqfd->producer &&
 		    kvm_arch_irqfd_route_changed(&old, &irqfd->irq_entry)) {
-		        int ret = kvm_arch_update_irqfd_routing(irqfd, &old, &irqfd->irq_entry);
-
-			WARN_ON(ret);
+		        kvm_arch_update_irqfd_routing(irqfd, &old, &irqfd->irq_entry);
 		}
 #endif
 	}
