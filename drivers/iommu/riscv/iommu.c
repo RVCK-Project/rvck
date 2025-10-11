@@ -21,6 +21,7 @@
 #include <linux/irqdomain.h>
 #include <linux/kernel.h>
 #include <linux/pci.h>
+#include <linux/dma-map-ops.h>
 
 #include "../iommu-pages.h"
 #include "iommu-bits.h"
@@ -1519,6 +1520,12 @@ static struct iommu_device *riscv_iommu_probe_device(struct device *dev)
 	return &iommu->iommu;
 }
 
+static void riscv_iommu_probe_finalize(struct device *dev)
+{
+	set_dma_ops(dev, NULL);
+	iommu_setup_dma_ops(dev, 0, U64_MAX);
+}
+
 static void riscv_iommu_release_device(struct device *dev)
 {
 	struct riscv_iommu_info *info = dev_iommu_priv_get(dev);
@@ -1537,6 +1544,7 @@ static const struct iommu_ops riscv_iommu_ops = {
 	.get_resv_regions = riscv_iommu_get_resv_regions,
 	.device_group = riscv_iommu_device_group,
 	.probe_device = riscv_iommu_probe_device,
+	.probe_finalize	= riscv_iommu_probe_finalize,
 	.release_device	= riscv_iommu_release_device,
 };
 
