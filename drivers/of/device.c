@@ -93,13 +93,17 @@ of_dma_set_restricted_buffer(struct device *dev, struct device_node *np)
 int of_dma_configure_id(struct device *dev, struct device_node *np,
 			bool force_dma, const u32 *id)
 {
-	const struct iommu_ops *iommu;
 	const struct bus_dma_region *map = NULL;
 	struct device_node *bus_np;
 	u64 dma_start = 0;
 	u64 mask, end, size = 0;
-	bool coherent;
+	bool coherent, set_map = false;
 	int ret;
+
+	if (dev->dma_range_map) {
+		dev_dbg(dev, "dma_range_map already set\n");
+		goto skip_map;
+	}
 
 	if (np == dev->of_node)
 		bus_np = __of_get_dma_parent(np);
@@ -145,8 +149,9 @@ int of_dma_configure_id(struct device *dev, struct device_node *np,
 			kfree(map);
 			return -EINVAL;
 		}
+		set_map = true;
 	}
-
+skip_map:
 	/*
 	 * If @dev is expected to be DMA-capable then the bus code that created
 	 * it should have initialised its dma_mask pointer by this point. For
@@ -172,7 +177,7 @@ int of_dma_configure_id(struct device *dev, struct device_node *np,
 	dev->coherent_dma_mask &= mask;
 	*dev->dma_mask &= mask;
 	/* ...but only set bus limit and range map if we found valid dma-ranges earlier */
-	if (!ret) {
+	if (set_map) {
 		dev->bus_dma_limit = end;
 		dev->dma_range_map = map;
 	}
@@ -181,21 +186,21 @@ int of_dma_configure_id(struct device *dev, struct device_node *np,
 	dev_dbg(dev, "device is%sdma coherent\n",
 		coherent ? " " : " not ");
 
-	iommu = of_iommu_configure(dev, np, id);
-	if (PTR_ERR(iommu) == -EPROBE_DEFER) {
+	ret = of_iommu_configure(dev, np, id);
+	if (ret == -EPROBE_DEFER) {
 		/* Don't touch range map if it wasn't set from a valid dma-ranges */
-		if (!ret)
+		if (set_map)
 			dev->dma_range_map = NULL;
 		kfree(map);
 		return -EPROBE_DEFER;
 	}
-
+	/* Take all other IOMMU errors to mean we'll just carry on without it */
 	dev_dbg(dev, "device is%sbehind an iommu\n",
-		iommu ? " " : " not ");
+		!ret ? " " : " not ");
 
-	arch_setup_dma_ops(dev, dma_start, size, iommu, coherent);
+	arch_setup_dma_ops(dev, dma_start, size, coherent);
 
-	if (!iommu)
+	if (ret)
 		of_dma_set_restricted_buffer(dev, np);
 
 	return 0;
