@@ -12,7 +12,7 @@
 
 #include "../pci.h"
 #include "msi.h"
-#ifdef CONFIG_ARCH_SOPHGO
+#ifdef CONFIG_PCIE_CADENCE_SOPHGO
 #include "../controller/cadence/pcie-cadence-sophgo.h"
 #endif
 
@@ -794,7 +794,7 @@ int __pci_enable_msix_range(struct pci_dev *dev, struct msix_entry *entries, int
 {
 	int hwsize, rc, nvec = maxvec;
 
-#ifdef CONFIG_ARCH_SOPHGO
+#ifdef CONFIG_PCIE_CADENCE_SOPHGO
 	if (check_vendor_id(dev, vendor_id_list, vendor_id_list_num)) {
 #endif
 		if (maxvec < minvec)
@@ -858,7 +858,7 @@ int __pci_enable_msix_range(struct pci_dev *dev, struct msix_entry *entries, int
 
 			nvec = rc;
 		}
-#ifdef CONFIG_ARCH_SOPHGO
+#ifdef CONFIG_PCIE_CADENCE_SOPHGO
 	} else {
 		return -1;
 	}

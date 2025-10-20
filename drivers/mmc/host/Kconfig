@@ -668,6 +668,7 @@ config MMC_SDHCI_SPRD
 config MMC_SDHCI_SOPHGO
 	tristate "Sophgo/BitMain SDIO host Controller"
 	depends on MMC_SDHCI_PLTFM
+	depends on ARCH_SOPHGO
 	help
 	  This selects the SDIO Host Controller in Sophgo/BitMain
 	  SoCs.
