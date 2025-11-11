@@ -12552,6 +12552,16 @@ L:	devicetree@vger.kernel.org
 S:	Maintained
 F:	Documentation/devicetree/bindings/i2c/lrw,lrw-i2c.yaml
 
+LRW I2C DRIVER
+M:	Fei Liu <liu.fei16@zte.com.cn>
+M:	Xiaowei Han <han.xiaowei1@zte.com.cn>
+R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
+L:	linux-i2c@vger.kernel.org
+S:	Maintained
+F:	drivers/i2c/busses/i2c-lrw-core.h
+F:	drivers/i2c/busses/i2c-lrw-master.c
+F:	drivers/i2c/busses/i2c-lrw-platdrv.c
+
 M68K ARCHITECTURE
 M:	Geert Uytterhoeven <geert@linux-m68k.org>
 L:	linux-m68k@lists.linux-m68k.org
