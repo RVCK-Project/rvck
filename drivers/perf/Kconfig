@@ -258,4 +258,21 @@ config CXL_PMU
 
 	  If unsure say 'm'.
 
+config LRW_DDR_PMU
+	tristate "Enable LRW DDR sub-system performance monitoring"
+	depends on ACPI
+	help
+	  This option enables the PMU driver for the LRW DDR sub-system, which allows
+	  performance monitoring of DDR memory operations using the perf framework.
+
+	  Say Y here if you want to include this driver directly in the kernel image,
+	  or M to build it as a module named lrw_ddr_pmu.ko.
+
+	  This driver provides basic counter support for DDR performance metrics, such as
+	  memory access counts. It does not support advanced features like counter overflow
+	  handling or privilege mode filtering.
+
+	  If you are not using LRW DDR hardware or do not require performance monitoring,
+	  say N.
+
 endmenu
