@@ -40,7 +40,9 @@
 
 #include "head.h"
 
+#ifndef CONFIG_HOTPLUG_PARALLEL
 static DECLARE_COMPLETION(cpu_running);
+#endif
 
 void __init smp_prepare_boot_cpu(void)
 {
@@ -202,6 +204,12 @@ static int start_secondary_cpu(int cpu, struct task_struct *tidle)
 	return -EOPNOTSUPP;
 }
 
+#ifdef CONFIG_HOTPLUG_PARALLEL
+int arch_cpuhp_kick_ap_alive(unsigned int cpu, struct task_struct *tidle)
+{
+	return start_secondary_cpu(cpu, tidle);
+}
+#else
 int __cpu_up(unsigned int cpu, struct task_struct *tidle)
 {
 	int ret = 0;
@@ -222,6 +230,7 @@ int __cpu_up(unsigned int cpu, struct task_struct *tidle)
 
 	return ret;
 }
+#endif
 
 void __init smp_cpus_done(unsigned int max_cpus)
 {
@@ -238,6 +247,10 @@ asmlinkage __visible void smp_callin(void)
 	/* All kernel threads share the same mm context.  */
 	mmgrab(mm);
 	current->active_mm = mm;
+
+#ifdef CONFIG_HOTPLUG_PARALLEL
+	cpuhp_ap_sync_alive();
+#endif
 
 	store_cpu_topology(curr_cpuid);
 	notify_cpu_starting(curr_cpuid);
@@ -257,7 +270,9 @@ asmlinkage __visible void smp_callin(void)
 	 * a local TLB flush right now just in case.
 	 */
 	local_flush_tlb_all();
+#ifndef CONFIG_HOTPLUG_PARALLEL
 	complete(&cpu_running);
+#endif
 	/*
 	 * Disable preemption before enabling interrupts, so we don't try to
 	 * schedule a CPU that hasn't actually started yet.
