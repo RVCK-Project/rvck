@@ -231,4 +231,8 @@ static struct platform_driver aplic_driver = {
 	},
 	.probe = aplic_probe,
 };
-builtin_platform_driver(aplic_driver);
+static int __init aplic_driver_init(void)
+{	
+	return platform_driver_register(&aplic_driver);
+}
+arch_initcall(aplic_driver_init);
