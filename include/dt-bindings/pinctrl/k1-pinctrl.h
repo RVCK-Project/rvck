@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
 /*Copyright (C) 2023 Spacemit Co., Ltd. */
-#ifndef __DT_BINDINGS_K1X_PINCTRL_H
-#define __DT_BINDINGS_K1X_PINCTRL_H
+#ifndef __DT_BINDINGS_K1_PINCTRL_H
+#define __DT_BINDINGS_K1_PINCTRL_H
 
 /* pin offset */
 #define PINID(x)	((x) + 1)
@@ -193,6 +193,6 @@
 #define PULL_UP		(6 << 13) /* bit[15:13] 110 */
 #define PULL_DOWN	(5 << 13) /* bit[15:13] 101 */
 
-#define K1X_PADCONF(pinid, conf, mux)	((pinid) * 4) (conf) (mux)
+#define K1_PINCFGID(pinid)  ((pinid) * 4)
 
-#endif /* __DT_BINDINGS_K1PRO_PINCTRL_H */
+#endif /* __DT_BINDINGS_K1_PINCTRL_H */
