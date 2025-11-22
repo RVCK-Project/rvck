@@ -3,8 +3,8 @@
  * Copyright (c) 2022 Spacemit, Inc
  */
 
-#ifndef _DT_BINDINGS_CLK_SPACEMIT_K1X_H_
-#define _DT_BINDINGS_CLK_SPACEMIT_K1X_H_
+#ifndef _DT_BINDINGS_CLK_SPACEMIT_K1_H_
+#define _DT_BINDINGS_CLK_SPACEMIT_K1_H_
 
 #define CLK_PLL2		0
 #define CLK_PLL3		1
@@ -220,4 +220,4 @@
 #define CLK_RCPU2_PWM9		211
 #define CLK_MAX_NO		212
 
-#endif /* _DT_BINDINGS_CLK_SPACEMIT_K1X_H_ */
+#endif /* _DT_BINDINGS_CLK_SPACEMIT_K1_H_ */
