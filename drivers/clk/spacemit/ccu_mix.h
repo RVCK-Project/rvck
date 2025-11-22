@@ -5,7 +5,7 @@
 #define _CCU_MIX_H_
 
 #include <linux/clk-provider.h>
-#include "ccu-spacemit-k1x.h"
+#include "ccu-spacemit-k1.h"
 
 #define SPACEMIT_CLK_GATE_NEED_DELAY BIT(0)
 
