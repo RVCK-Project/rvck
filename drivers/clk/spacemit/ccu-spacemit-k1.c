@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
- * Spacemit k1x clock controller driver
+ * Spacemit k1 clock controller driver
  *
  * Copyright (c) 2023, spacemit Corporation.
  *
@@ -12,8 +12,8 @@
 #include <linux/module.h>
 #include <linux/of_address.h>
 #include <linux/platform_device.h>
-#include <dt-bindings/clock/spacemit-k1x-clock.h>
-#include "ccu-spacemit-k1x.h"
+#include <dt-bindings/clock/spacemit-k1-clock.h>
+#include "ccu-spacemit-k1.h"
 #include "ccu_mix.h"
 #include "ccu_pll.h"
 #include "ccu_ddn.h"
@@ -207,7 +207,7 @@ DEFINE_SPINLOCK(g_cru_lock);
 #define RCPU2_PWM9_CLK_RST		0x24
 /* end of RCPU2 register offset */
 
-struct spacemit_k1x_clk k1x_clock_controller;
+struct spacemit_k1_clk k1_clock_controller;
 
 static const struct ccu_pll_rate_tbl pll2_rate_tbl[] = {
 	PLL_RATE(3000000000UL, 0x66, 0xdd, 0x50, 0x00, 0x3f, 0xe00000),
@@ -1631,7 +1631,7 @@ static SPACEMIT_CCU_DIV_MUX_GATE(ruart1_clk, "ruart1_clk", ruart1_parent_names,
 	0x6, 0x6, 0x0,
 	0);
 
-static struct clk_hw_onecell_data spacemit_k1x_hw_clks = {
+static struct clk_hw_onecell_data spacemit_k1_hw_clks = {
 	.hws = {
 		[CLK_PLL2] = &pll2.common.hw,
 		[CLK_PLL3] = &pll3.common.hw,
@@ -1876,7 +1876,7 @@ void spacemit_clocks_enable(struct clk_hw_table *tbl, int tbl_size)
 	struct clk_hw *hw_clk;
 
 	for (i = 0; i < tbl_size; i++) {
-		hw_clk = spacemit_k1x_hw_clks.hws[tbl[i].clk_hw_id];
+		hw_clk = spacemit_k1_hw_clks.hws[tbl[i].clk_hw_id];
 		clk = clk_hw_get_clk(hw_clk, tbl[i].name);
 		if (!IS_ERR_OR_NULL(clk))
 			clk_prepare_enable(clk);
@@ -1886,7 +1886,7 @@ void spacemit_clocks_enable(struct clk_hw_table *tbl, int tbl_size)
 	}
 }
 
-unsigned long spacemit_k1x_ddr_freq_tbl[MAX_FREQ_LV + 1] = {0};
+unsigned long spacemit_k1_ddr_freq_tbl[MAX_FREQ_LV + 1] = {0};
 
 void spacemit_fill_ddr_freq_tbl(void)
 {
@@ -1894,19 +1894,19 @@ void spacemit_fill_ddr_freq_tbl(void)
 	struct clk *clk;
 	struct clk_hw *hw_clk;
 
-	for (i = 0; i < ARRAY_SIZE(spacemit_k1x_ddr_freq_tbl); i++) {
-		hw_clk = spacemit_k1x_hw_clks.hws[CLK_DFC_LVL0 + i];
+	for (i = 0; i < ARRAY_SIZE(spacemit_k1_ddr_freq_tbl); i++) {
+		hw_clk = spacemit_k1_hw_clks.hws[CLK_DFC_LVL0 + i];
 		clk = clk_hw_get_clk(hw_clk, ddr_clk_parents[i]);
 
 		if (!IS_ERR_OR_NULL(clk))
-			spacemit_k1x_ddr_freq_tbl[i] = clk_get_rate(clk);
+			spacemit_k1_ddr_freq_tbl[i] = clk_get_rate(clk);
 		else
 			pr_err("%s : can't find clk %s\n",
 			       __func__, ddr_clk_parents[i]);
 	}
 }
 
-int ccu_common_init(struct clk_hw *hw, struct spacemit_k1x_clk *clk_info)
+int ccu_common_init(struct clk_hw *hw, struct spacemit_k1_clk *clk_info)
 {
 	struct ccu_common *common = hw_to_ccu_common(hw);
 	struct ccu_pll *pll = hw_to_ccu_pll(hw);
@@ -1962,7 +1962,7 @@ int ccu_common_init(struct clk_hw *hw, struct spacemit_k1x_clk *clk_info)
 }
 
 int spacemit_ccu_probe(struct device_node *node,
-		       struct spacemit_k1x_clk *clk_info,
+		       struct spacemit_k1_clk *clk_info,
 		       struct clk_hw_onecell_data *hw_clks)
 {
 	int i, ret;
@@ -2007,14 +2007,14 @@ err_clk_unreg:
 	return ret;
 }
 
-static void spacemit_k1x_ccu_probe(struct device_node *np)
+static void spacemit_k1_ccu_probe(struct device_node *np)
 {
 	int ret;
-	struct spacemit_k1x_clk *clk_info;
-	struct clk_hw_onecell_data *hw_clks = &spacemit_k1x_hw_clks;
+	struct spacemit_k1_clk *clk_info;
+	struct clk_hw_onecell_data *hw_clks = &spacemit_k1_hw_clks;
 
-	if (of_device_is_compatible(np, "spacemit,k1x-clock")) {
-		clk_info = &k1x_clock_controller;
+	if (of_device_is_compatible(np, "spacemit,k1-clock")) {
+		clk_info = &k1_clock_controller;
 
 		clk_info->mpmu_base = of_iomap(np, 0);
 		if (!clk_info->mpmu_base) {
@@ -2076,7 +2076,7 @@ static void spacemit_k1x_ccu_probe(struct device_node *np)
 			goto out;
 		}
 	} else {
-		pr_err("not spacemit,k1x-clock\n");
+		pr_err("not spacemit,k1-clock\n");
 		goto out;
 	}
 	ret = spacemit_ccu_probe(np, clk_info, hw_clks);
@@ -2088,14 +2088,14 @@ out:
 
 void *spacemit_get_ddr_freq_tbl(void)
 {
-	return spacemit_k1x_ddr_freq_tbl;
+	return spacemit_k1_ddr_freq_tbl;
 }
 EXPORT_SYMBOL_GPL(spacemit_get_ddr_freq_tbl);
 
 u32 spacemit_get_ddr_freq_level(void)
 {
 	u32 ddr_freq_lvl = 0;
-	struct clk_hw *hw = spacemit_k1x_hw_clks.hws[CLK_DDR];
+	struct clk_hw *hw = spacemit_k1_hw_clks.hws[CLK_DDR];
 
 	ddr_freq_lvl = clk_hw_get_parent_index(hw);
 
@@ -2106,7 +2106,7 @@ EXPORT_SYMBOL_GPL(spacemit_get_ddr_freq_level);
 int spacemit_set_ddr_freq_level(u32 level)
 {
 	int ret = 0;
-	struct clk_hw *hw = spacemit_k1x_hw_clks.hws[CLK_DDR];
+	struct clk_hw *hw = spacemit_k1_hw_clks.hws[CLK_DDR];
 
 	if (level < 0 || level > MAX_FREQ_LV)
 		return -EINVAL;
@@ -2119,5 +2119,5 @@ int spacemit_set_ddr_freq_level(u32 level)
 }
 EXPORT_SYMBOL_GPL(spacemit_set_ddr_freq_level);
 
-CLK_OF_DECLARE(k1x_clock, "spacemit,k1x-clock", spacemit_k1x_ccu_probe);
+CLK_OF_DECLARE(k1_clock, "spacemit,k1-clock", spacemit_k1_ccu_probe);
 
