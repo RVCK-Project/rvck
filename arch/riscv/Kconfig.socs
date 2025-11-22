@@ -148,35 +148,10 @@ config SOC_SPACEMIT
 	help
 	  This enables support for Spacemit SoCs platform hardware.
 
-if SOC_SPACEMIT
-
-choice
-	prompt "Spacemit SoCs platform"
-	default SOC_SPACEMIT_K1
+config SOC_SPACEMIT_K1
+	bool "Spacemit k1 Platform SoCs."
+	depends on SOC_SPACEMIT
 	help
-	  choice Spacemit Soc platform
-
-	config SOC_SPACEMIT_K1
-		bool "k1"
-		help
-		  select Spacemit k1 Platform SoCs.
-endchoice
-
-if SOC_SPACEMIT_K1
-
-choice
-	prompt "Spacemit K1 serial SoCs"
-	default SOC_SPACEMIT_K1X
-	help
-	  choice Spacemit K1 SoC platform
-
-	config SOC_SPACEMIT_K1X
-		bool "k1-x"
-		help
-		  This enables support for Spacemit k1-x Platform Hardware.
-endchoice
-
-endif
-endif
+	  select Spacemit k1 Platform SoCs.
 
 endmenu # "SoC selection"
