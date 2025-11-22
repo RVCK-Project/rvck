@@ -7,7 +7,7 @@
 #include <linux/spinlock_types.h>
 #include <linux/clk-provider.h>
 
-#include "ccu-spacemit-k1x.h"
+#include "ccu-spacemit-k1.h"
 
 struct ccu_ddn_tbl {
 	unsigned int num;
