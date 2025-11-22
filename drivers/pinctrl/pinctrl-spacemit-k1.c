@@ -2067,14 +2067,14 @@ static int pcs_remove(struct platform_device *pdev)
 	return 0;
 }
 
-static const struct pcs_soc_data pinctrl_spacemit_k1x = {
+static const struct pcs_soc_data pinctrl_spacemit_k1 = {
 	.flags = PCS_QUIRK_SHARED_IRQ | PCS_FEAT_PINCONF,
 	.irq_enable_mask = (1 << EDGE_CLEAR), /* WAKEUPENABLE */
 	.irq_status_mask = (1 << EDGE_CLEAR), /* WAKEUPENABLE */
 };
 
 static const struct of_device_id pcs_of_match[] = {
-	{ .compatible = "pinctrl-spacemit-k1x", .data = &pinctrl_spacemit_k1x },
+	{ .compatible = "pinctrl-spacemit-k1", .data = &pinctrl_spacemit_k1 },
 	{ },
 };
 MODULE_DEVICE_TABLE(of, pcs_of_match);
