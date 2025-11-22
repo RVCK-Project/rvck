@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* Copyright (c) 2023, spacemit Corporation. */
 
-#ifndef __DT_BINDINGS_RESET_SAPCEMIT_K1X_H__
-#define __DT_BINDINGS_RESET_SAPCEMIT_K1X_H__
+#ifndef __DT_BINDINGS_RESET_SAPCEMIT_K1_H__
+#define __DT_BINDINGS_RESET_SAPCEMIT_K1_H__
 
 #define RESET_UART1		1
 #define RESET_UART2		2
@@ -123,4 +123,4 @@
 #define RESET_RCPU2_PWM9	117
 #define RESET_NUMBER		118
 
-#endif /* __DT_BINDINGS_RESET_SAPCEMIT_K1X_H__ */
+#endif /* __DT_BINDINGS_RESET_SAPCEMIT_K1_H__ */
