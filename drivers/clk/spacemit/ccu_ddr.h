@@ -5,7 +5,7 @@
 #define _CCU_DDR_H_
 
 #include <linux/clk-provider.h>
-#include "ccu-spacemit-k1x.h"
+#include "ccu-spacemit-k1.h"
 #include "ccu_mix.h"
 
 struct ccu_ddr {
