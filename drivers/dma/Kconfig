@@ -491,7 +491,7 @@ config OWL_DMA
 
 config SPACEMIT_K1_DMA
 	bool "Spacemit k1 SoCs DMA support"
-	depends on SOC_SPACEMIT_K1X
+	depends on SOC_SPACEMIT_K1
 	depends on DMA_ENGINE
 	help
 	  Enable support for the Spacemit k1 SoCs DMA controller.
