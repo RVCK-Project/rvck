@@ -967,14 +967,14 @@ config SPI_SN_F_OSPI
 
 config SPI_SPACEMIT_K1
 	tristate "Spacemit K1 SPI Controller Platform Driver Support"
-	depends on SOC_SPACEMIT_K1X
+	depends on SOC_SPACEMIT_K1
 	help
 	  This enables support for the SPI master controller in the Spacemit
 	  k1 SOC.
 
 config SPI_SPACEMIT_K1_QSPI
 	tristate "Spacemit K1 QuadSPI Controller Platform Driver Support"
-	depends on SOC_SPACEMIT_K1X && SPI_MEM
+	depends on SOC_SPACEMIT_K1 && SPI_MEM
 	help
 	  This enables support for the Spacemit K1 QuadSPI controller in master mode.
 	  This controller does only support the high-level SPI memory interface
