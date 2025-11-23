@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef I2C_SPACEMIT_K1X_H
-#define I2C_SPACEMIT_K1X_H
+#ifndef I2C_SPACEMIT_K1_H
+#define I2C_SPACEMIT_K1_H
 #include <linux/bitops.h>
 #include <linux/i2c.h>
 #include <linux/reset.h>
@@ -222,4 +222,4 @@ struct spacemit_i2c_dev {
 	u32			apb_clock;
 };
 
-#endif /* I2C_SPACEMIT_K1X_H */
+#endif /* I2C_SPACEMIT_K1_H */
