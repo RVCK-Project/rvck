@@ -3,13 +3,13 @@
 
 /dts-v1/;
 
-#include <dt-bindings/reset/spacemit-k1x-reset.h>
-#include <dt-bindings/clock/spacemit-k1x-clock.h>
+#include <dt-bindings/reset/spacemit-k1-reset.h>
+#include <dt-bindings/clock/spacemit-k1-clock.h>
 #include <dt-bindings/dma/spacemit-k1-dma.h>
 #include <dt-bindings/mmc/spacemit-k1-sdhci.h>
 
 / {
-	compatible = "spacemit,k1-x";
+	compatible = "spacemit,k1";
 	#address-cells = <2>;
 	#size-cells = <2>;
 
@@ -476,7 +476,7 @@
 		};
 
 		ccu: clock-controller@d4050000 {
-			compatible = "spacemit,k1x-clock";
+			compatible = "spacemit,k1-clock";
 			reg = <0x0 0xd4050000 0x0 0x209c>,
 				<0x0 0xd4282800 0x0 0x400>,
 				<0x0 0xd4015000 0x0 0x1000>,
@@ -499,7 +499,7 @@
 		};
 
 		reset: reset-controller@d4050000 {
-			compatible = "spacemit,k1x-reset";
+			compatible = "spacemit,k1-reset";
 			reg = <0x0 0xd4050000 0x0 0x209c>,
 				<0x0 0xd4282800 0x0 0x400>,
 				<0x0 0xd4015000 0x0 0x1000>,
@@ -537,7 +537,7 @@
 		};
 
 		pinctrl: pinctrl@d401e000 {
-			compatible = "pinctrl-spacemit-k1x";
+			compatible = "pinctrl-spacemit-k1";
 			reg = <0x0 0xd401e000 0x0 0x250>,
 			      <0x0 0xd4019800 0x0 0x10>,
 			      <0x0 0xd4019000 0x0 0x800>;
@@ -1103,7 +1103,7 @@
 		};
 
 		gpio: gpio@d4019000 {
-			compatible = "spacemit,k1x-gpio";
+			compatible = "spacemit,k1-gpio";
 			reg = <0x0 0xd4019000 0x0 0x800>;
 			gpio-controller;
 			#gpio-cells = <2>;
