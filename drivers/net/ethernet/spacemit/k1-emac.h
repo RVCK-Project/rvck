@@ -724,4 +724,4 @@ static inline int emac_rd(struct emac_priv *priv, u32 reg)
 	return readl(priv->iobase + reg);
 }
 
-#endif /* _K1X_EMAC_H_ */
+#endif /* _K1_EMAC_H_ */
