@@ -154,4 +154,10 @@ config SOC_SPACEMIT_K1
 	help
 	  select Spacemit k1 Platform SoCs.
 
+config SOC_SPACEMIT_K3
+	bool "Spacemit k3 Platform SoCs."
+	depends on SOC_SPACEMIT
+	help
+	  select Spacemit k3 Platform SoCs.
+
 endmenu # "SoC selection"
