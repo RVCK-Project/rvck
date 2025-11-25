@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/* Copyright (c) 2025 Spacemit, Inc */
+
+#include "k3.dtsi"
+
+/ {
+	model = "Spacemit K3 Pico";
+
+	memory@102000000 {
+		device_type = "memory";
+		reg = <0x1 0x02000000 0x0 0x7e000000>;
+	};
+
+	chosen {
+		bootargs = "earlycon=sbi loglevel=8 swiotlb=noforce rdinit=/init";
+	};
+};
+
+&resmem {
+	/* global autoconfigured region for contiguous allocations */
+	cmamem: linux,cma {
+		compatible = "shared-dma-pool";
+		reusable;
+		size = <0 0x10000000>;
+		alloc-ranges = <1 0x40000000 0 0x20000000>;
+		linux,cma-default;
+	};
+};
+
