@@ -4,17 +4,16 @@
  * Copyright (c) 2024-2025 Haylen Chu <heylenay@4d2.org>
  */
 
-#include <linux/array_size.h>
 #include <linux/auxiliary_bus.h>
 #include <linux/clk-provider.h>
 #include <linux/delay.h>
-#include <linux/idr.h>
 #include <linux/mfd/syscon.h>
 #include <linux/minmax.h>
 #include <linux/module.h>
 #include <linux/platform_device.h>
-#include <linux/slab.h>
 #include <soc/spacemit/k1-syscon.h>
+#include <soc/spacemit/spacemit-syscon.h>
+
 
 #include "ccu_common.h"
 #include "ccu_pll.h"
@@ -28,8 +27,6 @@ struct spacemit_ccu_data {
 	struct clk_hw **hws;
 	size_t num;
 };
-
-static DEFINE_IDA(auxiliary_ids);
 
 /* APBS clocks start, APBS region contains and only contains all PLL clocks */
 
@@ -136,8 +133,8 @@ CCU_GATE_DEFINE(pll1_d3_819p2, CCU_PARENT_HW(pll1_d3), MPMU_ACGR, BIT(14), 0);
 CCU_GATE_DEFINE(pll1_d2_1228p8, CCU_PARENT_HW(pll1_d2), MPMU_ACGR, BIT(16), 0);
 
 CCU_GATE_DEFINE(slow_uart, CCU_PARENT_NAME(osc), MPMU_ACGR, BIT(1), CLK_IGNORE_UNUSED);
-CCU_DDN_DEFINE(slow_uart1_14p74, pll1_d16_153p6, MPMU_SUCCR, 16, 13, 0, 13, 0);
-CCU_DDN_DEFINE(slow_uart2_48, pll1_d4_614p4, MPMU_SUCCR_1, 16, 13, 0, 13, 0);
+CCU_DDN_DEFINE(slow_uart1_14p74, pll1_d16_153p6, MPMU_SUCCR, 16, 13, 0, 13, 2, 0);
+CCU_DDN_DEFINE(slow_uart2_48, pll1_d4_614p4, MPMU_SUCCR_1, 16, 13, 0, 13, 2, 0);
 
 CCU_GATE_DEFINE(wdt_clk, CCU_PARENT_HW(pll1_d96_25p6), MPMU_WDTPCR, BIT(1), 0);
 
@@ -1018,6 +1015,8 @@ static int spacemit_ccu_register(struct device *dev,
 	if (!clk_data)
 		return -ENOMEM;
 
+	clk_data->num = data->num;
+
 	for (i = 0; i < data->num; i++) {
 		struct clk_hw *hw = data->hws[i];
 		struct ccu_common *common;
@@ -1044,8 +1043,6 @@ static int spacemit_ccu_register(struct device *dev,
 		clk_data->hws[i] = hw;
 	}
 
-	clk_data->num = data->num;
-
 	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
 	if (ret)
 		dev_err(dev, "failed to add clock hardware provider (%d)\n", ret);
@@ -1057,7 +1054,6 @@ static void spacemit_cadev_release(struct device *dev)
 {
 	struct auxiliary_device *adev = to_auxiliary_dev(dev);
 
-	ida_free(&auxiliary_ids, adev->id);
 	kfree(to_spacemit_ccu_adev(adev));
 }
 
@@ -1075,16 +1071,16 @@ static int spacemit_ccu_reset_register(struct device *dev,
 {
 	struct spacemit_ccu_adev *cadev;
 	struct auxiliary_device *adev;
+	static u32 next_id;
 	int ret;
 
 	/* Nothing to do if the CCU does not implement a reset controller */
 	if (!reset_name)
 		return 0;
 
-	cadev = kzalloc(sizeof(*cadev), GFP_KERNEL);
+	cadev = devm_kzalloc(dev, sizeof(*cadev), GFP_KERNEL);
 	if (!cadev)
 		return -ENOMEM;
-
 	cadev->regmap = regmap;
 
 	adev = &cadev->adev;
@@ -1092,14 +1088,11 @@ static int spacemit_ccu_reset_register(struct device *dev,
 	adev->dev.parent = dev;
 	adev->dev.release = spacemit_cadev_release;
 	adev->dev.of_node = dev->of_node;
-	ret = ida_alloc(&auxiliary_ids, GFP_KERNEL);
-	if (ret < 0)
-		goto err_free_cadev;
-	adev->id = ret;
+	adev->id = next_id++;
 
 	ret = auxiliary_device_init(adev);
 	if (ret)
-		goto err_free_aux_id;
+		return ret;
 
 	ret = auxiliary_device_add(adev);
 	if (ret) {
@@ -1108,13 +1101,6 @@ static int spacemit_ccu_reset_register(struct device *dev,
 	}
 
 	return devm_add_action_or_reset(dev, spacemit_adev_unregister, adev);
-
-err_free_aux_id:
-	ida_free(&auxiliary_ids, adev->id);
-err_free_cadev:
-	kfree(cadev);
-
-	return ret;
 }
 
 static int k1_ccu_probe(struct platform_device *pdev)
