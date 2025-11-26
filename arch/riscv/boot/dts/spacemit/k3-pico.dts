@@ -12,7 +12,7 @@
 	};
 
 	chosen {
-		bootargs = "earlycon=sbi loglevel=8 swiotlb=noforce rdinit=/init";
+		bootargs = "earlycon=sbi console=ttyS0,115200n8 loglevel=8 swiotlb=noforce rdinit=/init";
 	};
 };
 
@@ -25,4 +25,8 @@
 		alloc-ranges = <1 0x40000000 0 0x20000000>;
 		linux,cma-default;
 	};
+};
+
+&uart0 {
+	status = "okay";
 };
