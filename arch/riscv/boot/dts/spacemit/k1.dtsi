@@ -3,8 +3,7 @@
 
 /dts-v1/;
 
-#include <dt-bindings/reset/spacemit-k1-reset.h>
-#include <dt-bindings/clock/spacemit-k1-clock.h>
+#include <dt-bindings/clock/spacemit,k1-syscon.h>
 #include <dt-bindings/dma/spacemit-k1-dma.h>
 #include <dt-bindings/mmc/spacemit-k1-sdhci.h>
 
@@ -352,57 +351,32 @@
 	};
 
 	clocks {
-		#address-cells = <0x2>;
-		#size-cells = <0x2>;
-		ranges;
-
-		vctcxo_24: clock-vctcxo_24 {
-			#clock-cells = <0>;
-			compatible = "fixed-clock";
-			clock-frequency = <24000000>;
-			clock-output-names = "vctcxo_24";
-		};
-
-		vctcxo_3: clock-vctcxo_3 {
-			#clock-cells = <0>;
-			compatible = "fixed-clock";
-			clock-frequency = <3000000>;
-			clock-output-names = "vctcxo_3";
-		};
-
-		vctcxo_1: clock-vctcxo_1 {
-			#clock-cells = <0>;
+		vctcxo_1m: clock-1m {
 			compatible = "fixed-clock";
 			clock-frequency = <1000000>;
-			clock-output-names = "vctcxo_1";
+			clock-output-names = "vctcxo_1m";
+			#clock-cells = <0>;
 		};
 
-		pll1_2457p6_vco: clock-pll1_2457p6_vco {
-			#clock-cells = <0>;
+		vctcxo_24m: clock-24m {
 			compatible = "fixed-clock";
-			clock-frequency = <2457600000>;
-			clock-output-names = "pll1_2457p6_vco";
+			clock-frequency = <24000000>;
+			clock-output-names = "vctcxo_24m";
+			#clock-cells = <0>;
 		};
 
-		clk_32k: clock-clk32k {
+		vctcxo_3m: clock-3m {
+			compatible = "fixed-clock";
+			clock-frequency = <3000000>;
+			clock-output-names = "vctcxo_3m";
 			#clock-cells = <0>;
+		};
+
+		osc_32k: clock-32k {
 			compatible = "fixed-clock";
 			clock-frequency = <32000>;
-			clock-output-names = "clk_32k";
-		};
-
-		pll_clk_cluster0: clock-pll_clk_cluster0 {
+			clock-output-names = "osc_32k";
 			#clock-cells = <0>;
-			compatible = "fixed-clock";
-			clock-frequency = <10000000>;
-			clock-output-names = "pll_clk_cluster0";
-		};
-
-		pll_clk_cluster1: clock-pll_clk_cluster1 {
-			#clock-cells = <0>;
-			compatible = "fixed-clock";
-			clock-frequency = <10000000>;
-			clock-output-names = "pll_clk_cluster1";
 		};
 	};
 
@@ -475,47 +449,6 @@
 			reg = <0x0 0xE4000000 0x0 0x00010000>;
 		};
 
-		ccu: clock-controller@d4050000 {
-			compatible = "spacemit,k1-clock";
-			reg = <0x0 0xd4050000 0x0 0x209c>,
-				<0x0 0xd4282800 0x0 0x400>,
-				<0x0 0xd4015000 0x0 0x1000>,
-				<0x0 0xd4090000 0x0 0x1000>,
-				<0x0 0xd4282c00 0x0 0x400>,
-				<0x0 0xd8440000 0x0 0x98>,
-				<0x0 0xc0000000 0x0 0x4280>,
-				<0x0 0xf0610000 0x0 0x20>,
-				<0x0 0xc0880000 0x0 0x2050>,
-				<0x0 0xc0888000 0x0 0x30>;
-			reg-names = "mpmu", "apmu", "apbc", "apbs", "ciu",
-				    "dciu", "ddrc", "apbc2", "rcpu", "rcpu2";
-			clocks = <&vctcxo_24>, <&vctcxo_3>, <&vctcxo_1>,
-				 <&pll1_2457p6_vco>, <&clk_32k>;
-			clock-names = "vctcxo_24", "vctcxo_3", "vctcxo_1",
-				      "pll1_2457p6_vco",
-				"clk_32k";
-			#clock-cells = <1>;
-			status = "okay";
-		};
-
-		reset: reset-controller@d4050000 {
-			compatible = "spacemit,k1-reset";
-			reg = <0x0 0xd4050000 0x0 0x209c>,
-				<0x0 0xd4282800 0x0 0x400>,
-				<0x0 0xd4015000 0x0 0x1000>,
-				<0x0 0xd4090000 0x0 0x1000>,
-				<0x0 0xd4282c00 0x0 0x400>,
-				<0x0 0xd8440000 0x0 0x98>,
-				<0x0 0xc0000000 0x0 0x4280>,
-				<0x0 0xf0610000 0x0 0x20>,
-				<0x0 0xc0880000 0x0 0x2050>,
-				<0x0 0xc0888000 0x0 0x30>;
-			reg-names = "mpmu", "apmu", "apbc", "apbs", "ciu",
-				    "dciu", "ddrc", "apbc2", "rcpu", "rcpu2";
-			#reset-cells = <1>;
-			status = "okay";
-		};
-
 		intc: interrupt-controller@e0000000 {
 			#interrupt-cells = <1>;
 			compatible = "riscv,plic0";
@@ -536,6 +469,67 @@
 			riscv,ndev = <159>;
 		};
 
+		syscon_mpmu: system-controller@d4050000 {
+			compatible = "spacemit,k1-syscon-mpmu";
+			reg = <0x0 0xd4050000 0x0 0x209c>;
+			clocks = <&osc_32k>, <&vctcxo_1m>, <&vctcxo_3m>,
+				 <&vctcxo_24m>;
+			clock-names = "osc", "vctcxo_1m", "vctcxo_3m",
+				      "vctcxo_24m";
+			#clock-cells = <1>;
+			#power-domain-cells = <1>;
+			#reset-cells = <1>;
+		};
+
+		pll: clock-controller@d4090000 {
+			compatible = "spacemit,k1-pll";
+			reg = <0x0 0xd4090000 0x0 0x1000>;
+			clocks = <&vctcxo_24m>;
+			spacemit,mpmu = <&syscon_mpmu>;
+			#clock-cells = <1>;
+		};
+
+		syscon_apmu: system-controller@d4282800 {
+			compatible = "spacemit,k1-syscon-apmu";
+			reg = <0x0 0xd4282800 0x0 0x400>;
+			clocks = <&osc_32k>, <&vctcxo_1m>, <&vctcxo_3m>,
+				 <&vctcxo_24m>;
+			clock-names = "osc", "vctcxo_1m", "vctcxo_3m",
+				      "vctcxo_24m";
+			#clock-cells = <1>;
+			#power-domain-cells = <1>;
+			#reset-cells = <1>;
+		};
+
+		syscon_apbc: system-controller@d4015000 {
+			compatible = "spacemit,k1-syscon-apbc";
+			reg = <0x0 0xd4015000 0x0 0x1000>;
+			clocks = <&osc_32k>, <&vctcxo_1m>, <&vctcxo_3m>,
+				 <&vctcxo_24m>;
+			clock-names = "osc", "vctcxo_1m", "vctcxo_3m",
+				      "vctcxo_24m";
+			#clock-cells = <1>;
+			#reset-cells = <1>;
+		};
+
+		syscon_apbc2: system-controller@f0610000 {
+			compatible = "spacemit,k1-syscon-apbc2";
+			reg = <0x0 0xf0610000 0x0 0x20>;
+			#reset-cells = <1>;
+		};
+
+		syscon_rcpu: system-controller@c0880000 {
+			compatible = "spacemit,k1-syscon-rcpu";
+			reg = <0x0 0xc0880000 0x0 0x2048>;
+			#reset-cells = <1>;
+		};
+
+		syscon_rcpu2: system-controller@c0888000 {
+			compatible = "spacemit,k1-syscon-rcpu2";
+			reg = <0x0 0xc0888000 0x0 0x28>;
+			#reset-cells = <1>;
+		};
+
 		pinctrl: pinctrl@d401e000 {
 			compatible = "pinctrl-spacemit-k1";
 			reg = <0x0 0xd401e000 0x0 0x250>,
@@ -549,9 +543,10 @@
 			pinctrl-single,register-width = <32>;
 			pinctrl-single,function-mask = <0xff77>;
 
-			clocks = <&ccu CLK_AIB>;
-			clock-names = "clk_aib";
-			resets = <&reset RESET_AIB>;
+			clocks = <&syscon_apbc CLK_AIB>,
+				 <&syscon_apbc CLK_AIB_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_AIB>;
 			reset-names = "aib_rst";
 
 			interrupt-parent = <&intc>;
@@ -569,8 +564,8 @@
 			reg = <0x0 0xd4000000 0x0 0x4000>;
 			interrupts = <72>;
 			interrupt-parent = <&intc>;
-			clocks = <&ccu CLK_DMA>;
-			resets = <&reset RESET_DMA>;
+			clocks = <&syscon_apmu CLK_DMA>;
+			resets = <&syscon_apmu RESET_DMA>;
 			#dma-cells= <2>;
 			#dma-channels = <16>;
 			max-burst-size = <64>;
@@ -585,9 +580,10 @@
 			reg = <0x0 0xd4017000 0x0 0x100>;
 			interrupt-parent = <&intc>;
 			interrupts = <42>;
-			clocks = <&ccu CLK_UART1>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART0>,
+				 <&syscon_apbc CLK_UART0_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART1>;
+			resets = <&syscon_apbc RESET_UART0>;
 			reg-shift = <2>;
 			reg-io-width = <4>;
 			status = "disabled";
@@ -598,9 +594,10 @@
 			reg = <0x0 0xd4017100 0x0 0x100>;
 			interrupt-parent = <&intc>;
 			interrupts = <44>;
-			clocks = <&ccu CLK_UART2>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART2>,
+				 <&syscon_apbc CLK_UART2_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART2>;
+			resets = <&syscon_apbc RESET_UART2>;
 			status = "disabled";
 		};
 
@@ -609,9 +606,10 @@
 			reg = <0x0 0xd4017200 0x0 0x100>;
 			interrupt-parent = <&intc>;
 			interrupts = <45>;
-			clocks = <&ccu CLK_UART3>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART3>,
+				 <&syscon_apbc CLK_UART3_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART3>;
+			resets = <&syscon_apbc RESET_UART3>;
 			status = "disabled";
 		};
 
@@ -620,9 +618,10 @@
 			interrupt-parent = <&intc>;
 			reg = <0x0 0xd4017300 0x0 0x100>;
 			interrupts = <46>;
-			clocks = <&ccu CLK_UART4>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART4>,
+				 <&syscon_apbc CLK_UART4_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART4>;
+				resets = <&syscon_apbc RESET_UART4>;
 			status = "disabled";
 		};
 
@@ -631,9 +630,10 @@
 			interrupt-parent = <&intc>;
 			reg = <0x0 0xd4017400 0x0 0x100>;
 			interrupts = <47>;
-			clocks = <&ccu CLK_UART5>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART5>,
+				 <&syscon_apbc CLK_UART5_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART5>;
+			resets = <&syscon_apbc RESET_UART5>;
 			status = "disabled";
 		};
 
@@ -642,9 +642,10 @@
 			interrupt-parent = <&intc>;
 			reg = <0x0 0xd4017500 0x0 0x100>;
 			interrupts = <48>;
-			clocks = <&ccu CLK_UART6>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART6>,
+				 <&syscon_apbc CLK_UART6_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART6>;
+			resets = <&syscon_apbc RESET_UART6>;
 			status = "disabled";
 		};
 
@@ -653,9 +654,10 @@
 			interrupt-parent = <&intc>;
 			reg = <0x0 0xd4017600 0x0 0x100>;
 			interrupts = <49>;
-			clocks = <&ccu CLK_UART7>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART7>,
+				 <&syscon_apbc CLK_UART7_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART7>;
+			resets = <&syscon_apbc RESET_UART7>;
 			status = "disabled";
 		};
 
@@ -664,9 +666,10 @@
 			interrupt-parent = <&intc>;
 			reg = <0x0 0xd4017700 0x0 0x100>;
 			interrupts = <50>;
-			clocks = <&ccu CLK_UART8>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART8>,
+				 <&syscon_apbc CLK_UART8_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART8>;
+			resets = <&syscon_apbc RESET_UART8>;
 			status = "disabled";
 		};
 
@@ -675,9 +678,10 @@
 			interrupt-parent = <&intc>;
 			reg = <0x0 0xd4017800 0x0 0x100>;
 			interrupts = <51>;
-			clocks = <&ccu CLK_UART9>, <&ccu CLK_SLOW_UART>;
+			clocks = <&syscon_apbc CLK_UART9>,
+				 <&syscon_apbc CLK_UART9_BUS>;
 			clock-names = "core", "bus";
-			resets = <&reset RESET_UART9>;
+			resets = <&syscon_apbc RESET_UART9>;
 			status = "disabled";
 		};
 
@@ -689,8 +693,10 @@
 			#size-cells = <0>;
 			interrupt-parent = <&intc>;
 			interrupts = <36>;
-			clocks = <&ccu CLK_TWSI0>;
-			resets = <&reset RESET_TWSI0>;
+			clocks = <&syscon_apbc CLK_TWSI0>,
+				 <&syscon_apbc CLK_TWSI0_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_TWSI0>;
 			spacemit,i2c-master-code = /bits/ 8 <0x0e>;
 			spacemit,i2c-clk-rate = <32000000>;
 			spacemit,i2c-lcr = <0x82c469f>;
@@ -708,8 +714,10 @@
 			#size-cells = <0>;
 			interrupt-parent = <&intc>;
 			interrupts = <37>;
-			clocks = <&ccu CLK_TWSI1>;
-			resets = <&reset RESET_TWSI1>;
+			clocks = <&syscon_apbc CLK_TWSI1>,
+				 <&syscon_apbc CLK_TWSI1_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_TWSI1>;
 			spacemit,i2c-master-code = /bits/ 8 <0x0e>;
 			spacemit,i2c-clk-rate = <32000000>;
 			spacemit,i2c-lcr = <0x82c469f>;
@@ -727,8 +735,10 @@
 			#size-cells = <0>;
 			interrupt-parent = <&intc>;
 			interrupts = <38>;
-			clocks = <&ccu CLK_TWSI2>;
-			resets = <&reset RESET_TWSI2>;
+			clocks = <&syscon_apbc CLK_TWSI2>,
+				 <&syscon_apbc CLK_TWSI2_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_TWSI2>;
 			spacemit,i2c-master-code = /bits/ 8 <0x0e>;
 			spacemit,i2c-clk-rate = <32000000>;
 			spacemit,i2c-lcr = <0x82c469f>;
@@ -746,8 +756,10 @@
 			#size-cells = <0>;
 			interrupt-parent = <&intc>;
 			interrupts = <40>;
-			clocks = <&ccu CLK_TWSI4>;
-			resets = <&reset RESET_TWSI4>;
+			clocks = <&syscon_apbc CLK_TWSI4>,
+				 <&syscon_apbc CLK_TWSI4_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_TWSI4>;
 			spacemit,i2c-master-code = /bits/ 8 <0x0e>;
 			spacemit,i2c-clk-rate = <32000000>;
 			spacemit,i2c-lcr = <0x82c469f>;
@@ -765,8 +777,10 @@
 			#size-cells = <0>;
 			interrupt-parent = <&intc>;
 			interrupts = <41>;
-			clocks = <&ccu CLK_TWSI5>;
-			resets = <&reset RESET_TWSI5>;
+			clocks = <&syscon_apbc CLK_TWSI5>,
+				 <&syscon_apbc CLK_TWSI5_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_TWSI5>;
 			spacemit,i2c-master-code = /bits/ 8 <0x0e>;
 			spacemit,i2c-clk-rate = <32000000>;
 			spacemit,i2c-lcr = <0x82c469f>;
@@ -784,8 +798,10 @@
 			#size-cells = <0>;
 			interrupt-parent = <&intc>;
 			interrupts = <70>;
-			clocks = <&ccu CLK_TWSI6>;
-			resets = <&reset RESET_TWSI6>;
+			clocks = <&syscon_apbc CLK_TWSI6>,
+				 <&syscon_apbc CLK_TWSI6_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_TWSI6>;
 			spacemit,i2c-master-code = /bits/ 8 <0x0e>;
 			spacemit,i2c-clk-rate = <32000000>;
 			spacemit,i2c-lcr = <0x82c469f>;
@@ -803,8 +819,10 @@
 			#size-cells = <0>;
 			interrupt-parent = <&intc>;
 			interrupts = <18>;
-			clocks = <&ccu CLK_TWSI7>;
-			resets = <&reset RESET_TWSI7>;
+			clocks = <&syscon_apbc CLK_TWSI7>,
+				 <&syscon_apbc CLK_TWSI7_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_TWSI7>;
 			spacemit,i2c-master-code = /bits/ 8 <0x0e>;
 			spacemit,i2c-clk-rate = <32000000>;
 			spacemit,i2c-lcr = <0x82c469f>;
@@ -822,8 +840,10 @@
 			#size-cells = <0>;
 			interrupt-parent = <&intc>;
 			interrupts = <19>;
-			clocks = <&ccu CLK_TWSI8>;
-			resets = <&reset RESET_TWSI8>;
+			clocks = <&syscon_apbc CLK_TWSI8>,
+				 <&syscon_apbc CLK_TWSI8_BUS>;
+			clock-names = "func", "bus";
+			resets = <&syscon_apbc RESET_TWSI8>;
 			spacemit,i2c-master-code = /bits/ 8 <0x0e>;
 			spacemit,i2c-clk-rate = <32000000>;
 			spacemit,i2c-lcr = <0x82c469f>;
@@ -843,8 +863,8 @@
 			dma-names = "rx", "tx";
 			interrupt-parent = <&intc>;
 			interrupts = <56>;
-			clocks = <&ccu CLK_SSPA0>;
-			resets = <&reset RESET_SSPA0>;
+			clocks = <&syscon_apbc CLK_SSPA0>;
+			resets = <&syscon_apbc RESET_SSPA0>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			interconnects = <&dram_range0>;
@@ -862,8 +882,8 @@
 			dma-names = "rx", "tx";
 			interrupt-parent = <&intc>;
 			interrupts = <57>;
-			clocks = <&ccu CLK_SSPA1>;
-			resets = <&reset RESET_SSPA1>;
+			clocks = <&syscon_apbc CLK_SSPA1>;
+			resets = <&syscon_apbc RESET_SSPA1>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			interconnects = <&dram_range0>;
@@ -881,8 +901,8 @@
 			dma-names = "rx", "tx";
 			interrupt-parent = <&intc>;
 			interrupts = <55>;
-			clocks = <&ccu CLK_SSP3>;
-			resets = <&reset RESET_SSP3>;
+			clocks = <&syscon_apbc CLK_SSP3>;
+			resets = <&syscon_apbc RESET_SSP3>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			interconnects = <&dram_range0>;
@@ -901,11 +921,11 @@
 			k1,qspi-sfa2ad = <0x100000>;
 			k1,qspi-sfb1ad = <0x100000>;
 			k1,qspi-sfb2ad = <0x100000>;
-			clocks = <&ccu CLK_QSPI>,
-				 <&ccu CLK_QSPI_BUS>;
-			clock-names = "qspi_clk", "qspi_bus_clk";
-			resets = <&reset RESET_QSPI>,
-				 <&reset RESET_QSPI_BUS>;
+			clocks = <&syscon_apmu CLK_QSPI_BUS>,
+				 <&syscon_apmu CLK_QSPI>;
+			clock-names = "qspi_bus_clk", "qspi_clk";
+			resets = <&syscon_apmu RESET_QSPI>,
+				 <&syscon_apmu RESET_QSPI_BUS>;
 			reset-names = "qspi_reset", "qspi_bus_reset";
 			k1,qspi-pmuap-reg = <0xd4282860>;
 			k1,qspi-mpmu-acgr-reg = <0xd4051024>;
@@ -926,8 +946,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd401a000 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM0>;
-			resets = <&reset RESET_PWM0>;
+			clocks = <&syscon_apbc CLK_PWM0>;
+			resets = <&syscon_apbc RESET_PWM0>;
 			status = "disabled";
 		};
 
@@ -935,8 +955,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd401a400 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM1>;
-			resets = <&reset RESET_PWM1>;
+			clocks = <&syscon_apbc CLK_PWM1>;
+			resets = <&syscon_apbc RESET_PWM1>;
 			status = "disabled";
 		};
 
@@ -944,8 +964,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd401a800 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM2>;
-			resets = <&reset RESET_PWM2>;
+			clocks = <&syscon_apbc CLK_PWM2>;
+			resets = <&syscon_apbc RESET_PWM2>;
 			status = "disabled";
 		};
 
@@ -953,8 +973,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd401ac00 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM3>;
-			resets = <&reset RESET_PWM3>;
+			clocks = <&syscon_apbc CLK_PWM3>;
+			resets = <&syscon_apbc RESET_PWM3>;
 			status = "disabled";
 		};
 
@@ -962,8 +982,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd401b000 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM4>;
-			resets = <&reset RESET_PWM4>;
+			clocks = <&syscon_apbc CLK_PWM4>;
+			resets = <&syscon_apbc RESET_PWM4>;
 			status = "disabled";
 		};
 
@@ -971,8 +991,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd401b400 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM5>;
-			resets = <&reset RESET_PWM5>;
+			clocks = <&syscon_apbc CLK_PWM5>;
+			resets = <&syscon_apbc RESET_PWM5>;
 			status = "disabled";
 		};
 
@@ -980,8 +1000,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd401b800 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM6>;
-			resets = <&reset RESET_PWM6>;
+			clocks = <&syscon_apbc CLK_PWM6>;
+			resets = <&syscon_apbc RESET_PWM6>;
 			status = "disabled";
 		};
 
@@ -989,8 +1009,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd401bc00 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM7>;
-			resets = <&reset RESET_PWM7>;
+			clocks = <&syscon_apbc CLK_PWM7>;
+			resets = <&syscon_apbc RESET_PWM7>;
 			status = "disabled";
 		};
 
@@ -998,8 +1018,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4020000 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM8>;
-			resets = <&reset RESET_PWM8>;
+			clocks = <&syscon_apbc CLK_PWM8>;
+			resets = <&syscon_apbc RESET_PWM8>;
 			status = "disabled";
 		};
 
@@ -1007,8 +1027,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4020400 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM9>;
-			resets = <&reset RESET_PWM9>;
+			clocks = <&syscon_apbc CLK_PWM9>;
+			resets = <&syscon_apbc RESET_PWM9>;
 			status = "disabled";
 		};
 
@@ -1016,8 +1036,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4020800 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM10>;
-			resets = <&reset RESET_PWM10>;
+			clocks = <&syscon_apbc CLK_PWM10>;
+			resets = <&syscon_apbc RESET_PWM10>;
 			status = "disabled";
 		};
 
@@ -1025,8 +1045,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4020c00 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM11>;
-			resets = <&reset RESET_PWM11>;
+			clocks = <&syscon_apbc CLK_PWM11>;
+			resets = <&syscon_apbc RESET_PWM11>;
 			status = "disabled";
 		};
 
@@ -1034,8 +1054,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4021000 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM12>;
-			resets = <&reset RESET_PWM12>;
+			clocks = <&syscon_apbc CLK_PWM12>;
+			resets = <&syscon_apbc RESET_PWM12>;
 			status = "disabled";
 		};
 
@@ -1043,8 +1063,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4021400 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM13>;
-			resets = <&reset RESET_PWM13>;
+			clocks = <&syscon_apbc CLK_PWM13>;
+			resets = <&syscon_apbc RESET_PWM13>;
 			status = "disabled";
 		};
 
@@ -1052,8 +1072,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4021800 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM14>;
-			resets = <&reset RESET_PWM14>;
+			clocks = <&syscon_apbc CLK_PWM14>;
+			resets = <&syscon_apbc RESET_PWM14>;
 			status = "disabled";
 		};
 
@@ -1061,8 +1081,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4021c00 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM15>;
-			resets = <&reset RESET_PWM15>;
+			clocks = <&syscon_apbc CLK_PWM15>;
+			resets = <&syscon_apbc RESET_PWM15>;
 			status = "disabled";
 		};
 
@@ -1070,8 +1090,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4022000 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM16>;
-			resets = <&reset RESET_PWM16>;
+			clocks = <&syscon_apbc CLK_PWM16>;
+			resets = <&syscon_apbc RESET_PWM16>;
 			status = "disabled";
 		};
 
@@ -1079,8 +1099,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4022400 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM17>;
-			resets = <&reset RESET_PWM17>;
+			clocks = <&syscon_apbc CLK_PWM17>;
+			resets = <&syscon_apbc RESET_PWM17>;
 			status = "disabled";
 		};
 
@@ -1088,8 +1108,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4022800 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM18>;
-			resets = <&reset RESET_PWM18>;
+			clocks = <&syscon_apbc CLK_PWM18>;
+			resets = <&syscon_apbc RESET_PWM18>;
 			status = "disabled";
 		};
 
@@ -1097,8 +1117,8 @@
 			compatible = "spacemit,k1-pwm";
 			reg = <0x0 0xd4022c00 0x0 0x10>;
 			#pwm-cells = <1>;
-			clocks = <&ccu CLK_PWM19>;
-			resets = <&reset RESET_PWM19>;
+			clocks = <&syscon_apbc CLK_PWM19>;
+			resets = <&syscon_apbc RESET_PWM19>;
 			status = "disabled";
 		};
 
@@ -1108,7 +1128,9 @@
 			gpio-controller;
 			#gpio-cells = <2>;
 			interrupts = <58>;
-			clocks = <&ccu CLK_GPIO>;
+			clocks = <&syscon_apbc CLK_GPIO>,
+				 <&syscon_apbc CLK_GPIO_BUS>;
+			clock-names = "core", "bus";
 			interrupt-names = "gpio_mux";
 			interrupt-parent = <&intc>;
 			interrupt-controller;
@@ -1136,13 +1158,13 @@
 			reg = <0x0 0xd4280000 0x0 0x200>;
 			interrupts = <99>;
 			interrupt-parent = <&intc>;
-			resets = <&reset RESET_SDH_AXI>,
-				 <&reset RESET_SDH0>;
-			reset-names = "sdh_axi", "sdh0";
-			clocks = <&ccu CLK_SDH0>,
-				 <&ccu CLK_SDH_AXI>,
-				 <&ccu CLK_AIB>;
-			clock-names = "sdh-io", "sdh-core","aib-clk";
+			clocks = <&syscon_apmu CLK_SDH_AXI>,
+				 <&syscon_apmu CLK_SDH0>,
+				 <&syscon_apmu CLK_AIB>;
+			clock-names = "core", "io", "aib";
+			resets = <&syscon_apmu RESET_SDH_AXI>,
+				 <&syscon_apmu RESET_SDH0>;
+			reset-names = "core", "io";
 			interconnects = <&dram_range0>;
 			interconnect-names = "dma-mem";
 			status = "disabled";
@@ -1153,12 +1175,12 @@
 			reg = <0x0 0xd4280800 0x0 0x200>;
 			interrupts = <100>;
 			interrupt-parent = <&intc>;
-			resets = <&reset RESET_SDH_AXI>,
-				  <&reset RESET_SDH1>;
-			reset-names = "sdh_axi", "sdh1";
-			clocks = <&ccu CLK_SDH1>,
-				 <&ccu CLK_SDH_AXI>;
-			clock-names = "sdh-io", "sdh-core";
+			clocks = <&syscon_apmu CLK_SDH_AXI>,
+				 <&syscon_apmu CLK_SDH1>;
+			clock-names = "core", "io";
+			resets = <&syscon_apmu RESET_SDH_AXI>,
+				 <&syscon_apmu RESET_SDH1>;
+			reset-names = "core", "io";
 			interconnects = <&dram_range0>;
 			interconnect-names = "dma-mem";
 			status = "disabled";
@@ -1169,12 +1191,12 @@
 			reg = <0x0 0xd4281000 0x0 0x200>;
 			interrupts = <101>;
 			interrupt-parent = <&intc>;
-			resets = <&reset RESET_SDH_AXI>,
-				 <&reset RESET_SDH2>;
-			reset-names = "sdh_axi", "sdh2";
-			clocks = <&ccu CLK_SDH2>,
-				 <&ccu CLK_SDH_AXI>;
-			clock-names = "sdh-io", "sdh-core";
+			clocks = <&syscon_apmu CLK_SDH_AXI>,
+				 <&syscon_apmu CLK_SDH2>;
+			clock-names = "core", "io";
+			resets = <&syscon_apmu RESET_SDH_AXI>,
+				 <&syscon_apmu RESET_SDH2>;
+			reset-names = "core", "io";
 			interconnects = <&dram_range0>;
 			interconnect-names = "dma-mem";
 			status = "disabled";
@@ -1186,9 +1208,10 @@
 			k1,apmu-base-reg = <0xD4282800>;
 			ctrl-reg = <0x3e4>;
 			dline-reg = <0x3e8>;
-			clocks = <&ccu CLK_EMAC0_BUS>, <&ccu CLK_EMAC0_PTP>;
+			clocks = <&syscon_apmu CLK_EMAC0_BUS>,
+				 <&syscon_apmu CLK_EMAC0_PTP>;
 			clock-names = "emac-clk", "ptp-clk";
-			resets = <&reset RESET_EMAC0>;
+			resets = <&syscon_apmu RESET_EMAC0>;
 			reset-names = "emac-reset";
 			interrupts-extended = <&intc 131>;
 			mac-address = [ 00 00 00 00 00 00 ];
@@ -1205,9 +1228,10 @@
 			k1,apmu-base-reg = <0xD4282800>;
 			ctrl-reg = <0x3ec>;
 			dline-reg = <0x3f0>;
-			clocks = <&ccu CLK_EMAC1_BUS>, <&ccu CLK_EMAC1_PTP>;
+			clocks = <&syscon_apmu CLK_EMAC1_BUS>,
+				 <&syscon_apmu CLK_EMAC1_PTP>;
 			clock-names = "emac-clk", "ptp-clk";
-			resets = <&reset RESET_EMAC1>;
+			resets = <&syscon_apmu RESET_EMAC1>;
 			reset-names = "emac-reset";
 			interrupts-extended = <&intc 133>;
 			mac-address = [ 00 00 00 00 00 00 ];
