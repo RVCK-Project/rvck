@@ -15,3 +15,9 @@ config RESET_SPACEMIT_K1
 	help
 	  This enables the reset controller driver for SpacemiT k1.
 
+config RESET_SPACEMIT_K3
+	tristate "SpacemiT k3 reset driver"
+	depends on RESET_SPACEMIT || COMPILE_TEST
+	default SOC_SPACEMIT_K3
+	help
+	  This enables the reset controller driver for SpacemiT k3.
