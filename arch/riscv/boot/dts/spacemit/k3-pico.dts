@@ -12,7 +12,7 @@
 	};
 
 	chosen {
-		bootargs = "earlycon=sbi loglevel=8 swiotlb=noforce rdinit=/init";
+		bootargs = "earlycon=sbi console=ttyS0,115200n8 loglevel=8 swiotlb=noforce rdinit=/init";
 	};
 };
 
@@ -27,3 +27,6 @@
 	};
 };
 
+&uart0 {
+	status = "okay";
+};
