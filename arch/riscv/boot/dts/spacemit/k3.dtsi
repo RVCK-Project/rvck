@@ -4,11 +4,16 @@
 /dts-v1/;
 
 #include <dt-bindings/clock/spacemit,k3-syscon.h>
+#include <dt-bindings/interrupt-controller/irq.h>
 
 / {
 	compatible = "spacemit,k3";
 	#address-cells = <2>;
 	#size-cells = <2>;
+
+	aliases {
+		serial0 = &uart0;
+	};
 
 	cpus: cpus {
 		#address-cells = <1>;
@@ -597,6 +602,22 @@
 			reg = <0x0 0xc088d000 0x0 0x100>;
 			#clock-cells = <1>;
 			#reset-cells = <1>;
+		};
+
+		uart0: serial@d4017000 {
+			compatible = "spacemit,k1-uart",
+				     "intel,xscale-uart";
+			reg = <0x0 0xd4017000 0x0 0x100>;
+			clocks = <&syscon_apbc CLK_APBC_UART0>,
+				 <&syscon_apbc CLK_APBC_UART0_BUS>,
+				 <&syscon_mpmu CLK_MPMU_SLOW_UART>;
+			clock-names = "core", "bus", "gate";
+			resets = <&syscon_apbc RESET_APBC_UART0>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			interrupt-parent = <&saplic>;
+			interrupts = <42 IRQ_TYPE_LEVEL_HIGH>;
+			status = "okay";
 		};
 	};
 };
