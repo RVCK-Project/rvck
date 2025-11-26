@@ -14,6 +14,7 @@
 #include <soc/spacemit/spacemit-syscon.h>
 #include "reset-spacemit.h"
 #include "reset-k1.h"
+#include "reset-k3.h"
 
 static int spacemit_reset_update(struct reset_controller_dev *rcdev,
 				 unsigned long id, bool assert)
@@ -85,6 +86,21 @@ static const struct auxiliary_device_id spacemit_reset_ids[] = {
 	K1_AUX_DEV_ID(rcpu),
 	K1_AUX_DEV_ID(rcpu2),
 	K1_AUX_DEV_ID(apbc2),
+#endif
+
+#ifdef CONFIG_RESET_SPACEMIT_K3
+	K3_AUX_DEV_ID(mpmu),
+	K3_AUX_DEV_ID(apbc),
+	K3_AUX_DEV_ID(apmu),
+	K3_AUX_DEV_ID(dciu),
+	K3_AUX_DEV_ID(rsysctrl),
+	K3_AUX_DEV_ID(ruartctrl),
+	K3_AUX_DEV_ID(ri2sctrl),
+	K3_AUX_DEV_ID(rspictrl),
+	K3_AUX_DEV_ID(ri2cctrl),
+	K3_AUX_DEV_ID(rpmu),
+	K3_AUX_DEV_ID(rpwmctrl),
+	K3_AUX_DEV_ID(apbc2),
 #endif
 	{ },
 };
