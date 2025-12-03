@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* Copyright (c) 2023, spacemit Corporation. */
 
-#ifndef _CCU_SPACEMIT_K1X_H_
-#define _CCU_SPACEMIT_K1X_H_
+#ifndef _CCU_SPACEMIT_K1_H_
+#define _CCU_SPACEMIT_K1_H_
 
 #include <linux/compiler.h>
 #include <linux/clk-provider.h>
@@ -48,7 +48,7 @@ struct ccu_common {
 	struct clk_hw		hw;
 };
 
-struct spacemit_k1x_clk {
+struct spacemit_k1_clk {
 	void __iomem *mpmu_base;
 	void __iomem *apmu_base;
 	void __iomem *apbc_base;
@@ -75,7 +75,7 @@ static inline struct ccu_common *hw_to_ccu_common(struct clk_hw *hw)
 }
 
 int spacemit_ccu_probe(struct device_node *node,
-		       struct spacemit_k1x_clk *clk_info,
+		       struct spacemit_k1_clk *clk_info,
 		       struct clk_hw_onecell_data *desc);
 
-#endif /* _CCU_SPACEMIT_K1X_H_ */
+#endif /* _CCU_SPACEMIT_K1_H_ */

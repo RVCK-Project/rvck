@@ -13,7 +13,7 @@
 #include <linux/platform_device.h>
 #include <linux/reset-controller.h>
 #include <linux/io.h>
-#include <dt-bindings/reset/spacemit-k1x-reset.h>
+#include <dt-bindings/reset/spacemit-k1-reset.h>
 #include <linux/clk-provider.h>
 #include <linux/atomic.h>
 #include <linux/spinlock.h>
@@ -181,10 +181,10 @@ struct spacemit_reset {
 
 /* for register access protection */
 extern spinlock_t g_cru_lock;
-struct spacemit_reset k1x_reset_controller;
+struct spacemit_reset k1_reset_controller;
 
 static const struct spacemit_reset_signal
-	k1x_reset_signals[RESET_NUMBER] = {
+	k1_reset_signals[RESET_NUMBER] = {
 	[RESET_UART1] = { APBC_UART1_CLK_RST, BIT(2), 0,
 			BIT(2), RST_BASE_TYPE_APBC },
 	[RESET_UART2] = { APBC_UART2_CLK_RST, BIT(2), 0,
@@ -575,9 +575,9 @@ static int spacemit_reset_deassert(struct reset_controller_dev *rcdev,
 	return spacemit_reset_update(rcdev, id, false);
 }
 
-static const struct spacemit_reset_variant k1x_reset_data = {
-	.signals = k1x_reset_signals,
-	.signals_num = ARRAY_SIZE(k1x_reset_signals),
+static const struct spacemit_reset_variant k1_reset_data = {
+	.signals = k1_reset_signals,
+	.signals_num = ARRAY_SIZE(k1_reset_signals),
 	.ops = {
 		.assert = spacemit_reset_assert,
 		.deassert = spacemit_reset_deassert,
@@ -588,8 +588,8 @@ static void spacemit_reset_init(struct device_node *np)
 {
 	struct spacemit_reset *reset;
 
-	if (of_device_is_compatible(np, "spacemit,k1x-reset")) {
-		reset = &k1x_reset_controller;
+	if (of_device_is_compatible(np, "spacemit,k1-reset")) {
+		reset = &k1_reset_controller;
 		reset->mpmu_base = of_iomap(np, 0);
 		if (!reset->mpmu_base) {
 			pr_err("failed to map mpmu registers\n");
@@ -650,20 +650,20 @@ static void spacemit_reset_init(struct device_node *np)
 			goto out;
 		}
 	} else {
-		pr_err("not spacemit,k1x-reset\n");
+		pr_err("not spacemit,k1-reset\n");
 		goto out;
 	}
 
 	reset->lock = &g_cru_lock;
-	reset->signals = k1x_reset_data.signals;
+	reset->signals = k1_reset_data.signals;
 	reset->rcdev.owner = THIS_MODULE;
-	reset->rcdev.nr_resets = k1x_reset_data.signals_num;
-	reset->rcdev.ops = &k1x_reset_data.ops;
+	reset->rcdev.nr_resets = k1_reset_data.signals_num;
+	reset->rcdev.ops = &k1_reset_data.ops;
 	reset->rcdev.of_node = np;
 	reset_controller_register(&reset->rcdev);
 out:
 	return;
 }
 
-CLK_OF_DECLARE(k1x_reset, "spacemit,k1x-reset", spacemit_reset_init);
+CLK_OF_DECLARE(k1_reset, "spacemit,k1-reset", spacemit_reset_init);
 
