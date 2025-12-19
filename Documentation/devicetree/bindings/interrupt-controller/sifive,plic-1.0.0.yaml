@@ -119,7 +119,6 @@ allOf:
             enum:
               - andestech,nceplic100
               - thead,c900-plic
-              - ultrarisc,dp1000-plic
 
     then:
       properties:
