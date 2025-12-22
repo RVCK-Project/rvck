@@ -1,7 +1,6 @@
-// SPDX-License-Identifier: GPL-2.0+
+// SPDX-License-Identifier: GPL-2.0
 /*
- * Copyright (c) 2019-2022 UltraRISC Technology (Shanghai) Co., Ltd.
- *
+ * Copyright(C) 2025 UltraRISC Technology (Shanghai) Co., Ltd.
  */
 
 /dts-v1/;
@@ -553,7 +552,6 @@
 		plic: plic@9000000 {
 			#interrupt-cells = <1>;
 			#address-cells = <0>;
-			phandle = <0x01>;
 			compatible = "ultrarisc,cp100-plic", "ultrarisc,dp1000-plic";
 			interrupt-controller;
 			interrupts-extended = <&cpu0_intc 0xb>, <&cpu0_intc 0x9>, <&cpu0_intc 0xa>,
@@ -639,7 +637,7 @@
 		};
 
 		uart0: serial@20300000 {
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <17>;
 			clock-frequency = <62500000>;
 			current-speed = <115200>;
@@ -650,7 +648,7 @@
 		};
 
 		uart1: serial@20310000 {
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <18>;
 			clock-frequency = <62500000>;
 			current-speed = <115200>;
@@ -661,7 +659,7 @@
 		};
 
 		uart2: serial@20400000 {
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <25>;
 			clock-frequency = <62500000>;
 			current-speed = <115200>;
@@ -672,7 +670,7 @@
 		};
 
 		uart3: serial@20410000 {
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <26>;
 			clock-frequency = <62500000>;
 			current-speed = <115200>;
@@ -688,7 +686,7 @@
 			#address-cells = <0x01>;
 			#size-cells = <0x00>;
 			reg = <0x0 0x20320000 0x0 0x1000>;
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <19>;
 			clocks = <&device_clk>;
 			clock-names = "device_clk";
@@ -702,7 +700,7 @@
 			#address-cells = <0x01>;
 			#size-cells = <0x00>;
 			reg = <0x0 0x20420000 0x0 0x1000>;
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <27>;
 			clocks = <&device_clk>;
 			clock-names = "device_clk";
@@ -718,7 +716,7 @@
 			reg = <0x0 0x20330000 0x0 0x100>;
 			clock-frequency = <400000>;
 			clocks = <&device_clk>;
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <20>;
 		};
 
@@ -730,7 +728,7 @@
 			reg = <0x0 0x20340000 0x0 0x100>;
 			clock-frequency = <400000>;
 			clocks = <&device_clk>;
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <21>;
 		};
 
@@ -742,7 +740,7 @@
 			reg = <0x0 0x20430000 0x0 0x100>;
 			clock-frequency = <400000>;
 			clocks = <&device_clk>;
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <28>;
 		};
 
@@ -754,7 +752,7 @@
 			reg = <0x0 0x20440000 0x0 0x100>;
 			clock-frequency = <400000>;
 			clocks = <&device_clk>;
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <29>;
 		};
 
@@ -786,7 +784,7 @@
 				snps,nr-gpios = <16>;
 				interrupt-controller;
 				#interrupt-cells = <2>;
-				interrupt-parent = <0x01>;
+				interrupt-parent = <&plic>;
 				interrupts = <34>;
 				gpio-ranges = <&pmx0 0 0 16>;
 			};
@@ -823,7 +821,7 @@
 			clocks = <&csr_clk>;
 			clock-names = "stmmaceth";
 			compatible = "ultrarisc,dp1000-gmac", "snps,dwmac-5.10a";
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <84>;
 			interrupt-names = "macirq";
 			reg = <0x00 0x38000000 0x00 0x1000000>;
@@ -841,7 +839,7 @@
 			reg = <0x0 0x39000000 0x0 0x400>;
 			clocks = <&device_clk>, <&device_clk>;
 			clock-names = "core-clk", "cfgr-clk";
-			interrupt-parent = <0x01>;
+			interrupt-parent = <&plic>;
 			interrupts = <152>;
 			#dma-cells = <1>;
 			dma-channels = <8>;
@@ -864,6 +862,11 @@
 			dma-coherent;
 			bus-range = <0x0 0xff>;
 			num-lanes = <16>;
+			/* ranges:
+			 *   io
+			 *   mem32
+			 *   mem64 prefetchable
+			 */
 			ranges = <0x81000000  0x0 0x4fbf0000  0x0 0x4fbf0000  0x0 0x00400000>,
 				 <0x82000000  0x0 0x40000000  0x0 0x40000000  0x0 0x0fbf0000>,
 				 <0xc3000000 0x40 0x00000000 0x40 0x00000000  0xd 0x00000000>;
@@ -890,6 +893,11 @@
 			dma-coherent;
 			bus-range = <0x0 0xff>;
 			num-lanes = <4>;
+			/* ranges:
+			 *   io
+			 *   mem32
+			 *   mem64 prefetchable
+			 */
 			ranges = <0x81000000  0x0 0x6fbf0000  0x0 0x6fbf0000  0x0 0x00400000>,
 				 <0x82000000  0x0 0x60000000  0x0 0x60000000  0x0 0x0fbf0000>,
 				 <0xc3000000 0x80 0x00000000 0x80 0x00000000  0xd 0x00000000>;
@@ -916,6 +924,11 @@
 			dma-coherent;
 			bus-range = <0x0 0xff>;
 			num-lanes = <4>;
+			/* ranges:
+			 *   io
+			 *   mem32
+			 *   mem64 prefetchable
+			 */
 			ranges = <0x81000000  0x0 0x7fbf0000  0x0 0x7fbf0000 0x0 0x00400000>,
 				 <0x82000000  0x0 0x70000000  0x0 0x70000000 0x0 0x0fbf0000>,
 				 <0xc3000000 0xc0 0x00000000 0xc0 0x00000000 0xd 0x00000000>;
