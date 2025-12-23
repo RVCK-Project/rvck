@@ -1,0 +1,234 @@
+[
+  {
+    "MetricName": "misprediction",
+    "MetricExpr": "BR_MIS_PRED / BR_PRED",
+    "BriefDescription": "Branch predictor misprediction rate. May not count branches that are never resolved because they are in the misprediction shadow of an earlier branch",
+    "MetricGroup": "Branch",
+    "ScaleUnit": "1per branch"
+  },
+  {
+    "MetricName": "misprediction_retired",
+    "MetricExpr": "BR_MIS_PRED_RETIRED / BR_RETIRED",
+    "BriefDescription": "Branch predictor misprediction rate (retired).",
+    "MetricGroup": "Branch",
+    "ScaleUnit": "1per branch"
+  },
+  {
+    "MetricName": "bus_utilization",
+    "MetricExpr": "BUS_ACCESS / (CPU_CYCLES * 1)",
+    "BriefDescription": "Core-to-uncore bus utilization",
+    "MetricGroup": "Bus",
+    "ScaleUnit": "1percent of bus cycles"
+  },
+  {
+    "MetricName": "l1d_cache_miss",
+    "MetricExpr": "L1D_CACHE_REFILL / L1D_CACHE",
+    "BriefDescription": "L1D cache miss rate",
+    "MetricGroup": "Cache",
+    "ScaleUnit": "1per cache access"
+  },
+  {
+    "MetricName": "l1d_cache_read_miss",
+    "MetricExpr": "L1D_CACHE_LMISS_RD / L1D_CACHE_RD",
+    "BriefDescription": "L1D cache read miss rate",
+    "MetricGroup": "Cache",
+    "ScaleUnit": "1per cache access"
+  },
+  {
+    "MetricName": "l1i_cache_miss",
+    "MetricExpr": "L1I_CACHE_REFILL / L1I_CACHE",
+    "BriefDescription": "L1I cache miss rate",
+    "MetricGroup": "Cache",
+    "ScaleUnit": "1per cache access"
+  },
+  {
+    "MetricName": "l2_cache_miss",
+    "MetricExpr": "L2_CACHE_REFILL / L2_CACHE",
+    "BriefDescription": "L2 cache miss rate",
+    "MetricGroup": "Cache",
+    "ScaleUnit": "1per cache access"
+  },
+  {
+    "MetricName": "l1i_cache_read_miss",
+    "MetricExpr": "L1I_CACHE_LMISS / L1I_CACHE",
+    "BriefDescription": "L1I cache read miss rate",
+    "MetricGroup": "Cache",
+    "ScaleUnit": "1per cache access"
+  },
+  {
+    "MetricName": "l2_cache_read_miss",
+    "MetricExpr": "L2_CACHE_LMISS_RD / L2_CACHE_RD",
+    "BriefDescription": "L2 cache read miss rate",
+    "MetricGroup": "Cache",
+    "ScaleUnit": "1per cache access"
+  },
+  {
+    "MetricName": "mpki_data",
+    "MetricExpr": "(L1D_CACHE_LMISS_RD * 1000) / INST_RETIRED",
+    "BriefDescription": "Misses per thousand instructions (data)",
+    "MetricGroup": "Cache",
+    "ScaleUnit": "1MPKI"
+  },
+  {
+    "MetricName": "mpki_instruction",
+    "MetricExpr": "(L1I_CACHE_LMISS * 1000) / INST_RETIRED",
+    "BriefDescription": "Misses per thousand instructions (instruction)",
+    "MetricGroup": "Cache",
+    "ScaleUnit": "1MPKI"
+  },
+  {
+    "MetricName": "vector_mix",
+    "MetricExpr": "VEC_INST_SPEC / OP_SPEC",
+    "BriefDescription": "Proportion of vector data processing operations (excluding vector LD/ST_SPEC) operations",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1percent of operations"
+  },
+  {
+    "MetricName": "crypto_mix",
+    "MetricExpr": "CRYPTO_SPEC / OP_SPEC",
+    "BriefDescription": "Proportion of crypto data processing operations",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1percent of operations"
+  },
+  {
+    "MetricName": "integer_mix",
+    "MetricExpr": "DP_SPEC / OP_SPEC",
+    "BriefDescription": "Proportion of integer data processing operations",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1percent of operations"
+  },
+  {
+    "MetricName": "load_mix",
+    "MetricExpr": "LD_SPEC / OP_SPEC",
+    "BriefDescription": "Proportion of load operations",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1percent of operations"
+  },
+  {
+    "MetricName": "pc_write_mix",
+    "MetricExpr": "PC_WRITE_SPEC / OP_SPEC",
+    "BriefDescription": "Proportion of software change of PC operations",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1percent of operations"
+  },
+  {
+    "MetricName": "store_mix",
+    "MetricExpr": "ST_SPEC / OP_SPEC",
+    "BriefDescription": "Proportion of store operations",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1percent of operations"
+  },
+  {
+    "MetricName": "vfp_mix",
+    "MetricExpr": "VFP_SPEC / OP_SPEC",
+    "BriefDescription": "Proportion of FP operations",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1percent of operations"
+  },
+  {
+    "MetricName": "gflops_issued",
+    "MetricExpr": "VFP_SPEC / (duration_time * 1000000000)",
+    "BriefDescription": "Giga-floating point operations per second",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1GFLOPS"
+  },
+  {
+    "MetricName": "mips_utilization",
+    "MetricExpr": "INST_SPEC / (duration_time * 1000000)",
+    "BriefDescription": "Millions of instructions per second",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1MIPS"
+  },
+  {
+    "MetricName": "mips_retired",
+    "MetricExpr": "INST_RETIRED / (duration_time * 1000000)",
+    "BriefDescription": "Millions of instructions per second",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1MIPS"
+  },
+  {
+    "MetricName": "ipc",
+    "MetricExpr": "INST_RETIRED / CPU_CYCLES",
+    "BriefDescription": "Instructions per cycle",
+    "MetricGroup": "Instruction",
+    "ScaleUnit": "1per cycle"
+  },
+  {
+    "MetricName": "cpu_lost",
+    "MetricExpr": "1 - (OP_RETIRED / (CPU_CYCLES * 6))",
+    "BriefDescription": "Proportion of slots lost",
+    "MetricGroup": "Speculation",
+    "ScaleUnit": "1percent of slots"
+  },
+  {
+    "MetricName": "cpu_utilization",
+    "MetricExpr": "OP_RETIRED / (CPU_CYCLES * 6)",
+    "BriefDescription": "Proportion of slots retiring",
+    "MetricGroup": "Speculation",
+    "ScaleUnit": "1percent of slots"
+  },
+  {
+    "MetricName": "operations_lost",
+    "MetricExpr": "OP_SPEC - OP_RETIRED",
+    "BriefDescription": "Operations lost due to misspeculation",
+    "MetricGroup": "Speculation",
+    "ScaleUnit": "1operation"
+  },
+  {
+    "MetricName": "operations_lost_ratio",
+    "MetricExpr": "1 - (OP_RETIRED / OP_SPEC)",
+    "BriefDescription": "Proportion of operations lost",
+    "MetricGroup": "Speculation",
+    "ScaleUnit": "100%"
+  },
+  {
+    "MetricName": "operations_retired",
+    "MetricExpr": "OP_RETIRED / OP_SPEC",
+    "BriefDescription": "Proportion of operations retired",
+    "MetricGroup": "Speculation",
+    "ScaleUnit": "100%"
+  },
+  {
+    "MetricName": "dtlb_walks",
+    "MetricExpr": "DTLB_WALK / L1D_TLB",
+    "BriefDescription": "D-side walk per d-side translation request",
+    "MetricGroup": "TLB",
+    "ScaleUnit": "1per TLB access"
+  },
+  {
+    "MetricName": "itlb_walks",
+    "MetricExpr": "ITLB_WALK / L1I_TLB",
+    "BriefDescription": "I-side walk per i-side translation request",
+    "MetricGroup": "TLB",
+    "ScaleUnit": "1per TLB access"
+  },
+  {
+    "MetricName": "backend",
+    "MetricExpr": "(STALL_SLOT_BACKEND - 4 * BR_MIS_PRED) / (CPU_CYCLES * 6)",
+    "BriefDescription": "Fraction of slots backend bound",
+    "MetricGroup": "TopDownL1",
+    "ScaleUnit": "100%"
+  },
+  {
+    "MetricName": "frontend",
+    "MetricExpr": "(STALL_SLOT_FRONTEND - 4 * BR_MIS_PRED) / (CPU_CYCLES * 6)",
+    "BriefDescription": "Fraction of slots frontend bound",
+    "MetricGroup": "TopDownL1",
+    "ScaleUnit": "100%"
+  },
+  {
+    "MetricName": "lost",
+    "MetricExpr": "((OP_SPEC - OP_RETIRED + 8 * BR_MIS_PRED) / (CPU_CYCLES * 6))",
+    "BriefDescription": "Fraction of slots lost due to misspeculation",
+    "MetricGroup": "TopDownL1",
+    "ScaleUnit": "100%"
+  },
+  {
+    "MetricName": "retiring",
+    "MetricExpr": "OP_RETIRED / (CPU_CYCLES * 6)",
+    "BriefDescription": "Fraction of slots retiring, useful work",
+    "MetricGroup": "TopDownL1",
+    "ScaleUnit": "100%"
+  }
+]
+
