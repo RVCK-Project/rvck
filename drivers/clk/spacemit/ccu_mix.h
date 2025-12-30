@@ -1,18 +1,24 @@
-// SPDX-License-Identifier: GPL-2.0-only
-/* Copyright (c) 2023, spacemit Corporation. */
+/* SPDX-License-Identifier: GPL-2.0-only */
+/*
+ * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+ * Copyright (c) 2024-2025 Haylen Chu <heylenay@4d2.org>
+ */
 
 #ifndef _CCU_MIX_H_
 #define _CCU_MIX_H_
 
 #include <linux/clk-provider.h>
-#include "ccu-spacemit-k1.h"
 
-#define SPACEMIT_CLK_GATE_NEED_DELAY BIT(0)
+#include "ccu_common.h"
 
+/**
+ * struct ccu_gate_config - Gate configuration
+ *
+ * @mask:	Mask to enable the gate. Some clocks may have more than one bit
+ *		set in this field.
+ */
 struct ccu_gate_config {
-	u32 gate_mask;
-	u32 val_enable;
-	u32 val_disable;
+	u32 mask;
 	u32 flags;
 };
 
@@ -24,349 +30,202 @@ struct ccu_factor_config {
 struct ccu_mux_config {
 	u8 shift;
 	u8 width;
-	const u8 *table;
-	u32 flags;
 };
 
 struct ccu_div_config {
 	u8 shift;
 	u8 width;
-	u32 max;
-	u32 offset;
-	u32 flags;
-	struct clk_div_table *table;
 };
 
 struct ccu_mix {
-	struct ccu_gate_config *gate;
-	struct ccu_factor_config *factor;
-	struct ccu_div_config *div;
-	struct ccu_mux_config *mux;
+	struct ccu_factor_config factor;
+	struct ccu_gate_config gate;
+	struct ccu_div_config div;
+	struct ccu_mux_config mux;
 	struct ccu_common common;
 };
 
-#define CCU_GATE_INIT(_gate_mask, _val_enable, _val_disable, _flags) \
-	(&(struct ccu_gate_config) {		\
-		.gate_mask = _gate_mask,	\
-		.val_enable = _val_enable,	\
-		.val_disable = _val_disable,	\
-		.flags = _flags,		\
-	})
+#define CCU_GATE_INIT(_mask)		{ .mask = _mask }
+#define CCU_FACTOR_INIT(_div, _mul)	{ .div = _div, .mul = _mul }
+#define CCU_MUX_INIT(_shift, _width)	{ .shift = _shift, .width = _width }
+#define CCU_DIV_INIT(_shift, _width)	{ .shift = _shift, .width = _width }
+#define CCU_GATE_FLAGS_INIT(_mask, _flags)	{ .mask = _mask, .flags = _flags }
 
-#define CCU_FACTOR_INIT(_div, _mul)		\
-	(&(struct ccu_factor_config) {		\
-		.div = _div,			\
-		.mul = _mul,			\
-	})
+#define CCU_PARENT_HW(_parent)		{ .hw = &_parent.common.hw }
+#define CCU_PARENT_NAME(_name)		{ .fw_name = #_name }
 
-#define CCU_MUX_INIT(_shift, _width, _table, _flags) \
-	(&(struct ccu_mux_config) {		\
-		.shift = _shift,		\
-		.width = _width,		\
-		.table = _table,		\
-		.flags = _flags,		\
-	})
-
-#define CCU_DIV_INIT(_shift, _width, _table, _flags) \
-	(&(struct ccu_div_config) {		\
-		.shift = _shift,		\
-		.width = _width,		\
-		.flags = _flags,		\
-		.table = _table,		\
-	})
-
-#define SPACEMIT_CCU_GATE(_struct, _name, _parent, _base_type, _reg, \
-		_gate_mask, _val_enable, _val_disable, _flags)	\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-			_val_disable, 0),			\
-		.common	= {					\
-			.reg_ctrl = _reg,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.num_parents = 1,			\
-			.hw.init = CLK_HW_INIT(_name, _parent,	\
-				&ccu_mix_ops, _flags),		\
-		}						\
+#define CCU_MIX_INITHW(_name, _parent, _ops, _flags)			\
+	.hw.init = &(struct clk_init_data) {				\
+		.flags		= _flags,				\
+		.name		= #_name,				\
+		.parent_data	= (const struct clk_parent_data[])	\
+					{ _parent },			\
+		.num_parents	= 1,					\
+		.ops		= &_ops,				\
 	}
 
-#define SPACEMIT_CCU_GATE_NO_PARENT(_struct, _name, _parent,	\
-		_base_type, _reg, _gate_mask, _val_enable,	\
-		_val_disable, _flags)				\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-				_val_disable, 0),		\
-		.common = {					\
-			.reg_ctrl = _reg,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.num_parents = 0,			\
-			.hw.init = CLK_HW_INIT_NO_PARENT(_name,	\
-				&ccu_mix_ops, _flags),		\
-		}						\
-	}
+#define CCU_MIX_INITHW_PARENTS(_name, _parents, _ops, _flags)		\
+	.hw.init = CLK_HW_INIT_PARENTS_DATA(#_name, _parents, &_ops, _flags)
 
-#define SPACEMIT_CCU_FACTOR(_struct, _name, _parent, _div, _mul) \
-	struct ccu_mix _struct = {				\
-		.factor	= CCU_FACTOR_INIT(_div, _mul),		\
-		.common = {					\
-			.name = _name,				\
-			.num_parents = 1,			\
-			.hw.init = CLK_HW_INIT(_name,		\
-				_parent, &ccu_mix_ops, 0),	\
-		}						\
-	}
+#define CCU_GATE_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _flags)		\
+static struct ccu_mix _name = {							\
+	.gate	= CCU_GATE_INIT(_mask_gate),					\
+	.common	= {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_gate_ops, _flags),	\
+	}									\
+}
 
-#define SPACEMIT_CCU_MUX(_struct, _name, _parents, _base_type,	\
-		_reg, _shift, _width, _flags)			\
-	struct ccu_mix _struct = {				\
-		.mux = CCU_MUX_INIT(_shift, _width, NULL, 0),	\
-		.common = {					\
-			.reg_ctrl = _reg,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		}						\
-	}
+#define CCU_FACTOR_DEFINE(_name, _parent, _div, _mul)				\
+static struct ccu_mix _name = {							\
+	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
+	.common = {								\
+		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_factor_ops, 0),	\
+	}									\
+}
 
-#define SPACEMIT_CCU_DIV(_struct, _name, _parent, _base_type,	\
-		_reg, _shift, _width, _flags)			\
-	struct ccu_mix _struct = {				\
-		.div = CCU_DIV_INIT(_shift, _width, NULL, 0),	\
-		.common = {					\
-			.reg_ctrl = _reg,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.num_parents = 1,			\
-			.hw.init = CLK_HW_INIT(_name, _parent,	\
-				&ccu_mix_ops,			\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		}						\
-	}
+#define CCU_MUX_DEFINE(_name, _parents, _reg_ctrl, _shift, _width, _flags)	\
+static struct ccu_mix _name = {							\
+	.mux	= CCU_MUX_INIT(_shift, _width),					\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		CCU_MIX_INITHW_PARENTS(_name, _parents, spacemit_ccu_mux_ops,	\
+				       _flags),					\
+	}									\
+}
 
-#define SPACEMIT_CCU_GATE_FACTOR(_struct, _name, _parent, _base_type, \
-		_reg, _gate_mask, _val_enable, _val_disable,	\
-		_div, _mul, _flags)				\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-				_val_disable, 0),		\
-		.factor	= CCU_FACTOR_INIT(_div, _mul),		\
-		.common = {					\
-			.reg_ctrl = _reg,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.num_parents = 1,			\
-			.hw.init = CLK_HW_INIT(_name, _parent,	\
-				&ccu_mix_ops, _flags),		\
-		}						\
-	}
+#define CCU_DIV_DEFINE(_name, _parent, _reg_ctrl, _shift, _width, _flags)	\
+static struct ccu_mix _name = {							\
+	.div	= CCU_DIV_INIT(_shift, _width),					\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_div_ops, _flags)	\
+	}									\
+}
 
-#define SPACEMIT_CCU_MUX_GATE(_struct, _name, _parents, _base_type, \
-		_reg, _shift, _width, _gate_mask, _val_enable,	\
-		_val_disable, _flags)				\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-				_val_disable, 0),		\
-		.mux = CCU_MUX_INIT(_shift, _width, NULL, 0),	\
-		.common = {					\
-			.reg_ctrl = _reg,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		}						\
-	}
+#define CCU_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _flags)		\
+static struct ccu_mix _name = {							\
+	.gate	= CCU_GATE_FLAGS_INIT(_mask_gate, _flags),					\
+	.common	= {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_gate_ops, _flags),	\
+	}									\
+}
 
-#define SPACEMIT_CCU_DIV_GATE(_struct, _name, _parent, _base_type, \
-		_reg, _shift, _width, _gate_mask, _val_enable,	\
-		_val_disable, _flags)				\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-			_val_disable, 0),			\
-		.div = CCU_DIV_INIT(_shift, _width, NULL, 0),	\
-		.common = {					\
-			.reg_ctrl = _reg,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.num_parents = 1,			\
-			.hw.init = CLK_HW_INIT(_name, _parent,	\
-				&ccu_mix_ops,			\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		}						\
-	}
+#define CCU_FACTOR_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
+			       _mul, _flags)					\
+static struct ccu_mix _name = {							\
+	.gate	= CCU_GATE_INIT(_mask_gate),					\
+	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_factor_gate_ops, _flags)	\
+	}									\
+}
 
-#define SPACEMIT_CCU_DIV_MUX_GATE(_struct, _name, _parents, _base_type, \
-		_reg_ctrl, _mshift, _mwidth, _muxshift,		\
-		_muxwidth, _gate_mask, _val_enable,		\
-		_val_disable, _flags)				\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-			_val_disable, 0),			\
-		.div = CCU_DIV_INIT(_mshift, _mwidth, NULL, 0),	\
-		.mux = CCU_MUX_INIT(_muxshift, _muxwidth, NULL, 0), \
-		.common	= {					\
-			.reg_ctrl = _reg_ctrl,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		},						\
-	}
+#define CCU_FACTOR_GATE_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
+			       _mul)						\
+	CCU_FACTOR_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
+			       _mul, 0)
 
-#define SPACEMIT_CCU_DIV2_FC_MUX_GATE(_struct, _name, _parents, \
-		_base_type, _reg_ctrl, _reg_sel, _mshift,	\
-		_mwidth, _fc, _muxshift, _muxwidth, _gate_mask,	\
-		_val_enable, _val_disable, _flags)		\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-			_val_disable, 0),			\
-		.div = CCU_DIV_INIT(_mshift, _mwidth, NULL, 0),	\
-		.mux = CCU_MUX_INIT(_muxshift, _muxwidth, NULL, 0), \
-		.common = {					\
-			.reg_type = CLK_DIV_TYPE_2REG_FC_V4,	\
-			.reg_ctrl = _reg_ctrl,			\
-			.reg_sel = _reg_sel,			\
-			.fc = _fc,				\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		},						\
-	}
+#define CCU_MUX_GATE_DEFINE(_name, _parents, _reg_ctrl, _shift, _width,		\
+			    _mask_gate, _flags)					\
+static struct ccu_mix _name = {							\
+	.gate	= CCU_GATE_INIT(_mask_gate),					\
+	.mux	= CCU_MUX_INIT(_shift, _width),					\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		CCU_MIX_INITHW_PARENTS(_name, _parents,				\
+				       spacemit_ccu_mux_gate_ops, _flags),	\
+	}									\
+}
 
-#define SPACEMIT_CCU_DIV_FC_MUX_GATE(_struct, _name, _parents,	\
-		_base_type, _reg_ctrl, _mshift, _mwidth, _fc,	\
-		_muxshift, _muxwidth, _gate_mask, _val_enable,	\
-		_val_disable, _flags)				\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-			_val_disable, 0),			\
-		.div = CCU_DIV_INIT(_mshift, _mwidth, NULL, 0),	\
-		.mux = CCU_MUX_INIT(_muxshift, _muxwidth, NULL, 0), \
-		.common = {					\
-			.reg_type = CLK_DIV_TYPE_1REG_FC_V2,	\
-			.reg_ctrl = _reg_ctrl,			\
-			.fc = _fc,				\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		},						\
-	}
+#define CCU_DIV_GATE_DEFINE(_name, _parent, _reg_ctrl, _shift, _width,		\
+			    _mask_gate,	_flags)					\
+static struct ccu_mix _name = {							\
+	.gate	= CCU_GATE_INIT(_mask_gate),					\
+	.div	= CCU_DIV_INIT(_shift, _width),					\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_div_gate_ops,	\
+			       _flags),						\
+	}									\
+}
 
-#define SPACEMIT_CCU_DIV_MFC_MUX_GATE(_struct, _name, _parents, _base_type, \
-		_reg_ctrl, _mshift, _mwidth, _fc, _muxshift,	\
-		_muxwidth, _gate_mask, _val_enable,		\
-		_val_disable, _flags)				\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask,		\
-				_val_enable, _val_disable, 0),	\
-		.div = CCU_DIV_INIT(_mshift, _mwidth, NULL, 0), \
-		.mux = CCU_MUX_INIT(_muxshift, _muxwidth, NULL, 0), \
-		.common = {					\
-			.reg_type = CLK_DIV_TYPE_1REG_FC_MUX_V6, \
-			.reg_ctrl = _reg_ctrl,			\
-			.fc = _fc,				\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		},						\
-	}
+#define CCU_MUX_DIV_GATE_DEFINE(_name, _parents, _reg_ctrl, _mshift, _mwidth,	\
+				 _muxshift, _muxwidth, _mask_gate, _flags)	\
+static struct ccu_mix _name = {							\
+	.gate	= CCU_GATE_INIT(_mask_gate),					\
+	.div	= CCU_DIV_INIT(_mshift, _mwidth),				\
+	.mux	= CCU_MUX_INIT(_muxshift, _muxwidth),				\
+	.common	= {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		CCU_MIX_INITHW_PARENTS(_name, _parents,				\
+				       spacemit_ccu_mux_div_gate_ops, _flags),	\
+	},									\
+}
 
-#define SPACEMIT_CCU_DIV_FC_WITH_GATE(_struct, _name, _parent, _base_type, \
-		_reg_ctrl, _mshift, _mwidth, _fc, _gate_mask,	\
-		_val_enable, _val_disable, _flags)		\
-	struct ccu_mix _struct = {				\
-		.gate = CCU_GATE_INIT(_gate_mask, _val_enable,	\
-			_val_disable, 0),			\
-		.div = CCU_DIV_INIT(_mshift, _mwidth, NULL, 0),	\
-		.common = {					\
-			.reg_type = CLK_DIV_TYPE_1REG_FC_V2,	\
-			.reg_ctrl = _reg_ctrl,			\
-			.fc = _fc,				\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.num_parents = 1,			\
-			.hw.init = CLK_HW_INIT(_name,		\
-				_parent, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		},						\
-	}
+#define CCU_MUX_DIV_GATE_SPLIT_FC_DEFINE(_name, _parents, _reg_ctrl, _reg_fc,	\
+					 _mshift, _mwidth, _mask_fc, _muxshift,	\
+					 _muxwidth, _mask_gate, _flags)		\
+static struct ccu_mix _name = {							\
+	.gate	= CCU_GATE_INIT(_mask_gate),					\
+	.div	= CCU_DIV_INIT(_mshift, _mwidth),				\
+	.mux	= CCU_MUX_INIT(_muxshift, _muxwidth),				\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		.reg_fc		= _reg_fc,					\
+		.mask_fc	= _mask_fc,					\
+		CCU_MIX_INITHW_PARENTS(_name, _parents,				\
+				       spacemit_ccu_mux_div_gate_ops, _flags),	\
+	},									\
+}
 
-#define SPACEMIT_CCU_DIV_MUX(_struct, _name, _parents, _base_type, \
-		_reg_ctrl, _mshift, _mwidth, _muxshift, _muxwidth, _flags) \
-	struct ccu_mix _struct = {				\
-		.div = CCU_DIV_INIT(_mshift, _mwidth, NULL, 0),	\
-		.mux = CCU_MUX_INIT(_muxshift, _muxwidth, NULL, 0), \
-		.common = {					\
-			.reg_ctrl = _reg_ctrl,			\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		},						\
-	}
+#define CCU_MUX_DIV_GATE_FC_DEFINE(_name, _parents, _reg_ctrl, _mshift, _mwidth,\
+				   _mask_fc, _muxshift, _muxwidth, _mask_gate,	\
+				   _flags)					\
+CCU_MUX_DIV_GATE_SPLIT_FC_DEFINE(_name, _parents, _reg_ctrl, _reg_ctrl, _mshift,\
+				 _mwidth, _mask_fc, _muxshift, _muxwidth,	\
+				 _mask_gate, _flags)
 
-#define SPACEMIT_CCU_DIV_FC_MUX(_struct, _name, _parents, _base_type, \
-		_reg_ctrl, _mshift, _mwidth, _fc, _muxshift,	\
-		_muxwidth, _flags)				\
-	struct ccu_mix _struct = {				\
-		.div = CCU_DIV_INIT(_mshift, _mwidth, NULL, 0),	\
-		.mux = CCU_MUX_INIT(_muxshift, _muxwidth, NULL, 0), \
-		.common = {					\
-			.reg_type = CLK_DIV_TYPE_1REG_FC_V2,	\
-			.reg_ctrl = _reg_ctrl,			\
-			.fc = _fc,				\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		},						\
-	}
+#define CCU_MUX_DIV_FC_DEFINE(_name, _parents, _reg_ctrl, _mshift, _mwidth,	\
+			      _mask_fc, _muxshift, _muxwidth, _flags)		\
+static struct ccu_mix _name = {							\
+	.div	= CCU_DIV_INIT(_mshift, _mwidth),				\
+	.mux	= CCU_MUX_INIT(_muxshift, _muxwidth),				\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		.reg_fc		= _reg_ctrl,					\
+		.mask_fc	= _mask_fc,					\
+		CCU_MIX_INITHW_PARENTS(_name, _parents,				\
+				       spacemit_ccu_mux_div_ops, _flags),	\
+	},									\
+}
 
-#define SPACEMIT_CCU_MUX_FC(_struct, _name, _parents, _base_type, \
-		_reg_ctrl, _fc, _muxshift, _muxwidth, _flags)	\
-	struct ccu_mix _struct = {				\
-		.mux = CCU_MUX_INIT(_muxshift, _muxwidth, NULL, 0), \
-		.common = {					\
-			.reg_type = CLK_DIV_TYPE_1REG_FC_V2,	\
-			.reg_ctrl = _reg_ctrl,			\
-			.fc = _fc,				\
-			.base_type = _base_type,		\
-			.name = _name,				\
-			.parent_names = _parents,		\
-			.num_parents = ARRAY_SIZE(_parents),	\
-			.hw.init = CLK_HW_INIT_PARENTS(_name,	\
-				_parents, &ccu_mix_ops,		\
-				(_flags) | CLK_GET_RATE_NOCACHE), \
-		},						\
-	}
+#define CCU_MUX_FC_DEFINE(_name, _parents, _reg_ctrl, _mask_fc,	_muxshift,	\
+			  _muxwidth, _flags)					\
+static struct ccu_mix _name = {							\
+	.mux	= CCU_MUX_INIT(_muxshift, _muxwidth),				\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		.reg_fc		= _reg_ctrl,					\
+		.mask_fc	= _mask_fc,					\
+		CCU_MIX_INITHW_PARENTS(_name, _parents, spacemit_ccu_mux_ops,	\
+				       _flags)					\
+	},									\
+}
+
+#define CCU_DIV_FC_DEFINE(_name, _parent, _reg_ctrl, _mask_fc,	_mshift,	\
+			  _mwidth, _flags)					\
+static struct ccu_mix _name = {							\
+	.div	= CCU_DIV_INIT(_mshift, _mwidth),				\
+	.common = {								\
+		.reg_ctrl	= _reg_ctrl,					\
+		.reg_fc		= _reg_ctrl,					\
+		.mask_fc	= _mask_fc,					\
+		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_div_ops, _flags)		\
+	},									\
+}
 
 static inline struct ccu_mix *hw_to_ccu_mix(struct clk_hw *hw)
 {
@@ -375,6 +234,13 @@ static inline struct ccu_mix *hw_to_ccu_mix(struct clk_hw *hw)
 	return container_of(common, struct ccu_mix, common);
 }
 
-extern const struct clk_ops ccu_mix_ops;
-
+extern const struct clk_ops spacemit_ccu_gate_ops;
+extern const struct clk_ops spacemit_ccu_factor_ops;
+extern const struct clk_ops spacemit_ccu_mux_ops;
+extern const struct clk_ops spacemit_ccu_div_ops;
+extern const struct clk_ops spacemit_ccu_factor_gate_ops;
+extern const struct clk_ops spacemit_ccu_div_gate_ops;
+extern const struct clk_ops spacemit_ccu_mux_gate_ops;
+extern const struct clk_ops spacemit_ccu_mux_div_ops;
+extern const struct clk_ops spacemit_ccu_mux_div_gate_ops;
 #endif /* _CCU_DIV_H_ */

@@ -1,286 +1,278 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
- * Spacemit clock type pll
- *
- * Copyright (c) 2023, spacemit Corporation.
- *
+ * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+ * Copyright (c) 2024-2025 Haylen Chu <heylenay@4d2.org>
  */
 
-#include <linux/io.h>
-#include <linux/clk.h>
 #include <linux/clk-provider.h>
-#include <linux/clkdev.h>
-#include <linux/delay.h>
+#include <linux/math.h>
+#include <linux/regmap.h>
 
+#include "ccu_common.h"
 #include "ccu_pll.h"
 
-#define PLL_MIN_FREQ	600000000
-#define PLL_MAX_FREQ	3400000000
-#define PLL_DELAYTIME	590
+#define PLL_TIMEOUT_US		3000
+#define PLL_DELAY_US		5
 
-#define pll_readl(reg)		readl(reg)
-#define pll_readl_pll_swcr1(p)	pll_readl(p.base + p.reg_ctrl)
-#define pll_readl_pll_swcr2(p)	pll_readl(p.base + p.reg_sel)
-#define pll_readl_pll_swcr3(p)	pll_readl(p.base + p.reg_xtc)
+#define PLL_SWCR3_EN		((u32)BIT(31))
+#define PLL_SWCR3_MASK		GENMASK(30, 0)
 
-#define pll_writel(val, reg)		writel(val, reg)
-#define pll_writel_pll_swcr1(val, p)	pll_writel(val, p.base + p.reg_ctrl)
-#define pll_writel_pll_swcr2(val, p)	pll_writel(val, p.base + p.reg_sel)
-#define pll_writel_pll_swcr3(val, p)	pll_writel(val, p.base + p.reg_xtc)
+#define PLLA_SWCR2_EN		((u32)BIT(16))
+#define PLLA_SWCR2_MASK 	GENMASK(15, 8)
 
-/* unified pllx_swcr1 for pll1~3 */
-union pllx_swcr1 {
-	struct {
-		unsigned int reg5:8;
-		unsigned int reg6:8;
-		unsigned int reg7:8;
-		unsigned int reg8:8;
-	} b;
-	unsigned int v;
-};
+static const struct ccu_pll_rate_tbl *ccu_pll_lookup_best_rate(struct ccu_pll *pll,
+							       unsigned long rate)
+{
+	struct ccu_pll_config *config = &pll->config;
+	const struct ccu_pll_rate_tbl *best_entry;
+	unsigned long best_delta = ULONG_MAX;
+	int i;
 
-/* unified pllx_swcr2 for pll1~3 */
-union pllx_swcr2 {
-	struct {
-		unsigned int div1_en:1;
-		unsigned int div2_en:1;
-		unsigned int div3_en:1;
-		unsigned int div4_en:1;
-		unsigned int div5_en:1;
-		unsigned int div6_en:1;
-		unsigned int div7_en:1;
-		unsigned int div8_en:1;
-		unsigned int reserved1:4;
-		unsigned int atest_en:1;
-		unsigned int cktest_en:1;
-		unsigned int dtest_en:1;
-		unsigned int rdo:2;
-		unsigned int mon_cfg:4;
-		unsigned int reserved2:11;
-	} b;
-	unsigned int v;
-};
+	for (i = 0; i < config->tbl_num; i++) {
+		const struct ccu_pll_rate_tbl *entry = &config->rate_tbl[i];
+		unsigned long delta = abs_diff(entry->rate, rate);
 
-union pllx_swcr3 {
-	struct {
-		unsigned int div_frc:24;
-		unsigned int div_int:7;
-		unsigned int pll_en:1;
-	} b;
+		if (delta < best_delta) {
+			best_delta = delta;
+			best_entry = entry;
+		}
+	}
 
-	unsigned int v;
-};
+	return best_entry;
+}
+
+static const struct ccu_pll_rate_tbl *ccu_pll_lookup_matched_entry(struct ccu_pll *pll)
+{
+	struct ccu_pll_config *config = &pll->config;
+	u32 swcr1, swcr3;
+	int i;
+
+	swcr1 = ccu_read(&pll->common, swcr1);
+	swcr3 = ccu_read(&pll->common, swcr3);
+	swcr3 &= PLL_SWCR3_MASK;
+
+	for (i = 0; i < config->tbl_num; i++) {
+		const struct ccu_pll_rate_tbl *entry = &config->rate_tbl[i];
+
+		if (swcr1 == entry->swcr1 && swcr3 == entry->swcr3)
+			return entry;
+	}
+
+	return NULL;
+}
+
+static void ccu_pll_update_param(struct ccu_pll *pll, const struct ccu_pll_rate_tbl *entry)
+{
+	struct ccu_common *common = &pll->common;
+
+	regmap_write(common->regmap, common->reg_swcr1, entry->swcr1);
+	ccu_update(common, swcr3, PLL_SWCR3_MASK, entry->swcr3);
+}
 
 static int ccu_pll_is_enabled(struct clk_hw *hw)
 {
-	struct ccu_pll *p = hw_to_ccu_pll(hw);
-	union pllx_swcr3 swcr3;
-	unsigned int enabled;
+	struct ccu_common *common = hw_to_ccu_common(hw);
 
-	swcr3.v = pll_readl_pll_swcr3(p->common);
-	enabled = swcr3.b.pll_en;
-
-	return enabled;
-}
-
-static unsigned long __get_vco_freq(struct clk_hw *hw)
-{
-	unsigned int reg5, reg6, reg7, reg8, size, i;
-	unsigned int div_int, div_frc;
-	struct ccu_pll_rate_tbl *freq_pll_regs_table, *pll_regs;
-	struct ccu_pll *p = hw_to_ccu_pll(hw);
-	union pllx_swcr1 swcr1;
-	union pllx_swcr3 swcr3;
-
-	swcr1.v = pll_readl_pll_swcr1(p->common);
-	swcr3.v = pll_readl_pll_swcr3(p->common);
-
-	reg5 = swcr1.b.reg5;
-	reg6 = swcr1.b.reg6;
-	reg7 = swcr1.b.reg7;
-	reg8 = swcr1.b.reg8;
-
-	div_int = swcr3.b.div_int;
-	div_frc = swcr3.b.div_frc;
-
-	freq_pll_regs_table = p->pll.rate_tbl;
-	size = p->pll.tbl_size;
-
-	for (i = 0; i < size; i++) {
-		pll_regs = &freq_pll_regs_table[i];
-		if (pll_regs->reg5 == reg5 && pll_regs->reg6 == reg6 &&
-		    pll_regs->reg7 == reg7 && pll_regs->reg8 == reg8 &&
-		    pll_regs->div_int == div_int &&
-		    pll_regs->div_frac == div_frc)
-			return pll_regs->rate;
-	}
-
-	pr_err("Unknown rate for clock %s\n", __clk_get_name(hw->clk));
-
-	return 0;
+	return ccu_read(common, swcr3) & PLL_SWCR3_EN;
 }
 
 static int ccu_pll_enable(struct clk_hw *hw)
 {
-	unsigned int delaytime = PLL_DELAYTIME;
-	unsigned long flags;
-	struct ccu_pll *p = hw_to_ccu_pll(hw);
-	union pllx_swcr3 swcr3;
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
+	struct ccu_common *common = &pll->common;
+	unsigned int tmp;
 
-	if (ccu_pll_is_enabled(hw))
-		return 0;
-
-	spin_lock_irqsave(p->common.lock, flags);
-	swcr3.v = pll_readl_pll_swcr3(p->common);
-	swcr3.b.pll_en = 1;
-	pll_writel_pll_swcr3(swcr3.v, p->common);
-	spin_unlock_irqrestore(p->common.lock, flags);
+	ccu_update(common, swcr3, PLL_SWCR3_EN, PLL_SWCR3_EN);
 
 	/* check lock status */
-	udelay(50);
-
-	while ((!(readl(p->pll.lock_base + p->pll.reg_lock)
-	       & p->pll.lock_enable_bit)) && delaytime) {
-		udelay(5);
-		delaytime--;
-	}
-
-	if (unlikely(!delaytime)) {
-		pr_err("%s enabling didn't get stable within 3000us!!!\n",
-		       __clk_get_name(hw->clk));
-		return -EINVAL;
-	}
-
-	return 0;
+	return regmap_read_poll_timeout_atomic(common->lock_regmap,
+					       pll->config.reg_lock,
+					       tmp,
+					       tmp & pll->config.mask_lock,
+					       PLL_DELAY_US, PLL_TIMEOUT_US);
 }
 
 static void ccu_pll_disable(struct clk_hw *hw)
 {
-	unsigned long flags;
-	struct ccu_pll *p = hw_to_ccu_pll(hw);
-	union pllx_swcr3 swcr3;
+	struct ccu_common *common = hw_to_ccu_common(hw);
 
-	spin_lock_irqsave(p->common.lock, flags);
-	swcr3.v = pll_readl_pll_swcr3(p->common);
-	swcr3.b.pll_en = 0;
-	pll_writel_pll_swcr3(swcr3.v, p->common);
-	spin_unlock_irqrestore(p->common.lock, flags);
+	ccu_update(common, swcr3, PLL_SWCR3_EN, 0);
 }
 
 /*
- * pll rate change requires sequence:
- * clock off -> change rate setting -> clock on
- * This function doesn't really change rate, but cache the config
+ * PLLs must be gated before changing rate, which is ensured by
+ * flag CLK_SET_RATE_GATE.
  */
 static int ccu_pll_set_rate(struct clk_hw *hw, unsigned long rate,
 			    unsigned long parent_rate)
 {
-	unsigned int i, reg5 = 0, reg6 = 0, reg7 = 0, reg8 = 0;
-	unsigned int div_int, div_frc;
-	unsigned long flags;
-	unsigned long new_rate = rate, old_rate;
-	struct ccu_pll *p = hw_to_ccu_pll(hw);
-	struct ccu_pll_config *params = &p->pll;
-	union pllx_swcr1 swcr1;
-	union pllx_swcr3 swcr3;
-	bool found = false;
-	bool pll_enabled = false;
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
+	const struct ccu_pll_rate_tbl *entry;
 
-	if (ccu_pll_is_enabled(hw)) {
-		pll_enabled = true;
-		ccu_pll_disable(hw);
-	}
+	entry = ccu_pll_lookup_best_rate(pll, rate);
+	ccu_pll_update_param(pll, entry);
 
-	old_rate = __get_vco_freq(hw);
-
-	/* setp 1: calculate fbd frcd kvco and band */
-	if (params->rate_tbl) {
-		for (i = 0; i < params->tbl_size; i++) {
-			if (rate == params->rate_tbl[i].rate) {
-				found = true;
-
-				reg5 = params->rate_tbl[i].reg5;
-				reg6 = params->rate_tbl[i].reg6;
-				reg7 = params->rate_tbl[i].reg7;
-				reg8 = params->rate_tbl[i].reg8;
-				div_int = params->rate_tbl[i].div_int;
-				div_frc = params->rate_tbl[i].div_frac;
-				break;
-			}
-		}
-
-		WARN_ON_ONCE(!found);
-	} else {
-		pr_err("don't find freq table for pll\n");
-		if (pll_enabled)
-			ccu_pll_enable(hw);
-		return -EINVAL;
-	}
-
-	spin_lock_irqsave(p->common.lock, flags);
-
-	/* setp 2: set pll kvco/band and fbd/frcd setting */
-	swcr1.v = pll_readl_pll_swcr1(p->common);
-	swcr1.b.reg5 = reg5;
-	swcr1.b.reg6 = reg6;
-	swcr1.b.reg7 = reg7;
-	swcr1.b.reg8 = reg8;
-	pll_writel_pll_swcr1(swcr1.v, p->common);
-
-	swcr3.v = pll_readl_pll_swcr3(p->common);
-	swcr3.b.div_int = div_int;
-	swcr3.b.div_frc = div_frc;
-	pll_writel_pll_swcr3(swcr3.v, p->common);
-
-	spin_unlock_irqrestore(p->common.lock, flags);
-
-	if (pll_enabled)
-		ccu_pll_enable(hw);
-
-	pr_debug("%s %s rate %lu->%lu!\n", __func__,
-		 __clk_get_name(hw->clk), old_rate, new_rate);
 	return 0;
 }
 
 static unsigned long ccu_pll_recalc_rate(struct clk_hw *hw,
 					 unsigned long parent_rate)
 {
-	return __get_vco_freq(hw);
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
+	const struct ccu_pll_rate_tbl *entry;
+
+	entry = ccu_pll_lookup_matched_entry(pll);
+
+	WARN_ON_ONCE(!entry);
+
+	return entry ? entry->rate : -EINVAL;
 }
 
 static long ccu_pll_round_rate(struct clk_hw *hw, unsigned long rate,
 			       unsigned long *prate)
 {
-	struct ccu_pll *p = hw_to_ccu_pll(hw);
-	unsigned long max_rate = 0;
-	unsigned int i;
-	struct ccu_pll_config *params = &p->pll;
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
 
-	if (rate > PLL_MAX_FREQ || rate < PLL_MIN_FREQ) {
-		pr_err("%lu rate out of range!\n", rate);
-		return -EINVAL;
-	}
-
-	if (params->rate_tbl) {
-		for (i = 0; i < params->tbl_size; i++) {
-			if (params->rate_tbl[i].rate <= rate) {
-				if (max_rate < params->rate_tbl[i].rate)
-					max_rate = params->rate_tbl[i].rate;
-			}
-		}
-	} else {
-		pr_err("don't find freq table for pll\n");
-	}
-
-	return max_rate;
+	return ccu_pll_lookup_best_rate(pll, rate)->rate;
 }
 
-const struct clk_ops ccu_pll_ops = {
-	.enable = ccu_pll_enable,
-	.disable = ccu_pll_disable,
-	.set_rate = ccu_pll_set_rate,
-	.recalc_rate = ccu_pll_recalc_rate,
-	.round_rate = ccu_pll_round_rate,
-	.is_enabled = ccu_pll_is_enabled,
+static int ccu_pll_init(struct clk_hw *hw)
+{
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
+
+	if (ccu_pll_lookup_matched_entry(pll))
+		return 0;
+
+	ccu_pll_disable(hw);
+	ccu_pll_update_param(pll, &pll->config.rate_tbl[0]);
+
+	return 0;
+}
+
+static const struct ccu_pll_rate_tbl *ccu_plla_lookup_matched_entry(struct ccu_pll *pll)
+{
+	struct ccu_pll_config *config = &pll->config;
+	u32 swcr1, swcr2, swcr3;
+	int i;
+
+	swcr1 = ccu_read(&pll->common, swcr1);
+	swcr2 = ccu_read(&pll->common, swcr2);
+	swcr3 = ccu_read(&pll->common, swcr3);
+	swcr2 &= PLLA_SWCR2_MASK;
+
+	for (i = 0; i < config->tbl_num; i++) {
+		const struct ccu_pll_rate_tbl *entry = &config->rate_tbl[i];
+
+		if (swcr1 == entry->swcr1 && swcr2 == entry->swcr2 && swcr3 == entry->swcr3)
+			return entry;
+	}
+
+	return NULL;
+}
+
+static void ccu_plla_update_param(struct ccu_pll *pll, const struct ccu_pll_rate_tbl *entry)
+{
+	struct ccu_common *common = &pll->common;
+
+	regmap_write(common->regmap, common->reg_swcr1, entry->swcr1);
+	regmap_write(common->regmap, common->reg_swcr3, entry->swcr3);
+	ccu_update(common, swcr2, PLLA_SWCR2_MASK, entry->swcr2);
+}
+
+static int ccu_plla_is_enabled(struct clk_hw *hw)
+{
+	struct ccu_common *common = hw_to_ccu_common(hw);
+
+	return ccu_read(common, swcr2) & PLLA_SWCR2_EN;
+}
+
+static int ccu_plla_enable(struct clk_hw *hw)
+{
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
+	struct ccu_common *common = &pll->common;
+#ifndef CONFIG_SOC_SPACEMIT_K3_FPGA
+	unsigned int tmp;
+#endif
+
+	ccu_update(common, swcr2, PLLA_SWCR2_EN, PLLA_SWCR2_EN);
+
+#ifdef CONFIG_SOC_SPACEMIT_K3_FPGA
+	return 0;
+#else
+	/* check lock status */
+	return regmap_read_poll_timeout_atomic(common->lock_regmap,
+					       pll->config.reg_lock,
+					       tmp,
+					       tmp & pll->config.mask_lock,
+					       PLL_DELAY_US, PLL_TIMEOUT_US);
+#endif
+}
+
+static void ccu_plla_disable(struct clk_hw *hw)
+{
+	struct ccu_common *common = hw_to_ccu_common(hw);
+
+	ccu_update(common, swcr2, PLLA_SWCR2_EN, 0);
+}
+
+/*
+ * PLLAs must be gated before changing rate, which is ensured by
+ * flag CLK_SET_RATE_GATE.
+ */
+static int ccu_plla_set_rate(struct clk_hw *hw, unsigned long rate,
+			     unsigned long parent_rate)
+{
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
+	const struct ccu_pll_rate_tbl *entry;
+
+	entry = ccu_pll_lookup_best_rate(pll, rate);
+	ccu_plla_update_param(pll, entry);
+
+	return 0;
+}
+
+static unsigned long ccu_plla_recalc_rate(struct clk_hw *hw,
+					  unsigned long parent_rate)
+{
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
+	const struct ccu_pll_rate_tbl *entry;
+
+	entry = ccu_plla_lookup_matched_entry(pll);
+
+	WARN_ON_ONCE(!entry);
+
+	return entry ? entry->rate : -EINVAL;
+}
+
+static int ccu_plla_init(struct clk_hw *hw)
+{
+	struct ccu_pll *pll = hw_to_ccu_pll(hw);
+
+	if (ccu_plla_lookup_matched_entry(pll))
+		return 0;
+
+	ccu_plla_disable(hw);
+	ccu_plla_update_param(pll, &pll->config.rate_tbl[0]);
+
+	return 0;
+}
+
+const struct clk_ops spacemit_ccu_pll_ops = {
+	.init		= ccu_pll_init,
+	.enable		= ccu_pll_enable,
+	.disable	= ccu_pll_disable,
+	.set_rate	= ccu_pll_set_rate,
+	.recalc_rate	= ccu_pll_recalc_rate,
+	.round_rate	= ccu_pll_round_rate,
+	.is_enabled	= ccu_pll_is_enabled,
 };
 
+const struct clk_ops spacemit_ccu_plla_ops = {
+	.init		= ccu_plla_init,
+	.enable		= ccu_plla_enable,
+	.disable	= ccu_plla_disable,
+	.set_rate	= ccu_plla_set_rate,
+	.recalc_rate	= ccu_plla_recalc_rate,
+	.round_rate	= ccu_pll_round_rate,
+	.is_enabled	= ccu_plla_is_enabled,
+};

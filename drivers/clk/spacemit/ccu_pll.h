@@ -1,71 +1,117 @@
-// SPDX-License-Identifier: GPL-2.0-only
-/* Copyright (c) 2023, spacemit Corporation. */
+/* SPDX-License-Identifier: GPL-2.0-only */
+/*
+ * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+ * Copyright (c) 2024-2025 Haylen Chu <heylenay@4d2.org>
+ */
 
 #ifndef _CCU_PLL_H_
 #define _CCU_PLL_H_
 
-#include <linux/spinlock_types.h>
 #include <linux/clk-provider.h>
-#include "ccu-spacemit-k1.h"
 
+#include "ccu_common.h"
+
+/**
+ * struct ccu_pll_rate_tbl - Structure mapping between PLL rate and register
+ * configuration.
+ *
+ * Usual PLL type
+ * @rate:	PLL rate
+ * @swcr1:	Register value of PLLX_SW1_CTRL (PLLx_SWCR1).
+ * @swcr2:	Not use.
+ * @swcr3:	Register value of the PLLx_SW3_CTRL's lowest 31 bits of
+ *		PLLx_SW3_CTRL (PLLx_SWCR3). This highest bit is for enabling
+ *		the PLL and not contained in this field.
+ *
+ * Special PLL type A
+ * @rate:	PLLA rate
+ * @swcr1:	Register value of PLLAX_SW1_CTRL (PLLAx_SWCR1).
+ * @swcr2:	Register value of PLLAX_SW2_CTRL[15:8] (PLLAx_SWCR2). PLLAX_SW2_CTRL[16]
+ *		is for enabling the PLLA and not contained in this field.
+ * @swcr3:	Register value of PLLAX_SW3_CTRL (PLLAx_SWCR3).
+ */
 struct ccu_pll_rate_tbl {
-	unsigned long long rate;
-	u32 reg5;
-	u32 reg6;
-	u32 reg7;
-	u32 reg8;
-	unsigned int div_int;
-	unsigned int div_frac;
+	unsigned long rate;
+	u32 swcr1;
+	u32 swcr2;
+	u32 swcr3;
 };
 
 struct ccu_pll_config {
-	struct ccu_pll_rate_tbl *rate_tbl;
-	u32 tbl_size;
-	void __iomem *lock_base;
+	const struct ccu_pll_rate_tbl *rate_tbl;
+	u32 tbl_num;
 	u32 reg_lock;
-	u32 lock_enable_bit;
+	u32 mask_lock;
 };
 
-#define PLL_RATE(_rate, _reg5, _reg6, _reg7, _reg8, _div_int, _div_frac) \
-	{					\
-		.rate = (_rate),		\
-		.reg5 = (_reg5),		\
-		.reg6 = (_reg6),		\
-		.reg7 = (_reg7),		\
-		.reg8 = (_reg8),		\
-		.div_int = (_div_int),		\
-		.div_frac = (_div_frac),	\
+#define CCU_PLL_RATE(_rate, _swcr1, _swcr3) \
+	{									\
+		.rate	= _rate,						\
+		.swcr1	= _swcr1,						\
+		.swcr3	= _swcr3,						\
+	}
+
+#define CCU_PLLA_RATE(_rate, _swcr1, _swcr2, _swcr3) \
+	{									\
+		.rate	= _rate,						\
+		.swcr1	= _swcr1,						\
+		.swcr2	= _swcr2,						\
+		.swcr3	= _swcr3,						\
 	}
 
 struct ccu_pll {
-	struct ccu_pll_config	pll;
 	struct ccu_common	common;
+	struct ccu_pll_config	config;
 };
 
-#define _SPACEMIT_CCU_PLL_CONFIG(_table, _size, _reg_lock, _lock_enable_bit) \
-	{							\
-		.rate_tbl = (struct ccu_pll_rate_tbl *)_table,	\
-		.tbl_size = _size,				\
-		.reg_lock = _reg_lock,				\
-		.lock_enable_bit = _lock_enable_bit,		\
+#define CCU_PLL_CONFIG(_table, _reg_lock, _mask_lock) \
+	{									\
+		.rate_tbl	= _table,					\
+		.tbl_num	= ARRAY_SIZE(_table),				\
+		.reg_lock	= (_reg_lock),					\
+		.mask_lock	= (_mask_lock),					\
 	}
 
-#define SPACEMIT_CCU_PLL(_struct, _name, _table, _size,	_base_type, \
-			_reg_ctrl, _reg_sel, _reg_xtc, _reg_lock,  \
-			_lock_enable_bit, _is_pll, _flags)	\
-	struct ccu_pll _struct = {				\
-		.pll = _SPACEMIT_CCU_PLL_CONFIG(_table, _size,	\
-				_reg_lock, _lock_enable_bit),	\
-		.common = {					\
-			.reg_ctrl = _reg_ctrl,			\
-			.reg_sel = _reg_sel,			\
-			.reg_xtc = _reg_xtc,			\
-			.base_type = _base_type,		\
-			.is_pll = _is_pll,			\
-			.hw.init = CLK_HW_INIT_NO_PARENT(_name,	\
-					&ccu_pll_ops, _flags),	\
-		}						\
-	}
+#define CCU_PLL_HWINIT(_name, _flags)						\
+	(&(struct clk_init_data) {						\
+		.name		= #_name,					\
+		.ops		= &spacemit_ccu_pll_ops,			\
+		.parent_data	= &(struct clk_parent_data) { .index = 0 },	\
+		.num_parents	= 1,						\
+		.flags		= _flags,					\
+	})
+
+#define CCU_PLLA_HWINIT(_name, _flags)						\
+	(&(struct clk_init_data) {						\
+		.name		= #_name,					\
+		.ops		= &spacemit_ccu_plla_ops,			\
+		.parent_data	= &(struct clk_parent_data) { .index = 0 },	\
+		.num_parents	= 1,						\
+		.flags		= _flags,					\
+	})
+
+#define CCU_PLL_DEFINE(_name, _table, _reg_swcr1, _reg_swcr3, _reg_lock,	\
+		       _mask_lock, _flags)					\
+static struct ccu_pll _name = {							\
+	.config	= CCU_PLL_CONFIG(_table, _reg_lock, _mask_lock),		\
+	.common = {								\
+		.reg_swcr1	= _reg_swcr1,					\
+		.reg_swcr3	= _reg_swcr3,					\
+		.hw.init	= CCU_PLL_HWINIT(_name, _flags)			\
+	}									\
+}
+
+#define CCU_PLLA_DEFINE(_name, _table, _reg_swcr1, _reg_swcr2, _reg_swcr3,	\
+		       _reg_lock, _mask_lock, _flags)				\
+static struct ccu_pll _name = {							\
+	.config	= CCU_PLL_CONFIG(_table, _reg_lock, _mask_lock),		\
+	.common = {								\
+		.reg_swcr1	= _reg_swcr1,					\
+		.reg_swcr2	= _reg_swcr2,					\
+		.reg_swcr3	= _reg_swcr3,					\
+		.hw.init	= CCU_PLLA_HWINIT(_name, _flags)		\
+	}									\
+}
 
 static inline struct ccu_pll *hw_to_ccu_pll(struct clk_hw *hw)
 {
@@ -74,6 +120,7 @@ static inline struct ccu_pll *hw_to_ccu_pll(struct clk_hw *hw)
 	return container_of(common, struct ccu_pll, common);
 }
 
-extern const struct clk_ops ccu_pll_ops;
+extern const struct clk_ops spacemit_ccu_pll_ops;
+extern const struct clk_ops spacemit_ccu_plla_ops;
 
 #endif
