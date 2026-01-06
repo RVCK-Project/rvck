@@ -820,7 +820,7 @@
 		ethernet: ethernet1@38000000 {
 			clocks = <&csr_clk>;
 			clock-names = "stmmaceth";
-			compatible = "ultrarisc,dp1000-gmac", "snps,dwmac-5.10a";
+			compatible = "snps,dwmac", "snps,dwmac-5.10a";
 			interrupt-parent = <&plic>;
 			interrupts = <84>;
 			interrupt-names = "macirq";
@@ -851,7 +851,7 @@
 		};
 
 		pcie_x16: pcie@21000000 {
-			compatible = "ultrarisc,dw-pcie";
+			compatible = "ultrarisc,dp1000-pcie", "ultrarisc,dw-pcie";
 			#address-cells = <3>;
 			#size-cells = <2>;
 			#interrupt-cells = <1>;
@@ -882,7 +882,7 @@
 		};
 
 		pcie_x4a: pcie@23000000 {
-			compatible = "ultrarisc,dw-pcie";
+			compatible = "ultrarisc,dp1000-pcie", "ultrarisc,dw-pcie";
 			#address-cells = <3>;
 			#size-cells = <2>;
 			#interrupt-cells = <1>;
@@ -913,7 +913,7 @@
 		};
 
 		pcie_x4b: pcie@24000000 {
-			compatible = "ultrarisc,dw-pcie";
+			compatible = "ultrarisc,dp1000-pcie", "ultrarisc,dw-pcie";
 			#address-cells = <3>;
 			#size-cells = <2>;
 			#interrupt-cells = <1>;
