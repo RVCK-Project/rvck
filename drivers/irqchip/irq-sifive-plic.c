@@ -65,7 +65,7 @@
 #define	PLIC_ENABLE_THRESHOLD		0
 
 #define PLIC_QUIRK_EDGE_INTERRUPT	0
-#define PLIC_QUIRK_CLAIM_REGISTER	1
+#define PLIC_QUIRK_CP100_CLAIM_REGISTER_ERRATUM	1
 
 struct plic_priv {
 	struct fwnode_handle *fwnode;
@@ -97,15 +97,22 @@ static DEFINE_PER_CPU(struct plic_handler, plic_handlers);
 
 static int plic_irq_set_type(struct irq_data *d, unsigned int type);
 
-static void __plic_toggle(void __iomem *enable_base, int hwirq, int enable)
+static void __plic_toggle(struct plic_handler *handler, int hwirq, int enable)
 {
-	u32 __iomem *reg = enable_base + (hwirq / 32) * sizeof(u32);
+	u32 __iomem *base = handler->enable_base;
 	u32 hwirq_mask = 1 << (hwirq % 32);
+	int group = hwirq / 32;
+	u32 value;
+
+	value = readl(base + group);
 
 	if (enable)
-		writel(readl(reg) | hwirq_mask, reg);
+		value |= hwirq_mask;
 	else
-		writel(readl(reg) & ~hwirq_mask, reg);
+		value &= ~hwirq_mask;
+
+	handler->enable_save[group] = value;
+	writel(value, base + group);
 }
 
 static void plic_toggle(struct plic_handler *handler, int hwirq, int enable)
@@ -113,7 +120,7 @@ static void plic_toggle(struct plic_handler *handler, int hwirq, int enable)
 	unsigned long flags;
 
 	raw_spin_lock_irqsave(&handler->enable_lock, flags);
-	__plic_toggle(handler->enable_base, hwirq, enable);
+	__plic_toggle(handler, hwirq, enable);
 	raw_spin_unlock_irqrestore(&handler->enable_lock, flags);
 }
 
@@ -250,31 +257,14 @@ static int plic_irq_set_type(struct irq_data *d, unsigned int type)
 
 static int plic_irq_suspend(void)
 {
-	unsigned int i, cpu;
-	unsigned long flags;
-	u32 __iomem *reg;
 	struct plic_priv *priv;
 
 	priv = per_cpu_ptr(&plic_handlers, smp_processor_id())->priv;
 
 	/* irq ID 0 is reserved */
-	for (i = 1; i < priv->nr_irqs; i++) {
+	for (unsigned int i = 1; i < priv->nr_irqs; i++) {
 		__assign_bit(i, priv->prio_save,
 			     readl(priv->regs + PRIORITY_BASE + i * PRIORITY_PER_ID));
-	}
-
-	for_each_cpu(cpu, cpu_present_mask) {
-		struct plic_handler *handler = per_cpu_ptr(&plic_handlers, cpu);
-
-		if (!handler->present)
-			continue;
-
-		raw_spin_lock_irqsave(&handler->enable_lock, flags);
-		for (i = 0; i < DIV_ROUND_UP(priv->nr_irqs, 32); i++) {
-			reg = handler->enable_base + i * sizeof(u32);
-			handler->enable_save[i] = readl(reg);
-		}
-		raw_spin_unlock_irqrestore(&handler->enable_lock, flags);
 	}
 
 	return 0;
@@ -296,7 +286,7 @@ static void plic_irq_resume(void)
 		       priv->regs + PRIORITY_BASE + i * PRIORITY_PER_ID);
 	}
 
-	for_each_cpu(cpu, cpu_present_mask) {
+	for_each_present_cpu(cpu) {
 		struct plic_handler *handler = per_cpu_ptr(&plic_handlers, cpu);
 
 		if (!handler->present)
@@ -372,82 +362,6 @@ static const struct irq_domain_ops plic_irqdomain_ops = {
 	.free		= irq_domain_free_irqs_top,
 };
 
-static bool plic_check_enable_first_pending(u32 ie[])
-{
-	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
-	void __iomem *enable = handler->enable_base;
-	void __iomem *pending = handler->priv->regs + PENDING_BASE;
-	int nr_irqs = handler->priv->nr_irqs;
-	int nr_irq_groups = (nr_irqs + 31) / 32;
-	bool is_pending = false;
-	int i, j;
-
-	raw_spin_lock(&handler->enable_lock);
-
-	// Read current interrupt enables
-	for (i = 0; i < nr_irq_groups; i++)
-		ie[i] = readl(enable + i * sizeof(u32));
-
-	// Check for pending interrupts and enable only the first one found
-	for (i = 0; i < nr_irq_groups; i++) {
-		u32 pending_irqs = readl(pending + i * sizeof(u32)) & ie[i];
-
-		if (pending_irqs) {
-			int nbit = __ffs(pending_irqs);
-
-			for (j = 0; j < nr_irq_groups; j++)
-				writel((i == j)?(1 << nbit):0, enable + j * sizeof(u32));
-			is_pending = true;
-			break;
-		}
-	}
-
-	raw_spin_unlock(&handler->enable_lock);
-
-	return is_pending;
-}
-
-static void plic_restore_enable_state(u32 ie[])
-{
-	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
-	void __iomem *enable = handler->enable_base;
-	int nr_irqs = handler->priv->nr_irqs;
-	int nr_irq_groups = (nr_irqs + 31) / 32;
-	int i;
-
-	raw_spin_lock(&handler->enable_lock);
-
-	for (i = 0; i < nr_irq_groups; i++)
-		writel(ie[i], enable + i * sizeof(u32));
-
-	raw_spin_unlock(&handler->enable_lock);
-}
-
-static irq_hw_number_t plic_get_hwirq(void)
-{
-	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
-	struct plic_priv *priv = handler->priv;
-	void __iomem *claim = handler->hart_base + CONTEXT_CLAIM;
-	irq_hw_number_t hwirq;
-	u32 ie[32] = {0};
-
-	/*
-	 * Due to the implementation of the claim register in the UltraRISC DP1000
-	 * platform PLIC not conforming to the specification, this is a hardware
-	 * bug. Therefore, when an interrupt is pending, we need to disable the other
-	 * interrupts before reading the claim register. After processing the interrupt,
-	 * we should then restore the enable register.
-	 */
-	if (test_bit(PLIC_QUIRK_CLAIM_REGISTER, &priv->plic_quirks)) {
-		hwirq = plic_check_enable_first_pending(ie)?readl(claim):0;
-		plic_restore_enable_state(ie);
-	} else {
-		hwirq = readl(claim);
-	}
-
-	return hwirq;
-}
-
 /*
  * Handling an interrupt is a two-step process: first you claim the interrupt
  * by reading the claim register, then you complete the interrupt by writing
@@ -458,15 +372,108 @@ static void plic_handle_irq(struct irq_desc *desc)
 {
 	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
 	struct irq_chip *chip = irq_desc_get_chip(desc);
+	void __iomem *claim = handler->hart_base + CONTEXT_CLAIM;
 	irq_hw_number_t hwirq;
 
 	WARN_ON_ONCE(!handler->present);
 
 	chained_irq_enter(chip, desc);
 
-	while ((hwirq = plic_get_hwirq())) {
+	while ((hwirq = readl(claim))) {
 		int err = generic_handle_domain_irq(handler->priv->irqdomain,
 						    hwirq);
+		if (unlikely(err)) {
+			pr_warn_ratelimited("%pfwP: can't find mapping for hwirq %lu\n",
+					    handler->priv->fwnode, hwirq);
+		}
+	}
+
+	chained_irq_exit(chip, desc);
+}
+
+static u32 cp100_isolate_pending_irq(int nr_irq_groups, struct plic_handler *handler)
+{
+	u32 __iomem *pending = handler->priv->regs + PENDING_BASE;
+	u32 __iomem *enable = handler->enable_base;
+	u32 pending_irqs = 0;
+	int i, j;
+
+	/* Look for first pending interrupt */
+	for (i = 0; i < nr_irq_groups; i++) {
+		/* Any pending interrupts would be annihilated, so skip checking them */
+		if (!handler->enable_save[i])
+			continue;
+
+		pending_irqs = handler->enable_save[i] & readl_relaxed(pending + i);
+		if (pending_irqs)
+			break;
+	}
+
+	if (!pending_irqs)
+		return 0;
+
+	/* Isolate lowest set bit */
+	pending_irqs &= -pending_irqs;
+
+	/* Disable all interrupts but the first pending one */
+	for (j = 0; j < nr_irq_groups; j++) {
+		u32 new_mask = j == i ? pending_irqs : 0;
+
+		if (new_mask != handler->enable_save[j])
+			writel_relaxed(new_mask, enable + j);
+	}
+	return pending_irqs;
+}
+
+static irq_hw_number_t cp100_get_hwirq(struct plic_handler *handler, void __iomem *claim)
+{
+	int nr_irq_groups = DIV_ROUND_UP(handler->priv->nr_irqs, 32);
+	u32 __iomem *enable = handler->enable_base;
+	irq_hw_number_t hwirq = 0;
+	u32 iso_mask;
+	int i;
+
+	guard(raw_spinlock)(&handler->enable_lock);
+
+	/* Existing enable state is already cached in enable_save */
+	iso_mask = cp100_isolate_pending_irq(nr_irq_groups, handler);
+	if (!iso_mask)
+		return 0;
+
+	/*
+	 * Interrupts delievered to hardware still become pending, but only
+	 * interrupts that are both pending and enabled can be claimed.
+	 * Clearing the enable bit for all interrupts but the first pending
+	 * one avoids a hardware bug that occurs during read from the claim
+	 * register with more than one eligible interrupt.
+	 */
+	hwirq = readl(claim);
+
+	/* Restore previous state */
+	for (i = 0; i < nr_irq_groups; i++) {
+		u32 written = i == hwirq / 32 ? iso_mask : 0;
+		u32 stored = handler->enable_save[i];
+
+		if (stored != written)
+			writel_relaxed(stored, enable + i);
+	}
+	return hwirq;
+}
+
+static void plic_handle_irq_cp100(struct irq_desc *desc)
+{
+	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
+	struct irq_chip *chip = irq_desc_get_chip(desc);
+	void __iomem *claim = handler->hart_base + CONTEXT_CLAIM;
+	irq_hw_number_t hwirq;
+
+	WARN_ON_ONCE(!handler->present);
+
+	chained_irq_enter(chip, desc);
+
+	while ((hwirq = cp100_get_hwirq(handler, claim))) {
+		int err = generic_handle_domain_irq(handler->priv->irqdomain, hwirq);
+
 		if (unlikely(err)) {
 			pr_warn_ratelimited("%pfwP: can't find mapping for hwirq %lu\n",
 					    handler->priv->fwnode, hwirq);
@@ -512,8 +519,8 @@ static const struct of_device_id plic_match[] = {
 	  .data = (const void *)BIT(PLIC_QUIRK_EDGE_INTERRUPT) },
 	{ .compatible = "thead,c900-plic",
 	  .data = (const void *)BIT(PLIC_QUIRK_EDGE_INTERRUPT) },
-	{ .compatible = "ultrarisc,dp1000-plic",
-	  .data = (const void *)BIT(PLIC_QUIRK_CLAIM_REGISTER) },
+	{ .compatible = "ultrarisc,cp100-plic",
+	  .data = (const void *)BIT(PLIC_QUIRK_CP100_CLAIM_REGISTER_ERRATUM) },
 	{}
 };
 
@@ -672,12 +679,11 @@ static int plic_probe(struct fwnode_handle *fwnode)
 		if (parent_hwirq != RV_IRQ_EXT) {
 			/* Disable S-mode enable bits if running in M-mode. */
 			if (IS_ENABLED(CONFIG_RISCV_M_MODE)) {
-				void __iomem *enable_base = priv->regs +
-					CONTEXT_ENABLE_BASE +
-					i * CONTEXT_ENABLE_SIZE;
+				u32 __iomem *enable_base = priv->regs +	CONTEXT_ENABLE_BASE +
+							   i * CONTEXT_ENABLE_SIZE;
 
-				for (hwirq = 1; hwirq <= nr_irqs; hwirq++)
-					__plic_toggle(enable_base, hwirq, 0);
+				for (int j = 0; j <= nr_irqs / 32; j++)
+					writel(0, enable_base + j);
 			}
 			continue;
 		}
@@ -710,8 +716,10 @@ static int plic_probe(struct fwnode_handle *fwnode)
 
 		handler->enable_save = kcalloc(DIV_ROUND_UP(nr_irqs, 32),
 					       sizeof(*handler->enable_save), GFP_KERNEL);
-		if (!handler->enable_save)
+		if (!handler->enable_save) {
+			error = -ENOMEM;
 			goto fail_cleanup_contexts;
+		}
 done:
 		for (hwirq = 1; hwirq <= nr_irqs; hwirq++) {
 			plic_toggle(handler, hwirq, 0);
@@ -723,8 +731,10 @@ done:
 
 	priv->irqdomain = irq_domain_create_linear(fwnode, nr_irqs + 1,
 						   &plic_irqdomain_ops, priv);
-	if (WARN_ON(!priv->irqdomain))
+	if (WARN_ON(!priv->irqdomain)) {
+		error = -ENOMEM;
 		goto fail_cleanup_contexts;
+	}
 
 	/*
 	 * We can have multiple PLIC instances so setup global state
@@ -744,12 +754,17 @@ done:
 		}
 
 		if (global_setup) {
+			void (*handler_fn)(struct irq_desc *) = plic_handle_irq;
+
+			if (test_bit(PLIC_QUIRK_CP100_CLAIM_REGISTER_ERRATUM, &handler->priv->plic_quirks))
+				handler_fn = plic_handle_irq_cp100;
+
 			/* Find parent domain and register chained handler */
 			domain = irq_find_matching_fwnode(riscv_get_intc_hwnode(), DOMAIN_BUS_ANY);
 			if (domain)
 				plic_parent_irq = irq_create_mapping(domain, RV_IRQ_EXT);
 			if (plic_parent_irq)
-				irq_set_chained_handler(plic_parent_irq, plic_handle_irq);
+				irq_set_chained_handler(plic_parent_irq, handler_fn);
 
 			cpuhp_setup_state(CPUHP_AP_IRQ_SIFIVE_PLIC_STARTING,
 					  "irqchip/sifive/plic:starting",
