@@ -1,0 +1,151 @@
+name: Update Contribution Stats
+
+on:
+  # 定时触发（需要启用时取消注释）
+  schedule:
+    - cron: '0 2 * * *'  # 每天UTC时间2点运行
+
+  # 手动触发（通过GitHub Actions页面）
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: '强制更新（忽略无变更）'
+        required: false
+        default: false
+        type: boolean
+
+  # 当统计分支有push时触发（统计脚本更新时）
+  push:
+    branches:
+      - contrib-stats
+    paths:
+      - 'scripts/contrib_stats/**'
+      - '.github/workflows/update-contrib-stats.yml'
+
+# 此工作流仅在contrib-stats分支上运行
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    # 只在contrib-stats分支上运行
+    if: github.ref == 'refs/heads/contrib-stats'
+
+    steps:
+    - name: Checkout contrib-stats branch
+      uses: actions/checkout@v4
+      with:
+        ref: contrib-stats
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f "scripts/contrib_stats/requirements.txt" ]; then
+          pip install -r scripts/contrib_stats/requirements.txt
+        fi
+
+    - name: Configure Git
+      run: |
+        git config --global user.name 'Mingzheng Xing'
+        git config --global user.email 'xingmingzheng@iscas.ac.cn'
+
+    - name: Run contribution statistics
+      id: stats
+      run: |
+        echo "开始运行贡献统计..."
+        TZ='Asia/Shanghai' python scripts/contrib_stats/company_stats.py \
+          --main-branch ${{ secrets.MAIN_BRANCH || 'rvck-6.6' }} \
+          --stats-branch contrib-stats \
+          --remote-url https://github.com/${{ github.repository }}.git
+
+        echo "统计完成时间: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+
+    - name: Get start tag from stats
+      id: get_start_tag
+      run: |
+        if [ -f "docs/data/latest.json" ]; then
+          START_TAG=$(python3 -c "import json; f=open('docs/data/latest.json'); d=json.load(f); print(d.get('start_tag', 'unknown')); f.close()")
+          echo "start_tag=$START_TAG" >> $GITHUB_OUTPUT
+          echo "找到起始标签: $START_TAG"
+        else
+          echo "start_tag=unknown" >> $GITHUB_OUTPUT
+          echo "未找到latest.json文件"
+        fi
+
+    - name: Check for changes
+      id: check_changes
+      run: |
+        echo "检查文件变更..."
+        git add .
+        if git diff --cached --quiet; then
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "没有检测到文件变更"
+        else
+          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "检测到文件变更:"
+          git status --porcelain
+        fi
+
+    - name: Commit and push changes to contrib-stats branch
+      if: steps.check_changes.outputs.changes == 'true' || inputs.force_update == 'true'
+      run: |
+        echo "提交变更到contrib-stats分支..."
+
+        # 添加所有变更
+        git add .
+
+        # 提交变更
+        git commit -m "📊 docs: 更新贡献统计数据 [automated]
+
+        统计时间: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
+        主分支: ${{ secrets.MAIN_BRANCH || 'rvck-6.6' }}
+        起始标签: ${{ steps.get_start_tag.outputs.start_tag }}"
+
+        # 推送到contrib-stats分支
+        git push origin contrib-stats
+
+        echo "✓ 变更已提交并推送到 contrib-stats 分支"
+
+    - name: No changes detected
+      if: steps.check_changes.outputs.changes == 'false' && inputs.force_update == 'false'
+      run: |
+        echo "没有检测到文件变更，跳过提交步骤"
+
+    - name: Create workflow summary
+      if: always()
+      run: |
+        echo "## 贡献统计更新报告" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        if [ -f "docs/data/latest.json" ]; then
+          echo "### 📊 最新统计摘要" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # 读取统计数据
+          STATS=$(cat docs/data/latest.json)
+          echo "$STATS" | python3 -c "import sys,json;d=json.load(sys.stdin);print(f'**统计时间**: {d[\"generated_at\"]}');print(f'**主分支**: {d[\"main_branch\"]}');print(f'**起始标签**: {d[\"start_tag\"]}');print(f'**总提交数**: {d[\"total_commits\"]}');print(f'**有公司贡献的提交**: {d[\"commits_with_company\"]}');" >> $GITHUB_STEP_SUMMARY
+
+          # 公司统计信息
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**查看完整公司贡献排名**，请点击：[统计主页](docs/index.md)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "### ❌ 统计失败" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "未能生成统计数据，请检查日志。" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "---" >> $GITHUB_STEP_SUMMARY
+        echo "*本报告由 GitHub Actions 自动生成*" >> $GITHUB_STEP_SUMMARY
