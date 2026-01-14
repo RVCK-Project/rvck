@@ -415,6 +415,18 @@ class ContribStats:
                 content += f"| [{company}](companies/{company}.md) | {count} | 0.0% | `░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` |\n"
 
         content += f"""
+## 📈 可视化图表
+
+```mermaid
+pie title 各公司贡献占比
+"""
+
+        # 添加Mermaid饼图数据
+        for company, count in sorted_companies:
+            if count > 0:
+                content += f'    "{company} : {count}" : {count}\n'
+
+        content += """```
 
 ## 📋 统计规则说明
 
