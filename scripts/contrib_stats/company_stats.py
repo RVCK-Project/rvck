@@ -38,7 +38,7 @@ class ContribStats:
         self.clone_depth = 3000  # 默认克隆深度，rvck 贡献量超过该数值时需要更新
         self.fallback_count = 1000  # 未找到 tag 时的默认统计数量
 
-        # 公司配置
+        # 机构配置
         self.companies = {
             "超睿科技": {
                 "suffixes": ["@ultrarisc.com"],
@@ -270,7 +270,7 @@ class ContribStats:
         return signatures
 
     def get_company_by_email(self, email):
-        """根据邮箱判断公司归属"""
+        """根据邮箱判断机构归属"""
 
         if not email:
             return None
@@ -335,16 +335,16 @@ class ContribStats:
                     signatures = self.get_commit_signatures(tmp_dir, commit['hash'])
                     commit['signatures'] = signatures
 
-                    # 确定提交所属公司
+                    # 确定提交所属机构
                     author_company = self.get_company_by_email(commit['author_email'])
 
                     if author_company:
-                        # Author属于某个公司，只统计该公司
+                        # Author属于某个机构，只统计该机构
                         stats['companies'][author_company]['count'] += 1
                         stats['companies'][author_company]['commits'].append(commit)
                         stats['commits_with_company'] += 1
                     else:
-                        # Author不属于任何公司，检查签名中的公司
+                        # Author不属于任何机构，检查签名中的机构
                         signature_companies = set()
                         for sig in signatures:
                             # 从签名中提取邮箱
@@ -356,13 +356,13 @@ class ContribStats:
                                     signature_companies.add(company)
 
                         if signature_companies:
-                            # 统计所有出现的公司
+                            # 统计所有出现的机构
                             stats['commits_with_company'] += 1
                             for company in signature_companies:
                                 stats['companies'][company]['count'] += 1
                                 stats['companies'][company]['commits'].append(commit)
                         else:
-                            # 没有公司相关签名
+                            # 没有机构相关签名
                             stats['no_company_commits'].append(commit)
 
                 return stats
@@ -395,12 +395,12 @@ class ContribStats:
 | 项目 | 数量 |
 |------|------|
 | 总提交数 | {stats['total_commits']} |
-| 有公司贡献的提交 | {stats['commits_with_company']} |
-| 无公司贡献的提交 | {len(stats['no_company_commits'])} |
+| 有机构贡献的提交 | {stats['commits_with_company']} |
+| 无机构贡献的提交 | {len(stats['no_company_commits'])} |
 
-## 各公司贡献统计
+## 各机构贡献统计
 
-| 公司 | 提交数 | 占比 | 图表 |
+| 机构 | 提交数 | 占比 | 图表 |
 |------|--------|------|------|
 """
 
@@ -418,7 +418,7 @@ class ContribStats:
 ## 📈 可视化图表
 
 ```mermaid
-pie title 各公司贡献占比
+pie title 各机构贡献占比
 """
 
         # 添加Mermaid饼图数据
@@ -430,7 +430,7 @@ pie title 各公司贡献占比
 
 ## 📋 统计规则说明
 
-### 1. 公司识别规则
+### 1. 机构识别规则
 """
 
         for company, info in self.companies.items():
@@ -442,14 +442,14 @@ pie title 各公司贡献占比
         content += f"""
 ### 2. 提交归属规则
 
-贡献统计目前只面向对 RVCK 仓库有贡献的参与单位，因此在对主线补丁反合至 RVCK
-等工作中，原补丁作者所属单位暂不计入该统计。
+贡献统计目前只面向对 RVCK 仓库有贡献的参与机构，因此在对主线补丁反合至 RVCK
+等工作中，原补丁作者所属机构暂不计入该统计。
 
-在 RVCK 贡献单位范围中，提交归属统计基于以下规则：
+在 RVCK 贡献机构范围中，提交归属统计基于以下规则：
 
-1. **优先原则**: 如果提交的 Author 邮箱属于某公司，则该提交只计入该公司
-2. **签名统计**: 如果 Author 不属于任何公司，则统计签名中出现的所有公司
-3. **去重规则**: 每个提交对每个公司最多计1次
+1. **优先原则**: 如果提交的 Author 邮箱属于某机构，则该提交只计入该机构
+2. **签名统计**: 如果 Author 不属于任何机构，则统计签名中出现的所有机构
+3. **去重规则**: 每个提交对每个机构最多计1次
 
 ### 3. 统计范围
 - 主分支: `{stats['main_branch']}`
@@ -474,7 +474,7 @@ pie title 各公司贡献占比
         return content
 
     def generate_company_page(self, company, info, stats):
-        """生成单个公司的详情页"""
+        """生成单个机构的详情页"""
 
         company_stats = stats['companies'][company]
 
@@ -557,7 +557,7 @@ pie title 各公司贡献占比
 
         print(f"✓ 统计主页已生成: {main_page_file}")
 
-        # 3. 生成并保存各公司页面
+        # 3. 生成并保存各机构页面
         for company, info in self.companies.items():
             if stats['companies'][company]['count'] > 0:
                 company_page = self.generate_company_page(company, info, stats)
@@ -566,7 +566,7 @@ pie title 各公司贡献占比
                 with open(company_file, 'w', encoding='utf-8') as f:
                     f.write(company_page)
 
-                print(f"✓ 公司页面已生成: {company_file}")
+                print(f"✓ 机构页面已生成: {company_file}")
 
         # 4. 生成分支README
         branch_readme = self.generate_branch_readme(stats)
@@ -605,7 +605,7 @@ pie title 各公司贡献占比
 | 项目 | 数量 |
 |------|------|
 | 总提交数 | {stats['total_commits']} |
-| 有公司贡献的提交 | {stats['commits_with_company']} |
+| 有机构贡献的提交 | {stats['commits_with_company']} |
 
 **贡献排名**:
 {rank_content}
@@ -617,7 +617,7 @@ contrib-stats/
 ├── scripts/contrib_stats/      # 统计脚本
 ├── docs/                       # 统计报告
 │   ├── index.md               # 统计主页
-│   ├── companies/             # 各公司详情
+│   ├── companies/             # 各机构详情
 │   └── data/                  # 原始数据
 └── README.md                  # 本文件
 ```
@@ -675,11 +675,11 @@ git checkout contrib-stats
 
         print(f"\n统计完成:")
         print(f"- 总提交数: {stats['total_commits']}")
-        print(f"- 有公司贡献的提交: {stats['commits_with_company']}")
-        print(f"- 无公司贡献的提交: {len(stats['no_company_commits'])}")
+        print(f"- 有机构贡献的提交: {stats['commits_with_company']}")
+        print(f"- 无机构贡献的提交: {len(stats['no_company_commits'])}")
 
-        # 输出各公司统计
-        print(f"\n各公司贡献:")
+        # 输出各机构统计
+        print(f"\n各机构贡献:")
         for company in self.companies:
             count = stats['companies'][company]['count']
             if count > 0:
@@ -691,7 +691,7 @@ git checkout contrib-stats
         if success:
             print(f"\n✓ 统计报告已生成:")
             print(f"  - 统计主页: docs/index.md")
-            print(f"  - 公司详情: docs/companies/")
+            print(f"  - 机构详情: docs/companies/")
             print(f"  - 原始数据: docs/data/")
             print(f"  - 分支说明: README.md")
 

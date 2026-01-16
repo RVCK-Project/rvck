@@ -135,11 +135,11 @@ jobs:
 
           # 读取统计数据
           STATS=$(cat docs/data/latest.json)
-          echo "$STATS" | python3 -c "import sys,json;d=json.load(sys.stdin);print(f'**统计时间**: {d[\"generated_at\"]}');print(f'**主分支**: {d[\"main_branch\"]}');print(f'**起始标签**: {d[\"start_tag\"]}');print(f'**总提交数**: {d[\"total_commits\"]}');print(f'**有公司贡献的提交**: {d[\"commits_with_company\"]}');" >> $GITHUB_STEP_SUMMARY
+          echo "$STATS" | python3 -c "import sys,json;d=json.load(sys.stdin);print(f'**统计时间**: {d[\"generated_at\"]}');print(f'**主分支**: {d[\"main_branch\"]}');print(f'**起始标签**: {d[\"start_tag\"]}');print(f'**总提交数**: {d[\"total_commits\"]}');print(f'**有机构贡献的提交**: {d[\"commits_with_company\"]}');" >> $GITHUB_STEP_SUMMARY
 
-          # 公司统计信息
+          # 机构统计信息
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**查看完整公司贡献排名**，请点击：[统计主页](docs/index.md)" >> $GITHUB_STEP_SUMMARY
+          echo "**查看完整机构贡献排名**，请点击：[统计主页](docs/index.md)" >> $GITHUB_STEP_SUMMARY
         else
           echo "### ❌ 统计失败" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
