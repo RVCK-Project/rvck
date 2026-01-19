@@ -1160,8 +1160,9 @@
 			interrupt-parent = <&intc>;
 			clocks = <&syscon_apmu CLK_SDH_AXI>,
 				 <&syscon_apmu CLK_SDH0>,
+				 <&syscon_apbc CLK_AIB_BUS>,
 				 <&syscon_apmu CLK_AIB>;
-			clock-names = "core", "io", "aib";
+			clock-names = "core", "io", "aib-bus", "aib";
 			resets = <&syscon_apmu RESET_SDH_AXI>,
 				 <&syscon_apmu RESET_SDH0>;
 			reset-names = "core", "io";
