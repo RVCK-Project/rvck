@@ -171,7 +171,8 @@ struct spacemit_i2c_dev {
 	void __iomem		*mapbase;
 
 	struct reset_control    *resets;
-	struct clk		*clk;
+	struct clk		*func_clk;
+	struct clk		*bus_clk;
 	int			irq;
 	int			clk_freq_in;
 	int			clk_freq_out;
