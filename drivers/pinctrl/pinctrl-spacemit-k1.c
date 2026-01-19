@@ -225,6 +225,10 @@ struct pcs_device {
 	struct pinctrl_desc desc;
 	unsigned int (*read)(void __iomem *reg);
 	void (*write)(unsigned int val, void __iomem *reg);
+
+	struct clk *func_clk;
+	struct clk *bus_clk;
+	struct reset_control *reset;
 };
 
 static int pcs_pinconf_get(struct pinctrl_dev *pctldev, unsigned int pin,
@@ -1753,27 +1757,6 @@ static int pcs_irq_init_chained_handler(struct pcs_device *pcs, struct device_no
 	return 0;
 }
 
-#ifdef CONFIG_PM_SLEEP
-static struct pcs_device *pinctrl_pcs;
-
-static int pinctrl_syscore_suspend(void)
-{
-	pinctrl_force_sleep(pinctrl_pcs->pctl);
-
-	return 0;
-}
-
-static void pinctrl_syscore_resume(void)
-{
-	pinctrl_force_default(pinctrl_pcs->pctl);
-}
-
-static struct syscore_ops pinctrl_syscore_ops = {
-	.suspend = pinctrl_syscore_suspend,
-	.resume = pinctrl_syscore_resume,
-};
-#endif
-
 /**
  * pcs_quirk_missing_pinctrl_cells - handle legacy binding
  * @pcs: pinctrl driver instance
@@ -1822,9 +1805,6 @@ static int pcs_quirk_missing_pinctrl_cells(struct pcs_device *pcs,
 	return error;
 }
 
-static struct clk *psc_clk;
-static struct reset_control *psc_rst;
-
 static int pcs_probe(struct platform_device *pdev)
 {
 	int ret;
@@ -1840,36 +1820,49 @@ static int pcs_probe(struct platform_device *pdev)
 	if (WARN_ON(!soc))
 		return -EINVAL;
 
-	psc_rst = devm_reset_control_get_exclusive(&pdev->dev, "aib_rst");
-	if (IS_ERR(psc_rst)) {
-		ret = PTR_ERR(psc_rst);
+	pcs = devm_kzalloc(&pdev->dev, sizeof(*pcs), GFP_KERNEL);
+	if (!pcs)
+		return -ENOMEM;
+
+	pcs->reset = devm_reset_control_get_exclusive(&pdev->dev, "aib_rst");
+	if (IS_ERR(pcs->reset)) {
+		ret = PTR_ERR(pcs->reset);
 		dev_err(&pdev->dev, "Failed to get reset: %d\n", ret);
 		return -EINVAL;
 	}
 
+	pcs->func_clk = devm_clk_get(&pdev->dev, "func");
+	if (IS_ERR(pcs->func_clk)) {
+		dev_err(&pdev->dev, "Fail to get pinctrl func clock, error %ld.\n",
+			PTR_ERR(pcs->func_clk));
+		return PTR_ERR(pcs->func_clk);
+	}
+
+	pcs->bus_clk = devm_clk_get(&pdev->dev, "bus");
+	if (IS_ERR(pcs->bus_clk)) {
+		dev_err(&pdev->dev, "Fail to get pinctrl bus clock, error %ld.\n",
+			PTR_ERR(pcs->bus_clk));
+		return PTR_ERR(pcs->bus_clk);
+	}
+
 	/* deasser clk  */
-	ret = reset_control_deassert(psc_rst);
+	ret = reset_control_deassert(pcs->reset);
 	if (ret) {
 		dev_err(&pdev->dev, "Failed to deassert reset: %d\n", ret);
 		return -EINVAL;
 	}
 
-	psc_clk = devm_clk_get(&pdev->dev, NULL);
-	if (IS_ERR(psc_clk)) {
-		dev_err(&pdev->dev, "Fail to get pinctrl clock, error %ld.\n",
-			PTR_ERR(psc_clk));
-		return PTR_ERR(psc_clk);
-	}
-
-	ret = clk_prepare_enable(psc_clk);
+	ret = clk_prepare_enable(pcs->func_clk);
 	if (ret) {
-		dev_err(&pdev->dev, "Fail to enable pinctrl clock, error %d.\n", ret);
+		dev_err(&pdev->dev, "Fail to enable pinctrl func clock, error %d.\n", ret);
 		return ret;
 	}
 
-	pcs = devm_kzalloc(&pdev->dev, sizeof(*pcs), GFP_KERNEL);
-	if (!pcs)
-		return -ENOMEM;
+	ret = clk_prepare_enable(pcs->bus_clk);
+	if (ret) {
+		dev_err(&pdev->dev, "Fail to enable pinctrl bus clock, error %d.\n", ret);
+		return ret;
+	}
 
 	pcs->dev = &pdev->dev;
 	pcs->np = np;
@@ -2037,11 +2030,6 @@ static int pcs_probe(struct platform_device *pdev)
 	dev_pm_set_wake_irq(&pdev->dev, pcs->socdata.irq);
 	device_init_wakeup(&pdev->dev, true);
 
-#ifdef CONFIG_PM_SLEEP
-	pinctrl_pcs = pcs;
-	register_syscore_ops(&pinctrl_syscore_ops);
-#endif
-
 	ret = pinctrl_enable(pcs->pctl);
 	if (ret)
 		goto free;
@@ -2060,9 +2048,11 @@ static int pcs_remove(struct platform_device *pdev)
 	if (!pcs)
 		return 0;
 
+	clk_disable_unprepare(pcs->func_clk);
+	clk_disable_unprepare(pcs->bus_clk);
+	reset_control_assert(pcs->reset);
+
 	pcs_free_resources(pcs);
-	clk_disable_unprepare(psc_clk);
-	reset_control_assert(psc_rst);
 
 	return 0;
 }
