@@ -57,6 +57,9 @@ struct k1_gpio_chip {
 	unsigned int ngpio;
 	unsigned int nbank;
 	struct k1_gpio_bank *banks;
+
+	struct clk *core_clk;
+	struct clk *bus_clk;
 };
 
 static int k1_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
@@ -301,7 +304,6 @@ static int k1_gpio_probe(struct platform_device *pdev)
 	struct k1_gpio_bank *bank;
 	struct resource *res;
 	struct irq_domain *domain;
-	struct clk *clk;
 
 	int irq, i, ret;
 	void __iomem *base;
@@ -334,15 +336,29 @@ static int k1_gpio_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	clk = devm_clk_get(dev, NULL);
-	if (IS_ERR(clk)) {
-		dev_err(dev, "Fail to get gpio clock, error %ld.\n",
-			PTR_ERR(clk));
-		return PTR_ERR(clk);
+	k1_chip->core_clk = devm_clk_get(dev, "core");
+	if (IS_ERR(k1_chip->core_clk)) {
+		dev_err(dev, "Fail to get gpio func clock, error %ld.\n",
+			PTR_ERR(k1_chip->core_clk));
+		return PTR_ERR(k1_chip->core_clk);
 	}
-	ret = clk_prepare_enable(clk);
+	ret = clk_prepare_enable(k1_chip->core_clk);
 	if (ret) {
-		dev_err(dev, "Fail to enable gpio clock, error %d.\n", ret);
+		dev_err(dev, "Fail to enable gpio func clock, error %d.\n", ret);
+		return ret;
+	}
+
+	k1_chip->bus_clk = devm_clk_get(dev, "bus");
+	if (IS_ERR(k1_chip->bus_clk)) {
+		dev_err(dev, "Fail to get gpio bus clock, error %ld.\n",
+			PTR_ERR(k1_chip->bus_clk));
+		clk_disable_unprepare(k1_chip->core_clk);
+		return PTR_ERR(k1_chip->bus_clk);
+	}
+	ret = clk_prepare_enable(k1_chip->bus_clk);
+	if (ret) {
+		dev_err(dev, "Fail to enable gpio bus clock, error %d.\n", ret);
+		clk_disable_unprepare(k1_chip->core_clk);
 		return ret;
 	}
 
