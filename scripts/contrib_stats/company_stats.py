@@ -55,7 +55,7 @@ class ContribStats:
                 "specific_emails": [],
                 "color": "#FF9800"
             },
-            "阿里": {
+            "阿里达摩院": {
                 "suffixes": ["@linux.alibaba.com"],
                 "specific_emails": [],
                 "color": "#F44336"
