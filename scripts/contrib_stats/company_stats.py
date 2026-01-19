@@ -423,8 +423,15 @@ pie title 各机构贡献占比
 
         # 添加Mermaid饼图数据
         for company, count in sorted_companies:
-            if count > 0:
-                content += f'    "{company} : {count}" : {count}\n'
+            if count > 0 and stats['total_commits'] > 0:
+                # 计算百分比
+                percentage = (count / stats['total_commits'] * 100)
+                content += f'    "{company} ({count}, {percentage:.1f}%)" : {count}\n'
+
+        # 添加无机构贡献的部分
+        if len(stats['no_company_commits']) > 0 and stats['total_commits'] > 0:
+            no_company_percentage = (len(stats['no_company_commits']) / stats['total_commits'] * 100)
+            content += f'    "其他 ({len(stats["no_company_commits"])}, {no_company_percentage:.1f}%)" : {len(stats["no_company_commits"])}\n'
 
         content += """```
 
