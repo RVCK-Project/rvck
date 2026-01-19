@@ -137,6 +137,7 @@ struct sdhci_spacemit {
 	struct clk *clk_core;
 	struct clk *clk_io;
 	struct clk *clk_aib;
+	struct clk *clk_aib_bus;
 	struct reset_control *reset;
 	unsigned char power_mode;
 	struct pinctrl_state *pin;
@@ -1305,7 +1306,7 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
 
 	pltfm_host = sdhci_priv(host);
 	spacemit = sdhci_pltfm_priv(pltfm_host);
-	spacemit->clk_io = devm_clk_get(dev, "sdh-io");
+	spacemit->clk_io = devm_clk_get(dev, "io");
 	if (IS_ERR(spacemit->clk_io))
 		spacemit->clk_io = devm_clk_get(dev, NULL);
 	if (IS_ERR(spacemit->clk_io)) {
@@ -1316,13 +1317,17 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
 	pltfm_host->clk = spacemit->clk_io;
 	clk_prepare_enable(spacemit->clk_io);
 
-	spacemit->clk_core = devm_clk_get(dev, "sdh-core");
+	spacemit->clk_core = devm_clk_get(dev, "core");
 	if (!IS_ERR(spacemit->clk_core))
 		clk_prepare_enable(spacemit->clk_core);
 
-	spacemit->clk_aib = devm_clk_get(dev, "aib-clk");
+	spacemit->clk_aib = devm_clk_get(dev, "aib");
 	if (!IS_ERR(spacemit->clk_aib))
 		clk_prepare_enable(spacemit->clk_aib);
+
+	spacemit->clk_aib_bus = devm_clk_get(dev, "aib-bus");
+	if (!IS_ERR(spacemit->clk_aib_bus))
+		clk_prepare_enable(spacemit->clk_aib_bus);
 
 	spacemit->reset = devm_reset_control_array_get_optional_shared(dev);
 	if (IS_ERR(spacemit->reset)) {
@@ -1431,6 +1436,8 @@ err_host_freq:
 err_of_parse:
 	reset_control_assert(spacemit->reset);
 err_rst_get:
+	if (!IS_ERR(spacemit->clk_aib_bus))
+		clk_disable_unprepare(spacemit->clk_aib_bus);
 	if (!IS_ERR(spacemit->clk_aib))
 		clk_disable_unprepare(spacemit->clk_aib);
 	clk_disable_unprepare(spacemit->clk_io);
@@ -1452,6 +1459,8 @@ static void spacemit_sdhci_remove(struct platform_device *pdev)
 	sdhci_remove_host(host, 1);
 
 	reset_control_assert(spacemit->reset);
+	if (!IS_ERR(spacemit->clk_aib_bus))
+		clk_disable_unprepare(spacemit->clk_aib_bus);
 	if (!IS_ERR(spacemit->clk_aib))
 		clk_disable_unprepare(spacemit->clk_aib);
 	clk_disable_unprepare(spacemit->clk_io);
