@@ -770,8 +770,6 @@ xfer_retry:
 	spacemit_i2c->xfer_mode = SPACEMIT_I2C_MODE_PIO;
 	timeout = jiffies_to_usecs(spacemit_i2c->timeout);
 
-	if (!spacemit_i2c->clk_always_on)
-		clk_enable(spacemit_i2c->clk);
 	spacemit_i2c_controller_reset(spacemit_i2c);
 	udelay(2);
 
@@ -826,9 +824,6 @@ xfer_retry:
 	}
 
 	spacemit_i2c_disable(spacemit_i2c);
-
-	if (!spacemit_i2c->clk_always_on)
-		clk_disable(spacemit_i2c->clk);
 
 	if (unlikely(timeout <= 0)) {
 		dev_alert(spacemit_i2c->dev, "i2c pio transfer timeout\n");
@@ -895,7 +890,6 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg msgs[], i
 	struct spacemit_i2c_dev *spacemit_i2c = i2c_get_adapdata(adapt);
 	int ret = 0, xfer_try = 0;
 	unsigned long time_left;
-	bool clk_directly = false;
 
 	/*
 	 * at the end of system power off sequence, system will send
@@ -917,29 +911,6 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg msgs[], i
 	if (spacemit_i2c->shutdown) {
 		mutex_unlock(&spacemit_i2c->mtx);
 		return -ENXIO;
-	}
-
-	if (!spacemit_i2c->clk_always_on) {
-		ret = pm_runtime_get_sync(spacemit_i2c->dev);
-		if (unlikely(ret < 0)) {
-			/*
-			 * during system suspend_late to system resume_early stage,
-			 * if PM runtime is suspended, we will get -EACCES return
-			 * value, so we need to enable clock directly, and disable after
-			 * i2c transfer is finished, if PM runtime is active, it will
-			 * work normally. During this stage, pmic onkey ISR that
-			 * invoked in an irq thread may use i2c interface if we have
-			 * onkey press action
-			 */
-			if (likely(ret == -EACCES)) {
-				clk_directly = true;
-				clk_enable(spacemit_i2c->clk);
-			} else {
-				dev_err(spacemit_i2c->dev, "pm runtime sync error: %d\n",
-					ret);
-				goto err_runtime;
-			}
-		}
 	}
 
 xfer_retry:
@@ -1029,17 +1000,6 @@ timeout_xfex:
 		goto xfer_retry;
 	}
 
-err_runtime:
-	if (unlikely(clk_directly)) {
-		/* if clock is enabled directly, here disable it */
-		clk_disable(spacemit_i2c->clk);
-	}
-
-	if (!spacemit_i2c->clk_always_on) {
-		pm_runtime_mark_last_busy(spacemit_i2c->dev);
-		pm_runtime_put_autosuspend(spacemit_i2c->dev);
-	}
-
 	mutex_unlock(&spacemit_i2c->mtx);
 
 	return ret < 0 ? ret : num;
@@ -1107,9 +1067,6 @@ static int spacemit_i2c_parse_dt(struct platform_device *pdev,
 
 	/* default: interrupt mode */
 	spacemit_i2c->xfer_mode = SPACEMIT_I2C_MODE_INTERRUPT;
-
-	/* true: the clock will always on and not use runtime mechanism */
-	spacemit_i2c->clk_always_on = of_property_read_bool(dnode, "spacemit,clk-always-on");
 
 	/* apb clock: 26MHz or 52MHz */
 	ret = of_property_read_u32(dnode, "spacemit,apb_clock", &spacemit_i2c->apb_clock);
@@ -1184,13 +1141,22 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
 		goto err_out;
 	}
 
-	spacemit_i2c->clk = devm_clk_get(spacemit_i2c->dev, NULL);
-	if (IS_ERR(spacemit_i2c->clk)) {
-		dev_err(spacemit_i2c->dev, "failed to get clock\n");
-		ret = PTR_ERR(spacemit_i2c->clk);
+	spacemit_i2c->func_clk = devm_clk_get(spacemit_i2c->dev, "func");
+	if (IS_ERR(spacemit_i2c->func_clk)) {
+		dev_err(spacemit_i2c->dev, "failed to get func clock\n");
+		ret = PTR_ERR(spacemit_i2c->func_clk);
 		goto err_out;
 	}
-	clk_prepare_enable(spacemit_i2c->clk);
+	clk_prepare_enable(spacemit_i2c->func_clk);
+
+	spacemit_i2c->bus_clk = devm_clk_get(spacemit_i2c->dev, "bus");
+	if (IS_ERR(spacemit_i2c->bus_clk)) {
+		dev_err(spacemit_i2c->dev, "failed to get bus clock\n");
+		clk_disable_unprepare(spacemit_i2c->func_clk);
+		ret = PTR_ERR(spacemit_i2c->bus_clk);
+		goto err_out;
+	}
+	clk_prepare_enable(spacemit_i2c->bus_clk);
 
 	i2c_set_adapdata(&spacemit_i2c->adapt, spacemit_i2c);
 	spacemit_i2c->adapt.owner = THIS_MODULE;
@@ -1212,15 +1178,6 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
 	init_completion(&spacemit_i2c->complete);
 	spin_lock_init(&spacemit_i2c->fifo_lock);
 
-	if (!spacemit_i2c->clk_always_on) {
-		pm_runtime_set_autosuspend_delay(spacemit_i2c->dev, MSEC_PER_SEC);
-		pm_runtime_use_autosuspend(spacemit_i2c->dev);
-		pm_runtime_set_active(spacemit_i2c->dev);
-		pm_suspend_ignore_children(&pdev->dev, 1);
-		pm_runtime_enable(spacemit_i2c->dev);
-	} else
-		dev_dbg(spacemit_i2c->dev, "clock keeps always on\n");
-
 	spacemit_i2c->shutdown = false;
 	ret = i2c_add_numbered_adapter(&spacemit_i2c->adapt);
 	if (ret) {
@@ -1231,11 +1188,8 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
 	return 0;
 
 err_clk:
-	if (!spacemit_i2c->clk_always_on) {
-		pm_runtime_disable(spacemit_i2c->dev);
-		pm_runtime_set_suspended(spacemit_i2c->dev);
-	}
-	clk_disable_unprepare(spacemit_i2c->clk);
+	clk_disable_unprepare(spacemit_i2c->func_clk);
+	clk_disable_unprepare(spacemit_i2c->bus_clk);
 err_out:
 	return ret;
 }
@@ -1244,15 +1198,11 @@ static int spacemit_i2c_remove(struct platform_device *pdev)
 {
 	struct spacemit_i2c_dev *spacemit_i2c = platform_get_drvdata(pdev);
 
-	if (!spacemit_i2c->clk_always_on) {
-		pm_runtime_disable(spacemit_i2c->dev);
-		pm_runtime_set_suspended(spacemit_i2c->dev);
-	}
-
 	i2c_del_adapter(&spacemit_i2c->adapt);
 	mutex_destroy(&spacemit_i2c->mtx);
 	reset_control_assert(spacemit_i2c->resets);
-	clk_disable_unprepare(spacemit_i2c->clk);
+	clk_disable_unprepare(spacemit_i2c->func_clk);
+	clk_disable_unprepare(spacemit_i2c->bus_clk);
 	dev_dbg(spacemit_i2c->dev, "driver removed\n");
 
 	return 0;
