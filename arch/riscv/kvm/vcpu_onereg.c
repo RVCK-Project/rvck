@@ -569,8 +569,10 @@ static inline int kvm_riscv_vcpu_smstateen_set_csr(struct kvm_vcpu *vcpu,
 	unsigned long regs_max = sizeof(struct kvm_riscv_smstateen_csr) /
 		sizeof(unsigned long);
 
+	if (!riscv_isa_extension_available(vcpu->arch.isa, SMSTATEEN))
+		return -ENOENT;
 	if (reg_num >= regs_max)
-		return -EINVAL;
+		return -ENOENT;
 
 	reg_num = array_index_nospec(reg_num, regs_max);
 
@@ -586,8 +588,10 @@ static int kvm_riscv_vcpu_smstateen_get_csr(struct kvm_vcpu *vcpu,
 	unsigned long regs_max = sizeof(struct kvm_riscv_smstateen_csr) /
 		sizeof(unsigned long);
 
+	if (!riscv_isa_extension_available(vcpu->arch.isa, SMSTATEEN))
+		return -ENOENT;
 	if (reg_num >= regs_max)
-		return -EINVAL;
+		return -ENOENT;
 
 	reg_num = array_index_nospec(reg_num, regs_max);
 
@@ -619,10 +623,7 @@ static int kvm_riscv_vcpu_get_reg_csr(struct kvm_vcpu *vcpu,
 		rc = kvm_riscv_vcpu_aia_get_csr(vcpu, reg_num, &reg_val);
 		break;
 	case KVM_REG_RISCV_CSR_SMSTATEEN:
-		rc = -EINVAL;
-		if (riscv_has_extension_unlikely(RISCV_ISA_EXT_SMSTATEEN))
-			rc = kvm_riscv_vcpu_smstateen_get_csr(vcpu, reg_num,
-							      &reg_val);
+		rc = kvm_riscv_vcpu_smstateen_get_csr(vcpu, reg_num, &reg_val);
 		break;
 	default:
 		rc = -ENOENT;
@@ -664,10 +665,7 @@ static int kvm_riscv_vcpu_set_reg_csr(struct kvm_vcpu *vcpu,
 		rc = kvm_riscv_vcpu_aia_set_csr(vcpu, reg_num, reg_val);
 		break;
 	case KVM_REG_RISCV_CSR_SMSTATEEN:
-		rc = -EINVAL;
-		if (riscv_has_extension_unlikely(RISCV_ISA_EXT_SMSTATEEN))
-			rc = kvm_riscv_vcpu_smstateen_set_csr(vcpu, reg_num,
-							      reg_val);
+		rc = kvm_riscv_vcpu_smstateen_set_csr(vcpu, reg_num, reg_val);
 		break;
 	default:
 		rc = -ENOENT;
