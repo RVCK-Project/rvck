@@ -802,5 +802,69 @@
 			syscon-edge = <&syscon_gpio_edge>;
 			spacemit,apbc = <&syscon_apbc 0x50>;
 		};
+
+		gmac_axi_setup: stmmac-axi-config {
+			snps,wr_osr_lmt = <0xf>;
+			snps,rd_osr_lmt = <0xf>;
+			/* max axi burst len is 256 */
+			snps,blen = <256 128 64 32 16 0 0>;
+		};
+
+		eth0: ethernet@cac80000 {
+			compatible = "spacemit,k3-gmac", "snps,dwmac-5.10a";
+			reg = <0x0 0xcac80000 0x0 0x2000>;
+			spacemit,apmu = <&syscon_apmu>;
+			spacemit,ctrl-offset = <0x3e4>;
+			spacemit,dline-offset = <0x3e8>;
+			clocks = <&syscon_apmu CLK_APMU_EMAC0_BUS>,
+				 <&syscon_apmu CLK_APMU_EMAC0_1588>;
+			clock-names = "stmmaceth", "ptp_ref";
+			resets = <&syscon_apmu RESET_APMU_EMAC0>;
+			reset-names = "stmmaceth";
+			interrupt-parent = <&saplic>;
+			interrupts = <131 IRQ_TYPE_LEVEL_HIGH>, <276 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "macirq", "eth_wake_irq";
+			mac-address = [00 00 00 00 00 00];
+			snps,axi-config = <&gmac_axi_setup>;
+			status = "disabled";
+		};
+
+		eth1: ethernet@cac82000 {
+			compatible = "spacemit,k3-gmac", "snps,dwmac-5.10a";
+			reg = <0x0 0xcac82000 0x0 0x2000>;
+			spacemit,apmu = <&syscon_apmu>;
+			spacemit,ctrl-offset = <0x3ec>;
+			spacemit,dline-offset = <0x3f0>;
+			clocks = <&syscon_apmu CLK_APMU_EMAC1_BUS>,
+				 <&syscon_apmu CLK_APMU_EMAC1_1588>;
+			clock-names = "stmmaceth", "ptp_ref";
+			resets = <&syscon_apmu RESET_APMU_EMAC1>;
+			reset-names = "stmmaceth";
+			interrupt-parent = <&saplic>;
+			interrupts = <133 IRQ_TYPE_LEVEL_HIGH>, <277 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "macirq", "eth_wake_irq";
+			mac-address = [00 00 00 00 00 00];
+			snps,axi-config = <&gmac_axi_setup>;
+			status = "disabled";
+		};
+
+		eth2: ethernet@cac8e000 {
+			compatible = "spacemit,k3-gmac", "snps,dwmac-5.10a";
+			reg = <0x0 0xcac8e000 0x0 0x2000>;
+			spacemit,apmu = <&syscon_apmu>;
+			spacemit,ctrl-offset = <0x248>;
+			spacemit,dline-offset = <0x24c>;
+			clocks = <&syscon_apmu CLK_APMU_EMAC2_BUS>,
+				 <&syscon_apmu CLK_APMU_EMAC2_1588>;
+			clock-names = "stmmaceth", "ptp_ref";
+			resets = <&syscon_apmu RESET_APMU_EMAC2>;
+			reset-names = "stmmaceth";
+			interrupt-parent = <&saplic>;
+			interrupts = <130 IRQ_TYPE_LEVEL_HIGH>, <278 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "macirq", "eth_wake_irq";
+			mac-address = [00 00 00 00 00 00];
+			snps,axi-config = <&gmac_axi_setup>;
+			status = "disabled";
+		};
 	};
 };
