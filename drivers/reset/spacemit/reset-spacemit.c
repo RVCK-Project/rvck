@@ -66,13 +66,14 @@ static int spacemit_reset_probe(struct auxiliary_device *adev,
 				const struct auxiliary_device_id *id)
 {
 	struct spacemit_ccu_adev *rdev = to_spacemit_ccu_adev(adev);
+	const void *data = (void *)id->driver_data;
 	struct ccu_reset_controller *controller;
 	struct device *dev = &adev->dev;
 
 	controller = devm_kzalloc(dev, sizeof(*controller), GFP_KERNEL);
 	if (!controller)
 		return -ENOMEM;
-	controller->data = (const struct ccu_reset_controller_data *)id->driver_data;
+	controller->data = data;
 	controller->regmap = rdev->regmap;
 
 	return spacemit_reset_controller_register(dev, controller);
