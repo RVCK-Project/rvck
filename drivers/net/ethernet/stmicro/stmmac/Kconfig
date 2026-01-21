@@ -131,6 +131,15 @@ config DWMAC_QCOM_ETHQOS
 	  This selects the Qualcomm ETHQOS glue layer support for the
 	  stmmac device driver.
 
+config DWMAC_SPACEMIT_ETHQOS
+	tristate "Spacemit ETHQOS support"
+	depends on OF && (SOC_SPACEMIT || COMPILE_TEST)
+	help
+	  Support for the Spacemit ETHQOS core.
+
+	  This selects the Spacemit ETHQOS glue layer support for the
+          stmmac device driver.
+
 config DWMAC_ROCKCHIP
 	tristate "Rockchip dwmac support"
 	default ARCH_ROCKCHIP
