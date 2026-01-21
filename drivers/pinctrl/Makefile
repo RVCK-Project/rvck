@@ -45,6 +45,7 @@ obj-$(CONFIG_PINCTRL_RK805)	+= pinctrl-rk805.o
 obj-$(CONFIG_PINCTRL_ROCKCHIP)	+= pinctrl-rockchip.o
 obj-$(CONFIG_PINCTRL_SINGLE)	+= pinctrl-single.o
 obj-$(CONFIG_PINCTRL_SPACEMIT_K1)	+= pinctrl-spacemit-k1.o
+obj-$(CONFIG_PINCTRL_SPACEMIT_K3)	+= pinctrl-spacemit-k3.o
 obj-$(CONFIG_PINCTRL_SPACEMIT_P1)	+= pinctrl-spacemit-p1.o
 obj-$(CONFIG_PINCTRL_ST) 	+= pinctrl-st.o
 obj-$(CONFIG_PINCTRL_STMFX) 	+= pinctrl-stmfx.o
