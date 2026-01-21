@@ -356,14 +356,14 @@
 #define RESET_APBC_I2S5          57
 #define RESET_APBC_DRO           58
 #define RESET_APBC_IR0           59
-#define RESET_APBC_IR1           59
-#define RESET_APBC_TSEN          60
-#define RESET_IPC_AP2AUD         61
-#define RESET_APBC_CAN0          62
-#define RESET_APBC_CAN1          63
-#define RESET_APBC_CAN2          64
-#define RESET_APBC_CAN3          65
-#define RESET_APBC_CAN4          66
+#define RESET_APBC_IR1           60
+#define RESET_APBC_TSEN          61
+#define RESET_APBC_IPC_AP2AUD    62
+#define RESET_APBC_CAN0          63
+#define RESET_APBC_CAN1          64
+#define RESET_APBC_CAN2          65
+#define RESET_APBC_CAN3          66
+#define RESET_APBC_CAN4          67
 
 /* APMU clocks */
 #define CLK_APMU_AXICLK          0
@@ -432,29 +432,30 @@
 #define CLK_APMU_PCIE_PORTD_SLV  63
 #define CLK_APMU_PCIE_PORTE_MSTE 64
 #define CLK_APMU_PCIE_PORTE_SLV  65
-#define CLK_APMU_EMAC0_BUS       66
-#define CLK_APMU_EMAC0_REF       67
-#define CLK_APMU_EMAC0_1588      68
-#define CLK_APMU_EMAC0_RGMII_TX  69
-#define CLK_APMU_EMAC1_BUS       70
-#define CLK_APMU_EMAC1_REF       71
-#define CLK_APMU_EMAC1_1588      72
-#define CLK_APMU_EMAC1_RGMII_TX  73
-#define CLK_APMU_EMAC2_BUS       74
-#define CLK_APMU_EMAC2_REF       75
-#define CLK_APMU_EMAC2_1588      76
-#define CLK_APMU_EMAC2_RGMII_TX  77
-#define CLK_APMU_ESPI_SCLK_SRC   78
-#define CLK_APMU_ESPI_SCLK       79
-#define CLK_APMU_ESPI_MCLK       80
-#define CLK_APMU_CAM_SRC1        81
-#define CLK_APMU_CAM_SRC2        82
-#define CLK_APMU_CAM_SRC3        83
-#define CLK_APMU_CAM_SRC4        84
-#define CLK_APMU_ISIM_VCLK0      85
-#define CLK_APMU_ISIM_VCLK1      86
-#define CLK_APMU_ISIM_VCLK2      87
-#define CLK_APMU_ISIM_VCLK3      88
+#define CLK_APMU_IOMMU           66
+#define CLK_APMU_EMAC0_BUS       67
+#define CLK_APMU_EMAC0_REF       68
+#define CLK_APMU_EMAC0_1588      69
+#define CLK_APMU_EMAC0_RGMII_TX  70
+#define CLK_APMU_EMAC1_BUS       71
+#define CLK_APMU_EMAC1_REF       72
+#define CLK_APMU_EMAC1_1588      73
+#define CLK_APMU_EMAC1_RGMII_TX  74
+#define CLK_APMU_EMAC2_BUS       75
+#define CLK_APMU_EMAC2_REF       76
+#define CLK_APMU_EMAC2_1588      77
+#define CLK_APMU_EMAC2_RGMII_TX  78
+#define CLK_APMU_ESPI_SCLK_SRC   79
+#define CLK_APMU_ESPI_SCLK       80
+#define CLK_APMU_ESPI_MCLK       81
+#define CLK_APMU_CAM_SRC1        82
+#define CLK_APMU_CAM_SRC2        83
+#define CLK_APMU_CAM_SRC3        84
+#define CLK_APMU_CAM_SRC4        85
+#define CLK_APMU_ISIM_VCLK0      86
+#define CLK_APMU_ISIM_VCLK1      87
+#define CLK_APMU_ISIM_VCLK2      88
+#define CLK_APMU_ISIM_VCLK3      89
 
 /* APMU resets */
 #define RESET_APMU_CSI           0
@@ -571,6 +572,10 @@
 #define CLK_RCPU_SYSCTRL_REMAC_RGMII_TX 17
 #define CLK_RCPU_SYSCTRL_RI2S0_SYSCLK   18
 #define CLK_RCPU_SYSCTRL_RI2S1_SYSCLK   19
+#define CLK_RCPU_SYSCTRL_RUART_14_SRC   20
+#define CLK_RCPU_SYSCTRL_RUART_58_SRC   21
+#define CLK_RCPU_SYSCTRL_RUART_14       22
+#define CLK_RCPU_SYSCTRL_RUART_58       23
 
 /* RCPU SYSCTRL resets */
 #define RESET_RCPU_SYSCTRL_RCAN0 0
@@ -654,8 +659,8 @@
 #define RESET_RCPU_I2CCTRL_RI2C2 2
 
 /* RMPU clocks */
-#define CLK_RPMU_RCPU_APB        0
-#define CLK_RPMU_RCPU_AXI        1
+#define CLK_RPMU_RCPU_AXI        0
+#define CLK_RPMU_RCPU_APB        1
 #define CLK_RPMU_RIPC2MSA        2
 #define CLK_RPMU_RIPC2CP         3
 #define CLK_RPMU_RIPC2AP         4
