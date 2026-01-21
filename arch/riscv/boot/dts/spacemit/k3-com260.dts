@@ -5,7 +5,7 @@
 #include "k3-pinctrl.dtsi"
 
 / {
-	model = "Spacemit K3 Pico-ITX";
+	model = "Spacemit K3 CoM260 Kit";
 
 	memory@102000000 {
 		device_type = "memory";
