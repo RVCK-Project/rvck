@@ -1159,10 +1159,17 @@ static struct sdhci_pltfm_data sdhci_k1_pdata = {
 	.quirks2 = SDHCI_QUIRK2_BROKEN_64_BIT_DMA,
 };
 
+static struct sdhci_pltfm_data sdhci_k3_pdata = {
+	.ops = &spacemit_sdhci_ops,
+	.quirks = SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK
+		| SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC
+		| SDHCI_QUIRK_32BIT_ADMA_SIZE
+		| SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN,
+};
+
 static const struct of_device_id sdhci_spacemit_of_match[] = {
-	{
-		.compatible = "spacemit,k1-sdhci",
-	},
+	{ .compatible = "spacemit,k1-sdhci", .data = &sdhci_k1_pdata },
+	{ .compatible = "spacemit,k3-sdhci", .data = &sdhci_k3_pdata },
 	{},
 };
 MODULE_DEVICE_TABLE(of, sdhci_spacemit_of_match);
@@ -1300,7 +1307,13 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
 	struct k1_sdhci_platdata *pdata;
 	int ret;
 
-	host = sdhci_pltfm_init(pdev, &sdhci_k1_pdata, sizeof(*spacemit));
+	match = of_match_device(sdhci_spacemit_of_match, dev);
+	if (!match) {
+		dev_err(dev, "Unable to match of id\n");
+		return -ENODEV;
+	}
+
+	host = sdhci_pltfm_init(pdev, match->data, sizeof(*spacemit));
 	if (IS_ERR(host))
 		return PTR_ERR(host);
 
