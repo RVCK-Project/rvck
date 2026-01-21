@@ -4,6 +4,7 @@
 #include "k3.dtsi"
 #include "k3-pinctrl.dtsi"
 #include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/mmc/spacemit-k1-sdhci.h>
 
 / {
 	model = "Spacemit K3 CoM260 Kit";
@@ -281,6 +282,31 @@
 &uart0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart0_0_cfg>;
+	status = "okay";
+};
+
+&sdcard {
+	pinctrl-names = "default", "fast";
+	pinctrl-0 = <&mmc1_cfg>;
+	pinctrl-1 = <&mmc1_fast_cfg>;
+	bus-width = <4>;
+	cd-gpios = <&gpio 0 4 GPIO_ACTIVE_HIGH>;
+	vmmc-supply = <&p3v3>;
+	vqmmc-supply = <&aldo1>;
+	no-mmc;
+	no-sdio;
+	spacemit,sdh-host-caps-disable = <(MMC_CAP_UHS_SDR12 | MMC_CAP_UHS_SDR25)>;
+	spacemit,sdh-quirks = <(SDHCI_QUIRK_BROKEN_CARD_DETECTION |
+				SDHCI_QUIRK_INVERTED_WRITE_PROTECT |
+				SDHCI_QUIRK_BROKEN_TIMEOUT_VAL)>;
+	spacemit,sdh-quirks2 = <(SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
+				 SDHCI_QUIRK2_BROKEN_PHY_MODULE |
+				 SDHCI_QUIRK2_SET_AIB_MMC)>;
+	spacemit,rx_dline_reg = <0x0>;
+	spacemit,tx_dline_reg = <0x0>;
+	spacemit,tx_delaycode = <0x1f>;
+	spacemit,rx_tuning_limit = <50>;
+	spacemit,sdh-freq = <204800000>;
 	status = "okay";
 };
 
