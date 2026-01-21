@@ -540,6 +540,17 @@ config PINCTRL_SPACEMIT_K1
 	help
           This support pinctrl driver for Spacemit k1 SoC.
 
+config PINCTRL_SPACEMIT_K3
+	bool "Spacemit k3 pinctrl driver"
+	depends on SOC_SPACEMIT_K3
+	depends on OF
+	depends on HAS_IOMEM
+	select GENERIC_PINCTRL_GROUPS
+	select GENERIC_PINMUX_FUNCTIONS
+	select GENERIC_PINCONF
+	help
+          This support pinctrl driver for Spacemit k3 SoC.
+
 source "drivers/pinctrl/actions/Kconfig"
 source "drivers/pinctrl/aspeed/Kconfig"
 source "drivers/pinctrl/bcm/Kconfig"
