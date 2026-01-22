@@ -8,14 +8,21 @@
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/input/gpio-keys.h>
+#include <dt-bindings/leds/common.h>
 
 / {
 	model = "MilkV Titan V1.2";
 	compatible = "milkv,titan-v1.2", "ultrarisc,dp1000";
 
 	chosen {
-		bootargs = "earlycon=sbi console=ttyS0,115200";
-		stdout-path = &uart0;
+		stdout-path = "serial0:115200n8";
+	};
+
+	aliases {
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+		serial3 = &uart3;
 	};
 
 	gpio-poweroff {
@@ -170,6 +177,29 @@
 		phy0: phy@0{
 			reg = <0x00>;
 			status = "okay";
+
+			leds {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				led@1 {
+					label = "eth-link";
+					reg = <0x01>;
+					color = <LED_COLOR_ID_YELLOW>;
+					function = LED_FUNCTION_INDICATOR;
+					default-state = "keep";
+					linux,default-trigger = "netdev";
+				};
+
+				led@2 {
+					label = "eth-activity";
+					reg = <0x02>;
+					color = <LED_COLOR_ID_GREEN>;
+					function = LED_FUNCTION_ACTIVITY;
+					default-state = "keep";
+					linux,default-trigger = "netdev";
+				};
+			};
 		};
 	};
 };
