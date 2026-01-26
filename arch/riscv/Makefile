@@ -62,6 +62,9 @@ riscv-march-$(CONFIG_TOOLCHAIN_HAS_ZACAS) := $(riscv-march-y)_zacas
 # Check if the toolchain supports Zabha
 riscv-march-$(CONFIG_TOOLCHAIN_HAS_ZABHA) := $(riscv-march-y)_zabha
 
+KBUILD_BASE_ISA = -march=$(shell echo $(riscv-march-y) | sed -E 's/(rv32ima|rv64ima)fd([^v_]*)v?/\1\2/')
+export KBUILD_BASE_ISA
+
 # XUANTIE ISA
 riscv-march-$(CONFIG_XUANTIE_ISA) := $(riscv-march-y)_xtheadc
 
@@ -70,7 +73,7 @@ riscv-march-$(CONFIG_XUANTIE_ISA) := $(riscv-march-y)_xtheadc
 ifeq ($(CONFIG_TOOLCHAIN_HAS_XTHEADC)$(call gcc-max-version, 100400),yy)
 	KBUILD_CFLAGS += -march=$(subst fd,,$(riscv-march-y))
 else
-	KBUILD_CFLAGS += -march=$(shell echo $(riscv-march-y) | sed -E 's/(rv32ima|rv64ima)fd([^v_]*)v?/\1\2/')
+	KBUILD_CFLAGS += $(KBUILD_BASE_ISA)
 endif
 
 KBUILD_AFLAGS += -march=$(riscv-march-y)
