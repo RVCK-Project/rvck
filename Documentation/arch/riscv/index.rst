@@ -14,6 +14,7 @@ RISC-V architecture
     uabi
     vector
     zicfilp
+    zicfiss
 
     features
 
