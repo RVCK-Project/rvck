@@ -4,9 +4,10 @@
 #include "k3.dtsi"
 #include "k3-pinctrl.dtsi"
 #include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/mmc/spacemit-k1-sdhci.h>
 
 / {
-	model = "Spacemit K3 Pico-ITX";
+	model = "Spacemit K3 CoM260 Kit";
 
 	memory@102000000 {
 		device_type = "memory";
@@ -24,29 +25,18 @@
 		regulator-boot-on;
 		regulator-min-microvolt = <12000000>;
 		regulator-max-microvolt = <12000000>;
-		status = "disabled";
+		status = "okay";
 	};
 
-	aux_5v: aux_5v {
+	p5v: p5v {
 		compatible = "regulator-fixed";
-		regulator-name = "aux_5v";
+		regulator-name = "p5v";
 		regulator-always-on;
 		regulator-boot-on;
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
 		vin-supply = <&p12v>;
-		status = "disabled";
-	};
-
-	aux_3v3: aux_3v3 {
-		compatible = "regulator-fixed";
-		regulator-name = "aux_3v3";
-		regulator-always-on;
-		regulator-boot-on;
-		regulator-min-microvolt = <3300000>;
-		regulator-max-microvolt = <3300000>;
-		vin-supply = <&aux_5v>;
-		status = "disabled";
+		status = "okay";
 	};
 
 	p1v8: p1v8 {
@@ -56,8 +46,8 @@
 		regulator-boot-on;
 		regulator-min-microvolt = <1800000>;
 		regulator-max-microvolt = <1800000>;
-		vin-supply = <&p12v>;
-		status = "disabled";
+		vin-supply = <&p5v>;
+		status = "okay";
 	};
 
 	p3v3: p3v3 {
@@ -67,8 +57,8 @@
 		regulator-boot-on;
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
-		vin-supply = <&p12v>;
-		status = "disabled";
+		vin-supply = <&p5v>;
+		status = "okay";
 	};
 };
 
@@ -95,7 +85,7 @@
 		interrupts = <64 IRQ_TYPE_LEVEL_HIGH>;
 		status = "okay";
 
-		vcc_sys-supply = <&aux_5v>;
+		vcc_sys-supply = <&p5v>;
 
 		regulators {
 			compatible = "spacemit,p1,regulator";
@@ -262,25 +252,25 @@
 };
 
 &pinctrl {
-	gmac0-cfg {
-		/delete-node/ gmac0-2-pins;
-		/delete-node/ gmac0-4-pins;
-		/delete-node/ gmac0-5-pins;
+	gmac1-cfg {
+		/delete-node/ gmac1-2-pins;
+		/delete-node/ gmac1-4-pins;
+		/delete-node/ gmac1-5-pins;
 
-		gmac0-0-pins {
+		gmac1-0-pins {
 			power-source = <1800>;
 		};
 
-		gmac0-1-pins {
+		gmac1-1-pins {
 			power-source = <1800>;
 		};
 
-		gmac0-3-pins {
+		gmac1-3-pins {
 			power-source = <1800>;
 		};
 
-		gmac0-6-pins {
-			pinmux = <K3_PADCONF(15, 0)>;
+		gmac1-6-pins {
+			pinmux = <K3_PADCONF(37, 0)>;
 
 			bias-disable;
 			drive-strength = <25>;
@@ -295,9 +285,34 @@
 	status = "okay";
 };
 
-&eth0 {
+&sdcard {
+	pinctrl-names = "default", "fast";
+	pinctrl-0 = <&mmc1_cfg>;
+	pinctrl-1 = <&mmc1_fast_cfg>;
+	bus-width = <4>;
+	cd-gpios = <&gpio 0 4 GPIO_ACTIVE_HIGH>;
+	vmmc-supply = <&p3v3>;
+	vqmmc-supply = <&aldo1>;
+	no-mmc;
+	no-sdio;
+	spacemit,sdh-host-caps-disable = <(MMC_CAP_UHS_SDR12 | MMC_CAP_UHS_SDR25)>;
+	spacemit,sdh-quirks = <(SDHCI_QUIRK_BROKEN_CARD_DETECTION |
+				SDHCI_QUIRK_INVERTED_WRITE_PROTECT |
+				SDHCI_QUIRK_BROKEN_TIMEOUT_VAL)>;
+	spacemit,sdh-quirks2 = <(SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
+				 SDHCI_QUIRK2_BROKEN_PHY_MODULE |
+				 SDHCI_QUIRK2_SET_AIB_MMC)>;
+	spacemit,rx_dline_reg = <0x0>;
+	spacemit,tx_dline_reg = <0x0>;
+	spacemit,tx_delaycode = <0x1f>;
+	spacemit,rx_tuning_limit = <50>;
+	spacemit,sdh-freq = <204800000>;
+	status = "okay";
+};
+
+&eth1 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&gmac0_cfg>;
+	pinctrl-0 = <&gmac1_cfg>;
 
 	max-speed = <1000>;
 	tx-fifo-depth = <8192>;
@@ -305,16 +320,16 @@
 	snps,tso;
 	snps,force_sf_dma_mode;
 	phy-mode = "rgmii";
-	phy-handle = <&rgmii0>;
-	snps,reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
+	phy-handle = <&rgmii1>;
+	snps,reset-gpios = <&gpio 1 5 GPIO_ACTIVE_LOW>;
 	snps,reset-delays-us = <2 10000 10000>;
 
 	spacemit,wake-irq-enable;
 
 	spacemit,clk-tuning-enable;
 	spacemit,clk-tuning-by-delayline;
-	spacemit,tx-phase = <73>;
-	spacemit,rx-phase = <61>;
+	spacemit,tx-phase = <47>;
+	spacemit,rx-phase = <53>;
 
 	status = "okay";
 
@@ -323,7 +338,7 @@
 		#size-cells = <0>;
 		compatible = "snps,dwmac-mdio";
 
-		rgmii0: phy@0 {
+		rgmii1: phy@1 {
 			compatible = "ethernet-phy-id001c.c916";
 			reg = <0x1>;
 			device_type = "ethernet-phy";

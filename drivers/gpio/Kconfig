@@ -1827,6 +1827,15 @@ config GPIO_K1
 	  bank control at most 32 GPIO pins. The number of banks
 	  is passed by device tree or platform data.
 
+config GPIO_SPACEMIT_K3
+	bool "Spacemit k3 GPIO support"
+	depends on PINCTRL_SPACEMIT_K3
+	help
+	  Say yes here to support the k3 GPIO device.
+	  The k3 GPIO device may have several banks, and each
+	  bank control at most 32 GPIO pins. The number of banks
+	  is passed by device tree or platform data.
+
 endmenu
 
 endif
