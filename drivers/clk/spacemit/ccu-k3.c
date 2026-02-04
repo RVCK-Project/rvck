@@ -983,7 +983,7 @@ static const struct clk_parent_data rcpu_clk_parents[] = {
 	CCU_PARENT_HW(pll1_d6_409p6),
 };
 CCU_MUX_DIV_GATE_FC_DEFINE(rcpu_clk, rcpu_clk_parents, APMU_RCPU_CLK_RES_CTRL,
-			   4, 3, BIT(15), 7, 3, BIT(12), 0);
+			   4, 3, BIT(15), 7, 3, BIT(12), CLK_IS_CRITICAL);
 
 static const struct clk_parent_data dsi4ln2_dsi_esc_parents[] = {
 	CCU_PARENT_HW(pll1_d48_51p2_ap),
@@ -1145,7 +1145,7 @@ CCU_MUX_DIV_GATE_DEFINE(isim_vclk_out3, isim_vclk_parents, APMU_SNR_ISIM_VCLK_CT
 /* APMU clocks end */
 
 /* DCIU clocks start */
-CCU_GATE_DEFINE(hdma_clk, CCU_PARENT_HW(axi_clk), DCIU_DMASYS_CLK_EN, BIT(0), 0);
+CCU_GATE_DEFINE(hdma_clk, CCU_PARENT_HW(axi_clk), DCIU_DMASYS_CLK_EN, BIT(0), CLK_IS_CRITICAL);
 CCU_GATE_DEFINE(dma350_clk, CCU_PARENT_HW(axi_clk), DCIU_DMASYS_SDMA_CLK_EN, BIT(0), 0);
 CCU_GATE_DEFINE(c2_tcm_pipe_clk, CCU_PARENT_HW(axi_clk), DCIU_C2_TCM_PIPE_CLK, BIT(0), 0);
 CCU_GATE_DEFINE(c3_tcm_pipe_clk, CCU_PARENT_HW(axi_clk), DCIU_C3_TCM_PIPE_CLK, BIT(0), 0);
