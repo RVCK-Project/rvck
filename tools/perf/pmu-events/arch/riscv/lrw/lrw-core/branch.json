@@ -50,21 +50,6 @@
         "BriefDescription": "Fetch queue empty"
     },
     {
-        "EventName": "FETCH_MCACHE_INVALIDATE",
-        "EventCode": "0x00040009",
-        "BriefDescription": "Fetch mopcache invalidate"
-    },
-    {
-        "EventName": "FETCH_MCACHE_ICACHE_SWITCH",
-        "EventCode": "0x00080009",
-        "BriefDescription": "Fetch mopcache instruction cache switch"
-    },
-    {
-        "EventName": "FETCH_MCACHE_ICACHE_SWITCH_PENALTY",
-        "EventCode": "0x00100009",
-        "BriefDescription": "Fetch mopcache instruction cache switch penalty"
-    },
-    {
         "EventName": "BR_PRED_BTB_RGN_UPDATE_NREADY",
         "EventCode": "0x00200009",
         "BriefDescription": "Branch prediction branch target buffer region update not ready"
