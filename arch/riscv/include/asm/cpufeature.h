@@ -35,7 +35,6 @@ DECLARE_PER_CPU(long, misaligned_access_speed);
 /* Per-cpu ISA extensions. */
 extern struct riscv_isainfo hart_isa[NR_CPUS];
 
-void check_unaligned_access(int cpu);
 void __init riscv_user_isa_enable(void);
 
 #define _RISCV_ISA_EXT_DATA(_name, _id, _subset_exts, _subset_exts_size, _validate) {	\
@@ -100,5 +99,23 @@ static __always_inline bool riscv_cpu_has_extension_unlikely(int cpu, const unsi
 
 	return __riscv_isa_extension_available(hart_isa[cpu].isa, ext);
 }
+
+#ifdef CONFIG_RISCV_MISALIGNED
+bool unaligned_ctl_available(void);
+bool check_unaligned_access_emulated(int cpu);
+void unaligned_emulation_finish(void);
+#else
+static inline bool unaligned_ctl_available(void)
+{
+	return false;
+}
+
+static inline bool check_unaligned_access_emulated(int cpu)
+{
+	return false;
+}
+
+static inline void unaligned_emulation_finish(void) {}
+#endif
 
 #endif
