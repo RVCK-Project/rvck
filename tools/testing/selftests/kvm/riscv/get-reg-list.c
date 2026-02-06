@@ -14,6 +14,11 @@
 
 static bool isa_ext_cant_disable[KVM_RISCV_ISA_EXT_MAX];
 
+enum {
+	VCPU_FEATURE_ISA_EXT = 0,
+	VCPU_FEATURE_SBI_EXT,
+};
+
 bool filter_reg(__u64 reg)
 {
 	switch (reg & ~REG_MASK) {
@@ -25,6 +30,8 @@ bool filter_reg(__u64 reg)
 	 * the visibility of the ISA_EXT register itself.
 	 *
 	 * Based on above, we should filter-out all ISA_EXT registers.
+	 *
+	 * Note: The below list is alphabetically sorted.
 	 */
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_A:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_C:
@@ -33,21 +40,21 @@ bool filter_reg(__u64 reg)
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_H:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_I:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_M:
-	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SVPBMT:
+	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_V:
+	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SSAIA:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SSTC:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SVINVAL:
-	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZIHINTPAUSE:
+	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SVNAPOT:
+	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SVPBMT:
+	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBA:
+	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBB:
+	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBS:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZICBOM:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZICBOZ:
-	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBB:
-	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SSAIA:
-	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_V:
-	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SVNAPOT:
-	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBA:
-	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBS:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZICNTR:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZICSR:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZIFENCEI:
+	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZIHINTPAUSE:
 	case KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZIHPM:
 		return true;
 	/* AIA registers are always available when Ssaia can't be disabled */
@@ -112,10 +119,12 @@ void finalize_vcpu(struct kvm_vcpu *vcpu, struct vcpu_reg_list *c)
 	}
 }
 
-static const char *config_id_to_str(__u64 id)
+static const char *config_id_to_str(const char *prefix, __u64 id)
 {
 	/* reg_off is the offset into struct kvm_riscv_config */
 	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_CONFIG);
+
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_CONFIG);
 
 	switch (reg_off) {
 	case KVM_REG_RISCV_CONFIG_REG(isa):
@@ -134,17 +143,15 @@ static const char *config_id_to_str(__u64 id)
 		return "KVM_REG_RISCV_CONFIG_REG(satp_mode)";
 	}
 
-	/*
-	 * Config regs would grow regularly with new pseudo reg added, so
-	 * just show raw id to indicate a new pseudo config reg.
-	 */
-	return strdup_printf("KVM_REG_RISCV_CONFIG_REG(%lld) /* UNKNOWN */", reg_off);
+	return strdup_printf("%lld /* UNKNOWN */", reg_off);
 }
 
 static const char *core_id_to_str(const char *prefix, __u64 id)
 {
 	/* reg_off is the offset into struct kvm_riscv_core */
 	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_CORE);
+
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_CORE);
 
 	switch (reg_off) {
 	case KVM_REG_RISCV_CORE_REG(regs.pc):
@@ -176,8 +183,7 @@ static const char *core_id_to_str(const char *prefix, __u64 id)
 		return "KVM_REG_RISCV_CORE_REG(mode)";
 	}
 
-	TEST_FAIL("%s: Unknown core reg id: 0x%llx", prefix, id);
-	return NULL;
+	return strdup_printf("%lld /* UNKNOWN */", reg_off);
 }
 
 #define RISCV_CSR_GENERAL(csr) \
@@ -211,8 +217,7 @@ static const char *general_csr_id_to_str(__u64 reg_off)
 		return RISCV_CSR_GENERAL(scounteren);
 	}
 
-	TEST_FAIL("Unknown general csr reg: 0x%llx", reg_off);
-	return NULL;
+	return strdup_printf("KVM_REG_RISCV_CSR_GENERAL | %lld /* UNKNOWN */", reg_off);
 }
 
 static const char *aia_csr_id_to_str(__u64 reg_off)
@@ -235,14 +240,15 @@ static const char *aia_csr_id_to_str(__u64 reg_off)
 		return RISCV_CSR_AIA(iprio2h);
 	}
 
-	TEST_FAIL("Unknown aia csr reg: 0x%llx", reg_off);
-	return NULL;
+	return strdup_printf("KVM_REG_RISCV_CSR_AIA | %lld /* UNKNOWN */", reg_off);
 }
 
 static const char *csr_id_to_str(const char *prefix, __u64 id)
 {
 	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_CSR);
 	__u64 reg_subtype = reg_off & KVM_REG_RISCV_SUBTYPE_MASK;
+
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_CSR);
 
 	reg_off &= ~KVM_REG_RISCV_SUBTYPE_MASK;
 
@@ -253,14 +259,15 @@ static const char *csr_id_to_str(const char *prefix, __u64 id)
 		return aia_csr_id_to_str(reg_off);
 	}
 
-	TEST_FAIL("%s: Unknown csr subtype: 0x%llx", prefix, reg_subtype);
-	return NULL;
+	return strdup_printf("%lld | %lld /* UNKNOWN */", reg_subtype, reg_off);
 }
 
 static const char *timer_id_to_str(const char *prefix, __u64 id)
 {
 	/* reg_off is the offset into struct kvm_riscv_timer */
 	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_TIMER);
+
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_TIMER);
 
 	switch (reg_off) {
 	case KVM_REG_RISCV_TIMER_REG(frequency):
@@ -273,14 +280,15 @@ static const char *timer_id_to_str(const char *prefix, __u64 id)
 		return "KVM_REG_RISCV_TIMER_REG(state)";
 	}
 
-	TEST_FAIL("%s: Unknown timer reg id: 0x%llx", prefix, id);
-	return NULL;
+	return strdup_printf("%lld /* UNKNOWN */", reg_off);
 }
 
 static const char *fp_f_id_to_str(const char *prefix, __u64 id)
 {
 	/* reg_off is the offset into struct __riscv_f_ext_state */
 	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_FP_F);
+
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_FP_F);
 
 	switch (reg_off) {
 	case KVM_REG_RISCV_FP_F_REG(f[0]) ...
@@ -290,14 +298,15 @@ static const char *fp_f_id_to_str(const char *prefix, __u64 id)
 		return "KVM_REG_RISCV_FP_F_REG(fcsr)";
 	}
 
-	TEST_FAIL("%s: Unknown fp_f reg id: 0x%llx", prefix, id);
-	return NULL;
+	return strdup_printf("%lld /* UNKNOWN */", reg_off);
 }
 
 static const char *fp_d_id_to_str(const char *prefix, __u64 id)
 {
 	/* reg_off is the offset into struct __riscv_d_ext_state */
 	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_FP_D);
+
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_FP_D);
 
 	switch (reg_off) {
 	case KVM_REG_RISCV_FP_D_REG(f[0]) ...
@@ -307,103 +316,99 @@ static const char *fp_d_id_to_str(const char *prefix, __u64 id)
 		return "KVM_REG_RISCV_FP_D_REG(fcsr)";
 	}
 
-	TEST_FAIL("%s: Unknown fp_d reg id: 0x%llx", prefix, id);
-	return NULL;
+	return strdup_printf("%lld /* UNKNOWN */", reg_off);
 }
 
-static const char *isa_ext_id_to_str(__u64 id)
+#define KVM_ISA_EXT_ARR(ext)		\
+[KVM_RISCV_ISA_EXT_##ext] = "KVM_RISCV_ISA_EXT_" #ext
+
+static const char *isa_ext_id_to_str(const char *prefix, __u64 id)
 {
 	/* reg_off is the offset into unsigned long kvm_isa_ext_arr[] */
 	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_ISA_EXT);
 
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_ISA_EXT);
+
 	static const char * const kvm_isa_ext_reg_name[] = {
-		"KVM_RISCV_ISA_EXT_A",
-		"KVM_RISCV_ISA_EXT_C",
-		"KVM_RISCV_ISA_EXT_D",
-		"KVM_RISCV_ISA_EXT_F",
-		"KVM_RISCV_ISA_EXT_H",
-		"KVM_RISCV_ISA_EXT_I",
-		"KVM_RISCV_ISA_EXT_M",
-		"KVM_RISCV_ISA_EXT_SVPBMT",
-		"KVM_RISCV_ISA_EXT_SSTC",
-		"KVM_RISCV_ISA_EXT_SVINVAL",
-		"KVM_RISCV_ISA_EXT_ZIHINTPAUSE",
-		"KVM_RISCV_ISA_EXT_ZICBOM",
-		"KVM_RISCV_ISA_EXT_ZICBOZ",
-		"KVM_RISCV_ISA_EXT_ZBB",
-		"KVM_RISCV_ISA_EXT_SSAIA",
-		"KVM_RISCV_ISA_EXT_V",
-		"KVM_RISCV_ISA_EXT_SVNAPOT",
-		"KVM_RISCV_ISA_EXT_ZBA",
-		"KVM_RISCV_ISA_EXT_ZBS",
-		"KVM_RISCV_ISA_EXT_ZICNTR",
-		"KVM_RISCV_ISA_EXT_ZICSR",
-		"KVM_RISCV_ISA_EXT_ZIFENCEI",
-		"KVM_RISCV_ISA_EXT_ZIHPM",
+		KVM_ISA_EXT_ARR(A),
+		KVM_ISA_EXT_ARR(C),
+		KVM_ISA_EXT_ARR(D),
+		KVM_ISA_EXT_ARR(F),
+		KVM_ISA_EXT_ARR(H),
+		KVM_ISA_EXT_ARR(I),
+		KVM_ISA_EXT_ARR(M),
+		KVM_ISA_EXT_ARR(V),
+		KVM_ISA_EXT_ARR(SSAIA),
+		KVM_ISA_EXT_ARR(SSTC),
+		KVM_ISA_EXT_ARR(SVINVAL),
+		KVM_ISA_EXT_ARR(SVNAPOT),
+		KVM_ISA_EXT_ARR(SVPBMT),
+		KVM_ISA_EXT_ARR(ZBA),
+		KVM_ISA_EXT_ARR(ZBB),
+		KVM_ISA_EXT_ARR(ZBS),
+		KVM_ISA_EXT_ARR(ZICBOM),
+		KVM_ISA_EXT_ARR(ZICBOZ),
+		KVM_ISA_EXT_ARR(ZICNTR),
+		KVM_ISA_EXT_ARR(ZICSR),
+		KVM_ISA_EXT_ARR(ZIFENCEI),
+		KVM_ISA_EXT_ARR(ZIHINTPAUSE),
+		KVM_ISA_EXT_ARR(ZIHPM),
 	};
 
-	if (reg_off >= ARRAY_SIZE(kvm_isa_ext_reg_name)) {
-		/*
-		 * isa_ext regs would grow regularly with new isa extension added, so
-		 * just show "reg" to indicate a new extension.
-		 */
+	if (reg_off >= ARRAY_SIZE(kvm_isa_ext_reg_name))
 		return strdup_printf("%lld /* UNKNOWN */", reg_off);
-	}
 
 	return kvm_isa_ext_reg_name[reg_off];
 }
+
+#define KVM_SBI_EXT_ARR(ext)		\
+[ext] = "KVM_REG_RISCV_SBI_SINGLE | " #ext
 
 static const char *sbi_ext_single_id_to_str(__u64 reg_off)
 {
 	/* reg_off is KVM_RISCV_SBI_EXT_ID */
 	static const char * const kvm_sbi_ext_reg_name[] = {
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_V01",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_TIME",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_IPI",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_RFENCE",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_SRST",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_HSM",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_PMU",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_EXPERIMENTAL",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_VENDOR",
-		"KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_DBCN",
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_V01),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_TIME),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_IPI),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_RFENCE),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_SRST),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_HSM),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_PMU),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_STA),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_EXPERIMENTAL),
+		KVM_SBI_EXT_ARR(KVM_RISCV_SBI_EXT_VENDOR),
 	};
 
-	if (reg_off >= ARRAY_SIZE(kvm_sbi_ext_reg_name)) {
-		/*
-		 * sbi_ext regs would grow regularly with new sbi extension added, so
-		 * just show "reg" to indicate a new extension.
-		 */
+	if (reg_off >= ARRAY_SIZE(kvm_sbi_ext_reg_name))
 		return strdup_printf("KVM_REG_RISCV_SBI_SINGLE | %lld /* UNKNOWN */", reg_off);
-	}
 
 	return kvm_sbi_ext_reg_name[reg_off];
 }
 
 static const char *sbi_ext_multi_id_to_str(__u64 reg_subtype, __u64 reg_off)
 {
-	if (reg_off > KVM_REG_RISCV_SBI_MULTI_REG_LAST) {
-		/*
-		 * sbi_ext regs would grow regularly with new sbi extension added, so
-		 * just show "reg" to indicate a new extension.
-		 */
-		return strdup_printf("%lld /* UNKNOWN */", reg_off);
-	}
+	const char *unknown = "";
+
+	if (reg_off > KVM_REG_RISCV_SBI_MULTI_REG_LAST)
+		unknown = " /* UNKNOWN */";
 
 	switch (reg_subtype) {
 	case KVM_REG_RISCV_SBI_MULTI_EN:
-		return strdup_printf("KVM_REG_RISCV_SBI_MULTI_EN | %lld", reg_off);
+		return strdup_printf("KVM_REG_RISCV_SBI_MULTI_EN | %lld%s", reg_off, unknown);
 	case KVM_REG_RISCV_SBI_MULTI_DIS:
-		return strdup_printf("KVM_REG_RISCV_SBI_MULTI_DIS | %lld", reg_off);
+		return strdup_printf("KVM_REG_RISCV_SBI_MULTI_DIS | %lld%s", reg_off, unknown);
 	}
 
-	return NULL;
+	return strdup_printf("%lld | %lld /* UNKNOWN */", reg_subtype, reg_off);
 }
 
 static const char *sbi_ext_id_to_str(const char *prefix, __u64 id)
 {
 	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_SBI_EXT);
 	__u64 reg_subtype = reg_off & KVM_REG_RISCV_SUBTYPE_MASK;
+
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_SBI_EXT);
 
 	reg_off &= ~KVM_REG_RISCV_SUBTYPE_MASK;
 
@@ -415,8 +420,33 @@ static const char *sbi_ext_id_to_str(const char *prefix, __u64 id)
 		return sbi_ext_multi_id_to_str(reg_subtype, reg_off);
 	}
 
-	TEST_FAIL("%s: Unknown sbi ext subtype: 0x%llx", prefix, reg_subtype);
-	return NULL;
+	return strdup_printf("%lld | %lld /* UNKNOWN */", reg_subtype, reg_off);
+}
+
+static const char *sbi_sta_id_to_str(__u64 reg_off)
+{
+	switch (reg_off) {
+	case 0: return "KVM_REG_RISCV_SBI_STA | KVM_REG_RISCV_SBI_STA_REG(shmem_lo)";
+	case 1: return "KVM_REG_RISCV_SBI_STA | KVM_REG_RISCV_SBI_STA_REG(shmem_hi)";
+	}
+	return strdup_printf("KVM_REG_RISCV_SBI_STA | %lld /* UNKNOWN */", reg_off);
+}
+
+static const char *sbi_id_to_str(const char *prefix, __u64 id)
+{
+	__u64 reg_off = id & ~(REG_MASK | KVM_REG_RISCV_SBI_STATE);
+	__u64 reg_subtype = reg_off & KVM_REG_RISCV_SUBTYPE_MASK;
+
+	assert((id & KVM_REG_RISCV_TYPE_MASK) == KVM_REG_RISCV_SBI_STATE);
+
+	reg_off &= ~KVM_REG_RISCV_SUBTYPE_MASK;
+
+	switch (reg_subtype) {
+	case KVM_REG_RISCV_SBI_STA:
+		return sbi_sta_id_to_str(reg_off);
+	}
+
+	return strdup_printf("%lld | %lld /* UNKNOWN */", reg_subtype, reg_off);
 }
 
 void print_reg(const char *prefix, __u64 id)
@@ -437,14 +467,14 @@ void print_reg(const char *prefix, __u64 id)
 		reg_size = "KVM_REG_SIZE_U128";
 		break;
 	default:
-		TEST_FAIL("%s: Unexpected reg size: 0x%llx in reg id: 0x%llx",
-			  prefix, (id & KVM_REG_SIZE_MASK) >> KVM_REG_SIZE_SHIFT, id);
+		printf("\tKVM_REG_RISCV | (%lld << KVM_REG_SIZE_SHIFT) | 0x%llx /* UNKNOWN */,",
+		       (id & KVM_REG_SIZE_MASK) >> KVM_REG_SIZE_SHIFT, id & REG_MASK);
 	}
 
 	switch (id & KVM_REG_RISCV_TYPE_MASK) {
 	case KVM_REG_RISCV_CONFIG:
 		printf("\tKVM_REG_RISCV | %s | KVM_REG_RISCV_CONFIG | %s,\n",
-				reg_size, config_id_to_str(id));
+				reg_size, config_id_to_str(prefix, id));
 		break;
 	case KVM_REG_RISCV_CORE:
 		printf("\tKVM_REG_RISCV | %s | KVM_REG_RISCV_CORE | %s,\n",
@@ -468,15 +498,19 @@ void print_reg(const char *prefix, __u64 id)
 		break;
 	case KVM_REG_RISCV_ISA_EXT:
 		printf("\tKVM_REG_RISCV | %s | KVM_REG_RISCV_ISA_EXT | %s,\n",
-				reg_size, isa_ext_id_to_str(id));
+				reg_size, isa_ext_id_to_str(prefix, id));
 		break;
 	case KVM_REG_RISCV_SBI_EXT:
 		printf("\tKVM_REG_RISCV | %s | KVM_REG_RISCV_SBI_EXT | %s,\n",
 				reg_size, sbi_ext_id_to_str(prefix, id));
 		break;
+	case KVM_REG_RISCV_SBI_STATE:
+		printf("\tKVM_REG_RISCV | %s | KVM_REG_RISCV_SBI_STATE | %s,\n",
+				reg_size, sbi_id_to_str(prefix, id));
+		break;
 	default:
-		TEST_FAIL("%s: Unexpected reg type: 0x%llx in reg id: 0x%llx", prefix,
-				(id & KVM_REG_RISCV_TYPE_MASK) >> KVM_REG_RISCV_TYPE_SHIFT, id);
+		printf("\tKVM_REG_RISCV | %s | 0x%llx /* UNKNOWN */,",
+				reg_size, id & REG_MASK);
 	}
 }
 
@@ -537,18 +571,6 @@ static __u64 base_regs[] = {
 	KVM_REG_RISCV | KVM_REG_SIZE_U64 | KVM_REG_RISCV_TIMER | KVM_REG_RISCV_TIMER_REG(time),
 	KVM_REG_RISCV | KVM_REG_SIZE_U64 | KVM_REG_RISCV_TIMER | KVM_REG_RISCV_TIMER_REG(compare),
 	KVM_REG_RISCV | KVM_REG_SIZE_U64 | KVM_REG_RISCV_TIMER | KVM_REG_RISCV_TIMER_REG(state),
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_V01,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_TIME,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_IPI,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_RFENCE,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_SRST,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_HSM,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_PMU,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_EXPERIMENTAL,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_VENDOR,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_DBCN,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_MULTI_EN | 0,
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_MULTI_DIS | 0,
 };
 
 /*
@@ -559,8 +581,24 @@ static __u64 base_skips_set[] = {
 	KVM_REG_RISCV | KVM_REG_SIZE_U64 | KVM_REG_RISCV_TIMER | KVM_REG_RISCV_TIMER_REG(state),
 };
 
-static __u64 h_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_H,
+static __u64 sbi_base_regs[] = {
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_V01,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_TIME,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_IPI,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_RFENCE,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_SRST,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_HSM,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_EXPERIMENTAL,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_VENDOR,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_DBCN,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_MULTI_EN | 0,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_MULTI_DIS | 0,
+};
+
+static __u64 sbi_sta_regs[] = {
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE | KVM_RISCV_SBI_EXT_STA,
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_STATE | KVM_REG_RISCV_SBI_STA | KVM_REG_RISCV_SBI_STA_REG(shmem_lo),
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_SBI_STATE | KVM_REG_RISCV_SBI_STA | KVM_REG_RISCV_SBI_STA_REG(shmem_hi),
 };
 
 static __u64 zicbom_regs[] = {
@@ -573,50 +611,6 @@ static __u64 zicboz_regs[] = {
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZICBOZ,
 };
 
-static __u64 svpbmt_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SVPBMT,
-};
-
-static __u64 sstc_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SSTC,
-};
-
-static __u64 svinval_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SVINVAL,
-};
-
-static __u64 zihintpause_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZIHINTPAUSE,
-};
-
-static __u64 zba_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBA,
-};
-
-static __u64 zbb_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBB,
-};
-
-static __u64 zbs_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZBS,
-};
-
-static __u64 zicntr_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZICNTR,
-};
-
-static __u64 zicsr_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZICSR,
-};
-
-static __u64 zifencei_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZIFENCEI,
-};
-
-static __u64 zihpm_regs[] = {
-	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_ZIHPM,
-};
-
 static __u64 aia_regs[] = {
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_CSR | KVM_REG_RISCV_CSR_AIA | KVM_REG_RISCV_CSR_AIA_REG(siselect),
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_CSR | KVM_REG_RISCV_CSR_AIA | KVM_REG_RISCV_CSR_AIA_REG(iprio1),
@@ -626,6 +620,11 @@ static __u64 aia_regs[] = {
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_CSR | KVM_REG_RISCV_CSR_AIA | KVM_REG_RISCV_CSR_AIA_REG(iprio1h),
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_CSR | KVM_REG_RISCV_CSR_AIA | KVM_REG_RISCV_CSR_AIA_REG(iprio2h),
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_SSAIA,
+};
+
+static __u64 smstateen_regs[] = {
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_CSR | KVM_REG_RISCV_CSR_SMSTATEEN | KVM_REG_RISCV_CSR_SMSTATEEN_REG(sstateen0),
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_REG_RISCV_ISA_SINGLE | KVM_RISCV_ISA_EXT_SMSTATEEN,
 };
 
 static __u64 fp_f_regs[] = {
@@ -702,199 +701,138 @@ static __u64 fp_d_regs[] = {
 	KVM_REG_RISCV | KVM_REG_SIZE_ULONG | KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_D,
 };
 
-#define BASE_SUBLIST \
+#define SUBLIST_BASE \
 	{"base", .regs = base_regs, .regs_n = ARRAY_SIZE(base_regs), \
 	 .skips_set = base_skips_set, .skips_set_n = ARRAY_SIZE(base_skips_set),}
-#define H_REGS_SUBLIST \
-	{"h", .feature = KVM_RISCV_ISA_EXT_H, .regs = h_regs, .regs_n = ARRAY_SIZE(h_regs),}
-#define ZICBOM_REGS_SUBLIST \
+#define SUBLIST_SBI_BASE \
+	{"sbi-base", .feature_type = VCPU_FEATURE_SBI_EXT, .feature = KVM_RISCV_SBI_EXT_V01, \
+	 .regs = sbi_base_regs, .regs_n = ARRAY_SIZE(sbi_base_regs),}
+#define SUBLIST_SBI_STA \
+	{"sbi-sta", .feature_type = VCPU_FEATURE_SBI_EXT, .feature = KVM_RISCV_SBI_EXT_STA, \
+	 .regs = sbi_sta_regs, .regs_n = ARRAY_SIZE(sbi_sta_regs),}
+#define SUBLIST_ZICBOM \
 	{"zicbom", .feature = KVM_RISCV_ISA_EXT_ZICBOM, .regs = zicbom_regs, .regs_n = ARRAY_SIZE(zicbom_regs),}
-#define ZICBOZ_REGS_SUBLIST \
+#define SUBLIST_ZICBOZ \
 	{"zicboz", .feature = KVM_RISCV_ISA_EXT_ZICBOZ, .regs = zicboz_regs, .regs_n = ARRAY_SIZE(zicboz_regs),}
-#define SVPBMT_REGS_SUBLIST \
-	{"svpbmt", .feature = KVM_RISCV_ISA_EXT_SVPBMT, .regs = svpbmt_regs, .regs_n = ARRAY_SIZE(svpbmt_regs),}
-#define SSTC_REGS_SUBLIST \
-	{"sstc", .feature = KVM_RISCV_ISA_EXT_SSTC, .regs = sstc_regs, .regs_n = ARRAY_SIZE(sstc_regs),}
-#define SVINVAL_REGS_SUBLIST \
-	{"svinval", .feature = KVM_RISCV_ISA_EXT_SVINVAL, .regs = svinval_regs, .regs_n = ARRAY_SIZE(svinval_regs),}
-#define ZIHINTPAUSE_REGS_SUBLIST \
-	{"zihintpause", .feature = KVM_RISCV_ISA_EXT_ZIHINTPAUSE, .regs = zihintpause_regs, .regs_n = ARRAY_SIZE(zihintpause_regs),}
-#define ZBA_REGS_SUBLIST \
-	{"zba", .feature = KVM_RISCV_ISA_EXT_ZBA, .regs = zba_regs, .regs_n = ARRAY_SIZE(zba_regs),}
-#define ZBB_REGS_SUBLIST \
-	{"zbb", .feature = KVM_RISCV_ISA_EXT_ZBB, .regs = zbb_regs, .regs_n = ARRAY_SIZE(zbb_regs),}
-#define ZBS_REGS_SUBLIST \
-	{"zbs", .feature = KVM_RISCV_ISA_EXT_ZBS, .regs = zbs_regs, .regs_n = ARRAY_SIZE(zbs_regs),}
-#define ZICNTR_REGS_SUBLIST \
-	{"zicntr", .feature = KVM_RISCV_ISA_EXT_ZICNTR, .regs = zicntr_regs, .regs_n = ARRAY_SIZE(zicntr_regs),}
-#define ZICSR_REGS_SUBLIST \
-	{"zicsr", .feature = KVM_RISCV_ISA_EXT_ZICSR, .regs = zicsr_regs, .regs_n = ARRAY_SIZE(zicsr_regs),}
-#define ZIFENCEI_REGS_SUBLIST \
-	{"zifencei", .feature = KVM_RISCV_ISA_EXT_ZIFENCEI, .regs = zifencei_regs, .regs_n = ARRAY_SIZE(zifencei_regs),}
-#define ZIHPM_REGS_SUBLIST \
-	{"zihpm", .feature = KVM_RISCV_ISA_EXT_ZIHPM, .regs = zihpm_regs, .regs_n = ARRAY_SIZE(zihpm_regs),}
-#define AIA_REGS_SUBLIST \
+#define SUBLIST_AIA \
 	{"aia", .feature = KVM_RISCV_ISA_EXT_SSAIA, .regs = aia_regs, .regs_n = ARRAY_SIZE(aia_regs),}
-#define FP_F_REGS_SUBLIST \
+#define SUBLIST_SMSTATEEN \
+	{"smstateen", .feature = KVM_RISCV_ISA_EXT_SMSTATEEN, .regs = smstateen_regs, .regs_n = ARRAY_SIZE(smstateen_regs),}
+#define SUBLIST_FP_F \
 	{"fp_f", .feature = KVM_RISCV_ISA_EXT_F, .regs = fp_f_regs, \
 		.regs_n = ARRAY_SIZE(fp_f_regs),}
-#define FP_D_REGS_SUBLIST \
+#define SUBLIST_FP_D \
 	{"fp_d", .feature = KVM_RISCV_ISA_EXT_D, .regs = fp_d_regs, \
 		.regs_n = ARRAY_SIZE(fp_d_regs),}
 
-static struct vcpu_reg_list h_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	H_REGS_SUBLIST,
-	{0},
-	},
-};
+#define KVM_ISA_EXT_SIMPLE_CONFIG(ext, extu)			\
+static __u64 regs_##ext[] = {					\
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG |			\
+	KVM_REG_RISCV_ISA_EXT | KVM_RISCV_ISA_EXT_##extu,	\
+};								\
+static struct vcpu_reg_list config_##ext = {			\
+	.sublists = {						\
+		SUBLIST_BASE,					\
+		{						\
+			.name = #ext,				\
+			.feature = KVM_RISCV_ISA_EXT_##extu,	\
+			.regs = regs_##ext,			\
+			.regs_n = ARRAY_SIZE(regs_##ext),	\
+		},						\
+		{0},						\
+	},							\
+}								\
 
-static struct vcpu_reg_list zicbom_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZICBOM_REGS_SUBLIST,
-	{0},
-	},
-};
+#define KVM_SBI_EXT_SIMPLE_CONFIG(ext, extu)			\
+static __u64 regs_sbi_##ext[] = {				\
+	KVM_REG_RISCV | KVM_REG_SIZE_ULONG |			\
+	KVM_REG_RISCV_SBI_EXT | KVM_REG_RISCV_SBI_SINGLE |	\
+	KVM_RISCV_SBI_EXT_##extu,				\
+};								\
+static struct vcpu_reg_list config_sbi_##ext = {		\
+	.sublists = {						\
+		SUBLIST_BASE,					\
+		{						\
+			.name = "sbi-"#ext,			\
+			.feature_type = VCPU_FEATURE_SBI_EXT,	\
+			.feature = KVM_RISCV_SBI_EXT_##extu,	\
+			.regs = regs_sbi_##ext,			\
+			.regs_n = ARRAY_SIZE(regs_sbi_##ext),	\
+		},						\
+		{0},						\
+	},							\
+}								\
 
-static struct vcpu_reg_list zicboz_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZICBOZ_REGS_SUBLIST,
-	{0},
-	},
-};
+#define KVM_ISA_EXT_SUBLIST_CONFIG(ext, extu)			\
+static struct vcpu_reg_list config_##ext = {			\
+	.sublists = {						\
+		SUBLIST_BASE,					\
+		SUBLIST_##extu,					\
+		{0},						\
+	},							\
+}								\
 
-static struct vcpu_reg_list svpbmt_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	SVPBMT_REGS_SUBLIST,
-	{0},
-	},
-};
+#define KVM_SBI_EXT_SUBLIST_CONFIG(ext, extu)			\
+static struct vcpu_reg_list config_sbi_##ext = {		\
+	.sublists = {						\
+		SUBLIST_BASE,					\
+		SUBLIST_SBI_##extu,				\
+		{0},						\
+	},							\
+}								\
 
-static struct vcpu_reg_list sstc_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	SSTC_REGS_SUBLIST,
-	{0},
-	},
-};
+/* Note: The below list is alphabetically sorted. */
 
-static struct vcpu_reg_list svinval_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	SVINVAL_REGS_SUBLIST,
-	{0},
-	},
-};
+KVM_SBI_EXT_SUBLIST_CONFIG(base, BASE);
+KVM_SBI_EXT_SUBLIST_CONFIG(sta, STA);
+KVM_SBI_EXT_SIMPLE_CONFIG(pmu, PMU);
+KVM_SBI_EXT_SIMPLE_CONFIG(dbcn, DBCN);
 
-static struct vcpu_reg_list zihintpause_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZIHINTPAUSE_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list zba_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZBA_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list zbb_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZBB_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list zbs_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZBS_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list zicntr_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZICNTR_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list zicsr_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZICSR_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list zifencei_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZIFENCEI_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list zihpm_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	ZIHPM_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list aia_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	AIA_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list fp_f_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	FP_F_REGS_SUBLIST,
-	{0},
-	},
-};
-
-static struct vcpu_reg_list fp_d_config = {
-	.sublists = {
-	BASE_SUBLIST,
-	FP_D_REGS_SUBLIST,
-	{0},
-	},
-};
+KVM_ISA_EXT_SUBLIST_CONFIG(aia, AIA);
+KVM_ISA_EXT_SUBLIST_CONFIG(fp_f, FP_F);
+KVM_ISA_EXT_SUBLIST_CONFIG(fp_d, FP_D);
+KVM_ISA_EXT_SIMPLE_CONFIG(h, H);
+KVM_ISA_EXT_SUBLIST_CONFIG(smstateen, SMSTATEEN);
+KVM_ISA_EXT_SIMPLE_CONFIG(sstc, SSTC);
+KVM_ISA_EXT_SIMPLE_CONFIG(svinval, SVINVAL);
+KVM_ISA_EXT_SIMPLE_CONFIG(svnapot, SVNAPOT);
+KVM_ISA_EXT_SIMPLE_CONFIG(svpbmt, SVPBMT);
+KVM_ISA_EXT_SIMPLE_CONFIG(zba, ZBA);
+KVM_ISA_EXT_SIMPLE_CONFIG(zbb, ZBB);
+KVM_ISA_EXT_SIMPLE_CONFIG(zbs, ZBS);
+KVM_ISA_EXT_SUBLIST_CONFIG(zicbom, ZICBOM);
+KVM_ISA_EXT_SUBLIST_CONFIG(zicboz, ZICBOZ);
+KVM_ISA_EXT_SIMPLE_CONFIG(zicntr, ZICNTR);
+KVM_ISA_EXT_SIMPLE_CONFIG(zicond, ZICOND);
+KVM_ISA_EXT_SIMPLE_CONFIG(zicsr, ZICSR);
+KVM_ISA_EXT_SIMPLE_CONFIG(zifencei, ZIFENCEI);
+KVM_ISA_EXT_SIMPLE_CONFIG(zihintpause, ZIHINTPAUSE);
+KVM_ISA_EXT_SIMPLE_CONFIG(zihpm, ZIHPM);
 
 struct vcpu_reg_list *vcpu_configs[] = {
-	&h_config,
-	&zicbom_config,
-	&zicboz_config,
-	&svpbmt_config,
-	&sstc_config,
-	&svinval_config,
-	&zihintpause_config,
-	&zba_config,
-	&zbb_config,
-	&zbs_config,
-	&zicntr_config,
-	&zicsr_config,
-	&zifencei_config,
-	&zihpm_config,
-	&aia_config,
-	&fp_f_config,
-	&fp_d_config,
+	&config_sbi_base,
+	&config_sbi_sta,
+	&config_sbi_pmu,
+	&config_sbi_dbcn,
+	&config_aia,
+	&config_fp_f,
+	&config_fp_d,
+	&config_h,
+	&config_smstateen,
+	&config_sstc,
+	&config_svinval,
+	&config_svnapot,
+	&config_svpbmt,
+	&config_zba,
+	&config_zbb,
+	&config_zbs,
+	&config_zicbom,
+	&config_zicboz,
+	&config_zicntr,
+	&config_zicond,
+	&config_zicsr,
+	&config_zifencei,
+	&config_zihintpause,
+	&config_zihpm,
 };
 int vcpu_configs_n = ARRAY_SIZE(vcpu_configs);
