@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
- * Copyright 2022-2023 Rivos, Inc
+ * Copyright 2022-2024 Rivos, Inc
  */
 
 #ifndef _ASM_CPUFEATURE_H
@@ -11,6 +11,7 @@
 #include <linux/kconfig.h>
 #include <linux/percpu-defs.h>
 #include <linux/threads.h>
+#include <linux/workqueue.h>
 #include <asm/hwcap.h>
 #include <asm/cpufeature-macros.h>
 
@@ -29,8 +30,6 @@ struct riscv_isainfo {
 };
 
 DECLARE_PER_CPU(struct riscv_cpuinfo, riscv_cpuinfo);
-
-DECLARE_PER_CPU(long, misaligned_access_speed);
 
 /* Per-cpu ISA extensions. */
 extern struct riscv_isainfo hart_isa[NR_CPUS];
@@ -61,6 +60,42 @@ void __init riscv_user_isa_enable(void);
 	_RISCV_ISA_EXT_DATA(_name, _id, _sub_exts, ARRAY_SIZE(_sub_exts), NULL)
 #define __RISCV_ISA_EXT_SUPERSET_VALIDATE(_name, _id, _sub_exts, _validate) \
 	_RISCV_ISA_EXT_DATA(_name, _id, _sub_exts, ARRAY_SIZE(_sub_exts), _validate)
+
+bool __init check_unaligned_access_emulated_all_cpus(void);
+#if defined(CONFIG_RISCV_SCALAR_MISALIGNED)
+void check_unaligned_access_emulated(struct work_struct *work __always_unused);
+void unaligned_emulation_finish(void);
+bool unaligned_ctl_available(void);
+DECLARE_PER_CPU(long, misaligned_access_speed);
+#else
+static inline bool unaligned_ctl_available(void)
+{
+	return false;
+}
+#endif
+
+bool __init check_vector_unaligned_access_emulated_all_cpus(void);
+#if defined(CONFIG_RISCV_VECTOR_MISALIGNED)
+void check_vector_unaligned_access_emulated(struct work_struct *work __always_unused);
+DECLARE_PER_CPU(long, vector_misaligned_access);
+#endif
+
+#if defined(CONFIG_RISCV_PROBE_UNALIGNED_ACCESS)
+DECLARE_STATIC_KEY_FALSE(fast_unaligned_access_speed_key);
+
+static __always_inline bool has_fast_unaligned_accesses(void)
+{
+	return static_branch_likely(&fast_unaligned_access_speed_key);
+}
+#else
+static __always_inline bool has_fast_unaligned_accesses(void)
+{
+	if (IS_ENABLED(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS))
+		return true;
+	else
+		return false;
+}
+#endif
 
 unsigned long riscv_get_elf_hwcap(void);
 
@@ -100,22 +135,6 @@ static __always_inline bool riscv_cpu_has_extension_unlikely(int cpu, const unsi
 	return __riscv_isa_extension_available(hart_isa[cpu].isa, ext);
 }
 
-#ifdef CONFIG_RISCV_MISALIGNED
-bool unaligned_ctl_available(void);
-bool check_unaligned_access_emulated(int cpu);
-void unaligned_emulation_finish(void);
-#else
-static inline bool unaligned_ctl_available(void)
-{
-	return false;
-}
-
-static inline bool check_unaligned_access_emulated(int cpu)
-{
-	return false;
-}
-
-static inline void unaligned_emulation_finish(void) {}
-#endif
+DECLARE_STATIC_KEY_FALSE(fast_misaligned_access_speed_key);
 
 #endif
