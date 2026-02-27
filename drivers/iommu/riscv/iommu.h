@@ -57,7 +57,6 @@ struct riscv_iommu_domain {
 	int pscid;
 	int gscid;
 	struct riscv_iommu_msi_table msi_table;
-	bool amo_enabled;
 	bool s2;			/* true if this is a second-stage domain */
 	int numa_node;
 	unsigned int pgd_mode;
