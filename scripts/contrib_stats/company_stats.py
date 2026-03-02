@@ -518,9 +518,9 @@ pie title 各机构贡献占比
 
         for commit in display_commits:
             date_short = commit['date'][:10] if 'T' in commit['date'] else commit['date'][:10]
-            # 使用相对链接，点击后会在主分支查看具体提交 (FIXME)
             repo = os.environ.get('GITHUB_REPOSITORY', 'your/repo')
-            content += f"| [{commit['hash'][:8]}](https://github.com/{repo}/tree/{stats['main_commit']}) | {date_short} | {commit['author_name']} | {commit['subject'][:80]}... |\n"
+            # 链接指向具体的 commit
+            content += f"| [{commit['hash'][:8]}](https://github.com/{repo}/commit/{commit['hash']}) | {date_short} | {commit['author_name']} | {commit['subject'][:80]}... |\n"
 
         if company_stats['count'] > max_display:
             content += f"\n*注：只显示前{max_display}个提交，共 {company_stats['count']} 个提交*\n"
