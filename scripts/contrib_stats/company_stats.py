@@ -508,8 +508,8 @@ pie title 各机构贡献占比
         content += f"""
 ## 📋 提交列表
 
-| 提交哈希 | 日期 | 作者 | 标题 |
-|----------|------|------|------|
+| 提交哈希 | 日期 | 原始作者 | 标题 |
+|----------|------|----------|------|
 """
 
         # 显示所有提交（如果没有太多）
@@ -539,6 +539,141 @@ pie title 各机构贡献占比
 
         return content
 
+    def _generate_page_header(self, company, info, stats):
+        """生成页面头部（公共部分）"""
+        company_stats = stats['companies'][company]
+
+        content = f"""# {company} 贡献详情
+
+<div style="background-color: {info['color']}20; padding: 15px; border-radius: 8px; border-left: 5px solid {info['color']};">
+<p><strong>📊 统计信息</strong></p>
+<ul>
+<li><strong>贡献提交数</strong>: {company_stats['count']}</li>
+<li><strong>统计时间</strong>: {stats['generated_at']}</li>
+<li><strong>主分支</strong>: {stats['main_branch']}</li>
+<li><strong>起始标签</strong>: {stats['start_tag']}</li>
+</ul>
+</div>
+
+## 📧 识别规则
+
+- **邮箱后缀**: {', '.join(info['suffixes'])}
+"""
+        if info['specific_emails']:
+            content += f"- **特定签名**: {', '.join(info['specific_emails'])}\n"
+
+        return content
+
+    def _generate_commits_table(self, company, commits, repo):
+        """生成 Markdown 格式的提交表格"""
+        lines = ["| 提交哈希 | 日期 | 原始作者 | 标题 |", "|----------|------|----------|------|"]
+
+        for commit in commits:
+            date_short = commit['date'][:10] if 'T' in commit['date'] else commit['date'][:10]
+            subject = commit['subject'][:80] + "..." if len(commit['subject']) > 80 else commit['subject']
+            subject = subject.replace('|', '\\|').replace('<', '\\<').replace('>', '\\>')
+            author = commit['author_name'].replace('|', '\\|')
+            lines.append(f"| [{commit['hash'][:8]}](https://github.com/{repo}/commit/{commit['hash']}) | {date_short} | {author} | {subject} |")
+
+        return '\n'.join(lines)
+
+    def _generate_pagination_nav(self, company, current_page, total_pages, total_commits, page_size, is_all=False):
+        """生成分页导航"""
+        nav_lines = []
+        nav_lines.append("")
+        nav_lines.append("---")
+        nav_lines.append("")
+
+        if is_all:
+            nav_lines.append(f"**共 {total_commits} 条提交（显示全部）**")
+            nav_lines.append("")
+            nav_lines.append(f"[分页显示]({company}.md) | [纯文本视图]({company}_commits.txt)")
+        else:
+            start_idx = (current_page - 1) * page_size + 1
+            end_idx = min(current_page * page_size, total_commits)
+            nav_lines.append(f"**共 {total_commits} 条提交，显示 {start_idx}-{end_idx}**")
+            nav_lines.append("")
+
+            # 页码链接
+            page_links = []
+            for i in range(1, total_pages + 1):
+                if i == current_page:
+                    page_links.append(f"**[{i}]**")
+                elif i == 1:
+                    page_links.append(f"[{i}]({company}.md)")
+                else:
+                    page_links.append(f"[{i}]({company}_page{i}.md)")
+
+            nav_lines.append(" ".join(page_links))
+            nav_lines.append("")
+            nav_lines.append(f"[显示全部]({company}_all.md) | [纯文本视图]({company}_commits.txt)")
+
+        return '\n'.join(nav_lines)
+
+    def _generate_page_footer(self, stats):
+        """生成页面底部"""
+        return f"""
+## 🔙 返回
+
+[← 返回统计主页](../index.md)
+
+---
+
+*本页面最后更新于 {stats['generated_at']}*
+*数据来源: 主分支 {stats['main_branch']}@{stats['main_commit']}*
+"""
+
+    def generate_company_page(self, company, info, stats, page=1, is_all=False):
+        """生成单个机构的详情页（分页版本）"""
+
+        company_stats = stats['companies'][company]
+        commits = company_stats['commits']
+        total = len(commits)
+        page_size = 200
+        repo = os.environ.get('GITHUB_REPOSITORY', 'your/repo')
+
+        # 计算总页数
+        total_pages = (total + page_size - 1) // page_size if total > 0 else 1
+
+        # 确定要显示的提交
+        if is_all:
+            display_commits = commits
+        else:
+            start = (page - 1) * page_size
+            end = start + page_size
+            display_commits = commits[start:end]
+
+        # 组装页面内容
+        content = self._generate_page_header(company, info, stats)
+        content += "\n## 📋 提交列表\n\n"
+        content += self._generate_commits_table(company, display_commits, repo)
+        content += self._generate_pagination_nav(company, page, total_pages, total, page_size, is_all)
+        content += self._generate_page_footer(stats)
+
+        return content
+
+    def generate_company_text_view(self, company, stats):
+        """生成纯文本视图文件"""
+
+        company_stats = stats['companies'][company]
+        commits = company_stats['commits']
+
+        lines = [
+            f"# {company} 提交列表（纯文本视图）",
+            f"# 共 {len(commits)} 个提交",
+            f"# 生成时间: {stats['generated_at']}",
+            "#",
+            "# 格式: 提交哈希 | 日期 | 原始作者 | 标题",
+            "-" * 120,
+        ]
+
+        for commit in commits:
+            date_short = commit['date'][:10] if 'T' in commit['date'] else commit['date'][:10]
+            subject = commit['subject']
+            lines.append(f"{commit['hash'][:8]} | {date_short} | {commit['author_name']} | {subject}")
+
+        return "\n".join(lines)
+
     def save_statistics(self, stats):
         """保存所有统计数据"""
 
@@ -566,14 +701,42 @@ pie title 各机构贡献占比
 
         # 3. 生成并保存各机构页面
         for company, info in self.companies.items():
-            if stats['companies'][company]['count'] > 0:
-                company_page = self.generate_company_page(company, info, stats)
-                company_file = self.companies_dir / f"{company}.md"
+            count = stats['companies'][company]['count']
+            if count > 0:
+                page_size = 200
+                total_pages = (count + page_size - 1) // page_size
 
-                with open(company_file, 'w', encoding='utf-8') as f:
-                    f.write(company_page)
+                # 生成分页文件
+                for page in range(1, total_pages + 1):
+                    company_page = self.generate_company_page(company, info, stats, page=page)
+                    if page == 1:
+                        company_file = self.companies_dir / f"{company}.md"
+                    else:
+                        company_file = self.companies_dir / f"{company}_page{page}.md"
 
-                print(f"✓ 机构页面已生成: {company_file}")
+                    with open(company_file, 'w', encoding='utf-8') as f:
+                        f.write(company_page)
+
+                    print(f"✓ 机构页面已生成: {company_file}")
+
+                # 生成"显示全部"页面
+                if total_pages > 1:
+                    all_page = self.generate_company_page(company, info, stats, is_all=True)
+                    all_file = self.companies_dir / f"{company}_all.md"
+
+                    with open(all_file, 'w', encoding='utf-8') as f:
+                        f.write(all_page)
+
+                    print(f"✓ 全部提交页面已生成: {all_file}")
+
+                # 生成纯文本视图
+                text_view = self.generate_company_text_view(company, stats)
+                text_file = self.companies_dir / f"{company}_commits.txt"
+
+                with open(text_file, 'w', encoding='utf-8') as f:
+                    f.write(text_view)
+
+                print(f"✓ 纯文本视图已生成: {text_file}")
 
         # 4. 生成分支README
         branch_readme = self.generate_branch_readme(stats)
