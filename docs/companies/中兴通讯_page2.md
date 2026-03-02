@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 251</li>
-<li><strong>统计时间</strong>: 2026-03-02 13:34:25</li>
+<li><strong>贡献提交数</strong>: 252</li>
+<li><strong>统计时间</strong>: 2026-03-02 22:17:57</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [b98351e8](https://github.com/RVCK-Project/rvck/commit/b98351e885d1e4193cadb24bc7094003c8912769) | 2023-09-13 | Jason Gunthorpe | iommu: Add __iommu_group_domain_alloc() |
 | [874a6329](https://github.com/RVCK-Project/rvck/commit/874a6329ff6e0aed1dbab1335f47475fb25d424e) | 2023-09-13 | Jason Gunthorpe | iommu: Require a default_domain for all iommu drivers |
 | [1a9d2259](https://github.com/RVCK-Project/rvck/commit/1a9d22595988d8e516b9dde318d91067c48f6c61) | 2023-09-13 | Jason Gunthorpe | iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN |
 | [81fc6ba9](https://github.com/RVCK-Project/rvck/commit/81fc6ba90df2b6e08a3763edecc667fa6b1c7594) | 2023-09-13 | Jason Gunthorpe | iommu/mtk_iommu: Add an IOMMU_IDENTITIY_DOMAIN |
@@ -71,7 +72,7 @@
 | [d1658d9a](https://github.com/RVCK-Project/rvck/commit/d1658d9a67bcd8173ab7aecea4981166db078122) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 251 条提交，显示 201-251**
+**共 252 条提交，显示 201-252**
 
 [1](中兴通讯.md) **[2]**
 
@@ -82,5 +83,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-02 13:34:25*
-*数据来源: 主分支 rvck-6.6@5b98c7e7*
+*本页面最后更新于 2026-03-02 22:17:57*
+*数据来源: 主分支 rvck-6.6@d415e668*

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 251</li>
-<li><strong>统计时间</strong>: 2026-03-02 13:34:25</li>
+<li><strong>贡献提交数</strong>: 252</li>
+<li><strong>统计时间</strong>: 2026-03-02 22:17:57</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [98ae7cdd](https://github.com/RVCK-Project/rvck/commit/98ae7cddc7906c91a830c2097951861832129c42) | 2026-02-05 | shenlin | perf vendor events riscv: fix lrw core PMU event mapping |
 | [5b98c7e7](https://github.com/RVCK-Project/rvck/commit/5b98c7e7086477af8e1d2bbf0b12c01480f9d699) | 2024-06-05 | Björn Töpel | riscv: Enable DAX VMEMMAP optimization |
 | [c42a387c](https://github.com/RVCK-Project/rvck/commit/c42a387c55a53389fea99401794358ef48c4e09f) | 2024-06-05 | Björn Töpel | riscv: mm: Add support for ZONE_DEVICE |
 | [d2ce625d](https://github.com/RVCK-Project/rvck/commit/d2ce625d1a4b9b10e79ca93c9885c16080cd3393) | 2024-06-05 | Björn Töpel | virtio-mem: Enable virtio-mem for RISC-V |
@@ -271,7 +272,7 @@
 | [d1658d9a](https://github.com/RVCK-Project/rvck/commit/d1658d9a67bcd8173ab7aecea4981166db078122) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 251 条提交（显示全部）**
+**共 252 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -280,5 +281,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-02 13:34:25*
-*数据来源: 主分支 rvck-6.6@5b98c7e7*
+*本页面最后更新于 2026-03-02 22:17:57*
+*数据来源: 主分支 rvck-6.6@d415e668*
