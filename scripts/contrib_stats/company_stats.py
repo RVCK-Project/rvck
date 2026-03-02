@@ -417,6 +417,15 @@ class ContribStats:
             reverse=True
         )
 
+        # 生成概览段落中的机构列表
+        company_details = []
+        for company, count in sorted_companies:
+            if count > 0 and stats['total_commits'] > 0:
+                percentage = (count / stats['total_commits'] * 100)
+                company_details.append(f"{company} {count} 个提交 ({percentage:.1f}%)")
+
+        overview_text = "，".join(company_details) if company_details else "暂无机构贡献数据"
+
         # 生成Markdown内容
         content = f"""# 📊 内核贡献统计报告
 
@@ -434,6 +443,10 @@ class ContribStats:
 | 总提交数 | {stats['total_commits']} |
 | 有机构贡献的提交 | {stats['commits_with_company']} |
 | 无机构贡献的提交 | {len(stats['no_company_commits'])} |
+
+### 📌 累计贡献概览
+
+目前 RVCK 基于统计起始点 `{stats['start_tag']}`，已累计合入 {stats['total_commits']} 个补丁（截至 {stats['generated_at'][:10]}），其中，{overview_text}。
 
 ### 📊 代码修改统计
 
