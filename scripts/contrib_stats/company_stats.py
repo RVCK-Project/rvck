@@ -293,6 +293,28 @@ class ContribStats:
 
         return None
 
+    def get_commit_stats(self, clone_dir, commit_hash):
+        """获取提交的代码修改统计（insert/delete行数）"""
+        cmd = f"git -C {clone_dir} show --stat --format='' {commit_hash} | tail -1"
+        stdout, stderr, returncode = self.run_git(cmd, check_error=False)
+
+        if returncode != 0 or not stdout:
+            return {'insertions': 0, 'deletions': 0}
+
+        line = stdout
+        insertions = 0
+        deletions = 0
+
+        insert_match = re.search(r'(\d+) insertion', line)
+        if insert_match:
+            insertions = int(insert_match.group(1))
+
+        delete_match = re.search(r'(\d+) deletion', line)
+        if delete_match:
+            deletions = int(delete_match.group(1))
+
+        return {'insertions': insertions, 'deletions': deletions}
+
     def analyze_commits(self):
         """分析提交数据"""
 
@@ -318,7 +340,9 @@ class ContribStats:
                 stats = {
                     'total_commits': len(commits),
                     'commits_with_company': 0,
-                    'companies': {company: {'count': 0, 'commits': []} for company in self.companies},
+                    'total_insertions': 0,
+                    'total_deletions': 0,
+                    'companies': {company: {'count': 0, 'insertions': 0, 'deletions': 0, 'commits': []} for company in self.companies},
                     'no_company_commits': [],
                     'generated_at': self.timestamp,
                     'main_branch': self.main_branch,
@@ -331,6 +355,15 @@ class ContribStats:
                     if (i + 1) % 50 == 0:
                         print(f"已分析 {i + 1}/{len(commits)} 个提交")
 
+                    # 获取代码修改统计
+                    commit_stats = self.get_commit_stats(tmp_dir, commit['hash'])
+                    commit['insertions'] = commit_stats['insertions']
+                    commit['deletions'] = commit_stats['deletions']
+
+                    # 累加到总体统计
+                    stats['total_insertions'] += commit_stats['insertions']
+                    stats['total_deletions'] += commit_stats['deletions']
+
                     # 获取签名信息
                     signatures = self.get_commit_signatures(tmp_dir, commit['hash'])
                     commit['signatures'] = signatures
@@ -341,6 +374,8 @@ class ContribStats:
                     if author_company:
                         # Author属于某个机构，只统计该机构
                         stats['companies'][author_company]['count'] += 1
+                        stats['companies'][author_company]['insertions'] += commit_stats['insertions']
+                        stats['companies'][author_company]['deletions'] += commit_stats['deletions']
                         stats['companies'][author_company]['commits'].append(commit)
                         stats['commits_with_company'] += 1
                     else:
@@ -360,6 +395,8 @@ class ContribStats:
                             stats['commits_with_company'] += 1
                             for company in signature_companies:
                                 stats['companies'][company]['count'] += 1
+                                stats['companies'][company]['insertions'] += commit_stats['insertions']
+                                stats['companies'][company]['deletions'] += commit_stats['deletions']
                                 stats['companies'][company]['commits'].append(commit)
                         else:
                             # 没有机构相关签名
@@ -398,21 +435,29 @@ class ContribStats:
 | 有机构贡献的提交 | {stats['commits_with_company']} |
 | 无机构贡献的提交 | {len(stats['no_company_commits'])} |
 
+### 📊 代码修改统计
+
+RVCK 累计合入的补丁涉及代码修改：insert 🟢 +{stats.get('total_insertions', 0)} delete 🔴 -{stats.get('total_deletions', 0)}
+
 ## 各机构贡献统计
 
-| 机构 | 提交数 | 占比 | 图表 |
-|------|--------|------|------|
+| 机构 | 提交数 | 占比 | 可视化占比 | 代码修改行数 |
+|------|--------|------|------------|--------------|
 """
 
         for company, count in sorted_companies:
+            company_stat = stats['companies'][company]
+            insertions = company_stat.get('insertions', 0)
+            deletions = company_stat.get('deletions', 0)
+            total_lines = insertions + deletions
             if stats['total_commits'] > 0:
                 percentage = (count / stats['total_commits'] * 100)
                 # 生成简单的进度条
                 bar_length = int(percentage / 2)  # 50个字符对应100%
                 bar = "█" * bar_length + "░" * (50 - bar_length)
-                content += f"| [{company}](companies/{company}.md) | {count} | {percentage:.1f}% | `{bar}` |\n"
+                content += f"| [{company}](companies/{company}.md) | {count} | {percentage:.1f}% | `{bar}` | +{insertions}/-{deletions} ({total_lines}) |\n"
             else:
-                content += f"| [{company}](companies/{company}.md) | {count} | 0.0% | `░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` |\n"
+                content += f"| [{company}](companies/{company}.md) | {count} | 0.0% | `░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | +{insertions}/-{deletions} ({total_lines}) |\n"
 
         content += f"""
 ## 📈 可视化图表
