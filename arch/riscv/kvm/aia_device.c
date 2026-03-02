@@ -467,7 +467,7 @@ static int aia_get_attr(struct kvm_device *dev, struct kvm_device_attr *attr)
 
 static int aia_has_attr(struct kvm_device *dev, struct kvm_device_attr *attr)
 {
-	int nr_vcpus;
+	int nr_vcpus, r = -ENXIO;
 
 	switch (attr->group) {
 	case KVM_DEV_RISCV_AIA_GRP_CONFIG:
@@ -496,7 +496,10 @@ static int aia_has_attr(struct kvm_device *dev, struct kvm_device_attr *attr)
 		}
 		break;
 	case KVM_DEV_RISCV_AIA_GRP_APLIC:
-		return kvm_riscv_aia_aplic_has_attr(dev->kvm, attr->attr);
+		mutex_lock(&dev->kvm->lock);
+		r = kvm_riscv_aia_aplic_has_attr(dev->kvm, attr->attr);
+		mutex_unlock(&dev->kvm->lock);
+		break;
 	case KVM_DEV_RISCV_AIA_GRP_IMSIC:
 		mutex_lock(&dev->kvm->lock);
 		r = kvm_riscv_aia_imsic_has_attr(dev->kvm, attr->attr);
@@ -504,7 +507,7 @@ static int aia_has_attr(struct kvm_device *dev, struct kvm_device_attr *attr)
 		break;
 	}
 
-	return -ENXIO;
+	return r;
 }
 
 struct kvm_device_ops kvm_riscv_aia_device_ops = {
