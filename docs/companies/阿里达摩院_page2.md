@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 286</li>
-<li><strong>统计时间</strong>: 2026-03-02 22:17:57</li>
+<li><strong>贡献提交数</strong>: 289</li>
+<li><strong>统计时间</strong>: 2026-03-04 23:57:33</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [a4f15445](https://github.com/RVCK-Project/rvck/commit/a4f154456a8f6bddf803b214c1df81c206343f62) | 2024-09-01 | Xiangyi Zeng | riscv:dts:som: add th1520-lpi4a-product and th1520-lpi4a-product-sec dts file |
+| [9a69be0d](https://github.com/RVCK-Project/rvck/commit/9a69be0da090de454a9ebeb08f5f69c44cd5b32f) | 2024-09-01 | Xiangyi Zeng | dts:th1520-a: add th1520-a-val.dts and th1520-a-val-sec.dts |
+| [9dd78d07](https://github.com/RVCK-Project/rvck/commit/9dd78d074f268cf99aba2aa75bb937c82ca7c489) | 2024-06-21 | Huaming | defconfig:th1520: enable cma config |
 | [1203aef9](https://github.com/RVCK-Project/rvck/commit/1203aef9178daf6a52d61435d5cd885961380f46) | 2024-09-01 | Huaming | dtb:lipi:enable VI module config |
 | [ce113251](https://github.com/RVCK-Project/rvck/commit/ce113251890239592851a63a383286c2a2b43065) | 2024-09-01 | xianbing Zhu | riscv: config: add MAX_ORDER config for riscv and th1520 |
 | [306e51d4](https://github.com/RVCK-Project/rvck/commit/306e51d452d1798b3b673e3331d7b9d95a63ed3d) | 2024-09-01 | xianbing Zhu | dts: th1520: add vdec venc and video mem device node |
@@ -106,7 +109,7 @@
 | [52752d42](https://github.com/RVCK-Project/rvck/commit/52752d42e61247407191c3a26a5f79ffccf2d96f) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 286 条提交，显示 201-286**
+**共 289 条提交，显示 201-289**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -117,5 +120,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-02 22:17:57*
-*数据来源: 主分支 rvck-6.6@d415e668*
+*本页面最后更新于 2026-03-04 23:57:33*
+*数据来源: 主分支 rvck-6.6@baf2c808*

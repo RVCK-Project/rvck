@@ -1,10 +1,14 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 252 个提交
-# 生成时间: 2026-03-02 22:17:57
+# 共 256 个提交
+# 生成时间: 2026-03-04 23:57:33
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
 98ae7cdd | 2026-02-05 | shenlin | perf vendor events riscv: fix lrw core PMU event mapping
+9f3c4ca3 | 2024-03-01 | Samuel Holland | riscv: mm: Fix prototype to avoid discarding const
+174a18ba | 2024-01-30 | Alexandre Ghiti | riscv: Fix arch_tlbbatch_flush() by clearing the batch cpumask
+2d1a227b | 2024-01-08 | Alexandre Ghiti | riscv: Add support for BATCHED_UNMAP_TLB_FLUSH
+e3900f2f | 2023-10-30 | Alexandre Ghiti | riscv: Improve flush_tlb_range() for hugetlb pages
 5b98c7e7 | 2024-06-05 | Björn Töpel | riscv: Enable DAX VMEMMAP optimization
 c42a387c | 2024-06-05 | Björn Töpel | riscv: mm: Add support for ZONE_DEVICE
 d2ce625d | 2024-06-05 | Björn Töpel | virtio-mem: Enable virtio-mem for RISC-V

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 252</li>
-<li><strong>统计时间</strong>: 2026-03-02 22:17:57</li>
+<li><strong>贡献提交数</strong>: 256</li>
+<li><strong>统计时间</strong>: 2026-03-04 23:57:33</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -19,6 +19,10 @@
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
 | [98ae7cdd](https://github.com/RVCK-Project/rvck/commit/98ae7cddc7906c91a830c2097951861832129c42) | 2026-02-05 | shenlin | perf vendor events riscv: fix lrw core PMU event mapping |
+| [9f3c4ca3](https://github.com/RVCK-Project/rvck/commit/9f3c4ca3839188f2cbe84828b9eda8b735cbc7e3) | 2024-03-01 | Samuel Holland | riscv: mm: Fix prototype to avoid discarding const |
+| [174a18ba](https://github.com/RVCK-Project/rvck/commit/174a18baf88f065fa64543bf3aefd05ec41b69ee) | 2024-01-30 | Alexandre Ghiti | riscv: Fix arch_tlbbatch_flush() by clearing the batch cpumask |
+| [2d1a227b](https://github.com/RVCK-Project/rvck/commit/2d1a227bbf7a9b4d224d29f2cd5fec960ace4aec) | 2024-01-08 | Alexandre Ghiti | riscv: Add support for BATCHED_UNMAP_TLB_FLUSH |
+| [e3900f2f](https://github.com/RVCK-Project/rvck/commit/e3900f2ffbd2d4a328b77d5c6b9d535d42da3039) | 2023-10-30 | Alexandre Ghiti | riscv: Improve flush_tlb_range() for hugetlb pages |
 | [5b98c7e7](https://github.com/RVCK-Project/rvck/commit/5b98c7e7086477af8e1d2bbf0b12c01480f9d699) | 2024-06-05 | Björn Töpel | riscv: Enable DAX VMEMMAP optimization |
 | [c42a387c](https://github.com/RVCK-Project/rvck/commit/c42a387c55a53389fea99401794358ef48c4e09f) | 2024-06-05 | Björn Töpel | riscv: mm: Add support for ZONE_DEVICE |
 | [d2ce625d](https://github.com/RVCK-Project/rvck/commit/d2ce625d1a4b9b10e79ca93c9885c16080cd3393) | 2024-06-05 | Björn Töpel | virtio-mem: Enable virtio-mem for RISC-V |
@@ -272,7 +276,7 @@
 | [d1658d9a](https://github.com/RVCK-Project/rvck/commit/d1658d9a67bcd8173ab7aecea4981166db078122) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 252 条提交（显示全部）**
+**共 256 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -281,5 +285,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-02 22:17:57*
-*数据来源: 主分支 rvck-6.6@d415e668*
+*本页面最后更新于 2026-03-04 23:57:33*
+*数据来源: 主分支 rvck-6.6@baf2c808*

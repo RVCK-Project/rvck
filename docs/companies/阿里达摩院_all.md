@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 286</li>
-<li><strong>统计时间</strong>: 2026-03-02 22:17:57</li>
+<li><strong>贡献提交数</strong>: 289</li>
+<li><strong>统计时间</strong>: 2026-03-04 23:57:33</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [380954bb](https://github.com/RVCK-Project/rvck/commit/380954bb076dec25762343c067e41edf306ac597) | 2023-09-21 | Yu Chien Peter Lin | riscv: Introduce NAPOT field to PTDUMP |
+| [816ba755](https://github.com/RVCK-Project/rvck/commit/816ba755e21d32903da0abf362db599c8e267736) | 2023-09-21 | Yu Chien Peter Lin | riscv: Introduce PBMT field to PTDUMP |
+| [d231950d](https://github.com/RVCK-Project/rvck/commit/d231950d7c678c04ae7dcfa8b4d95709a70abb6d) | 2023-09-21 | Yu Chien Peter Lin | riscv: Improve PTDUMP to show RSW with non-zero value |
 | [10035d5e](https://github.com/RVCK-Project/rvck/commit/10035d5eee92affed6243f444b78ff776633a595) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add commandline option for SBI PMU test |
 | [702429e1](https://github.com/RVCK-Project/rvck/commit/702429e1f33bc08732f16e9e4f8cfdd7331830df) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add a test for counter overflow |
 | [de0727e3](https://github.com/RVCK-Project/rvck/commit/de0727e39c35d4bd10791aa70ec2b2b65ea274f4) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add a test for PMU snapshot functionality |
@@ -306,7 +309,7 @@
 | [52752d42](https://github.com/RVCK-Project/rvck/commit/52752d42e61247407191c3a26a5f79ffccf2d96f) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 286 条提交（显示全部）**
+**共 289 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -315,5 +318,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-02 22:17:57*
-*数据来源: 主分支 rvck-6.6@d415e668*
+*本页面最后更新于 2026-03-04 23:57:33*
+*数据来源: 主分支 rvck-6.6@baf2c808*
