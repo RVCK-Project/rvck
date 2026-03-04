@@ -1039,10 +1039,6 @@
 		status = "okay";
 };
 
-&aon {
-    log-memory-region = <&aon_log_mem>;
-	status = "okay";
-};
 
 &resmem {
 	#address-cells = <2>;
@@ -1089,9 +1085,6 @@
 	//Note: with "no-map" reserv mem not saved in hibernation
 	rpmsgmem: memory@1E000000 {
 		reg = <0x0 0x1E000000 0x0 0x10000>;
-	};
-	aon_log_mem: memory@33600000 {
-        reg = <0x0 0x33600000 0x0 0x200000>;
 	};
 
 };
