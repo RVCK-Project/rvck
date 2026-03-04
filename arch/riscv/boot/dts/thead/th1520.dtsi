@@ -1850,11 +1850,6 @@
 			status = "okay";
 		};
 
-		regdump: th1520-regdump {
-			compatible = "xuantie,th1520-regdump";
-			status = "disabled";
-		};
-
 		vdec_opp_table: opp_table_vdec {
 			compatible = "operating-points-v2";
 
