@@ -27,5 +27,4 @@ config TH1520_IOPMP
 	help
 	  This driver supports TH1520 IOPMP built-in for security system
 
-source "drivers/soc/xuantie/nna/Kconfig"
 endmenu
