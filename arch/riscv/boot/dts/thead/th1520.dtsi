@@ -287,7 +287,7 @@
 		snps,blen = <0 0 64 32 0 0 0>;
 	};
 
-	aon: aon_subsys {
+	aon {
 		compatible = "thead,th1520-aon";
 		mbox-names = "aon";
 		mboxes = <&mbox_910t 1 0>;
