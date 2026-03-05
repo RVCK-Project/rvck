@@ -138,12 +138,12 @@
 			cache-sets = <1024>;
 			cache-unified;
 		};
-	};
 
-	resmem: reserved-memory {
-		#address-cells = <2>;
-		#size-cells = <2>;
-		ranges;
+		resmem: reserved-memory {
+			#address-cells = <2>;
+			#size-cells = <2>;
+			ranges;
+		};
 	};
 
 	pmu {
@@ -1078,12 +1078,6 @@
 			#size-cells = <0>;
 		};
 
-		audio_mbox: audio_mbox@0xffefc48000 {
-			compatible = "thead,th1520-audio-mbox-reg", "syscon";
-			reg = <0xff 0xefc48000 0x0 0x1000>;
-			status = "okay";
-		};
-
 		gpio@ffe7f34000 {
 			compatible = "snps,dw-apb-gpio";
 			reg = <0xff 0xe7f34000 0x0 0x1000>;
@@ -1635,11 +1629,6 @@
 					remote-endpoint = <&enc1_in>;
 				};
 			};
-		};
-
-		aon_suspend_ctrl: aon_suspend_ctrl {
-		        compatible = "thead,th1520-aon-suspend-ctrl";
-		        status = "okay";
 		};
 
 		dspsys_reg: dspsys-reg@ffef040000 {
