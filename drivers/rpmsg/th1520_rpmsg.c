@@ -48,7 +48,6 @@
 #include <linux/th1520_proc_debug.h>
 #ifdef CONFIG_PM_SLEEP
 #include <linux/suspend.h>
-#include <linux/firmware/thead/ipc.h>
 //#include <linux/firmware/thead/light_event.h>
 #endif
 #define MBOX_MAX_MSG_LEN	28
