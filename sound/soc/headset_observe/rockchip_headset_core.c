@@ -41,6 +41,7 @@ static int rockchip_headset_probe(struct platform_device *pdev)
 	struct device_node *node = pdev->dev.of_node;
 	struct rk_headset_pdata *pdata;
 	int ret;
+	enum of_gpio_flags flags;
 
 	pdata = devm_kzalloc(&pdev->dev, sizeof(*pdata), GFP_KERNEL);
 	if (!pdata) {
@@ -50,7 +51,7 @@ static int rockchip_headset_probe(struct platform_device *pdev)
 	pdata_info = pdata;
 
 	/* headset */
-	ret = of_get_named_gpio(node, "headset_gpio", 0);
+	ret = of_get_named_gpio_flags(node, "headset_gpio", 0, &flags);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "Can not read property headset_gpio\n");
 		goto err;
@@ -68,9 +69,12 @@ static int rockchip_headset_probe(struct platform_device *pdev)
 				"headset_gpio set direction fail\n");
 			goto err;
 		}
+		pdata->headset_insert_type = (flags & OF_GPIO_ACTIVE_LOW) ?
+						     HEADSET_IN_LOW :
+						     HEADSET_IN_HIGH;
 	}
 	/* 3.5mm line-in */
-	ret = of_get_named_gpio(node, "linein_gpio", 0);
+	ret = of_get_named_gpio_flags(node, "linein_gpio", 0, &flags);
 	if (ret < 0) {
 		dev_warn(&pdev->dev, "no property linein_gpio\n");
 	} else {
@@ -87,9 +91,12 @@ static int rockchip_headset_probe(struct platform_device *pdev)
 				"linein_gpio set direction fail\n");
 			goto err;
 		}
+		pdata->linein_insert_type = (flags & OF_GPIO_ACTIVE_LOW) ?
+						     LINEIN_LOW :
+						     LINEIN_HIGH;
 	}
 	/* ip-board line-in */
-	ret = of_get_named_gpio(node, "iplin_gpio", 0);
+	ret = of_get_named_gpio_flags(node, "iplin_gpio", 0, &flags);
 	if (ret < 0) {
 		dev_warn(&pdev->dev, "no property iplin_gpio\n");
 	} else {
@@ -106,9 +113,12 @@ static int rockchip_headset_probe(struct platform_device *pdev)
 				"iplin_gpio set direction fail\n");
 			goto err;
 		}
+		pdata->iplin_insert_type = (flags & OF_GPIO_ACTIVE_LOW) ?
+						     LINEIN_LOW :
+						     LINEIN_HIGH;
 	}
 	/* hook */
-	ret = of_get_named_gpio(node, "hook_gpio", 0);
+	ret = of_get_named_gpio_flags(node, "hook_gpio", 0, &pdata->hook_gpio);
 	if (ret < 0) {
 		dev_warn(&pdev->dev, "Can not read property hook_gpio\n");
 		pdata->hook_gpio = 0;
@@ -143,7 +153,7 @@ static int rockchip_headset_probe(struct platform_device *pdev)
 
 #ifdef CONFIG_MODEM_MIC_SWITCH
 	/* mic */
-	ret = of_get_named_gpio(node, "mic_switch_gpio", 0);
+	ret = of_get_named_gpio_flags(node, "mic_switch_gpio", 0, &flags);
 	if (ret < 0) {
 		DBG("%s() Can not read property mic_switch_gpio\n",
 		    __func__);
