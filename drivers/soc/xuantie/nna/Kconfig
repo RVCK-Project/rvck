@@ -1,7 +1,6 @@
 menuconfig VHA
        tristate "IMG neural network accelerator"
        default m
-       select SYNC_FILE
 
 if VHA
 choice
