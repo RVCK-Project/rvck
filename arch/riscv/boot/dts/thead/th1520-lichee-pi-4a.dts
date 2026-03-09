@@ -1358,10 +1358,6 @@
 	memory-region = <&dsp1_mem>;
 };
 
-&gpu {
-	status = "okay";
-};
-
 &dpu_enc1 {
 	ports {
 		/delete-node/ port@0;
