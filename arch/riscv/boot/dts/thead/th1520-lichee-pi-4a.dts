@@ -30,13 +30,6 @@
 		cooling-levels = <0 66 196 255>;
 	};
 
-	lcd0_backlight: pwm-backlight@0 {
-		compatible = "pwm-backlight";
-		pwms = <&pwm 0 5000000 0>;
-		brightness-levels = <0 4 8 16 32 64 128 255>;
-		default-brightness-level = <7>;
-	};
-
 	reg_tp0_pwr: regulator-tp0-pwr {
 		compatible = "regulator-fixed";
 		regulator-name = "tp0-pwr";
@@ -1052,27 +1045,6 @@
 	pinctrl-0 = <&i2s1_pa_pins>, <&i2s1_pins>;
 };
 
-&dpu_enc1 {
-	ports {
-		/delete-node/ port@0;
-	};
-};
-
-&disp1_out {
-	remote-endpoint = <&hdmi_tx_in>;
-};
-
-&hdmi_tx {
-	status = "okay";
-
-	port@0 {
-		/* input */
-		hdmi_tx_in: endpoint {
-			remote-endpoint = <&disp1_out>;
-		};
-	};
-};
-
 &isp0 {
 	status = "okay";
 };
@@ -1115,19 +1087,6 @@
 
 &bm_csi2 {
 	status = "okay";
-};
-
-&hdmi_tx {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&hdmi_tx_pins>;
-
-	port@0 {
-		/* input */
-		hdmi_tx_in: endpoint {
-			remote-endpoint = <&disp1_out>;
-		};
-	};
 };
 
 &eip_28 {
