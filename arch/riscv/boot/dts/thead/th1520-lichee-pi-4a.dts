@@ -1084,17 +1084,6 @@
 	status = "okay";
 };
 
-&npu {
-	vha_clk_rate = <1000000000>;
-	status = "okay";
-};
-
-&npu_opp_table {
-	opp-1000000000 {
-		opp-suspend;
-	};
-};
-
 &dpu_enc1 {
 	ports {
 		/delete-node/ port@0;
