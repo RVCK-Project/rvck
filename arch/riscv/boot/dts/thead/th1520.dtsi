@@ -325,14 +325,6 @@
 		snps,blen = <0 0 64 32 0 0 0>;
 	};
 
-	aon: aon_subsys {
-		compatible = "thead,th1520-aon";
-		mbox-names = "aon";
-		mboxes = <&mbox_910t 1 0>;
-		opensbi-mboxes = <&mbox_910r>;
-		status = "okay";
-	};
-
 	aon_iram: aon-iram@ffffef8000 {
 		compatible = "syscon";
 		reg = <0xff 0xffef8000 0x0 0x10000>;
