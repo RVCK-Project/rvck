@@ -1770,10 +1770,6 @@
 			  "GPIO10";
 };
 
-&gpu {
-	status = "okay";
-};
-
 &eip_28 {
 	status = "okay";
 };
