@@ -950,11 +950,6 @@
 		status = "okay";
 };
 
-&aon {
-    log-memory-region = <&aon_log_mem>;
-	status = "okay";
-};
-
 &resmem {
 	#address-cells = <2>;
 	#size-cells = <2>;
