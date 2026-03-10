@@ -139,12 +139,6 @@
 		};
 	};
 
-	resmem: reserved-memory {
-		#address-cells = <2>;
-		#size-cells = <2>;
-		ranges;
-	};
-
 	pmu {
 		compatible = "riscv,pmu";
 		riscv,event-to-mhpmcounters =
