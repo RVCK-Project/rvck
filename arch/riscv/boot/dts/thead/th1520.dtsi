@@ -12,8 +12,8 @@
 #include <dt-bindings/clock/th1520-dspsys.h>
 #include <dt-bindings/clock/th1520-audiosys.h>
 #include <dt-bindings/clock/th1520-miscsys.h>
-#include <dt-bindings/reset/xuantie,th1520-reset.h>
-#include <dt-bindings/firmware/xuantie/rsrc.h>
+#include <dt-bindings/reset/thead,th1520-reset.h>
+#include <dt-bindings/firmware/thead/rsrc.h>
 #include <dt-bindings/thermal/thermal.h>
 #include <dt-bindings/soc/xuantie,th1520-iopmp.h>
 
@@ -366,14 +366,14 @@
 	};
 
 	aon: aon_subsys {
-		compatible = "xuantie,th1520-aon";
+		compatible = "thead,th1520-aon";
 		mbox-names = "aon";
 		mboxes = <&mbox_910t 1 0>;
 		opensbi-mboxes = <&mbox_910r>;
 		status = "okay";
 
 		pd: th1520-aon-pd {
-			compatible = "xuantie,th1520-aon-pd";
+			compatible = "thead,th1520-aon-pd";
 			#power-domain-cells = <1>;
 		};
 
@@ -933,7 +933,7 @@
 		};
 
 		gmac0: ethernet@ffe7070000 {
-			compatible = "xuantie,th1520-dwmac";
+			compatible = "thead,th1520-dwmac";
 			reg = <0xff 0xe7070000 0x0 0x2000>;
 			interrupts = <66 IRQ_TYPE_LEVEL_HIGH>;
 			interrupt-names = "macirq";
@@ -947,7 +947,7 @@
 			snps,multicast-filter-bins = <64>;
 			snps,perfect-filter-entries = <32>;
 			snps,axi-config = <&stmmac_axi_config>;
-			th1520,gmacapb = <&gmac0_apb>;
+			thead,gmacapb = <&gmac0_apb>;
 			status = "disabled";
 
 			mdio0: mdio {
@@ -958,7 +958,7 @@
 		};
 
 		gmac1: ethernet@ffe7060000 {
-			compatible = "xuantie,th1520-dwmac";
+			compatible = "thead,th1520-dwmac";
 			reg = <0xff 0xe7060000 0x0 0x2000>;
 			interrupts = <67 IRQ_TYPE_LEVEL_HIGH>;
 			interrupt-names = "macirq";
@@ -972,7 +972,7 @@
 			snps,multicast-filter-bins = <64>;
 			snps,perfect-filter-entries = <32>;
 			snps,axi-config = <&stmmac_axi_config>;
-			th1520,gmacapb = <&gmac1_apb>;
+			thead,gmacapb = <&gmac1_apb>;
 			status = "disabled";
 
 			mdio1: mdio {
@@ -1161,7 +1161,7 @@
 		};
 
 		audio_mbox: audio_mbox@0xffefc48000 {
-			compatible = "xuantie,th1520-audio-mbox-reg", "syscon";
+			compatible = "thead,th1520-audio-mbox-reg", "syscon";
 			reg = <0xff 0xefc48000 0x0 0x1000>;
 			status = "okay";
 		};
@@ -1218,12 +1218,12 @@
 		};
 
 		gmac0_apb: syscon@ffec003000 {
-			compatible = "xuantie,th1520-gmac-apb", "syscon";
+			compatible = "thead,th1520-gmac-apb", "syscon";
 			reg = <0xff 0xec003000 0x0 0x1000>;
 		};
 
 		gmac1_apb: syscon@ffec004000 {
-			compatible = "xuantie,th1520-gmac-apb", "syscon";
+			compatible = "thead,th1520-gmac-apb", "syscon";
 			reg = <0xff 0xec004000 0x0 0x1000>;
 		};
 
@@ -1279,22 +1279,22 @@
 		};
 
 		pwm: pwm@ffec01c000 {
-			compatible = "xuantie,th1520-pwm";
+			compatible = "thead,th1520-pwm";
 			reg = <0xff 0xec01c000 0x0 0x4000>;
 			#pwm-cells = <3>;
 			clocks = <&osc>;
 		};
 
 		misc_sysreg: misc_sysreg@ffec02c000 {
-			compatible = "xuantie,th1520-misc-sysreg", "syscon";
+			compatible = "thead,th1520-misc-sysreg", "syscon";
 			reg = <0xff 0xec02c000 0x0 0x1000>;
 		};
 
 		usb: usb@ffec03f000 {
-			compatible = "xuantie,th1520-usb";
+			compatible = "thead,th1520-usb";
 			usb3-misc-regmap = <&misc_sysreg>;
 			reg = <0xff 0xec03f000 0x0 0x1000>;
-			xuantie,misc-sysreg = <&misc_sysreg>;
+			thead,misc-sysreg = <&misc_sysreg>;
 			clocks = <&miscsys_clk_gate CLKGEN_MISCSYS_USB3_DRD_CLK>,
 					<&miscsys_clk_gate CLKGEN_MISCSYS_USB3_DRD_CTRL_REF_CLK>,
 					<&miscsys_clk_gate CLKGEN_MISCSYS_USB3_DRD_PHY_REF_CLK>,
@@ -1367,7 +1367,7 @@
 		};
 
 		emmc: mmc@ffe7080000 {
-			compatible = "xuantie,th1520-dwcmshc";
+			compatible = "thead,th1520-dwcmshc";
 			reg = <0xff 0xe7080000 0x0 0x10000>;
 			interrupts = <62 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&clk CLKGEN_EMMC_SDIO_REF_CLK>,
@@ -1377,7 +1377,7 @@
 		};
 
 		sdio0: mmc@ffe7090000 {
-			compatible = "xuantie,th1520-dwcmshc";
+			compatible = "thead,th1520-dwcmshc";
 			reg = <0xff 0xe7090000 0x0 0x10000>;
 			interrupts = <64 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&clk CLKGEN_EMMC_SDIO_REF_CLK>,
@@ -1387,7 +1387,7 @@
 		};
 
 		sdio1: mmc@ffe70a0000 {
-			compatible = "xuantie,th1520-dwcmshc";
+			compatible = "thead,th1520-dwcmshc";
 			reg = <0xff 0xe70a0000 0x0 0x10000>;
 			interrupts = <71 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&clk CLKGEN_EMMC_SDIO_REF_CLK>,
@@ -1590,7 +1590,7 @@
 		};
 
 		adc: adc@0xfffff51000 {
-			compatible = "xuantie,th1520-adc";
+			compatible = "thead,th1520-adc";
 			reg = <0xff 0xfff51000 0x0 0x1000>;
 			interrupts = <61 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&aonsys_clk>;
@@ -1600,7 +1600,7 @@
 		};
 
 		visys_reg: visys-reg@ffe4040000 {
-			compatible = "xuantie,th1520-visys-reg", "syscon";
+			compatible = "thead,th1520-visys-reg", "syscon";
 			reg = <0xff 0xe4040000 0x0 0x1000>;
 			status = "disabled";
 		};
@@ -1732,8 +1732,8 @@
 		};
 
 		aon_suspend_ctrl: aon_suspend_ctrl {
-			compatible = "xuantie,th1520-aon-suspend-ctrl";
-			status = "okay";
+				compatible = "thead,th1520-aon-suspend-ctrl";
+				status = "okay";
 		};
 
 		sys_reg: sys-reg@ffef010100 {
@@ -1743,31 +1743,31 @@
 		};
 
 		dspsys_reg: dspsys-reg@ffef040000 {
-			compatible = "xuantie,th1520-dspsys-reg", "syscon";
+			compatible = "thead,th1520-dspsys-reg", "syscon";
 			reg = <0xff 0xef040000 0x0 0x1000>;
 			status = "okay";
 		};
 
 		miscsys_reg: miscsys-reg@ffec02c000 {
-			compatible = "xuantie,th1520-miscsys-reg", "syscon";
+			compatible = "thead,th1520-miscsys-reg", "syscon";
 			reg = <0xff 0xec02c000 0x0 0x1000>;
 			status = "okay";
 		};
 
 		tee_miscsys_reg: tee_miscsys-reg@fffc02d000 {
-			compatible = "xuantie,th1520-miscsys-reg", "syscon";
+			compatible = "thead,th1520-miscsys-reg", "syscon";
 			reg = <0xff 0xfc02d000 0x0 0x1000>;
 			status = "okay";
 		};
 
 		audio_cpr: audio_cpr@ffcb000000 {
-			compatible = "xuantie,th1520-audio-cpr-reg", "syscon";
+			compatible = "thead,th1520-audio-cpr-reg", "syscon";
 			reg = <0xff 0xcb000000 0x0 0x1000>;
 			status = "okay";
 		};
 
 		clk: clock-controller@ffef010000 {
-			compatible = "xuantie,th1520-fm-ree-clk";
+			compatible = "thead,th1520-fm-ree-clk";
 			reg = <0xff 0xef010000 0x0 0x1000>;
 			#clock-cells = <1>;
 			clocks = <&osc_32k>, <&osc>, <&rc_24m>;
@@ -1776,42 +1776,42 @@
 		};
 
 		visys_clk_gate: visys-clk-gate { /* VI_SYSREG_R */
-			compatible = "xuantie,visys-gate-controller";
+			compatible = "thead,visys-gate-controller";
 			visys-regmap = <&visys_reg>;
 			#clock-cells = <1>;
 			status = "okay";
 		};
 
 		vpsys_clk_gate: vpsys-clk-gate@ffecc30000 { /* VP_SYSREG_R */
-			compatible = "xuantie,vpsys-gate-controller";
+			compatible = "thead,vpsys-gate-controller";
 			reg = <0xff 0xecc30000 0x0 0x1000>;
 			#clock-cells = <1>;
 			status = "okay";
 		};
 
 		vosys_clk_gate: vosys-clk-gate@ffef528000 { /* VO_SYSREG_R */
-			compatible = "xuantie,vosys-gate-controller";
+			compatible = "thead,vosys-gate-controller";
 			reg = <0xff 0xef528000 0x0 0x1000>;
 			#clock-cells = <1>;
 			status = "okay";
 		};
 
 		dspsys_clk_gate: dspsys-clk-gate {
-			compatible = "xuantie,dspsys-gate-controller";
+			compatible = "thead,dspsys-gate-controller";
 			dspsys-regmap = <&dspsys_reg>;
 			#clock-cells = <1>;
 			status = "okay";
 		};
 
 		audiosys_clk_gate: audiosys-clk-gate {
-			compatible = "xuantie,audiosys-gate-controller";
+			compatible = "thead,audiosys-gate-controller";
 			audiosys-regmap = <&audio_cpr>;
 			#clock-cells = <1>;
 			status = "okay";
 		};
 
 		miscsys_clk_gate: miscsys-clk-gate {
-			compatible = "xuantie,miscsys-gate-controller";
+			compatible = "thead,miscsys-gate-controller";
 			miscsys-regmap = <&miscsys_reg>;
 			tee-miscsys-regmap = <&tee_miscsys_reg>;
 			#clock-cells = <1>;
@@ -1876,7 +1876,7 @@
 		};
 
 		th1520_event: th1520-event {
-			compatible = "xuantie,th1520-event";
+			compatible = "thead,th1520-event";
 			aon-iram-regmap = <&aon_iram>;
 			status = "okay";
 		};
