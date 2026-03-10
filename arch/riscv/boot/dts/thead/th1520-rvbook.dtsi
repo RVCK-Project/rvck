@@ -11,10 +11,8 @@
 #include <dt-bindings/usb/pd.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 / {
-	model = "Xuantie RvBook board";
-	compatible = "thead,th1520";
-
 	chosen {
+		bootargs = "console=ttyS0,115200 crashkernel=256M-:128M earlycon clk_ignore_unused sram=0xffe0000000,0x180000";
 		stdout-path = "serial0:115200n8";
 	};
 
@@ -207,7 +205,7 @@
 	};
 
 	mbox_910t_client1: mbox_910t_client1 {
-		compatible = "xuantie,th1520-mbox-client";
+		compatible = "thead,light-mbox-client";
 		mbox-names = "902";
 		mboxes = <&mbox_910t 1 0>;
 		status = "disabled";
@@ -215,7 +213,7 @@
 
 
 	mbox_910t_client2: mbox_910t_client2 {
-		compatible = "xuantie,th1520-mbox-client";
+		compatible = "thead,light-mbox-client";
 		mbox-names = "906";
 		mboxes = <&mbox_910t 2 0>;
 		audio-mbox-regmap = <&audio_mbox>;
@@ -573,49 +571,7 @@
 	};
 };
 
-&osc {
-	clock-frequency = <24000000>;
-};
-
-&osc_32k {
-	clock-frequency = <32768>;
-};
-
-&rc_24m {
-	clock-frequency = <24000000>;
-};
-
-&aonsys_clk {
-	clock-frequency = <73728000>;
-};
-
-&audiosys_clk {
-	clock-frequency = <294912000>;
-};
-
-&apb_clk {
-	clock-frequency = <62500000>;
-};
-
-&sdhci_clk {
-	clock-frequency = <198000000>;
-};
-
-&uart_sclk {
-	clock-frequency = <100000000>;
-};
-
-&gmac_clk {
-	clock-frequency = <500000000>;
-};
-
-&gmac_axi_clk {
-	clock-frequency = <100000000>;
-};
-
 &aon {
-	log-memory-region = <&aon_log_mem>;
-
 	dvdd_cpu_reg: appcpu_dvdd {
 		compatible = "thead,th1520-aon-pmic";
 		regulator-name = "appcpu_dvdd";
@@ -727,7 +683,7 @@
 
 	soc_vdd33_emmc_reg: soc_vdd33_emmc {
 		compatible = "thead,th1520-aon-pmic";
-		regulator-name = "soc_dvdd33_emmc";
+		regulator-name = "soc_vdd33_emmc";
 		regulator-type = "common";
 		regulator-boot-on;
 		regulator-always-on;
@@ -735,7 +691,7 @@
 
 	soc_vdd18_emmc_reg: soc_vdd18_emmc {
 		compatible = "thead,th1520-aon-pmic";
-		regulator-name = "soc_dvdd18_emmc";
+		regulator-name = "soc_vdd18_emmc";
 		regulator-type = "gpio";
 		regulator-boot-on;
 		regulator-always-on;
@@ -804,9 +760,6 @@
 	num-cs = <1>;
 	cs-gpios = <&gpio2 15 0>; // GPIO_ACTIVE_HIGH: 0
 	rx-sample-delay-ns = <10>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&spi_pins>;
-	status = "okay";
 
 	spi_norflash@0 {
 		status = "disable";
@@ -839,7 +792,6 @@
 	clock-frequency = <100000000>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart0_pins>;
-	status = "okay";
 };
 
 &uart1 {
@@ -850,7 +802,6 @@
 &uart3 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart3_pins>;
-	status = "okay";
 };
 
 &uart4 {
@@ -927,14 +878,6 @@
 	tx-clk-delay = <0x00>; /* for RGMII */
 	phy-handle = <&phy_88E1111_1>;
 	status = "disabled";
-};
-
-&dmac0 {
-	status = "okay";
-};
-
-&dmac2 {
-	status = "okay";
 };
 
 &emmc {
@@ -1056,7 +999,7 @@
 			function = "uart";
 			bias-disable;
 			drive-strength = <3>;
-			input-disable;
+			input-enable;
 			input-schmitt-disable;
 			slew-rate = <0>;
 		};
@@ -1065,20 +1008,9 @@
 			pins = "UART0_RXD";
 			function = "uart";
 			bias-disable;
-			drive-strength = <1>;
+			drive-strength = <3>;
 			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	spi_pins: spi-0 {
-		spi-pins {
-			pins = "SPI_SCLK", "SPI_MOSI", "SPI_MISO";
-			function = "spi";
-			bias-disable;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
+			input-schmitt-disable;
 			slew-rate = <0>;
 		};
 	};
@@ -2071,6 +2003,7 @@
         pinctrl-names = "default";
         pinctrl-0 = <&i2s1_pa_pins>,
                     <&i2s1_pins>;
+		light,mclk_keepon = <1>;
 };
 
 &i2s2 {
@@ -2093,8 +2026,6 @@
 
 &cpus {
 	c910_0: cpu@0 {
-		dvdd-supply = <&dvdd_cpu_reg>;
-		dvddm-supply = <&dvddm_cpu_reg>;
 		operating-points = <
 			/* kHz    uV */
 			300000	600000
@@ -2114,7 +2045,7 @@
 			1704000	1000000
 			1848000 1000000
 		>;
-		th1520,dvddm-operating-points = <
+		light,dvddm-operating-points = <
 			/* kHz   uV */
 			300000	800000
 			400000  800000
@@ -2135,8 +2066,6 @@
 		>;
 	};
 	c910_1: cpu@1 {
-		dvdd-supply = <&dvdd_cpu_reg>;
-		dvddm-supply = <&dvddm_cpu_reg>;
 		operating-points = <
 			/* kHz    uV */
 			300000	600000
@@ -2156,7 +2085,7 @@
 			1704000	1000000
 			1848000 1000000
 		>;
-		th1520,dvddm-operating-points = <
+		light,dvddm-operating-points = <
 			/* kHz   uV */
 			300000	800000
 			400000  800000
@@ -2177,8 +2106,7 @@
 		>;
 	};
 	c910_2: cpu@2 {
-		dvdd-supply = <&dvdd_cpu_reg>;
-		dvddm-supply = <&dvddm_cpu_reg>;
+
 		operating-points = <
 			/* kHz    uV */
 			300000	600000
@@ -2198,7 +2126,7 @@
 			1704000	1000000
 			1848000 1000000
 		>;
-		th1520,dvddm-operating-points = <
+		light,dvddm-operating-points = <
 			/* kHz   uV */
 			300000	800000
 			400000  800000
@@ -2219,8 +2147,7 @@
 		>;
 	};
 	c910_3: cpu@3 {
-		dvdd-supply = <&dvdd_cpu_reg>;
-		dvddm-supply = <&dvddm_cpu_reg>;
+
 		operating-points = <
 			/* kHz    uV */
 			300000	600000
@@ -2240,7 +2167,7 @@
 			1704000	1000000
 			1848000 1000000
 		>;
-		th1520,dvddm-operating-points = <
+		light,dvddm-operating-points = <
 			/* kHz   uV */
 			300000	800000
 			400000  800000
