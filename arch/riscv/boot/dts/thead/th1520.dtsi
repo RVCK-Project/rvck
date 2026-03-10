@@ -363,16 +363,6 @@
 		mboxes = <&mbox_910t 1 0>;
 		opensbi-mboxes = <&mbox_910r>;
 		status = "okay";
-
-		pd: th1520-aon-pd {
-			compatible = "thead,th1520-aon-pd";
-			#power-domain-cells = <1>;
-		};
-
-		cpufreq: c910_cpufreq {
-			compatible = "xuantie,th1520-cpufreq";
-			status = "okay";
-		};
 	};
 
 	aon_iram: aon-iram@ffffef8000 {
