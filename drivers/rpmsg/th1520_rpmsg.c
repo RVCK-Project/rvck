@@ -161,7 +161,7 @@ static bool th1520_rpmsg_notify(struct virtqueue *vq)
 static int th1520_mu_rpmsg_callback(struct notifier_block *this,
 					unsigned long index, void *data)
 {
-	u32 mu_msg = (phys_addr_t)data;
+	phys_addr_t mu_msg = (phys_addr_t)data;
 	struct th1520_virdev *virdev;
 
 	virdev = container_of(this, struct th1520_virdev, nb);
@@ -413,7 +413,7 @@ static int set_vring_phy_buf(struct platform_device *pdev,
 
 static void rpmsg_work_handler(struct work_struct *work)
 {
-	u32 message = 0;
+	phys_addr_t message = 0;
 	struct delayed_work *dwork = to_delayed_work(work);
 	struct th1520_rpmsg_vproc *rpdev = container_of(dwork,
 			struct th1520_rpmsg_vproc, rpmsg_work);
