@@ -1,9 +1,14 @@
 # 超睿科技 提交列表（纯文本视图）
-# 共 85 个提交
-# 生成时间: 2026-03-10 08:37:53
+# 共 90 个提交
+# 生成时间: 2026-03-10 09:17:20
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+6465e051 | 2024-01-06 | Sun Haiyong | perf tools: Fix calloc() arguments to address error introduced in gcc-14
+90def07a | 2026-01-23 | Leo Yan | tools: Fix bitfield dependency failure
+fd35e7d9 | 2023-12-04 | Sun Haiyong | perf top: Remove needless malloc(0) call that triggers -Walloc-size
+fadfcca5 | 2024-07-19 | Eric Lin | perf arch events: Fix duplicate RISC-V SBI firmware event name
+c80c4015 | 2023-09-12 | Benjamin Gray | perf tools: Address python 3.6 DeprecationWarning for string scapes
 08d07af0 | 2026-01-13 | Jia Wang | dt-bindings: hwmon: ultrarisc,dp1000-pvt.yaml: add Add a blank line at the end of the file.
 b4f2c3a1 | 2026-01-08 | Jia Wang | riscv: dts: ultrarisc: remove 'bootargs' property in 'chosen'
 9e3a9d6a | 2026-01-06 | Jia Wang | riscv: dts: ultrarisc: Update pcie and gmac compatible strings
