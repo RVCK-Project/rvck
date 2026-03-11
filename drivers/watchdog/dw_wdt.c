@@ -28,7 +28,6 @@
 #include <linux/pm.h>
 #include <linux/reset.h>
 #include <linux/watchdog.h>
-#include <linux/firmware/thead/th1520_event.h>
 
 #define WDOG_CONTROL_REG_OFFSET		    0x00
 #define WDOG_CONTROL_REG_WDT_EN_MASK	    0x01
@@ -376,7 +375,6 @@ static irqreturn_t dw_wdt_irq(int irq, void *devid)
 		pr_warn("watchdog irq enter. however status is 0\n");
 		return IRQ_NONE;
 	}
-	th1520_event_set_rebootmode(TH1520_EVENT_SW_WATCHDOG);
 
 	pr_info("watchdog app was stuck! watchdog pretimeout event\n");
 	watchdog_notify_pretimeout(&dw_wdt->wdd);
