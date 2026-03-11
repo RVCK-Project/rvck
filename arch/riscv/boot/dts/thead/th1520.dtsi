@@ -171,12 +171,6 @@
 		};
 	};
 
-	resmem: reserved-memory {
-		#address-cells = <2>;
-		#size-cells = <2>;
-		ranges;
-	};
-
 	pmu {
 		compatible = "riscv,pmu";
 		riscv,event-to-mhpmcounters =
@@ -1001,12 +995,6 @@
 			#size-cells = <0>;
 		};
 
-		audio_mbox: audio_mbox@0xffefc48000 {
-			compatible = "thead,th1520-audio-mbox-reg", "syscon";
-			reg = <0xff 0xefc48000 0x0 0x1000>;
-			status = "okay";
-		};
-
 		gpio@ffe7f34000 {
 			compatible = "snps,dw-apb-gpio";
 			reg = <0xff 0xe7f34000 0x0 0x1000>;
@@ -1734,11 +1722,6 @@
 			clock-names = "tclk";
 			resets = <&rst TH1520_RESET_WDT1>;
 			status = "okay";
-		};
-
-		regdump: th1520-regdump {
-			compatible = "xuantie,th1520-regdump";
-			status = "disabled";
 		};
 
 		g2d_opp_table:g2d-opp-table {
