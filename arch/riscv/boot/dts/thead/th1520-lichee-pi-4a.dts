@@ -287,30 +287,6 @@
 		enable-active-high;
 	};
 
-	mbox_910t_client2: mbox_910t_client2 {
-		compatible = "thead,th1520-mbox-client";
-		mbox-names = "906";
-		mboxes = <&mbox_910t 2 0>;
-		audio-mbox-regmap = <&audio_mbox>;
-		status = "okay";
-	};
-
-	th1520_rpmsg: th1520_rpmsg {
-		compatible = "th1520,rpmsg-bus", "simple-bus";
-		memory-region = <&rpmsgmem>;
-		#address-cells = <2>;
-		#size-cells = <2>;
-		ranges;
-		rpmsg: rpmsg{
-			vdev-nums = <1>;
-            reg = <0x0 0x1E000000 0 0x10000>;
-			compatible = "th1520,th1520-rpmsg";
-			log-memory-region = <&audio_log_mem>;
-			audio-text-memory-region = <&audio_text_mem>;
-			status = "okay";
-		};
-	};
-
 	hdmi_codec: hdmi_codec@1 {
 		#sound-dai-cells = <0>;
 		compatible = "xuantie,th1520-hdmi-pcm";
@@ -948,66 +924,6 @@
 		wakeup-source;
 		keep-power-in-suspend;
 		status = "okay";
-};
-
-&resmem {
-	#address-cells = <2>;
-	#size-cells = <2>;
-	ranges;
-
-	/* global autoconfigured region for contiguous allocations */
-	cmamem: linux,cma {
-		compatible = "shared-dma-pool";
-		reusable;
-		size = <0 0x30000000>; // 768MB on lpi4a (SOM)
-		alloc-ranges = <0 0xc8000000 0 0x30000000>; // [0x0C800_0000 ~ 0x0F800_0000]    linux,cma-default;
-		linux,cma-default;
-	};
-	dsp0_mem: memory@20000000 {             /**0x2000_0000~0x2040_0000 4M**/
-		reg = <0x0 0x20000000 0x0 0x00280000   /* DSP FW code&data section 2.5M*/
-			0x0 0x20280000 0x0 0x00001000   /* DSP communication area 4K*/
-			0x0 0x20281000 0x0 0x00007000  /* Panic/log page 28K */
-			0x0 0x20288000 0x0 0x00178000>;  /* DSP shared memory 1.5M-32K*/
-		};
-	dsp1_mem: memory@20400000 {             /**0x2040_0000~0x2080_0000 4M**/
-		reg = <0x0 0x20400000 0x0 0x00280000  /* DSP FW code&data section */
-			0x0 0x20680000 0x0 0x00001000 /* DSP communication area */
-			0x0 0x20681000 0x0 0x00007000    /* Panic/log page*/
-			0x0 0x20688000 0x0 0x00178000>;  /* DSP shared memory */
-		};
-	vi_mem: framebuffer@10000000 {
-		reg = <0x0 0x10000000 0x0 0x6700000>;	/* vi_mem_pool_region[0]  44 MB (default) */
-			//0x0 0x12C00000 0x0 0x01D00000	/* vi_mem_pool_region[1]  29 MB */
-			//0x0 0x14900000 0x0 0x01E00000>;	/* vi_mem_pool_region[2]  30 MB */
-		};
-
-	audio_text_mem: memory@32000000 {
-		reg = <0x0 0x32000000 0x0 0xE00000>;
-		//no-map;
-    };
-    audio_data_mem: memory@32E00000 {
-		reg = <0x0 0x32E00000 0x0 0x600000>;
-		//no-map;
-    };
-	audio_log_mem: memory@33400000 {
-        reg = <0x0 0x33400000 0x0 0x200000>;
-	};
-	//Note: with "no-map" reserv mem not saved in hibernation
-	rpmsgmem: memory@1E000000 {
-		reg = <0x0 0x1E000000 0x0 0x10000>;
-	};
-	aon_log_mem: memory@33600000 {
-        reg = <0x0 0x33600000 0x0 0x200000>;
-	};
-	regdump_mem: memory@38400000 {
-		reg = <0x0 0x38400000 0x0 0x1400000>;
-		no-map;
-	};
-};
-
-&regdump {
-	memory-region = <&regdump_mem>;
-	status = "okay";
 };
 
 &audio_i2c0 {
