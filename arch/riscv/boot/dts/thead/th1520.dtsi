@@ -1385,32 +1385,6 @@
 			status = "disabled";
 		};
 
-		th1520_event: th1520-event {
-			compatible = "thead,th1520-event";
-			aon-iram-regmap = <&aon_iram>;
-			status = "okay";
-		};
-
-		watchdog0: watchdog@ffefc30000 {
-			compatible = "snps,dw-wdt";
-			reg = <0xff 0xefc30000 0x0 0x1000>;
-			interrupts = <24 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&clk CLKGEN_WDT0_PCLK>;
-			clock-names = "tclk";
-			resets = <&rst 	TH1520_RESET_WDT0>;
-			status = "okay";
-		};
-
-		watchdog1: watchdog@ffefc31000 {
-			compatible = "snps,dw-wdt";
-			reg = <0xff 0xefc31000 0x0 0x1000>;
-			interrupts = <25 IRQ_TYPE_LEVEL_HIGH>;
-			clocks = <&clk CLKGEN_WDT1_PCLK>;
-			clock-names = "tclk";
-			resets = <&rst TH1520_RESET_WDT1>;
-			status = "okay";
-		};
-
 		g2d_opp_table:g2d-opp-table {
 			compatible = "operating-points-v2";
 			video-4k-minfreq = <396000000>;
