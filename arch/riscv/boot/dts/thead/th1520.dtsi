@@ -12,7 +12,6 @@
 #include <dt-bindings/clock/th1520-dspsys.h>
 #include <dt-bindings/clock/th1520-audiosys.h>
 #include <dt-bindings/clock/th1520-miscsys.h>
-#include <dt-bindings/reset/thead,th1520-reset.h>
 #include <dt-bindings/firmware/thead/rsrc.h>
 #include <dt-bindings/thermal/thermal.h>
 #include <dt-bindings/soc/xuantie,th1520-iopmp.h>
