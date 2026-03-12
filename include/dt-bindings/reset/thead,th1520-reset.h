@@ -5,9 +5,5 @@
 
 #define TH1520_RESET_WDT0 0
 #define TH1520_RESET_WDT1 1
-#define TH1520_RESET_NPU 2
-
-// vpsys reset
-#define TH1520_RESET_FCE 100
 
 #endif
