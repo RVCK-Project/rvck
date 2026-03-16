@@ -1,9 +1,29 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 289 个提交
-# 生成时间: 2026-03-16 09:07:50
+# 共 309 个提交
+# 生成时间: 2026-03-16 22:57:54
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+1b4591a9 | 2026-03-11 | ZhenXing Zhu | Revert "regdump:add regdump support for lpi4a and light-a && rename some dts name from "thead" to "xuantie""
+c89f9683 | 2026-03-11 | ZhenXing Zhu | Revert "drivers/soc/event: Add THEAD TH1520 event driver"
+4c9fa51f | 2026-03-11 | ZhenXing Zhu | Revert "add c906 audio support"
+d8877ccf | 2026-03-11 | ZhenXing Zhu | Revert "drivers: regulator: add th1520 AON virtual regulator control support."
+e634f57f | 2026-03-10 | ZhenXing Zhu | Revert "drivers/watchdog: Add THEAD TH1520 pmic watchdog driver"
+21714768 | 2026-03-10 | ZhenXing Zhu | Revert "firmware: thead: c910_aon: add th1520 Aon protocol driver"
+ab7d0977 | 2026-03-10 | ZhenXing Zhu | Revert "drivers: cpufreq: add cpufreq driver."
+37c6914c | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: to modify rvbook dts"
+35cb75c6 | 2026-03-10 | ZhenXing Zhu | Revert "audio: th1520: add soundcard dts node of th1520-a-val board"
+5dc29b50 | 2026-03-10 | ZhenXing Zhu | Revert "dts:th1520-a: add th1520-a-val.dts and th1520-a-val-sec.dts"
+a2ecd6df | 2026-03-10 | ZhenXing Zhu | Revert "drivers: pmdomain: support th1520 Power domain control."
+861b804d | 2026-03-10 | ZhenXing Zhu | Revert "dts: add GPU device node"
+ec554ec2 | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add cpu thermal node and device thermal node"
+bfa584d8 | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add npu device node"
+a93ceeb0 | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: to add npu device node"
+804ebbe5 | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add th1520-a-val-crash.dts and th1520-lpi4a-product-crash.dts for kdump"
+2d152f7f | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add cpu thermal node and device thermal node"
+00516c96 | 2026-03-10 | ZhenXing Zhu | Revert "dtb:lipi:enable VI module config"
+bd08bb38 | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add vdec venc and video mem device node"
+f41260a3 | 2026-03-10 | ZhenXing Zhu | Revert "chore: use xuantie instead of thead"
 380954bb | 2023-09-21 | Yu Chien Peter Lin | riscv: Introduce NAPOT field to PTDUMP
 816ba755 | 2023-09-21 | Yu Chien Peter Lin | riscv: Introduce PBMT field to PTDUMP
 d231950d | 2023-09-21 | Yu Chien Peter Lin | riscv: Improve PTDUMP to show RSW with non-zero value

@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 289</li>
-<li><strong>统计时间</strong>: 2026-03-16 09:07:50</li>
+<li><strong>贡献提交数</strong>: 309</li>
+<li><strong>统计时间</strong>: 2026-03-16 22:57:54</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,26 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [b704dd09](https://github.com/RVCK-Project/rvck/commit/b704dd095893a9b587b78c5e6bac5ecddbc79aea) | 2024-09-01 | Xiangyi Zeng | drivers: pinctrl: correct th1520 audio i2c1 bit mapping table |
+| [42d50800](https://github.com/RVCK-Project/rvck/commit/42d5080076184501c69c84964ddd984492f4f926) | 2024-09-01 | Huaming | dtb:th1520: LA Board correct cma cfg |
+| [9f626982](https://github.com/RVCK-Project/rvck/commit/9f626982b8cae92e2c4772d1e91e1ab11a07be37) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add cpu thermal node and device thermal node |
+| [58f3278f](https://github.com/RVCK-Project/rvck/commit/58f3278ff5f924cfa88084c8ee0686def1d7a38a) | 2024-09-01 | David Li | perf: sync vendor event path with torvalds/linux |
+| [a7bf54dc](https://github.com/RVCK-Project/rvck/commit/a7bf54dcb843bfddd6d82ccf571aa37d2c865972) | 2024-09-01 | David Li | dts: audio: to support i2s-8ch feature |
+| [e1a12d1a](https://github.com/RVCK-Project/rvck/commit/e1a12d1ae966d7399e8504a03c75096257d75f3f) | 2024-09-01 | tingming | th1520: system_monitor: to add system_monitor driver |
+| [c7b3a228](https://github.com/RVCK-Project/rvck/commit/c7b3a22811d19f309d92e16cb303487b5a01e307) | 2024-09-01 | David Li | dts: audio: to adapt compatible 'thead,th1520' |
+| [98027ca1](https://github.com/RVCK-Project/rvck/commit/98027ca1fbf73f0bb21b20c687ccb9ce6319fa04) | 2024-09-01 | Huaming | dtb:th1520:light add vi module |
+| [fbf6833f](https://github.com/RVCK-Project/rvck/commit/fbf6833f3cc55c3d30a5b7b30d3c3991e555698e) | 2024-09-01 | xiaojin.cxj | regdump:add regdump support for lpi4a and light-a && rename some dts name from "... |
+| [5989479f](https://github.com/RVCK-Project/rvck/commit/5989479fcc4f6259928859f61cd3c70e196cef1f) | 2024-09-01 | Huaming | driver:i2c:add i2c mode for tx transfer |
+| [a77284c1](https://github.com/RVCK-Project/rvck/commit/a77284c1fff8f76e9173af97eab8b958180fad17) | 2024-09-01 | David Li | dts: audio: correct audiosys pinctrl name |
+| [018f0f62](https://github.com/RVCK-Project/rvck/commit/018f0f626ea4c4004f506e472faff4e6ba93ef29) | 2024-09-01 | David Li | audio: th1520: support audiosys pinctrl feature |
+| [82e6a7a7](https://github.com/RVCK-Project/rvck/commit/82e6a7a7046f0c48eb9f2dd0c77728431cb83a4b) | 2024-09-01 | Xiangyi Zeng | dts: th1520: remove usb hub node from th1520-a board |
+| [c43274b2](https://github.com/RVCK-Project/rvck/commit/c43274b235b6e23b7d1b2217b51d6d8d0fad9ec5) | 2024-09-01 | tingming | hwspinlock: th1520: to add th1520 hwspinlock driver |
+| [6da0470a](https://github.com/RVCK-Project/rvck/commit/6da0470a2e1ddb864ded130ec0f01dab0d22683a) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add rambus eip_28 device node |
+| [f93b81df](https://github.com/RVCK-Project/rvck/commit/f93b81df2b2aef71c1de5bc04bb4a2c05ba32e82) | 2024-09-01 | Esther Z | dts: th1520: add LA regulator support. |
+| [81e64767](https://github.com/RVCK-Project/rvck/commit/81e647675617d2fb9ddccb29a7a0ee0439b9ec4d) | 2024-09-01 | Xiangyi Zeng | drivers:misc:dsmart: add th1520 iso7816 driver |
+| [d4cf4211](https://github.com/RVCK-Project/rvck/commit/d4cf4211c780ec75a39341f41a66e8b2b60c44ec) | 2024-09-01 | Xiangyi Zeng | drivers:nvmem:efuse: add th1520 efuse driver |
+| [3e8f747a](https://github.com/RVCK-Project/rvck/commit/3e8f747a46e74ae26d28b7f2165c80d315083a21) | 2024-09-01 | David Li | audio: th1520: add soundcard dts node of th1520-a-val board |
+| [030c62b2](https://github.com/RVCK-Project/rvck/commit/030c62b2a35912de4d25fea37c7918992271c814) | 2024-09-01 | tingming | dts: th1520: to add npu device node |
 | [a4f15445](https://github.com/RVCK-Project/rvck/commit/a4f154456a8f6bddf803b214c1df81c206343f62) | 2024-09-01 | Xiangyi Zeng | riscv:dts:som: add th1520-lpi4a-product and th1520-lpi4a-product-sec dts file |
 | [9a69be0d](https://github.com/RVCK-Project/rvck/commit/9a69be0da090de454a9ebeb08f5f69c44cd5b32f) | 2024-09-01 | Xiangyi Zeng | dts:th1520-a: add th1520-a-val.dts and th1520-a-val-sec.dts |
 | [9dd78d07](https://github.com/RVCK-Project/rvck/commit/9dd78d074f268cf99aba2aa75bb937c82ca7c489) | 2024-06-21 | Huaming | defconfig:th1520: enable cma config |
@@ -109,7 +129,7 @@
 | [52752d42](https://github.com/RVCK-Project/rvck/commit/52752d42e61247407191c3a26a5f79ffccf2d96f) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 289 条提交，显示 201-289**
+**共 309 条提交，显示 201-309**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -120,5 +140,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-16 09:07:50*
-*数据来源: 主分支 rvck-6.6@ac7e300d*
+*本页面最后更新于 2026-03-16 22:57:54*
+*数据来源: 主分支 rvck-6.6@b7b3d803*

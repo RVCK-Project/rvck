@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 289</li>
-<li><strong>统计时间</strong>: 2026-03-16 09:07:50</li>
+<li><strong>贡献提交数</strong>: 309</li>
+<li><strong>统计时间</strong>: 2026-03-16 22:57:54</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,26 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [1b4591a9](https://github.com/RVCK-Project/rvck/commit/1b4591a90ee43fe1386d9664746d9b9999db8720) | 2026-03-11 | ZhenXing Zhu | Revert "regdump:add regdump support for lpi4a and light-a && rename some dts nam... |
+| [c89f9683](https://github.com/RVCK-Project/rvck/commit/c89f9683964e08ab04f05638dbbccd67346de46a) | 2026-03-11 | ZhenXing Zhu | Revert "drivers/soc/event: Add THEAD TH1520 event driver" |
+| [4c9fa51f](https://github.com/RVCK-Project/rvck/commit/4c9fa51fa0a8d612ad2c64ddbd1ac2135ba0065c) | 2026-03-11 | ZhenXing Zhu | Revert "add c906 audio support" |
+| [d8877ccf](https://github.com/RVCK-Project/rvck/commit/d8877ccf7e2ebf01f25983bd551b7b979cf874ee) | 2026-03-11 | ZhenXing Zhu | Revert "drivers: regulator: add th1520 AON virtual regulator control support." |
+| [e634f57f](https://github.com/RVCK-Project/rvck/commit/e634f57fca3136d1c576a595bac92b245327c53f) | 2026-03-10 | ZhenXing Zhu | Revert "drivers/watchdog: Add THEAD TH1520 pmic watchdog driver" |
+| [21714768](https://github.com/RVCK-Project/rvck/commit/21714768f1adf167faf2b5053015b0e86f4e6d1f) | 2026-03-10 | ZhenXing Zhu | Revert "firmware: thead: c910_aon: add th1520 Aon protocol driver" |
+| [ab7d0977](https://github.com/RVCK-Project/rvck/commit/ab7d09778bfdbb0077fd62b7e3d24df5b75ed795) | 2026-03-10 | ZhenXing Zhu | Revert "drivers: cpufreq: add cpufreq driver." |
+| [37c6914c](https://github.com/RVCK-Project/rvck/commit/37c6914c58d287289995a97870e9a7822284ba71) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: to modify rvbook dts" |
+| [35cb75c6](https://github.com/RVCK-Project/rvck/commit/35cb75c6a99c5fcfbad77c1c889331e7412a427e) | 2026-03-10 | ZhenXing Zhu | Revert "audio: th1520: add soundcard dts node of th1520-a-val board" |
+| [5dc29b50](https://github.com/RVCK-Project/rvck/commit/5dc29b50002f3d1dcfce02fc9751dbb31db705bd) | 2026-03-10 | ZhenXing Zhu | Revert "dts:th1520-a: add th1520-a-val.dts and th1520-a-val-sec.dts" |
+| [a2ecd6df](https://github.com/RVCK-Project/rvck/commit/a2ecd6dff722fcb0f068ea06432dbb7a97c6b77c) | 2026-03-10 | ZhenXing Zhu | Revert "drivers: pmdomain: support th1520 Power domain control." |
+| [861b804d](https://github.com/RVCK-Project/rvck/commit/861b804df585421322c094d68e56ce0ebd6ba27d) | 2026-03-10 | ZhenXing Zhu | Revert "dts: add GPU device node" |
+| [ec554ec2](https://github.com/RVCK-Project/rvck/commit/ec554ec21c278d07d975479867634a96b4892251) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add cpu thermal node and device thermal node" |
+| [bfa584d8](https://github.com/RVCK-Project/rvck/commit/bfa584d8735f777a8708ffe2d670cce13bafcda5) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add npu device node" |
+| [a93ceeb0](https://github.com/RVCK-Project/rvck/commit/a93ceeb00918b2168962478583526fc06e6fe8d2) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: to add npu device node" |
+| [804ebbe5](https://github.com/RVCK-Project/rvck/commit/804ebbe530b510662bd0bbd5bece664fd8ea8ada) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add th1520-a-val-crash.dts and th1520-lpi4a-product-crash.d... |
+| [2d152f7f](https://github.com/RVCK-Project/rvck/commit/2d152f7ff62859b9bdf3008ced47f2f6255ae057) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add cpu thermal node and device thermal node" |
+| [00516c96](https://github.com/RVCK-Project/rvck/commit/00516c96752665d273261321c9e4830d7b5ad991) | 2026-03-10 | ZhenXing Zhu | Revert "dtb:lipi:enable VI module config" |
+| [bd08bb38](https://github.com/RVCK-Project/rvck/commit/bd08bb382999f1756540070b45edb9a17a2e7430) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add vdec venc and video mem device node" |
+| [f41260a3](https://github.com/RVCK-Project/rvck/commit/f41260a3e68ce7bb457cdd6dc8a79a70f9774bf9) | 2026-03-10 | ZhenXing Zhu | Revert "chore: use xuantie instead of thead" |
 | [380954bb](https://github.com/RVCK-Project/rvck/commit/380954bb076dec25762343c067e41edf306ac597) | 2023-09-21 | Yu Chien Peter Lin | riscv: Introduce NAPOT field to PTDUMP |
 | [816ba755](https://github.com/RVCK-Project/rvck/commit/816ba755e21d32903da0abf362db599c8e267736) | 2023-09-21 | Yu Chien Peter Lin | riscv: Introduce PBMT field to PTDUMP |
 | [d231950d](https://github.com/RVCK-Project/rvck/commit/d231950d7c678c04ae7dcfa8b4d95709a70abb6d) | 2023-09-21 | Yu Chien Peter Lin | riscv: Improve PTDUMP to show RSW with non-zero value |
@@ -309,7 +329,7 @@
 | [52752d42](https://github.com/RVCK-Project/rvck/commit/52752d42e61247407191c3a26a5f79ffccf2d96f) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 289 条提交（显示全部）**
+**共 309 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -318,5 +338,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-16 09:07:50*
-*数据来源: 主分支 rvck-6.6@ac7e300d*
+*本页面最后更新于 2026-03-16 22:57:54*
+*数据来源: 主分支 rvck-6.6@b7b3d803*
