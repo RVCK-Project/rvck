@@ -225,7 +225,7 @@ config DWMAC_SUN8I
 	  stmmac device driver. This driver is used for H3/A83T/A64
 	  EMAC ethernet controller.
 
-config DWMAC_XUANTIE
+config DWMAC_THEAD
 	tristate "XuanTie dwmac support"
 	depends on OF && (ARCH_XUANTIE || COMPILE_TEST)
 	select MFD_SYSCON
