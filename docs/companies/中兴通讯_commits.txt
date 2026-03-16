@@ -1,9 +1,19 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 256 个提交
-# 生成时间: 2026-03-10 09:17:20
+# 共 266 个提交
+# 生成时间: 2026-03-16 09:07:50
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+bac7d86a | 2025-10-20 | Xu Lu | RISC-V: KVM: Allow Zalasr extensions for Guest/VM
+1bf715a5 | 2025-07-24 | Aleksa Paunovic | riscv: hwprobe: Add MIPS vendor extension probing
+9a7ee6cc | 2025-04-18 | Cyan Yang | riscv: hwprobe: Add SiFive vendor extension support and probe for xsfqmaccdod and xsfqmaccqoq
+062b1837 | 2025-04-18 | Cyan Yang | riscv: hwprobe: Document SiFive xsfvqmaccdod and xsfvqmaccqoq vendor extensions
+c713fa43 | 2024-11-13 | Charlie Jenkins | riscv: hwprobe: Add thead vendor extension probing
+284960f1 | 2025-10-20 | Xu Lu | riscv: Introduce Zalasr instructions
+28903f85 | 2025-10-20 | Xu Lu | riscv: hwprobe: Export Zalasr extension
+0e48028a | 2025-10-20 | Xu Lu | dt-bindings: riscv: Add Zalasr ISA extension description
+ad6e80c3 | 2025-10-20 | Xu Lu | riscv: Add ISA extension parsing for Zalasr
+890a2bea | 2025-04-21 | Alexandre Ghiti | riscv: hwprobe: export Zabha extension
 98ae7cdd | 2026-02-05 | shenlin | perf vendor events riscv: fix lrw core PMU event mapping
 9f3c4ca3 | 2024-03-01 | Samuel Holland | riscv: mm: Fix prototype to avoid discarding const
 174a18ba | 2024-01-30 | Alexandre Ghiti | riscv: Fix arch_tlbbatch_flush() by clearing the batch cpumask

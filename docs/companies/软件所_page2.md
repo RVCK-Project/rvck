@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 252</li>
-<li><strong>统计时间</strong>: 2026-03-10 09:17:20</li>
+<li><strong>贡献提交数</strong>: 258</li>
+<li><strong>统计时间</strong>: 2026-03-16 09:07:50</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -19,6 +19,12 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [004200a5](https://github.com/RVCK-Project/rvck/commit/004200a540431648b10cf305d737c919bc0ca8f3) | 2024-09-01 | Han Gao | drivers: support virtio_vdmabuf |
+| [412dd151](https://github.com/RVCK-Project/rvck/commit/412dd151b1b90db40430251242b659d8b586dba3) | 2024-09-01 | Han Gao | perf:test:fix PERF_RECORD_* events & perf_sample fields in yocto linux |
+| [f1f1b6d4](https://github.com/RVCK-Project/rvck/commit/f1f1b6d4da852ecba098f9dc84d0340326954853) | 2024-09-01 | Han Gao | move the place of dts "audio-text-memory-region" property |
+| [6f954be2](https://github.com/RVCK-Project/rvck/commit/6f954be29bce2a8f39a3f0ce7e82c0365593f2fd) | 2024-09-01 | Han Gao | defconfig: bt: add hid support |
+| [b3846d02](https://github.com/RVCK-Project/rvck/commit/b3846d020b049d05c0e0071b074b41aa904330e3) | 2024-09-01 | Han Gao | defconfig: bt : add rtl8723ds |
+| [65ef793e](https://github.com/RVCK-Project/rvck/commit/65ef793e32d30a1c6dce59beaf44a91811cc3da2) | 2024-09-01 | Han Gao | driver: bt : Compatible with RTL8723ds'h5 protocol |
 | [c168bb0f](https://github.com/RVCK-Project/rvck/commit/c168bb0faece212917ee74e3ee24ee4c9b50da3a) | 2024-09-01 | Han Gao | driver: bt: add rtl8723ds h5 protocol |
 | [de3dc137](https://github.com/RVCK-Project/rvck/commit/de3dc137d7fb1129464d3ab3f65a2477ef81f6e8) | 2024-09-01 | Han Gao | add audio hibernation ops |
 | [223886f5](https://github.com/RVCK-Project/rvck/commit/223886f510bec187eba95a297be103f17aebc235) | 2024-09-01 | Han Gao | DPU: remove panel unprepare process in disable dsi process |
@@ -73,7 +79,7 @@
 | [0ba3a417](https://github.com/RVCK-Project/rvck/commit/0ba3a4175101ecb087dac66b6b18a4a98af4fe15) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 252 条提交，显示 201-252**
+**共 258 条提交，显示 201-258**
 
 [1](软件所.md) **[2]**
 
@@ -84,5 +90,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-10 09:17:20*
-*数据来源: 主分支 rvck-6.6@32d36de6*
+*本页面最后更新于 2026-03-16 09:07:50*
+*数据来源: 主分支 rvck-6.6@ac7e300d*

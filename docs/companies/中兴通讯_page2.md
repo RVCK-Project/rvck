@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 256</li>
-<li><strong>统计时间</strong>: 2026-03-10 09:17:20</li>
+<li><strong>贡献提交数</strong>: 266</li>
+<li><strong>统计时间</strong>: 2026-03-16 09:07:50</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,16 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [ef98d903](https://github.com/RVCK-Project/rvck/commit/ef98d903e31a2a94ef30f0dc8dfa6903206c086c) | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zihintntl extension for Guest/VM |
+| [0a1c7678](https://github.com/RVCK-Project/rvck/commit/0a1c76782511bc0547cc609c85a92298b655483a) | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zfh[min] extensions for Guest/VM |
+| [f5b495cb](https://github.com/RVCK-Project/rvck/commit/f5b495cbf4be1cf28273a890540b4a88b44a63fb) | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow vector crypto extensions for Guest/VM |
+| [af260bd2](https://github.com/RVCK-Project/rvck/commit/af260bd27f7f931df82716746639514c957cf66a) | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow scalar crypto extensions for Guest/VM |
+| [d9b25527](https://github.com/RVCK-Project/rvck/commit/d9b255271fe5e882271e8e1d6f1cb2a9f9788b7f) | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zbc extension for Guest/VM |
+| [1a5d87d5](https://github.com/RVCK-Project/rvck/commit/1a5d87d559d1951a3d15fc7598a30eddd4674374) | 2023-09-15 | Anup Patel | RISC-V: KVM: Allow Zicond extension for Guest/VM |
+| [07dcae62](https://github.com/RVCK-Project/rvck/commit/07dcae62866fb7596b8b48c0192b137f8dfafda6) | 2023-11-12 | Xiao Wang | riscv: Optimize hweight API with Zbb extension |
+| [8c2aaf95](https://github.com/RVCK-Project/rvck/commit/8c2aaf95581187697405a8ddab6a94ac34f55543) | 2023-10-31 | Xiao Wang | riscv: Optimize bitops with Zbb extension |
+| [882c1e4f](https://github.com/RVCK-Project/rvck/commit/882c1e4f637dd0cfe197ca26b926e56e5d150f08) | 2024-06-21 | Xiao Wang | riscv: Optimize crc32 with Zbc extension |
+| [5bcb23f6](https://github.com/RVCK-Project/rvck/commit/5bcb23f6d0ca65e87e50828f46f30ad52cc54c42) | 2025-02-28 | Robin Murphy | iommu: Handle race with default domain setup |
 | [b2024a6c](https://github.com/RVCK-Project/rvck/commit/b2024a6ce42a0fff58f983a8139d808089bf49fc) | 2023-10-03 | Jason Gunthorpe | iommu: Do not use IOMMU_DOMAIN_DMA if CONFIG_IOMMU_DMA is not enabled |
 | [415caad5](https://github.com/RVCK-Project/rvck/commit/415caad579396ef251436b57e51c9aa87d4657ef) | 2023-09-13 | Jason Gunthorpe | iommu: Convert remaining simple drivers to domain_alloc_paging() |
 | [3e94048e](https://github.com/RVCK-Project/rvck/commit/3e94048e6281053089b8a67348f2073f4b6a0058) | 2023-09-13 | Jason Gunthorpe | iommu: Convert simple drivers with DOMAIN_DMA to domain_alloc_paging() |
@@ -76,7 +86,7 @@
 | [d1658d9a](https://github.com/RVCK-Project/rvck/commit/d1658d9a67bcd8173ab7aecea4981166db078122) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 256 条提交，显示 201-256**
+**共 266 条提交，显示 201-266**
 
 [1](中兴通讯.md) **[2]**
 
@@ -87,5 +97,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-10 09:17:20*
-*数据来源: 主分支 rvck-6.6@32d36de6*
+*本页面最后更新于 2026-03-16 09:07:50*
+*数据来源: 主分支 rvck-6.6@ac7e300d*

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 256</li>
-<li><strong>统计时间</strong>: 2026-03-10 09:17:20</li>
+<li><strong>贡献提交数</strong>: 266</li>
+<li><strong>统计时间</strong>: 2026-03-16 09:07:50</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,16 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [bac7d86a](https://github.com/RVCK-Project/rvck/commit/bac7d86a445fede7ea0d646ef00edde1e9d9afc5) | 2025-10-20 | Xu Lu | RISC-V: KVM: Allow Zalasr extensions for Guest/VM |
+| [1bf715a5](https://github.com/RVCK-Project/rvck/commit/1bf715a52af6263c5e89bb4d5e11c7d22906e66b) | 2025-07-24 | Aleksa Paunovic | riscv: hwprobe: Add MIPS vendor extension probing |
+| [9a7ee6cc](https://github.com/RVCK-Project/rvck/commit/9a7ee6cc0552d3f9fc8f911ce57c9d70756fa97e) | 2025-04-18 | Cyan Yang | riscv: hwprobe: Add SiFive vendor extension support and probe for xsfqmaccdod an... |
+| [062b1837](https://github.com/RVCK-Project/rvck/commit/062b183779a2dbff34f2aadaade386021469c49a) | 2025-04-18 | Cyan Yang | riscv: hwprobe: Document SiFive xsfvqmaccdod and xsfvqmaccqoq vendor extensions |
+| [c713fa43](https://github.com/RVCK-Project/rvck/commit/c713fa4320c5ca5d89011240208d33eee1c78dc2) | 2024-11-13 | Charlie Jenkins | riscv: hwprobe: Add thead vendor extension probing |
+| [284960f1](https://github.com/RVCK-Project/rvck/commit/284960f17d3223f1ef133dec4b982101238793f7) | 2025-10-20 | Xu Lu | riscv: Introduce Zalasr instructions |
+| [28903f85](https://github.com/RVCK-Project/rvck/commit/28903f85e9dbb0148361e3a667515e59349e11c0) | 2025-10-20 | Xu Lu | riscv: hwprobe: Export Zalasr extension |
+| [0e48028a](https://github.com/RVCK-Project/rvck/commit/0e48028a24071b3b8fcb88bc02228313c5483cd6) | 2025-10-20 | Xu Lu | dt-bindings: riscv: Add Zalasr ISA extension description |
+| [ad6e80c3](https://github.com/RVCK-Project/rvck/commit/ad6e80c3a411339e524e54cac685e2479e6d1398) | 2025-10-20 | Xu Lu | riscv: Add ISA extension parsing for Zalasr |
+| [890a2bea](https://github.com/RVCK-Project/rvck/commit/890a2bea55c0b379f160982247cc40180f86a07b) | 2025-04-21 | Alexandre Ghiti | riscv: hwprobe: export Zabha extension |
 | [98ae7cdd](https://github.com/RVCK-Project/rvck/commit/98ae7cddc7906c91a830c2097951861832129c42) | 2026-02-05 | shenlin | perf vendor events riscv: fix lrw core PMU event mapping |
 | [9f3c4ca3](https://github.com/RVCK-Project/rvck/commit/9f3c4ca3839188f2cbe84828b9eda8b735cbc7e3) | 2024-03-01 | Samuel Holland | riscv: mm: Fix prototype to avoid discarding const |
 | [174a18ba](https://github.com/RVCK-Project/rvck/commit/174a18baf88f065fa64543bf3aefd05ec41b69ee) | 2024-01-30 | Alexandre Ghiti | riscv: Fix arch_tlbbatch_flush() by clearing the batch cpumask |
@@ -276,7 +286,7 @@
 | [d1658d9a](https://github.com/RVCK-Project/rvck/commit/d1658d9a67bcd8173ab7aecea4981166db078122) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 256 条提交（显示全部）**
+**共 266 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -285,5 +295,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-10 09:17:20*
-*数据来源: 主分支 rvck-6.6@32d36de6*
+*本页面最后更新于 2026-03-16 09:07:50*
+*数据来源: 主分支 rvck-6.6@ac7e300d*

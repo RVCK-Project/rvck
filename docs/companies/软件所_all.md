@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 252</li>
-<li><strong>统计时间</strong>: 2026-03-10 09:17:20</li>
+<li><strong>贡献提交数</strong>: 258</li>
+<li><strong>统计时间</strong>: 2026-03-16 09:07:50</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -19,6 +19,12 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [28ced177](https://github.com/RVCK-Project/rvck/commit/28ced177937222e3f758ad6bc753d02f78061738) | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add Zicbop extension to get-reg-list test |
+| [023aa1c2](https://github.com/RVCK-Project/rvck/commit/023aa1c27eba56417708a26b20f342015aa54356) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow bfloat16 extension for Guest/VM |
+| [83b969c7](https://github.com/RVCK-Project/rvck/commit/83b969c7581cb499da79ce817d26f4c01a991ca9) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow Zicbop extension for Guest/VM |
+| [c42c1b83](https://github.com/RVCK-Project/rvck/commit/c42c1b83420c9b52d2d0729b4f5652b744a978c1) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Provide UAPI for Zicbop block size |
+| [6a49b6bc](https://github.com/RVCK-Project/rvck/commit/6a49b6bca20bb4e6fc663d272baa180db55b2654) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Change zicbom/zicboz block size to depend on the host isa |
+| [bd4440b7](https://github.com/RVCK-Project/rvck/commit/bd4440b79ab158858ecafb2acaa44b896c3c5d53) | 2025-11-19 | Yao Zihong | riscv: hwprobe: Expose Zicbop extension and its block size |
 | [96f89e2e](https://github.com/RVCK-Project/rvck/commit/96f89e2ecace66f8e13ec19258bfbd3f14e4949c) | 2025-12-11 | Mingzheng Xing | th1520-i2s: Fix kernel panic when reading sysfs registers |
 | [84de32bf](https://github.com/RVCK-Project/rvck/commit/84de32bfc1c72471dbce4d7afa7b6b557f468aee) | 2025-02-26 | Yunhui Cui | RISC-V: hwprobe: Expose Zicbom extension and its block size |
 | [3e4301b0](https://github.com/RVCK-Project/rvck/commit/3e4301b04659ffe829009ad5b993a45deb1b5ab7) | 2024-09-13 | Miquel Sabaté Solà | riscv: hwprobe: export Zicntr and Zihpm extensions |
@@ -273,7 +279,7 @@
 | [0ba3a417](https://github.com/RVCK-Project/rvck/commit/0ba3a4175101ecb087dac66b6b18a4a98af4fe15) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 252 条提交（显示全部）**
+**共 258 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -282,5 +288,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-10 09:17:20*
-*数据来源: 主分支 rvck-6.6@32d36de6*
+*本页面最后更新于 2026-03-16 09:07:50*
+*数据来源: 主分支 rvck-6.6@ac7e300d*

@@ -1,9 +1,15 @@
 # 软件所 提交列表（纯文本视图）
-# 共 252 个提交
-# 生成时间: 2026-03-10 09:17:20
+# 共 258 个提交
+# 生成时间: 2026-03-16 09:07:50
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+28ced177 | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add Zicbop extension to get-reg-list test
+023aa1c2 | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow bfloat16 extension for Guest/VM
+83b969c7 | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow Zicbop extension for Guest/VM
+c42c1b83 | 2025-08-08 | Quan Zhou | RISC-V: KVM: Provide UAPI for Zicbop block size
+6a49b6bc | 2025-08-08 | Quan Zhou | RISC-V: KVM: Change zicbom/zicboz block size to depend on the host isa
+bd4440b7 | 2025-11-19 | Yao Zihong | riscv: hwprobe: Expose Zicbop extension and its block size
 96f89e2e | 2025-12-11 | Mingzheng Xing | th1520-i2s: Fix kernel panic when reading sysfs registers
 84de32bf | 2025-02-26 | Yunhui Cui | RISC-V: hwprobe: Expose Zicbom extension and its block size
 3e4301b0 | 2024-09-13 | Miquel Sabaté Solà | riscv: hwprobe: export Zicntr and Zihpm extensions
