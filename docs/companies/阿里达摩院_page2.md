@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 309</li>
-<li><strong>统计时间</strong>: 2026-03-16 22:57:54</li>
+<li><strong>贡献提交数</strong>: 316</li>
+<li><strong>统计时间</strong>: 2026-03-23 23:58:13</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,13 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [368f1b7b](https://github.com/RVCK-Project/rvck/commit/368f1b7b89c5c240a989cff4bbd80e6326c0a35a) | 2024-09-01 | Xiangyi Zeng | watchdog: dw_wdt: ap watchdog timeout report different strategies |
+| [167e844a](https://github.com/RVCK-Project/rvck/commit/167e844a5b69061a199ce7b2946cdc8118915853) | 2024-09-01 | Xiangyi Zeng | drivers: wdt: drop DW wdt restart function for th1520 soc |
+| [08cd52a7](https://github.com/RVCK-Project/rvck/commit/08cd52a738c60494fed9d33be4323459f9f2b818) | 2024-09-01 | Xiangyi Zeng | drivers: hwmon: bugfix for mr75203 |
+| [8879f62c](https://github.com/RVCK-Project/rvck/commit/8879f62c6c58e2785e0f42418faf65260e609162) | 2024-09-01 | Xiangyi Zeng | spi: spidev: add spidev speed sysfs for debug |
+| [f893c43d](https://github.com/RVCK-Project/rvck/commit/f893c43d75cc72d533bd9e356cf3c497b7b172ba) | 2024-09-01 | Huaming | dtb:th15210: correct vi camera2 path cfg |
+| [729e120d](https://github.com/RVCK-Project/rvck/commit/729e120dbe0e48202769c36f700faa00c75a2509) | 2024-09-01 | David Li | dts: update pin/regulator configuration in rvbook dts file |
+| [4dd71d49](https://github.com/RVCK-Project/rvck/commit/4dd71d498dd0c8fd7c8a2aadc13586672a4966e6) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add th1520-a-val-crash.dts and th1520-lpi4a-product-crash.dts for k... |
 | [b704dd09](https://github.com/RVCK-Project/rvck/commit/b704dd095893a9b587b78c5e6bac5ecddbc79aea) | 2024-09-01 | Xiangyi Zeng | drivers: pinctrl: correct th1520 audio i2c1 bit mapping table |
 | [42d50800](https://github.com/RVCK-Project/rvck/commit/42d5080076184501c69c84964ddd984492f4f926) | 2024-09-01 | Huaming | dtb:th1520: LA Board correct cma cfg |
 | [9f626982](https://github.com/RVCK-Project/rvck/commit/9f626982b8cae92e2c4772d1e91e1ab11a07be37) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add cpu thermal node and device thermal node |
@@ -129,7 +136,7 @@
 | [52752d42](https://github.com/RVCK-Project/rvck/commit/52752d42e61247407191c3a26a5f79ffccf2d96f) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 309 条提交，显示 201-309**
+**共 316 条提交，显示 201-316**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -140,5 +147,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-16 22:57:54*
-*数据来源: 主分支 rvck-6.6@b7b3d803*
+*本页面最后更新于 2026-03-23 23:58:13*
+*数据来源: 主分支 rvck-6.6@a246e153*

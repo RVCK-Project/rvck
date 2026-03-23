@@ -1,9 +1,16 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 309 个提交
-# 生成时间: 2026-03-16 22:57:54
+# 共 316 个提交
+# 生成时间: 2026-03-23 23:58:13
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+6cd32be4 | 2025-02-19 | Michal Wilczynski | riscv: dts: thead: Introduce power domain nodes with aon firmware
+c49f028a | 2024-02-08 | Krzysztof Kozlowski | pmdomain: core: constify of_phandle_args in xlate
+71ec95ba | 2025-03-11 | Michal Wilczynski | dt-bindings: power: Add TH1520 SoC power domains
+4254d45c | 2023-09-11 | Ulf Hansson | pmdomain: Prepare to move Kconfig files into the pmdomain subsystem
+53d7d48b | 2025-03-14 | Arnd Bergmann | pmdomain: thead: fix TH1520_AON_PROTOCOL dependency
+c6dac2a0 | 2025-03-11 | Michal Wilczynski | pmdomain: thead: Add power-domain driver for TH1520
+42059844 | 2025-03-11 | Michal Wilczynski | firmware: thead: Add AON firmware protocol driver
 1b4591a9 | 2026-03-11 | ZhenXing Zhu | Revert "regdump:add regdump support for lpi4a and light-a && rename some dts name from "thead" to "xuantie""
 c89f9683 | 2026-03-11 | ZhenXing Zhu | Revert "drivers/soc/event: Add THEAD TH1520 event driver"
 4c9fa51f | 2026-03-11 | ZhenXing Zhu | Revert "add c906 audio support"

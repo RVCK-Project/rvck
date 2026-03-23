@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 309</li>
-<li><strong>统计时间</strong>: 2026-03-16 22:57:54</li>
+<li><strong>贡献提交数</strong>: 316</li>
+<li><strong>统计时间</strong>: 2026-03-23 23:58:13</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.127</li>
 </ul>
@@ -18,6 +18,13 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [6cd32be4](https://github.com/RVCK-Project/rvck/commit/6cd32be4262d213045948e8beac192f7b00418ff) | 2025-02-19 | Michal Wilczynski | riscv: dts: thead: Introduce power domain nodes with aon firmware |
+| [c49f028a](https://github.com/RVCK-Project/rvck/commit/c49f028a240beb2ac0f4ea337164aa3f12979811) | 2024-02-08 | Krzysztof Kozlowski | pmdomain: core: constify of_phandle_args in xlate |
+| [71ec95ba](https://github.com/RVCK-Project/rvck/commit/71ec95ba137d4a1f0ac41512649efbe17041d6e8) | 2025-03-11 | Michal Wilczynski | dt-bindings: power: Add TH1520 SoC power domains |
+| [4254d45c](https://github.com/RVCK-Project/rvck/commit/4254d45c1a802c7c2a6b8be16e89c2ab2c8f59d0) | 2023-09-11 | Ulf Hansson | pmdomain: Prepare to move Kconfig files into the pmdomain subsystem |
+| [53d7d48b](https://github.com/RVCK-Project/rvck/commit/53d7d48b6251daac8e9ec52e911a92d181956d32) | 2025-03-14 | Arnd Bergmann | pmdomain: thead: fix TH1520_AON_PROTOCOL dependency |
+| [c6dac2a0](https://github.com/RVCK-Project/rvck/commit/c6dac2a02bbb3b86203121aa8561ca21a4ff125a) | 2025-03-11 | Michal Wilczynski | pmdomain: thead: Add power-domain driver for TH1520 |
+| [42059844](https://github.com/RVCK-Project/rvck/commit/42059844f2531e10cf4be94d6af95e0d682bc3c4) | 2025-03-11 | Michal Wilczynski | firmware: thead: Add AON firmware protocol driver |
 | [1b4591a9](https://github.com/RVCK-Project/rvck/commit/1b4591a90ee43fe1386d9664746d9b9999db8720) | 2026-03-11 | ZhenXing Zhu | Revert "regdump:add regdump support for lpi4a and light-a && rename some dts nam... |
 | [c89f9683](https://github.com/RVCK-Project/rvck/commit/c89f9683964e08ab04f05638dbbccd67346de46a) | 2026-03-11 | ZhenXing Zhu | Revert "drivers/soc/event: Add THEAD TH1520 event driver" |
 | [4c9fa51f](https://github.com/RVCK-Project/rvck/commit/4c9fa51fa0a8d612ad2c64ddbd1ac2135ba0065c) | 2026-03-11 | ZhenXing Zhu | Revert "add c906 audio support" |
@@ -329,7 +336,7 @@
 | [52752d42](https://github.com/RVCK-Project/rvck/commit/52752d42e61247407191c3a26a5f79ffccf2d96f) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 309 条提交（显示全部）**
+**共 316 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -338,5 +345,5 @@
 
 ---
 
-*本页面最后更新于 2026-03-16 22:57:54*
-*数据来源: 主分支 rvck-6.6@b7b3d803*
+*本页面最后更新于 2026-03-23 23:58:13*
+*数据来源: 主分支 rvck-6.6@a246e153*
