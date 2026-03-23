@@ -69,10 +69,6 @@
 	clock-frequency = <32768>;
 };
 
-&aonsys_clk {
-	clock-frequency = <73728000>;
-};
-
 &audiosys_clk {
 	clock-frequency = <294912000>;
 };
