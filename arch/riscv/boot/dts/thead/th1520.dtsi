@@ -16,6 +16,7 @@
 #include <dt-bindings/firmware/thead/rsrc.h>
 #include <dt-bindings/thermal/thermal.h>
 #include <dt-bindings/soc/xuantie,th1520-iopmp.h>
+#include <dt-bindings/power/thead,th1520-power.h>
 
 / {
 	compatible = "thead,th1520";
@@ -376,6 +377,13 @@
 				};
 			};
 		};
+	};
+
+	aon: aon {
+		compatible = "thead,th1520-aon";
+		mboxes = <&mbox_910t 1>;
+		mbox-names = "aon";
+		#power-domain-cells = <1>;
 	};
 
 	soc {
