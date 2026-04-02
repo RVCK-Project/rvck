@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 258</li>
-<li><strong>统计时间</strong>: 2026-04-01 01:38:00</li>
+<li><strong>贡献提交数</strong>: 262</li>
+<li><strong>统计时间</strong>: 2026-04-02 23:48:06</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.130</li>
 </ul>
@@ -19,6 +19,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [4c7746a6](https://github.com/RVCK-Project/rvck/commit/4c7746a6bffe7a4896461457d14bd960bdf2ad41) | 2024-09-01 | Han Gao | riscv:kdump: Fix gen /proc/vmcore |
+| [108e3f60](https://github.com/RVCK-Project/rvck/commit/108e3f600e31e47cfe062fd76f2b4453c5277ccc) | 2024-09-01 | Han Gao | driver:tee:add tee_driver_pm_ops |
+| [8f9788de](https://github.com/RVCK-Project/rvck/commit/8f9788de3ef12868f2f45e5ea7c3992c9d77bc28) | 2024-09-01 | Han Gao | driver:tee:Allow to freeze when tee supplicant is freezed |
+| [a10a6d65](https://github.com/RVCK-Project/rvck/commit/a10a6d655e1d205dc05a8e67dda66bc31972b365) | 2024-09-01 | Han Gao | usb: dwc3: th1520.dtsi: bugfix: fix usb str xhci error |
 | [6ebf9086](https://github.com/RVCK-Project/rvck/commit/6ebf90863e14685e49c8d897172eeb3c16e378cd) | 2024-09-01 | Han Gao | drivers: support virtio_vdmabuf |
 | [db1a52a3](https://github.com/RVCK-Project/rvck/commit/db1a52a394405fecdbbb484761f7d0e741ce392b) | 2024-09-01 | Han Gao | perf:test:fix PERF_RECORD_* events & perf_sample fields in yocto linux |
 | [1e5a2f64](https://github.com/RVCK-Project/rvck/commit/1e5a2f645cbf0f46090b508d94b700398c7e71f9) | 2024-09-01 | Han Gao | move the place of dts "audio-text-memory-region" property |
@@ -79,7 +83,7 @@
 | [bb1719e3](https://github.com/RVCK-Project/rvck/commit/bb1719e35718a0e0bec356067d73de407622c6c3) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 258 条提交，显示 201-258**
+**共 262 条提交，显示 201-262**
 
 [1](软件所.md) **[2]**
 
@@ -90,5 +94,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-01 01:38:00*
-*数据来源: 主分支 rvck-6.6@d6487ede*
+*本页面最后更新于 2026-04-02 23:48:06*
+*数据来源: 主分支 rvck-6.6@6988de26*

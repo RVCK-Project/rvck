@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 258</li>
-<li><strong>统计时间</strong>: 2026-04-01 01:38:00</li>
+<li><strong>贡献提交数</strong>: 262</li>
+<li><strong>统计时间</strong>: 2026-04-02 23:48:06</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.130</li>
 </ul>
@@ -19,6 +19,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [bbbd18e4](https://github.com/RVCK-Project/rvck/commit/bbbd18e4848b4eea038a373686f67f00b304ab4f) | 2026-03-30 | jichuan Feng | riscv: k1: add OrangePi RV2 device tree |
+| [5c0e4454](https://github.com/RVCK-Project/rvck/commit/5c0e44544a8ee79b8f40e88ff4ce8aaaa31a4148) | 2026-03-30 | jichuan Feng | riscv: k1: add Milk-V Jupiter device tree |
+| [b4a31e2d](https://github.com/RVCK-Project/rvck/commit/b4a31e2da777fb3cde4edf5f01ef98565de56aed) | 2026-03-30 | jichuan Feng | riscv: k1: add MUSE Pi device tree |
+| [6ab29a51](https://github.com/RVCK-Project/rvck/commit/6ab29a51693861f5f048c5a10a30c7d3fbee28ef) | 2026-03-24 | jichuan Feng | riscv: k1: add MUSE Pi Pro device tree |
 | [c1eb812f](https://github.com/RVCK-Project/rvck/commit/c1eb812f53cccdd9a2a01f15208cde28b2da7aa4) | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add Zicbop extension to get-reg-list test |
 | [195a6b23](https://github.com/RVCK-Project/rvck/commit/195a6b232a5cd92c3262cfc91af8cd24a4cbe538) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow bfloat16 extension for Guest/VM |
 | [0895e30a](https://github.com/RVCK-Project/rvck/commit/0895e30a73bd5b453fc38ebdb2d46885566394fd) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow Zicbop extension for Guest/VM |
@@ -279,7 +283,7 @@
 | [bb1719e3](https://github.com/RVCK-Project/rvck/commit/bb1719e35718a0e0bec356067d73de407622c6c3) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 258 条提交（显示全部）**
+**共 262 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -288,5 +292,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-01 01:38:00*
-*数据来源: 主分支 rvck-6.6@d6487ede*
+*本页面最后更新于 2026-04-02 23:48:06*
+*数据来源: 主分支 rvck-6.6@6988de26*
