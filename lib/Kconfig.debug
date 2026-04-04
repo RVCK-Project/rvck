@@ -2327,6 +2327,17 @@ config STRING_HELPERS_KUNIT_TEST
 	depends on KUNIT
 	default KUNIT_ALL_TESTS
 
+config STRING_KUNIT_BENCH
+	bool "Benchmark string functions at runtime"
+	depends on STRING_KUNIT_TEST
+	help
+	  Enable performance measurement for string functions.
+
+	  This measures the execution efficiency of string functions
+	  during the KUnit test run.
+
+	  If unsure, say N.
+
 config TEST_KSTRTOX
 	tristate "Test kstrto*() family of functions at runtime"
 
