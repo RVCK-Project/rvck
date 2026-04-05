@@ -151,6 +151,7 @@ void start_thread(struct pt_regs *regs, unsigned long pc,
 	 * clear shadow stack state on exec.
 	 * libc will set it later via prctl.
 	 */
+	set_shstk_lock(current, false);
 	set_shstk_status(current, false);
 	set_shstk_base(current, 0, 0);
 	set_active_shstk(current, 0);
@@ -158,6 +159,7 @@ void start_thread(struct pt_regs *regs, unsigned long pc,
 	 * disable indirect branch tracking on exec.
 	 * libc will enable it later via prctl.
 	 */
+	set_indir_lp_lock(current, false);
 	set_indir_lp_status(current, false);
 
 #ifdef CONFIG_64BIT
