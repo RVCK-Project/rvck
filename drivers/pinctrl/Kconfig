@@ -493,6 +493,20 @@ config PINCTRL_TH1520
 	help
 	  This selects the pinctrl driver for XuanTie TH1520 RISC-V SoC.
 
+config PINCTRL_A210
+	tristate "ZhiHe A210 pin controller"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	default ARCH_ZHIHE
+	select GENERIC_PINMUX_FUNCTIONS
+	select GENERIC_PINCONF
+	select PINMUX
+	help
+	  This selects the pinctrl driver for the ZhiHe A210 RISC-V SoC.
+
+	  It provides pin multiplexing and configuration support for
+	  the A210 pad controllers (AON, PADCTRL0-2). Say Y if you
+	  are building a kernel for the ZhiHe A210 platform.
+
 config PINCTRL_ZYNQ
 	bool "Pinctrl driver for Xilinx Zynq"
 	depends on ARCH_ZYNQ
