@@ -9,5 +9,6 @@ subdir-y += spacemit
 subdir-y += starfive
 subdir-y += thead
 subdir-y += ultrarisc
+subdir-y += zhihe
 
 obj-$(CONFIG_BUILTIN_DTB) := $(addsuffix /, $(subdir-y))
