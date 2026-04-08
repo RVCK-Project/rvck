@@ -328,6 +328,17 @@ config RESET_ZYNQ
 	help
 	  This enables the reset controller driver for Xilinx Zynq SoCs.
 
+config RESET_A210
+	bool "ZhiHe A210 reset controller"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	default ARCH_ZHIHE
+	help
+	  Build the reset controller driver for the ZhiHe A210 SoC.
+
+	  This driver provides reset control for the various hardware
+	  blocks in the A210 SoC. Say Y if you are building a kernel
+	  for the ZhiHe A210 platform.
+
 source "drivers/reset/spacemit/Kconfig"
 source "drivers/reset/starfive/Kconfig"
 source "drivers/reset/sti/Kconfig"
