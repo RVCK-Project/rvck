@@ -16,3 +16,4 @@ obj-y					+= tegra/
 obj-y					+= thead/
 obj-y					+= ti/
 obj-y					+= xilinx/
+obj-y					+= zhihe/

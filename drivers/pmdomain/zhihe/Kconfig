@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config A210_POWER_DOMAIN
+	bool "ZhiHe A210 power domain driver"
+	depends on PM && (ARCH_ZHIHE || COMPILE_TEST)
+	select PM_GENERIC_DOMAINS
+	default ARCH_ZHIHE
+	help
+	  This is the power domain driver that controls PCU/PPU for
+	  the A210 SoC. It manages power gating of various hardware
+	  subsystems to reduce overall power consumption.
+	  Say Y here if you are building a kernel for the ZhiHe A210.
