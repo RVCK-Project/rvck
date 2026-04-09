@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config ZHIHE_AON
+	bool "ZhiHe AON protocol driver"
+	depends on ZHIHE_MBOX=y
+	default ARCH_ZHIHE
+	help
+	  ZhiHe AON is a low-level system function which runs a dedicated
+	  ZhiHe RISC-V E902 core to provide power, clock and resource management.
+
+	  This driver manages the IPC interface between the host CPU and the
+	  AON firmware running on the ZhiHe RISC-V E902 core.
+
+config ZHIHE_PROC_DEBUG
+	bool "ZhiHe AON debug"
+	help
+	  Enable debug support for the ZhiHe AON subsystem via procfs.
+	  This provides a /proc interface for reading AON firmware logs
+	  and debugging the always-on subsystem.
+	  Say Y here only if you need AON debugging support.
