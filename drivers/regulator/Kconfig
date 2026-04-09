@@ -1670,4 +1670,15 @@ config REGULATOR_QCOM_LABIBB
 	  boost regulator and IBB can be used as a negative boost regulator
 	  for LCD display panel.
 
+config REGULATOR_ZHIHE_AON
+	tristate "ZhiHe AON regulator"
+	depends on ZHIHE_AON
+	default ZHIHE_AON
+	help
+	  This driver provides support for the ZhiHe virtual regulators
+	  implemented on the ZhiHe AON subsystem.
+
+	  This driver relies on the IPC interface between the host CPU and
+	  the AON firmware running on E902.
+
 endif
