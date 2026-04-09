@@ -314,4 +314,14 @@ config RISCV_SBI_MPXY_MBOX
 	  or HS-mode hypervisor). Say Y here if you want to have this support.
 	  If unsure say N.
 
+config ZHIHE_MBOX
+	tristate "ZhiHe mailbox driver"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	default ARCH_ZHIHE
+	help
+	  Mailbox implementation for ZhiHe SoCs. This driver provides
+	  inter-processor communication channels between the application
+	  processor and the AON (Always-On) subsystem.
+	  Say Y here if you want to have this support. If unsure say N.
+
 endif
