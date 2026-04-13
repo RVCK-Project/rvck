@@ -195,7 +195,7 @@
 #define CPR_SPDIF1_SRST_N_SEL_MSK                       (0x1U << CPR_SPDIF1_SRST_N_SEL_POS)
 #define CPR_SPDIF1_SRST_N_SEL(X)                            (X << CPR_SPDIF1_SRST_N_SEL_POS)
 
-#define TH1520_SPDIF_DMABUF_SIZE     (64 * 1024)
+#define TH1520_TDM_DMABUF_SIZE     (64 * 1024)
 #define SPDIF_STATE_IDLE				0
 #define SPDIF_STATE_TX_RUNNING	    1
 #define SPDIF_STATE_RX_RUNNING	    2
@@ -209,7 +209,6 @@ struct th1520_spdif_priv {
     struct snd_dmaengine_dai_dma_data dma_params_tx;
     struct snd_dmaengine_dai_dma_data dma_params_rx;
     struct device *dev;
-    char name[16];
     unsigned int irq;
     u32 suspend_tx_en;
     u32 suspend_tx_ctl;
