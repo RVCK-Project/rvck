@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 316</li>
-<li><strong>统计时间</strong>: 2026-04-02 23:48:06</li>
+<li><strong>贡献提交数</strong>: 320</li>
+<li><strong>统计时间</strong>: 2026-04-13 23:20:26</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.130</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [560068bc](https://github.com/RVCK-Project/rvck/commit/560068bc8418d20c2473c365b75275fe8648b6bd) | 2024-09-01 | Xiangyi Zeng | drivers: dma: change dw dma runtime pm to sync |
+| [fa63c64b](https://github.com/RVCK-Project/rvck/commit/fa63c64bd4cb1308a33c1944ae04d5741d270877) | 2024-09-01 | Xiangyi Zeng | audio: th1520: fix i2s pause/resume dma fail |
+| [b770cb0c](https://github.com/RVCK-Project/rvck/commit/b770cb0ce3d4cb1e34e47f11b21056ec141f250f) | 2024-09-01 | Hao Li | dma: dw-axi-dmac: fix multi-channel dmatest fail |
+| [49ff927f](https://github.com/RVCK-Project/rvck/commit/49ff927fcd006e3cf294ab57da4552b4852d9ef8) | 2024-09-01 | Xiangyi Zeng | audio: th1520: resolve the dma error problem when ap i2s audio stop play |
 | [cff42c36](https://github.com/RVCK-Project/rvck/commit/cff42c36f337630c72844611eea863c832fa3e2f) | 2024-09-01 | Xiangyi Zeng | watchdog: dw_wdt: ap watchdog timeout report different strategies |
 | [0339e497](https://github.com/RVCK-Project/rvck/commit/0339e497f0d6618476ba9acf25e81748203b3b1a) | 2024-09-01 | Xiangyi Zeng | drivers: wdt: drop DW wdt restart function for th1520 soc |
 | [adaed1e9](https://github.com/RVCK-Project/rvck/commit/adaed1e9f01a13e499af4dda48f709f9f4ad178f) | 2024-09-01 | Xiangyi Zeng | drivers: hwmon: bugfix for mr75203 |
@@ -136,7 +140,7 @@
 | [bb40d965](https://github.com/RVCK-Project/rvck/commit/bb40d965a302b8058b2efe7bd3a07ecce667eaa3) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 316 条提交，显示 201-316**
+**共 320 条提交，显示 201-320**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -147,5 +151,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-02 23:48:06*
-*数据来源: 主分支 rvck-6.6@6988de26*
+*本页面最后更新于 2026-04-13 23:20:26*
+*数据来源: 主分支 rvck-6.6@99789bf4*

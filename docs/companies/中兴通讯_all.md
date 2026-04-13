@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 300</li>
-<li><strong>统计时间</strong>: 2026-04-02 23:48:06</li>
+<li><strong>贡献提交数</strong>: 329</li>
+<li><strong>统计时间</strong>: 2026-04-13 23:20:26</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.130</li>
 </ul>
@@ -18,6 +18,35 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [3fe14768](https://github.com/RVCK-Project/rvck/commit/3fe14768b037db3fa8b6afc2c9576408d0f17863) | 2025-08-18 | Anup Patel | MAINTAINERS: Add entry for RISC-V RPMI and MPXY drivers |
+| [011cb2b1](https://github.com/RVCK-Project/rvck/commit/011cb2b12d42e83b34e3fc07880726bef42999c4) | 2025-08-18 | Anup Patel | RISC-V: Enable GPIO keyboard and event device in RV64 defconfig |
+| [f8bc2877](https://github.com/RVCK-Project/rvck/commit/f8bc2877f1aa82559a01da8f92286d09952ea730) | 2025-08-18 | Sunil V L | irqchip/riscv-rpmi-sysmsi: Add ACPI support |
+| [ea039b9b](https://github.com/RVCK-Project/rvck/commit/ea039b9b6bd46ab11834c4c639e3f1023f93a772) | 2025-08-18 | Sunil V L | mailbox/riscv-sbi-mpxy: Add ACPI support |
+| [1235b3c7](https://github.com/RVCK-Project/rvck/commit/1235b3c7478429b0655161fe7e0583d0b7ec9662) | 2025-08-18 | Sunil V L | irqchip/irq-riscv-imsic-early: Export imsic_acpi_get_fwnode() |
+| [1f9f38d0](https://github.com/RVCK-Project/rvck/commit/1f9f38d062955c6ba6a2d48f9951293636522135) | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add RPMI System MSI to GSI mapping |
+| [7f317ef5](https://github.com/RVCK-Project/rvck/commit/7f317ef5e74fd242ab657e63ace748461b41502b) | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add support to update gsi range |
+| [f25000a6](https://github.com/RVCK-Project/rvck/commit/f25000a6e5677f5f6c868797e21ce461993a31b0) | 2025-08-18 | Sunil V L | ACPI: RISC-V: Create interrupt controller list in sorted order |
+| [d58a8982](https://github.com/RVCK-Project/rvck/commit/d58a8982b12ffb57f8de5616c64f154d454c405e) | 2025-08-18 | Sunil V L | ACPI: scan: Update honor list for RPMI System MSI |
+| [a45de01b](https://github.com/RVCK-Project/rvck/commit/a45de01b877986460015e7b5d712f834618c77ae) | 2025-08-18 | Sunil V L | ACPI: Add support for nargs_prop in acpi_fwnode_get_reference_args() |
+| [33538ef0](https://github.com/RVCK-Project/rvck/commit/33538ef0f6330ac647cf20e94c0c8d8b88d4a056) | 2025-08-18 | Sunil V L | ACPI: property: Refactor acpi_fwnode_get_reference_args() to support nargs_prop |
+| [fbcccfe2](https://github.com/RVCK-Project/rvck/commit/fbcccfe2a680be68ee50c22dbc44892422faffff) | 2025-08-18 | Anup Patel | irqchip: Add driver for the RPMI system MSI service group |
+| [9bc99a50](https://github.com/RVCK-Project/rvck/commit/9bc99a502fe3961d7a20717c6c398908a9e08400) | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI interrupt controller bindings |
+| [090bbf16](https://github.com/RVCK-Project/rvck/commit/090bbf166568c9c2fda0b6c860b723d4738f6e22) | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI message proxy bindings |
+| [ae46fec7](https://github.com/RVCK-Project/rvck/commit/ae46fec72d1c130c36c38930c558b4290c9e8dea) | 2025-08-18 | Rahul Pathak | clk: Add clock driver for the RISC-V RPMI clock service group |
+| [cf37a193](https://github.com/RVCK-Project/rvck/commit/cf37a1938e475ca357d1ee0de89256cbb47deb65) | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service controller bindings |
+| [8464d881](https://github.com/RVCK-Project/rvck/commit/8464d881cd7d11f30c5da78dad38465ba0e0d846) | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service message proxy bindings |
+| [b54f19bf](https://github.com/RVCK-Project/rvck/commit/b54f19bfd1d5fc6b00368ea6e34afa3572409043) | 2025-08-18 | Anup Patel | mailbox: Add RISC-V SBI message proxy (MPXY) based mailbox driver |
+| [f32c71af](https://github.com/RVCK-Project/rvck/commit/f32c71af14f8ebcf11d3d6bb292e6a6542c3dfa1) | 2025-08-18 | Anup Patel | byteorder: Add memcpy_to_le32() and memcpy_from_le32() |
+| [f3fe64f0](https://github.com/RVCK-Project/rvck/commit/f3fe64f02c2381e0465cb70868ea154f2d2f3b46) | 2025-08-18 | Anup Patel | mailbox: Add common header for RPMI messages sent via mailbox |
+| [7a1330c7](https://github.com/RVCK-Project/rvck/commit/7a1330c772fae0190b6e68a109ca145270b8ed96) | 2025-08-18 | Anup Patel | RISC-V: Add defines for the SBI message proxy extension |
+| [73e23441](https://github.com/RVCK-Project/rvck/commit/73e234416d1caf239afdad05043aa7a43e886b32) | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RISC-V SBI MPXY extension |
+| [b7727e1f](https://github.com/RVCK-Project/rvck/commit/b7727e1ffa189c9ba243f8541b94bcf61b1f43f8) | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RPMI shared memory transport |
+| [4248c342](https://github.com/RVCK-Project/rvck/commit/4248c3422ce7f78f641029655d6f1b067df45a96) | 2025-02-12 | Andy Shevchenko | driver core: Split devres APIs to device/devres.h |
+| [d49d2895](https://github.com/RVCK-Project/rvck/commit/d49d28950359f722003545d8f8d695619e3d2c1f) | 2023-12-26 | Tanzir Hasan | lib/string: shrink lib/string.i via IWYU |
+| [93217881](https://github.com/RVCK-Project/rvck/commit/932178816e19c6df5e07a74dd1e475604990aa65) | 2023-12-26 | Tanzir Hasan | kernel.h: removed REPEAT_BYTE from kernel.h |
+| [d41a4816](https://github.com/RVCK-Project/rvck/commit/d41a4816e565735ebd6ac120d26d945a319a7501) | 2024-06-06 | Nuno Sa | dev_printk: add new dev_err_probe() helpers |
+| [e0706902](https://github.com/RVCK-Project/rvck/commit/e07069022a290f4f0582685651be2159a16ba8d4) | 2025-04-09 | Sakari Ailus | Documentation: ACPI: Use all-string data node references |
+| [04d7cb5e](https://github.com/RVCK-Project/rvck/commit/04d7cb5e2e5a8ed28dcdcb1ce08da97cdb597e2c) | 2023-11-06 | Rafael J. Wysocki | ACPI: property: Support using strings in reference properties |
 | [d6487ede](https://github.com/RVCK-Project/rvck/commit/d6487ede665c8a54109f05c2c3bc7596c5aa8f8b) | 2025-06-20 | Nam Cao | Revert "riscv: misaligned: fix sleeping function called during misaligned access... |
 | [1da2aad4](https://github.com/RVCK-Project/rvck/commit/1da2aad4dba653cbc25aa628e5de1b3619cdccf0) | 2025-06-20 | Alexandre Ghiti | riscv: Move all duplicate insn parsing macros into asm/insn.h |
 | [523248bb](https://github.com/RVCK-Project/rvck/commit/523248bb76194671aa1a10a60bf0ccd1e0106286) | 2025-06-20 | Alexandre Ghiti | riscv: Strengthen duplicate and inconsistent definition of RV_X() |
@@ -320,7 +349,7 @@
 | [3e33cff9](https://github.com/RVCK-Project/rvck/commit/3e33cff9c961a29335bf4df4c34e50ee573a36f5) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 300 条提交（显示全部）**
+**共 329 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -329,5 +358,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-02 23:48:06*
-*数据来源: 主分支 rvck-6.6@6988de26*
+*本页面最后更新于 2026-04-13 23:20:26*
+*数据来源: 主分支 rvck-6.6@99789bf4*

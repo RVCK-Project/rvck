@@ -1,9 +1,38 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 300 个提交
-# 生成时间: 2026-04-02 23:48:06
+# 共 329 个提交
+# 生成时间: 2026-04-13 23:20:26
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+3fe14768 | 2025-08-18 | Anup Patel | MAINTAINERS: Add entry for RISC-V RPMI and MPXY drivers
+011cb2b1 | 2025-08-18 | Anup Patel | RISC-V: Enable GPIO keyboard and event device in RV64 defconfig
+f8bc2877 | 2025-08-18 | Sunil V L | irqchip/riscv-rpmi-sysmsi: Add ACPI support
+ea039b9b | 2025-08-18 | Sunil V L | mailbox/riscv-sbi-mpxy: Add ACPI support
+1235b3c7 | 2025-08-18 | Sunil V L | irqchip/irq-riscv-imsic-early: Export imsic_acpi_get_fwnode()
+1f9f38d0 | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add RPMI System MSI to GSI mapping
+7f317ef5 | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add support to update gsi range
+f25000a6 | 2025-08-18 | Sunil V L | ACPI: RISC-V: Create interrupt controller list in sorted order
+d58a8982 | 2025-08-18 | Sunil V L | ACPI: scan: Update honor list for RPMI System MSI
+a45de01b | 2025-08-18 | Sunil V L | ACPI: Add support for nargs_prop in acpi_fwnode_get_reference_args()
+33538ef0 | 2025-08-18 | Sunil V L | ACPI: property: Refactor acpi_fwnode_get_reference_args() to support nargs_prop
+fbcccfe2 | 2025-08-18 | Anup Patel | irqchip: Add driver for the RPMI system MSI service group
+9bc99a50 | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI interrupt controller bindings
+090bbf16 | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI message proxy bindings
+ae46fec7 | 2025-08-18 | Rahul Pathak | clk: Add clock driver for the RISC-V RPMI clock service group
+cf37a193 | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service controller bindings
+8464d881 | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service message proxy bindings
+b54f19bf | 2025-08-18 | Anup Patel | mailbox: Add RISC-V SBI message proxy (MPXY) based mailbox driver
+f32c71af | 2025-08-18 | Anup Patel | byteorder: Add memcpy_to_le32() and memcpy_from_le32()
+f3fe64f0 | 2025-08-18 | Anup Patel | mailbox: Add common header for RPMI messages sent via mailbox
+7a1330c7 | 2025-08-18 | Anup Patel | RISC-V: Add defines for the SBI message proxy extension
+73e23441 | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RISC-V SBI MPXY extension
+b7727e1f | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RPMI shared memory transport
+4248c342 | 2025-02-12 | Andy Shevchenko | driver core: Split devres APIs to device/devres.h
+d49d2895 | 2023-12-26 | Tanzir Hasan | lib/string: shrink lib/string.i via IWYU
+93217881 | 2023-12-26 | Tanzir Hasan | kernel.h: removed REPEAT_BYTE from kernel.h
+d41a4816 | 2024-06-06 | Nuno Sa | dev_printk: add new dev_err_probe() helpers
+e0706902 | 2025-04-09 | Sakari Ailus | Documentation: ACPI: Use all-string data node references
+04d7cb5e | 2023-11-06 | Rafael J. Wysocki | ACPI: property: Support using strings in reference properties
 d6487ede | 2025-06-20 | Nam Cao | Revert "riscv: misaligned: fix sleeping function called during misaligned access handling"
 1da2aad4 | 2025-06-20 | Alexandre Ghiti | riscv: Move all duplicate insn parsing macros into asm/insn.h
 523248bb | 2025-06-20 | Alexandre Ghiti | riscv: Strengthen duplicate and inconsistent definition of RV_X()

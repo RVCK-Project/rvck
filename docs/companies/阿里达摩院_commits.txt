@@ -1,9 +1,13 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 316 个提交
-# 生成时间: 2026-04-02 23:48:06
+# 共 320 个提交
+# 生成时间: 2026-04-13 23:20:26
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+5a3bfc97 | 2026-03-12 | ZhenXing Zhu | Revert "i2s: add i2s driver for XuanTie TH1520 SoC"
+1b737462 | 2026-03-12 | ZhenXing Zhu | Revert "audio: th1520: add tdm driver for XuanTie TH1520 SoC"
+b27f63a6 | 2026-03-12 | ZhenXing Zhu | Revert "dts: audio: to support i2s-8ch feature"
+2b8d0b18 | 2026-03-12 | ZhenXing Zhu | Revert "audio: th1520: to support tdm/spdif feature"
 ef5109cd | 2025-02-19 | Michal Wilczynski | riscv: dts: thead: Introduce power domain nodes with aon firmware
 ff9b00a6 | 2024-02-08 | Krzysztof Kozlowski | pmdomain: core: constify of_phandle_args in xlate
 896a2ca0 | 2025-03-11 | Michal Wilczynski | dt-bindings: power: Add TH1520 SoC power domains

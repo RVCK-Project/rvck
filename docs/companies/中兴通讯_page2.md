@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 300</li>
-<li><strong>统计时间</strong>: 2026-04-02 23:48:06</li>
+<li><strong>贡献提交数</strong>: 329</li>
+<li><strong>统计时间</strong>: 2026-04-13 23:20:26</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.130</li>
 </ul>
@@ -18,6 +18,35 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [beb84a62](https://github.com/RVCK-Project/rvck/commit/beb84a628d2c61211171ff8f55f9ac2c726e06d9) | 2024-03-13 | Xiao Wang | riscv: uaccess: Relax the threshold for fast path |
+| [1168b1a4](https://github.com/RVCK-Project/rvck/commit/1168b1a4f94ad137f322cbeb06d583d1cbd47b40) | 2024-03-13 | Xiao Wang | riscv: uaccess: Allow the last potential unrolled copy |
+| [2e4cf175](https://github.com/RVCK-Project/rvck/commit/2e4cf1755f4df03e611bf8ae395782f58b146771) | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps |
+| [3d836196](https://github.com/RVCK-Project/rvck/commit/3d836196ea9ca5a59e95a379b7c23cd1cb5b59c9) | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events |
+| [ae0ad467](https://github.com/RVCK-Project/rvck/commit/ae0ad467eb3f7ad4c6d15cf12e6e59aa6a13f7e9) | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest |
+| [c7ad2cd1](https://github.com/RVCK-Project/rvck/commit/c7ad2cd144aaa3c2c88ec7f78147db56c4e8dcbc) | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys |
+| [f47c841c](https://github.com/RVCK-Project/rvck/commit/f47c841ce3f79e74e481df29a19529deb671260d) | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver |
+| [7b0cf4e5](https://github.com/RVCK-Project/rvck/commit/7b0cf4e5b85565d665ec87f5532716bb4702569d) | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it |
+| [5cf8bec5](https://github.com/RVCK-Project/rvck/commit/5cf8bec5d4385c9241718cd497ee639ebca6d0e7) | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi |
+| [98d62f3d](https://github.com/RVCK-Project/rvck/commit/98d62f3dd71a9bc8dce2ff43977991a53b45b6f9) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Paging domain support |
+| [07b0397a](https://github.com/RVCK-Project/rvck/commit/07b0397a4a884ee21ddcd1f6fbf9e7ce529f703f) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Command and fault queue support |
+| [8c9c276a](https://github.com/RVCK-Project/rvck/commit/8c9c276afc26f0124cc1fa1c0ab15651dcedc743) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Device directory management. |
+| [e930cca4](https://github.com/RVCK-Project/rvck/commit/e930cca4603680e82d5079f4ec2c6414d9f53cef) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Enable IOMMU registration and device probe. |
+| [97b10696](https://github.com/RVCK-Project/rvck/commit/97b10696136deb5bef5718266065eb3428dc36f6) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU PCIe device driver |
+| [97d07574](https://github.com/RVCK-Project/rvck/commit/97d07574e1831d8801650bcc43acd9ff190ac70f) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU platform device driver |
+| [267460a0](https://github.com/RVCK-Project/rvck/commit/267460a08fecd10b6b57ce38af277a3f3481dd86) | 2024-10-15 | Tomasz Jeznach | dt-bindings: iommu: riscv: Add bindings for RISC-V IOMMU |
+| [4913eec3](https://github.com/RVCK-Project/rvck/commit/4913eec30f82b1be395c257aed19b46a2b05be93) | 2024-04-13 | Pasha Tatashin | iommu/vt-d: add wrapper functions for page allocations |
+| [9b3fe121](https://github.com/RVCK-Project/rvck/commit/9b3fe12105ddbd93b34a07ae76f98c9f827e5622) | 2024-02-16 | Krzysztof Kozlowski | iommu: constify of_phandle_args in xlate |
+| [42a22077](https://github.com/RVCK-Project/rvck/commit/42a22077eb3af2e26d6a609bd07be0968e8cab6c) | 2023-11-22 | Matt Coster | sizes.h: Add entries between SZ_32G and SZ_64T |
+| [cd889f81](https://github.com/RVCK-Project/rvck/commit/cd889f816af95152f25c1b1ab6977fde71bf1dde) | 2024-03-05 | Lu Baolu | iommu: Add static iommu_ops-\>release_domain |
+| [51e21700](https://github.com/RVCK-Project/rvck/commit/51e21700a5cf4566017f9a0c0c29b095f523b2c4) | 2023-09-27 | Jason Gunthorpe | iommufd: Convert to alloc_domain_paging() |
+| [2b16efa0](https://github.com/RVCK-Project/rvck/commit/2b16efa0dd7a67590b78a56f02b359a4b83576f2) | 2024-04-13 | Pasha Tatashin | iommu: Move IOMMU_DOMAIN_BLOCKED global statics to ops-\>blocked_domain |
+| [5ccc2cbe](https://github.com/RVCK-Project/rvck/commit/5ccc2cbed4847b249013be9f806d2deb2cdb798b) | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new userspace mappings with Svvpt... |
+| [27ba2841](https://github.com/RVCK-Project/rvck/commit/27ba2841f2c7af027a4842c530c7136cb4e9938a) | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new vmalloc mappings |
+| [c0c08dea](https://github.com/RVCK-Project/rvck/commit/c0c08dea4498112014e027d3d082aa8850a0bb5b) | 2023-10-20 | Anup Patel | KVM: riscv: selftests: Add SBI DBCN extension to get-reg-list test |
+| [7005191b](https://github.com/RVCK-Project/rvck/commit/7005191b5f848494c20d9bbe8101081b0779dc4d) | 2022-07-22 | Anup Patel | RISC-V: KVM: Forward SBI DBCN extension to user-space |
+| [d85e228f](https://github.com/RVCK-Project/rvck/commit/d85e228f224a4107bb215e0dde41bfd6892a546b) | 2023-10-11 | Anup Patel | RISC-V: KVM: Allow some SBI extensions to be disabled by default |
+| [ca793690](https://github.com/RVCK-Project/rvck/commit/ca7936901cdca166275f532c3c591643255d2df1) | 2023-10-10 | Anup Patel | RISC-V: KVM: Change the SBI specification version to v2.0 |
+| [91514c3c](https://github.com/RVCK-Project/rvck/commit/91514c3c417fafadf438a9dab964caa2436fd848) | 2022-07-22 | Anup Patel | RISC-V: Add defines for SBI debug console extension |
 | [ed4aabf1](https://github.com/RVCK-Project/rvck/commit/ed4aabf106e883826d73db65c548e9a90a6264fe) | 2023-11-24 | Anup Patel | RISC-V: Enable SBI based earlycon support |
 | [089837fd](https://github.com/RVCK-Project/rvck/commit/089837fdef905128554f127e942566c8362370e4) | 2023-11-24 | Atish Patra | tty: Add SBI debug console support to HVC SBI driver |
 | [f23517eb](https://github.com/RVCK-Project/rvck/commit/f23517eb69621dc142c50b82aaafd69381cadfd2) | 2023-11-24 | Anup Patel | tty/serial: Add RISC-V SBI debug console based earlycon |
@@ -120,7 +149,7 @@
 | [3e33cff9](https://github.com/RVCK-Project/rvck/commit/3e33cff9c961a29335bf4df4c34e50ee573a36f5) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 300 条提交，显示 201-300**
+**共 329 条提交，显示 201-329**
 
 [1](中兴通讯.md) **[2]**
 
@@ -131,5 +160,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-02 23:48:06*
-*数据来源: 主分支 rvck-6.6@6988de26*
+*本页面最后更新于 2026-04-13 23:20:26*
+*数据来源: 主分支 rvck-6.6@99789bf4*
