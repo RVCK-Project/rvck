@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 320</li>
-<li><strong>统计时间</strong>: 2026-04-13 23:20:26</li>
+<li><strong>贡献提交数</strong>: 321</li>
+<li><strong>统计时间</strong>: 2026-04-14 22:18:37</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.130</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [1b29fd65](https://github.com/RVCK-Project/rvck/commit/1b29fd6556ac1a71b6a4bc8617bb03d6d8a782ce) | 2026-03-12 | ZhenXing Zhu | Revert "riscv:dts:thead: Add TH1520 event and watchdog device node" |
 | [5a3bfc97](https://github.com/RVCK-Project/rvck/commit/5a3bfc97363ba406f94ea74c2f0a214505d1ee79) | 2026-03-12 | ZhenXing Zhu | Revert "i2s: add i2s driver for XuanTie TH1520 SoC" |
 | [1b737462](https://github.com/RVCK-Project/rvck/commit/1b737462aa84eb413dd7166797de8161b08e8a54) | 2026-03-12 | ZhenXing Zhu | Revert "audio: th1520: add tdm driver for XuanTie TH1520 SoC" |
 | [b27f63a6](https://github.com/RVCK-Project/rvck/commit/b27f63a63a0611e887bcffed71ca519db109dca1) | 2026-03-12 | ZhenXing Zhu | Revert "dts: audio: to support i2s-8ch feature" |
@@ -340,7 +341,7 @@
 | [bb40d965](https://github.com/RVCK-Project/rvck/commit/bb40d965a302b8058b2efe7bd3a07ecce667eaa3) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 320 条提交（显示全部）**
+**共 321 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -349,5 +350,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-13 23:20:26*
-*数据来源: 主分支 rvck-6.6@99789bf4*
+*本页面最后更新于 2026-04-14 22:18:37*
+*数据来源: 主分支 rvck-6.6@565a6ee1*
