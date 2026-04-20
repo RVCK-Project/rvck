@@ -376,9 +376,11 @@
 	};
 
 	aon: aon {
-		compatible = "thead,th1520-aon";
-		mboxes = <&mbox_910t 1>;
+		compatible = "xuantie,th1520-aon", "thead,th1520-aon";
+		mboxes = <&mbox_910t 1 0>;
 		mbox-names = "aon";
+		opensbi-mboxes = <&mbox_910r>;
+		status = "okay";
 		#power-domain-cells = <1>;
 	};
 
