@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 321</li>
-<li><strong>统计时间</strong>: 2026-04-14 22:18:37</li>
+<li><strong>贡献提交数</strong>: 323</li>
+<li><strong>统计时间</strong>: 2026-04-21 22:02:54</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.130</li>
 </ul>
@@ -18,6 +18,8 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [58bc6f98](https://github.com/RVCK-Project/rvck/commit/58bc6f9813e5807a1a54f3c0512ba3850c665a19) | 2024-09-01 | xianbing Zhu | hibernate:snaoshot: detail show copied pfn info |
+| [b9d26e3a](https://github.com/RVCK-Project/rvck/commit/b9d26e3a1d25282bb41841a08c1ed2f3135b92f0) | 2024-09-01 | xianbing Zhu | hibernate: extended platform ops for all mode |
 | [a899a956](https://github.com/RVCK-Project/rvck/commit/a899a9567931b8a18eddd79fc079e03efbd16bbb) | 2024-09-01 | xianbing Zhu | hibernate: add interface for driver to mark no_save region |
 | [560068bc](https://github.com/RVCK-Project/rvck/commit/560068bc8418d20c2473c365b75275fe8648b6bd) | 2024-09-01 | Xiangyi Zeng | drivers: dma: change dw dma runtime pm to sync |
 | [fa63c64b](https://github.com/RVCK-Project/rvck/commit/fa63c64bd4cb1308a33c1944ae04d5741d270877) | 2024-09-01 | Xiangyi Zeng | audio: th1520: fix i2s pause/resume dma fail |
@@ -141,7 +143,7 @@
 | [bb40d965](https://github.com/RVCK-Project/rvck/commit/bb40d965a302b8058b2efe7bd3a07ecce667eaa3) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 321 条提交，显示 201-321**
+**共 323 条提交，显示 201-323**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -152,5 +154,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-14 22:18:37*
-*数据来源: 主分支 rvck-6.6@565a6ee1*
+*本页面最后更新于 2026-04-21 22:02:54*
+*数据来源: 主分支 rvck-6.6@f48c461b*

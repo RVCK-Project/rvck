@@ -1,9 +1,11 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 321 个提交
-# 生成时间: 2026-04-14 22:18:37
+# 共 323 个提交
+# 生成时间: 2026-04-21 22:02:54
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+5bf0f0ac | 2026-04-20 | ZhenXing Zhu | riscv: dts: thead: Fix aon node for OpenSBI compatibility
+1d3a37af | 2026-04-17 | ZhenXing Zhu | clk: Kconfig: Restore thead clock driver Kconfig inclusion
 1b29fd65 | 2026-03-12 | ZhenXing Zhu | Revert "riscv:dts:thead: Add TH1520 event and watchdog device node"
 5a3bfc97 | 2026-03-12 | ZhenXing Zhu | Revert "i2s: add i2s driver for XuanTie TH1520 SoC"
 1b737462 | 2026-03-12 | ZhenXing Zhu | Revert "audio: th1520: add tdm driver for XuanTie TH1520 SoC"
