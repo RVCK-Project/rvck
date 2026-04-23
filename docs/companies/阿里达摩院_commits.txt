@@ -1,9 +1,12 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 323 个提交
-# 生成时间: 2026-04-21 22:02:54
+# 共 326 个提交
+# 生成时间: 2026-04-24 00:45:12
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+987f07d5 | 2026-03-12 | ZhenXing Zhu | Revert "dt-bindings: reset: Document th1520 reset control"
+a1b51162 | 2026-03-12 | ZhenXing Zhu | Revert "reset: Add th1520 reset driver support"
+8ea18f09 | 2026-03-12 | ZhenXing Zhu | Revert "reset: th1520: to support npu/fce reset feature"
 5bf0f0ac | 2026-04-20 | ZhenXing Zhu | riscv: dts: thead: Fix aon node for OpenSBI compatibility
 1d3a37af | 2026-04-17 | ZhenXing Zhu | clk: Kconfig: Restore thead clock driver Kconfig inclusion
 1b29fd65 | 2026-03-12 | ZhenXing Zhu | Revert "riscv:dts:thead: Add TH1520 event and watchdog device node"
