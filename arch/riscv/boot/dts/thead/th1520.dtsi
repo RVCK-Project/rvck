@@ -12,7 +12,6 @@
 #include <dt-bindings/clock/th1520-dspsys.h>
 #include <dt-bindings/clock/th1520-audiosys.h>
 #include <dt-bindings/clock/th1520-miscsys.h>
-#include <dt-bindings/reset/thead,th1520-reset.h>
 #include <dt-bindings/firmware/thead/rsrc.h>
 #include <dt-bindings/thermal/thermal.h>
 #include <dt-bindings/soc/xuantie,th1520-iopmp.h>
@@ -1341,14 +1340,6 @@
 			compatible = "thead,th1520-reset", "syscon";
 			reg = <0xff 0xef014000 0x0 0x1000>;
 			#reset-cells = <1>;
-			status = "okay";
-		};
-
-		vpsys_rst: vpsys-reset-controller@ffecc30000 {
-			compatible = "thead,th1520-vpsys-reset","syscon";
-			reg = <0xff 0xecc30000 0x0 0x1000>;
-			#reset-cells = <1>;
-			status = "okay";
 		};
 
 		spi: spi@ffe700c000 {
