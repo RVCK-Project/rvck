@@ -1,9 +1,12 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 326 个提交
-# 生成时间: 2026-04-24 00:45:12
+# 共 329 个提交
+# 生成时间: 2026-04-27 22:52:46
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+d2425867 | 2025-06-26 | Michal Wilczynski | riscv: dts: thead: th1520: Add GPU clkgen reset to AON node
+ad4b2325 | 2025-03-03 | Michal Wilczynski | reset: thead: Add TH1520 reset controller driver
+6b0cddcf | 2025-03-03 | Michal Wilczynski | dt-bindings: reset: Add T-HEAD TH1520 SoC Reset Controller
 987f07d5 | 2026-03-12 | ZhenXing Zhu | Revert "dt-bindings: reset: Document th1520 reset control"
 a1b51162 | 2026-03-12 | ZhenXing Zhu | Revert "reset: Add th1520 reset driver support"
 8ea18f09 | 2026-03-12 | ZhenXing Zhu | Revert "reset: th1520: to support npu/fce reset feature"

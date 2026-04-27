@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 326</li>
-<li><strong>统计时间</strong>: 2026-04-24 00:45:12</li>
+<li><strong>贡献提交数</strong>: 329</li>
+<li><strong>统计时间</strong>: 2026-04-27 22:52:46</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.130</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [d2425867](https://github.com/RVCK-Project/rvck/commit/d24258678475d08a324a0e0e6412ce7ce2c41100) | 2025-06-26 | Michal Wilczynski | riscv: dts: thead: th1520: Add GPU clkgen reset to AON node |
+| [ad4b2325](https://github.com/RVCK-Project/rvck/commit/ad4b232598552a271d6c440d16d3ca9c05f3657d) | 2025-03-03 | Michal Wilczynski | reset: thead: Add TH1520 reset controller driver |
+| [6b0cddcf](https://github.com/RVCK-Project/rvck/commit/6b0cddcfcb7aeb92aee009d8e87d0b64ba821229) | 2025-03-03 | Michal Wilczynski | dt-bindings: reset: Add T-HEAD TH1520 SoC Reset Controller |
 | [987f07d5](https://github.com/RVCK-Project/rvck/commit/987f07d51470fe5ba5ad6670ba5cdd177c046510) | 2026-03-12 | ZhenXing Zhu | Revert "dt-bindings: reset: Document th1520 reset control" |
 | [a1b51162](https://github.com/RVCK-Project/rvck/commit/a1b511625b49ba4aab7587571a51afad820bb4ee) | 2026-03-12 | ZhenXing Zhu | Revert "reset: Add th1520 reset driver support" |
 | [8ea18f09](https://github.com/RVCK-Project/rvck/commit/8ea18f095ba2092e975b9ee94e2034950cfa396e) | 2026-03-12 | ZhenXing Zhu | Revert "reset: th1520: to support npu/fce reset feature" |
@@ -346,7 +349,7 @@
 | [bb40d965](https://github.com/RVCK-Project/rvck/commit/bb40d965a302b8058b2efe7bd3a07ecce667eaa3) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 326 条提交（显示全部）**
+**共 329 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -355,5 +358,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-24 00:45:12*
-*数据来源: 主分支 rvck-6.6@0c8885da*
+*本页面最后更新于 2026-04-27 22:52:46*
+*数据来源: 主分支 rvck-6.6@7eb9b431*
