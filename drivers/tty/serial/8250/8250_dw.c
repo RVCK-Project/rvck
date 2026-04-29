@@ -49,7 +49,6 @@
 #define DW_UART_QUIRK_IS_DMA_FC		BIT(3)
 #define DW_UART_QUIRK_APMC0D08		BIT(4)
 #define DW_UART_QUIRK_CPR_VALUE		BIT(5)
-#define DW_UART_QUIRK_FIXED_TYPE	BIT(6)
 
 struct dw8250_platform_data {
 	u8 usr_reg;
@@ -492,11 +491,6 @@ static void dw8250_quirks(struct uart_port *p, struct dw8250_data *data)
 		data->data.dma.prepare_tx_dma = dw8250_prepare_tx_dma;
 		data->data.dma.prepare_rx_dma = dw8250_prepare_rx_dma;
 	}
-	if (quirks & DW_UART_QUIRK_FIXED_TYPE) {
-		p->flags |= UPF_FIXED_TYPE;
-		p->type = PORT_16550A;
-		data->skip_autocfg = true;
-	}
 	if (quirks & DW_UART_QUIRK_APMC0D08) {
 		p->iotype = UPIO_MEM32;
 		p->regshift = 2;
@@ -810,7 +804,11 @@ static const struct dw8250_platform_data dw8250_skip_set_rate_data = {
 
 static const struct dw8250_platform_data dw8250_ultrarisc_dp1000_data = {
 	.usr_reg = DW_UART_USR,
-	.quirks = DW_UART_QUIRK_FIXED_TYPE,
+	.cpr_value = FIELD_PREP_CONST(DW_UART_CPR_ABP_DATA_WIDTH, 2) |
+		     DW_UART_CPR_THRE_MODE |
+		     DW_UART_CPR_DMA_EXTRA |
+		     DW_UART_CPR_FIFO_MODE_FROM_SIZE(32),
+	.quirks = DW_UART_QUIRK_CPR_VALUE,
 };
 
 static const struct of_device_id dw8250_of_match[] = {
