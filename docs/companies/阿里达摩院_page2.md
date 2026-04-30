@@ -4,9 +4,9 @@
 <p><strong>📊 统计信息</strong></p>
 <ul>
 <li><strong>贡献提交数</strong>: 329</li>
-<li><strong>统计时间</strong>: 2026-04-27 22:52:46</li>
+<li><strong>统计时间</strong>: 2026-05-01 01:06:15</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
-<li><strong>起始标签</strong>: v6.6.130</li>
+<li><strong>起始标签</strong>: v6.6.137</li>
 </ul>
 </div>
 
@@ -18,135 +18,135 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [cbc30ff3](https://github.com/RVCK-Project/rvck/commit/cbc30ff3c38ce6009d6ae47541b61de10c63b564) | 2024-09-01 | Xiangyi Zeng | dts: th1520: modify kernel memory region, [0x0, 0x20000] is reserved for opensbi |
-| [e30a8bdf](https://github.com/RVCK-Project/rvck/commit/e30a8bdfae050d7c1a4ded43172229efa0284650) | 2024-09-01 | tingming | dts: th1520: to modify rvbook dts |
-| [355f56ae](https://github.com/RVCK-Project/rvck/commit/355f56aecf4b4eae5ebd9c9e70f0192da296d55f) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add adc vref-supply regulator |
-| [26353aef](https://github.com/RVCK-Project/rvck/commit/26353aeff3bf04ae21c6c5dc6929d9850c68042d) | 2024-09-01 | David Li | audio: th1520: to support tdm/spdif feature |
-| [fa420aa7](https://github.com/RVCK-Project/rvck/commit/fa420aa7f0b1f18a7aa3339d08f3ec87832771ec) | 2024-09-01 | David Li | dts: rvbook: to adapt compatible 'thead,th1520' of rvbook |
-| [1309a9f2](https://github.com/RVCK-Project/rvck/commit/1309a9f23c881d26ec7f756260e006760f6bc700) | 2024-09-01 | xianbing Zhu | riscv: hibernate: crash dump memory mark as nosave |
-| [58bc6f98](https://github.com/RVCK-Project/rvck/commit/58bc6f9813e5807a1a54f3c0512ba3850c665a19) | 2024-09-01 | xianbing Zhu | hibernate:snaoshot: detail show copied pfn info |
-| [b9d26e3a](https://github.com/RVCK-Project/rvck/commit/b9d26e3a1d25282bb41841a08c1ed2f3135b92f0) | 2024-09-01 | xianbing Zhu | hibernate: extended platform ops for all mode |
-| [a899a956](https://github.com/RVCK-Project/rvck/commit/a899a9567931b8a18eddd79fc079e03efbd16bbb) | 2024-09-01 | xianbing Zhu | hibernate: add interface for driver to mark no_save region |
-| [560068bc](https://github.com/RVCK-Project/rvck/commit/560068bc8418d20c2473c365b75275fe8648b6bd) | 2024-09-01 | Xiangyi Zeng | drivers: dma: change dw dma runtime pm to sync |
-| [fa63c64b](https://github.com/RVCK-Project/rvck/commit/fa63c64bd4cb1308a33c1944ae04d5741d270877) | 2024-09-01 | Xiangyi Zeng | audio: th1520: fix i2s pause/resume dma fail |
-| [b770cb0c](https://github.com/RVCK-Project/rvck/commit/b770cb0ce3d4cb1e34e47f11b21056ec141f250f) | 2024-09-01 | Hao Li | dma: dw-axi-dmac: fix multi-channel dmatest fail |
-| [49ff927f](https://github.com/RVCK-Project/rvck/commit/49ff927fcd006e3cf294ab57da4552b4852d9ef8) | 2024-09-01 | Xiangyi Zeng | audio: th1520: resolve the dma error problem when ap i2s audio stop play |
-| [cff42c36](https://github.com/RVCK-Project/rvck/commit/cff42c36f337630c72844611eea863c832fa3e2f) | 2024-09-01 | Xiangyi Zeng | watchdog: dw_wdt: ap watchdog timeout report different strategies |
-| [0339e497](https://github.com/RVCK-Project/rvck/commit/0339e497f0d6618476ba9acf25e81748203b3b1a) | 2024-09-01 | Xiangyi Zeng | drivers: wdt: drop DW wdt restart function for th1520 soc |
-| [adaed1e9](https://github.com/RVCK-Project/rvck/commit/adaed1e9f01a13e499af4dda48f709f9f4ad178f) | 2024-09-01 | Xiangyi Zeng | drivers: hwmon: bugfix for mr75203 |
-| [ae45c715](https://github.com/RVCK-Project/rvck/commit/ae45c715fd943939353da9e6556b31e0dcc0d36b) | 2024-09-01 | Xiangyi Zeng | spi: spidev: add spidev speed sysfs for debug |
-| [b848d007](https://github.com/RVCK-Project/rvck/commit/b848d007b3848c2a2c6edd6b7e23b21a21b7c7f2) | 2024-09-01 | Huaming | dtb:th15210: correct vi camera2 path cfg |
-| [f080e245](https://github.com/RVCK-Project/rvck/commit/f080e24576398c858c1749ed46e791e833f84377) | 2024-09-01 | David Li | dts: update pin/regulator configuration in rvbook dts file |
-| [b10c69cc](https://github.com/RVCK-Project/rvck/commit/b10c69ccb4caa82ecab9466cc9917640ce2781d7) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add th1520-a-val-crash.dts and th1520-lpi4a-product-crash.dts for k... |
-| [6605d054](https://github.com/RVCK-Project/rvck/commit/6605d054b2f2ad42ff2ff004fdc17a9a827deadb) | 2024-09-01 | Xiangyi Zeng | drivers: pinctrl: correct th1520 audio i2c1 bit mapping table |
-| [c0a8aba6](https://github.com/RVCK-Project/rvck/commit/c0a8aba620be8a47d5f3b4e3322aa6ce5ab23dbd) | 2024-09-01 | Huaming | dtb:th1520: LA Board correct cma cfg |
-| [0314a483](https://github.com/RVCK-Project/rvck/commit/0314a48329783750615bcff81143b747d7fb2fbb) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add cpu thermal node and device thermal node |
-| [7637bd20](https://github.com/RVCK-Project/rvck/commit/7637bd20912228613dc55675fd0f78b35eb3cedc) | 2024-09-01 | David Li | perf: sync vendor event path with torvalds/linux |
-| [7cbffbd5](https://github.com/RVCK-Project/rvck/commit/7cbffbd5ddecdbdbd371265fbe98504552247e9b) | 2024-09-01 | David Li | dts: audio: to support i2s-8ch feature |
-| [50a3e8df](https://github.com/RVCK-Project/rvck/commit/50a3e8df6c038b9d2464f5f4d2cc025c6c4b32f7) | 2024-09-01 | tingming | th1520: system_monitor: to add system_monitor driver |
-| [6fce6ae3](https://github.com/RVCK-Project/rvck/commit/6fce6ae3111e27735f22af72c1ab3b9b9b3e1560) | 2024-09-01 | David Li | dts: audio: to adapt compatible 'thead,th1520' |
-| [50048d1d](https://github.com/RVCK-Project/rvck/commit/50048d1dc8421e43299fdfe5abe2faabc21e9453) | 2024-09-01 | Huaming | dtb:th1520:light add vi module |
-| [1b2d09b7](https://github.com/RVCK-Project/rvck/commit/1b2d09b71e7f5d8e3b09a149c2dd39146b4be737) | 2024-09-01 | xiaojin.cxj | regdump:add regdump support for lpi4a and light-a && rename some dts name from "... |
-| [0cb1cf5b](https://github.com/RVCK-Project/rvck/commit/0cb1cf5bbb9cdf33b3ead6c45c28fc8e754665e4) | 2024-09-01 | Huaming | driver:i2c:add i2c mode for tx transfer |
-| [58efe13a](https://github.com/RVCK-Project/rvck/commit/58efe13a2410c6b9fd9e446e19ddf604e2f139fc) | 2024-09-01 | David Li | dts: audio: correct audiosys pinctrl name |
-| [80bffb0d](https://github.com/RVCK-Project/rvck/commit/80bffb0da75df306221505425137aa5c7f6b21f9) | 2024-09-01 | David Li | audio: th1520: support audiosys pinctrl feature |
-| [2c0ee0cd](https://github.com/RVCK-Project/rvck/commit/2c0ee0cd3655df564e4394b819896b5770c88b88) | 2024-09-01 | Xiangyi Zeng | dts: th1520: remove usb hub node from th1520-a board |
-| [8b6dafb7](https://github.com/RVCK-Project/rvck/commit/8b6dafb741e3f5c645c46443719c8e76da0baed1) | 2024-09-01 | tingming | hwspinlock: th1520: to add th1520 hwspinlock driver |
-| [3aa8c178](https://github.com/RVCK-Project/rvck/commit/3aa8c1789c59fa4c4129e7ba8a3910514fc545db) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add rambus eip_28 device node |
-| [7de404be](https://github.com/RVCK-Project/rvck/commit/7de404be46b8b98ea3dd0a8709378b8d220458e4) | 2024-09-01 | Esther Z | dts: th1520: add LA regulator support. |
-| [e5a2fb51](https://github.com/RVCK-Project/rvck/commit/e5a2fb5177ca4ccba734e3a24306e4ab6b18f062) | 2024-09-01 | Xiangyi Zeng | drivers:misc:dsmart: add th1520 iso7816 driver |
-| [45bf647e](https://github.com/RVCK-Project/rvck/commit/45bf647e22d0edfdb440c9099d23f3ce9374f8b0) | 2024-09-01 | Xiangyi Zeng | drivers:nvmem:efuse: add th1520 efuse driver |
-| [a6b5eda0](https://github.com/RVCK-Project/rvck/commit/a6b5eda0a03957204829e7b43c1d475232c0c29f) | 2024-09-01 | David Li | audio: th1520: add soundcard dts node of th1520-a-val board |
-| [525c1e9a](https://github.com/RVCK-Project/rvck/commit/525c1e9add476b5d1c7d611fd1357faeac922e86) | 2024-09-01 | tingming | dts: th1520: to add npu device node |
-| [dad29dd2](https://github.com/RVCK-Project/rvck/commit/dad29dd2c0cd6bccd60f49812fbdb2b4a20ef826) | 2024-09-01 | Xiangyi Zeng | riscv:dts:som: add th1520-lpi4a-product and th1520-lpi4a-product-sec dts file |
-| [4105f13f](https://github.com/RVCK-Project/rvck/commit/4105f13f22efba732d744ca6bd87eb7e75c76f34) | 2024-09-01 | Xiangyi Zeng | dts:th1520-a: add th1520-a-val.dts and th1520-a-val-sec.dts |
-| [d402d6cd](https://github.com/RVCK-Project/rvck/commit/d402d6cd6774abeb892f00f089192973634970e5) | 2024-06-21 | Huaming | defconfig:th1520: enable cma config |
-| [f8261d8c](https://github.com/RVCK-Project/rvck/commit/f8261d8c070c5b178984dbf1485d8637ef326c05) | 2024-09-01 | Huaming | dtb:lipi:enable VI module config |
-| [912b9a1e](https://github.com/RVCK-Project/rvck/commit/912b9a1e3b40c65f7b4052d1df99e9a7dd2b93c2) | 2024-09-01 | xianbing Zhu | riscv: config: add MAX_ORDER config for riscv and th1520 |
-| [1abd7313](https://github.com/RVCK-Project/rvck/commit/1abd73130d6b718273b89f1d08d2b4b7167d7d5f) | 2024-09-01 | xianbing Zhu | dts: th1520: add vdec venc and video mem device node |
-| [bd862151](https://github.com/RVCK-Project/rvck/commit/bd86215167d3f95b57ab321fb188973aa8011a5b) | 2024-08-31 | xianbing Zhu | mm: export sysmbol __pte_offset_map_lock for modules outside |
-| [3f932700](https://github.com/RVCK-Project/rvck/commit/3f932700bf4c7b9855c16775727b0dc569c4fc7d) | 2024-08-31 | David Li | audio: th1520: add pa aw87519 driver for XuanTie TH1520 SoC |
-| [13f4823b](https://github.com/RVCK-Project/rvck/commit/13f4823bba0f6c295ddd80486b31578c2c97bed2) | 2024-08-31 | David Li | audio: th1520: add spdif driver for XuanTie TH1520 SoC |
-| [2d1e8ed4](https://github.com/RVCK-Project/rvck/commit/2d1e8ed43dcd7867aed6a8ef8ef7d366e12a2f14) | 2024-08-31 | David Li | audio: th1520: add tdm driver for XuanTie TH1520 SoC |
-| [ce93a5b9](https://github.com/RVCK-Project/rvck/commit/ce93a5b90b2d69960283bf0433429e99a40f46cb) | 2024-09-06 | Guo Ren | riscv: mm: Add support for Svinval extension |
-| [3ddcb3d1](https://github.com/RVCK-Project/rvck/commit/3ddcb3d10732dbf6d58ff4b2443687c2458949f4) | 2024-09-04 | Guo Ren | riscv: Add ACLINT SSWI support |
-| [be0d6634](https://github.com/RVCK-Project/rvck/commit/be0d66342086006a2cb0428f5ec72e6f24455ecb) | 2024-07-29 | forain | drm: Fix HDMI hot-plug problem |
-| [b5e2b52e](https://github.com/RVCK-Project/rvck/commit/b5e2b52ed61730b6ce06f1f67c7ee7dd32338174) | 2024-07-25 | Hao Li | gpu/drm: hdmi: Add hdmi debounce to enhance hdmi plugin/out stable |
-| [3f5e3fb3](https://github.com/RVCK-Project/rvck/commit/3f5e3fb3eac9c94909d9b9a9a3d24472f70dd1f5) | 2024-07-21 | David Li | audio: th1520: fixup compile warning of i2s driver |
-| [3ef209c8](https://github.com/RVCK-Project/rvck/commit/3ef209c8443d0c85e489453521ef640a98f4ed0f) | 2024-07-12 | David Li | dmaengine: dw-axi-dmac: Add support for Xuantie TH1520 DMA |
-| [aa111514](https://github.com/RVCK-Project/rvck/commit/aa1115145db6480d1382e60dcf060ed5146a8929) | 2024-07-04 | Chen Pei | arch:rsicv:select ARCH_HAS_DMA_WRITE_COMBINE |
-| [c6e85b26](https://github.com/RVCK-Project/rvck/commit/c6e85b265fc744c5d74b0692f577dad719722ce4) | 2024-07-01 | Xiangyi Zeng | drivers: pinctrl: correct th1520 audio i2c1 bit mapping table |
-| [8f0d5130](https://github.com/RVCK-Project/rvck/commit/8f0d51303ada77470cbc50709e3a7cb06039d19d) | 2024-06-30 | Huaming | driver:padctrl:correct th1520 gpio_1 24/25 cfg |
-| [8ac60f3b](https://github.com/RVCK-Project/rvck/commit/8ac60f3baf221715c0942c0e99b2fe75edbdc37f) | 2024-07-04 | Xiangyi Zeng | dts: th1520: add adc vref-supply regulator |
-| [85c742f3](https://github.com/RVCK-Project/rvck/commit/85c742f3b4721c581f9b7f8b4178e96cce2f50aa) | 2024-07-04 | Xiangyi Zeng | dts: th1520: add cpu thermal node and device thermal node |
-| [e30a8c7c](https://github.com/RVCK-Project/rvck/commit/e30a8c7c04ae5bab6e31bd2b41980a45e25ecf62) | 2024-07-04 | Xiangyi Zeng | drivers: event: add macro definition to control SW_PANIC event |
-| [a72baf0f](https://github.com/RVCK-Project/rvck/commit/a72baf0fe5f88ee371e4f9cf420791f81249504a) | 2024-06-28 | David Li | audio: th1520: enable soundcard feature |
-| [26296d6e](https://github.com/RVCK-Project/rvck/commit/26296d6e97133d843ec5826a22b7ecb65c5e3324) | 2024-06-27 | David Li | audio: th1520: support audiosys pinctrl feature |
-| [52c63896](https://github.com/RVCK-Project/rvck/commit/52c638969003a821f102f43b213dce965c6afec4) | 2024-06-26 | Xiangyi Zeng | dts: th1520: fix interrupt number config error in dts |
-| [fad99ffd](https://github.com/RVCK-Project/rvck/commit/fad99ffd1c5c148bc65d3f0fb59cf72d1b6932b0) | 2024-06-24 | forain | DPU: add DPU driver for Lichee-Pi-4A board |
-| [496b990c](https://github.com/RVCK-Project/rvck/commit/496b990cf865f027a1a91f6614e1c611fc884519) | 2024-06-23 | tingming | dts: th1520: add npu device node |
-| [0e8ac161](https://github.com/RVCK-Project/rvck/commit/0e8ac1619187225736e65a9f30a8414c0ae1ee02) | 2024-06-21 | David Li | codec: audio: add codec driver for Lichee-Pi-4A board |
-| [45de25d2](https://github.com/RVCK-Project/rvck/commit/45de25d2e2dfa0da24ba3eee4a43e7ed31475894) | 2024-06-20 | Chen Pei | riscv: vector: Fix the boot issue compiled using xuantie-toolchain or upstream-t... |
-| [7006dac7](https://github.com/RVCK-Project/rvck/commit/7006dac795212b55d5fe7775b8ba17c54e4e3967) | 2024-06-19 | Esther Z | drivers: cpufreq: add cpufreq driver. |
-| [3821b248](https://github.com/RVCK-Project/rvck/commit/3821b248d55d44ae9eda5a4817ee5450ae2717c5) | 2024-06-18 | Esther Z | riscv: dts: Introduce lichee-pi-4a fixed regulator support. |
-| [6670f6b7](https://github.com/RVCK-Project/rvck/commit/6670f6b779689aca7b519af4796e26519e909d39) | 2024-06-17 | zhangye | Enable XUANTIE ISA for memcpy performance |
-| [c2dfa7ed](https://github.com/RVCK-Project/rvck/commit/c2dfa7edc9ceeec37d31344ea73818c10093cef7) | 2024-03-27 | Chen Pei | riscv: build: Support compiling kernel using Xuantie toolchain |
-| [06002bad](https://github.com/RVCK-Project/rvck/commit/06002bad0e74b22c6dcd73535b2e76ec1f0d6b71) | 2024-06-17 | David Li | i2s: remove debug message |
-| [fbe85cc7](https://github.com/RVCK-Project/rvck/commit/fbe85cc7a97cd785d1467658869d1dc9abcc5fa0) | 2024-06-17 | Xiangyi Zeng | riscv:dts: fix the aon gpio range configuration error |
-| [0d99c3c2](https://github.com/RVCK-Project/rvck/commit/0d99c3c29f38833c786140d7bbd94148e2aa5d12) | 2024-06-17 | Xiangyi Zeng | riscv:dts: fix spi/qspi1 cs pin duplicate configuration error |
-| [6991e406](https://github.com/RVCK-Project/rvck/commit/6991e406bf577b7e9a8b038d49fcfd513d2310db) | 2024-06-17 | Xiangyi Zeng | riscv:dts: fix the gpio range configuration error |
-| [9ae61828](https://github.com/RVCK-Project/rvck/commit/9ae618283c5e3f43a6920a3632923296d0ee56fd) | 2024-06-16 | Esther Z | drivers: regulator: add th1520 AON virtual regulator control support. |
-| [328d8262](https://github.com/RVCK-Project/rvck/commit/328d8262a37dc2d4b4154d2db9316ced3ee57980) | 2024-06-16 | Esther Z | dt-bindings: add AON resource id headfile |
-| [e26394ea](https://github.com/RVCK-Project/rvck/commit/e26394ea1fa170801e83728c5e8b8183ff1640ec) | 2024-06-16 | Esther Z | drivers: pmdomain: support th1520 Power domain control. |
-| [d3e6b3b1](https://github.com/RVCK-Project/rvck/commit/d3e6b3b1b022e9af8fe0a4bb39d3c4465978f522) | 2024-06-15 | David Li | i2s: add i2s driver for XuanTie TH1520 SoC |
-| [7d35af68](https://github.com/RVCK-Project/rvck/commit/7d35af68ea51c0bf4b27a4628f48add74d3e2bd8) | 2024-06-15 | David Li | configs: xuantie: correct definition of SoC Architecture |
-| [f6dfab52](https://github.com/RVCK-Project/rvck/commit/f6dfab52a9e2cc007994ca83359d4bde9fab06e6) | 2024-06-11 | lst | i2c: designware: add support for hcnt/lcnt got from dt |
-| [21710748](https://github.com/RVCK-Project/rvck/commit/217107488c7df23e3e74306f5d5a2f2433fc51ff) | 2024-06-11 | xiaojin.cxj | add 902 share mem log |
-| [22805057](https://github.com/RVCK-Project/rvck/commit/22805057e569d97b3e1181dbe7a2578e21a0dc9d) | 2024-06-05 | abing | refine thead,th1520-usb.yaml |
-| [320e47dc](https://github.com/RVCK-Project/rvck/commit/320e47dc6c06b88fef06a14b6288df3504e0dda4) | 2024-06-05 | abing | drivers: usb: dwc3: add usb_mode usb_speed param for mode speed change when insm... |
-| [735a553e](https://github.com/RVCK-Project/rvck/commit/735a553e3a69343d5868815fc5a67033da5701f2) | 2024-06-05 | abing | drivers: usb: add dwc3-thead.c |
-| [a4161a94](https://github.com/RVCK-Project/rvck/commit/a4161a94ed81f6236fddf69a3fca705c8a07c0c6) | 2024-06-05 | abing | th1520.dtsi: refine usb dts |
-| [ec9d4cd9](https://github.com/RVCK-Project/rvck/commit/ec9d4cd93d5568626953415c11563338fbe1c28d) | 2024-06-06 | Xiangyi Zeng | riscv:dts:thead: Add TH1520 event and watchdog device node |
-| [da7a466d](https://github.com/RVCK-Project/rvck/commit/da7a466dc44a1eec721b2633c4f626aa0d5c1d4b) | 2024-06-06 | Xiangyi Zeng | dt-bindings:wdt: Add Documentation for THEAD TH1520 pmic watchdog |
-| [4ecc4c19](https://github.com/RVCK-Project/rvck/commit/4ecc4c195443d0ea4b1feede055b2c6cc715373a) | 2024-06-06 | Xiangyi Zeng | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver |
-| [d0d8f91e](https://github.com/RVCK-Project/rvck/commit/d0d8f91e0bcd719526bad1a7bc97a61b821e5d6f) | 2024-06-06 | Xiangyi Zeng | dt-bindings:event: Add Documentation for THEAD TH1520 event driver |
-| [0cce4799](https://github.com/RVCK-Project/rvck/commit/0cce4799a4bafc17a11113419e832449c8526d8f) | 2024-06-06 | Xiangyi Zeng | drivers/soc/event: Add THEAD TH1520 event driver |
-| [61ddf5a5](https://github.com/RVCK-Project/rvck/commit/61ddf5a54a607165063c182b3b5ffa4cf93ff7e3) | 2024-06-07 | xiaojin.cxj | fix rpmsg addr cast warning |
-| [774a7769](https://github.com/RVCK-Project/rvck/commit/774a7769fcba31cccc43c76d1fdd476e97933f8a) | 2024-06-07 | xiaojin.cxj | fix lp32 compile warnoing for rpmsg |
-| [7605078b](https://github.com/RVCK-Project/rvck/commit/7605078b82e2535d4baad9bc6430e5ba453656c2) | 2024-06-07 | xiaojin.cxj | fix proc log warning |
-| [dc14a5bb](https://github.com/RVCK-Project/rvck/commit/dc14a5bbdc368ffcd948a5129888b26350587520) | 2024-06-06 | xiaojin.cxj | fix rpmsg warning |
-| [49ccbbe4](https://github.com/RVCK-Project/rvck/commit/49ccbbe483c303b35c8d9b1af6402a3546a4e167) | 2024-06-06 | xiaojin.cxj | add c906 audio support |
-| [e31eaf57](https://github.com/RVCK-Project/rvck/commit/e31eaf57256be8b4f97a6c160556ad19df21aca2) | 2024-06-05 | xianbing Zhu | net:stmmac: increase timeout for dma reset |
-| [14d97355](https://github.com/RVCK-Project/rvck/commit/14d97355cf008996c9960930054982825ff8e2ed) | 2024-06-05 | xianbing Zhu | stmmac:dwmac-thead: add support for suspend/resume feature |
-| [403ca230](https://github.com/RVCK-Project/rvck/commit/403ca230482069dcb591b594d2b43bdd6dabcf78) | 2024-06-04 | xianbing Zhu | net:dwmac-thead: dd ptp clk set and enable |
-| [d8298da0](https://github.com/RVCK-Project/rvck/commit/d8298da03de32fe93174b8f4dd13af2089c43691) | 2024-06-05 | Esther Z | configs: Enable th1520 mailbox. |
-| [94647578](https://github.com/RVCK-Project/rvck/commit/94647578839051ff5b54c4f79cc8ed7de76942f7) | 2024-06-04 | Esther Z | drivers:ipc: update th1520 rpc msg version 2 |
-| [a5563ee0](https://github.com/RVCK-Project/rvck/commit/a5563ee0af83a9e4d68f59620c88eb9707508750) | 2021-08-10 | fugang.duan | firmware: thead: c910_aon: add th1520 Aon protocol driver |
-| [64d63e43](https://github.com/RVCK-Project/rvck/commit/64d63e43e1322835fa89a06b0ebbc8aba1d95447) | 2024-06-04 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 add delay line in different mode and sdio rxclk del... |
-| [b833abc3](https://github.com/RVCK-Project/rvck/commit/b833abc3e596cfe8e5927894b0c5258ec4f90621) | 2024-06-03 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 larger tuning max loop count to 128 |
-| [a361d615](https://github.com/RVCK-Project/rvck/commit/a361d615aa74150007c461ec750c0087b739f876) | 2024-05-31 | xianbing Zhu | dts: th1520: enable sdio1 for wifi card in lichee-pi-4a |
-| [bf1b5539](https://github.com/RVCK-Project/rvck/commit/bf1b5539393d27032d413481ddc37f7f3f729e03) | 2024-05-31 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 sdhci add fix io voltage 1v8 |
-| [161055c5](https://github.com/RVCK-Project/rvck/commit/161055c54144b8953ec4625b67981153aecdc4a6) | 2024-05-30 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 resolve accss rpmb error in hs400 |
-| [e605d9b2](https://github.com/RVCK-Project/rvck/commit/e605d9b2efdc346d308bc6beba56a18bd3e40688) | 2024-05-30 | Xiangyi Zeng | drivers/dmac: add pm suspend/resume for dma driver |
-| [551bbd63](https://github.com/RVCK-Project/rvck/commit/551bbd630bb611ccae4a447a585171caefb60152) | 2023-08-21 | David Li | audio: th1520: add dma chan str for dmaengine |
-| [26c2fc5a](https://github.com/RVCK-Project/rvck/commit/26c2fc5aab23926cf0a0ac5dd9f0d59d105a9390) | 2024-05-30 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 dmac1 and dmac2 device node |
-| [75a65e1b](https://github.com/RVCK-Project/rvck/commit/75a65e1be51fe08ec1deca64ba9cf4825a86d1d6) | 2023-08-22 | sanyi | STR: fix pca953x resume bug |
-| [a94f6dbc](https://github.com/RVCK-Project/rvck/commit/a94f6dbcdde9deed6c7869490cb065c69e6da1e0) | 2024-05-28 | Xiangyi Zeng | drivers/iio/adc: add sysfs_remove_file when adc driver removed |
-| [74b571e6](https://github.com/RVCK-Project/rvck/commit/74b571e686519255813fbd96997ac06391d81a59) | 2024-05-27 | Xiangyi Zeng | drivers/pvt: add mr75203 driver pm feature and correct temperature coefficient |
-| [b821e875](https://github.com/RVCK-Project/rvck/commit/b821e875e29a90ad3647299e1514fa8806740bce) | 2024-05-27 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 SPI/QSPI device node |
-| [9ec5f429](https://github.com/RVCK-Project/rvck/commit/9ec5f429a0b79da2e4e14518af42e0b3a3b5986e) | 2024-05-27 | Xiangyi Zeng | dt-bindings: spi/qspi: Add Documentation for THEAD TH1520 SPI/QSPI |
-| [bb5f3d4d](https://github.com/RVCK-Project/rvck/commit/bb5f3d4d2debd6a50486a7b918a456535cb37515) | 2024-05-27 | Xiangyi Zeng | drivers/spi: Add THEAD TH1520 QSPI driver |
-| [503c51f9](https://github.com/RVCK-Project/rvck/commit/503c51f92a8ac6d3ff48a5dd8d1eec272da11dc5) | 2024-05-27 | tingming | reset: th1520: to support npu/fce reset feature |
-| [af583548](https://github.com/RVCK-Project/rvck/commit/af583548d56942167c12d9a526f895f2e4094c7a) | 2024-05-19 | Wei Fu | riscv: dts: thead: Add XuanTie TH1520 Mailbox device node |
-| [7b49eaa9](https://github.com/RVCK-Project/rvck/commit/7b49eaa9a0ad19eefce55c97f0c1138d88b93196) | 2024-05-17 | Fugang Duan | mailbox: add XuanTie TH1520 Mailbox IPC driver |
-| [c68ddb2c](https://github.com/RVCK-Project/rvck/commit/c68ddb2c19dc918427b3a1893496b16d8a5feeb0) | 2024-05-19 | Wei Fu | dt-bindings: mailbox: Add a binding file for XuanTie TH1520 Mailbox |
-| [8adddd63](https://github.com/RVCK-Project/rvck/commit/8adddd63513e5731b30c0e83acc23a05184cd044) | 2024-05-22 | tingming | riscv: dts: thead: to add th1520 clk nodes |
-| [b5f08317](https://github.com/RVCK-Project/rvck/commit/b5f08317966dcf2cc5265c846a654552d458354b) | 2024-05-22 | tingming | drivers: clk: to add thead th1520 clk driver |
-| [7bf30373](https://github.com/RVCK-Project/rvck/commit/7bf303735614230a7daa4133d051f0183229f313) | 2024-05-17 | Xiangyi Zeng | dt-bindings: adc: Add Documentation for THEAD TH1520 ADC |
-| [6f0dc7b1](https://github.com/RVCK-Project/rvck/commit/6f0dc7b1ad68eaac4194e91b965358277e5d46ee) | 2024-05-17 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 ADC device node |
-| [87ed9f97](https://github.com/RVCK-Project/rvck/commit/87ed9f97c1e70f8a9356fa4294f1076133263e92) | 2024-05-17 | Xiangyi Zeng | drivers/iio/adc: Add THEAD TH1520 ADC driver |
-| [89ca021d](https://github.com/RVCK-Project/rvck/commit/89ca021dd2a04fe50871171163740b1c773c8f95) | 2024-06-29 | Chen Pei | riscv: ptrace: Fix ptrace using uninitialized riscv_v_vsize |
-| [bb40d965](https://github.com/RVCK-Project/rvck/commit/bb40d965a302b8058b2efe7bd3a07ecce667eaa3) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
+| [7a17fb93](https://github.com/RVCK-Project/rvck/commit/7a17fb93c8ef1cb71b8aa5bf9c79aa68333dec06) | 2024-09-01 | Xiangyi Zeng | dts: th1520: modify kernel memory region, [0x0, 0x20000] is reserved for opensbi |
+| [9dcd301a](https://github.com/RVCK-Project/rvck/commit/9dcd301a2ed5931a07ffb1baba10c86afab5936a) | 2024-09-01 | tingming | dts: th1520: to modify rvbook dts |
+| [904ff87e](https://github.com/RVCK-Project/rvck/commit/904ff87ea435c5e33caf06eee4808bb37469bece) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add adc vref-supply regulator |
+| [0a258c08](https://github.com/RVCK-Project/rvck/commit/0a258c08abbb176a7ba2720ddbc47e13667a7a69) | 2024-09-01 | David Li | audio: th1520: to support tdm/spdif feature |
+| [ec110d6c](https://github.com/RVCK-Project/rvck/commit/ec110d6cbbbedbdfeb8332680e5736afb60ed883) | 2024-09-01 | David Li | dts: rvbook: to adapt compatible 'thead,th1520' of rvbook |
+| [2f554eec](https://github.com/RVCK-Project/rvck/commit/2f554eece29d1f7654bea74c424a7655f8b34de6) | 2024-09-01 | xianbing Zhu | riscv: hibernate: crash dump memory mark as nosave |
+| [fb6f24eb](https://github.com/RVCK-Project/rvck/commit/fb6f24ebd1dea2de052b818f7efb82a05ad0b05b) | 2024-09-01 | xianbing Zhu | hibernate:snaoshot: detail show copied pfn info |
+| [c5fb25ed](https://github.com/RVCK-Project/rvck/commit/c5fb25edd9fc5b3640ba62c3d536260c0e774508) | 2024-09-01 | xianbing Zhu | hibernate: extended platform ops for all mode |
+| [c3cbf612](https://github.com/RVCK-Project/rvck/commit/c3cbf612d2fa8e4bed1a61b2e2bb16e62ce2dbef) | 2024-09-01 | xianbing Zhu | hibernate: add interface for driver to mark no_save region |
+| [0c542f75](https://github.com/RVCK-Project/rvck/commit/0c542f75008a0872093da9fcf0b7c6e340589813) | 2024-09-01 | Xiangyi Zeng | drivers: dma: change dw dma runtime pm to sync |
+| [f65c4299](https://github.com/RVCK-Project/rvck/commit/f65c42994fb5251fbb92bedc765f0a0ce92430e7) | 2024-09-01 | Xiangyi Zeng | audio: th1520: fix i2s pause/resume dma fail |
+| [d776cf34](https://github.com/RVCK-Project/rvck/commit/d776cf340b2f88e484161037581c2a2126ad4a8d) | 2024-09-01 | Hao Li | dma: dw-axi-dmac: fix multi-channel dmatest fail |
+| [492ddfb5](https://github.com/RVCK-Project/rvck/commit/492ddfb5fb4c575d0682e77dc0fe54bdd7ab1cf4) | 2024-09-01 | Xiangyi Zeng | audio: th1520: resolve the dma error problem when ap i2s audio stop play |
+| [882c31c8](https://github.com/RVCK-Project/rvck/commit/882c31c8c7db2c9f86f53db76cfb3eacbfd17b1c) | 2024-09-01 | Xiangyi Zeng | watchdog: dw_wdt: ap watchdog timeout report different strategies |
+| [53ac8acd](https://github.com/RVCK-Project/rvck/commit/53ac8acd02b34b54b8ad45df8e9f6be0c91c0b88) | 2024-09-01 | Xiangyi Zeng | drivers: wdt: drop DW wdt restart function for th1520 soc |
+| [59cc5c1c](https://github.com/RVCK-Project/rvck/commit/59cc5c1cebe72c487bd74abe0975cf54772cae8c) | 2024-09-01 | Xiangyi Zeng | drivers: hwmon: bugfix for mr75203 |
+| [6749228c](https://github.com/RVCK-Project/rvck/commit/6749228c7c3cfd62d2015fdebc661d5b37d5e205) | 2024-09-01 | Xiangyi Zeng | spi: spidev: add spidev speed sysfs for debug |
+| [3ac91b5f](https://github.com/RVCK-Project/rvck/commit/3ac91b5f41181955bdd61a8331fae49487a55188) | 2024-09-01 | Huaming | dtb:th15210: correct vi camera2 path cfg |
+| [4672d747](https://github.com/RVCK-Project/rvck/commit/4672d747c6cb0022ffb6822505c1245b4e8965a8) | 2024-09-01 | David Li | dts: update pin/regulator configuration in rvbook dts file |
+| [de46e976](https://github.com/RVCK-Project/rvck/commit/de46e9760c256e6bca39d6d35aef3854d7c58d72) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add th1520-a-val-crash.dts and th1520-lpi4a-product-crash.dts for k... |
+| [e7a4e249](https://github.com/RVCK-Project/rvck/commit/e7a4e249fdf1e1d6338771e69655a745f8b15f46) | 2024-09-01 | Xiangyi Zeng | drivers: pinctrl: correct th1520 audio i2c1 bit mapping table |
+| [3a08a019](https://github.com/RVCK-Project/rvck/commit/3a08a01967e03fb37a0e062ae06ead167b839702) | 2024-09-01 | Huaming | dtb:th1520: LA Board correct cma cfg |
+| [63dbf5d2](https://github.com/RVCK-Project/rvck/commit/63dbf5d2dfb1ad753270f7d187e64c250481f836) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add cpu thermal node and device thermal node |
+| [f333dc9c](https://github.com/RVCK-Project/rvck/commit/f333dc9c9de86f59e50e50ad62bced60f6976622) | 2024-09-01 | David Li | perf: sync vendor event path with torvalds/linux |
+| [e63701ff](https://github.com/RVCK-Project/rvck/commit/e63701ffe7c6be2a12df90822747908b9bb22b70) | 2024-09-01 | David Li | dts: audio: to support i2s-8ch feature |
+| [cb4f98bc](https://github.com/RVCK-Project/rvck/commit/cb4f98bc035695c2d7f58a1192f6bd2917e7f2ed) | 2024-09-01 | tingming | th1520: system_monitor: to add system_monitor driver |
+| [22aa56ca](https://github.com/RVCK-Project/rvck/commit/22aa56caab394c05b5b5d01aaa7725211063ca8c) | 2024-09-01 | David Li | dts: audio: to adapt compatible 'thead,th1520' |
+| [29f68b3e](https://github.com/RVCK-Project/rvck/commit/29f68b3eb1677f18cb2b4246b7e88d0003d243ba) | 2024-09-01 | Huaming | dtb:th1520:light add vi module |
+| [d891a51e](https://github.com/RVCK-Project/rvck/commit/d891a51e5a58a5415ff9877da12af36752b0a9ca) | 2024-09-01 | xiaojin.cxj | regdump:add regdump support for lpi4a and light-a && rename some dts name from "... |
+| [727c862d](https://github.com/RVCK-Project/rvck/commit/727c862db89aab194cedb86c05eebd787ea48aec) | 2024-09-01 | Huaming | driver:i2c:add i2c mode for tx transfer |
+| [028c690d](https://github.com/RVCK-Project/rvck/commit/028c690d0151fdbc0468913c9ebebb69a9d39092) | 2024-09-01 | David Li | dts: audio: correct audiosys pinctrl name |
+| [99b8ea7c](https://github.com/RVCK-Project/rvck/commit/99b8ea7c4b18c919054ae7c1cb1548d35f25239c) | 2024-09-01 | David Li | audio: th1520: support audiosys pinctrl feature |
+| [d527d436](https://github.com/RVCK-Project/rvck/commit/d527d43659e087399b4db518c3a5b461afea0ac7) | 2024-09-01 | Xiangyi Zeng | dts: th1520: remove usb hub node from th1520-a board |
+| [938adf5c](https://github.com/RVCK-Project/rvck/commit/938adf5cf7b5f7e02bb7652d7e6d1624badeea68) | 2024-09-01 | tingming | hwspinlock: th1520: to add th1520 hwspinlock driver |
+| [e1e17ceb](https://github.com/RVCK-Project/rvck/commit/e1e17ceb950eedf4a8994950438c094011d3b0ee) | 2024-09-01 | Xiangyi Zeng | dts: th1520: add rambus eip_28 device node |
+| [fe61294e](https://github.com/RVCK-Project/rvck/commit/fe61294ebb2dabcd1f77a89137883e785c649ee1) | 2024-09-01 | Esther Z | dts: th1520: add LA regulator support. |
+| [ed90e1ad](https://github.com/RVCK-Project/rvck/commit/ed90e1adbd9f5d7b1cabc86dc54640639e8d80fa) | 2024-09-01 | Xiangyi Zeng | drivers:misc:dsmart: add th1520 iso7816 driver |
+| [99132a12](https://github.com/RVCK-Project/rvck/commit/99132a120bf5d349fb909208319792e6ce6e6b55) | 2024-09-01 | Xiangyi Zeng | drivers:nvmem:efuse: add th1520 efuse driver |
+| [242504f2](https://github.com/RVCK-Project/rvck/commit/242504f2db78aeb4da837ac1c37296ce18ee0254) | 2024-09-01 | David Li | audio: th1520: add soundcard dts node of th1520-a-val board |
+| [af10fb89](https://github.com/RVCK-Project/rvck/commit/af10fb89414976a66da85ca22bc2378066f482ec) | 2024-09-01 | tingming | dts: th1520: to add npu device node |
+| [0b4cd7aa](https://github.com/RVCK-Project/rvck/commit/0b4cd7aae800644c707f7fc4685c7ac301d75468) | 2024-09-01 | Xiangyi Zeng | riscv:dts:som: add th1520-lpi4a-product and th1520-lpi4a-product-sec dts file |
+| [e7fe8f49](https://github.com/RVCK-Project/rvck/commit/e7fe8f49bec647cfba79df3f5cdcb85944714eeb) | 2024-09-01 | Xiangyi Zeng | dts:th1520-a: add th1520-a-val.dts and th1520-a-val-sec.dts |
+| [06f5460e](https://github.com/RVCK-Project/rvck/commit/06f5460e2353897c05dd7872202d3895cb435194) | 2024-06-21 | Huaming | defconfig:th1520: enable cma config |
+| [35b56d4c](https://github.com/RVCK-Project/rvck/commit/35b56d4c6c232e9902e1a60b17a8c1d34dd977a2) | 2024-09-01 | Huaming | dtb:lipi:enable VI module config |
+| [6dfc80f8](https://github.com/RVCK-Project/rvck/commit/6dfc80f8db3f9a04c3468a5a6fafd1780dad3dcf) | 2024-09-01 | xianbing Zhu | riscv: config: add MAX_ORDER config for riscv and th1520 |
+| [8d619cc6](https://github.com/RVCK-Project/rvck/commit/8d619cc6aaa29f9757bf114906d0b9a1c8dea876) | 2024-09-01 | xianbing Zhu | dts: th1520: add vdec venc and video mem device node |
+| [21025fa0](https://github.com/RVCK-Project/rvck/commit/21025fa0e5e56e219729a7719ee61d514988de65) | 2024-08-31 | xianbing Zhu | mm: export sysmbol __pte_offset_map_lock for modules outside |
+| [0410625f](https://github.com/RVCK-Project/rvck/commit/0410625f89b26f87777bcdc61faaae27f0897e87) | 2024-08-31 | David Li | audio: th1520: add pa aw87519 driver for XuanTie TH1520 SoC |
+| [8057fb43](https://github.com/RVCK-Project/rvck/commit/8057fb43e6e1b721db97590d347ed1cde896f816) | 2024-08-31 | David Li | audio: th1520: add spdif driver for XuanTie TH1520 SoC |
+| [ba2dbab6](https://github.com/RVCK-Project/rvck/commit/ba2dbab6bd74ecd67260c0cbcd25421360af07fd) | 2024-08-31 | David Li | audio: th1520: add tdm driver for XuanTie TH1520 SoC |
+| [5ad50e79](https://github.com/RVCK-Project/rvck/commit/5ad50e792cf53c07f3e766def999b118d034ca59) | 2024-09-06 | Guo Ren | riscv: mm: Add support for Svinval extension |
+| [8b410cfc](https://github.com/RVCK-Project/rvck/commit/8b410cfc23372bf4a5b783a99d514d9f3f3e2067) | 2024-09-04 | Guo Ren | riscv: Add ACLINT SSWI support |
+| [5b11ba43](https://github.com/RVCK-Project/rvck/commit/5b11ba436ab1f80b95de3241e1ff85b6575ba8bd) | 2024-07-29 | forain | drm: Fix HDMI hot-plug problem |
+| [1826da37](https://github.com/RVCK-Project/rvck/commit/1826da37cccd9600ba4899bfb6b497c873a46057) | 2024-07-25 | Hao Li | gpu/drm: hdmi: Add hdmi debounce to enhance hdmi plugin/out stable |
+| [beabd722](https://github.com/RVCK-Project/rvck/commit/beabd722d6ea7270f71f02295c3a2d80ae1a319d) | 2024-07-21 | David Li | audio: th1520: fixup compile warning of i2s driver |
+| [a6ad398a](https://github.com/RVCK-Project/rvck/commit/a6ad398a433421fcd4d1099094cc223bc1e70554) | 2024-07-12 | David Li | dmaengine: dw-axi-dmac: Add support for Xuantie TH1520 DMA |
+| [6dd1d0b3](https://github.com/RVCK-Project/rvck/commit/6dd1d0b3f174a7a8cfd70fd05141e43b704e2b6e) | 2024-07-04 | Chen Pei | arch:rsicv:select ARCH_HAS_DMA_WRITE_COMBINE |
+| [6dabc426](https://github.com/RVCK-Project/rvck/commit/6dabc4260000278e7985747ae4a2f24688391eeb) | 2024-07-01 | Xiangyi Zeng | drivers: pinctrl: correct th1520 audio i2c1 bit mapping table |
+| [05c53497](https://github.com/RVCK-Project/rvck/commit/05c53497d20b6236d2d4d7223a7e8f20a6eca360) | 2024-06-30 | Huaming | driver:padctrl:correct th1520 gpio_1 24/25 cfg |
+| [3a72ade6](https://github.com/RVCK-Project/rvck/commit/3a72ade66dfce540f9112e4af05ab5f1fa90bcc6) | 2024-07-04 | Xiangyi Zeng | dts: th1520: add adc vref-supply regulator |
+| [79e39f18](https://github.com/RVCK-Project/rvck/commit/79e39f1882b532073adbbec6214a9f2de2781852) | 2024-07-04 | Xiangyi Zeng | dts: th1520: add cpu thermal node and device thermal node |
+| [1a8d9e88](https://github.com/RVCK-Project/rvck/commit/1a8d9e882bfb7de3e9991baeabb446d29c7210ea) | 2024-07-04 | Xiangyi Zeng | drivers: event: add macro definition to control SW_PANIC event |
+| [486e3fa6](https://github.com/RVCK-Project/rvck/commit/486e3fa65c0d1913c3e8411d01067fe6084e9c1a) | 2024-06-28 | David Li | audio: th1520: enable soundcard feature |
+| [4a82d9bf](https://github.com/RVCK-Project/rvck/commit/4a82d9bf3f4dc60847bbf0e6124695323a2c0372) | 2024-06-27 | David Li | audio: th1520: support audiosys pinctrl feature |
+| [3371b7e4](https://github.com/RVCK-Project/rvck/commit/3371b7e4b22ae0b364a82eb44566c73ca21bb223) | 2024-06-26 | Xiangyi Zeng | dts: th1520: fix interrupt number config error in dts |
+| [e23d4a4f](https://github.com/RVCK-Project/rvck/commit/e23d4a4fae4c2922e81f0ea74d38381bb0ed6cf1) | 2024-06-24 | forain | DPU: add DPU driver for Lichee-Pi-4A board |
+| [cda8dfff](https://github.com/RVCK-Project/rvck/commit/cda8dfff76aa47469620101f2fdf3539da0c7e98) | 2024-06-23 | tingming | dts: th1520: add npu device node |
+| [33a1f1c7](https://github.com/RVCK-Project/rvck/commit/33a1f1c73644739dd76bc752fc7004313c0c48b5) | 2024-06-21 | David Li | codec: audio: add codec driver for Lichee-Pi-4A board |
+| [48b1a03d](https://github.com/RVCK-Project/rvck/commit/48b1a03de222f5d5420e7ba514d045e26a1d86c5) | 2024-06-20 | Chen Pei | riscv: vector: Fix the boot issue compiled using xuantie-toolchain or upstream-t... |
+| [80b8eacd](https://github.com/RVCK-Project/rvck/commit/80b8eacd30d8ee9fed95345f69a34579edd5143e) | 2024-06-19 | Esther Z | drivers: cpufreq: add cpufreq driver. |
+| [d49b60d5](https://github.com/RVCK-Project/rvck/commit/d49b60d5dc2223921b2ccd71b604ff6bb9fba944) | 2024-06-18 | Esther Z | riscv: dts: Introduce lichee-pi-4a fixed regulator support. |
+| [f1ebd4db](https://github.com/RVCK-Project/rvck/commit/f1ebd4db77a15f6850c4267dbc4739b3fa8fc5e0) | 2024-06-17 | zhangye | Enable XUANTIE ISA for memcpy performance |
+| [58e75f51](https://github.com/RVCK-Project/rvck/commit/58e75f518680e4ccc02ab6bfcbee638d1ad1671d) | 2024-03-27 | Chen Pei | riscv: build: Support compiling kernel using Xuantie toolchain |
+| [5bc836db](https://github.com/RVCK-Project/rvck/commit/5bc836db21fb3aa211036350f3639e48b2db5c74) | 2024-06-17 | David Li | i2s: remove debug message |
+| [1c29a57b](https://github.com/RVCK-Project/rvck/commit/1c29a57b713bc810fcab9a393910cc272e13a04d) | 2024-06-17 | Xiangyi Zeng | riscv:dts: fix the aon gpio range configuration error |
+| [73d4764c](https://github.com/RVCK-Project/rvck/commit/73d4764cc87de476f3f86dbb5ee574dec736082c) | 2024-06-17 | Xiangyi Zeng | riscv:dts: fix spi/qspi1 cs pin duplicate configuration error |
+| [91a5619e](https://github.com/RVCK-Project/rvck/commit/91a5619ef140fb809887070668015d6d23c8bc45) | 2024-06-17 | Xiangyi Zeng | riscv:dts: fix the gpio range configuration error |
+| [4a4a497a](https://github.com/RVCK-Project/rvck/commit/4a4a497a9927ed6e200e8ba1df78a92e28acaca6) | 2024-06-16 | Esther Z | drivers: regulator: add th1520 AON virtual regulator control support. |
+| [53e5e5ac](https://github.com/RVCK-Project/rvck/commit/53e5e5ac8ec97123d33b89134e1820c16198511e) | 2024-06-16 | Esther Z | dt-bindings: add AON resource id headfile |
+| [5decf220](https://github.com/RVCK-Project/rvck/commit/5decf220ef0c3331affcd61331f233172e5c6f15) | 2024-06-16 | Esther Z | drivers: pmdomain: support th1520 Power domain control. |
+| [f5e91ae4](https://github.com/RVCK-Project/rvck/commit/f5e91ae48143b66d3a8534255e58fa842f674b1d) | 2024-06-15 | David Li | i2s: add i2s driver for XuanTie TH1520 SoC |
+| [d448c04e](https://github.com/RVCK-Project/rvck/commit/d448c04eb33da0ee23c0c3f4e1df427dfca4d7f3) | 2024-06-15 | David Li | configs: xuantie: correct definition of SoC Architecture |
+| [7d56b248](https://github.com/RVCK-Project/rvck/commit/7d56b248316d11f67e0a08d2bbb2b3c8a3357659) | 2024-06-11 | lst | i2c: designware: add support for hcnt/lcnt got from dt |
+| [8ea7738a](https://github.com/RVCK-Project/rvck/commit/8ea7738ae730d3f709fc890a48106b1dcda94380) | 2024-06-11 | xiaojin.cxj | add 902 share mem log |
+| [c88ec7cc](https://github.com/RVCK-Project/rvck/commit/c88ec7cc8dd9e4b357ee2a2a412ff2416c25b7d0) | 2024-06-05 | abing | refine thead,th1520-usb.yaml |
+| [9543dc9c](https://github.com/RVCK-Project/rvck/commit/9543dc9c99def979163a3326f1bdfb39d2147b29) | 2024-06-05 | abing | drivers: usb: dwc3: add usb_mode usb_speed param for mode speed change when insm... |
+| [b09f4019](https://github.com/RVCK-Project/rvck/commit/b09f4019a8b2bd6d0c3b9804366bf06b27672393) | 2024-06-05 | abing | drivers: usb: add dwc3-thead.c |
+| [b354637f](https://github.com/RVCK-Project/rvck/commit/b354637f194d4d1a3a583f91d22f585313a363b0) | 2024-06-05 | abing | th1520.dtsi: refine usb dts |
+| [2d1a7dac](https://github.com/RVCK-Project/rvck/commit/2d1a7dac7d957d321a756a7c48bada0d1e218425) | 2024-06-06 | Xiangyi Zeng | riscv:dts:thead: Add TH1520 event and watchdog device node |
+| [3b473505](https://github.com/RVCK-Project/rvck/commit/3b4735059c445ddabcc3b2d712f0060119e99100) | 2024-06-06 | Xiangyi Zeng | dt-bindings:wdt: Add Documentation for THEAD TH1520 pmic watchdog |
+| [0f3ad83c](https://github.com/RVCK-Project/rvck/commit/0f3ad83cc480965305a0991e8435ba62e62a2cf9) | 2024-06-06 | Xiangyi Zeng | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver |
+| [1b8f4d13](https://github.com/RVCK-Project/rvck/commit/1b8f4d13c870d3b963d6a869ccaf0bb61bd56e60) | 2024-06-06 | Xiangyi Zeng | dt-bindings:event: Add Documentation for THEAD TH1520 event driver |
+| [0fc8c90a](https://github.com/RVCK-Project/rvck/commit/0fc8c90a2a4c9ca8da6fadc3305076e125b1e1ff) | 2024-06-06 | Xiangyi Zeng | drivers/soc/event: Add THEAD TH1520 event driver |
+| [d8659578](https://github.com/RVCK-Project/rvck/commit/d8659578581c1580700f057f470818536b8d3bb5) | 2024-06-07 | xiaojin.cxj | fix rpmsg addr cast warning |
+| [38f27fdf](https://github.com/RVCK-Project/rvck/commit/38f27fdf1f36a6d2ce6b1f295b5ecefffb9db7a2) | 2024-06-07 | xiaojin.cxj | fix lp32 compile warnoing for rpmsg |
+| [761093ba](https://github.com/RVCK-Project/rvck/commit/761093ba437d9269c98671c970629b9a0a7738fa) | 2024-06-07 | xiaojin.cxj | fix proc log warning |
+| [df4e26c5](https://github.com/RVCK-Project/rvck/commit/df4e26c5e1a5117743d55c0c74968b5c6578b1e4) | 2024-06-06 | xiaojin.cxj | fix rpmsg warning |
+| [b99ea806](https://github.com/RVCK-Project/rvck/commit/b99ea8063875ada965b973b5a0ceec9ef998618f) | 2024-06-06 | xiaojin.cxj | add c906 audio support |
+| [dd720edd](https://github.com/RVCK-Project/rvck/commit/dd720edd8ba2b04bc486664cbb5198c576b809e8) | 2024-06-05 | xianbing Zhu | net:stmmac: increase timeout for dma reset |
+| [c30f6904](https://github.com/RVCK-Project/rvck/commit/c30f690404b6c4b5302c42edad5409d66fcf2918) | 2024-06-05 | xianbing Zhu | stmmac:dwmac-thead: add support for suspend/resume feature |
+| [b02b6a64](https://github.com/RVCK-Project/rvck/commit/b02b6a64d1fdfec9ecc9b323e280768ef9ba797f) | 2024-06-04 | xianbing Zhu | net:dwmac-thead: dd ptp clk set and enable |
+| [d1effd4e](https://github.com/RVCK-Project/rvck/commit/d1effd4e3377b086555ae6188be14d52bbe10a29) | 2024-06-05 | Esther Z | configs: Enable th1520 mailbox. |
+| [712a2de7](https://github.com/RVCK-Project/rvck/commit/712a2de706e3741e80cbdfd426223f46d6b50d80) | 2024-06-04 | Esther Z | drivers:ipc: update th1520 rpc msg version 2 |
+| [d3a2310f](https://github.com/RVCK-Project/rvck/commit/d3a2310f92f23c3381236b618ef9476cf42d0160) | 2021-08-10 | fugang.duan | firmware: thead: c910_aon: add th1520 Aon protocol driver |
+| [4f5015a3](https://github.com/RVCK-Project/rvck/commit/4f5015a30e93fa9b2ec87e0170d1db90fdf6656b) | 2024-06-04 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 add delay line in different mode and sdio rxclk del... |
+| [9965efbe](https://github.com/RVCK-Project/rvck/commit/9965efbe3b425aa3e7dc9eacd7a2723b651f5b47) | 2024-06-03 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 larger tuning max loop count to 128 |
+| [ce683dbf](https://github.com/RVCK-Project/rvck/commit/ce683dbf477fdc504e882bac50c2f71513b1dfa6) | 2024-05-31 | xianbing Zhu | dts: th1520: enable sdio1 for wifi card in lichee-pi-4a |
+| [dbced36f](https://github.com/RVCK-Project/rvck/commit/dbced36f2dd627158bddb78f60d7aac0000e7a6d) | 2024-05-31 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 sdhci add fix io voltage 1v8 |
+| [13b19b67](https://github.com/RVCK-Project/rvck/commit/13b19b67eafbe9b330385abca3fff0c505efac35) | 2024-05-30 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 resolve accss rpmb error in hs400 |
+| [98188b3d](https://github.com/RVCK-Project/rvck/commit/98188b3dc2bb82007ae56717134685ec9e89b354) | 2024-05-30 | Xiangyi Zeng | drivers/dmac: add pm suspend/resume for dma driver |
+| [d98cecee](https://github.com/RVCK-Project/rvck/commit/d98cecee5880ea852e6466b97f4b3d9ba24e6d72) | 2023-08-21 | David Li | audio: th1520: add dma chan str for dmaengine |
+| [86bc7c57](https://github.com/RVCK-Project/rvck/commit/86bc7c577de6c9d00913fdb8edec205749ba419d) | 2024-05-30 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 dmac1 and dmac2 device node |
+| [802755d8](https://github.com/RVCK-Project/rvck/commit/802755d87fafa99481190d725362ae5f56a9cb41) | 2023-08-22 | sanyi | STR: fix pca953x resume bug |
+| [6c6c086d](https://github.com/RVCK-Project/rvck/commit/6c6c086d49039a07a2d498f46ef8d1781c653c82) | 2024-05-28 | Xiangyi Zeng | drivers/iio/adc: add sysfs_remove_file when adc driver removed |
+| [603a20bc](https://github.com/RVCK-Project/rvck/commit/603a20bcb4f21d7a6a41f4636bae5411bd47a405) | 2024-05-27 | Xiangyi Zeng | drivers/pvt: add mr75203 driver pm feature and correct temperature coefficient |
+| [d7212ade](https://github.com/RVCK-Project/rvck/commit/d7212adea3e8d695f5922a1fe8be7936fff3e103) | 2024-05-27 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 SPI/QSPI device node |
+| [7ae0c18d](https://github.com/RVCK-Project/rvck/commit/7ae0c18ddcd854005fc44661bd0d67827ed3f558) | 2024-05-27 | Xiangyi Zeng | dt-bindings: spi/qspi: Add Documentation for THEAD TH1520 SPI/QSPI |
+| [ff957c45](https://github.com/RVCK-Project/rvck/commit/ff957c45a9fbf399e3919fb21cdb8b6823f55691) | 2024-05-27 | Xiangyi Zeng | drivers/spi: Add THEAD TH1520 QSPI driver |
+| [8a0c73c2](https://github.com/RVCK-Project/rvck/commit/8a0c73c2880e2345ea6d7eec22a7486864bbcb3f) | 2024-05-27 | tingming | reset: th1520: to support npu/fce reset feature |
+| [9ef075c0](https://github.com/RVCK-Project/rvck/commit/9ef075c08a42f7339ec001cb38d262bc00c6ce60) | 2024-05-19 | Wei Fu | riscv: dts: thead: Add XuanTie TH1520 Mailbox device node |
+| [5a730c3f](https://github.com/RVCK-Project/rvck/commit/5a730c3fe3f8c80c0e8c38d38fc0bd135341ab5b) | 2024-05-17 | Fugang Duan | mailbox: add XuanTie TH1520 Mailbox IPC driver |
+| [5619545a](https://github.com/RVCK-Project/rvck/commit/5619545ae61495f80b36c661af63d24861151636) | 2024-05-19 | Wei Fu | dt-bindings: mailbox: Add a binding file for XuanTie TH1520 Mailbox |
+| [9711ac77](https://github.com/RVCK-Project/rvck/commit/9711ac77a795f8cdea290965391da0279284bf83) | 2024-05-22 | tingming | riscv: dts: thead: to add th1520 clk nodes |
+| [854dd918](https://github.com/RVCK-Project/rvck/commit/854dd918a04c958402db50dcd8aff13be9334ae8) | 2024-05-22 | tingming | drivers: clk: to add thead th1520 clk driver |
+| [47c481e5](https://github.com/RVCK-Project/rvck/commit/47c481e5f38da4860c3123b2d2a7942b642e5023) | 2024-05-17 | Xiangyi Zeng | dt-bindings: adc: Add Documentation for THEAD TH1520 ADC |
+| [ef913283](https://github.com/RVCK-Project/rvck/commit/ef9132835e1afadf38cab9c3208599dc08a8d280) | 2024-05-17 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 ADC device node |
+| [b8428103](https://github.com/RVCK-Project/rvck/commit/b8428103f4e550873a3ccc8e7006da5ffd8f2864) | 2024-05-17 | Xiangyi Zeng | drivers/iio/adc: Add THEAD TH1520 ADC driver |
+| [e7dd886d](https://github.com/RVCK-Project/rvck/commit/e7dd886dcc6306a10078d0a495cd7e0e840275c8) | 2024-06-29 | Chen Pei | riscv: ptrace: Fix ptrace using uninitialized riscv_v_vsize |
+| [9b99c021](https://github.com/RVCK-Project/rvck/commit/9b99c021c6200cb696e330f6eeebe0e36f8cb742) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
 **共 329 条提交，显示 201-329**
@@ -160,5 +160,5 @@
 
 ---
 
-*本页面最后更新于 2026-04-27 22:52:46*
-*数据来源: 主分支 rvck-6.6@7eb9b431*
+*本页面最后更新于 2026-05-01 01:06:15*
+*数据来源: 主分支 rvck-6.6@f62dc7fb*

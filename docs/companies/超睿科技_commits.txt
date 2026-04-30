@@ -1,95 +1,95 @@
 # 超睿科技 提交列表（纯文本视图）
 # 共 89 个提交
-# 生成时间: 2026-04-27 22:52:46
+# 生成时间: 2026-05-01 01:06:15
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-81631a50 | 2024-01-06 | Sun Haiyong | perf tools: Fix calloc() arguments to address error introduced in gcc-14
-eecea41b | 2023-12-04 | Sun Haiyong | perf top: Remove needless malloc(0) call that triggers -Walloc-size
-8cbfc3fb | 2024-07-19 | Eric Lin | perf arch events: Fix duplicate RISC-V SBI firmware event name
-589b6884 | 2023-09-12 | Benjamin Gray | perf tools: Address python 3.6 DeprecationWarning for string scapes
-a1893907 | 2026-01-13 | Jia Wang | dt-bindings: hwmon: ultrarisc,dp1000-pvt.yaml: add Add a blank line at the end of the file.
-ef8906d6 | 2026-01-08 | Jia Wang | riscv: dts: ultrarisc: remove 'bootargs' property in 'chosen'
-f29b8c52 | 2026-01-06 | Jia Wang | riscv: dts: ultrarisc: Update pcie and gmac compatible strings
-1d3ffce0 | 2025-12-29 | Jia Wang | PCI: dwc: ultrarisc: Update compatible string for DP1000 SoC
-2f6152b7 | 2026-01-08 | Jia Wang | riscv: dts: ultrarisc: Add model and compatible properties
-2cc2a05b | 2026-01-08 | Jia Wang | riscv: dts: dp1000-titan-v1: add phy leds support
-3b8feb15 | 2024-09-27 | Hui Wang | net: phy: realtek: Check the index value in led_hw_control_get
-a1681b45 | 2024-06-12 | Lee Jones | leds: core: Omit set_brightness error message for a LED supporting hw trigger only
-e6b052c7 | 2024-08-21 | Sava Jakovljev | net: phy: realtek: Fix setting of PHY LEDs Mode B bit on RTL8211F
-f9bebd7c | 2024-06-25 | Marek Vasut | net: phy: realtek: Add support for PHY LEDs on RTL8211F
-d798a43e | 2024-01-31 | Heiner Kallweit | leds: triggers: Add helper led_match_default_trigger
-3122412e | 2024-01-31 | Heiner Kallweit | leds: trigger: Stop exporting trigger_list
-2b698ac6 | 2023-12-09 | Heiner Kallweit | leds: trigger: panic: Simplify led_trigger_set_panic
-e58a3622 | 2025-03-17 | Craig McQueen | leds: led-triggers: Improvements for default trigger
-945e7ebc | 2024-12-16 | Marek Vasut | leds: trigger: netdev: Check offload ability on interface up
-c45eedbf | 2024-01-11 | Christian Marangi | docs: ABI: sysfs-class-led-trigger-netdev: Document now hidable link_*
-ab930824 | 2024-01-11 | Christian Marangi | leds: trigger: netdev: Display only supported link speed attribute
-08648e75 | 2023-11-28 | Daniel Golle | docs: ABI: sysfs-class-led-trigger-netdev: Add new modes and entry
-1c39573a | 2023-11-28 | Daniel Golle | leds: trigger: netdev: Extend speeds up to 10G
-a81aff75 | 2023-12-22 | Heiner Kallweit | leds: class: If no default trigger is given, make hw_control trigger the default trigger
-4bd2975e | 2023-12-21 | Heiner Kallweit | leds: trigger: netdev: Add module alias ledtrig:netdev
-0c7496dc | 2023-12-21 | Heiner Kallweit | leds: trigger: netdev: Skip setting baseline state in activate if hw-controlled
-f35af3dd | 2023-12-21 | Heiner Kallweit | leds: trigger: Load trigger modules on-demand if used as default trigger
-afc6d634 | 2025-12-23 | Jia Wang | riscv: defconfig: Enable FW_LOADER_COMPRESS_ZSTD DRM_AMD_ACP and DRM_AMD_SECURE_DISPLAY
-79638c63 | 2025-12-22 | Jia Wang | dt-bindings: pinctrl: Rename pinctrl header ur-dp1000-pinctrl.h to ultrarisc,dp1000-pinctrl.h
-0e7428d7 | 2025-12-22 | Jia Wang | riscv: dts: ultrarisc: Fix naming inconsistencies in dp1000 files
-230d4541 | 2025-12-18 | Jia Wang | riscv: defconfig: Enable COREPVT_ULTRARISC and GPIO_KEY
-12e57569 | 2025-09-16 | Jia Wang | dt-bindings: hwmon: Add UltraRISC DP1000 Core PVT sensor binding
-72c93712 | 2025-12-18 | Jia Wang | hwmon: corepvt-ultrarisc: Add UltraRISC Core PVT sensor driver
-09466a8f | 2025-12-18 | Jia Wang | riscv: dts: ultrarisc: Update DP1000 series device tree files
-849a0414 | 2025-11-03 | Charles Mirabile | irqchip/sifive-plic: Fix call to __plic_toggle() in M-Mode code path
-2bb2c9da | 2025-10-24 | Charles Mirabile | dt-bindings: interrupt-controller: Add UltraRISC DP1000 PLIC
-70d4b13c | 2025-10-24 | Charles Mirabile | irqchip/sifive-plic: Add support for UltraRISC DP1000 PLIC
-f0fc5048 | 2025-10-24 | Charles Mirabile | irqchip/sifive-plic: Cache the interrupt enable state
-7e67277a | 2025-08-11 | Fushuai Wang | irqchip/sifive-plic: Use for_each_present_cpu() instead of for_each_cpu()
-28c8fd83 | 2024-09-03 | Charlie Jenkins | irqchip/sifive-plic: Return error code on failure
-ae0e24d5 | 2025-12-19 | Jia Wang | Revert "riscv: dp1000: bindings: Add UltraRISC DP1000 PLIC in interrupr-controller"
-64967e98 | 2025-12-19 | Jia Wang | Revert "riscv: dp1000: plic: fix plic claim register hardware bug"
-6d88a4ae | 2024-07-23 | Marek Vasut | PCI: xilinx: Silence set affinity failed warning
-242a1fd0 | 2024-07-23 | Marek Vasut | PCI: xilinx-nwl: Silence set affinity failed warning
-f22ccf06 | 2024-07-23 | Marek Vasut | PCI: vmd: Silence set affinity failed warning
-8b8672cb | 2024-07-23 | Marek Vasut | PCI: tegra: Silence set affinity failed warning
-a88c2d05 | 2024-07-23 | Marek Vasut | PCI: rcar-host: Silence set affinity failed warning
-73bfb314 | 2024-07-23 | Marek Vasut | PCI: mobiveil: Silence set affinity failed warning
-137d70fe | 2024-07-23 | Marek Vasut | PCI: mediatek: Silence set affinity failed warning
-fdcd3128 | 2024-07-23 | Marek Vasut | PCI: mediatek-gen3: Silence set affinity failed warning
-6f50bfd1 | 2024-07-23 | Marek Vasut | PCI: dwc: Silence set affinity failed warning
-fb7a42e6 | 2024-07-23 | Marek Vasut | PCI: brcmstb: Silence set affinity failed warning
-651c0029 | 2024-07-23 | Marek Vasut | PCI: altera-msi: Silence set affinity failed warning
-084ba782 | 2024-07-23 | Marek Vasut | PCI: aardvark: Silence set affinity failed warning
-2d751a48 | 2024-07-23 | Marek Vasut | genirq/msi: Silence set affinity failed warning
-3eb50f68 | 2025-12-02 | Jia Wang | Revert "riscv: dp1000: pci: support dw pcie rc interrupt affinity settings"
-cbc8ad49 | 2025-11-18 | Jia Wang | riscv: dts: dp1000: add dts/dtsi for Milk-V Titan board based on UltraRISC DP1000 SoC
-afd1d89a | 2025-11-12 | Jia Wang | riscv: pinctrl: ultrarisc: Implement pin configuration support
-20436ee0 | 2025-11-11 | Jia Wang | dts: riscv: ultrarisc: Refactor DP1000 device tree files
-168d4164 | 2025-11-10 | Jia Wang | riscv: dp1000: dts: Move chosen node from common to board-specific DTS
-e968973e | 2025-10-27 | Xincheng Zhang | pcie: ultrarisc: Add suspend/resume support
-85ebe9c4 | 2025-09-22 | Jia Wang | riscv: defconfig: update UltraRISC platform configurations
-9a53d777 | 2025-09-18 | Jia Wang | riscv: dp1000: plic: add plic early init supports
-41348248 | 2025-09-18 | Jia Wang | riscv: pci: msi: fix compile error when disable PCIE_CADENCE_SOPHGO
-4ae3722f | 2025-09-18 | Jia Wang | Revert "riscv: pci: Restrict check_vendor_id invocation to Sophgo platform via CONFIG_ARCH_SOPHGO"
-000136d9 | 2025-09-16 | Jia Wang | drivers: pci/mmc: Fix build errors when ARCH_SOPHGO is disabled
-3d755594 | 2025-09-15 | Jia Wang | riscv: drm: img-rogue: Convert structure initializations to designated initializers
-4ff6b15a | 2025-09-09 | Jia Wang | riscv: dp1000: dts: Move mmc0 node from SoC to board DTS
-ba140bcf | 2025-09-04 | Jia Wang | riscv: dp1000: dts: add the dts of UltraRISC dp1000-mo-v1 board
-1e7abd17 | 2025-08-05 | Xincheng Zhang | riscv: dp1000: pci: Add custom PCI host ops
-5e1294c6 | 2025-09-05 | Jia Wang | Revert "riscv: dp1000: pci: dwc: Update dw_pcie_ops for 32-bit cfg access"
-34af2512 | 2025-07-25 | Zhang Xincheng | riscv: dp1000: pci: dwc: Add support for 16-lane PCIe link width
-862fa41a | 2025-07-24 | Jia Wang | riscv: pci: Restrict check_vendor_id invocation to Sophgo platform via CONFIG_ARCH_SOPHGO
-a5a5770d | 2025-06-18 | Jia Wang | riscv: dp1000: add dp1000_defconfig
-7d093596 | 2025-06-16 | Jia Wang | riscv: dp1000: dts: add pinctrl dtsi/dts for UltraRISC DP1000
-c0ac3609 | 2025-06-06 | Jia Wang | riscv: dp1000: bindings: pinctrl: add pincltrl binding file of DP1000
-01796c13 | 2025-01-17 | Jia Wang | riscv: dp1000: pinctrl: add pinctrl dirver of UltraRISC DP1000
-5dbe2895 | 2025-01-13 | wangjiahao | riscv: dp1000: stmmac: add gmac driver for UltraRISC DP1000
-f8f871aa | 2025-06-13 | Zhang Xincheng | riscv: dp1000: pci: Update the number of pci outbound and inbound
-6d91e000 | 2025-02-05 | Zhang Xincheng | riscv: dp1000: pci: update the outbound mapping process
-cd54f1b1 | 2025-02-26 | Zhang Xincheng | riscv: dp1000: pci: dwc: Update dw_pcie_ops for 32-bit cfg access
-babed75c | 2025-01-16 | Zhang Xincheng | riscv: dp1000: pci: support dw pcie rc interrupt affinity settings
-f5d059f7 | 2024-05-28 | Zhang Xincheng | riscv: dp1000: pci: support UltraRISC pcie rc
-3bf40ce4 | 2025-04-09 | Jia Wang | riscv: dp1000: arch: add UltraRISC DP1000 SoC support
-e1b07eaf | 2025-05-16 | Jia Wang | riscv: dp1000: dts: add dp1000.dts for UltraRISC DP1000 SoC
-5ccd302d | 2025-07-23 | Jia Wang | riscv: dp1000: bindings: Add UltraRISC DP1000 PLIC in interrupr-controller
-3bf7c8e2 | 2024-08-30 | Zhang Xincheng | riscv: dp1000: plic: fix plic claim register hardware bug
-3c0be55c | 2025-07-23 | Jia Wang | riscv: dp1000: bindings: update bindings of ultrarisc dp1000 uart
-5c962dda | 2024-05-28 | Zhang Xincheng | riscv: dp1000: 8250_dw: support ultrarisc dp1000 uart
+65b93d26 | 2024-01-06 | Sun Haiyong | perf tools: Fix calloc() arguments to address error introduced in gcc-14
+75b52468 | 2023-12-04 | Sun Haiyong | perf top: Remove needless malloc(0) call that triggers -Walloc-size
+7e185504 | 2024-07-19 | Eric Lin | perf arch events: Fix duplicate RISC-V SBI firmware event name
+abcc2ff1 | 2023-09-12 | Benjamin Gray | perf tools: Address python 3.6 DeprecationWarning for string scapes
+e07f0aa7 | 2026-01-13 | Jia Wang | dt-bindings: hwmon: ultrarisc,dp1000-pvt.yaml: add Add a blank line at the end of the file.
+bd6ae159 | 2026-01-08 | Jia Wang | riscv: dts: ultrarisc: remove 'bootargs' property in 'chosen'
+db97e53c | 2026-01-06 | Jia Wang | riscv: dts: ultrarisc: Update pcie and gmac compatible strings
+6797bf88 | 2025-12-29 | Jia Wang | PCI: dwc: ultrarisc: Update compatible string for DP1000 SoC
+4161c3b0 | 2026-01-08 | Jia Wang | riscv: dts: ultrarisc: Add model and compatible properties
+21d86f4b | 2026-01-08 | Jia Wang | riscv: dts: dp1000-titan-v1: add phy leds support
+82bf2d72 | 2024-09-27 | Hui Wang | net: phy: realtek: Check the index value in led_hw_control_get
+fafb58d3 | 2024-06-12 | Lee Jones | leds: core: Omit set_brightness error message for a LED supporting hw trigger only
+583650a0 | 2024-08-21 | Sava Jakovljev | net: phy: realtek: Fix setting of PHY LEDs Mode B bit on RTL8211F
+5df6d327 | 2024-06-25 | Marek Vasut | net: phy: realtek: Add support for PHY LEDs on RTL8211F
+374769c9 | 2024-01-31 | Heiner Kallweit | leds: triggers: Add helper led_match_default_trigger
+756238e7 | 2024-01-31 | Heiner Kallweit | leds: trigger: Stop exporting trigger_list
+5ae549e5 | 2023-12-09 | Heiner Kallweit | leds: trigger: panic: Simplify led_trigger_set_panic
+8ca2c1e8 | 2025-03-17 | Craig McQueen | leds: led-triggers: Improvements for default trigger
+7ee09914 | 2024-12-16 | Marek Vasut | leds: trigger: netdev: Check offload ability on interface up
+b946e34a | 2024-01-11 | Christian Marangi | docs: ABI: sysfs-class-led-trigger-netdev: Document now hidable link_*
+752f521c | 2024-01-11 | Christian Marangi | leds: trigger: netdev: Display only supported link speed attribute
+dabf0f48 | 2023-11-28 | Daniel Golle | docs: ABI: sysfs-class-led-trigger-netdev: Add new modes and entry
+5ab54baf | 2023-11-28 | Daniel Golle | leds: trigger: netdev: Extend speeds up to 10G
+7e9c79e3 | 2023-12-22 | Heiner Kallweit | leds: class: If no default trigger is given, make hw_control trigger the default trigger
+8c454c25 | 2023-12-21 | Heiner Kallweit | leds: trigger: netdev: Add module alias ledtrig:netdev
+b894155b | 2023-12-21 | Heiner Kallweit | leds: trigger: netdev: Skip setting baseline state in activate if hw-controlled
+ef483ea3 | 2023-12-21 | Heiner Kallweit | leds: trigger: Load trigger modules on-demand if used as default trigger
+50e8f543 | 2025-12-23 | Jia Wang | riscv: defconfig: Enable FW_LOADER_COMPRESS_ZSTD DRM_AMD_ACP and DRM_AMD_SECURE_DISPLAY
+b4ccde08 | 2025-12-22 | Jia Wang | dt-bindings: pinctrl: Rename pinctrl header ur-dp1000-pinctrl.h to ultrarisc,dp1000-pinctrl.h
+d91adc25 | 2025-12-22 | Jia Wang | riscv: dts: ultrarisc: Fix naming inconsistencies in dp1000 files
+a0542637 | 2025-12-18 | Jia Wang | riscv: defconfig: Enable COREPVT_ULTRARISC and GPIO_KEY
+49b82cf6 | 2025-09-16 | Jia Wang | dt-bindings: hwmon: Add UltraRISC DP1000 Core PVT sensor binding
+4f55aa41 | 2025-12-18 | Jia Wang | hwmon: corepvt-ultrarisc: Add UltraRISC Core PVT sensor driver
+8f71334b | 2025-12-18 | Jia Wang | riscv: dts: ultrarisc: Update DP1000 series device tree files
+f82d6b7d | 2025-11-03 | Charles Mirabile | irqchip/sifive-plic: Fix call to __plic_toggle() in M-Mode code path
+b01000d3 | 2025-10-24 | Charles Mirabile | dt-bindings: interrupt-controller: Add UltraRISC DP1000 PLIC
+32039644 | 2025-10-24 | Charles Mirabile | irqchip/sifive-plic: Add support for UltraRISC DP1000 PLIC
+4dca093e | 2025-10-24 | Charles Mirabile | irqchip/sifive-plic: Cache the interrupt enable state
+ff5b3651 | 2025-08-11 | Fushuai Wang | irqchip/sifive-plic: Use for_each_present_cpu() instead of for_each_cpu()
+b67acf49 | 2024-09-03 | Charlie Jenkins | irqchip/sifive-plic: Return error code on failure
+6869cbd8 | 2025-12-19 | Jia Wang | Revert "riscv: dp1000: bindings: Add UltraRISC DP1000 PLIC in interrupr-controller"
+3c6d3ff3 | 2025-12-19 | Jia Wang | Revert "riscv: dp1000: plic: fix plic claim register hardware bug"
+9747133f | 2024-07-23 | Marek Vasut | PCI: xilinx: Silence set affinity failed warning
+ec2b5a40 | 2024-07-23 | Marek Vasut | PCI: xilinx-nwl: Silence set affinity failed warning
+3db5beb8 | 2024-07-23 | Marek Vasut | PCI: vmd: Silence set affinity failed warning
+400b4cb2 | 2024-07-23 | Marek Vasut | PCI: tegra: Silence set affinity failed warning
+4f97803b | 2024-07-23 | Marek Vasut | PCI: rcar-host: Silence set affinity failed warning
+aa80980f | 2024-07-23 | Marek Vasut | PCI: mobiveil: Silence set affinity failed warning
+8d7c0ba7 | 2024-07-23 | Marek Vasut | PCI: mediatek: Silence set affinity failed warning
+8d1204fb | 2024-07-23 | Marek Vasut | PCI: mediatek-gen3: Silence set affinity failed warning
+231791c4 | 2024-07-23 | Marek Vasut | PCI: dwc: Silence set affinity failed warning
+fe61c502 | 2024-07-23 | Marek Vasut | PCI: brcmstb: Silence set affinity failed warning
+da5b4dba | 2024-07-23 | Marek Vasut | PCI: altera-msi: Silence set affinity failed warning
+5eb9e731 | 2024-07-23 | Marek Vasut | PCI: aardvark: Silence set affinity failed warning
+eaba706f | 2024-07-23 | Marek Vasut | genirq/msi: Silence set affinity failed warning
+a5939479 | 2025-12-02 | Jia Wang | Revert "riscv: dp1000: pci: support dw pcie rc interrupt affinity settings"
+ecc77a25 | 2025-11-18 | Jia Wang | riscv: dts: dp1000: add dts/dtsi for Milk-V Titan board based on UltraRISC DP1000 SoC
+8cfdac16 | 2025-11-12 | Jia Wang | riscv: pinctrl: ultrarisc: Implement pin configuration support
+b49d7153 | 2025-11-11 | Jia Wang | dts: riscv: ultrarisc: Refactor DP1000 device tree files
+a29458ec | 2025-11-10 | Jia Wang | riscv: dp1000: dts: Move chosen node from common to board-specific DTS
+93faa04c | 2025-10-27 | Xincheng Zhang | pcie: ultrarisc: Add suspend/resume support
+6341d4d7 | 2025-09-22 | Jia Wang | riscv: defconfig: update UltraRISC platform configurations
+c1aefd21 | 2025-09-18 | Jia Wang | riscv: dp1000: plic: add plic early init supports
+36a08264 | 2025-09-18 | Jia Wang | riscv: pci: msi: fix compile error when disable PCIE_CADENCE_SOPHGO
+170c94ab | 2025-09-18 | Jia Wang | Revert "riscv: pci: Restrict check_vendor_id invocation to Sophgo platform via CONFIG_ARCH_SOPHGO"
+01e527eb | 2025-09-16 | Jia Wang | drivers: pci/mmc: Fix build errors when ARCH_SOPHGO is disabled
+bf0739db | 2025-09-15 | Jia Wang | riscv: drm: img-rogue: Convert structure initializations to designated initializers
+be58fb32 | 2025-09-09 | Jia Wang | riscv: dp1000: dts: Move mmc0 node from SoC to board DTS
+21641d26 | 2025-09-04 | Jia Wang | riscv: dp1000: dts: add the dts of UltraRISC dp1000-mo-v1 board
+eed82740 | 2025-08-05 | Xincheng Zhang | riscv: dp1000: pci: Add custom PCI host ops
+80e4eac2 | 2025-09-05 | Jia Wang | Revert "riscv: dp1000: pci: dwc: Update dw_pcie_ops for 32-bit cfg access"
+002d9fe8 | 2025-07-25 | Zhang Xincheng | riscv: dp1000: pci: dwc: Add support for 16-lane PCIe link width
+8ac52119 | 2025-07-24 | Jia Wang | riscv: pci: Restrict check_vendor_id invocation to Sophgo platform via CONFIG_ARCH_SOPHGO
+6e7a185e | 2025-06-18 | Jia Wang | riscv: dp1000: add dp1000_defconfig
+bd3a2280 | 2025-06-16 | Jia Wang | riscv: dp1000: dts: add pinctrl dtsi/dts for UltraRISC DP1000
+fdd4519c | 2025-06-06 | Jia Wang | riscv: dp1000: bindings: pinctrl: add pincltrl binding file of DP1000
+4db9e368 | 2025-01-17 | Jia Wang | riscv: dp1000: pinctrl: add pinctrl dirver of UltraRISC DP1000
+a2b90c2f | 2025-01-13 | wangjiahao | riscv: dp1000: stmmac: add gmac driver for UltraRISC DP1000
+ba4d8159 | 2025-06-13 | Zhang Xincheng | riscv: dp1000: pci: Update the number of pci outbound and inbound
+f7cc7e0e | 2025-02-05 | Zhang Xincheng | riscv: dp1000: pci: update the outbound mapping process
+7d559ab0 | 2025-02-26 | Zhang Xincheng | riscv: dp1000: pci: dwc: Update dw_pcie_ops for 32-bit cfg access
+024c7101 | 2025-01-16 | Zhang Xincheng | riscv: dp1000: pci: support dw pcie rc interrupt affinity settings
+a4237c02 | 2024-05-28 | Zhang Xincheng | riscv: dp1000: pci: support UltraRISC pcie rc
+7f3b7285 | 2025-04-09 | Jia Wang | riscv: dp1000: arch: add UltraRISC DP1000 SoC support
+b1196dc8 | 2025-05-16 | Jia Wang | riscv: dp1000: dts: add dp1000.dts for UltraRISC DP1000 SoC
+bda0bc60 | 2025-07-23 | Jia Wang | riscv: dp1000: bindings: Add UltraRISC DP1000 PLIC in interrupr-controller
+92c30f56 | 2024-08-30 | Zhang Xincheng | riscv: dp1000: plic: fix plic claim register hardware bug
+21317a05 | 2025-07-23 | Jia Wang | riscv: dp1000: bindings: update bindings of ultrarisc dp1000 uart
+912864b1 | 2024-05-28 | Zhang Xincheng | riscv: dp1000: 8250_dw: support ultrarisc dp1000 uart
