@@ -1101,16 +1101,30 @@ static void riscv_iommu_iotlb_sync(struct iommu_domain *iommu_domain,
 
 #define PT_SHIFT (PAGE_SHIFT - ilog2(sizeof(pte_t)))
 
+static int riscv_iommu_va_bits(unsigned int pgd_mode)
+{
+	return PAGE_SHIFT + PT_SHIFT *
+		(pgd_mode - RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39 + 3);
+}
+
+/* Unmanaged domains use the 2048-entry second-stage x4 root. */
+static bool riscv_iommu_x4_root(struct riscv_iommu_domain *domain)
+{
+	return domain->domain.type == IOMMU_DOMAIN_UNMANAGED;
+}
+
 #define _io_pte_present(pte)	((pte) & (_PAGE_PRESENT | _PAGE_PROT_NONE))
 #define _io_pte_leaf(pte)	((pte) & _PAGE_LEAF)
 #define _io_pte_none(pte)	((pte) == 0)
 #define _io_pte_entry(pn, prot)	((_PAGE_PFN_MASK & ((pn) << _PAGE_PFN_SHIFT)) | (prot))
 
 static void riscv_iommu_pte_free(struct riscv_iommu_domain *domain,
-				 unsigned long pte, struct list_head *freelist)
+				 unsigned long pte, struct list_head *freelist,
+				 bool root)
 {
 	unsigned long *ptr;
-	int i;
+	int i, nr_ptes = root && riscv_iommu_x4_root(domain) ?
+		     PTRS_PER_PTE * 4 : PTRS_PER_PTE;
 
 	if (!_io_pte_present(pte) || _io_pte_leaf(pte))
 		return;
@@ -1118,16 +1132,16 @@ static void riscv_iommu_pte_free(struct riscv_iommu_domain *domain,
 	ptr = (unsigned long *)pfn_to_virt(__page_val_to_pfn(pte));
 
 	/* Recursively free all sub page table pages */
-	for (i = 0; i < PTRS_PER_PTE; i++) {
+	for (i = 0; i < nr_ptes; i++) {
 		pte = READ_ONCE(ptr[i]);
 		if (!_io_pte_none(pte) && cmpxchg_relaxed(ptr + i, pte, 0) == pte)
-			riscv_iommu_pte_free(domain, pte, freelist);
+			riscv_iommu_pte_free(domain, pte, freelist, false);
 	}
 
 	if (freelist)
 		list_add_tail(&virt_to_page(ptr)->lru, freelist);
 	else
-		iommu_free_page(ptr);
+		iommu_free_pages(ptr, root ? 2 : 0);
 }
 
 static unsigned long *riscv_iommu_pte_alloc(struct riscv_iommu_domain *domain,
@@ -1136,13 +1150,16 @@ static unsigned long *riscv_iommu_pte_alloc(struct riscv_iommu_domain *domain,
 {
 	unsigned long *ptr = domain->pgd_root;
 	unsigned long pte, old;
-	int level = domain->pgd_mode - RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39 + 2;
+	int root_level = domain->pgd_mode - RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39 + 2;
+	int level = root_level;
 	void *addr;
 
 	do {
 		const int shift = PAGE_SHIFT + PT_SHIFT * level;
 
-		ptr += ((iova >> shift) & (PTRS_PER_PTE - 1));
+		ptr += ((iova >> shift) &
+			(riscv_iommu_x4_root(domain) && level == root_level ?
+			 PTRS_PER_PTE * 4 - 1 : PTRS_PER_PTE - 1));
 		/*
 		 * Note: returned entry might be a non-leaf if there was
 		 * existing mapping with smaller granularity. Up to the caller
@@ -1194,12 +1211,15 @@ static unsigned long *riscv_iommu_pte_fetch(struct riscv_iommu_domain *domain,
 {
 	unsigned long *ptr = domain->pgd_root;
 	unsigned long pte;
-	int level = domain->pgd_mode - RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39 + 2;
+	int root_level = domain->pgd_mode - RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39 + 2;
+	int level = root_level;
 
 	do {
 		const int shift = PAGE_SHIFT + PT_SHIFT * level;
 
-		ptr += ((iova >> shift) & (PTRS_PER_PTE - 1));
+		ptr += ((iova >> shift) &
+			(riscv_iommu_x4_root(domain) && level == root_level ?
+			 PTRS_PER_PTE * 4 - 1 : PTRS_PER_PTE - 1));
 		pte = READ_ONCE(*ptr);
 		if (_io_pte_present(pte) && _io_pte_leaf(pte)) {
 			*pte_pgsize = (size_t)1 << shift;
@@ -1253,7 +1273,7 @@ static int riscv_iommu_map_pages(struct iommu_domain *iommu_domain,
 		if (cmpxchg_relaxed(ptr, old, pte) != old)
 			continue;
 
-		riscv_iommu_pte_free(domain, old, &freelist);
+		riscv_iommu_pte_free(domain, old, &freelist, false);
 
 		size += pgsize;
 		iova += pgsize;
@@ -1338,7 +1358,7 @@ static void riscv_iommu_free_paging_domain(struct iommu_domain *iommu_domain)
 	if (domain->gscid > 0)
 		ida_free(&riscv_iommu_gscids, domain->gscid);
 
-	riscv_iommu_pte_free(domain, _io_pte_entry(pfn, _PAGE_TABLE), NULL);
+	riscv_iommu_pte_free(domain, _io_pte_entry(pfn, _PAGE_TABLE), NULL, true);
 	kfree(domain);
 }
 
@@ -1381,11 +1401,25 @@ static int riscv_iommu_attach_paging_domain(struct iommu_domain *iommu_domain,
 	struct riscv_iommu_device *iommu = dev_to_iommu(dev);
 	struct riscv_iommu_info *info = dev_iommu_priv_get(dev);
 	struct riscv_iommu_dc dc = { 0 };
+	int new_gscid;
+	int va_bits;
 
-	if (domain->gscid) {
+	if (iommu_domain->type == IOMMU_DOMAIN_UNMANAGED) {
 		if (!riscv_iommu_iohgatp_supported(iommu, domain->pgd_mode))
 			return -ENODEV;
 
+		if (!domain->gscid) {
+			new_gscid = ida_alloc_range(&riscv_iommu_gscids, 1,
+						    RISCV_IOMMU_MAX_GSCID, GFP_KERNEL);
+			if (new_gscid < 0)
+				return new_gscid;
+
+			/* Published before bond_link() and its full barrier. */
+			WRITE_ONCE(domain->gscid, new_gscid);
+		}
+	}
+
+	if (domain->gscid) {
 		dc.iohgatp = FIELD_PREP(RISCV_IOMMU_DC_IOHGATP_MODE, domain->pgd_mode) |
 			     FIELD_PREP(RISCV_IOMMU_DC_IOHGATP_GSCID, domain->gscid) |
 			     FIELD_PREP(RISCV_IOMMU_DC_IOHGATP_PPN,
@@ -1394,12 +1428,16 @@ static int riscv_iommu_attach_paging_domain(struct iommu_domain *iommu_domain,
 		if (!riscv_iommu_fsc_supported(iommu, domain->pgd_mode))
 			return -ENODEV;
 
+		va_bits = riscv_iommu_va_bits(domain->pgd_mode);
+		if (iommu_domain->geometry.aperture_end != DMA_BIT_MASK(va_bits - 1))
+			iommu_domain->geometry.aperture_end = DMA_BIT_MASK(va_bits - 1);
+
 		dc.fsc = FIELD_PREP(RISCV_IOMMU_PC_FSC_MODE, domain->pgd_mode) |
 			 FIELD_PREP(RISCV_IOMMU_PC_FSC_PPN,
 				    virt_to_pfn(domain->pgd_root));
-		dc.ta = FIELD_PREP(RISCV_IOMMU_PC_TA_PSCID, domain->pscid) |
-			RISCV_IOMMU_PC_TA_V;
 	}
+	dc.ta = FIELD_PREP(RISCV_IOMMU_PC_TA_PSCID, domain->pscid) |
+		RISCV_IOMMU_PC_TA_V;
 
 	if (riscv_iommu_bond_link(domain, dev))
 		return -ENOMEM;
@@ -1432,17 +1470,15 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
 	iommu = dev_to_iommu(dev);
 	if (iommu->caps & RISCV_IOMMU_CAPABILITIES_SV57) {
 		pgd_mode = RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV57;
-		va_bits = 57;
 	} else if (iommu->caps & RISCV_IOMMU_CAPABILITIES_SV48) {
 		pgd_mode = RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV48;
-		va_bits = 48;
 	} else if (iommu->caps & RISCV_IOMMU_CAPABILITIES_SV39) {
 		pgd_mode = RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39;
-		va_bits = 39;
 	} else {
 		dev_err(dev, "cannot find supported page table mode\n");
 		return ERR_PTR(-ENODEV);
 	}
+	va_bits = riscv_iommu_va_bits(pgd_mode);
 
 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
 	if (!domain)
@@ -1453,8 +1489,12 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
 	domain->numa_node = dev_to_node(iommu->dev);
 	domain->amo_enabled = !!(iommu->caps & RISCV_IOMMU_CAPABILITIES_AMO_HWAD);
 	domain->pgd_mode = pgd_mode;
-	domain->pgd_root = iommu_alloc_page_node(domain->numa_node,
-						 GFP_KERNEL_ACCOUNT);
+	/*
+	 * The domain type is not known yet, so always allocate an x4 root.
+	 * Replacing the root on attach would race with lockless map/unmap.
+	 */
+	domain->pgd_root = iommu_alloc_pages_node(domain->numa_node,
+						  GFP_KERNEL_ACCOUNT, 2);
 	if (!domain->pgd_root) {
 		kfree(domain);
 		return ERR_PTR(-ENOMEM);
@@ -1463,7 +1503,7 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
 	domain->pscid = ida_alloc_range(&riscv_iommu_pscids, 1,
 					RISCV_IOMMU_MAX_PSCID, GFP_KERNEL);
 	if (domain->pscid < 0) {
-		iommu_free_page(domain->pgd_root);
+		iommu_free_pages(domain->pgd_root, 2);
 		kfree(domain);
 		return ERR_PTR(-ENOMEM);
 	}
@@ -1476,12 +1516,15 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
 	 * above us (e.g. iommu_dma_alloc_iova()) won't do that for us
 	 * for now, so we'll end up with invalid virtual addresses
 	 * to map. As a workaround until we get this sorted out
-	 * limit the available virtual addresses to VA_BITS - 1.
+	 * limit first-stage virtual addresses to VA_BITS - 1.
 	 */
 	va_mask = DMA_BIT_MASK(va_bits - 1);
 
 	domain->domain.geometry.aperture_start = 0;
-	domain->domain.geometry.aperture_end = va_mask;
+	/* x4 GPAs use VA_BITS + 2, zero-extended; S1 narrows on attach before DMA geometry use. */
+	domain->domain.geometry.aperture_end =
+		riscv_iommu_iohgatp_supported(iommu, pgd_mode) ?
+		DMA_BIT_MASK(va_bits + 2) : va_mask;
 	domain->domain.geometry.force_aperture = true;
 	domain->domain.pgsize_bitmap = va_mask & (SZ_4K | SZ_2M | SZ_1G | SZ_512G);
 
