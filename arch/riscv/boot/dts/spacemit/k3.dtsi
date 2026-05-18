@@ -553,6 +553,18 @@
 			#reset-cells = <1>;
 		};
 
+		pdma: dma-controller@d4000000 {
+			compatible = "spacemit,k3-pdma";
+			reg = <0x0 0xd4000000 0x0 0x4000>;
+			clocks = <&syscon_apmu CLK_APMU_DMA>;
+			resets = <&syscon_apmu RESET_APMU_DMA>;
+			interrupt-parent = <&saplic>;
+			interrupts = <72 IRQ_TYPE_LEVEL_HIGH>;
+			dma-channels = <16>;
+			#dma-cells = <1>;
+			status = "disabled";
+		};
+
 		uart0: serial@d4017000 {
 			compatible = "spacemit,k1-uart",
 				     "intel,xscale-uart";
