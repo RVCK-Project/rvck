@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 345</li>
-<li><strong>统计时间</strong>: 2026-05-01 01:06:15</li>
+<li><strong>贡献提交数</strong>: 354</li>
+<li><strong>统计时间</strong>: 2026-05-19 22:52:14</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.137</li>
 </ul>
@@ -18,6 +18,15 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [61d5a5e2](https://github.com/RVCK-Project/rvck/commit/61d5a5e2f86cd71a683b2458662f05f65c13afc7) | 2024-06-10 | Lu Baolu | vhost-vdpa: Use iommu_paging_domain_alloc() |
+| [ec9c2d57](https://github.com/RVCK-Project/rvck/commit/ec9c2d57a2bb2a12bb8594c43f0b8f7f4c738106) | 2024-06-10 | Lu Baolu | vfio/type1: Use iommu_paging_domain_alloc() |
+| [e640cce2](https://github.com/RVCK-Project/rvck/commit/e640cce2dbe168907b700902ad987c1c21368c9a) | 2024-06-10 | Lu Baolu | iommufd: Use iommu_paging_domain_alloc() |
+| [1734a13c](https://github.com/RVCK-Project/rvck/commit/1734a13c19fcda02f03309d7543b3f1b77ec451f) | 2024-06-10 | Lu Baolu | iommu: Add iommu_paging_domain_alloc() interface |
+| [4c792d9f](https://github.com/RVCK-Project/rvck/commit/4c792d9f29fc784980a326cac1dff54706cef50e) | 2025-02-28 | Robin Murphy | iommu: Get DT/ACPI parsing into the proper probe path |
+| [b0d43520](https://github.com/RVCK-Project/rvck/commit/b0d43520b5ec064d19ae649092c73aeb93def82c) | 2025-02-28 | Robin Murphy | iommu: Keep dev-\>iommu state consistent |
+| [e12824b2](https://github.com/RVCK-Project/rvck/commit/e12824b221881b07cf03febbec78f6430b2c90e3) | 2025-02-28 | Robin Murphy | iommu: Resolve ops in iommu_init_device() |
+| [7e1886f8](https://github.com/RVCK-Project/rvck/commit/7e1886f87bb7dbc081fa365d0e75dd3bacfa4d1b) | 2025-02-28 | Robin Murphy | iommu: Handle race with default domain setup |
+| [912e39b2](https://github.com/RVCK-Project/rvck/commit/912e39b28fc2a580709d316ff733e4d54f4409be) | 2025-02-27 | Robin Murphy | iommu: Unexport iommu_fwspec_free() |
 | [e9e76d80](https://github.com/RVCK-Project/rvck/commit/e9e76d804e87a608e5a56abb40c345753d86ecbf) | 2024-07-02 | Robin Murphy | iommu: Remove iommu_fwspec ops |
 | [ebf3e3cb](https://github.com/RVCK-Project/rvck/commit/ebf3e3cb03827460f4026389480cfd3183317e24) | 2024-07-02 | Robin Murphy | OF: Simplify of_iommu_configure() |
 | [7bddb00b](https://github.com/RVCK-Project/rvck/commit/7bddb00bbdef7e40577fe9f4e12df4569ec6f7b3) | 2024-07-02 | Robin Murphy | ACPI: Retire acpi_iommu_fwspec_ops() |
@@ -165,7 +174,7 @@
 | [09153d5d](https://github.com/RVCK-Project/rvck/commit/09153d5d8415f7ed9b908c48e1417239d7b39af8) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 345 条提交，显示 201-345**
+**共 354 条提交，显示 201-354**
 
 [1](中兴通讯.md) **[2]**
 
@@ -176,5 +185,5 @@
 
 ---
 
-*本页面最后更新于 2026-05-01 01:06:15*
-*数据来源: 主分支 rvck-6.6@f62dc7fb*
+*本页面最后更新于 2026-05-19 22:52:14*
+*数据来源: 主分支 rvck-6.6@998334e6*

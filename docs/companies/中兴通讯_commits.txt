@@ -1,9 +1,18 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 345 个提交
-# 生成时间: 2026-05-01 01:06:15
+# 共 354 个提交
+# 生成时间: 2026-05-19 22:52:14
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+0d61cc41 | 2025-06-02 | Cyril Bur | riscv: uaccess: Only restore the CSR_STATUS SUM bit
+b18ee1aa | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning in __get_user_error()
+0fcaa7b1 | 2025-06-10 | Palmer Dabbelt | RISC-V: uaccess: Wrap the get_user_8 uaccess macro
+7d1e89e6 | 2025-07-25 | Aurelien Jarno | riscv: uaccess: fix __put_user_nocheck for unaligned accesses
+ebff58ec | 2025-07-15 | Nathan Chancellor | riscv: uaccess: Fix -Wuninitialized and -Wshadow in __put_user_nocheck
+37b33f86 | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning about different address spaces
+cb2a9c3d | 2025-08-05 | Radim Krčmář | RISC-V: KVM: fix stack overrun when loading vlenb
+7594581c | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: add 'vlenb' Vector CSR
+8485afb4 | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: set 'vlenb' in kvm_riscv_vcpu_alloc_vector_context()
 f62dc7fb | 2024-10-21 | Anup Patel | RISC-V: KVM: Use NACL HFENCEs for KVM request based HFENCEs
 c8034db8 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save trap CSRs in kvm_riscv_vcpu_enter_exit()
 8f54dc9a | 2024-10-21 | Anup Patel | RISC-V: KVM: Use SBI sync SRET call when available

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 345</li>
-<li><strong>统计时间</strong>: 2026-05-01 01:06:15</li>
+<li><strong>贡献提交数</strong>: 354</li>
+<li><strong>统计时间</strong>: 2026-05-19 22:52:14</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.137</li>
 </ul>
@@ -18,6 +18,15 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [0d61cc41](https://github.com/RVCK-Project/rvck/commit/0d61cc4183e12ec32c6c320d4adbdbd6712aa9e4) | 2025-06-02 | Cyril Bur | riscv: uaccess: Only restore the CSR_STATUS SUM bit |
+| [b18ee1aa](https://github.com/RVCK-Project/rvck/commit/b18ee1aa507d9937f395ea0cc01621a608b90a9d) | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning in __get_user_error() |
+| [0fcaa7b1](https://github.com/RVCK-Project/rvck/commit/0fcaa7b11396801eb2bcc55d2360d48d902aa231) | 2025-06-10 | Palmer Dabbelt | RISC-V: uaccess: Wrap the get_user_8 uaccess macro |
+| [7d1e89e6](https://github.com/RVCK-Project/rvck/commit/7d1e89e647813d27ef3d1ce1d1ee62ca66051016) | 2025-07-25 | Aurelien Jarno | riscv: uaccess: fix __put_user_nocheck for unaligned accesses |
+| [ebff58ec](https://github.com/RVCK-Project/rvck/commit/ebff58ec1d661fe30101bdb5ba918524dd0a8c87) | 2025-07-15 | Nathan Chancellor | riscv: uaccess: Fix -Wuninitialized and -Wshadow in __put_user_nocheck |
+| [37b33f86](https://github.com/RVCK-Project/rvck/commit/37b33f86ef7fb40450103fb07e0534299c61e1a9) | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning about different address spaces |
+| [cb2a9c3d](https://github.com/RVCK-Project/rvck/commit/cb2a9c3d49635f8f440b11a55c32a08f43ad0fc1) | 2025-08-05 | Radim Krčmář | RISC-V: KVM: fix stack overrun when loading vlenb |
+| [7594581c](https://github.com/RVCK-Project/rvck/commit/7594581cd2552b5dda28a6fab87479f8a27ee611) | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: add 'vlenb' Vector CSR |
+| [8485afb4](https://github.com/RVCK-Project/rvck/commit/8485afb45e256c46a4901a0549007c9528e7f490) | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: set 'vlenb' in kvm_riscv_vcpu_alloc_vector_context() |
 | [f62dc7fb](https://github.com/RVCK-Project/rvck/commit/f62dc7fbae97b0179ad0ff3bda5c74f9344e4908) | 2024-10-21 | Anup Patel | RISC-V: KVM: Use NACL HFENCEs for KVM request based HFENCEs |
 | [c8034db8](https://github.com/RVCK-Project/rvck/commit/c8034db86a2dd4e03237bff6572b3c2fb3f8e777) | 2024-10-21 | Anup Patel | RISC-V: KVM: Save trap CSRs in kvm_riscv_vcpu_enter_exit() |
 | [8f54dc9a](https://github.com/RVCK-Project/rvck/commit/8f54dc9ab817d88e192692def0c7c5685cb2b2dd) | 2024-10-21 | Anup Patel | RISC-V: KVM: Use SBI sync SRET call when available |
@@ -365,7 +374,7 @@
 | [09153d5d](https://github.com/RVCK-Project/rvck/commit/09153d5d8415f7ed9b908c48e1417239d7b39af8) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 345 条提交（显示全部）**
+**共 354 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -374,5 +383,5 @@
 
 ---
 
-*本页面最后更新于 2026-05-01 01:06:15*
-*数据来源: 主分支 rvck-6.6@f62dc7fb*
+*本页面最后更新于 2026-05-19 22:52:14*
+*数据来源: 主分支 rvck-6.6@998334e6*
