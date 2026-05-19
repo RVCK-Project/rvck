@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 354</li>
-<li><strong>统计时间</strong>: 2026-05-19 22:52:14</li>
+<li><strong>贡献提交数</strong>: 371</li>
+<li><strong>统计时间</strong>: 2026-05-20 02:50:53</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.137</li>
 </ul>
@@ -18,6 +18,23 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [9d99253f](https://github.com/RVCK-Project/rvck/commit/9d99253fa7180ea49e7ef407e651bb45f0f7494d) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit zero-extension to emit_zextw |
+| [4e8ecf0d](https://github.com/RVCK-Project/rvck/commit/4e8ecf0d6e2d1f27580f900bbae62f6dfadc507f) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit sign-extension to emit_sextw |
+| [5cc12bc0](https://github.com/RVCK-Project/rvck/commit/5cc12bc0aea2a98e81f68f661a900c343bf6c658) | 2025-03-12 | Robin Murphy | iommu: Don't warn prematurely about dodgy probes |
+| [a8e6b5f6](https://github.com/RVCK-Project/rvck/commit/a8e6b5f602b1a9dcf5f8aa0ec3b5a9c6e72d6868) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_domain_alloc() |
+| [9763d022](https://github.com/RVCK-Project/rvck/commit/9763d02203ec2eabc5e4073bc91d8f2f4068ee04) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_present() |
+| [e7cf4807](https://github.com/RVCK-Project/rvck/commit/e7cf480730a39a495609be974e946b9b33312e44) | 2024-09-02 | Lu Baolu | drm/tegra: Use iommu_paging_domain_alloc() |
+| [4e626a55](https://github.com/RVCK-Project/rvck/commit/4e626a552a6ef2100c9e52dd06b8f3815a620834) | 2024-09-02 | Lu Baolu | drm/rockchip: Use iommu_paging_domain_alloc() |
+| [6733bcce](https://github.com/RVCK-Project/rvck/commit/6733bccea42325e7b57863836c1359152b209c35) | 2024-06-10 | Lu Baolu | RDMA/usnic: Use iommu_paging_domain_alloc() |
+| [e38238ba](https://github.com/RVCK-Project/rvck/commit/e38238ba723723cca8788729898d9e655f59898d) | 2024-08-12 | Lu Baolu | soc: fsl: qbman: Use iommu_paging_domain_alloc() |
+| [b6d6ddfb](https://github.com/RVCK-Project/rvck/commit/b6d6ddfb23132f5c723e0ee376328bcb630b7573) | 2024-08-12 | Lu Baolu | remoteproc: Use iommu_paging_domain_alloc() |
+| [52555b87](https://github.com/RVCK-Project/rvck/commit/52555b874168af87be5fc8fef7fa95513b2a7313) | 2024-08-12 | Lu Baolu | media: venus: firmware: Use iommu_paging_domain_alloc() |
+| [821e852d](https://github.com/RVCK-Project/rvck/commit/821e852d9b1fe5cd842161cd4c32d3c49b10936f) | 2024-08-12 | Lu Baolu | media: nvidia: tegra: Use iommu_paging_domain_alloc() |
+| [41623077](https://github.com/RVCK-Project/rvck/commit/41623077c7ed334bfd183592e3f921c67480b41a) | 2024-08-12 | Lu Baolu | gpu: host1x: Use iommu_paging_domain_alloc() |
+| [9eddc688](https://github.com/RVCK-Project/rvck/commit/9eddc6881810bee38053e60b5f9c624a722c4ecd) | 2024-09-02 | Lu Baolu | drm/nouveau/tegra: Use iommu_paging_domain_alloc() |
+| [98925e3b](https://github.com/RVCK-Project/rvck/commit/98925e3b1028ccddf4b9babf617ae3433d0e60e8) | 2024-06-10 | Lu Baolu | wifi: ath11k: Use iommu_paging_domain_alloc() |
+| [1ecce27d](https://github.com/RVCK-Project/rvck/commit/1ecce27d24ed11509d0a4e9f5472a8dce9d106b4) | 2024-06-10 | Lu Baolu | wifi: ath10k: Use iommu_paging_domain_alloc() |
+| [9fc450f4](https://github.com/RVCK-Project/rvck/commit/9fc450f457a17c593979a8c3e216d14915cca941) | 2024-06-10 | Lu Baolu | drm/msm: Use iommu_paging_domain_alloc() |
 | [61d5a5e2](https://github.com/RVCK-Project/rvck/commit/61d5a5e2f86cd71a683b2458662f05f65c13afc7) | 2024-06-10 | Lu Baolu | vhost-vdpa: Use iommu_paging_domain_alloc() |
 | [ec9c2d57](https://github.com/RVCK-Project/rvck/commit/ec9c2d57a2bb2a12bb8594c43f0b8f7f4c738106) | 2024-06-10 | Lu Baolu | vfio/type1: Use iommu_paging_domain_alloc() |
 | [e640cce2](https://github.com/RVCK-Project/rvck/commit/e640cce2dbe168907b700902ad987c1c21368c9a) | 2024-06-10 | Lu Baolu | iommufd: Use iommu_paging_domain_alloc() |
@@ -174,7 +191,7 @@
 | [09153d5d](https://github.com/RVCK-Project/rvck/commit/09153d5d8415f7ed9b908c48e1417239d7b39af8) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 354 条提交，显示 201-354**
+**共 371 条提交，显示 201-371**
 
 [1](中兴通讯.md) **[2]**
 
@@ -185,5 +202,5 @@
 
 ---
 
-*本页面最后更新于 2026-05-19 22:52:14*
-*数据来源: 主分支 rvck-6.6@998334e6*
+*本页面最后更新于 2026-05-20 02:50:53*
+*数据来源: 主分支 rvck-6.6@b709bb3e*

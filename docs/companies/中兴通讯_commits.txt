@@ -1,15 +1,32 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 354 个提交
-# 生成时间: 2026-05-19 22:52:14
+# 共 371 个提交
+# 生成时间: 2026-05-20 02:50:53
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+ced35919 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Split huge pages during fault handling for dirty logging
+db511640 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Fix lost write protection on huge pages during dirty logging
+d5a39291 | 2026-02-26 | Wang Yechao | RISC-V: KVM: Skip THP support check during dirty logging
 0d61cc41 | 2025-06-02 | Cyril Bur | riscv: uaccess: Only restore the CSR_STATUS SUM bit
 b18ee1aa | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning in __get_user_error()
 0fcaa7b1 | 2025-06-10 | Palmer Dabbelt | RISC-V: uaccess: Wrap the get_user_8 uaccess macro
 7d1e89e6 | 2025-07-25 | Aurelien Jarno | riscv: uaccess: fix __put_user_nocheck for unaligned accesses
 ebff58ec | 2025-07-15 | Nathan Chancellor | riscv: uaccess: Fix -Wuninitialized and -Wshadow in __put_user_nocheck
 37b33f86 | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning about different address spaces
+b4d0addb | 2025-11-27 | Jessica Liu | RISC-V: KVM: Transparent huge page support
+b1a96f67 | 2025-01-08 | Andrew Bresticker | riscv: Support huge pfnmaps
+e77eaa84 | 2025-06-18 | Anup Patel | RISC-V: KVM: Pass VMID as parameter to kvm_riscv_hfence_xyz() APIs
+aba695a8 | 2025-06-18 | Anup Patel | RISC-V: KVM: Factor-out g-stage page table management
+1e3f8539 | 2025-06-18 | Anup Patel | RISC-V: KVM: Add vmid field to struct kvm_riscv_hfence
+8c96aac0 | 2025-06-18 | Anup Patel | RISC-V: KVM: Introduce struct kvm_gstage_mapping
+49537baf | 2025-06-18 | Anup Patel | RISC-V: KVM: Factor-out MMU related declarations into separate headers
+c75ed7c9 | 2025-06-18 | Anup Patel | RISC-V: KVM: Use ncsr_xyz() in kvm_riscv_vcpu_trap_redirect()
+30fc9e1f | 2025-06-18 | Anup Patel | RISC-V: KVM: Implement kvm_arch_flush_remote_tlbs_range()
+45698a42 | 2025-06-18 | Anup Patel | RISC-V: KVM: Don't flush TLB when PTE is unchanged
+3151ba5b | 2025-06-18 | Anup Patel | RISC-V: KVM: Replace KVM_REQ_HFENCE_GVMA_VMID_ALL with KVM_REQ_TLB_FLUSH
+c2b71ba7 | 2025-06-18 | Anup Patel | RISC-V: KVM: Rename and move kvm_riscv_local_tlb_sanitize()
+a648c2a8 | 2025-06-18 | Anup Patel | RISC-V: KVM: Drop the return value of kvm_riscv_vcpu_aia_init()
+9edc75e5 | 2025-06-18 | Anup Patel | RISC-V: KVM: Check kvm_riscv_vcpu_alloc_vector_context() return value
 cb2a9c3d | 2025-08-05 | Radim Krčmář | RISC-V: KVM: fix stack overrun when loading vlenb
 7594581c | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: add 'vlenb' Vector CSR
 8485afb4 | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: set 'vlenb' in kvm_riscv_vcpu_alloc_vector_context()

@@ -1,9 +1,10 @@
 # 软件所 提交列表（纯文本视图）
-# 共 264 个提交
-# 生成时间: 2026-05-19 22:52:14
+# 共 265 个提交
+# 生成时间: 2026-05-20 02:50:53
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+136df7a4 | 2026-02-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_gstage_get_leaf()
 93210af3 | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling
 d02d233e | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction
 f4f56a3a | 2026-03-30 | jichuan Feng | riscv: k1: add OrangePi RV2 device tree

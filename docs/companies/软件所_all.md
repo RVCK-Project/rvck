@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 264</li>
-<li><strong>统计时间</strong>: 2026-05-19 22:52:14</li>
+<li><strong>贡献提交数</strong>: 265</li>
+<li><strong>统计时间</strong>: 2026-05-20 02:50:53</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.137</li>
 </ul>
@@ -19,6 +19,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [136df7a4](https://github.com/RVCK-Project/rvck/commit/136df7a4e6d44564423bb01865f9bab3f644c411) | 2026-02-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_gstage_get_leaf() |
 | [93210af3](https://github.com/RVCK-Project/rvck/commit/93210af3b47d5fded597585df5c3625c07d5fdc2) | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling |
 | [d02d233e](https://github.com/RVCK-Project/rvck/commit/d02d233ef0e111cfabefbb1092e576ebf2344fc6) | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction |
 | [f4f56a3a](https://github.com/RVCK-Project/rvck/commit/f4f56a3ac5dd8577df1f967451ffbf36cb3efce9) | 2026-03-30 | jichuan Feng | riscv: k1: add OrangePi RV2 device tree |
@@ -285,7 +286,7 @@
 | [1025788c](https://github.com/RVCK-Project/rvck/commit/1025788cfbad85c49e84ca25a68e4de2c9884519) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 264 条提交（显示全部）**
+**共 265 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -294,5 +295,5 @@
 
 ---
 
-*本页面最后更新于 2026-05-19 22:52:14*
-*数据来源: 主分支 rvck-6.6@998334e6*
+*本页面最后更新于 2026-05-20 02:50:53*
+*数据来源: 主分支 rvck-6.6@b709bb3e*
