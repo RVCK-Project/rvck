@@ -12437,6 +12437,12 @@ R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
 S:	Maintained
 F:	drivers/perf/lrw_ddr_pmu.c
 
+LRW PCIE PMU DRIVER
+M:	Wu Guo <guowu1@zte.com.cn>
+R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
+S:	Maintained
+F:	drivers/perf/lrw_pcie_pmu.c
+
 LSILOGIC MPT FUSION DRIVERS (FC/SAS/SPI)
 M:	Sathya Prakash <sathya.prakash@broadcom.com>
 M:	Sreekanth Reddy <sreekanth.reddy@broadcom.com>
