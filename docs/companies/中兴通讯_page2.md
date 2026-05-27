@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 371</li>
-<li><strong>统计时间</strong>: 2026-05-20 02:50:53</li>
+<li><strong>贡献提交数</strong>: 375</li>
+<li><strong>统计时间</strong>: 2026-05-28 00:50:25</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.137</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [b64bb09f](https://github.com/RVCK-Project/rvck/commit/b64bb09f7a7b63bd693e811af484acf2a54c053b) | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize bswap insns with Zbb support |
+| [0f671a96](https://github.com/RVCK-Project/rvck/commit/0f671a96eeb586c2b4581dacc0335b88edbca11d) | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize sign-extention mov insns with Zbb support |
+| [ccc6bc0c](https://github.com/RVCK-Project/rvck/commit/ccc6bc0cac1f644421344721400af55ad9c4fbb2) | 2024-01-15 | Pu Lehui | riscv, bpf: Add necessary Zbb instructions |
+| [9d83d620](https://github.com/RVCK-Project/rvck/commit/9d83d6202783c1aca35d71b8e43111282ae2c3b2) | 2024-01-15 | Pu Lehui | riscv, bpf: Simplify sext and zext logics in branch instructions |
 | [9d99253f](https://github.com/RVCK-Project/rvck/commit/9d99253fa7180ea49e7ef407e651bb45f0f7494d) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit zero-extension to emit_zextw |
 | [4e8ecf0d](https://github.com/RVCK-Project/rvck/commit/4e8ecf0d6e2d1f27580f900bbae62f6dfadc507f) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit sign-extension to emit_sextw |
 | [5cc12bc0](https://github.com/RVCK-Project/rvck/commit/5cc12bc0aea2a98e81f68f661a900c343bf6c658) | 2025-03-12 | Robin Murphy | iommu: Don't warn prematurely about dodgy probes |
@@ -191,7 +195,7 @@
 | [09153d5d](https://github.com/RVCK-Project/rvck/commit/09153d5d8415f7ed9b908c48e1417239d7b39af8) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 371 条提交，显示 201-371**
+**共 375 条提交，显示 201-375**
 
 [1](中兴通讯.md) **[2]**
 
@@ -202,5 +206,5 @@
 
 ---
 
-*本页面最后更新于 2026-05-20 02:50:53*
-*数据来源: 主分支 rvck-6.6@b709bb3e*
+*本页面最后更新于 2026-05-28 00:50:25*
+*数据来源: 主分支 rvck-6.6@b332b22a*

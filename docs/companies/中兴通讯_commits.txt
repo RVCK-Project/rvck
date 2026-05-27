@@ -1,9 +1,13 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 371 个提交
-# 生成时间: 2026-05-20 02:50:53
+# 共 375 个提交
+# 生成时间: 2026-05-28 00:50:25
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+8f3875e5 | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit
+5721f44a | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use
+4a6f244b | 2025-02-21 | BillXiang | riscv: KVM: Remove unnecessary vcpu kick
+325cf76f | 2024-08-15 | Anup Patel | RISC-V: KVM: Don't zero-out PMU snapshot area before freeing data
 ced35919 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Split huge pages during fault handling for dirty logging
 db511640 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Fix lost write protection on huge pages during dirty logging
 d5a39291 | 2026-02-26 | Wang Yechao | RISC-V: KVM: Skip THP support check during dirty logging
