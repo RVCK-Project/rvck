@@ -11,9 +11,7 @@
 #include <pthread.h>
 #include <linux/kernel.h>
 #include <asm/kvm.h>
-#ifdef __riscv
-#include "sbi.h"
-#else
+#ifndef __riscv
 #include <asm/kvm_para.h>
 #endif
 
