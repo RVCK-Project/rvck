@@ -1,9 +1,13 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 375 个提交
-# 生成时间: 2026-05-28 00:50:25
+# 共 379 个提交
+# 生成时间: 2026-05-29 09:30:52
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+fde7a63d | 2025-02-17 | Andrew Jones | riscv: KVM: Fix SBI sleep_type use
+1ad9933f | 2024-10-17 | Andrew Jones | KVM: riscv: selftests: Add SBI SUSP to get-reg-list test
+a19a1db4 | 2024-10-17 | Andrew Jones | RISC-V: KVM: Add SBI system suspend support
+df1fc665 | 2024-04-17 | Yong-Xuan Wang | RISCV: KVM: Introduce vcpu->reset_cntx_lock
 8f3875e5 | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit
 5721f44a | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use
 4a6f244b | 2025-02-21 | BillXiang | riscv: KVM: Remove unnecessary vcpu kick

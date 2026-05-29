@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 375</li>
-<li><strong>统计时间</strong>: 2026-05-28 00:50:25</li>
+<li><strong>贡献提交数</strong>: 379</li>
+<li><strong>统计时间</strong>: 2026-05-29 09:30:52</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.137</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [fde7a63d](https://github.com/RVCK-Project/rvck/commit/fde7a63d1bb7d51bbc7385ffd7905ef6ac500c1e) | 2025-02-17 | Andrew Jones | riscv: KVM: Fix SBI sleep_type use |
+| [1ad9933f](https://github.com/RVCK-Project/rvck/commit/1ad9933fb1a7842f3cf823d419eefa82b0acea19) | 2024-10-17 | Andrew Jones | KVM: riscv: selftests: Add SBI SUSP to get-reg-list test |
+| [a19a1db4](https://github.com/RVCK-Project/rvck/commit/a19a1db4ebaeb1f93c3cb0275cbdaff6ae8d0a01) | 2024-10-17 | Andrew Jones | RISC-V: KVM: Add SBI system suspend support |
+| [df1fc665](https://github.com/RVCK-Project/rvck/commit/df1fc665a357f0d7f60560c06ef968b7e1b0a95f) | 2024-04-17 | Yong-Xuan Wang | RISCV: KVM: Introduce vcpu-\>reset_cntx_lock |
 | [8f3875e5](https://github.com/RVCK-Project/rvck/commit/8f3875e55614493c15e6ffab71d319fbf4f24e30) | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
 | [5721f44a](https://github.com/RVCK-Project/rvck/commit/5721f44a6db2f50d31602dd4b1276a6f68d2199d) | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use |
 | [4a6f244b](https://github.com/RVCK-Project/rvck/commit/4a6f244bdb2eb850d772b33894e45e8ccebed262) | 2025-02-21 | BillXiang | riscv: KVM: Remove unnecessary vcpu kick |
@@ -395,7 +399,7 @@
 | [09153d5d](https://github.com/RVCK-Project/rvck/commit/09153d5d8415f7ed9b908c48e1417239d7b39af8) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 375 条提交（显示全部）**
+**共 379 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -404,5 +408,5 @@
 
 ---
 
-*本页面最后更新于 2026-05-28 00:50:25*
-*数据来源: 主分支 rvck-6.6@b332b22a*
+*本页面最后更新于 2026-05-29 09:30:52*
+*数据来源: 主分支 rvck-6.6@9b5408c4*

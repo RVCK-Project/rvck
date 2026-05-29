@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 375</li>
-<li><strong>统计时间</strong>: 2026-05-28 00:50:25</li>
+<li><strong>贡献提交数</strong>: 379</li>
+<li><strong>统计时间</strong>: 2026-05-29 09:30:52</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.137</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [326682c5](https://github.com/RVCK-Project/rvck/commit/326682c5d502db271bbe93b5f8d1c5b256178f77) | 2025-02-13 | Inochi Amaoto | riscv: hwprobe: export bfloat16 ISA extension |
+| [99a82208](https://github.com/RVCK-Project/rvck/commit/99a82208dcfdaf6a62b9323d2ef4ffd6bcc097b9) | 2025-02-13 | Inochi Amaoto | riscv: add ISA extension parsing for bfloat16 ISA extension |
+| [4f306687](https://github.com/RVCK-Project/rvck/commit/4f306687884655dd68f4e3a71e4e552ad20632f0) | 2024-05-24 | Xiao Wang | riscv, bpf: Introduce shift add helper with Zba optimization |
+| [81958ac3](https://github.com/RVCK-Project/rvck/commit/81958ac36a62eed13fd597f02f1918b000eaba9a) | 2024-05-16 | Xiao Wang | riscv, bpf: Optimize zextw insn with Zba extension |
 | [b64bb09f](https://github.com/RVCK-Project/rvck/commit/b64bb09f7a7b63bd693e811af484acf2a54c053b) | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize bswap insns with Zbb support |
 | [0f671a96](https://github.com/RVCK-Project/rvck/commit/0f671a96eeb586c2b4581dacc0335b88edbca11d) | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize sign-extention mov insns with Zbb support |
 | [ccc6bc0c](https://github.com/RVCK-Project/rvck/commit/ccc6bc0cac1f644421344721400af55ad9c4fbb2) | 2024-01-15 | Pu Lehui | riscv, bpf: Add necessary Zbb instructions |
@@ -195,7 +199,7 @@
 | [09153d5d](https://github.com/RVCK-Project/rvck/commit/09153d5d8415f7ed9b908c48e1417239d7b39af8) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 375 条提交，显示 201-375**
+**共 379 条提交，显示 201-379**
 
 [1](中兴通讯.md) **[2]**
 
@@ -206,5 +210,5 @@
 
 ---
 
-*本页面最后更新于 2026-05-28 00:50:25*
-*数据来源: 主分支 rvck-6.6@b332b22a*
+*本页面最后更新于 2026-05-29 09:30:52*
+*数据来源: 主分支 rvck-6.6@9b5408c4*
