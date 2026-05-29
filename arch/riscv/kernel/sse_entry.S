@@ -100,8 +100,8 @@ SYM_CODE_START(handle_sse)
 	mv t3, zero
 
 #ifdef CONFIG_SMP
-	REG_L t4, SSE_REG_HART_ID(a7)
-	REG_L t3, SSE_REG_CPU_ID(a7)
+	lw t4, SSE_REG_HART_ID(a7)
+	lw t3, SSE_REG_CPU_ID(a7)
 
 	bne t4, a6, .Lfind_hart_id_slowpath
 
