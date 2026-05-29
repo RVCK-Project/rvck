@@ -44,6 +44,7 @@ enum sbi_ext_base_fid {
 	SBI_EXT_BASE_GET_IMP_VERSION,
 	SBI_EXT_BASE_PROBE_EXT = 3,
 };
+
 enum sbi_ext_pmu_fid {
 	SBI_EXT_PMU_NUM_COUNTERS = 0,
 	SBI_EXT_PMU_COUNTER_GET_INFO,
