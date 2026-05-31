@@ -1,271 +1,271 @@
 # 软件所 提交列表（纯文本视图）
 # 共 265 个提交
-# 生成时间: 2026-05-29 09:30:52
+# 生成时间: 2026-06-01 02:29:15
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-136df7a4 | 2026-02-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_gstage_get_leaf()
-93210af3 | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling
-d02d233e | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction
-f4f56a3a | 2026-03-30 | jichuan Feng | riscv: k1: add OrangePi RV2 device tree
-d358c295 | 2026-03-30 | jichuan Feng | riscv: k1: add Milk-V Jupiter device tree
-bd235b46 | 2026-03-30 | jichuan Feng | riscv: k1: add MUSE Pi device tree
-f1001a9c | 2026-03-24 | jichuan Feng | riscv: k1: add MUSE Pi Pro device tree
-22c577c1 | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add Zicbop extension to get-reg-list test
-f3e8fec5 | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow bfloat16 extension for Guest/VM
-34f4f119 | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow Zicbop extension for Guest/VM
-83f1f47d | 2025-08-08 | Quan Zhou | RISC-V: KVM: Provide UAPI for Zicbop block size
-819c0d3a | 2025-08-08 | Quan Zhou | RISC-V: KVM: Change zicbom/zicboz block size to depend on the host isa
-94890931 | 2025-11-19 | Yao Zihong | riscv: hwprobe: Expose Zicbop extension and its block size
-c02b2114 | 2025-12-11 | Mingzheng Xing | th1520-i2s: Fix kernel panic when reading sysfs registers
-a5e144ed | 2025-02-26 | Yunhui Cui | RISC-V: hwprobe: Expose Zicbom extension and its block size
-a2503c96 | 2024-09-13 | Miquel Sabaté Solà | riscv: hwprobe: export Zicntr and Zihpm extensions
-cc3436a0 | 2024-12-24 | Quan Zhou | RISC-V: KVM: Redirect instruction access fault trap to guest
-c5430ca3 | 2023-10-05 | Benjamin Tissoires | selftests/hid: force using our compiled libbpf headers
-4c1c678c | 2023-10-05 | Benjamin Tissoires | selftests/hid: do not manually call headers_install
-170592ed | 2023-10-05 | Benjamin Tissoires | selftests/hid: ensure we can compile the tests on kernels pre-6.3
-2e980b6c | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Ziccrse extension for Guest/VM
-b303a0af | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Zabha extension for Guest/VM
-c7de3ab0 | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Svvptc extension for Guest/VM
-ff6b5220 | 2023-10-12 | Björn Töpel | riscv, qemu_fw_cfg: Add support for RISC-V architecture
-d0e0c98c | 2025-08-19 | Yafen Fang | xuantie: nna: select SYNC_FILE
-377f9804 | 2024-02-22 | Yu Chien Peter Lin | riscv: errata: Rename defines for Andes
-f1ddd8eb | 2024-11-03 | Alexandre Ghiti | riscv: Move cpufeature.h macros into their own header
-d969ba45 | 2024-07-19 | Charlie Jenkins | riscv: cpufeature: Extract common elements from extension checking
-15fc05f0 | 2024-07-19 | Charlie Jenkins | riscv: Introduce vendor variants of extension helpers
-def09dad | 2024-07-17 | Conor Dooley | RISC-V: hwprobe: sort EXT_KEY()s in hwprobe_isa_ext0() alphabetically
-f1b2b005 | 2024-10-16 | Samuel Holland | riscv: hwprobe: Export the Supm ISA extension
-08232eb7 | 2024-07-02 | Palmer Dabbelt | RISC-V: Provide the frequency of time CSR via hwprobe
-91fed082 | 2024-04-26 | Andrew Jones | riscv: hwprobe: export Zawrs ISA extension
-ed4bc13d | 2024-04-10 | Clément Léger | riscv: hwprobe: export highest virtual userspace address
-7c763ba4 | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zcmop ISA extension
-5c8800c3 | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zca, Zcf, Zcd and Zcb ISA extensions
-94183391 | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zimop ISA extension
-68cfc21c | 2024-05-10 | Andy Chiu | riscv: hwprobe: add zve Vector subextensions into hwprobe interface
-35322e6c | 2024-02-21 | Clément Léger | riscv: hwprobe: export Zihintpause ISA extension
-9da8363f | 2023-11-22 | Andrew Jones | RISC-V: Move the hwprobe syscall to its own file
-48da1af8 | 2024-04-09 | Clément Léger | riscv: hwprobe: fix invalid sign extension for RISCV_HWPROBE_EXT_ZVFHMIN
-fb251344 | 2023-12-20 | Clément Léger | riscv: hwprobe: export Zicond extension
-a5d341d8 | 2023-12-20 | Clément Léger | riscv: hwprobe: export Zacas ISA extension
-0c766bfa | 2023-12-20 | Clément Léger | riscv: hwprobe: export Ztso ISA extension
-7ab07364 | 2023-11-22 | Andrew Jones | RISC-V: hwprobe: Introduce which-cpus flag
-f7269f27 | 2023-11-22 | Andrew Jones | RISC-V: hwprobe: Clarify cpus size parameter
-336ae5fa | 2023-09-18 | Andrew Jones | RISC-V: selftests: Add CBO tests
-51b46e28 | 2023-09-18 | Andrew Jones | RISC-V: selftests: Convert hwprobe test to kselftest API
-8abbe76e | 2023-09-18 | Andrew Jones | RISC-V: selftests: Statically link hwprobe test
-9e8087a4 | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zfa ISA extension
-6053320f | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zvfh[min] ISA extensions
-005f0931 | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zhintntl ISA extension
-be3f7b09 | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zfh[min] ISA extensions
-413f8303 | 2023-11-14 | Clément Léger | riscv: hwprobe: export vector crypto ISA extensions
-7426cd65 | 2023-11-14 | Clément Léger | riscv: hwprobe: add support for scalar crypto ISA extensions
-880bb7bf | 2023-11-14 | Clément Léger | riscv: hwprobe: export missing Zbc ISA extension
-04792d5c | 2023-09-30 | Costa Shulyupin | docs: move riscv under arch
-91b0dd75 | 2023-09-18 | Andrew Jones | RISC-V: hwprobe: Expose Zicboz extension and its block size
-c47def87 | 2024-07-26 | Yong-Xuan Wang | RISC-V: Add Svade and Svadu Extensions Support
-995ee3e0 | 2024-11-03 | Alexandre Ghiti | riscv: Add ISA extension parsing for Ziccrse
-370afea2 | 2024-11-03 | Alexandre Ghiti | riscv: Implement cmpxchg8/16() using Zabha
-ae0b9d1e | 2024-11-03 | Alexandre Ghiti | riscv: Implement cmpxchg32/64() using Zacas
-6ea505b9 | 2024-11-03 | Alexandre Ghiti | riscv: Do not fail to build on byte/halfword operations with Zawrs
-5c43426c | 2024-10-16 | Samuel Holland | riscv: Add ISA extension parsing for pointer masking
-59858f16 | 2024-08-14 | Samuel Holland | riscv: Call riscv_user_isa_enable() only on the boot hart
-4b6087ea | 2024-08-14 | Samuel Holland | riscv: Enable cbo.zero only when all harts support Zicboz
-ee894d55 | 2024-03-12 | Samuel Holland | riscv: Do not save the scratch CSR during suspend
-f941275a | 2024-01-18 | Sunil V L | cpuidle: RISC-V: Move few functions to arch/riscv
-61add481 | 2024-02-27 | Samuel Holland | riscv: Save/restore envcfg CSR during CPU suspend
-1ac7143c | 2024-07-17 | Alexandre Ghiti | riscv: Add ISA extension parsing for Svvptc
-7266aa6b | 2024-07-18 | Samuel Holland | riscv: cpufeature: Do not drop Linux-internal extensions
-3ca0c706 | 2024-07-19 | Charlie Jenkins | riscv: Extend cpufeature.c to detect vendor extensions
-9be35b4a | 2024-04-26 | Andrew Jones | riscv: Provide a definition for 'pause'
-702e4421 | 2024-04-26 | Christoph Müllner | riscv: Add Zawrs support for spinlocks
-c481b1a8 | 2024-05-30 | Alexandre Ghiti | riscv: Fix fully ordered LR/SC xchg[8|16]() implementations
-bd904b88 | 2024-03-25 | Jisheng Zhang | riscv: cmpxchg: implement arch_cmpxchg64_{relaxed|acquire|release}
-58556bd0 | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Implement xchg for variables of size 1 and 2
-1fefa224 | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Implement cmpxchg for variables of size 1 and 2
-0372b0f3 | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Deduplicate cmpxchg() asm and macros
-14e47a56 | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Deduplicate xchg() asm functions
-7cae162c | 2024-02-17 | Eric Chan | riscv/barrier: Consolidate fence definitions
-fa6b58f5 | 2024-02-17 | Eric Chan | riscv/barrier: Define RISCV_FULL_BARRIER
-9b617a12 | 2024-06-19 | Clément Léger | riscv: add ISA extension parsing for Zcmop
-1b901f0d | 2024-06-19 | Clément Léger | riscv: add ISA parsing for Zca, Zcf, Zcd and Zcb
-a34c20cb | 2024-06-19 | Clément Léger | riscv: add ISA extensions validation callback
-1154fd17 | 2024-06-19 | Clément Léger | riscv: add ISA extension parsing for Zimop
-11c5d717 | 2024-05-10 | Andy Chiu | riscv: vector: adjust minimum Vector requirement to ZVE32X
-41dc186a | 2024-05-10 | Andy Chiu | riscv: cpufeature: add zve32[xf] and zve64[xfd] isa detection
-c902cf72 | 2024-02-22 | Yu Chien Peter Lin | perf: RISC-V: Introduce Andes PMU to support perf event sampling
-7777e5d6 | 2024-02-22 | Yu Chien Peter Lin | perf: RISC-V: Eliminate redundant interrupt enable/disable operations
-10906feb | 2024-05-10 | Andy Chiu | riscv: cpufeature: call match_isa_ext() for single-letter extensions
-924f731d | 2024-05-10 | Andy Chiu | riscv: vector: add a comment when calling riscv_setup_vsize()
-1a3296d4 | 2024-05-02 | Charlie Jenkins | riscv: cpufeature: Fix extension subset checking
-1f025b69 | 2024-02-27 | Samuel Holland | riscv: Add a custom ISA extension for the [ms]envcfg CSR
-15fe15ec | 2023-12-20 | Clément Léger | riscv: add ISA extension parsing for Zacas
-ea40e2bc | 2023-12-20 | Clément Léger | riscv: add ISA extension parsing for Ztso
-7408861c | 2023-11-10 | Palmer Dabbelt | RISC-V: Remove the removed single-letter extensions
-5faa6a56 | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zfa
-8905e3f0 | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zvfh[min]
-402caac1 | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zihintntl
-268b672a | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zfh/Zfh[min]
-77746e51 | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for vector crypto
-41f94156 | 2023-11-14 | Evan Green | riscv: add ISA extension parsing for scalar crypto
-1f231559 | 2023-10-04 | Clément Léger | riscv: annotate check_unaligned_access_boot_cpu() with __init
-153232f6 | 2023-07-26 | Tsukasa OI | RISC-V: clarify the QEMU workaround in ISA parser
-9c71ebaf | 2023-10-31 | Xiao Wang | riscv: Rearrange hwcap.h and cpufeature.h
-2031d8bb | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zbc
-3c36454d | 2023-09-15 | Anup Patel | RISC-V: Detect Zicond from ISA string
-81468286 | 2024-11-13 | Mingzheng Xing | th1520: npu: fix build error
-ba719793 | 2024-04-11 | Anup Patel | RISC-V: KVM: Use IMSIC guest files when available
-f0b1b2cd | 2024-04-11 | Anup Patel | RISC-V: KVM: Share APLIC and IMSIC defines with irqchip drivers
-4ea13eed | 2025-02-12 | Mingzheng Xing | riscv: Kconfig: Enable amdkfd driver config
-747231ad | 2025-01-10 | Mingzheng Xing | kconfig: fix kernel-mode FPU support
-d3f35db0 | 2024-03-07 | Anup Patel | MAINTAINERS: Add entry for RISC-V AIA drivers
-285a47a3 | 2024-03-07 | Anup Patel | RISC-V: Select APLIC and IMSIC drivers
-c06e4163 | 2024-11-14 | Samuel Holland | irqchip/riscv-aplic: Prevent crash when MSI domain is missing
-c686b0fa | 2024-08-09 | Yong-Xuan Wang | irqchip/riscv-aplic: Retrigger MSI interrupt on source configuration
-9ad0acfc | 2024-06-03 | Jinjie Ruan | irqchip/riscv-aplic: Simplify the initialization code
-9bf81a46 | 2024-04-16 | Dawei Li | irqchip/riscv-aplic-direct: Avoid explicit cpumask allocation on stack
-66c4eea3 | 2024-04-16 | Dawei Li | cpumask: Introduce cpumask_first_and_and()
-af05e08e | 2024-03-07 | Anup Patel | irqchip/riscv-aplic: Add support for MSI-mode
-851b30de | 2024-08-20 | Dan Carpenter | irqchip/riscv-aplic: Fix an IS_ERR() vs NULL bug in probe()
-474d2923 | 2024-03-07 | Anup Patel | irqchip: Add RISC-V advanced PLIC driver for direct-mode
-16b7b4ae | 2024-03-07 | Anup Patel | dt-bindings: interrupt-controller: Add RISC-V advanced PLIC
-892dfe08 | 2024-03-07 | Anup Patel | irqchip/riscv-imsic: Add device MSI domain support for PCI devices
-11185835 | 2024-09-09 | Andrew Jones | irqchip/riscv-imsic: Fix output text of base address
-f65ce66f | 2024-04-13 | Anup Patel | irqchip/riscv-imsic: Fix boot time update effective affinity warning
-00a0cd91 | 2024-03-07 | Anup Patel | irqchip/riscv-imsic: Add device MSI domain support for platform devices
-7cf6579f | 2024-03-07 | Anup Patel | irqchip: Add RISC-V incoming MSI controller early driver
-62d0b339 | 2024-03-07 | Anup Patel | dt-bindings: interrupt-controller: Add RISC-V incoming MSI controller
-faf1939e | 2024-02-22 | Björn Töpel | genirq/matrix: Dynamic bitmap allocation
-bf58ca9d | 2024-03-12 | Samuel Holland | irqchip/riscv-intc: Fix use of AIA interrupts 32-63 on riscv32
-2aa05c4e | 2024-02-26 | Anup Patel | irqchip/riscv-intc: Fix low-level interrupt handler setup for AIA
-eb5ed7d3 | 2024-02-22 | Anup Patel | irqchip/riscv-intc: Add support for RISC-V AIA
-90b2bbe8 | 2023-12-20 | Jisheng Zhang | riscv: enable HAVE_FAST_GUP if MMU
-ccddfd86 | 2023-12-20 | Jisheng Zhang | riscv: enable MMU_GATHER_RCU_TABLE_FREE for SMP && MMU
-cae4afdc | 2023-12-20 | Jisheng Zhang | riscv: tlb: convert __p*d_free_tlb() to inline functions
-46144f02 | 2023-12-20 | Jisheng Zhang | riscv: tlb: fix __p*d_free_tlb()
-a2458b58 | 2023-09-13 | Mayuresh Chitale | dt-bindings: riscv: Add smstateen entry
-33a5ae45 | 2023-09-13 | Mayuresh Chitale | RISC-V: Detect Smstateen extension
-487441e3 | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide MSI_FLAG_PARENT_PM_DEV
-ad5834f3 | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Reroute device MSI create_mapping
-086ec9d2 | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide allocation/free functions for "wired" MSI interrupts
-20cb9d47 | 2024-01-27 | Thomas Gleixner | genirq/msi: Optionally use dev->fwnode for device domain
-33314d08 | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide DOMAIN_BUS_WIRED_TO_MSI
-467e0207 | 2024-01-27 | Thomas Gleixner | genirq/msi: Split msi_domain_alloc_irq_at()
-62d80742 | 2024-02-20 | Marc Zyngier | genirq/irqdomain: Don't call ops->select for DOMAIN_BUS_ANY tokens
-c2d9354d | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide optional translation op
-6607ed51 | 2024-02-15 | Thomas Gleixner | platform-msi: Remove unused interfaces
-43109d5b | 2024-01-27 | Thomas Gleixner | irqchip: Convert all platform MSI users to the new API
-84db0551 | 2024-01-27 | Thomas Gleixner | platform-msi: Prepare for real per device domains
-8921022e | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Add DOMAIN_BUS_DEVICE_MSI
-c2efa755 | 2024-01-27 | Thomas Gleixner | genirq/msi: Extend msi_parent_ops
-9af0bd82 | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Remove the param count restriction from select()
-f834e68b | 2024-12-10 | Yafen Fang | fix: Error: unrecognized opcode cbo.clean (a0)
-a2078984 | 2024-03-27 | Han Gao | riscv: sophgo: mango: add xtheadvector for mango-cpus-socket0&1
-93779f9f | 2024-09-27 | Han Gao | driver: video-memory: reorganize the code structure
-892dbea6 | 2024-09-21 | Han Gao | fix: gpu: fix device tree matching img,gpu
-028c4252 | 2024-09-21 | Han Gao | ci: cleanup forced setting of thread number
-6d068991 | 2024-09-21 | Han Gao | debian: linux-image provide wireguard-modules
-3af98173 | 2024-09-21 | Han Gao | config: cleanup unused option
-825d1ca1 | 2024-09-21 | Han Gao | fix: disable CONFIG_PCI for pvrsrvkm build error
-03007143 | 2024-09-21 | Han Gao | dts: lpi4a: remove mipi screen
-f698b348 | 2024-09-19 | Han Gao | sync: xuantie: vpu-vc8000e SDK v2.0.2 code
-14238d8c | 2024-09-19 | Han Gao | sync: xuantie: vpu-vc8000d SDK v2.0.2 code
-4e8f8d30 | 2024-08-07 | Han Gao | symbol: gpl: export pud_offset/p4d_offset symbol
-f1ab87b1 | 2024-09-19 | Han Gao | sync: xuantie: video_memory SDK v2.0.2 code
-fd63e08e | 2024-09-19 | Han Gao | sync: img: npu-ax3386: sync SDK V2.0.2 code
-045256b7 | 2024-09-16 | Han Gao | ci: kernel auto build on native
-efee6346 | 2024-03-28 | Icenowy Zheng | drm/verisilicon: add format_mod_supported to plane
-f3c51c2c | 2023-12-28 | Icenowy Zheng | drm/verisilicon: bias fb address for dual-head offset
-fbb3b621 | 2023-12-27 | Icenowy Zheng | drm/verisilicon: finally fix the cursor position
-b74faeed | 2023-12-05 | Icenowy Zheng | drm/verisilicon: fix cursor position
-2fec5d63 | 2023-05-08 | Icenowy Zheng | drm: verisilicon: fix fbcon
-8b4e44e1 | 2022-09-14 | Icenowy Zheng | drm/dc8200: disable gamma lut now
-edd12104 | 2024-09-14 | Drew Fustini | cpufreq: th1520-cpufreq: fix cpu_pll1 already disabled warning
-e8774edc | 2024-09-13 | Icenowy Zheng | th1520: use etnaviv gpu
-d1c41b91 | 2024-09-13 | Han Gao | config: enable configs for TH1520
-85dca649 | 2024-09-13 | Han Gao | config: enable ARCH_XUANTIE
-0970dd63 | 2024-09-13 | Han Gao | config: mmc_block & ext4 builtin
-5e649b54 | 2024-09-13 | Han Gao | config: init revyos defconfig
-820b4692 | 2024-09-01 | Han Gao | configs: enable img rogue gpu
-e3b9ca7a | 2024-09-01 | Mingzheng Xing | th1520: gpu: Add driver for PowerVR Rogue GPU
-75751b1f | 2024-09-01 | Han Gao | fix: dts: remove duplicate node
-b2128f0e | 2024-09-01 | Han Gao | Solve problem of hdmi-edid reading
-5bc1d5a8 | 2024-09-01 | Han Gao | riscv:uprobe: fix flush_icache to ensure that instructions are refreshed when switching to user mode
-c5ab6082 | 2024-09-01 | Han Gao | HDMI: fix bug of not being able to light up the external monitor
-bd193514 | 2024-09-01 | Han Gao | Fix panel-jadard-jd9365da panel driver problem
-3e0984dc | 2024-09-01 | Han Gao | Fix panel-jadard-jd9365da panel driver problem
-21b26f5a | 2024-09-01 | Han Gao | sensor: fix bug of channel 1 and channel 2 of video2 failed to run
-df6daada | 2024-09-01 | Han Gao | Expand cma size from 512MB to 768MB to meet the FBO video frame buffer requirement from chromium's X11 XVideo display feature
-a3541bb8 | 2024-09-01 | Han Gao | defconfig: th1520: to fix the problem of perf test fail
-79dff00b | 2024-09-01 | Han Gao | Fix: Repair rvbook hall sensor functionality and optimize codebase
-695216b1 | 2024-09-01 | Han Gao | riscv:vector: Check datap status in __switch_to_vector
-5a826abf | 2024-09-01 | Han Gao | th1520_defconfig:Enable lowpower settings
-cc36e61d | 2024-09-01 | Han Gao | th1520_defconfig:Enable ebpf settings
-085881c5 | 2024-09-01 | Han Gao | dts: th1520: sd card not try sdio cmds
-41d80cf6 | 2024-09-01 | Han Gao | fix rv_book str
-d6787598 | 2024-09-01 | Han Gao | driver usb: optimize pm resume time, do resume in runtime_resume
-86d0ea17 | 2024-09-01 | Han Gao | Solve problem of DSI transfer command failure when hotplug hdmi
-71186b67 | 2024-09-01 | Han Gao | dts: bt: support rtl8822cs
-35badfe5 | 2024-09-01 | Han Gao | dts: wifi: support rtl8822cs
-80eaec70 | 2024-09-01 | Han Gao | defconfig: wifi : add rtl8822cs(for rvbook)
-379f3672 | 2024-09-01 | Han Gao | riscv:kdump: Fix gen /proc/vmcore
-34d8230d | 2024-09-01 | Han Gao | driver:tee:add tee_driver_pm_ops
-ed57233d | 2024-09-01 | Han Gao | driver:tee:Allow to freeze when tee supplicant is freezed
-13e0598b | 2024-09-01 | Han Gao | usb: dwc3: th1520.dtsi: bugfix: fix usb str xhci error
-4005e227 | 2024-09-01 | Han Gao | drivers: support virtio_vdmabuf
-25d346cb | 2024-09-01 | Han Gao | perf:test:fix PERF_RECORD_* events & perf_sample fields in yocto linux
-919f0978 | 2024-09-01 | Han Gao | move the place of dts "audio-text-memory-region" property
-681001a9 | 2024-09-01 | Han Gao | defconfig: bt: add hid support
-eec6c725 | 2024-09-01 | Han Gao | defconfig: bt : add rtl8723ds
-a9fe7f6d | 2024-09-01 | Han Gao | driver: bt : Compatible with RTL8723ds'h5 protocol
-05fe6d99 | 2024-09-01 | Han Gao | driver: bt: add rtl8723ds h5 protocol
-c57d9ac9 | 2024-09-01 | Han Gao | add audio hibernation ops
-f2abaf93 | 2024-09-01 | Han Gao | DPU: remove panel unprepare process in disable dsi process
-5e23fddb | 2024-09-01 | Han Gao | remove dts "audio_mem" node and add mbox 910r channel
-a9a4dfd1 | 2024-09-01 | Han Gao | usb: dwc3-thead: fix usb gadget support
-280aa335 | 2024-09-01 | Han Gao | dts: th1520-lichee-pi-4a: update usb hub
-dbcc32ea | 2024-09-01 | Han Gao | dts: add th1520-lpi4a-dsi0.dts and th1520-lpi4a-hx8279.dts
-0a6372aa | 2024-09-01 | Han Gao | dts: add display support for dsi0&dsi1 and dsi0&hdmi
-d64201c8 | 2024-09-01 | Han Gao | dw-axi-dma : dma_chan_prep_dma_memcpy func add chan->direction = DMA_MEM_TO_MEM
-d8ebdb45 | 2024-09-01 | Han Gao | DPU: support DSI/HDMI driver for light-a-val
-9b67078f | 2024-09-01 | Han Gao | driver : rfkill : Delete unnecessary code
-975961f5 | 2024-09-01 | Han Gao | dts: rfkill: Delete unnecessary nodes
-a9899935 | 2024-09-01 | Han Gao | RISC-V laptop: Add new drivers for specific hardware components
-2acb3225 | 2024-09-01 | Han Gao | rvbook: add th1520-rvbook.dts
-bfa4e0d5 | 2024-09-01 | Han Gao | Add kernel boot rvbook_defconfig
-feefd876 | 2024-09-01 | Han Gao | dts: add GPU device node
-bd3b987c | 2024-09-01 | Han Gao | perf vendor events riscv: Add PMU event JSON files for TH1520 DDRC PMU
-c562ae64 | 2024-09-01 | Han Gao | dts: rfkill: Resolving Insmod Failure Issues
-c05812ff | 2024-09-01 | Han Gao | dts: th1520: add g2d device node
-d3a08454 | 2024-08-31 | Han Gao | aic8800: Add AIC8800's config to th1520_defconfig, as well as resolve known issues
-a053a415 | 2024-08-31 | Han Gao | uart: Fix the UART problem
-a92ab641 | 2024-08-31 | Han Gao | rfkill: add aic8800 rfkill support for gpio control of aic8800 wifi/bt
-40388a0c | 2024-08-31 | Han Gao | th1520-lichee-pi-4a.dts: change dts for aic8800 wifi Support aic8800 wifi
-020f5485 | 2024-08-31 | Han Gao | th1520-lichee-pi-4a.dts: change dts for aic8800 bt Support aic8800 bt
-bb1ea231 | 2024-08-27 | Han Gao | fix: riscv: xtheadvector: fix setup_v_vsize
-af33237a | 2024-07-05 | Han Gao | configs: enable rtw88 for 8723ds
-239532a7 | 2024-06-10 | Han Gao | xtheadvector: fix it used as v-ext when hwprobe is used
-acce88bd | 2024-03-30 | Han Gao | dts: th1520: add xtheadvector
-17cb7d54 | 2024-03-29 | Han Gao | fix: use has_vector instead of judge ELF_HWCAP
-f09b0819 | 2024-03-27 | Han Gao | riscv: xtheadvector: enable vector function
-8710cd51 | 2024-07-03 | Han Gao | configs: init th1520 config
-82e7b50b | 2024-07-05 | Han Gao | riscv: dts: lpi4a 16g support
-239e3e1f | 2024-07-02 | Han Gao | chore: use thead instead of xuantie
-7e805401 | 2024-07-02 | Han Gao | chore: use xuantie instead of thead
-0e848948 | 2024-01-12 | Han Gao | chore: dtb_install in /boot
-f7fba6d7 | 2023-09-21 | Han Gao | remove compression for riscv Image
-4694fafa | 2023-12-06 | Drew Fustini | riscv: dts: thead: Enable LicheePi 4A eMMC and microSD
-3baf8ebc | 2023-12-06 | Drew Fustini | riscv: dts: thead: Enable BeagleV Ahead eMMC and microSD
-41b5d78b | 2023-12-06 | Drew Fustini | riscv: dts: thead: Add TH1520 mmc controllers and sdhci clock
-380b4efd | 2023-12-06 | Drew Fustini | riscv: defconfig: Enable mmc and dma drivers for T-Head TH1520
-db21efc2 | 2023-11-14 | Drew Fustini | mmc: sdhci-of-dwcmshc: Add support for T-Head TH1520
-9937ffc1 | 2023-11-14 | Drew Fustini | mmc: sdhci: add __sdhci_execute_tuning() to header
-c24bfca9 | 2023-11-14 | Drew Fustini | dt-bindings: mmc: sdhci-of-dwcmhsc: Add T-Head TH1520 support
-43a14816 | 2024-04-25 | Han Gao | fix: remove linux/array_size.h for pinctrl-th1520
-d3e48c69 | 2024-01-03 | Emil Renner Berthing | riscv: dtb: thead: Add BeagleV Ahead LEDs
-9f000fb4 | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pinctrl settings for UART0
-21e63de1 | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add Lichee Pi 4M GPIO line names
-0f462640 | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Adjust TH1520 GPIO labels
-cba914fa | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 GPIO ranges
-52e56f5c | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pin control nodes
-e4c69f73 | 2024-01-03 | Emil Renner Berthing | pinctrl: Add driver for the T-Head TH1520 SoC
-1025788c | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings
+71275579 | 2026-02-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_gstage_get_leaf()
+b78a7f5f | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling
+fe67c90f | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction
+a575b92e | 2026-03-30 | jichuan Feng | riscv: k1: add OrangePi RV2 device tree
+b84c3501 | 2026-03-30 | jichuan Feng | riscv: k1: add Milk-V Jupiter device tree
+228a14a1 | 2026-03-30 | jichuan Feng | riscv: k1: add MUSE Pi device tree
+e59af2e3 | 2026-03-24 | jichuan Feng | riscv: k1: add MUSE Pi Pro device tree
+50633a3f | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add Zicbop extension to get-reg-list test
+20ef73ca | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow bfloat16 extension for Guest/VM
+430c6006 | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow Zicbop extension for Guest/VM
+1710d756 | 2025-08-08 | Quan Zhou | RISC-V: KVM: Provide UAPI for Zicbop block size
+637de49d | 2025-08-08 | Quan Zhou | RISC-V: KVM: Change zicbom/zicboz block size to depend on the host isa
+5f43b13e | 2025-11-19 | Yao Zihong | riscv: hwprobe: Expose Zicbop extension and its block size
+a2ab2a4f | 2025-12-11 | Mingzheng Xing | th1520-i2s: Fix kernel panic when reading sysfs registers
+16f348b4 | 2025-02-26 | Yunhui Cui | RISC-V: hwprobe: Expose Zicbom extension and its block size
+c62ef971 | 2024-09-13 | Miquel Sabaté Solà | riscv: hwprobe: export Zicntr and Zihpm extensions
+d4483f2d | 2024-12-24 | Quan Zhou | RISC-V: KVM: Redirect instruction access fault trap to guest
+adcd4cbe | 2023-10-05 | Benjamin Tissoires | selftests/hid: force using our compiled libbpf headers
+1e19a643 | 2023-10-05 | Benjamin Tissoires | selftests/hid: do not manually call headers_install
+628de197 | 2023-10-05 | Benjamin Tissoires | selftests/hid: ensure we can compile the tests on kernels pre-6.3
+d251f6f5 | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Ziccrse extension for Guest/VM
+549d4fec | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Zabha extension for Guest/VM
+5b4a5bc1 | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Svvptc extension for Guest/VM
+e5032b85 | 2023-10-12 | Björn Töpel | riscv, qemu_fw_cfg: Add support for RISC-V architecture
+ed1a6235 | 2025-08-19 | Yafen Fang | xuantie: nna: select SYNC_FILE
+9c675558 | 2024-02-22 | Yu Chien Peter Lin | riscv: errata: Rename defines for Andes
+b9ed8439 | 2024-11-03 | Alexandre Ghiti | riscv: Move cpufeature.h macros into their own header
+68e41cd3 | 2024-07-19 | Charlie Jenkins | riscv: cpufeature: Extract common elements from extension checking
+5141598c | 2024-07-19 | Charlie Jenkins | riscv: Introduce vendor variants of extension helpers
+763612f2 | 2024-07-17 | Conor Dooley | RISC-V: hwprobe: sort EXT_KEY()s in hwprobe_isa_ext0() alphabetically
+fa1104c2 | 2024-10-16 | Samuel Holland | riscv: hwprobe: Export the Supm ISA extension
+bc5b1413 | 2024-07-02 | Palmer Dabbelt | RISC-V: Provide the frequency of time CSR via hwprobe
+b4080b53 | 2024-04-26 | Andrew Jones | riscv: hwprobe: export Zawrs ISA extension
+c7a70014 | 2024-04-10 | Clément Léger | riscv: hwprobe: export highest virtual userspace address
+6410b535 | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zcmop ISA extension
+10e203fd | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zca, Zcf, Zcd and Zcb ISA extensions
+6f407d92 | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zimop ISA extension
+51341e53 | 2024-05-10 | Andy Chiu | riscv: hwprobe: add zve Vector subextensions into hwprobe interface
+e8fde025 | 2024-02-21 | Clément Léger | riscv: hwprobe: export Zihintpause ISA extension
+d6da5af8 | 2023-11-22 | Andrew Jones | RISC-V: Move the hwprobe syscall to its own file
+6495858d | 2024-04-09 | Clément Léger | riscv: hwprobe: fix invalid sign extension for RISCV_HWPROBE_EXT_ZVFHMIN
+678c34ca | 2023-12-20 | Clément Léger | riscv: hwprobe: export Zicond extension
+9f32d196 | 2023-12-20 | Clément Léger | riscv: hwprobe: export Zacas ISA extension
+6f63055f | 2023-12-20 | Clément Léger | riscv: hwprobe: export Ztso ISA extension
+358a66a0 | 2023-11-22 | Andrew Jones | RISC-V: hwprobe: Introduce which-cpus flag
+77fc6c49 | 2023-11-22 | Andrew Jones | RISC-V: hwprobe: Clarify cpus size parameter
+c1230869 | 2023-09-18 | Andrew Jones | RISC-V: selftests: Add CBO tests
+7564d0b9 | 2023-09-18 | Andrew Jones | RISC-V: selftests: Convert hwprobe test to kselftest API
+dd05091f | 2023-09-18 | Andrew Jones | RISC-V: selftests: Statically link hwprobe test
+8ce2ca25 | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zfa ISA extension
+a1e2372b | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zvfh[min] ISA extensions
+c4302224 | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zhintntl ISA extension
+1f9e1be5 | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zfh[min] ISA extensions
+721659f0 | 2023-11-14 | Clément Léger | riscv: hwprobe: export vector crypto ISA extensions
+2fe02a5a | 2023-11-14 | Clément Léger | riscv: hwprobe: add support for scalar crypto ISA extensions
+9da45a5a | 2023-11-14 | Clément Léger | riscv: hwprobe: export missing Zbc ISA extension
+101c01ff | 2023-09-30 | Costa Shulyupin | docs: move riscv under arch
+29a3128a | 2023-09-18 | Andrew Jones | RISC-V: hwprobe: Expose Zicboz extension and its block size
+53429c00 | 2024-07-26 | Yong-Xuan Wang | RISC-V: Add Svade and Svadu Extensions Support
+a0c39f95 | 2024-11-03 | Alexandre Ghiti | riscv: Add ISA extension parsing for Ziccrse
+c97273d5 | 2024-11-03 | Alexandre Ghiti | riscv: Implement cmpxchg8/16() using Zabha
+8ec59598 | 2024-11-03 | Alexandre Ghiti | riscv: Implement cmpxchg32/64() using Zacas
+1f6534b6 | 2024-11-03 | Alexandre Ghiti | riscv: Do not fail to build on byte/halfword operations with Zawrs
+52d459c0 | 2024-10-16 | Samuel Holland | riscv: Add ISA extension parsing for pointer masking
+f95914a5 | 2024-08-14 | Samuel Holland | riscv: Call riscv_user_isa_enable() only on the boot hart
+40c5ee9c | 2024-08-14 | Samuel Holland | riscv: Enable cbo.zero only when all harts support Zicboz
+b7f8dce5 | 2024-03-12 | Samuel Holland | riscv: Do not save the scratch CSR during suspend
+430370d2 | 2024-01-18 | Sunil V L | cpuidle: RISC-V: Move few functions to arch/riscv
+7cf98c08 | 2024-02-27 | Samuel Holland | riscv: Save/restore envcfg CSR during CPU suspend
+ed249ca9 | 2024-07-17 | Alexandre Ghiti | riscv: Add ISA extension parsing for Svvptc
+bd7d6b76 | 2024-07-18 | Samuel Holland | riscv: cpufeature: Do not drop Linux-internal extensions
+c33141ec | 2024-07-19 | Charlie Jenkins | riscv: Extend cpufeature.c to detect vendor extensions
+eb39d943 | 2024-04-26 | Andrew Jones | riscv: Provide a definition for 'pause'
+6360741a | 2024-04-26 | Christoph Müllner | riscv: Add Zawrs support for spinlocks
+8be2f65e | 2024-05-30 | Alexandre Ghiti | riscv: Fix fully ordered LR/SC xchg[8|16]() implementations
+21e27750 | 2024-03-25 | Jisheng Zhang | riscv: cmpxchg: implement arch_cmpxchg64_{relaxed|acquire|release}
+ecb23565 | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Implement xchg for variables of size 1 and 2
+714b3a88 | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Implement cmpxchg for variables of size 1 and 2
+9178c24f | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Deduplicate cmpxchg() asm and macros
+6d2eb799 | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Deduplicate xchg() asm functions
+03b5fc6f | 2024-02-17 | Eric Chan | riscv/barrier: Consolidate fence definitions
+a8dda2b5 | 2024-02-17 | Eric Chan | riscv/barrier: Define RISCV_FULL_BARRIER
+c1f07b82 | 2024-06-19 | Clément Léger | riscv: add ISA extension parsing for Zcmop
+82c8c1cb | 2024-06-19 | Clément Léger | riscv: add ISA parsing for Zca, Zcf, Zcd and Zcb
+643adc28 | 2024-06-19 | Clément Léger | riscv: add ISA extensions validation callback
+2b71b61c | 2024-06-19 | Clément Léger | riscv: add ISA extension parsing for Zimop
+ff27ae09 | 2024-05-10 | Andy Chiu | riscv: vector: adjust minimum Vector requirement to ZVE32X
+ad3b525f | 2024-05-10 | Andy Chiu | riscv: cpufeature: add zve32[xf] and zve64[xfd] isa detection
+ba1032fb | 2024-02-22 | Yu Chien Peter Lin | perf: RISC-V: Introduce Andes PMU to support perf event sampling
+e8d8b0cb | 2024-02-22 | Yu Chien Peter Lin | perf: RISC-V: Eliminate redundant interrupt enable/disable operations
+a4c76f5d | 2024-05-10 | Andy Chiu | riscv: cpufeature: call match_isa_ext() for single-letter extensions
+0d8f517e | 2024-05-10 | Andy Chiu | riscv: vector: add a comment when calling riscv_setup_vsize()
+387e9e47 | 2024-05-02 | Charlie Jenkins | riscv: cpufeature: Fix extension subset checking
+c3ee6f2e | 2024-02-27 | Samuel Holland | riscv: Add a custom ISA extension for the [ms]envcfg CSR
+c16a9fd0 | 2023-12-20 | Clément Léger | riscv: add ISA extension parsing for Zacas
+9f0bb917 | 2023-12-20 | Clément Léger | riscv: add ISA extension parsing for Ztso
+40279acf | 2023-11-10 | Palmer Dabbelt | RISC-V: Remove the removed single-letter extensions
+6ed133d2 | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zfa
+b3b76f3e | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zvfh[min]
+f73efea5 | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zihintntl
+9f0b6972 | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zfh/Zfh[min]
+11bead44 | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for vector crypto
+1dba08e7 | 2023-11-14 | Evan Green | riscv: add ISA extension parsing for scalar crypto
+19bb9fb2 | 2023-10-04 | Clément Léger | riscv: annotate check_unaligned_access_boot_cpu() with __init
+04b01d5d | 2023-07-26 | Tsukasa OI | RISC-V: clarify the QEMU workaround in ISA parser
+fd597d7c | 2023-10-31 | Xiao Wang | riscv: Rearrange hwcap.h and cpufeature.h
+29bbd66e | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zbc
+7c417a3e | 2023-09-15 | Anup Patel | RISC-V: Detect Zicond from ISA string
+579679c9 | 2024-11-13 | Mingzheng Xing | th1520: npu: fix build error
+d25c1d30 | 2024-04-11 | Anup Patel | RISC-V: KVM: Use IMSIC guest files when available
+1964b1af | 2024-04-11 | Anup Patel | RISC-V: KVM: Share APLIC and IMSIC defines with irqchip drivers
+2d891202 | 2025-02-12 | Mingzheng Xing | riscv: Kconfig: Enable amdkfd driver config
+dcc83bb9 | 2025-01-10 | Mingzheng Xing | kconfig: fix kernel-mode FPU support
+182b8ac2 | 2024-03-07 | Anup Patel | MAINTAINERS: Add entry for RISC-V AIA drivers
+01efc90c | 2024-03-07 | Anup Patel | RISC-V: Select APLIC and IMSIC drivers
+365b50f3 | 2024-11-14 | Samuel Holland | irqchip/riscv-aplic: Prevent crash when MSI domain is missing
+cc64688a | 2024-08-09 | Yong-Xuan Wang | irqchip/riscv-aplic: Retrigger MSI interrupt on source configuration
+cd795957 | 2024-06-03 | Jinjie Ruan | irqchip/riscv-aplic: Simplify the initialization code
+56f4a6f3 | 2024-04-16 | Dawei Li | irqchip/riscv-aplic-direct: Avoid explicit cpumask allocation on stack
+cf8c1059 | 2024-04-16 | Dawei Li | cpumask: Introduce cpumask_first_and_and()
+bc9bcff3 | 2024-03-07 | Anup Patel | irqchip/riscv-aplic: Add support for MSI-mode
+805f1916 | 2024-08-20 | Dan Carpenter | irqchip/riscv-aplic: Fix an IS_ERR() vs NULL bug in probe()
+63907ad3 | 2024-03-07 | Anup Patel | irqchip: Add RISC-V advanced PLIC driver for direct-mode
+8da04edf | 2024-03-07 | Anup Patel | dt-bindings: interrupt-controller: Add RISC-V advanced PLIC
+f871ebce | 2024-03-07 | Anup Patel | irqchip/riscv-imsic: Add device MSI domain support for PCI devices
+ad39fca8 | 2024-09-09 | Andrew Jones | irqchip/riscv-imsic: Fix output text of base address
+d1ba18a7 | 2024-04-13 | Anup Patel | irqchip/riscv-imsic: Fix boot time update effective affinity warning
+b1514d11 | 2024-03-07 | Anup Patel | irqchip/riscv-imsic: Add device MSI domain support for platform devices
+3639e900 | 2024-03-07 | Anup Patel | irqchip: Add RISC-V incoming MSI controller early driver
+fc20d617 | 2024-03-07 | Anup Patel | dt-bindings: interrupt-controller: Add RISC-V incoming MSI controller
+56d5e75f | 2024-02-22 | Björn Töpel | genirq/matrix: Dynamic bitmap allocation
+e78d99c7 | 2024-03-12 | Samuel Holland | irqchip/riscv-intc: Fix use of AIA interrupts 32-63 on riscv32
+906d466b | 2024-02-26 | Anup Patel | irqchip/riscv-intc: Fix low-level interrupt handler setup for AIA
+0f6153aa | 2024-02-22 | Anup Patel | irqchip/riscv-intc: Add support for RISC-V AIA
+67da1614 | 2023-12-20 | Jisheng Zhang | riscv: enable HAVE_FAST_GUP if MMU
+b400fb92 | 2023-12-20 | Jisheng Zhang | riscv: enable MMU_GATHER_RCU_TABLE_FREE for SMP && MMU
+032d3326 | 2023-12-20 | Jisheng Zhang | riscv: tlb: convert __p*d_free_tlb() to inline functions
+b1deaa4b | 2023-12-20 | Jisheng Zhang | riscv: tlb: fix __p*d_free_tlb()
+3cf79734 | 2023-09-13 | Mayuresh Chitale | dt-bindings: riscv: Add smstateen entry
+23f91691 | 2023-09-13 | Mayuresh Chitale | RISC-V: Detect Smstateen extension
+7d046c74 | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide MSI_FLAG_PARENT_PM_DEV
+6c1a9a64 | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Reroute device MSI create_mapping
+6e3feebd | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide allocation/free functions for "wired" MSI interrupts
+a32b08e3 | 2024-01-27 | Thomas Gleixner | genirq/msi: Optionally use dev->fwnode for device domain
+a2f6f7fd | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide DOMAIN_BUS_WIRED_TO_MSI
+ce46e427 | 2024-01-27 | Thomas Gleixner | genirq/msi: Split msi_domain_alloc_irq_at()
+cebdade7 | 2024-02-20 | Marc Zyngier | genirq/irqdomain: Don't call ops->select for DOMAIN_BUS_ANY tokens
+91d36481 | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide optional translation op
+79f039e3 | 2024-02-15 | Thomas Gleixner | platform-msi: Remove unused interfaces
+0ac658f0 | 2024-01-27 | Thomas Gleixner | irqchip: Convert all platform MSI users to the new API
+9149e739 | 2024-01-27 | Thomas Gleixner | platform-msi: Prepare for real per device domains
+cab99eaa | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Add DOMAIN_BUS_DEVICE_MSI
+a61405ad | 2024-01-27 | Thomas Gleixner | genirq/msi: Extend msi_parent_ops
+4d53d2e7 | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Remove the param count restriction from select()
+2a2f44e6 | 2024-12-10 | Yafen Fang | fix: Error: unrecognized opcode cbo.clean (a0)
+a4c3cda5 | 2024-03-27 | Han Gao | riscv: sophgo: mango: add xtheadvector for mango-cpus-socket0&1
+8bbd03b8 | 2024-09-27 | Han Gao | driver: video-memory: reorganize the code structure
+96260196 | 2024-09-21 | Han Gao | fix: gpu: fix device tree matching img,gpu
+730dcc52 | 2024-09-21 | Han Gao | ci: cleanup forced setting of thread number
+b57b6ae3 | 2024-09-21 | Han Gao | debian: linux-image provide wireguard-modules
+35352e3a | 2024-09-21 | Han Gao | config: cleanup unused option
+7c21f116 | 2024-09-21 | Han Gao | fix: disable CONFIG_PCI for pvrsrvkm build error
+e5ca3927 | 2024-09-21 | Han Gao | dts: lpi4a: remove mipi screen
+23b9b562 | 2024-09-19 | Han Gao | sync: xuantie: vpu-vc8000e SDK v2.0.2 code
+0ef32290 | 2024-09-19 | Han Gao | sync: xuantie: vpu-vc8000d SDK v2.0.2 code
+90350d3b | 2024-08-07 | Han Gao | symbol: gpl: export pud_offset/p4d_offset symbol
+6f69f836 | 2024-09-19 | Han Gao | sync: xuantie: video_memory SDK v2.0.2 code
+ce09897e | 2024-09-19 | Han Gao | sync: img: npu-ax3386: sync SDK V2.0.2 code
+d13b7669 | 2024-09-16 | Han Gao | ci: kernel auto build on native
+b7f225a5 | 2024-03-28 | Icenowy Zheng | drm/verisilicon: add format_mod_supported to plane
+388f1fab | 2023-12-28 | Icenowy Zheng | drm/verisilicon: bias fb address for dual-head offset
+369543e1 | 2023-12-27 | Icenowy Zheng | drm/verisilicon: finally fix the cursor position
+8b0d6eb6 | 2023-12-05 | Icenowy Zheng | drm/verisilicon: fix cursor position
+c2911ae5 | 2023-05-08 | Icenowy Zheng | drm: verisilicon: fix fbcon
+c7436ab4 | 2022-09-14 | Icenowy Zheng | drm/dc8200: disable gamma lut now
+5c15edaf | 2024-09-14 | Drew Fustini | cpufreq: th1520-cpufreq: fix cpu_pll1 already disabled warning
+863f2880 | 2024-09-13 | Icenowy Zheng | th1520: use etnaviv gpu
+1ae75754 | 2024-09-13 | Han Gao | config: enable configs for TH1520
+62c4e0f5 | 2024-09-13 | Han Gao | config: enable ARCH_XUANTIE
+c49b98b2 | 2024-09-13 | Han Gao | config: mmc_block & ext4 builtin
+fd3391f2 | 2024-09-13 | Han Gao | config: init revyos defconfig
+624cb125 | 2024-09-01 | Han Gao | configs: enable img rogue gpu
+ef458337 | 2024-09-01 | Mingzheng Xing | th1520: gpu: Add driver for PowerVR Rogue GPU
+3b7c54d7 | 2024-09-01 | Han Gao | fix: dts: remove duplicate node
+637e1144 | 2024-09-01 | Han Gao | Solve problem of hdmi-edid reading
+b88b6a04 | 2024-09-01 | Han Gao | riscv:uprobe: fix flush_icache to ensure that instructions are refreshed when switching to user mode
+765dcef4 | 2024-09-01 | Han Gao | HDMI: fix bug of not being able to light up the external monitor
+1cd35226 | 2024-09-01 | Han Gao | Fix panel-jadard-jd9365da panel driver problem
+56a6d12a | 2024-09-01 | Han Gao | Fix panel-jadard-jd9365da panel driver problem
+33ed41db | 2024-09-01 | Han Gao | sensor: fix bug of channel 1 and channel 2 of video2 failed to run
+3f4ecd1e | 2024-09-01 | Han Gao | Expand cma size from 512MB to 768MB to meet the FBO video frame buffer requirement from chromium's X11 XVideo display feature
+55efc1e4 | 2024-09-01 | Han Gao | defconfig: th1520: to fix the problem of perf test fail
+e0afdd81 | 2024-09-01 | Han Gao | Fix: Repair rvbook hall sensor functionality and optimize codebase
+9401f95e | 2024-09-01 | Han Gao | riscv:vector: Check datap status in __switch_to_vector
+5dfeccdb | 2024-09-01 | Han Gao | th1520_defconfig:Enable lowpower settings
+dc3bb5f4 | 2024-09-01 | Han Gao | th1520_defconfig:Enable ebpf settings
+52fb1dc1 | 2024-09-01 | Han Gao | dts: th1520: sd card not try sdio cmds
+63042511 | 2024-09-01 | Han Gao | fix rv_book str
+661ebb15 | 2024-09-01 | Han Gao | driver usb: optimize pm resume time, do resume in runtime_resume
+b32a7968 | 2024-09-01 | Han Gao | Solve problem of DSI transfer command failure when hotplug hdmi
+81565bbe | 2024-09-01 | Han Gao | dts: bt: support rtl8822cs
+22c17cc6 | 2024-09-01 | Han Gao | dts: wifi: support rtl8822cs
+b3da01c2 | 2024-09-01 | Han Gao | defconfig: wifi : add rtl8822cs(for rvbook)
+aaa2ca20 | 2024-09-01 | Han Gao | riscv:kdump: Fix gen /proc/vmcore
+6231f395 | 2024-09-01 | Han Gao | driver:tee:add tee_driver_pm_ops
+3f772920 | 2024-09-01 | Han Gao | driver:tee:Allow to freeze when tee supplicant is freezed
+4622a72d | 2024-09-01 | Han Gao | usb: dwc3: th1520.dtsi: bugfix: fix usb str xhci error
+3342b276 | 2024-09-01 | Han Gao | drivers: support virtio_vdmabuf
+51678119 | 2024-09-01 | Han Gao | perf:test:fix PERF_RECORD_* events & perf_sample fields in yocto linux
+962b3cf2 | 2024-09-01 | Han Gao | move the place of dts "audio-text-memory-region" property
+4274f56d | 2024-09-01 | Han Gao | defconfig: bt: add hid support
+e721721c | 2024-09-01 | Han Gao | defconfig: bt : add rtl8723ds
+aa583288 | 2024-09-01 | Han Gao | driver: bt : Compatible with RTL8723ds'h5 protocol
+210e13bf | 2024-09-01 | Han Gao | driver: bt: add rtl8723ds h5 protocol
+9a08e29e | 2024-09-01 | Han Gao | add audio hibernation ops
+9318c996 | 2024-09-01 | Han Gao | DPU: remove panel unprepare process in disable dsi process
+677a3bf1 | 2024-09-01 | Han Gao | remove dts "audio_mem" node and add mbox 910r channel
+0f5cceb4 | 2024-09-01 | Han Gao | usb: dwc3-thead: fix usb gadget support
+e228be00 | 2024-09-01 | Han Gao | dts: th1520-lichee-pi-4a: update usb hub
+ecb7a994 | 2024-09-01 | Han Gao | dts: add th1520-lpi4a-dsi0.dts and th1520-lpi4a-hx8279.dts
+1290e796 | 2024-09-01 | Han Gao | dts: add display support for dsi0&dsi1 and dsi0&hdmi
+1a047e7f | 2024-09-01 | Han Gao | dw-axi-dma : dma_chan_prep_dma_memcpy func add chan->direction = DMA_MEM_TO_MEM
+515fde6f | 2024-09-01 | Han Gao | DPU: support DSI/HDMI driver for light-a-val
+fe9754cf | 2024-09-01 | Han Gao | driver : rfkill : Delete unnecessary code
+2efe7090 | 2024-09-01 | Han Gao | dts: rfkill: Delete unnecessary nodes
+2d7e8d38 | 2024-09-01 | Han Gao | RISC-V laptop: Add new drivers for specific hardware components
+f43fbca7 | 2024-09-01 | Han Gao | rvbook: add th1520-rvbook.dts
+2bcbeab2 | 2024-09-01 | Han Gao | Add kernel boot rvbook_defconfig
+da399f3e | 2024-09-01 | Han Gao | dts: add GPU device node
+7764ee96 | 2024-09-01 | Han Gao | perf vendor events riscv: Add PMU event JSON files for TH1520 DDRC PMU
+63b7e103 | 2024-09-01 | Han Gao | dts: rfkill: Resolving Insmod Failure Issues
+aa830679 | 2024-09-01 | Han Gao | dts: th1520: add g2d device node
+7f1e7673 | 2024-08-31 | Han Gao | aic8800: Add AIC8800's config to th1520_defconfig, as well as resolve known issues
+95fe21cf | 2024-08-31 | Han Gao | uart: Fix the UART problem
+5206aaac | 2024-08-31 | Han Gao | rfkill: add aic8800 rfkill support for gpio control of aic8800 wifi/bt
+de6ba4c7 | 2024-08-31 | Han Gao | th1520-lichee-pi-4a.dts: change dts for aic8800 wifi Support aic8800 wifi
+177ebfed | 2024-08-31 | Han Gao | th1520-lichee-pi-4a.dts: change dts for aic8800 bt Support aic8800 bt
+0807a352 | 2024-08-27 | Han Gao | fix: riscv: xtheadvector: fix setup_v_vsize
+65d23d22 | 2024-07-05 | Han Gao | configs: enable rtw88 for 8723ds
+8be24c1f | 2024-06-10 | Han Gao | xtheadvector: fix it used as v-ext when hwprobe is used
+968b9a8b | 2024-03-30 | Han Gao | dts: th1520: add xtheadvector
+9264ce20 | 2024-03-29 | Han Gao | fix: use has_vector instead of judge ELF_HWCAP
+c09af420 | 2024-03-27 | Han Gao | riscv: xtheadvector: enable vector function
+a4f0ff98 | 2024-07-03 | Han Gao | configs: init th1520 config
+76589f1b | 2024-07-05 | Han Gao | riscv: dts: lpi4a 16g support
+b669e7a3 | 2024-07-02 | Han Gao | chore: use thead instead of xuantie
+837ad160 | 2024-07-02 | Han Gao | chore: use xuantie instead of thead
+a6d0d18d | 2024-01-12 | Han Gao | chore: dtb_install in /boot
+709e7173 | 2023-09-21 | Han Gao | remove compression for riscv Image
+e98be739 | 2023-12-06 | Drew Fustini | riscv: dts: thead: Enable LicheePi 4A eMMC and microSD
+d35aa78f | 2023-12-06 | Drew Fustini | riscv: dts: thead: Enable BeagleV Ahead eMMC and microSD
+ffeeaec7 | 2023-12-06 | Drew Fustini | riscv: dts: thead: Add TH1520 mmc controllers and sdhci clock
+74bd544e | 2023-12-06 | Drew Fustini | riscv: defconfig: Enable mmc and dma drivers for T-Head TH1520
+8fa2f3af | 2023-11-14 | Drew Fustini | mmc: sdhci-of-dwcmshc: Add support for T-Head TH1520
+04a244fc | 2023-11-14 | Drew Fustini | mmc: sdhci: add __sdhci_execute_tuning() to header
+e3bf6239 | 2023-11-14 | Drew Fustini | dt-bindings: mmc: sdhci-of-dwcmhsc: Add T-Head TH1520 support
+7cc4f501 | 2024-04-25 | Han Gao | fix: remove linux/array_size.h for pinctrl-th1520
+ee4d7ef3 | 2024-01-03 | Emil Renner Berthing | riscv: dtb: thead: Add BeagleV Ahead LEDs
+39003c14 | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pinctrl settings for UART0
+10457ee9 | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add Lichee Pi 4M GPIO line names
+1af01c5e | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Adjust TH1520 GPIO labels
+2afe6e14 | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 GPIO ranges
+b80bd69a | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pin control nodes
+cc81b51d | 2024-01-03 | Emil Renner Berthing | pinctrl: Add driver for the T-Head TH1520 SoC
+eb100ed2 | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings
