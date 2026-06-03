@@ -288,6 +288,10 @@
 	};
 };
 
+&pwm {
+	status = "okay";
+};
+
 &gmac0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&gmac0_pins>;
