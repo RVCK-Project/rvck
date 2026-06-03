@@ -1382,6 +1382,22 @@
 			status = "disabled";
 		};
 
+		watchdog0: watchdog@ffefc30000 {
+			compatible = "snps,dw-wdt";
+			reg = <0xff 0xefc30000 0x0 0x1000>;
+			interrupts = <24 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk CLKGEN_WDT0_PCLK>;
+			clock-names = "tclk";
+		};
+
+		watchdog1: watchdog@ffefc31000 {
+			compatible = "snps,dw-wdt";
+			reg = <0xff 0xefc31000 0x0 0x1000>;
+			interrupts = <25 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk CLKGEN_WDT1_PCLK>;
+			clock-names = "tclk";
+		};
+
 		g2d_opp_table:g2d-opp-table {
 			compatible = "operating-points-v2";
 			video-4k-minfreq = <396000000>;
