@@ -810,6 +810,7 @@
 			reg = <0xff 0xec01c000 0x0 0x4000>;
 			#pwm-cells = <3>;
 			clocks = <&osc>;
+			status = "disabled";
 		};
 
 		misc_sysreg: misc_sysreg@ffec02c000 {
