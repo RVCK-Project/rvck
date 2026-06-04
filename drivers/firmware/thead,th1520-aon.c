@@ -14,9 +14,13 @@
 #define MAX_RX_TIMEOUT (msecs_to_jiffies(3000))
 #define MAX_TX_TIMEOUT 500
 
+static struct th1520_aon_chan *global_aon_chan;
+
+#define TH1520_AON_RPC_MSG_NUM 7
+
 struct th1520_aon_chan {
 	struct mbox_chan *ch;
-	struct th1520_aon_rpc_ack_common ack_msg;
+	u32 ack_msg[TH1520_AON_RPC_MSG_NUM];
 	struct mbox_client cl;
 	struct completion done;
 
@@ -77,16 +81,14 @@ static void th1520_aon_rx_callback(struct mbox_client *c, void *rx_msg)
 {
 	struct th1520_aon_chan *aon_chan =
 		container_of(c, struct th1520_aon_chan, cl);
-	struct th1520_aon_rpc_msg_hdr *hdr =
-		(struct th1520_aon_rpc_msg_hdr *)rx_msg;
-	u8 recv_size = sizeof(struct th1520_aon_rpc_msg_hdr) + hdr->size;
 
-	if (recv_size != sizeof(struct th1520_aon_rpc_ack_common)) {
-		dev_err(c->dev, "Invalid ack size, not completing\n");
-		return;
-	}
-
-	memcpy(&aon_chan->ack_msg, rx_msg, recv_size);
+	/*
+	 * The mailbox driver passes us the raw INFO0~INFO6 register data
+	 * (7 x u32 = 28 bytes). The C902 AON firmware sets hdr->size to the
+	 * number of INFO words (7), not payload byte count. We only need the
+	 * first sizeof(th1520_aon_rpc_ack_common) bytes (hdr + err_code).
+	 */
+	memcpy(aon_chan->ack_msg, rx_msg, sizeof(aon_chan->ack_msg));
 	complete(&aon_chan->done);
 }
 
@@ -107,7 +109,8 @@ static void th1520_aon_rx_callback(struct mbox_client *c, void *rx_msg)
  * * A negative error code if the mailbox send fails or if AON responds with
  *   a non-zero error code (converted via th1520_aon_to_linux_errno()).
  */
-int th1520_aon_call_rpc(struct th1520_aon_chan *aon_chan, void *msg)
+static int __th1520_aon_call_rpc(struct th1520_aon_chan *aon_chan, void *msg,
+				 void *ack_buf, size_t ack_size)
 {
 	struct th1520_aon_rpc_msg_hdr *hdr = msg;
 	int ret;
@@ -132,14 +135,31 @@ int th1520_aon_call_rpc(struct th1520_aon_chan *aon_chan, void *msg)
 		return -ETIMEDOUT;
 	}
 
-	ret = aon_chan->ack_msg.err_code;
+	if (ack_buf && ack_size)
+		memcpy(ack_buf, aon_chan->ack_msg,
+		       min(ack_size, sizeof(aon_chan->ack_msg)));
+
+	/* err_code is the 5th byte in the ack (after 4-byte hdr) */
+	ret = ((struct th1520_aon_rpc_ack_common *)aon_chan->ack_msg)->err_code;
 
 out:
 	mutex_unlock(&aon_chan->transaction_lock);
 
 	return th1520_aon_to_linux_errno(ret);
 }
+
+int th1520_aon_call_rpc(struct th1520_aon_chan *aon_chan, void *msg)
+{
+	return __th1520_aon_call_rpc(aon_chan, msg, NULL, 0);
+}
 EXPORT_SYMBOL_GPL(th1520_aon_call_rpc);
+
+int th1520_aon_call_rpc_ack(struct th1520_aon_chan *aon_chan, void *msg,
+			    void *ack_buf, size_t ack_size)
+{
+	return __th1520_aon_call_rpc(aon_chan, msg, ack_buf, ack_size);
+}
+EXPORT_SYMBOL_GPL(th1520_aon_call_rpc_ack);
 
 /**
  * th1520_aon_power_update() - Change power state of a resource via TH1520 AON
@@ -224,9 +244,31 @@ struct th1520_aon_chan *th1520_aon_init(struct device *dev)
 	mutex_init(&aon_chan->transaction_lock);
 	init_completion(&aon_chan->done);
 
+	global_aon_chan = aon_chan;
 	return aon_chan;
 }
 EXPORT_SYMBOL_GPL(th1520_aon_init);
+
+/**
+ * th1520_aon_get_global_chan() - Get the global AON channel
+ *
+ * Returns the AON channel initialized by the first th1520_aon_init() call,
+ * or ERR_PTR(-EPROBE_DEFER) if AON has not been initialized yet.
+ * This is used by drivers that cannot provide their own DTS mailbox binding
+ * (e.g. virtual platform devices like th1520-wdt).
+ *
+ * Return:
+ * * Valid pointer to th1520_aon_chan on success
+ * * ERR_PTR(-EPROBE_DEFER) if AON is not yet initialized
+ */
+struct th1520_aon_chan *th1520_aon_get_global_chan(void)
+{
+	if (!global_aon_chan)
+		return ERR_PTR(-EPROBE_DEFER);
+
+	return global_aon_chan;
+}
+EXPORT_SYMBOL_GPL(th1520_aon_get_global_chan);
 
 /**
  * th1520_aon_deinit() - Clean up TH1520 AON firmware protocol interface
@@ -238,6 +280,8 @@ EXPORT_SYMBOL_GPL(th1520_aon_init);
  */
 void th1520_aon_deinit(struct th1520_aon_chan *aon_chan)
 {
+	if (aon_chan == global_aon_chan)
+		global_aon_chan = NULL;
 	mbox_free_channel(aon_chan->ch);
 	kfree(aon_chan);
 }

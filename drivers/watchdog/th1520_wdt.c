@@ -16,7 +16,7 @@
 #include <linux/regmap.h>
 #include <linux/device.h>
 #include <linux/watchdog.h>
-#include <linux/firmware/thead/ipc.h>
+#include <linux/firmware/thead/thead,th1520-aon.h>
 #include <linux/firmware/thead/th1520_event.h>
 
 #define DRV_NAME	"th1520-wdt"
@@ -51,7 +51,7 @@ struct th1520_aon_msg_wdg_ctrl_ack {
 
 struct th1520_wdt_device {
 	struct device *dev;
-	struct th1520_aon_ipc *ipc_handle;
+	struct th1520_aon_chan *aon_chan;
 	struct th1520_aon_msg_wdg_ctrl msg;
 	unsigned int    is_aon_wdt_ena;
 };
@@ -79,18 +79,18 @@ static void th1520_wdt_msg_hdr_fill(struct th1520_aon_rpc_msg_hdr *hdr, enum th1
 
 static int th1520_wdt_is_running(struct th1520_wdt_device *wdt_dev)
 {
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	struct th1520_aon_msg_wdg_ctrl_ack ack_msg = {0};
 	int ret;
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_GET_STATE);
 	wdt_dev->msg.running_state = -1;
 
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc_ack(aon_chan, &wdt_dev->msg,
+				      &ack_msg, sizeof(ack_msg));
 	if (ret)
 		return ret;
 
-	//RPC_GET_BE32(&ack_msg.timeout, 0, &wdt_dev->msg.timeout);
 	RPC_GET_BE32(&ack_msg.timeout, 4, &wdt_dev->msg.running_state);
 
 	pr_debug("ret = %d, timeout = %d, running_state = %d\n", ret, wdt_dev->msg.timeout,
@@ -109,15 +109,14 @@ static int th1520_wdt_update_timeout(struct th1520_wdt_device *wdt_dev, unsigned
 	 * value if the watchdog is already running. Then we can set the
 	 * new timeout value which enables the watchdog again.
 	 */
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
-	struct th1520_aon_msg_wdg_ctrl_ack ack_msg = {0};
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	int ret;
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_TIMEOUTSET);
 
 	RPC_SET_BE32(&wdt_dev->msg.timeout, 0, timeout);
 
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 	if (ret)
 		return ret;
 
@@ -150,13 +149,12 @@ static int th1520_wdt_set_timeout(struct watchdog_device *wdd, unsigned int time
 static int th1520_wdt_start(struct watchdog_device *wdd)
 {
 	struct th1520_wdt_device *wdt_dev = watchdog_get_drvdata(wdd);
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
-	struct th1520_aon_rpc_ack_common ack_msg = {0};
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	int ret;
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_START);
 
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 	if (ret)
 		return ret;
 
@@ -166,13 +164,12 @@ static int th1520_wdt_start(struct watchdog_device *wdd)
 static int th1520_wdt_stop(struct watchdog_device *wdd)
 {
 	struct th1520_wdt_device *wdt_dev = watchdog_get_drvdata(wdd);
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
-	struct th1520_aon_rpc_ack_common ack_msg = {0};
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	int ret;
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_STOP);
 
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 	if (ret)
 		return ret;
 
@@ -182,13 +179,12 @@ static int th1520_wdt_stop(struct watchdog_device *wdd)
 static int th1520_wdt_ping(struct watchdog_device *wdd)
 {
 	struct th1520_wdt_device *wdt_dev = watchdog_get_drvdata(wdd);
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
-	struct th1520_aon_rpc_ack_common ack_msg = {0};
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	int ret;
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_PING);
 
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 	if (ret)
 		return ret;
 
@@ -198,7 +194,7 @@ static int th1520_wdt_ping(struct watchdog_device *wdd)
 static int th1520_wdt_restart(struct watchdog_device *wdd, unsigned long action, void *data)
 {
 	struct th1520_wdt_device *wdt_dev = watchdog_get_drvdata(wdd);
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	int ret;
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_RESTART);
@@ -206,7 +202,7 @@ static int th1520_wdt_restart(struct watchdog_device *wdd, unsigned long action,
 	pr_debug("[%s,%d]: Inform aon to restart the whole system....\n", __func__, __LINE__);
 
 	th1520_event_set_rebootmode(TH1520_EVENT_SW_REBOOT);
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, NULL, false);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 	if (ret)
 		return ret;
 	pr_debug("[%s,%d]: Finish to inform aon to restart the whole system....\n", __func__, __LINE__);
@@ -243,20 +239,19 @@ static ssize_t aon_sys_wdt_store(struct device *dev,
 {
 	struct platform_device *pdev = to_platform_device(dev);
 	struct th1520_wdt_device *wdt_dev = platform_get_drvdata(pdev);
-	struct th1520_aon_rpc_ack_common ack_msg = {0};
-	struct th1520_aon_ipc *ipc;
+	struct th1520_aon_chan *aon_chan;
 	int ret;
 	char *start = (char *)buf;
 	unsigned long val;
 
-	ipc = wdt_dev->ipc_handle;
+	aon_chan = wdt_dev->aon_chan;
 	val = simple_strtoul(start, &start, 0);
 	wdt_dev->is_aon_wdt_ena = val;
 	if (val)
 		th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_AON_WDT_ON);
 	else
 		th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_AON_WDT_OFF);
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 	if (ret) {
 		pr_err("%s: err:%d\n", __func__, ret);
 		return -EINVAL;
@@ -267,15 +262,14 @@ static ssize_t aon_sys_wdt_store(struct device *dev,
 void th1520_pm_power_off(void)
 {
 	struct th1520_wdt_device *wdt_dev = th1520_power_off_wdt;
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
-	struct th1520_aon_rpc_ack_common ack_msg = {0};
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	int ret;
 
 	pr_info("[%s,%d]poweroff system...\n", __func__, __LINE__);
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_POWER_OFF);
 
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 
 	if (ret)
 		pr_err("failed to power off the system\n");
@@ -304,9 +298,9 @@ static int th1520_wdt_probe(struct platform_device *pdev)
 		return -ENOMEM;
 	wdt_dev->is_aon_wdt_ena = 0;
 
-	ret = th1520_aon_get_handle(&(wdt_dev->ipc_handle));
-	if (ret == -EPROBE_DEFER)
-		return ret;
+	wdt_dev->aon_chan = th1520_aon_get_global_chan();
+	if (IS_ERR(wdt_dev->aon_chan))
+		return PTR_ERR(wdt_dev->aon_chan);
 
 	wdd = devm_kzalloc(dev, sizeof(*wdd), GFP_KERNEL);
 	if (!wdd)
@@ -364,13 +358,12 @@ static int th1520_wdt_suspend(struct device *dev)
 {
 	struct platform_device *pdev = to_platform_device(dev);
 	struct th1520_wdt_device *wdt_dev = platform_get_drvdata(pdev);
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
-	struct th1520_aon_rpc_ack_common ack_msg = {0};
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	int ret;
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_STOP);
 
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 	if (ret)
 		dev_err(dev, "th1520_wdt_suspend call aon wdt stop fail, ret:%d\n", ret);
 
@@ -381,13 +374,12 @@ static int th1520_wdt_resume(struct device *dev)
 {
 	struct platform_device *pdev = to_platform_device(dev);
 	struct th1520_wdt_device *wdt_dev = platform_get_drvdata(pdev);
-	struct th1520_aon_ipc *ipc = wdt_dev->ipc_handle;
-	struct th1520_aon_rpc_ack_common ack_msg = {0};
+	struct th1520_aon_chan *aon_chan = wdt_dev->aon_chan;
 	int ret;
 
 	th1520_wdt_msg_hdr_fill(&wdt_dev->msg.hdr, TH1520_AON_WDG_FUNC_START);
 
-	ret = th1520_aon_call_rpc(ipc, &wdt_dev->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &wdt_dev->msg);
 	if (ret)
 		dev_err(dev, "th1520_wdt_resume call aon wdt start fail, ret:%d\n", ret);
 

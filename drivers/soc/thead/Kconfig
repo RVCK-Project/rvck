@@ -3,7 +3,7 @@ menu "Thead SoC drivers"
 
 config TH1520_REBOOTMODE
 	bool "XuanTie th1520 rebootmode support"
-	depends on TH1520_AON
+	depends on TH1520_AON_PROTOCOL
 	default y
 	help
 	 This driver supports check rebootmode feature in TH1520 FM platform
@@ -16,8 +16,8 @@ config TH1520_SYSTEM_MONITOR
 
 config TH1520_REGDUMP
 	bool "XuanTie th1520 sysdump support"
-	depends on TH1520_AON
-	default y
+	depends on TH1520_AON_PROTOCOL
+	default n
 	help
 	 This driver supports sysdump feature in TH1520 FM platform
 
