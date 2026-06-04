@@ -191,9 +191,12 @@ struct th1520_aon_rpc_ack_common {
 #define TH1520_AON_DSP1_PD 6
 
 struct th1520_aon_chan *th1520_aon_init(struct device *dev);
+struct th1520_aon_chan *th1520_aon_get_global_chan(void);
 void th1520_aon_deinit(struct th1520_aon_chan *aon_chan);
 
 int th1520_aon_call_rpc(struct th1520_aon_chan *aon_chan, void *msg);
+int th1520_aon_call_rpc_ack(struct th1520_aon_chan *aon_chan, void *msg,
+			    void *ack_buf, size_t ack_size);
 int th1520_aon_power_update(struct th1520_aon_chan *aon_chan, u16 rsrc,
 			    bool power_on);
 

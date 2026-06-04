@@ -6,7 +6,7 @@
 #include <linux/mfd/syscon.h>
 #include <linux/regmap.h>
 #include <linux/platform_device.h>
-#include <linux/firmware/thead/ipc.h>
+#include <linux/firmware/thead/thead,th1520-aon.h>
 #include <linux/firmware/thead/th1520_event.h>
 
 /*
@@ -41,7 +41,7 @@ struct th1520_aon_msg_event_ctrl {
 struct th1520_event {
 	struct device *dev;
 
-	struct th1520_aon_ipc *ipc_handle;
+	struct th1520_aon_chan *aon_chan;
 	struct th1520_aon_msg_event_ctrl msg;
 
 	struct regmap *aon_iram;
@@ -59,8 +59,7 @@ static void th1520_event_msg_hdr_fill(struct th1520_aon_rpc_msg_hdr *hdr, enum t
 
 static int th1520_event_aon_reservemem(struct th1520_event *event)
 {
-	struct th1520_aon_ipc *ipc = event->ipc_handle;
-	struct th1520_aon_rpc_ack_common ack_msg;
+	struct th1520_aon_chan *aon_chan = event->aon_chan;
 	int ret = 0;
 
 	dev_dbg(event->dev, "aon reservemem...\n");
@@ -69,7 +68,7 @@ static int th1520_event_aon_reservemem(struct th1520_event *event)
 
 	RPC_SET_BE32(&event->msg.reserve_offset, 0, TH1520_EVENT_OFFSET);
 
-	ret = th1520_aon_call_rpc(ipc, &event->msg, &ack_msg, true);
+	ret = th1520_aon_call_rpc(aon_chan, &event->msg);
 	if (ret)
 		dev_err(event->dev, "failed to set aon reservemem\n");
 
@@ -217,9 +216,9 @@ static int th1520_event_probe(struct platform_device *pdev)
 	if (!thead)
 		return -ENOMEM;
 
-	ret = th1520_aon_get_handle(&(thead->ipc_handle));
-	if (ret == -EPROBE_DEFER)
-		return ret;
+	thead->aon_chan = th1520_aon_init(&pdev->dev);
+	if (IS_ERR(thead->aon_chan))
+		return PTR_ERR(thead->aon_chan);
 
 	platform_set_drvdata(pdev, thead);
 	thead->dev = &pdev->dev;
