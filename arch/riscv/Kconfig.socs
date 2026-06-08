@@ -160,4 +160,10 @@ config SOC_SPACEMIT_K3
 	help
 	  select Spacemit k3 Platform SoCs.
 
+config SOC_LANXIN
+	bool "Lanxin SoCs."
+	select ARM_AMBA
+        help
+          This enables support for Lanxin SoC platform hardware.
+
 endmenu # "SoC selection"
