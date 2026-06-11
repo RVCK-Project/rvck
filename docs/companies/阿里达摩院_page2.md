@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 340</li>
-<li><strong>统计时间</strong>: 2026-06-09 03:21:08</li>
+<li><strong>贡献提交数</strong>: 346</li>
+<li><strong>统计时间</strong>: 2026-06-12 06:00:37</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.141</li>
 </ul>
@@ -18,6 +18,12 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [9488964d](https://github.com/RVCK-Project/rvck/commit/9488964dabe89563f97d603113d253adc690c86c) | 2024-09-01 | xianbing Zhu | sdhci:th1520: fixup mmc retune infinitely issue |
+| [092fb61b](https://github.com/RVCK-Project/rvck/commit/092fb61b0205a59297be3253786b631e82099e30) | 2024-09-01 | David Li | dts: audio: update audio pin configuration |
+| [35335afb](https://github.com/RVCK-Project/rvck/commit/35335afb3bdd14997cf010bfd71b4f0a11991dd0) | 2024-09-01 | David Li | audio: th1520: workaround to solve noise at the end |
+| [eae85130](https://github.com/RVCK-Project/rvck/commit/eae85130f856f8506eddbda38789472e92c46f25) | 2024-09-01 | tingming | dts: th1520_defconfig: to revert the config CONFIG_USB_GADGET |
+| [bd10de6a](https://github.com/RVCK-Project/rvck/commit/bd10de6a5f13cef50048b4852cf8e6db391dade5) | 2024-09-01 | Xiangyi Zeng | dts: gpio: add gpio/0/1/2/3 clk gate |
+| [3e5a738b](https://github.com/RVCK-Project/rvck/commit/3e5a738b3ada43357caf57d3c8f67576ec4f6f9a) | 2024-09-01 | xianbing Zhu | driver: pty/clk: bootargs options for pty and clk_debug init |
 | [5d85d1da](https://github.com/RVCK-Project/rvck/commit/5d85d1da74347c797c0bb1a277f8429060b83d58) | 2024-09-01 | xianbing Zhu | hibernate: improve crc32 speed by calc compressed data |
 | [6c00edde](https://github.com/RVCK-Project/rvck/commit/6c00edde84e9d2d01caae7758136219a69fdc898) | 2024-09-01 | xianbing Zhu | trace: add bootargs options for trace and ftrace for hibernate resume |
 | [44a3619b](https://github.com/RVCK-Project/rvck/commit/44a3619b89d8173caa63e23436eb8f1cf41f8f99) | 2024-09-01 | xianbing Zhu | hibernate: restart when resume fail and added resume dev |
@@ -160,7 +166,7 @@
 | [668bef52](https://github.com/RVCK-Project/rvck/commit/668bef52e4b534462285b938ecd99edbc4bced07) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 340 条提交，显示 201-340**
+**共 346 条提交，显示 201-346**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -171,5 +177,5 @@
 
 ---
 
-*本页面最后更新于 2026-06-09 03:21:08*
-*数据来源: 主分支 rvck-6.6@e06441f1*
+*本页面最后更新于 2026-06-12 06:00:37*
+*数据来源: 主分支 rvck-6.6@5a5237be*

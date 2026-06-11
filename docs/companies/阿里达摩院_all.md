@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 340</li>
-<li><strong>统计时间</strong>: 2026-06-09 03:21:08</li>
+<li><strong>贡献提交数</strong>: 346</li>
+<li><strong>统计时间</strong>: 2026-06-12 06:00:37</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.141</li>
 </ul>
@@ -18,6 +18,12 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [9f563877](https://github.com/RVCK-Project/rvck/commit/9f5638775b0c5a46de03c982afa3918884d11e1e) | 2026-06-04 | ZhenXing Zhu | soc: thead: adapt AON drivers to new th1520-aon protocol API |
+| [4610f1f3](https://github.com/RVCK-Project/rvck/commit/4610f1f31cc8816b867970fea39d9e0ed5aa5e6b) | 2026-06-03 | ZhenXing Zhu | riscv: th1520: lpi4a: fix fan not spinning |
+| [f7ab3e62](https://github.com/RVCK-Project/rvck/commit/f7ab3e62ad63e1e28a41c784236ae2399063ac3b) | 2026-06-03 | ZhenXing Zhu | riscv: defconfig: th1520: fix DWMAC config symbol for ethernet |
+| [428a8fdd](https://github.com/RVCK-Project/rvck/commit/428a8fdd6fab8a46a5cdeaa9571228e7cab6863e) | 2026-06-04 | ZhenXing Zhu | drivers/soc/event: Add THEAD TH1520 event driver |
+| [404e0cca](https://github.com/RVCK-Project/rvck/commit/404e0cca234f926e8fa7bc28210db939fc854d45) | 2026-06-04 | ZhenXing Zhu | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver |
+| [8ea6d74c](https://github.com/RVCK-Project/rvck/commit/8ea6d74c33523ad62fe963c84570b53fe5e4e1a9) | 2026-06-03 | ZhenXing Zhu | riscv: dts: th1520: add watchdog nodes for reboot support |
 | [c7063ef3](https://github.com/RVCK-Project/rvck/commit/c7063ef36969a31dba466b5c4cfbb5944a17d168) | 2024-04-19 | Robin Murphy | dma-mapping: Simplify arch_setup_dma_ops() |
 | [555d7f47](https://github.com/RVCK-Project/rvck/commit/555d7f47fc52738de186052e98c77d25b0675361) | 2024-04-19 | Robin Murphy | iommu/dma: Centralise iommu_setup_dma_ops() |
 | [87c06c3d](https://github.com/RVCK-Project/rvck/commit/87c06c3dff9cd661b874f3c1b533f090c2efea9b) | 2024-04-19 | Robin Murphy | iommu/dma: Make limit checks self-contained |
@@ -360,7 +366,7 @@
 | [668bef52](https://github.com/RVCK-Project/rvck/commit/668bef52e4b534462285b938ecd99edbc4bced07) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 340 条提交（显示全部）**
+**共 346 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -369,5 +375,5 @@
 
 ---
 
-*本页面最后更新于 2026-06-09 03:21:08*
-*数据来源: 主分支 rvck-6.6@e06441f1*
+*本页面最后更新于 2026-06-12 06:00:37*
+*数据来源: 主分支 rvck-6.6@5a5237be*

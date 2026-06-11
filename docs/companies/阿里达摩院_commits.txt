@@ -1,9 +1,15 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 340 个提交
-# 生成时间: 2026-06-09 03:21:08
+# 共 346 个提交
+# 生成时间: 2026-06-12 06:00:37
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+9f563877 | 2026-06-04 | ZhenXing Zhu | soc: thead: adapt AON drivers to new th1520-aon protocol API
+4610f1f3 | 2026-06-03 | ZhenXing Zhu | riscv: th1520: lpi4a: fix fan not spinning
+f7ab3e62 | 2026-06-03 | ZhenXing Zhu | riscv: defconfig: th1520: fix DWMAC config symbol for ethernet
+428a8fdd | 2026-06-04 | ZhenXing Zhu | drivers/soc/event: Add THEAD TH1520 event driver
+404e0cca | 2026-06-04 | ZhenXing Zhu | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver
+8ea6d74c | 2026-06-03 | ZhenXing Zhu | riscv: dts: th1520: add watchdog nodes for reboot support
 c7063ef3 | 2024-04-19 | Robin Murphy | dma-mapping: Simplify arch_setup_dma_ops()
 555d7f47 | 2024-04-19 | Robin Murphy | iommu/dma: Centralise iommu_setup_dma_ops()
 87c06c3d | 2024-04-19 | Robin Murphy | iommu/dma: Make limit checks self-contained
