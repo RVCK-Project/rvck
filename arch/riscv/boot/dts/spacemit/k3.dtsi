@@ -5,6 +5,7 @@
 
 #include <dt-bindings/clock/spacemit,k3-syscon.h>
 #include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/phy/phy.h>
 
 / {
 	compatible = "spacemit,k3";
@@ -908,6 +909,55 @@
 			resets = <&syscon_apmu RESET_APMU_SDH_AXI>,
 				 <&syscon_apmu RESET_APMU_SDH2>;
 			reset-names = "sdh_axi", "sdh2";
+			status = "disabled";
+		};
+
+		combphy: phy@81d00000 {
+			compatible = "spacemit,k3-comb-phy";
+			reg = <0x0 0x81d00000 0x0 0x600000>;
+			#phy-cells = <2>;
+			spacemit,apb-spare = <&pll>;
+			spacemit,apmu = <&syscon_apmu 0x0>;
+			status = "disabled";
+		};
+
+		pcie0_rc: pcie@80000000 {
+			compatible = "spacemit,k3-pcie";
+			reg = <0x0 0x80000000 0x0 0x00001000>,
+			      <0x0 0x80100000 0x0 0x00001000>,
+			      <0x0 0x80300000 0x0 0x00003f20>,
+			      <0x11 0x00000000 0x0 0x00010000>,
+			      <0x0 0x82900000 0x0 0x00001000>;
+			reg-names = "dbi", "dbi2", "atu", "config", "link";
+			device_type = "pci";
+			#address-cells = <3>;
+			#size-cells = <2>;
+			bus-range = <0x00 0xff>;
+			max-link-speed = <3>;
+			num-lanes = <8>;
+			ranges = <0x01000000 0x00 0x00010000 0x11 0x00010000 0x0 0x00100000>,
+				 <0x02000000 0x0 0x00110000 0x11 0x00110000 0x0 0x7fef0000>,
+				 <0x43000000 0x18 0x00000000 0x18 0x00000000 0x1 0x00000000>;
+			clocks = <&syscon_apmu CLK_APMU_PCIE_PORTA_SLV>,
+				 <&syscon_apmu CLK_APMU_PCIE_PORTA_MSTE>,
+				 <&syscon_apmu CLK_APMU_PCIE_PORTA_SLV>;
+			clock-names = "dbi", "mstr", "slv";
+			resets = <&syscon_apmu RESET_APMU_PCIE_PORTA>,
+				 <&syscon_apmu RESET_APMU_PCIE_PORTA>,
+				 <&syscon_apmu RESET_APMU_PCIE_PORTA>;
+			reset-names = "dbi", "mstr", "slv";
+			phys = <&combphy 0 PHY_TYPE_PCIE>,
+			       <&combphy 1 PHY_TYPE_PCIE>,
+			       <&combphy 2 PHY_TYPE_PCIE>,
+			       <&combphy 3 PHY_TYPE_PCIE>,
+			       <&combphy 4 PHY_TYPE_PCIE>,
+			       <&combphy 5 PHY_TYPE_PCIE>;
+			phy-names = "pcie0", "pcie1", "pcie2", "pcie3", "pcie4", "pcie5";
+			linux,pci-domain = <0>;
+			msi-parent = <&simsic>;
+			spacemit,apmu = <&syscon_apmu 0x1f0>;
+			interrupt-parent = <&saplic>;
+			interrupts = <141 IRQ_TYPE_LEVEL_HIGH>;
 			status = "disabled";
 		};
 	};

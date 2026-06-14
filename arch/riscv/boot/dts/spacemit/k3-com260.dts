@@ -276,6 +276,15 @@
 			drive-strength = <25>;
 			power-source = <1800>;
 		};
+		pcie0-1-cfg {
+			pcie0-0-pins {
+				pinmux = <K3_PADCONF(79, 5)>,	/* pcie0 perst */
+					 <K3_PADCONF(81, 5)>;	/* pcie0 clkreq */
+				bias-pull-up;
+				drive-strength = <38>;
+				power-source = <3300>;
+			};
+		};
 	};
 };
 
@@ -344,5 +353,15 @@
 			device_type = "ethernet-phy";
 		};
 	};
+};
+
+&combphy {
+	status = "okay";
+};
+
+&pcie0_rc {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pcie0_1_cfg>;
+	status = "okay";
 };
 
