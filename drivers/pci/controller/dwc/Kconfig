@@ -430,4 +430,14 @@ config PCIE_ULTRARISC
 	  requiring no further configuration on that platform.
 
 
+config PCIE_SPACEMIT_K1
+	tristate "SpacemiT K1/K3 PCIe controller (host mode)"
+	depends on ARCH_SPACEMIT || COMPILE_TEST
+	depends on HAS_IOMEM
+	select PCIE_DW_HOST
+	default ARCH_SPACEMIT
+	help
+	  Enables support for the DesignWare based PCIe controller in
+	  the SpacemiT K1/K3 SoC operating in host mode.
+
 endmenu
