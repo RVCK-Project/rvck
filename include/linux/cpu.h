@@ -232,4 +232,8 @@ static inline bool cpu_mitigations_auto_nosmt(void)
 }
 #endif
 
+int arch_prctl_get_branch_landing_pad_state(struct task_struct *t, unsigned long __user *state);
+int arch_prctl_set_branch_landing_pad_state(struct task_struct *t, unsigned long state);
+int arch_prctl_lock_branch_landing_pad_state(struct task_struct *t);
+
 #endif /* _LINUX_CPU_H_ */

@@ -13,6 +13,8 @@ RISC-V architecture
     patch-acceptance
     uabi
     vector
+    zicfilp
+    zicfiss
 
     features
 
