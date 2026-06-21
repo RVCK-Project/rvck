@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 346</li>
-<li><strong>统计时间</strong>: 2026-06-12 10:40:24</li>
+<li><strong>贡献提交数</strong>: 393</li>
+<li><strong>统计时间</strong>: 2026-06-21 16:31:41</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.141</li>
 </ul>
@@ -18,6 +18,53 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [c1f4a892](https://github.com/RVCK-Project/rvck/commit/c1f4a8929de0cf4e988c05bf4c4e30b60caa9079) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated ChaCha20 |
+| [b72d325b](https://github.com/RVCK-Project/rvck/commit/b72d325bc5dd66c63fe6d72f7c717521996340bf) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated AES-{ECB,CBC,CTR,XTS} |
+| [f83d1f51](https://github.com/RVCK-Project/rvck/commit/f83d1f51311bb430d2d213b854c58a4ab90ca10a) | 2024-01-21 | Heiko Stuebner | RISC-V: hook new crypto subdir into build-system |
+| [8822790a](https://github.com/RVCK-Project/rvck/commit/8822790a6f469bba17244e0406baa1799224b09f) | 2024-01-21 | Eric Biggers | RISC-V: add TOOLCHAIN_HAS_VECTOR_CRYPTO |
+| [cf784b4c](https://github.com/RVCK-Project/rvck/commit/cf784b4c87b96422f964428ab268cc85e27f7437) | 2024-01-21 | Heiko Stuebner | RISC-V: add helper function to read the vector VLEN |
+| [ec1bbedf](https://github.com/RVCK-Project/rvck/commit/ec1bbedf924dfc79fc27977e28c89c51a646e31f) | 2023-10-12 | Ian Rogers | perf pmu: Lazily compute default config |
+| [4d6bfbc1](https://github.com/RVCK-Project/rvck/commit/4d6bfbc15c59365714f91eeb1d993ce2322bdbd3) | 2023-10-12 | Ian Rogers | perf pmu-events: Remember the perf_events_map for a PMU |
+| [8c4c9aed](https://github.com/RVCK-Project/rvck/commit/8c4c9aed0cdab24bb0c0522c0f4094b56da33fb7) | 2023-10-12 | Ian Rogers | perf pmu: Const-ify perf_pmu__config_terms |
+| [7f4b08ff](https://github.com/RVCK-Project/rvck/commit/7f4b08ffc752d3d3888e9380b4fcca0d5e413c7b) | 2023-10-12 | Ian Rogers | perf pmu: Const-ify file APIs |
+| [88d6a985](https://github.com/RVCK-Project/rvck/commit/88d6a98554a84aa3af167131ab8743404dd4e137) | 2023-10-12 | Ian Rogers | perf arm-spe: Move PMU initialization from default config code |
+| [ba227876](https://github.com/RVCK-Project/rvck/commit/ba227876701b38ff76dbeea077e463378f434be5) | 2023-10-12 | Ian Rogers | perf intel-pt: Move PMU initialization from default config code |
+| [46eb3c80](https://github.com/RVCK-Project/rvck/commit/46eb3c80e1015ebdd2e28e3d9db9b71270943192) | 2023-10-12 | Ian Rogers | perf pmu: Rename perf_pmu__get_default_config to perf_pmu__arch_init |
+| [745da4b1](https://github.com/RVCK-Project/rvck/commit/745da4b1962668ed00d50381e66ffa3738b97ae7) | 2023-09-24 | Ian Rogers | perf pmus: Make PMU alias name loading lazy |
+| [7677dd38](https://github.com/RVCK-Project/rvck/commit/7677dd38a45d500372bfc5286ad6601b158c8ffa) | 2023-09-01 | Ian Rogers | perf parse-events: Introduce 'struct parse_events_terms' |
+| [146e7589](https://github.com/RVCK-Project/rvck/commit/146e758904d316e7ab341583e02e1c3b26a650a2) | 2023-09-01 | Ian Rogers | perf parse-events: Copy fewer term lists |
+| [60eab316](https://github.com/RVCK-Project/rvck/commit/60eab3164ab203ef347d0e23ad4cde4830167cf5) | 2023-09-01 | Ian Rogers | perf parse-events: Avoid enum casts |
+| [24eb47e3](https://github.com/RVCK-Project/rvck/commit/24eb47e3874e810fd8e7ee7ae95e1f7b50dd8624) | 2023-09-01 | Ian Rogers | perf parse-events: Tidy up str parameter |
+| [92a20dbe](https://github.com/RVCK-Project/rvck/commit/92a20dbe4c97652d45164b7b5699ea2cd8cf78d9) | 2023-09-01 | Ian Rogers | perf parse-events: Remove unnecessary __maybe_unused |
+| [4c3ccb4e](https://github.com/RVCK-Project/rvck/commit/4c3ccb4e85628a9384ceb0543906a59461245109) | 2025-04-21 | Guo Ren | riscv: xchg: Prefetch the destination word for sc.w |
+| [11e512a8](https://github.com/RVCK-Project/rvck/commit/11e512a82a1c314e636954f0b24bff55fc5720a9) | 2025-04-21 | Guo Ren | riscv: Add ARCH_HAS_PREFETCH[W] support with Zicbop |
+| [36e9c467](https://github.com/RVCK-Project/rvck/commit/36e9c4674b6c71c8a0c93b31e557de5c74b5be7c) | 2025-01-02 | Guo Ren | iommu/riscv: Fixup compile warning |
+| [62e964fb](https://github.com/RVCK-Project/rvck/commit/62e964fb7a8798858b674b04f5bf3d2b07dc25cd) | 2024-04-22 | Shenlin Liang | perf kvm/riscv: Port perf kvm stat to RISC-V |
+| [08d8a88d](https://github.com/RVCK-Project/rvck/commit/08d8a88db9b06e102e9d34f8f93835be20f443b8) | 2024-04-22 | Shenlin Liang | RISCV: KVM: add tracepoints for entry and exit events |
+| [eeac07db](https://github.com/RVCK-Project/rvck/commit/eeac07dbad3a7de1698da16c6eb611fb28f684f3) | 2024-11-03 | Guo Ren | asm-generic: ticket-lock: Add separate ticket-lock.h |
+| [9adabe27](https://github.com/RVCK-Project/rvck/commit/9adabe27e02a3ebc94de93767c3298b2f3ad8ffc) | 2024-11-03 | Guo Ren | asm-generic: ticket-lock: Reuse arch_spinlock_t of qspinlock |
+| [24bea32a](https://github.com/RVCK-Project/rvck/commit/24bea32a12bc20e60df2f205563874a1860ec778) | 2023-09-08 | Guo Ren | asm-generic: ticket-lock: Optimize arch_spin_value_unlocked() |
+| [288defca](https://github.com/RVCK-Project/rvck/commit/288defca9fe1d2b09f31e15d4bdc2d328d3e19ae) | 2023-09-18 | Baolin Wang | mm: add statistics for PUD level pagetable |
+| [f0007179](https://github.com/RVCK-Project/rvck/commit/f0007179a67be36e235ff7818521790eda44fa52) | 2024-09-01 | xianbing Zhu | hibernate: reduce logs in nosave_region register/remove |
+| [fdaa8df9](https://github.com/RVCK-Project/rvck/commit/fdaa8df9fce2f6e92f733f8b2743ad9e3a9b4914) | 2024-09-01 | Xiangyi Zeng | drivers: pwm_bl: fix adjusting failure of pwm backlight when resume from str |
+| [49fdb054](https://github.com/RVCK-Project/rvck/commit/49fdb05427d0305f0602642d080f5167e67dae87) | 2024-09-01 | David Li | audio: th1520: solve misalignment dma addr problem when HDMI playback |
+| [d1734179](https://github.com/RVCK-Project/rvck/commit/d173417967cc626bfac08d0e3055a93bb0ab8f8b) | 2024-09-01 | Xiangyi Zeng | drivers: i2c-hid: fix rvbook i2c-hid wake-up error |
+| [8af49553](https://github.com/RVCK-Project/rvck/commit/8af495538ba383847f155604e2c94cb96171f682) | 2024-09-01 | xianbing Zhu | hibernate: add blkdev flush op berfore poweroff |
+| [2966f061](https://github.com/RVCK-Project/rvck/commit/2966f0617616ab11e5648ecb1a013198d41b8f02) | 2024-09-01 | David Li | audio: light: i2s dma channel acquire change to dynamic |
+| [12f1fe66](https://github.com/RVCK-Project/rvck/commit/12f1fe66f56d966cce4069441078e31403431317) | 2024-09-01 | Xiangyi Zeng | dts: crash: enable watchdog0 and watchdog1 in crash kernel |
+| [dae5ce12](https://github.com/RVCK-Project/rvck/commit/dae5ce12d44768b7052f6a59138193e6dd03d9e8) | 2024-09-01 | tingming | defconfig: th1520: to fix problem of do_compile_kernelmodules fail |
+| [3f11814e](https://github.com/RVCK-Project/rvck/commit/3f11814e75728a5cba4017efce9b923ffc9d6cc8) | 2024-09-01 | tingming | defconfig: th1520: to add configs of media |
+| [eeff3358](https://github.com/RVCK-Project/rvck/commit/eeff335853d52d9dff8a5c16cbce2f69281809b6) | 2024-09-01 | Xiangyi Zeng | dts: som: add gpio-keys node |
+| [797df4be](https://github.com/RVCK-Project/rvck/commit/797df4be69c6ea58b915b0990b7505273523ce1b) | 2024-09-01 | Xiangyi Zeng | driver: wdt: th1520_wdt: add th1520_wdt driver pm ops |
+| [38b0d041](https://github.com/RVCK-Project/rvck/commit/38b0d0413e2c75b99b7cbeec132ffe3ae551b418) | 2024-09-01 | Xiangyi Zeng | drivers: mtd: nand: spi: support new winbond-spi-nand devices |
+| [1981d6ca](https://github.com/RVCK-Project/rvck/commit/1981d6cade1c796491733f3d5e6298d23bdd20e1) | 2024-09-01 | tingming | config: th1520: to modify MEMBLOCK&LOCALVERSION_AUTO config |
+| [e239345d](https://github.com/RVCK-Project/rvck/commit/e239345d791475d5a43655789f0fab7614a8ec2b) | 2024-09-01 | xianbing Zhu | dts:th1520: fix sd card wprtn issue |
+| [a8d05967](https://github.com/RVCK-Project/rvck/commit/a8d05967eb6b580445a03dfce98979f25cfc0cdc) | 2024-09-01 | xianbing Zhu | dts:th1520: add aliases for basic interface |
+| [be4d8765](https://github.com/RVCK-Project/rvck/commit/be4d8765cc068bdc2b0ecf6d50a1baa7cb35be8c) | 2024-09-01 | shuofeng.ren | audio: light_fm: change hdmi config for ap i2s hdmi audio |
+| [8e6d5d8a](https://github.com/RVCK-Project/rvck/commit/8e6d5d8afaa41a93f9f8d579606f54dacbd62968) | 2024-09-01 | Huaming | driver:i2c:fix rx_over miss re-try |
+| [7882df21](https://github.com/RVCK-Project/rvck/commit/7882df2162486845bf30c4149491ed8d0116d2e5) | 2024-09-01 | Esther Z | drivers: cpufreq: fix cpufreq em model regsiter warn. |
+| [78d68fef](https://github.com/RVCK-Project/rvck/commit/78d68fefa496ffa90cd989056f78c1396ce635ae) | 2024-09-01 | Xiangyi Zeng | drivers: pwm: fix pwm enable status check error |
+| [fe1c6897](https://github.com/RVCK-Project/rvck/commit/fe1c689707c9f65a830ca8bdfc67bcfecaf56e97) | 2024-09-01 | xianbing Zhu | th1520: sdhci: add quirks for th1520-a-val board |
 | [9488964d](https://github.com/RVCK-Project/rvck/commit/9488964dabe89563f97d603113d253adc690c86c) | 2024-09-01 | xianbing Zhu | sdhci:th1520: fixup mmc retune infinitely issue |
 | [092fb61b](https://github.com/RVCK-Project/rvck/commit/092fb61b0205a59297be3253786b631e82099e30) | 2024-09-01 | David Li | dts: audio: update audio pin configuration |
 | [35335afb](https://github.com/RVCK-Project/rvck/commit/35335afb3bdd14997cf010bfd71b4f0a11991dd0) | 2024-09-01 | David Li | audio: th1520: workaround to solve noise at the end |
@@ -166,7 +213,7 @@
 | [668bef52](https://github.com/RVCK-Project/rvck/commit/668bef52e4b534462285b938ecd99edbc4bced07) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 346 条提交，显示 201-346**
+**共 393 条提交，显示 201-393**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -177,5 +224,5 @@
 
 ---
 
-*本页面最后更新于 2026-06-12 10:40:24*
-*数据来源: 主分支 rvck-6.6@4aba8c4c*
+*本页面最后更新于 2026-06-21 16:31:41*
+*数据来源: 主分支 rvck-6.6@4645351a*

@@ -1,6 +1,6 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 346 个提交
-# 生成时间: 2026-06-12 10:40:24
+# 共 393 个提交
+# 生成时间: 2026-06-21 16:31:41
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
@@ -10,6 +10,53 @@ f7ab3e62 | 2026-06-03 | ZhenXing Zhu | riscv: defconfig: th1520: fix DWMAC confi
 428a8fdd | 2026-06-04 | ZhenXing Zhu | drivers/soc/event: Add THEAD TH1520 event driver
 404e0cca | 2026-06-04 | ZhenXing Zhu | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver
 8ea6d74c | 2026-06-03 | ZhenXing Zhu | riscv: dts: th1520: add watchdog nodes for reboot support
+fff36983 | 2026-04-04 | Charlie Jenkins | selftests: riscv: Add license to cfi selftest
+42ea61b2 | 2026-04-04 | Paul Walmsley | prctl: cfi: change the branch landing pad prctl()s to be more descriptive
+246f19e5 | 2026-04-04 | Zong Li | riscv: cfi: clear CFI lock status in start_thread()
+a52ccebb | 2026-04-04 | Paul Walmsley | riscv: ptrace: cfi: expand "SS" references to "shadow stack" in uapi headers
+e61589a3 | 2026-04-04 | Paul Walmsley | prctl: rename branch landing pad implementation functions to be more explicit
+06975dfb | 2026-04-04 | Paul Walmsley | riscv: ptrace: expand "LP" references to "branch landing pads" in uapi headers
+79819c8c | 2026-04-04 | Paul Walmsley | riscv: ptrace: cfi: fix "PRACE" typo in uapi header
+7a9b00de | 2026-04-02 | Paul Walmsley | riscv: use _BITUL macro rather than BIT() in ptrace uapi and kselftests
+9cd24142 | 2026-01-25 | Deepak Gupta | kselftest/riscv: add kselftest for user mode CFI
+17c7cb3e | 2026-01-25 | Deepak Gupta | riscv: add documentation for shadow stack
+c5bfcade | 2026-01-25 | Deepak Gupta | riscv: add documentation for landing pad / indirect branch tracking
+17816952 | 2026-01-25 | Deepak Gupta | riscv: create a Kconfig fragment for shadow stack and landing pad support
+43b68df8 | 2026-01-25 | Deepak Gupta | arch/riscv: add dual vdso creation logic and select vdso based on hw
+e181a659 | 2026-01-25 | Jim Shu | arch/riscv: compile vdso with landing pad and shadow stack note
+bd346e95 | 2024-10-16 | Alexandre Ghiti | riscv: Check that vdso does not contain any dynamic relocations
+aa315cb3 | 2026-01-25 | Deepak Gupta | riscv: enable kernel access to shadow stack memory via the FWFT SBI call
+6e5fd137 | 2026-01-25 | Deepak Gupta | riscv: add kernel command line option to opt out of user CFI
+2f58bfc4 | 2026-01-25 | Deepak Gupta | riscv/hwprobe: add zicfilp / zicfiss enumeration in hwprobe
+95793930 | 2026-01-25 | Paul Walmsley | riscv: hwprobe: add support for RISCV_HWPROBE_KEY_IMA_EXT_1
+fa8114ac | 2026-01-25 | Deepak Gupta | riscv/ptrace: expose riscv CFI status and state via ptrace and in core files
+a5d0a4c3 | 2026-01-25 | Deepak Gupta | riscv/kernel: update __show_regs() to print shadow stack register
+796f04be | 2026-01-25 | Deepak Gupta | riscv/signal: save and restore the shadow stack on a signal
+0326c377 | 2026-01-25 | Deepak Gupta | riscv/traps: Introduce software check exception and uprobe handling
+8c5a5b6a | 2026-01-25 | Deepak Gupta | riscv: Implement indirect branch tracking prctls
+52f98916 | 2026-01-25 | Deepak Gupta | prctl: add arch-agnostic prctl()s for indirect branch tracking
+7a55b55a | 2024-10-01 | Mark Brown | mman: Add map_shadow_stack() flags
+e9e8b350 | 2024-10-01 | Mark Brown | prctl: arch-agnostic prctl for shadow stack
+5c5ea438 | 2026-01-25 | Deepak Gupta | riscv: Implement arch-agnostic shadow stack prctls
+24ccb815 | 2026-01-25 | Deepak Gupta | riscv/shstk: If needed allocate a new shadow stack on clone
+237f6fa5 | 2026-01-25 | Deepak Gupta | riscv/mm: Implement map_shadow_stack() syscall
+b8c81ae0 | 2026-01-25 | Deepak Gupta | riscv/mm: update write protect to work on shadow stacks
+40733fc6 | 2026-01-25 | Deepak Gupta | riscv/mm: teach pte_mkwrite to manufacture shadow stack PTEs
+2263ee8b | 2026-01-25 | Deepak Gupta | riscv/mm: manufacture shadow stack ptes
+68c41ca2 | 2026-01-25 | Deepak Gupta | riscv/mm: ensure PROT_WRITE leads to VM_READ | VM_WRITE
+43a989d3 | 2026-01-25 | Deepak Gupta | riscv: Add usercfi state for task and save/restore of CSR_SSP on trap entry/exit
+25ef1146 | 2026-01-25 | Deepak Gupta | riscv: add Zicfiss / Zicfilp extension CSR and bit definitions
+9906c3c2 | 2026-01-25 | Deepak Gupta | riscv: zicfiss / zicfilp enumeration
+2c014202 | 2026-01-25 | Deepak Gupta | dt-bindings: riscv: document zicfilp and zicfiss in extensions.yaml
+613f2dc8 | 2026-01-25 | Deepak Gupta | mm: add VM_SHADOW_STACK definition for riscv
+4c296654 | 2024-04-27 | Masahiro Yamada | kbuild: use $(obj)/ instead of $(src)/ for common pattern rules
+ab01b854 | 2024-03-13 | Vladimir Isaev | riscv: hwprobe: do not produce frtace relocation
+c405d0b7 | 2025-03-20 | Charlie Jenkins | riscv: entry: Split ret_from_fork() into user and kernel
+32d559a6 | 2025-03-20 | Charlie Jenkins | riscv: entry: Convert ret_from_fork() to C
+5ba1e368 | 2025-04-11 | Xi Ruoyao | RISC-V: vDSO: Wire up getrandom() vDSO implementation
+3e6c5769 | 2024-08-22 | Christophe Leroy | random: vDSO: add missing c-getrandom-y in Makefile
+d9fceba5 | 2025-11-12 | Andy Chiu | riscv: signal: abstract header saving for setup_sigcontext
+a126ffd1 | 2023-09-14 | Sohil Mehta | arch: Reserve map_shadow_stack() syscall number for all architectures
 c7063ef3 | 2024-04-19 | Robin Murphy | dma-mapping: Simplify arch_setup_dma_ops()
 555d7f47 | 2024-04-19 | Robin Murphy | iommu/dma: Centralise iommu_setup_dma_ops()
 87c06c3d | 2024-04-19 | Robin Murphy | iommu/dma: Make limit checks self-contained

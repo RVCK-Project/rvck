@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 346</li>
-<li><strong>统计时间</strong>: 2026-06-12 10:40:24</li>
+<li><strong>贡献提交数</strong>: 393</li>
+<li><strong>统计时间</strong>: 2026-06-21 16:31:41</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.141</li>
 </ul>
@@ -24,6 +24,53 @@
 | [428a8fdd](https://github.com/RVCK-Project/rvck/commit/428a8fdd6fab8a46a5cdeaa9571228e7cab6863e) | 2026-06-04 | ZhenXing Zhu | drivers/soc/event: Add THEAD TH1520 event driver |
 | [404e0cca](https://github.com/RVCK-Project/rvck/commit/404e0cca234f926e8fa7bc28210db939fc854d45) | 2026-06-04 | ZhenXing Zhu | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver |
 | [8ea6d74c](https://github.com/RVCK-Project/rvck/commit/8ea6d74c33523ad62fe963c84570b53fe5e4e1a9) | 2026-06-03 | ZhenXing Zhu | riscv: dts: th1520: add watchdog nodes for reboot support |
+| [fff36983](https://github.com/RVCK-Project/rvck/commit/fff36983f878d10955cbe8f17d847309a1014243) | 2026-04-04 | Charlie Jenkins | selftests: riscv: Add license to cfi selftest |
+| [42ea61b2](https://github.com/RVCK-Project/rvck/commit/42ea61b2895fdd458f846617e24360c1adf91e52) | 2026-04-04 | Paul Walmsley | prctl: cfi: change the branch landing pad prctl()s to be more descriptive |
+| [246f19e5](https://github.com/RVCK-Project/rvck/commit/246f19e5ba41bb850e6aa69d368a6d751edb7e7c) | 2026-04-04 | Zong Li | riscv: cfi: clear CFI lock status in start_thread() |
+| [a52ccebb](https://github.com/RVCK-Project/rvck/commit/a52ccebb5b148a0dce43d392ff7a14b38c5b2ddf) | 2026-04-04 | Paul Walmsley | riscv: ptrace: cfi: expand "SS" references to "shadow stack" in uapi headers |
+| [e61589a3](https://github.com/RVCK-Project/rvck/commit/e61589a3435fdd88f12619d282453b7c97b2653d) | 2026-04-04 | Paul Walmsley | prctl: rename branch landing pad implementation functions to be more explicit |
+| [06975dfb](https://github.com/RVCK-Project/rvck/commit/06975dfb0b08baa94308ae5450ad6153eff9e06b) | 2026-04-04 | Paul Walmsley | riscv: ptrace: expand "LP" references to "branch landing pads" in uapi headers |
+| [79819c8c](https://github.com/RVCK-Project/rvck/commit/79819c8cb34729518c865cbdf46e5db90c9bee7f) | 2026-04-04 | Paul Walmsley | riscv: ptrace: cfi: fix "PRACE" typo in uapi header |
+| [7a9b00de](https://github.com/RVCK-Project/rvck/commit/7a9b00de2ef0eebc51177e676dcc2b06ae5bd1dc) | 2026-04-02 | Paul Walmsley | riscv: use _BITUL macro rather than BIT() in ptrace uapi and kselftests |
+| [9cd24142](https://github.com/RVCK-Project/rvck/commit/9cd2414288eb3192f4cd7b321874f127f59eeab2) | 2026-01-25 | Deepak Gupta | kselftest/riscv: add kselftest for user mode CFI |
+| [17c7cb3e](https://github.com/RVCK-Project/rvck/commit/17c7cb3e092778120e5076b1dccb37aca3df51e6) | 2026-01-25 | Deepak Gupta | riscv: add documentation for shadow stack |
+| [c5bfcade](https://github.com/RVCK-Project/rvck/commit/c5bfcade590882e15e7a9c98f2ba27d533c5ba9a) | 2026-01-25 | Deepak Gupta | riscv: add documentation for landing pad / indirect branch tracking |
+| [17816952](https://github.com/RVCK-Project/rvck/commit/1781695266fdc183ab27e8bac55d5219a9e878eb) | 2026-01-25 | Deepak Gupta | riscv: create a Kconfig fragment for shadow stack and landing pad support |
+| [43b68df8](https://github.com/RVCK-Project/rvck/commit/43b68df83417c66af9bc237e08520a8993850e51) | 2026-01-25 | Deepak Gupta | arch/riscv: add dual vdso creation logic and select vdso based on hw |
+| [e181a659](https://github.com/RVCK-Project/rvck/commit/e181a6596a49ab8dd40bccb4093c57d22755dd55) | 2026-01-25 | Jim Shu | arch/riscv: compile vdso with landing pad and shadow stack note |
+| [bd346e95](https://github.com/RVCK-Project/rvck/commit/bd346e958d9a150936d84eee577e3a63ccbf2ba9) | 2024-10-16 | Alexandre Ghiti | riscv: Check that vdso does not contain any dynamic relocations |
+| [aa315cb3](https://github.com/RVCK-Project/rvck/commit/aa315cb320a012b730db10a9b14d0cd66147ee3b) | 2026-01-25 | Deepak Gupta | riscv: enable kernel access to shadow stack memory via the FWFT SBI call |
+| [6e5fd137](https://github.com/RVCK-Project/rvck/commit/6e5fd137120fa0d2967933de90616666562b652b) | 2026-01-25 | Deepak Gupta | riscv: add kernel command line option to opt out of user CFI |
+| [2f58bfc4](https://github.com/RVCK-Project/rvck/commit/2f58bfc468d9798343c7d592bc55faf121c6dc5f) | 2026-01-25 | Deepak Gupta | riscv/hwprobe: add zicfilp / zicfiss enumeration in hwprobe |
+| [95793930](https://github.com/RVCK-Project/rvck/commit/957939304a50bf311deec70f5cc5ecd0cf4f5592) | 2026-01-25 | Paul Walmsley | riscv: hwprobe: add support for RISCV_HWPROBE_KEY_IMA_EXT_1 |
+| [fa8114ac](https://github.com/RVCK-Project/rvck/commit/fa8114ac50fa6ff110df95821bbb4a7f044a7440) | 2026-01-25 | Deepak Gupta | riscv/ptrace: expose riscv CFI status and state via ptrace and in core files |
+| [a5d0a4c3](https://github.com/RVCK-Project/rvck/commit/a5d0a4c3c70c47e033b5d7ab99530e03dac132f2) | 2026-01-25 | Deepak Gupta | riscv/kernel: update __show_regs() to print shadow stack register |
+| [796f04be](https://github.com/RVCK-Project/rvck/commit/796f04bed0cda36a6b98a52a31f3dcfdd8276196) | 2026-01-25 | Deepak Gupta | riscv/signal: save and restore the shadow stack on a signal |
+| [0326c377](https://github.com/RVCK-Project/rvck/commit/0326c377b06e9f168c8d4aca59d57c4ffc9e0c9b) | 2026-01-25 | Deepak Gupta | riscv/traps: Introduce software check exception and uprobe handling |
+| [8c5a5b6a](https://github.com/RVCK-Project/rvck/commit/8c5a5b6a6dc5e82cbaa1951fa34ad416076cf73f) | 2026-01-25 | Deepak Gupta | riscv: Implement indirect branch tracking prctls |
+| [52f98916](https://github.com/RVCK-Project/rvck/commit/52f989163b0f8e394c805eab0bfe6e4999625929) | 2026-01-25 | Deepak Gupta | prctl: add arch-agnostic prctl()s for indirect branch tracking |
+| [7a55b55a](https://github.com/RVCK-Project/rvck/commit/7a55b55a0f7017be1a9d47417d5517953c9a9bb1) | 2024-10-01 | Mark Brown | mman: Add map_shadow_stack() flags |
+| [e9e8b350](https://github.com/RVCK-Project/rvck/commit/e9e8b3509f6bcc03643630f2b1768b55eb4951e9) | 2024-10-01 | Mark Brown | prctl: arch-agnostic prctl for shadow stack |
+| [5c5ea438](https://github.com/RVCK-Project/rvck/commit/5c5ea43806e599c65b8d5017d00401b93fc55709) | 2026-01-25 | Deepak Gupta | riscv: Implement arch-agnostic shadow stack prctls |
+| [24ccb815](https://github.com/RVCK-Project/rvck/commit/24ccb81590aab1c0d9395f13c1aa168059481b48) | 2026-01-25 | Deepak Gupta | riscv/shstk: If needed allocate a new shadow stack on clone |
+| [237f6fa5](https://github.com/RVCK-Project/rvck/commit/237f6fa5a0ac9820789bb494ba8c518c4c7073d9) | 2026-01-25 | Deepak Gupta | riscv/mm: Implement map_shadow_stack() syscall |
+| [b8c81ae0](https://github.com/RVCK-Project/rvck/commit/b8c81ae0e277ce23417683bd197ae2b8b1b992ec) | 2026-01-25 | Deepak Gupta | riscv/mm: update write protect to work on shadow stacks |
+| [40733fc6](https://github.com/RVCK-Project/rvck/commit/40733fc614703c88307b692600e4eab26b748fb2) | 2026-01-25 | Deepak Gupta | riscv/mm: teach pte_mkwrite to manufacture shadow stack PTEs |
+| [2263ee8b](https://github.com/RVCK-Project/rvck/commit/2263ee8ba95482d94207780319c95f2b3bea44d1) | 2026-01-25 | Deepak Gupta | riscv/mm: manufacture shadow stack ptes |
+| [68c41ca2](https://github.com/RVCK-Project/rvck/commit/68c41ca2dd419f2c17a39a3ba66a5cd8a8673ee7) | 2026-01-25 | Deepak Gupta | riscv/mm: ensure PROT_WRITE leads to VM_READ \| VM_WRITE |
+| [43a989d3](https://github.com/RVCK-Project/rvck/commit/43a989d3c71e3dadddec9e86f322b317ce2b9e5e) | 2026-01-25 | Deepak Gupta | riscv: Add usercfi state for task and save/restore of CSR_SSP on trap entry/exit |
+| [25ef1146](https://github.com/RVCK-Project/rvck/commit/25ef11464e69f50d802d216d492b2cc65e323142) | 2026-01-25 | Deepak Gupta | riscv: add Zicfiss / Zicfilp extension CSR and bit definitions |
+| [9906c3c2](https://github.com/RVCK-Project/rvck/commit/9906c3c2c7a581fc2604c965904bc23ad6f88d8d) | 2026-01-25 | Deepak Gupta | riscv: zicfiss / zicfilp enumeration |
+| [2c014202](https://github.com/RVCK-Project/rvck/commit/2c014202fb193286575f304ed71d48b398e71886) | 2026-01-25 | Deepak Gupta | dt-bindings: riscv: document zicfilp and zicfiss in extensions.yaml |
+| [613f2dc8](https://github.com/RVCK-Project/rvck/commit/613f2dc8cd3a2db02ee324a94e0176581a65a0b4) | 2026-01-25 | Deepak Gupta | mm: add VM_SHADOW_STACK definition for riscv |
+| [4c296654](https://github.com/RVCK-Project/rvck/commit/4c2966546e213efa090b2bca0f6de004bbbe5e3f) | 2024-04-27 | Masahiro Yamada | kbuild: use $(obj)/ instead of $(src)/ for common pattern rules |
+| [ab01b854](https://github.com/RVCK-Project/rvck/commit/ab01b85467b97fa8825da8ca011a199e205432a0) | 2024-03-13 | Vladimir Isaev | riscv: hwprobe: do not produce frtace relocation |
+| [c405d0b7](https://github.com/RVCK-Project/rvck/commit/c405d0b7c52a50179b8b7918f4352aff42fd2e64) | 2025-03-20 | Charlie Jenkins | riscv: entry: Split ret_from_fork() into user and kernel |
+| [32d559a6](https://github.com/RVCK-Project/rvck/commit/32d559a62d42a5ed771b50a87eb05b200c081f3b) | 2025-03-20 | Charlie Jenkins | riscv: entry: Convert ret_from_fork() to C |
+| [5ba1e368](https://github.com/RVCK-Project/rvck/commit/5ba1e368e2855fe896765f1e66970fad5c253482) | 2025-04-11 | Xi Ruoyao | RISC-V: vDSO: Wire up getrandom() vDSO implementation |
+| [3e6c5769](https://github.com/RVCK-Project/rvck/commit/3e6c5769fc9c4a880b1f96535b5e00bd54b457e2) | 2024-08-22 | Christophe Leroy | random: vDSO: add missing c-getrandom-y in Makefile |
+| [d9fceba5](https://github.com/RVCK-Project/rvck/commit/d9fceba5ca428cb457119a1274c7891746b6d5e2) | 2025-11-12 | Andy Chiu | riscv: signal: abstract header saving for setup_sigcontext |
+| [a126ffd1](https://github.com/RVCK-Project/rvck/commit/a126ffd1a7f204a14f2ba94585bdff44929244b6) | 2023-09-14 | Sohil Mehta | arch: Reserve map_shadow_stack() syscall number for all architectures |
 | [c7063ef3](https://github.com/RVCK-Project/rvck/commit/c7063ef36969a31dba466b5c4cfbb5944a17d168) | 2024-04-19 | Robin Murphy | dma-mapping: Simplify arch_setup_dma_ops() |
 | [555d7f47](https://github.com/RVCK-Project/rvck/commit/555d7f47fc52738de186052e98c77d25b0675361) | 2024-04-19 | Robin Murphy | iommu/dma: Centralise iommu_setup_dma_ops() |
 | [87c06c3d](https://github.com/RVCK-Project/rvck/commit/87c06c3dff9cd661b874f3c1b533f090c2efea9b) | 2024-04-19 | Robin Murphy | iommu/dma: Make limit checks self-contained |
@@ -366,7 +413,7 @@
 | [668bef52](https://github.com/RVCK-Project/rvck/commit/668bef52e4b534462285b938ecd99edbc4bced07) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 346 条提交（显示全部）**
+**共 393 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -375,5 +422,5 @@
 
 ---
 
-*本页面最后更新于 2026-06-12 10:40:24*
-*数据来源: 主分支 rvck-6.6@4aba8c4c*
+*本页面最后更新于 2026-06-21 16:31:41*
+*数据来源: 主分支 rvck-6.6@4645351a*
