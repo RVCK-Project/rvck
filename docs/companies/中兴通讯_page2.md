@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 403</li>
-<li><strong>统计时间</strong>: 2026-06-21 16:31:41</li>
+<li><strong>贡献提交数</strong>: 406</li>
+<li><strong>统计时间</strong>: 2026-06-24 11:10:39</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.141</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [86e27c87](https://github.com/RVCK-Project/rvck/commit/86e27c87ccf4b88e89065ed60a9e3e7a43d4f47f) | 2025-08-27 | Himanshu Chauhan | riscv: Enable APEI and NMI safe cmpxchg options required for RAS |
+| [3d1af17d](https://github.com/RVCK-Project/rvck/commit/3d1af17db869a0f86aaac1e8ffd2695702f3dd73) | 2025-08-27 | Himanshu Chauhan | riscv: Add config option to enable APEI SSE handler |
+| [2c3a9944](https://github.com/RVCK-Project/rvck/commit/2c3a9944fd61729c1f9b343cbf7da9a7bff052fc) | 2025-08-27 | Himanshu Chauhan | riscv: Introduce HEST SSE notification handlers |
 | [911e1105](https://github.com/RVCK-Project/rvck/commit/911e1105ca92c44e614b820766af7cf2b6faa6b4) | 2025-08-27 | Himanshu Chauhan | riscv: Add RISC-V entries in processor type and ISA strings |
 | [5f7f7321](https://github.com/RVCK-Project/rvck/commit/5f7f732187590327f0c8c8f5e7b09d902ce443de) | 2025-08-27 | Himanshu Chauhan | riscv: Add functions to register ghes having SSE notification |
 | [dad7b3eb](https://github.com/RVCK-Project/rvck/commit/dad7b3ebcb21c750a9154b99e55ffbb84f214af8) | 2025-08-27 | Himanshu Chauhan | riscv: conditionally compile GHES NMI spool function |
@@ -215,12 +218,9 @@
 | [38d0958d](https://github.com/RVCK-Project/rvck/commit/38d0958d267e2c470c2b05509f21aa2569c4a3e6) | 2024-05-02 | Sia Jee Heng | RISC-V: ACPI: Enable SPCR table for console output on RISC-V |
 | [9e96b3d9](https://github.com/RVCK-Project/rvck/commit/9e96b3d928e95e90c9289ec76f55f1901e964465) | 2024-07-18 | Ryo Takakura | RISC-V: Enable IPI CPU Backtrace |
 | [c63ab3cf](https://github.com/RVCK-Project/rvck/commit/c63ab3cfa3bd28fa75091ad56a072cd9cc356700) | 2024-06-13 | Haibo Xu | riscv: dmi: Add SMBIOS/DMI support |
-| [cc70db00](https://github.com/RVCK-Project/rvck/commit/cc70db00c045e10b76483fc126b7dc93e434d873) | 2024-06-13 | Haibo Xu | ACPI: NUMA: replace pr_info with pr_debug in arch_acpi_numa_init |
-| [95a6ec77](https://github.com/RVCK-Project/rvck/commit/95a6ec778290422ac8a77e7ace94d872aea65e71) | 2025-04-25 | gaorui | ACPI: NUMA: change the ACPI_NUMA to a hidden option |
-| [3dbba829](https://github.com/RVCK-Project/rvck/commit/3dbba8293d82b518276afcb3870336b176b26ed4) | 2025-04-25 | gaorui | ACPI: NUMA: Make some NUMA-related functions available for RISC-V |
 ---
 
-**共 403 条提交，显示 201-400**
+**共 406 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-06-21 16:31:41*
-*数据来源: 主分支 rvck-6.6@4645351a*
+*本页面最后更新于 2026-06-24 11:10:39*
+*数据来源: 主分支 rvck-6.6@ddd010bd*

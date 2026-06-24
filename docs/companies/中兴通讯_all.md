@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 403</li>
-<li><strong>统计时间</strong>: 2026-06-21 16:31:41</li>
+<li><strong>贡献提交数</strong>: 406</li>
+<li><strong>统计时间</strong>: 2026-06-24 11:10:39</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.141</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [706b693b](https://github.com/RVCK-Project/rvck/commit/706b693b756b1211bcf4b32a8ad8e2bb6d89ef38) | 2025-11-17 | Anup Patel | RISC-V: Enable HOTPLUG_PARALLEL for secondary CPUs |
+| [ef5a9a21](https://github.com/RVCK-Project/rvck/commit/ef5a9a215b1a376da1233107ec01fd79eaa2ca23) | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Provide weak fallback for arch_cpuhp_init_parallel_bringup() |
+| [7afb5df7](https://github.com/RVCK-Project/rvck/commit/7afb5df73df0f00db64ba6a263ba6c5621e5d98f) | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Make HOTPLUG_PARALLEL independent of HOTPLUG_SMT |
 | [d174bc8e](https://github.com/RVCK-Project/rvck/commit/d174bc8ee7e09d6604c5b0540d3666982151da6d) | 2026-05-29 | Lu Peng | riscv: Fix incorrect use of REG_L for 32-bit types in sse_entry.S |
 | [cf39e791](https://github.com/RVCK-Project/rvck/commit/cf39e791197f3cc257e8d8715789d8d3862e1040) | 2026-04-03 | Feng Jiang | riscv: lib: add strrchr() implementation |
 | [a104c1a8](https://github.com/RVCK-Project/rvck/commit/a104c1a8a40377598c9decebfddfa21eab04119f) | 2026-04-03 | Feng Jiang | riscv: lib: add strchr() implementation |
@@ -423,7 +426,7 @@
 | [1c2b5939](https://github.com/RVCK-Project/rvck/commit/1c2b5939b8b9ea2f772120ebd278b474d103e572) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 403 条提交（显示全部）**
+**共 406 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -432,5 +435,5 @@
 
 ---
 
-*本页面最后更新于 2026-06-21 16:31:41*
-*数据来源: 主分支 rvck-6.6@4645351a*
+*本页面最后更新于 2026-06-24 11:10:39*
+*数据来源: 主分支 rvck-6.6@ddd010bd*

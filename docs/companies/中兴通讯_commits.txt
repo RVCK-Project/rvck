@@ -1,9 +1,12 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 403 个提交
-# 生成时间: 2026-06-21 16:31:41
+# 共 406 个提交
+# 生成时间: 2026-06-24 11:10:39
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+706b693b | 2025-11-17 | Anup Patel | RISC-V: Enable HOTPLUG_PARALLEL for secondary CPUs
+ef5a9a21 | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Provide weak fallback for arch_cpuhp_init_parallel_bringup()
+7afb5df7 | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Make HOTPLUG_PARALLEL independent of HOTPLUG_SMT
 d174bc8e | 2026-05-29 | Lu Peng | riscv: Fix incorrect use of REG_L for 32-bit types in sse_entry.S
 cf39e791 | 2026-04-03 | Feng Jiang | riscv: lib: add strrchr() implementation
 a104c1a8 | 2026-04-03 | Feng Jiang | riscv: lib: add strchr() implementation
