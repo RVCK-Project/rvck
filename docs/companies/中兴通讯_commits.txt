@@ -1,6 +1,6 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 406 个提交
-# 生成时间: 2026-06-24 11:10:39
+# 共 404 个提交
+# 生成时间: 2026-06-26 11:06:09
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
@@ -38,7 +38,6 @@ db04fd4b | 2024-10-17 | Andrew Jones | KVM: riscv: selftests: Add SBI SUSP to ge
 cadaf8f8 | 2024-04-17 | Yong-Xuan Wang | RISCV: KVM: Introduce vcpu->reset_cntx_lock
 74da8147 | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit
 674ab54f | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use
-dcd3612f | 2025-02-21 | BillXiang | riscv: KVM: Remove unnecessary vcpu kick
 8a5b6cc0 | 2024-08-15 | Anup Patel | RISC-V: KVM: Don't zero-out PMU snapshot area before freeing data
 936eb58c | 2026-03-30 | Wang Yechao | RISC-V: KVM: Split huge pages during fault handling for dirty logging
 4050f130 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Fix lost write protection on huge pages during dirty logging
@@ -286,7 +285,6 @@ d50ba3b3 | 2024-03-13 | Xiao Wang | riscv: uaccess: Allow the last potential unr
 5f7d48a4 | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps
 c82b4bd1 | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events
 f4f592d2 | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest
-7fe6952a | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys
 4ab8cc41 | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver
 eb28ca1a | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it
 a38bbbd5 | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi

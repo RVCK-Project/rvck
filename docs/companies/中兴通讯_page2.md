@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 406</li>
-<li><strong>统计时间</strong>: 2026-06-24 11:10:39</li>
+<li><strong>贡献提交数</strong>: 404</li>
+<li><strong>统计时间</strong>: 2026-06-26 11:06:09</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.141</li>
 </ul>
@@ -18,7 +18,6 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [86e27c87](https://github.com/RVCK-Project/rvck/commit/86e27c87ccf4b88e89065ed60a9e3e7a43d4f47f) | 2025-08-27 | Himanshu Chauhan | riscv: Enable APEI and NMI safe cmpxchg options required for RAS |
 | [3d1af17d](https://github.com/RVCK-Project/rvck/commit/3d1af17db869a0f86aaac1e8ffd2695702f3dd73) | 2025-08-27 | Himanshu Chauhan | riscv: Add config option to enable APEI SSE handler |
 | [2c3a9944](https://github.com/RVCK-Project/rvck/commit/2c3a9944fd61729c1f9b343cbf7da9a7bff052fc) | 2025-08-27 | Himanshu Chauhan | riscv: Introduce HEST SSE notification handlers |
 | [911e1105](https://github.com/RVCK-Project/rvck/commit/911e1105ca92c44e614b820766af7cf2b6faa6b4) | 2025-08-27 | Himanshu Chauhan | riscv: Add RISC-V entries in processor type and ISA strings |
@@ -100,7 +99,6 @@
 | [5f7d48a4](https://github.com/RVCK-Project/rvck/commit/5f7d48a48ddfd38b8951f1ec0e3cd9eb4fbed44d) | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps |
 | [c82b4bd1](https://github.com/RVCK-Project/rvck/commit/c82b4bd1c6cd738d230ed87faf7433dd5410d8a0) | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events |
 | [f4f592d2](https://github.com/RVCK-Project/rvck/commit/f4f592d2ae7202962550608e3208ca626b719875) | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest |
-| [7fe6952a](https://github.com/RVCK-Project/rvck/commit/7fe6952af32ebc3bf70e10a7a775ae7574b7161f) | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys |
 | [4ab8cc41](https://github.com/RVCK-Project/rvck/commit/4ab8cc410271d9ca88108ad6155ab5d0ac888a55) | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver |
 | [eb28ca1a](https://github.com/RVCK-Project/rvck/commit/eb28ca1a73510809dd0cad67f52dc2256ea1bec0) | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it |
 | [a38bbbd5](https://github.com/RVCK-Project/rvck/commit/a38bbbd5a59d32a6e1d4e521f2a4add56ef3c6da) | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi |
@@ -218,9 +216,11 @@
 | [38d0958d](https://github.com/RVCK-Project/rvck/commit/38d0958d267e2c470c2b05509f21aa2569c4a3e6) | 2024-05-02 | Sia Jee Heng | RISC-V: ACPI: Enable SPCR table for console output on RISC-V |
 | [9e96b3d9](https://github.com/RVCK-Project/rvck/commit/9e96b3d928e95e90c9289ec76f55f1901e964465) | 2024-07-18 | Ryo Takakura | RISC-V: Enable IPI CPU Backtrace |
 | [c63ab3cf](https://github.com/RVCK-Project/rvck/commit/c63ab3cfa3bd28fa75091ad56a072cd9cc356700) | 2024-06-13 | Haibo Xu | riscv: dmi: Add SMBIOS/DMI support |
+| [cc70db00](https://github.com/RVCK-Project/rvck/commit/cc70db00c045e10b76483fc126b7dc93e434d873) | 2024-06-13 | Haibo Xu | ACPI: NUMA: replace pr_info with pr_debug in arch_acpi_numa_init |
+| [95a6ec77](https://github.com/RVCK-Project/rvck/commit/95a6ec778290422ac8a77e7ace94d872aea65e71) | 2025-04-25 | gaorui | ACPI: NUMA: change the ACPI_NUMA to a hidden option |
 ---
 
-**共 406 条提交，显示 201-400**
+**共 404 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-06-24 11:10:39*
+*本页面最后更新于 2026-06-26 11:06:09*
 *数据来源: 主分支 rvck-6.6@ddd010bd*

@@ -1,0 +1,9 @@
+# 蓝芯算力 提交列表（纯文本视图）
+# 共 3 个提交
+# 生成时间: 2026-06-26 11:06:09
+#
+# 格式: 提交哈希 | 日期 | 原始作者 | 标题
+------------------------------------------------------------------------------------------------------------------------
+a5ce7109 | 2026-05-29 | Li Hongbin | riscv: defconfig: add lanxin soc basic support
+dcd3612f | 2025-02-21 | BillXiang | riscv: KVM: Remove unnecessary vcpu kick
+7fe6952a | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys

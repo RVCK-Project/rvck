@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 406</li>
-<li><strong>统计时间</strong>: 2026-06-24 11:10:39</li>
+<li><strong>贡献提交数</strong>: 404</li>
+<li><strong>统计时间</strong>: 2026-06-26 11:06:09</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.141</li>
 </ul>
@@ -52,7 +52,6 @@
 | [cadaf8f8](https://github.com/RVCK-Project/rvck/commit/cadaf8f8802765594a0a0fff9e2e981aee8ca95b) | 2024-04-17 | Yong-Xuan Wang | RISCV: KVM: Introduce vcpu-\>reset_cntx_lock |
 | [74da8147](https://github.com/RVCK-Project/rvck/commit/74da8147bfb64971216a8dfd26916c2ea48e01f1) | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
 | [674ab54f](https://github.com/RVCK-Project/rvck/commit/674ab54f11837a60213dae9f900cf3f02fcc1afc) | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use |
-| [dcd3612f](https://github.com/RVCK-Project/rvck/commit/dcd3612ff02519e1fab0de935c63c4c6488afc25) | 2025-02-21 | BillXiang | riscv: KVM: Remove unnecessary vcpu kick |
 | [8a5b6cc0](https://github.com/RVCK-Project/rvck/commit/8a5b6cc0eff87851c067852e1544a0def0ce94ae) | 2024-08-15 | Anup Patel | RISC-V: KVM: Don't zero-out PMU snapshot area before freeing data |
 | [936eb58c](https://github.com/RVCK-Project/rvck/commit/936eb58c9c1c5561ca698d1bdadae9881d3b2188) | 2026-03-30 | Wang Yechao | RISC-V: KVM: Split huge pages during fault handling for dirty logging |
 | [4050f130](https://github.com/RVCK-Project/rvck/commit/4050f130f89b89e91db948cb78144e8694061424) | 2026-03-30 | Wang Yechao | RISC-V: KVM: Fix lost write protection on huge pages during dirty logging |
@@ -300,7 +299,6 @@
 | [5f7d48a4](https://github.com/RVCK-Project/rvck/commit/5f7d48a48ddfd38b8951f1ec0e3cd9eb4fbed44d) | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps |
 | [c82b4bd1](https://github.com/RVCK-Project/rvck/commit/c82b4bd1c6cd738d230ed87faf7433dd5410d8a0) | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events |
 | [f4f592d2](https://github.com/RVCK-Project/rvck/commit/f4f592d2ae7202962550608e3208ca626b719875) | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest |
-| [7fe6952a](https://github.com/RVCK-Project/rvck/commit/7fe6952af32ebc3bf70e10a7a775ae7574b7161f) | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys |
 | [4ab8cc41](https://github.com/RVCK-Project/rvck/commit/4ab8cc410271d9ca88108ad6155ab5d0ac888a55) | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver |
 | [eb28ca1a](https://github.com/RVCK-Project/rvck/commit/eb28ca1a73510809dd0cad67f52dc2256ea1bec0) | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it |
 | [a38bbbd5](https://github.com/RVCK-Project/rvck/commit/a38bbbd5a59d32a6e1d4e521f2a4add56ef3c6da) | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi |
@@ -426,7 +424,7 @@
 | [1c2b5939](https://github.com/RVCK-Project/rvck/commit/1c2b5939b8b9ea2f772120ebd278b474d103e572) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 406 条提交（显示全部）**
+**共 404 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -435,5 +433,5 @@
 
 ---
 
-*本页面最后更新于 2026-06-24 11:10:39*
+*本页面最后更新于 2026-06-26 11:06:09*
 *数据来源: 主分支 rvck-6.6@ddd010bd*
