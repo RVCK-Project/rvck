@@ -48,6 +48,7 @@
 - 阿里: @linux.alibaba.com
 - 算能: @sophgo.com
 - 软件所: @iscas.ac.cn, @isrc.iscas.ac.cn, Weihao Li <ieiao@outlook.com>
+- 蓝芯算力: @lanxincomputing.com
 
 ### 提交归属统计规则
 

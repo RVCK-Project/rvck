@@ -69,6 +69,11 @@ class ContribStats:
                 "suffixes": ["@iscas.ac.cn", "@isrc.iscas.ac.cn"],
                 "specific_emails": ["Weihao Li <ieiao@outlook.com>"],
                 "color": "#FF9800"
+            },
+            "蓝芯算力": {
+                "suffixes": ["@lanxincomputing.com"],
+                "specific_emails": [],
+                "color": "#00BCD4"
             }
         }
 
