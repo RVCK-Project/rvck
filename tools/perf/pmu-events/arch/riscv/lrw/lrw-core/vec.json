@@ -51,32 +51,32 @@
     },
     {
         "EventName": "FP_VEC_SPEC",
-        "EventCode": "0x010000c",
+        "EventCode": "0x0010000c",
         "BriefDescription": "Vector floating-point element operations speculatively executed"
     },
     {
         "EventName": "FP_SCALE_SPEC",
-        "EventCode": "0x020000c",
+        "EventCode": "0x0020000c",
         "BriefDescription": "Scalable floating-point element operations speculatively executed"
     },
     {
         "EventName": "VEC_INT08_SPEC",
-        "EventCode": "0x040000c",
+        "EventCode": "0x0040000c",
         "BriefDescription": "Operation counted by VEC_INT_SPEC where the largest type is 8-bit integer"
     },
     {
         "EventName": "VEC_INT16_SPEC",
-        "EventCode": "0x080000c",
+        "EventCode": "0x0080000c",
         "BriefDescription": "Operation counted by ASE_SVE_INT_SPEC where the largest type is 16-bit integer"
     },
     {
         "EventName": "VEC_INT32_SPEC",
-        "EventCode": "0x100000c",
+        "EventCode": "0x0100000c",
         "BriefDescription": "Operation counted by ASE_SVE_INT_SPEC where the largest type is 32-bit integer"
     },
     {
         "EventName": "VEC_INT64_SPEC",
-        "EventCode": "0x200000c",
+        "EventCode": "0x0200000c",
         "BriefDescription": "Operation counted by ASE_SVE_INT_SPEC where the largest type is 64-bit integer"
     }
 ]
