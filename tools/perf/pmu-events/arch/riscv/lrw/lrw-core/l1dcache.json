@@ -22,42 +22,42 @@
   {
       "EventName": "L1D_CACHE_RD",
       "EventCode": "0x00001001",
-      "BriefDescription": "L1 data cache read"
+      "BriefDescription": "L1 data cache access, read"
   },
   {
       "EventName": "L1D_CACHE_WR",
       "EventCode": "0x00002001",
-      "BriefDescription": "L1 data cache write"
+      "BriefDescription": "L1 data cache access, write"
   },
   {
       "EventName": "L1D_CACHE_REFILL_RD",
       "EventCode": "0x00004001",
-      "BriefDescription": "L1 data cache refill read"
+      "BriefDescription": "L1 data cache refill, read"
   },
   {
       "EventName": "L1D_CACHE_REFILL_WR",
       "EventCode": "0x00008001",
-      "BriefDescription": "L1 data cache refill write"
+      "BriefDescription": "L1 data cache refill, write"
   },
   {
       "EventName": "L1D_CACHE_REFILL_INNER",
       "EventCode": "0x00010001",
-      "BriefDescription": "L1 data cache refill inner"
+      "BriefDescription": "L1 data cache refill, inner"
   },
   {
       "EventName": "L1D_CACHE_REFILL_OUTER",
       "EventCode": "0x00020001",
-      "BriefDescription": "L1 data cache refill outer"
+      "BriefDescription": "L1 data cache refill, outer"
   },
   {
       "EventName": "L1D_CACHE_WB_VICTIM",
       "EventCode": "0x00040001",
-      "BriefDescription": "L1 data cache write-back victim"
+      "BriefDescription": "L1 data cache write-back, victim"
   },
   {
       "EventName": "L1D_CACHE_WB_CLEAN",
       "EventCode": "0x00080001",
-      "BriefDescription": "L1 data cache write-back clean"
+      "BriefDescription": "L1 data cache write-back cleaning and coherency"
   },
   {
       "EventName": "L1D_CACHE_INVAL",

@@ -5,14 +5,14 @@
         "BriefDescription": "Exception taken"
     },
     {
-        "EventName": "EXC_RETURN",
+        "EventName": "FLUSH_RETURN",
         "EventCode": "0x0000020a",
-        "BriefDescription": "Exception return"
+        "BriefDescription": "Flush return"
     },
     {
-        "EventName": "EXC_UNDEF",
+        "EventName": "EXC_ILL_INS",
         "EventCode": "0x0000040a",
-        "BriefDescription": "Undefined exception taken locally"
+        "BriefDescription": "Illegal Instruction exception taken locally"
     },
     {
         "EventName": "EXC_ECALL_U",
@@ -20,24 +20,24 @@
         "BriefDescription": "User Call exception taken locally"
     },
     {
-        "EventName": "EXC_PABORT",
+        "EventName": "EXC_PA",
         "EventCode": "0x0000100a",
-        "BriefDescription": "Instruction abort exception taken locally"
+        "BriefDescription": "Instruction exception or debug breakpoint taken locally"
     },
     {
-        "EventName": "EXC_DABORT",
+        "EventName": "EXC_DA",
         "EventCode": "0x0000200a",
-        "BriefDescription": "Data abort or SError taken locally"
+        "BriefDescription": "Data access or address breakpoint taken locally"
     },
     {
-        "EventName": "EXC_IRQ",
+        "EventName": "EXC_INT_S",
         "EventCode": "0x0000400a",
-        "BriefDescription": "IRQ exception taken locally"
+        "BriefDescription": "S/VS mode interrupt taken locally"
     },
     {
-        "EventName": "EXC_FIQ",
+        "EventName": "EXC_INT_M",
         "EventCode": "0x0000800a",
-        "BriefDescription": "FIQ exception taken locally"
+        "BriefDescription": "M mode interrupt taken locally"
     },
     {
         "EventName": "EXC_ECALL_M",
@@ -50,14 +50,14 @@
         "BriefDescription": "S-mode Call exception"
     },
     {
-        "EventName": "EXC_TRAP_PABORT",
+        "EventName": "EXC_TRAP_PA",
         "EventCode": "0x0004000a",
-        "BriefDescription": "Instruction abort exception not taken locally"
+        "BriefDescription": "Instruction exception or debug breakpoint not taken locally"
     },
     {
-        "EventName": "EXC_TRAP_DABORT",
+        "EventName": "EXC_TRAP_DA",
         "EventCode": "0x0008000a",
-        "BriefDescription": "Data abort or SError not taken locally"
+        "BriefDescription": "Data access or address breakpoint not taken locally"
     },
     {
         "EventName": "EXC_ECALL_VS",
@@ -65,14 +65,14 @@
         "BriefDescription": "VS-mode Call exception"
     },
     {
-        "EventName": "EXC_TRAP_IRQ",
+        "EventName": "EXC_TRAP_INT_S",
         "EventCode": "0x0020000a",
-        "BriefDescription": "IRQ exception not taken locally"
+        "BriefDescription": "S/VS mode interrupt not taken locally"
     },
     {
-        "EventName": "EXC_TRAP_FIQ",
+        "EventName": "EXC_TRAP_INT_M",
         "EventCode": "0x0040000a",
-        "BriefDescription": "FIQ exception not taken locally"
+        "BriefDescription": "M mode interrupt exception not taken locally"
     },
     {
         "EventName": "FLUSH",

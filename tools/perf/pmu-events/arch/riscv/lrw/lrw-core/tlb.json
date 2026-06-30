@@ -42,22 +42,22 @@
     {
         "EventName": "L1D_TLB_REFILL_RD",
         "EventCode": "0x00020000",
-        "BriefDescription": "L1 data TLB refill read"
+        "BriefDescription": "L1 data TLB refill, read"
     },
     {
         "EventName": "L1D_TLB_REFILL_WR",
         "EventCode": "0x00040000",
-        "BriefDescription": "L1 data TLB refill write"
+        "BriefDescription": "L1 data TLB refill, write"
     },
     {
         "EventName": "L1D_TLB_RD",
         "EventCode": "0x00080000",
-        "BriefDescription": "L1 data TLB read"
+        "BriefDescription": "L1 data TLB access, read"
     },
     {
         "EventName": "L1D_TLB_WR",
         "EventCode": "0x00100000",
-        "BriefDescription": "L1 data TLB write"
+        "BriefDescription": "L1 data TLB access, write"
     },
     {
         "EventName": "L2_TLB_REFILL_RD",

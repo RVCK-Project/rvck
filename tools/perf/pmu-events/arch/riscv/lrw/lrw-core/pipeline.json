@@ -2,55 +2,55 @@
     {
         "EventName": "STALL_FRONTEND",
         "EventCode": "0x00000106",
-        "BriefDescription": "Frontend stall"
+        "BriefDescription": "No operation issued due to the frontend"
     },
     {
         "EventName": "STALL_BACKEND",
         "EventCode": "0x00000206",
-        "BriefDescription": "Backend stall"
+        "BriefDescription": "No operation issued due to the backend"
     },
     {
         "EventName": "STALL",
         "EventCode": "0x00000406",
-        "BriefDescription": "Stall"
+        "BriefDescription": "No operation sent for execution"
     },
     {
         "EventName": "STALL_SLOT_BACKEND",
         "EventCode": "0x00000806",
-        "BriefDescription": "Backend stall slot"
+        "BriefDescription": "No operation sent for execution on a slot due to the backend"
     },
     {
         "EventName": "STALL_SLOT_FRONTEND",
         "EventCode": "0x00001006",
-        "BriefDescription": "Frontend stall slot"
+        "BriefDescription": "No operation sent for execution on a slot due to the frontend"
     },
     {
         "EventName": "STALL_SLOT",
         "EventCode": "0x00002006",
-        "BriefDescription": "Stall slot"
+        "BriefDescription": "No operation sent for execution on a slot"
     },
     {
         "EventName": "STALL_BACKEND_MEM",
         "EventCode": "0x00004006",
-        "BriefDescription": "Backend stall due to memory"
+        "BriefDescription": "No operation sent due to the backend and memory stalls"
     },
     {
         "EventName": "IDR_STALL_IXU_SCHED",
         "EventCode": "0x00008006",
-        "BriefDescription": "IXU scheduler stall"
+        "BriefDescription": "Dispatch stall due to IXU scheduler entries"
     },
     {
-        "EventName": "VX_IQ_STALL",
+        "EventName": "IDR_STALL_FSU_SCHED",
         "EventCode": "0x00010006",
         "BriefDescription": "Dispatch stall due to VX scheduler entries"
     },
     {
-        "EventName": "MCQ_FULL_STALL",
+        "EventName": "IDR_STALL_ROB_ID",
         "EventCode": "0x00020006",
         "BriefDescription": "Dispatch stall due to MCQ entries"
     },
     {
-        "EventName": "STALL_FRONTED_FLUSH",
+        "EventName": "IDR_STALL_FLUSH",
         "EventCode": "0x00040006",
         "BriefDescription": "Dispatch stall due to fronted flush"
     },
@@ -120,13 +120,13 @@
         "BriefDescription": "No operation issued due to the front cache"
     },
     {
-        "EventName": "FPG",
+        "EventName": "LIVELOCK",
         "EventCode": "0x200000006",
-        "BriefDescription": "Front-End Pipeline Gating"
+        "BriefDescription": "Livelock"
     },
     {
-        "EventName": "VTYPE_FLUSH",
+        "EventName": "FLUSH_VTYPE",
         "EventCode": "0x400000006",
-        "BriefDescription": "Flush due to fialed prediction of writing vtype csr"
+        "BriefDescription": "Flush due to failed prediction of writing vtype csr"
     }
 ]

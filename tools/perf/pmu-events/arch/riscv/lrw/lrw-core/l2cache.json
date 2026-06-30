@@ -7,7 +7,7 @@
   {
       "EventName": "L2_CACHE_REFILL",
       "EventCode": "0x00000203",
-      "BriefDescription": "L2cache refill"
+      "BriefDescription": "L2 cache refill"
   },
   {
       "EventName": "L2_CACHE_WB",
