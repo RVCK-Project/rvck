@@ -385,9 +385,8 @@ static void dw8250_set_termios(struct uart_port *p, struct ktermios *termios,
 	long rate;
 	int ret;
 
-	clk_disable_unprepare(d->clk);
 	rate = clk_round_rate(d->clk, newrate);
-	if (rate > 0) {
+	if (rate > 0 && rate != clk_get_rate(d->clk)) {
 		/*
 		 * Note that any clock-notifer worker will block in
 		 * serial8250_update_uartclk() until we are done.
@@ -396,7 +395,6 @@ static void dw8250_set_termios(struct uart_port *p, struct ktermios *termios,
 		if (!ret)
 			p->uartclk = rate;
 	}
-	clk_prepare_enable(d->clk);
 
 	dw8250_do_set_termios(p, termios, old);
 }
