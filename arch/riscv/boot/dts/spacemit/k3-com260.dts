@@ -3,6 +3,7 @@
 
 #include "k3.dtsi"
 #include "k3-pinctrl.dtsi"
+#include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/mmc/spacemit-k1-sdhci.h>
 
@@ -59,6 +60,17 @@
 		regulator-max-microvolt = <3300000>;
 		vin-supply = <&p5v>;
 		status = "okay";
+	};
+
+	hub_reset: hub-reset {
+		compatible = "regulator-fixed";
+		regulator-name = "hub-reset";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		enable-active-high;
+		regulator-boot-on;
+		regulator-always-on;
+		gpio = <&gpio 1 21 GPIO_ACTIVE_HIGH>;
 	};
 };
 
@@ -345,3 +357,34 @@
 		};
 	};
 };
+
+&usb3_portb_u2phy {
+	status = "okay";
+};
+
+&usb3_portb_u3phy {
+	status = "okay";
+};
+
+&usb3_portb {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	reset-on-resume;
+
+	/* VL817 USB2.0 hub (4 ports) */
+	hub_2_0: hub@1 {
+		compatible = "usb2109,2817";
+		reg = <1>;
+		peer-hub = <&hub_3_0>;
+		vdd-supply = <&hub_reset>;
+	};
+
+	/* VL817 USB3.0 hub (4 ports) */
+	hub_3_0: hub@2 {
+		compatible = "usb2109,817";
+		reg = <2>;
+		peer-hub = <&hub_2_0>;
+	};
+};
+
