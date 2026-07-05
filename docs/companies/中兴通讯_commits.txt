@@ -1,9 +1,10 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 405 个提交
-# 生成时间: 2026-07-01 13:51:53
+# 共 406 个提交
+# 生成时间: 2026-07-06 01:41:51
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+9b1a0804 | 2026-06-30 | heyilin | PERF: Update LRW PMU Event Encoding
 2920b176 | 2026-01-28 | Yicong Yang | ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn()
 d2bbc0fd | 2025-11-17 | Anup Patel | RISC-V: Enable HOTPLUG_PARALLEL for secondary CPUs
 ef38af4d | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Provide weak fallback for arch_cpuhp_init_parallel_bringup()

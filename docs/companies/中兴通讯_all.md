@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 405</li>
-<li><strong>统计时间</strong>: 2026-07-01 13:51:53</li>
+<li><strong>贡献提交数</strong>: 406</li>
+<li><strong>统计时间</strong>: 2026-07-06 01:41:51</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.143</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [9b1a0804](https://github.com/RVCK-Project/rvck/commit/9b1a08044c0459625cc06d59096e90617c3bd269) | 2026-06-30 | heyilin | PERF: Update LRW PMU Event Encoding |
 | [2920b176](https://github.com/RVCK-Project/rvck/commit/2920b1765855bb4cc1c6489840c785a0ef5e098d) | 2026-01-28 | Yicong Yang | ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn() |
 | [d2bbc0fd](https://github.com/RVCK-Project/rvck/commit/d2bbc0fd98c87f70febb4318485e843d8763b393) | 2025-11-17 | Anup Patel | RISC-V: Enable HOTPLUG_PARALLEL for secondary CPUs |
 | [ef38af4d](https://github.com/RVCK-Project/rvck/commit/ef38af4df3e7f964339d8417d68f555d959897ad) | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Provide weak fallback for arch_cpuhp_init_parallel_bringup() |
@@ -425,7 +426,7 @@
 | [b71d0d6d](https://github.com/RVCK-Project/rvck/commit/b71d0d6dcdb69249122ee286819ebe99ec8857fe) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 405 条提交（显示全部）**
+**共 406 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -434,5 +435,5 @@
 
 ---
 
-*本页面最后更新于 2026-07-01 13:51:53*
-*数据来源: 主分支 rvck-6.6@2920b176*
+*本页面最后更新于 2026-07-06 01:41:51*
+*数据来源: 主分支 rvck-6.6@3eb78001*
