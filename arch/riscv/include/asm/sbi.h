@@ -38,6 +38,7 @@ enum sbi_ext_id {
 	SBI_EXT_SSE = 0x535345,
 	SBI_EXT_FWFT = 0x46574654,
 	SBI_EXT_MPXY = 0x4D505859,
+	SBI_EXT_CONFIG_IOPMP = 0x5A5A5A5A,
 
 	/* Experimentals extensions must lie within this range */
 	SBI_EXT_EXPERIMENTAL_START = 0x08000000,
@@ -91,6 +92,11 @@ enum sbi_hsm_hart_state {
 	SBI_HSM_STATE_SUSPENDED,
 	SBI_HSM_STATE_SUSPEND_PENDING,
 	SBI_HSM_STATE_RESUME_PENDING,
+};
+
+enum sbi_ext_config_iopmp_fid {
+	SBI_EXT_CONFIG_IOPMP_ADD_RULE = 0,
+	SBI_EXT_CONFIG_IOPMP_REMOVE_RULE,
 };
 
 #define SBI_HSM_SUSP_BASE_MASK			0x7fffffff

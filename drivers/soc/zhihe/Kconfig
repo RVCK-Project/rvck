@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+menu "ZHIHE SoC drivers"
+
+config A210_IOPMP
+	tristate "ZhiHe A210 IOPMP support"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	default ARCH_ZHIHE
+	help
+	  Say Y here to include support for zhihe iopmp found on
+	  A210 fullmask devices.
+	  To compile this driver as a module, choose M here: the module
+	  will be called zh-iopmp.
+
+endmenu
