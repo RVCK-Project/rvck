@@ -1,0 +1,65 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/reset/zhihe,a210-reset-sample.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Zhihe A210 CPU Reset (reset-sample)
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  CPU bring-up / reset helper for the Zhihe A210 SoC. It programs the
+  per-cluster boot entry address and controls the software reset of the
+  C908/C920 CPU clusters.
+
+properties:
+  compatible:
+    const: zhihe,a210-reset-sample
+
+  reg:
+    maxItems: 1
+
+  plic-delegate:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: PLIC delegation control register address.
+
+  entry-reg:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: SYSREG registers used to set the per-cluster reset boot
+      address.
+
+  entry-cnt:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: Number of CPUs in each cluster.
+
+  control-reg:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: Software reset control registers for each cluster.
+
+  control-val:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: Software reset control values for each cluster.
+
+required:
+  - compatible
+  - reg
+  - entry-reg
+  - entry-cnt
+  - control-reg
+  - control-val
+
+additionalProperties: false
+
+examples:
+  - |
+    reset-sample {
+        compatible = "zhihe,a210-reset-sample";
+        reg = <0x00 0x00>;
+        plic-delegate = <0x181ffffc>;
+        entry-reg = <0x10148040 0x10148060>;
+        entry-cnt = <4 4>;
+        control-reg = <0x10144004 0x10144008>;
+        control-val = <0x1f 0x1f>;
+    };

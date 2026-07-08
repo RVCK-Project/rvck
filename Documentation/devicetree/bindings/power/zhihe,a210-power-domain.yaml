@@ -1,0 +1,98 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/power/zhihe,a210-power-domain.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Zhihe A210 Power Domain Controller
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  Power domain controller for the Zhihe A210 SoC. It manages power
+  gating of the various hardware subsystems through PCU/PPU units. Each
+  power domain is described by a child node identified by a reg
+  property. Domains may reference IOPMP protection devices and contain
+  clock control unit (ccu) subnodes.
+
+properties:
+  compatible:
+    const: zhihe,a210-power-domain
+
+  "#address-cells":
+    const: 1
+
+  "#size-cells":
+    const: 0
+
+patternProperties:
+  "^(power-domain|[a-z0-9-]+-power-domain)@[0-9a-f]+$":
+    type: object
+    description: A single power domain provided by the controller.
+
+    properties:
+      "#power-domain-cells":
+        const: 0
+
+      "#address-cells":
+        const: 2
+
+      "#size-cells":
+        const: 2
+
+      ranges: true
+
+      reg:
+        maxItems: 1
+        description: Power domain identifier.
+
+      iopmps:
+        $ref: /schemas/types.yaml#/definitions/phandle-array
+        description: IOPMP protection devices controlled with this domain.
+
+      power-domains:
+        maxItems: 1
+
+      clocks:
+        minItems: 1
+        maxItems: 32
+
+      resets:
+        minItems: 1
+        maxItems: 32
+
+      pmic-supply:
+        description: Regulator phandle powering this domain.
+
+    patternProperties:
+      "^clock-controller@[0-9a-f]+$":
+        type: object
+        description: Clock control unit associated with the domain.
+        $ref: /schemas/clock/zhihe,a210-ccu.yaml#
+
+    required:
+      - "#power-domain-cells"
+      - reg
+
+    additionalProperties: false
+
+required:
+  - compatible
+
+additionalProperties: false
+
+examples:
+  - |
+    #include <dt-bindings/power/a210-power.h>
+
+    power-controller {
+        compatible = "zhihe,a210-power-domain";
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        power-domain@0 {
+            reg = <A210_PD_TOP>;
+            #power-domain-cells = <0>;
+        };
+    };

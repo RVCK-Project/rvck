@@ -20,6 +20,7 @@ properties:
       - rockchip,rk3588-dwcmshc
       - snps,dwcmshc-sdhci
       - thead,th1520-dwcmshc
+      - zhihe,a210-dwcmshc
 
   reg:
     maxItems: 1

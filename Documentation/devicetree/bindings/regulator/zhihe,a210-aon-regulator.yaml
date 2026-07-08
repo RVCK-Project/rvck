@@ -1,0 +1,60 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/regulator/zhihe,a210-aon-regulator.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Zhihe A210 AON Regulator
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  Virtual regulator provider for the Zhihe A210 SoC. The regulators are
+  physically controlled by the Always-On (AON) subsystem firmware and
+  are accessed from the application processor over the AON mailbox.
+  Each supported rail is described by a child node. The
+  zhihe,regulator-id property identifies the corresponding AON firmware
+  regulator ID, while regulator-name remains the standard
+  consumer-visible regulator name.
+
+properties:
+  compatible:
+    const: zhihe,a210-aon-regulator
+
+patternProperties:
+  "^[a-z0-9]+(-[a-z0-9]+)+$":
+    type: object
+
+    allOf:
+      - $ref: regulator.yaml#
+
+    properties:
+      zhihe,regulator-id:
+        $ref: /schemas/types.yaml#/definitions/uint32
+        minimum: 0
+        maximum: 19
+        description: AON firmware regulator ID.
+
+    required:
+      - zhihe,regulator-id
+
+    unevaluatedProperties: false
+
+required:
+  - compatible
+
+additionalProperties: false
+
+examples:
+  - |
+    regulators {
+        compatible = "zhihe,a210-aon-regulator";
+
+        dvdd-core {
+            zhihe,regulator-id = <14>;
+            regulator-name = "vdd-cpu";
+            regulator-min-microvolt = <600000>;
+            regulator-max-microvolt = <1000000>;
+        };
+    };
