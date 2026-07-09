@@ -1151,6 +1151,15 @@ pte_retry:
 				return NULL;
 			old = pte;
 			pte = _io_pte_entry(virt_to_pfn(addr), _PAGE_TABLE);
+
+			/*
+			 * To ensure that the table itself is visible prior to its PTE,
+			 * a barrier is required; additionally, the dma_wmb primitive is
+			 * selected to avoid potential race conditions between
+			 * the IOMMU and the CPU.
+			 */
+			dma_wmb();
+
 			if (cmpxchg_relaxed(ptr, old, pte) != old) {
 				iommu_free_page(addr);
 				goto pte_retry;
@@ -1214,6 +1223,15 @@ static int riscv_iommu_map_pages(struct iommu_domain *iommu_domain,
 
 		old = READ_ONCE(*ptr);
 		pte = _io_pte_entry(phys_to_pfn(phys), pte_prot);
+
+		/*
+		 * To ensure that the table itself is visible prior to its PTE,
+		 * a barrier is required; additionally, the dma_wmb primitive is
+		 * selected to avoid potential race conditions between
+		 * the IOMMU and the CPU.
+		 */
+		dma_wmb();
+
 		if (cmpxchg_relaxed(ptr, old, pte) != old)
 			continue;
 
