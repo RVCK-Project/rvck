@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 406</li>
-<li><strong>统计时间</strong>: 2026-07-06 01:41:51</li>
+<li><strong>贡献提交数</strong>: 407</li>
+<li><strong>统计时间</strong>: 2026-07-10 00:58:34</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.143</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [6dc2d517](https://github.com/RVCK-Project/rvck/commit/6dc2d5177e7919fab6a8233e75844b96e1956d72) | 2025-09-04 | Wenhong Liu | dt-bindings: serial: Add binding for LRW UART |
 | [cd7c9c25](https://github.com/RVCK-Project/rvck/commit/cd7c9c253cebb73c336d50970b903fc27b9bedcb) | 2025-10-16 | Wenhong Liu | riscv: defconfig: remove CONFIG_CMDLINE and CONFIG_CMDLINE_EXTEND as mainline do... |
 | [544d2f93](https://github.com/RVCK-Project/rvck/commit/544d2f937d238706ac6b8cb9b1c344f91e811d6e) | 2025-08-27 | Himanshu Chauhan | riscv: Enable APEI and NMI safe cmpxchg options required for RAS |
 | [1eb4fea7](https://github.com/RVCK-Project/rvck/commit/1eb4fea7008eb50e6550eeaf9b3590348c2a1452) | 2025-08-27 | Himanshu Chauhan | riscv: Add config option to enable APEI SSE handler |
@@ -217,10 +218,9 @@
 | [6693b71c](https://github.com/RVCK-Project/rvck/commit/6693b71c48085dfa71253954a9cb7f26077a04bf) | 2024-06-17 | Yunhui Cui | RISC-V: Select ACPI PPTT drivers |
 | [81d1d1fb](https://github.com/RVCK-Project/rvck/commit/81d1d1fbf1a438408ebdefb80eb55f54bbdd4a4a) | 2024-05-02 | Sia Jee Heng | RISC-V: ACPI: Enable SPCR table for console output on RISC-V |
 | [31454310](https://github.com/RVCK-Project/rvck/commit/31454310333e1b8b7256313e2ac5c7c9dec990c0) | 2024-07-18 | Ryo Takakura | RISC-V: Enable IPI CPU Backtrace |
-| [879bbe34](https://github.com/RVCK-Project/rvck/commit/879bbe34ab077914a3cd947a8eda986cf935bf28) | 2024-06-13 | Haibo Xu | riscv: dmi: Add SMBIOS/DMI support |
 ---
 
-**共 406 条提交，显示 201-400**
+**共 407 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-07-06 01:41:51*
-*数据来源: 主分支 rvck-6.6@3eb78001*
+*本页面最后更新于 2026-07-10 00:58:34*
+*数据来源: 主分支 rvck-6.6@6e2f72b4*
