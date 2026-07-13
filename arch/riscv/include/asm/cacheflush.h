@@ -53,7 +53,8 @@ static inline void mark_new_valid_map(void)
 #define flush_cache_vmap flush_cache_vmap
 static inline void flush_cache_vmap(unsigned long start, unsigned long end)
 {
-	if (is_vmalloc_or_module_addr((void *)start))
+	if (is_vmalloc_or_module_addr((void *)start) ||
+	    (start >= VMEMMAP_START && end <= VMEMMAP_END))
 		mark_new_valid_map();
 }
 #define flush_cache_vmap_early(start, end)	local_flush_tlb_kernel_range(start, end)
