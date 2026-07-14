@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 407</li>
-<li><strong>统计时间</strong>: 2026-07-10 00:58:34</li>
+<li><strong>贡献提交数</strong>: 430</li>
+<li><strong>统计时间</strong>: 2026-07-14 16:41:52</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.143</li>
 </ul>
@@ -20,6 +20,29 @@
 |----------|------|----------|------|
 | [a71ca51d](https://github.com/RVCK-Project/rvck/commit/a71ca51d719bf614f2847efc496e59ea1510265a) | 2026-06-17 | bailu | iommu/riscv: add dma_wmb before cmpxchg_relaxed |
 | [9b1a0804](https://github.com/RVCK-Project/rvck/commit/9b1a08044c0459625cc06d59096e90617c3bd269) | 2026-06-30 | heyilin | PERF: Update LRW PMU Event Encoding |
+| [cd08520f](https://github.com/RVCK-Project/rvck/commit/cd08520fee09e56e0f53b136f599c83a0f255564) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements |
+| [a6e8bcd1](https://github.com/RVCK-Project/rvck/commit/a6e8bcd14ef3d7aafcbc363d981e6e6d902a64fe) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: add vector sub-extension dependencies |
+| [9a0e1f49](https://github.com/RVCK-Project/rvck/commit/9a0e1f498c38e4b283b7ad24353e8be2bfbe38c3) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: d requires f |
+| [b06939d6](https://github.com/RVCK-Project/rvck/commit/b06939d62db08c920424a369d6cd17a7563d4720) | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zaamo and Zalrsc ISA extension description |
+| [6070dd92](https://github.com/RVCK-Project/rvck/commit/6070dd92d7cdbe0c66fcfec28ca92405dced5768) | 2024-11-03 | Alexandre Ghiti | dt-bindings: riscv: Add Zabha ISA extension description |
+| [7dd6d222](https://github.com/RVCK-Project/rvck/commit/7dd6d222e9ae007bc597d2ebcb7ce89b06d87cc9) | 2024-10-16 | Samuel Holland | dt-bindings: riscv: Add pointer masking ISA extensions |
+| [a2e78c0a](https://github.com/RVCK-Project/rvck/commit/a2e78c0aa1ba2aa5ee03b0107291a1754ac4ec04) | 2024-07-17 | Alexandre Ghiti | dt-bindings: riscv: Add Svvptc ISA extension description |
+| [97b5cc4f](https://github.com/RVCK-Project/rvck/commit/97b5cc4f17db22e2e643b908abc9c1159b2f657f) | 2024-04-26 | Andrew Jones | dt-bindings: riscv: Add Zawrs ISA extension description |
+| [0eeec58e](https://github.com/RVCK-Project/rvck/commit/0eeec58e442ef443f72bdbe757a3ff20ea6238e4) | 2025-02-13 | Inochi Amaoto | dt-bindings: riscv: add bfloat16 ISA extension description |
+| [22ec2101](https://github.com/RVCK-Project/rvck/commit/22ec2101817e72e5d932b091a12f77fbbca69b65) | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zcmop ISA extension description |
+| [f8dbadaa](https://github.com/RVCK-Project/rvck/commit/f8dbadaa9e6cf9be89c5ae13aa6374c10c38de44) | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zca, Zcf, Zcd and Zcb ISA extension description |
+| [0c11e350](https://github.com/RVCK-Project/rvck/commit/0c11e35084b40ca461806a3c25a90fa5ce4d17f0) | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zimop ISA extension description |
+| [f54e55b7](https://github.com/RVCK-Project/rvck/commit/f54e55b70b86b78dc63528a4e2e813e0635d5f04) | 2024-05-10 | Andy Chiu | dt-bindings: riscv: add Zve32[xf] Zve64[xfd] ISA extension description |
+| [9d54460b](https://github.com/RVCK-Project/rvck/commit/9d54460b3aa973c14027a25b6a27915d2f5236c5) | 2024-02-22 | Yu Chien Peter Lin | dt-bindings: riscv: Add Andes PMU extension description |
+| [6bcba7e9](https://github.com/RVCK-Project/rvck/commit/6bcba7e952973ffe7ef8bd6d665a82be0c9d6fd9) | 2023-12-08 | Conor Dooley | dt-bindings: riscv: permit numbers in "riscv,isa" |
+| [30127177](https://github.com/RVCK-Project/rvck/commit/30127177ac84ed8da2cf541ecbd7a1eb7a5c6d44) | 2023-12-20 | Clément Léger | dt-bindings: riscv: add Zacas ISA extension description |
+| [83664bb8](https://github.com/RVCK-Project/rvck/commit/83664bb8d71cb64c9606349a036941f3572a4c63) | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zfa ISA extension description |
+| [27ad449c](https://github.com/RVCK-Project/rvck/commit/27ad449c37556d45c717744a821378bd8fe2605d) | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zvfh[min] ISA extension description |
+| [25c9dba2](https://github.com/RVCK-Project/rvck/commit/25c9dba29c421731bb172407f5e3828b6ad344a8) | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zihintntl ISA extension description |
+| [a3ceb9f8](https://github.com/RVCK-Project/rvck/commit/a3ceb9f88e822e9e570ade367725d1c370dfccd9) | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zfh[min] ISA extensions description |
+| [e552da82](https://github.com/RVCK-Project/rvck/commit/e552da82ded1d6774e441796db37ad2b46f090cb) | 2023-11-14 | Clément Léger | dt-bindings: riscv: add vector crypto ISA extensions description |
+| [c7d8f0da](https://github.com/RVCK-Project/rvck/commit/c7d8f0daf86bd16614b0e43b35b174ce060acd48) | 2023-11-14 | Clément Léger | dt-bindings: riscv: add scalar crypto ISA extensions description |
+| [cb9e2825](https://github.com/RVCK-Project/rvck/commit/cb9e2825795f84f657d103b5957754bcca2de180) | 2023-09-25 | Anup Patel | dt-bindings: riscv: Add Zicond extension entry |
 | [2920b176](https://github.com/RVCK-Project/rvck/commit/2920b1765855bb4cc1c6489840c785a0ef5e098d) | 2026-01-28 | Yicong Yang | ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn() |
 | [d2bbc0fd](https://github.com/RVCK-Project/rvck/commit/d2bbc0fd98c87f70febb4318485e843d8763b393) | 2025-11-17 | Anup Patel | RISC-V: Enable HOTPLUG_PARALLEL for secondary CPUs |
 | [ef38af4d](https://github.com/RVCK-Project/rvck/commit/ef38af4df3e7f964339d8417d68f555d959897ad) | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Provide weak fallback for arch_cpuhp_init_parallel_bringup() |
@@ -427,7 +450,7 @@
 | [b71d0d6d](https://github.com/RVCK-Project/rvck/commit/b71d0d6dcdb69249122ee286819ebe99ec8857fe) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 407 条提交（显示全部）**
+**共 430 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -436,5 +459,5 @@
 
 ---
 
-*本页面最后更新于 2026-07-10 00:58:34*
-*数据来源: 主分支 rvck-6.6@6e2f72b4*
+*本页面最后更新于 2026-07-14 16:41:52*
+*数据来源: 主分支 rvck-6.6@6f2837b3*

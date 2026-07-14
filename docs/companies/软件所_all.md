@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 265</li>
-<li><strong>统计时间</strong>: 2026-07-10 00:58:34</li>
+<li><strong>贡献提交数</strong>: 270</li>
+<li><strong>统计时间</strong>: 2026-07-14 16:41:52</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.143</li>
 </ul>
@@ -19,6 +19,11 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [381f1695](https://github.com/RVCK-Project/rvck/commit/381f1695a71c7d0008ea52969f74663cb35d3e3d) | 2025-08-27 | Pincheng Wang | KVM: riscv: selftests: add Zilsd and Zclsd extension to get-reg-list test |
+| [0b542d5a](https://github.com/RVCK-Project/rvck/commit/0b542d5a9a590d4a098b1e889944b84feee282c9) | 2025-08-27 | Pincheng Wang | riscv: KVM: allow Zilsd and Zclsd extensions for Guest/VM |
+| [b3f0af38](https://github.com/RVCK-Project/rvck/commit/b3f0af38885c917056430d42ec3bd19cb4c51269) | 2025-08-27 | Pincheng Wang | riscv: hwprobe: export Zilsd and Zclsd ISA extensions |
+| [dd732239](https://github.com/RVCK-Project/rvck/commit/dd73223952fc5d54f7154c423e3cfc4d3d806632) | 2025-08-27 | Pincheng Wang | riscv: add ISA extension parsing for Zilsd and Zclsd |
+| [1f10d2b8](https://github.com/RVCK-Project/rvck/commit/1f10d2b8eabe858550d5035e6902cb8e2375e683) | 2025-08-27 | Pincheng Wang | dt-bindings: riscv: add Zilsd and Zclsd extension descriptions |
 | [60e6f907](https://github.com/RVCK-Project/rvck/commit/60e6f9075f40d5e8961a185ca86c0feff0428ba0) | 2026-02-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_gstage_get_leaf() |
 | [75c6c15e](https://github.com/RVCK-Project/rvck/commit/75c6c15e9f395e96191b1e5c1308864fe3cefbfc) | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling |
 | [40203830](https://github.com/RVCK-Project/rvck/commit/40203830dfb0e2468cc0fe1532e69acf2ac1dfe8) | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction |
@@ -286,7 +291,7 @@
 | [b87c064c](https://github.com/RVCK-Project/rvck/commit/b87c064cba6d42ce77fcd56530b66585471d2d91) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 265 条提交（显示全部）**
+**共 270 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -295,5 +300,5 @@
 
 ---
 
-*本页面最后更新于 2026-07-10 00:58:34*
-*数据来源: 主分支 rvck-6.6@6e2f72b4*
+*本页面最后更新于 2026-07-14 16:41:52*
+*数据来源: 主分支 rvck-6.6@6f2837b3*

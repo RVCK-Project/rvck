@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 265</li>
-<li><strong>统计时间</strong>: 2026-07-10 00:58:34</li>
+<li><strong>贡献提交数</strong>: 270</li>
+<li><strong>统计时间</strong>: 2026-07-14 16:41:52</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.143</li>
 </ul>
@@ -19,6 +19,11 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [edea3002](https://github.com/RVCK-Project/rvck/commit/edea30029a79a799f73da538fc542a2e8de2cc16) | 2024-09-01 | Han Gao | th1520_defconfig:Enable ebpf settings |
+| [a223a61d](https://github.com/RVCK-Project/rvck/commit/a223a61d17c0872e28cb11f0569c2f6b438e6705) | 2024-09-01 | Han Gao | dts: th1520: sd card not try sdio cmds |
+| [a67520cd](https://github.com/RVCK-Project/rvck/commit/a67520cd46150111e74e27186020d80a50519edd) | 2024-09-01 | Han Gao | fix rv_book str |
+| [1cba4936](https://github.com/RVCK-Project/rvck/commit/1cba4936ad76f13f1b4b6f7a8dd0190df63fc99f) | 2024-09-01 | Han Gao | driver usb: optimize pm resume time, do resume in runtime_resume |
+| [b234f5dc](https://github.com/RVCK-Project/rvck/commit/b234f5dcabb8729af865612ed43ac143904dbc1b) | 2024-09-01 | Han Gao | Solve problem of DSI transfer command failure when hotplug hdmi |
 | [e9b550f7](https://github.com/RVCK-Project/rvck/commit/e9b550f74e0117dae855f3ada5214eb31fe103e3) | 2024-09-01 | Han Gao | dts: bt: support rtl8822cs |
 | [ba788df7](https://github.com/RVCK-Project/rvck/commit/ba788df709bb72a4adf811bbf6114b6a21afcba8) | 2024-09-01 | Han Gao | dts: wifi: support rtl8822cs |
 | [b730d706](https://github.com/RVCK-Project/rvck/commit/b730d706b42e9c9164dd79f85a01f463f209ed97) | 2024-09-01 | Han Gao | defconfig: wifi : add rtl8822cs(for rvbook) |
@@ -86,7 +91,7 @@
 | [b87c064c](https://github.com/RVCK-Project/rvck/commit/b87c064cba6d42ce77fcd56530b66585471d2d91) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 265 条提交，显示 201-265**
+**共 270 条提交，显示 201-270**
 
 [1](软件所.md) **[2]**
 
@@ -97,5 +102,5 @@
 
 ---
 
-*本页面最后更新于 2026-07-10 00:58:34*
-*数据来源: 主分支 rvck-6.6@6e2f72b4*
+*本页面最后更新于 2026-07-14 16:41:52*
+*数据来源: 主分支 rvck-6.6@6f2837b3*

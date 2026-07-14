@@ -1,11 +1,34 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 407 个提交
-# 生成时间: 2026-07-10 00:58:34
+# 共 430 个提交
+# 生成时间: 2026-07-14 16:41:52
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
 a71ca51d | 2026-06-17 | bailu | iommu/riscv: add dma_wmb before cmpxchg_relaxed
 9b1a0804 | 2026-06-30 | heyilin | PERF: Update LRW PMU Event Encoding
+cd08520f | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements
+a6e8bcd1 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: add vector sub-extension dependencies
+9a0e1f49 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: d requires f
+b06939d6 | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zaamo and Zalrsc ISA extension description
+6070dd92 | 2024-11-03 | Alexandre Ghiti | dt-bindings: riscv: Add Zabha ISA extension description
+7dd6d222 | 2024-10-16 | Samuel Holland | dt-bindings: riscv: Add pointer masking ISA extensions
+a2e78c0a | 2024-07-17 | Alexandre Ghiti | dt-bindings: riscv: Add Svvptc ISA extension description
+97b5cc4f | 2024-04-26 | Andrew Jones | dt-bindings: riscv: Add Zawrs ISA extension description
+0eeec58e | 2025-02-13 | Inochi Amaoto | dt-bindings: riscv: add bfloat16 ISA extension description
+22ec2101 | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zcmop ISA extension description
+f8dbadaa | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zca, Zcf, Zcd and Zcb ISA extension description
+0c11e350 | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zimop ISA extension description
+f54e55b7 | 2024-05-10 | Andy Chiu | dt-bindings: riscv: add Zve32[xf] Zve64[xfd] ISA extension description
+9d54460b | 2024-02-22 | Yu Chien Peter Lin | dt-bindings: riscv: Add Andes PMU extension description
+6bcba7e9 | 2023-12-08 | Conor Dooley | dt-bindings: riscv: permit numbers in "riscv,isa"
+30127177 | 2023-12-20 | Clément Léger | dt-bindings: riscv: add Zacas ISA extension description
+83664bb8 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zfa ISA extension description
+27ad449c | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zvfh[min] ISA extension description
+25c9dba2 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zihintntl ISA extension description
+a3ceb9f8 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zfh[min] ISA extensions description
+e552da82 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add vector crypto ISA extensions description
+c7d8f0da | 2023-11-14 | Clément Léger | dt-bindings: riscv: add scalar crypto ISA extensions description
+cb9e2825 | 2023-09-25 | Anup Patel | dt-bindings: riscv: Add Zicond extension entry
 2920b176 | 2026-01-28 | Yicong Yang | ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn()
 d2bbc0fd | 2025-11-17 | Anup Patel | RISC-V: Enable HOTPLUG_PARALLEL for secondary CPUs
 ef38af4d | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Provide weak fallback for arch_cpuhp_init_parallel_bringup()

@@ -1,9 +1,10 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 393 个提交
-# 生成时间: 2026-07-10 00:58:34
+# 共 394 个提交
+# 生成时间: 2026-07-14 16:41:52
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+493634c9 | 2026-04-03 | Chen Pei | riscv: vdso_cfi: Add clean rule for copied sources
 3f1ce50b | 2026-04-04 | Charlie Jenkins | selftests: riscv: Add license to cfi selftest
 d85c3625 | 2026-04-04 | Paul Walmsley | prctl: cfi: change the branch landing pad prctl()s to be more descriptive
 5641255f | 2026-04-04 | Zong Li | riscv: cfi: clear CFI lock status in start_thread()

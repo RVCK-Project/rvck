@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 407</li>
-<li><strong>统计时间</strong>: 2026-07-10 00:58:34</li>
+<li><strong>贡献提交数</strong>: 430</li>
+<li><strong>统计时间</strong>: 2026-07-14 16:41:52</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.143</li>
 </ul>
@@ -18,6 +18,29 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [ed0625dd](https://github.com/RVCK-Project/rvck/commit/ed0625dde47f6e330ce4b5b64ee43050ef305350) | 2026-01-17 | Lu Peng | riscv: defconfig: Enable more ACPI_APEI configs |
+| [3440e3e8](https://github.com/RVCK-Project/rvck/commit/3440e3e8814c000a732625844f6a42e1eb01833f) | 2025-07-23 | Ignacio Encinas | riscv: introduce asm/swab.h |
+| [de57fe60](https://github.com/RVCK-Project/rvck/commit/de57fe605485303deb60fd862a70275784d102be) | 2026-01-07 | hu.yuye | riscv:defconfig:Enable PCIE_EDR |
+| [5371d97a](https://github.com/RVCK-Project/rvck/commit/5371d97a5364e341b190dd997814b1ef76c529db) | 2025-12-31 | Yunhui Cui | arch_topology: move parse_acpi_topology() to common code |
+| [bbe4fc4f](https://github.com/RVCK-Project/rvck/commit/bbe4fc4f1381db38c979f775410b97aa60689d55) | 2025-12-31 | Yicong Yang | arm64: topology: Support SMT control on ACPI based system |
+| [7675bcab](https://github.com/RVCK-Project/rvck/commit/7675bcab5f1586aebd54b304276277a924fd0849) | 2025-12-31 | Yicong Yang | arch_topology: Support SMT control for OF based system |
+| [dfa7a7b6](https://github.com/RVCK-Project/rvck/commit/dfa7a7b65566e1bbc99798a9bf7b55a5be4ea3f6) | 2025-12-31 | Yicong Yang | cpu/SMT: Provide a default topology_is_primary_thread() |
+| [8f405c7e](https://github.com/RVCK-Project/rvck/commit/8f405c7ef4165050cd0f73be3e5ac886fb0d627a) | 2025-01-24 | Andy Shevchenko | serial: 8250_core: Remove unneeded -\>iotype assignment |
+| [3d8bb8d5](https://github.com/RVCK-Project/rvck/commit/3d8bb8d5e415b69f0ac4d40ecf9d4c7e5fadd990) | 2025-12-30 | hu.yuye | Revert "mango pci hack:broadcast when no MSI source known" |
+| [7d768a80](https://github.com/RVCK-Project/rvck/commit/7d768a803973c8fd20a17d41c3cf0b0a1301c8f8) | 2025-12-22 | Clément Léger | riscv: uaccess: do not do misaligned accesses in get/put_user() |
+| [90490f08](https://github.com/RVCK-Project/rvck/commit/90490f08e78cc968fdd441b840e004d1e8c788c0) | 2025-12-22 | Alexandre Ghiti | riscv: make unsafe user copy routines use existing assembly routines |
+| [2f85887d](https://github.com/RVCK-Project/rvck/commit/2f85887d2045bc973a5ddfae93251de619175ddc) | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use 'asm_goto_output' for get_user() |
+| [e4248887](https://github.com/RVCK-Project/rvck/commit/e4248887e694cc742ed79ed5bf10fffd741a0c07) | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use 'asm goto' for put_user() |
+| [fdf030f7](https://github.com/RVCK-Project/rvck/commit/fdf030f741358a120504127aaa9bb0ea543b64dc) | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use input constraints for ptr of __put_user() |
+| [68b46029](https://github.com/RVCK-Project/rvck/commit/68b460293d01fa82b5e1567b1649d0a77d4f38ac) | 2025-12-22 | Jisheng Zhang | riscv: implement user_access_begin() and families |
+| [b4e444b1](https://github.com/RVCK-Project/rvck/commit/b4e444b12b378f38f856b7697dc0640639253ade) | 2025-12-22 | Ben Dooks | riscv: save the SR_SUM status over switches |
+| [3e11453f](https://github.com/RVCK-Project/rvck/commit/3e11453fdf8c7f4507e76ec967b8832e823edf15) | 2011-12-08 | Tejun Heo | Revert "mm: Modify __find_max_addr for memory hole" |
+| [d53590a8](https://github.com/RVCK-Project/rvck/commit/d53590a81a6d77d08e6929d4926ffe8a73f691d7) | 2021-12-06 | Alexandre Ghiti | Revert "riscv: mm: Clear compilation warning about last_cpupid" |
+| [dcf3885e](https://github.com/RVCK-Project/rvck/commit/dcf3885e68dbd05a16629dcf4db3862377596530) | 2025-11-12 | shenlin | perf vendor events riscv: add lrw core JSON file with metric support |
+| [dc9de32e](https://github.com/RVCK-Project/rvck/commit/dc9de32e5080fc10f384c3069973b345e35f2258) | 2025-11-11 | Fei Liu | i2c: Add driver for the LRW I2C |
+| [d27df592](https://github.com/RVCK-Project/rvck/commit/d27df592a14c626285bc29fbae024fc024343bc0) | 2025-09-29 | Fei Liu | dt-bindings: i2c: Add binding for LRW I2C |
+| [e9d7b7d7](https://github.com/RVCK-Project/rvck/commit/e9d7b7d755eae5a503a50b0f7e38b7c6f5a86c1b) | 2025-11-12 | Jie Feng | drivers/perf: add LRW DDR PMU support |
+| [913d3668](https://github.com/RVCK-Project/rvck/commit/913d3668105858b00ee7962a5a3299fac987f507) | 2025-09-04 | Wenhong Liu | serial: Add driver for the LRW UART |
 | [6dc2d517](https://github.com/RVCK-Project/rvck/commit/6dc2d5177e7919fab6a8233e75844b96e1956d72) | 2025-09-04 | Wenhong Liu | dt-bindings: serial: Add binding for LRW UART |
 | [cd7c9c25](https://github.com/RVCK-Project/rvck/commit/cd7c9c253cebb73c336d50970b903fc27b9bedcb) | 2025-10-16 | Wenhong Liu | riscv: defconfig: remove CONFIG_CMDLINE and CONFIG_CMDLINE_EXTEND as mainline do... |
 | [544d2f93](https://github.com/RVCK-Project/rvck/commit/544d2f937d238706ac6b8cb9b1c344f91e811d6e) | 2025-08-27 | Himanshu Chauhan | riscv: Enable APEI and NMI safe cmpxchg options required for RAS |
@@ -195,32 +218,9 @@
 | [6119d5fc](https://github.com/RVCK-Project/rvck/commit/6119d5fcaac51046d0a5aa3191d8b3eaa802fb84) | 2025-07-29 | gaorui | Revert "iommu: Handle race with default domain setup" |
 | [3bb4186d](https://github.com/RVCK-Project/rvck/commit/3bb4186d8fb4a43fd337bc2f318c78ec4d391a08) | 2024-04-09 | Baoquan He | kexec: fix the unexpected kexec_dprintk() macro |
 | [0e910c86](https://github.com/RVCK-Project/rvck/commit/0e910c8610e6c9aa08de1b69246bccf3920152c8) | 2024-07-30 | Sunil V L | kexec_file, parisc: print out debugging message if required |
-| [9536dfb6](https://github.com/RVCK-Project/rvck/commit/9536dfb6d9917d8c1b856816f1be461142eea3c6) | 2023-12-13 | Baoquan He | kexec_file, power: print out debugging message if required |
-| [7cd30931](https://github.com/RVCK-Project/rvck/commit/7cd30931ac7c048496f986afab208b71c5fbcaa6) | 2023-12-13 | Baoquan He | kexec_file, riscv: print out debugging message if required |
-| [36af9aed](https://github.com/RVCK-Project/rvck/commit/36af9aed25941d80144920b8d0a9f9a6aa290940) | 2023-12-13 | Baoquan He | kexec_file, arm64: print out debugging message if required |
-| [7153e847](https://github.com/RVCK-Project/rvck/commit/7153e8470cec85cfbf3090853c90f61d7002cb83) | 2023-12-13 | Baoquan He | kexec_file, x86: print out debugging message if required |
-| [2a653ab4](https://github.com/RVCK-Project/rvck/commit/2a653ab48cd5e965cfa07e3ac1d1542f15a61038) | 2023-12-13 | Baoquan He | kexec_file: print out debugging message if required |
-| [b0b4d536](https://github.com/RVCK-Project/rvck/commit/b0b4d5361e417d5889afc42ea2eb935175c26458) | 2023-12-13 | Baoquan He | kexec_file: add kexec_file flag to control debug printing |
-| [bc38e549](https://github.com/RVCK-Project/rvck/commit/bc38e54959de797d9b1033aab5cf4eddb780a809) | 2025-04-03 | Radim Krčmář | KVM: RISC-V: reset smstateen CSRs |
-| [86e2ce15](https://github.com/RVCK-Project/rvck/commit/86e2ce15ca40f41037fed54080b1528e6fef0518) | 2023-12-24 | Anup Patel | RISC-V: KVM: Fix indentation in kvm_riscv_vcpu_set_reg_csr() |
-| [592d9de9](https://github.com/RVCK-Project/rvck/commit/592d9de95f6470ded03e92494d340461ce632265) | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add sstateen0 to ONE_REG |
-| [7f7504f9](https://github.com/RVCK-Project/rvck/commit/7f7504f9fefc97b024f7c99fbfc828b83b1f3487) | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add sstateen0 context save/restore |
-| [ca54b6b8](https://github.com/RVCK-Project/rvck/commit/ca54b6b805e0b39a149cb5ac0643bab8d3607f65) | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add senvcfg context save/restore |
-| [e79de7a9](https://github.com/RVCK-Project/rvck/commit/e79de7a9009b43ceb7b4b6d53879ba941c8b054f) | 2023-09-13 | Mayuresh Chitale | RISC-V: KVM: Enable Smstateen accesses |
-| [6b6ca3fc](https://github.com/RVCK-Project/rvck/commit/6b6ca3fc37d5e2ce1ad98892cb9af7716f57fa04) | 2023-09-13 | Mayuresh Chitale | RISC-V: KVM: Add kvm_vcpu_config |
-| [6d8933f6](https://github.com/RVCK-Project/rvck/commit/6d8933f651036c5b4fb18c77d01f8666ce726572) | 2024-07-30 | Sunil V L | serial: 8250_platform: Enable generic 16550A platform devices |
-| [5a304ad2](https://github.com/RVCK-Project/rvck/commit/5a304ad20fa5471639afcfee6f3c9594b946af21) | 2025-04-09 | Song Shuai | riscv: kexec_file: Support loading Image binary file |
-| [2eec7a59](https://github.com/RVCK-Project/rvck/commit/2eec7a596ae77f96fab66f5d085e67221aaee1cf) | 2025-07-25 | gaorui | riscv: kexec_file: Split the loading of kernel and others |
-| [c75c90f5](https://github.com/RVCK-Project/rvck/commit/c75c90f50b49d879b7518348e8d6c3010166940b) | 2025-07-25 | gaorui | Revert "riscv: kexec: Add image loader for kexec file" |
-| [2b867302](https://github.com/RVCK-Project/rvck/commit/2b867302a94c60b279e50c9ff65bcf0d6a3cac44) | 2023-11-30 | Samuel Ortiz | RISC-V: Implement archrandom when Zkr is available |
-| [dda68c38](https://github.com/RVCK-Project/rvck/commit/dda68c38f67433d6f179a7be0c2374dcd06228a8) | 2024-02-08 | Sunil V L | cpufreq: Move CPPC configs to common Kconfig and add RISC-V |
-| [44b0e706](https://github.com/RVCK-Project/rvck/commit/44b0e70633db190d4a4fa9aa0bfcd9bf9bd6f689) | 2024-02-08 | Sunil V L | ACPI: RISC-V: Add CPPC driver |
-| [6693b71c](https://github.com/RVCK-Project/rvck/commit/6693b71c48085dfa71253954a9cb7f26077a04bf) | 2024-06-17 | Yunhui Cui | RISC-V: Select ACPI PPTT drivers |
-| [81d1d1fb](https://github.com/RVCK-Project/rvck/commit/81d1d1fbf1a438408ebdefb80eb55f54bbdd4a4a) | 2024-05-02 | Sia Jee Heng | RISC-V: ACPI: Enable SPCR table for console output on RISC-V |
-| [31454310](https://github.com/RVCK-Project/rvck/commit/31454310333e1b8b7256313e2ac5c7c9dec990c0) | 2024-07-18 | Ryo Takakura | RISC-V: Enable IPI CPU Backtrace |
 ---
 
-**共 407 条提交，显示 201-400**
+**共 430 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-07-10 00:58:34*
-*数据来源: 主分支 rvck-6.6@6e2f72b4*
+*本页面最后更新于 2026-07-14 16:41:52*
+*数据来源: 主分支 rvck-6.6@6f2837b3*

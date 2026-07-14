@@ -1,9 +1,14 @@
 # 软件所 提交列表（纯文本视图）
-# 共 265 个提交
-# 生成时间: 2026-07-10 00:58:34
+# 共 270 个提交
+# 生成时间: 2026-07-14 16:41:52
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+381f1695 | 2025-08-27 | Pincheng Wang | KVM: riscv: selftests: add Zilsd and Zclsd extension to get-reg-list test
+0b542d5a | 2025-08-27 | Pincheng Wang | riscv: KVM: allow Zilsd and Zclsd extensions for Guest/VM
+b3f0af38 | 2025-08-27 | Pincheng Wang | riscv: hwprobe: export Zilsd and Zclsd ISA extensions
+dd732239 | 2025-08-27 | Pincheng Wang | riscv: add ISA extension parsing for Zilsd and Zclsd
+1f10d2b8 | 2025-08-27 | Pincheng Wang | dt-bindings: riscv: add Zilsd and Zclsd extension descriptions
 60e6f907 | 2026-02-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_gstage_get_leaf()
 75c6c15e | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling
 40203830 | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction

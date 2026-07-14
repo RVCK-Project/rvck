@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 393</li>
-<li><strong>统计时间</strong>: 2026-07-10 00:58:34</li>
+<li><strong>贡献提交数</strong>: 394</li>
+<li><strong>统计时间</strong>: 2026-07-14 16:41:52</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.143</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [493634c9](https://github.com/RVCK-Project/rvck/commit/493634c9a4bf62db189a59b6cedf9d7c0d0e54cb) | 2026-04-03 | Chen Pei | riscv: vdso_cfi: Add clean rule for copied sources |
 | [3f1ce50b](https://github.com/RVCK-Project/rvck/commit/3f1ce50b4bbd386755a9a8a48166c96012615707) | 2026-04-04 | Charlie Jenkins | selftests: riscv: Add license to cfi selftest |
 | [d85c3625](https://github.com/RVCK-Project/rvck/commit/d85c36258603480648604b12d2db46e535c8bf83) | 2026-04-04 | Paul Walmsley | prctl: cfi: change the branch landing pad prctl()s to be more descriptive |
 | [5641255f](https://github.com/RVCK-Project/rvck/commit/5641255f8275665d0e6f09c5148e2502f253bb99) | 2026-04-04 | Zong Li | riscv: cfi: clear CFI lock status in start_thread() |
@@ -413,7 +414,7 @@
 | [d701970c](https://github.com/RVCK-Project/rvck/commit/d701970c3dd4d4b0bf294822ea6a565f0177aca3) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 393 条提交（显示全部）**
+**共 394 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -422,5 +423,5 @@
 
 ---
 
-*本页面最后更新于 2026-07-10 00:58:34*
-*数据来源: 主分支 rvck-6.6@6e2f72b4*
+*本页面最后更新于 2026-07-14 16:41:52*
+*数据来源: 主分支 rvck-6.6@6f2837b3*
