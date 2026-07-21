@@ -17,6 +17,7 @@ SYM_FUNC_START(strnlen)
 	__ALTERNATIVE_CFG("nop", "j strnlen_zbb", 0, RISCV_ISA_EXT_ZBB,
 		IS_ENABLED(CONFIG_RISCV_ISA_ZBB) && IS_ENABLED(CONFIG_TOOLCHAIN_HAS_ZBB))
 
+strnlen_generic:
 
 	/*
 	 * Returns
@@ -27,19 +28,23 @@ SYM_FUNC_START(strnlen)
 	 *   a1 - Max length of string
 	 *
 	 * Clobbers
-	 *   t0, t1, t2
+	 *   t0, t1
 	 */
-	addi	t1, a0, -1
-	add	t2, a0, a1
+	mv	t1, a0
+
 1:
-	addi	t1, t1, 1
-	beq	t1, t2, 2f
+	beqz	a1, 2f
+	addi	a1, a1, -1
+
 	lbu	t0, 0(t1)
-	bnez	t0, 1b
+	beqz	t0, 2f
+
+	addi	t1, t1, 1
+	j	1b
+
 2:
 	sub	a0, t1, a0
 	ret
-
 
 /*
  * Variant of strnlen using the ZBB extension if available
@@ -73,6 +78,16 @@ strnlen_zbb:
 	/* If maxlen is 0, return 0. */
 	beqz	a1, 3f
 
+	/*
+	 * Fallback to generic implementation when count is large enough to
+	 * cause address overflow in the ZBB optimized path, or when count
+	 * equals SIZE_MAX where the minu instruction misbehaves.
+	 */
+	li	t5, -1
+	beq	a1, t5, strnlen_generic		/* count == SIZE_MAX */
+	add	t4, a0, a1
+	bltu	t4, a0, strnlen_generic		/* a0 + a1 overflow */
+
 	/* Number of irrelevant bytes in the first word. */
 	andi	t2, a0, SZREG-1
 
@@ -83,8 +98,12 @@ strnlen_zbb:
 	sub	t3, t3, t2
 	slli	t2, t2, 3
 
-	/* Aligned boundary. */
-	add	t4, a0, a1
+	/*
+	 * Aligned boundary.  Use the address of the last valid byte
+	 * (s + count - 1) to avoid loading a word past the count
+	 * boundary in the loop below.  count == 0 is handled above.
+	 */
+	addi	t4, t4, -1
 	andi	t4, t4, -SZREG
 
 	/* Get the first word.  */
@@ -119,6 +138,9 @@ strnlen_zbb:
 	minu	a0, a0, a1
 
 	bgtu	t3, a0, 2f
+
+	/* All remaining bytes are in the first word, no loop needed. */
+	bgeu	t0, t4, 2f
 
 	/* Prepare for the word comparison loop. */
 	addi	t2, t0, SZREG
