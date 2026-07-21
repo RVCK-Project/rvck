@@ -155,6 +155,16 @@ static void string_test_strnlen(struct kunit *test)
 
 	for (size_t offset = 0; offset < STRING_TEST_MAX_OFFSET; offset++) {
 		for (size_t len = 0; len <= STRING_TEST_MAX_LEN; len++) {
+			/* Test strings without NUL terminator */
+			s = buf + buf_size - offset - len;
+			if (len > 0)
+				KUNIT_EXPECT_EQ(test, strnlen(s, len - 1), len - 1);
+			if (len > 1)
+				KUNIT_EXPECT_EQ(test, strnlen(s, len - 2), len - 2);
+
+			KUNIT_EXPECT_EQ(test, strnlen(s, len), len);
+
+			/* Test strings with NUL terminator */
 			s = buf + buf_size - 1 - offset - len;
 			s[len] = '\0';
 
@@ -168,6 +178,9 @@ static void string_test_strnlen(struct kunit *test)
 			KUNIT_EXPECT_EQ(test, strnlen(s, len + 1), len);
 			KUNIT_EXPECT_EQ(test, strnlen(s, len + 2), len);
 			KUNIT_EXPECT_EQ(test, strnlen(s, len + 10), len);
+
+			/* Test Count overflow fallback */
+			KUNIT_EXPECT_EQ(test, strnlen(s, SSIZE_MAX), len);
 
 			s[len] = 'A';
 		}
