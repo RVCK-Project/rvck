@@ -505,7 +505,7 @@
 		};
 
 		pll: clock-controller@d4090000 {
-			compatible = "spacemit,k3-pll";
+			compatible = "spacemit,k3-pll", "syscon", "simple-mfd";
 			reg = <0x0 0xd4090000 0x0 0x10000>;
 			clocks = <&vctcxo_24m>;
 			spacemit,mpmu = <&syscon_mpmu>;
@@ -908,6 +908,46 @@
 			resets = <&syscon_apmu RESET_APMU_SDH_AXI>,
 				 <&syscon_apmu RESET_APMU_SDH2>;
 			reset-names = "sdh_axi", "sdh2";
+			status = "disabled";
+		};
+
+		usb3_portb_u2phy: phy@81500000 {
+			compatible = "spacemit,k3-usb2-phy";
+			reg = <0x0 0x81500000 0x0 0x200>;
+			#phy-cells = <0>;
+			status = "disabled";
+		};
+
+		usb3_portb_u3phy: phy@81f00000 {
+			compatible = "spacemit,k3-usb3-phy";
+			spacemit,syscon-apmu = <&syscon_apmu>;
+			spacemit,syscon-apb-spare = <&pll>;
+			reg = <0x0 0x81f00000 0x0 0x200>;
+			combo-usb-bit = <2>;
+			#phy-cells = <0>;
+			status = "disabled";
+		};
+
+		usb3_portb: usb3@81400000 {
+			compatible = "spacemit,k3-dwc3";
+			reg = <0x0 0x81400000 0x0 0x10000>;
+			spacemit,syscon-apmu = <&syscon_apmu 0x3c8>;
+			interrupts = <125 IRQ_TYPE_LEVEL_HIGH>,
+				     <157 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "dwc3", "wakeup";
+			interrupt-parent = <&saplic>;
+			clocks = <&syscon_apmu CLK_APMU_USB3_PORTB_BUS>;
+			resets = <&syscon_apmu RESET_APMU_USB3_PORTB>;
+			phys = <&usb3_portb_u2phy>, <&usb3_portb_u3phy>;
+			phy-names = "usb2-phy", "usb3-phy";
+			phy_type = "utmi";
+			snps,dis_enblslpm_quirk;
+			snps,dis_u2_susphy_quirk;
+			snps,dis_u3_susphy_quirk;
+			snps,dis-del-phy-power-chg-quirk;
+			snps,dis-tx-ipgap-linecheck-quirk;
+			snps,parkmode-disable-ss-quirk;
+			dr_mode = "host";
 			status = "disabled";
 		};
 	};
