@@ -1,9 +1,14 @@
 # 进迭时空 提交列表（纯文本视图）
-# 共 134 个提交
-# 生成时间: 2026-07-14 16:41:52
+# 共 139 个提交
+# 生成时间: 2026-07-23 17:08:25
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+9a5e85b5 | 2026-07-03 | Yongchao Jia | riscv: dts: spacemit: add K3 USB3 support for com260
+b20b6d24 | 2026-07-03 | Yongchao Jia | phy: spacemit: add K3 USB3 combo PHY driver
+90b3120e | 2025-10-17 | Ze Huang | phy: spacemit: support K1 USB2.0 PHY controller
+0eb5650f | 2025-09-13 | Ze Huang | usb: dwc3: add generic driver to support flattened
+72281c58 | 2025-04-14 | Bjorn Andersson | usb: dwc3: core: Expose core driver as library
 db9745bd | 2026-02-04 | Zhang Meng | driver: clk: k3: keep some system based clock always on
 109a47c1 | 2026-01-21 | Zhang Meng | riscv: k3: config: enable some modules for spacemit k3
 6ce7eb3a | 2026-01-21 | Zhang Meng | riscv: defconfig: make CONFIG_REGULATOR_FIXED_VOLTAGE builtin
