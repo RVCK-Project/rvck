@@ -1014,7 +1014,7 @@ void __init riscv_fill_hwcap(void)
 		elf_hwcap &= ~COMPAT_HWCAP_ISA_F;
 	}
 
-	if ((__riscv_isa_extension_available(NULL, RISCV_ISA_EXT_ZVE32X)) || test_bit(RISCV_ISA_EXT_XTHEADVECTOR, hart_isa[0].isa)) {
+	if (__riscv_isa_extension_available(NULL, RISCV_ISA_EXT_ZVE32X)) {
 		/*
 		 * This cannot fail when called on the boot hart
 		 */
