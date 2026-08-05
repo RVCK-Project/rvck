@@ -3,10 +3,10 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 270</li>
-<li><strong>统计时间</strong>: 2026-07-23 17:08:25</li>
+<li><strong>贡献提交数</strong>: 282</li>
+<li><strong>统计时间</strong>: 2026-08-05 22:11:45</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
-<li><strong>起始标签</strong>: v6.6.143</li>
+<li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
 </div>
 
@@ -19,79 +19,91 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [edea3002](https://github.com/RVCK-Project/rvck/commit/edea30029a79a799f73da538fc542a2e8de2cc16) | 2024-09-01 | Han Gao | th1520_defconfig:Enable ebpf settings |
-| [a223a61d](https://github.com/RVCK-Project/rvck/commit/a223a61d17c0872e28cb11f0569c2f6b438e6705) | 2024-09-01 | Han Gao | dts: th1520: sd card not try sdio cmds |
-| [a67520cd](https://github.com/RVCK-Project/rvck/commit/a67520cd46150111e74e27186020d80a50519edd) | 2024-09-01 | Han Gao | fix rv_book str |
-| [1cba4936](https://github.com/RVCK-Project/rvck/commit/1cba4936ad76f13f1b4b6f7a8dd0190df63fc99f) | 2024-09-01 | Han Gao | driver usb: optimize pm resume time, do resume in runtime_resume |
-| [b234f5dc](https://github.com/RVCK-Project/rvck/commit/b234f5dcabb8729af865612ed43ac143904dbc1b) | 2024-09-01 | Han Gao | Solve problem of DSI transfer command failure when hotplug hdmi |
-| [e9b550f7](https://github.com/RVCK-Project/rvck/commit/e9b550f74e0117dae855f3ada5214eb31fe103e3) | 2024-09-01 | Han Gao | dts: bt: support rtl8822cs |
-| [ba788df7](https://github.com/RVCK-Project/rvck/commit/ba788df709bb72a4adf811bbf6114b6a21afcba8) | 2024-09-01 | Han Gao | dts: wifi: support rtl8822cs |
-| [b730d706](https://github.com/RVCK-Project/rvck/commit/b730d706b42e9c9164dd79f85a01f463f209ed97) | 2024-09-01 | Han Gao | defconfig: wifi : add rtl8822cs(for rvbook) |
-| [4a726b2f](https://github.com/RVCK-Project/rvck/commit/4a726b2f706b61d3214c4ede82183af013e0269d) | 2024-09-01 | Han Gao | riscv:kdump: Fix gen /proc/vmcore |
-| [650cac1b](https://github.com/RVCK-Project/rvck/commit/650cac1b095485e924e852a2578c98d598334208) | 2024-09-01 | Han Gao | driver:tee:add tee_driver_pm_ops |
-| [7e455a75](https://github.com/RVCK-Project/rvck/commit/7e455a7528a2e125182bc580bb3bb12f33c01e39) | 2024-09-01 | Han Gao | driver:tee:Allow to freeze when tee supplicant is freezed |
-| [7ed1e342](https://github.com/RVCK-Project/rvck/commit/7ed1e3424c58eca4fa630c75e79d0d79308fa778) | 2024-09-01 | Han Gao | usb: dwc3: th1520.dtsi: bugfix: fix usb str xhci error |
-| [32450503](https://github.com/RVCK-Project/rvck/commit/324505039e863eefff483d2dfd860a705e5d54eb) | 2024-09-01 | Han Gao | drivers: support virtio_vdmabuf |
-| [08297710](https://github.com/RVCK-Project/rvck/commit/082977108f876e156740751dfdc57680de3cfd0d) | 2024-09-01 | Han Gao | perf:test:fix PERF_RECORD_* events & perf_sample fields in yocto linux |
-| [545d86cf](https://github.com/RVCK-Project/rvck/commit/545d86cf32a4c73669aa4f1b9eee87bc3e2af599) | 2024-09-01 | Han Gao | move the place of dts "audio-text-memory-region" property |
-| [f6a4bca2](https://github.com/RVCK-Project/rvck/commit/f6a4bca2cb2cd63c648a4baf7b54adf088511b48) | 2024-09-01 | Han Gao | defconfig: bt: add hid support |
-| [51e648b3](https://github.com/RVCK-Project/rvck/commit/51e648b3f1fd7cf0f439c626d65f4c7d9b99601b) | 2024-09-01 | Han Gao | defconfig: bt : add rtl8723ds |
-| [ffff6db8](https://github.com/RVCK-Project/rvck/commit/ffff6db85cba0bfb461a8d25100d84771a2b0c35) | 2024-09-01 | Han Gao | driver: bt : Compatible with RTL8723ds'h5 protocol |
-| [b1d30698](https://github.com/RVCK-Project/rvck/commit/b1d306980d7307ee8c8cf68432719b6772482363) | 2024-09-01 | Han Gao | driver: bt: add rtl8723ds h5 protocol |
-| [ee5aec8f](https://github.com/RVCK-Project/rvck/commit/ee5aec8f90f8394c6b419adf6071c2942600ea1f) | 2024-09-01 | Han Gao | add audio hibernation ops |
-| [6575b368](https://github.com/RVCK-Project/rvck/commit/6575b368e6aa5c5c856c3986261797c2567aebc0) | 2024-09-01 | Han Gao | DPU: remove panel unprepare process in disable dsi process |
-| [471f0449](https://github.com/RVCK-Project/rvck/commit/471f0449295b274e610c79af3d2acbdbbf600a40) | 2024-09-01 | Han Gao | remove dts "audio_mem" node and add mbox 910r channel |
-| [61922465](https://github.com/RVCK-Project/rvck/commit/61922465dcc2e18e85397b5af82789b0682323d7) | 2024-09-01 | Han Gao | usb: dwc3-thead: fix usb gadget support |
-| [a596ecd5](https://github.com/RVCK-Project/rvck/commit/a596ecd50d49a97ba0eb14320628afff8569c12c) | 2024-09-01 | Han Gao | dts: th1520-lichee-pi-4a: update usb hub |
-| [9e2456de](https://github.com/RVCK-Project/rvck/commit/9e2456dea977c536f7a33a5faec3aec151fa383c) | 2024-09-01 | Han Gao | dts: add th1520-lpi4a-dsi0.dts and th1520-lpi4a-hx8279.dts |
-| [6acb2e8c](https://github.com/RVCK-Project/rvck/commit/6acb2e8c12fbecc40f2411c0dd9d1db76b165ece) | 2024-09-01 | Han Gao | dts: add display support for dsi0&dsi1 and dsi0&hdmi |
-| [8a50e6cc](https://github.com/RVCK-Project/rvck/commit/8a50e6ccc9cf1f561ff0ab213da97e80bf8627f7) | 2024-09-01 | Han Gao | dw-axi-dma : dma_chan_prep_dma_memcpy func add chan-\>direction = DMA_MEM_TO_MEM |
-| [d674891b](https://github.com/RVCK-Project/rvck/commit/d674891bf247a0595a9c7536e372dd91665c1dd7) | 2024-09-01 | Han Gao | DPU: support DSI/HDMI driver for light-a-val |
-| [53af89ed](https://github.com/RVCK-Project/rvck/commit/53af89ed7dd7f5dfa8ee51e6015fc9f7c4d2e96d) | 2024-09-01 | Han Gao | driver : rfkill : Delete unnecessary code |
-| [81e193a3](https://github.com/RVCK-Project/rvck/commit/81e193a3b61c379bc5e99a4d54944bd267a431d5) | 2024-09-01 | Han Gao | dts: rfkill: Delete unnecessary nodes |
-| [7ba1f7b7](https://github.com/RVCK-Project/rvck/commit/7ba1f7b711d3d0a8ba46ffcc197f3d14821bbad5) | 2024-09-01 | Han Gao | RISC-V laptop: Add new drivers for specific hardware components |
-| [0e350acc](https://github.com/RVCK-Project/rvck/commit/0e350acc90df246e27cb1aba0f38f36aeed80714) | 2024-09-01 | Han Gao | rvbook: add th1520-rvbook.dts |
-| [d2aa66e9](https://github.com/RVCK-Project/rvck/commit/d2aa66e9b4178a7f7e01554714ec6bebde6663b7) | 2024-09-01 | Han Gao | Add kernel boot rvbook_defconfig |
-| [0e177144](https://github.com/RVCK-Project/rvck/commit/0e1771448ce4d28ca8130c1fd9e4faac87874b0e) | 2024-09-01 | Han Gao | dts: add GPU device node |
-| [039bd402](https://github.com/RVCK-Project/rvck/commit/039bd40287195bed08ab9c7b991a665deb5d917a) | 2024-09-01 | Han Gao | perf vendor events riscv: Add PMU event JSON files for TH1520 DDRC PMU |
-| [91c9c2e9](https://github.com/RVCK-Project/rvck/commit/91c9c2e9f55bd54a547c99cf89dae021e1e6b314) | 2024-09-01 | Han Gao | dts: rfkill: Resolving Insmod Failure Issues |
-| [5947c770](https://github.com/RVCK-Project/rvck/commit/5947c7704d7699895cf34df0fffa9fa710c18891) | 2024-09-01 | Han Gao | dts: th1520: add g2d device node |
-| [f4b7d6aa](https://github.com/RVCK-Project/rvck/commit/f4b7d6aa7c923ffb23eade1c4ba790bb00d73f3c) | 2024-08-31 | Han Gao | aic8800: Add AIC8800's config to th1520_defconfig, as well as resolve known issu... |
-| [0d3716b5](https://github.com/RVCK-Project/rvck/commit/0d3716b53279e13d41394f8852aed0ff4cf92649) | 2024-08-31 | Han Gao | uart: Fix the UART problem |
-| [dcfd93ed](https://github.com/RVCK-Project/rvck/commit/dcfd93ed1c89ac1851a09d16df221edd611a5abb) | 2024-08-31 | Han Gao | rfkill: add aic8800 rfkill support for gpio control of aic8800 wifi/bt |
-| [5b2f0fcc](https://github.com/RVCK-Project/rvck/commit/5b2f0fccf6ce2ef54517c1cfc3c09387d9c01b2b) | 2024-08-31 | Han Gao | th1520-lichee-pi-4a.dts: change dts for aic8800 wifi Support aic8800 wifi |
-| [ba6e6cb3](https://github.com/RVCK-Project/rvck/commit/ba6e6cb3e0cd75eb63592e7d3cb3a904eb09cdec) | 2024-08-31 | Han Gao | th1520-lichee-pi-4a.dts: change dts for aic8800 bt Support aic8800 bt |
-| [30843df1](https://github.com/RVCK-Project/rvck/commit/30843df1d1f39025474ab55d8e657522d957dd93) | 2024-08-27 | Han Gao | fix: riscv: xtheadvector: fix setup_v_vsize |
-| [3e69161e](https://github.com/RVCK-Project/rvck/commit/3e69161e010edd725f829c2652960e57955fe931) | 2024-07-05 | Han Gao | configs: enable rtw88 for 8723ds |
-| [4a439371](https://github.com/RVCK-Project/rvck/commit/4a439371948560bc3b4bd7c5c893367ac2279061) | 2024-06-10 | Han Gao | xtheadvector: fix it used as v-ext when hwprobe is used |
-| [9a4a7a34](https://github.com/RVCK-Project/rvck/commit/9a4a7a34b56671567278fe4ca7e387be33801bd4) | 2024-03-30 | Han Gao | dts: th1520: add xtheadvector |
-| [3f0adb97](https://github.com/RVCK-Project/rvck/commit/3f0adb97a271ce5ea779ddcd1cb1483b21ace62e) | 2024-03-29 | Han Gao | fix: use has_vector instead of judge ELF_HWCAP |
-| [3401b2a2](https://github.com/RVCK-Project/rvck/commit/3401b2a28bec41d0970798c06cfd999dc7d81439) | 2024-03-27 | Han Gao | riscv: xtheadvector: enable vector function |
-| [64a7d1cf](https://github.com/RVCK-Project/rvck/commit/64a7d1cf5522a9678bdc7c4c3d42eb0e3a6cb997) | 2024-07-03 | Han Gao | configs: init th1520 config |
-| [7fc8b864](https://github.com/RVCK-Project/rvck/commit/7fc8b8640a873f5607153ebc03f5ebf60c12d1e0) | 2024-07-05 | Han Gao | riscv: dts: lpi4a 16g support |
-| [01918c37](https://github.com/RVCK-Project/rvck/commit/01918c37f21effd83ce8eeb216d54775e10dd125) | 2024-07-02 | Han Gao | chore: use thead instead of xuantie |
-| [7753c1fe](https://github.com/RVCK-Project/rvck/commit/7753c1febbd6ad6bc6fe5b16ca9c47a71407615d) | 2024-07-02 | Han Gao | chore: use xuantie instead of thead |
-| [c02a7e22](https://github.com/RVCK-Project/rvck/commit/c02a7e22d3d082808de6ea7c16f0cb48fcc42e3e) | 2024-01-12 | Han Gao | chore: dtb_install in /boot |
-| [1ae2b54c](https://github.com/RVCK-Project/rvck/commit/1ae2b54cbc6ff093dc37fb802d53270a483de554) | 2023-09-21 | Han Gao | remove compression for riscv Image |
-| [85c801be](https://github.com/RVCK-Project/rvck/commit/85c801becf8dbf2a997811e28cccdac2eabcef13) | 2023-12-06 | Drew Fustini | riscv: dts: thead: Enable LicheePi 4A eMMC and microSD |
-| [1d4b4748](https://github.com/RVCK-Project/rvck/commit/1d4b474816629bf02bd75606d0468c80910df596) | 2023-12-06 | Drew Fustini | riscv: dts: thead: Enable BeagleV Ahead eMMC and microSD |
-| [e4314323](https://github.com/RVCK-Project/rvck/commit/e4314323df2de13f1ff5872e32bb9c3d51646d68) | 2023-12-06 | Drew Fustini | riscv: dts: thead: Add TH1520 mmc controllers and sdhci clock |
-| [0649e211](https://github.com/RVCK-Project/rvck/commit/0649e21182a1d054d17ba469efaf9d84c46a4d63) | 2023-12-06 | Drew Fustini | riscv: defconfig: Enable mmc and dma drivers for T-Head TH1520 |
-| [db65ebd7](https://github.com/RVCK-Project/rvck/commit/db65ebd795bc2048471b47f4c3ac896274ba9395) | 2023-11-14 | Drew Fustini | mmc: sdhci-of-dwcmshc: Add support for T-Head TH1520 |
-| [31232e65](https://github.com/RVCK-Project/rvck/commit/31232e6578b2f69b82cfa23b53e4c27a45cf9637) | 2023-11-14 | Drew Fustini | mmc: sdhci: add __sdhci_execute_tuning() to header |
-| [affca99f](https://github.com/RVCK-Project/rvck/commit/affca99fc3b0b04c2649096529c50c53816aa720) | 2023-11-14 | Drew Fustini | dt-bindings: mmc: sdhci-of-dwcmhsc: Add T-Head TH1520 support |
-| [d621386a](https://github.com/RVCK-Project/rvck/commit/d621386af3c59bcc187a74f65fdbace61269a038) | 2024-04-25 | Han Gao | fix: remove linux/array_size.h for pinctrl-th1520 |
-| [143c38d8](https://github.com/RVCK-Project/rvck/commit/143c38d8dc6d5245e3fcba94e21776b9495d9564) | 2024-01-03 | Emil Renner Berthing | riscv: dtb: thead: Add BeagleV Ahead LEDs |
-| [5ab172e1](https://github.com/RVCK-Project/rvck/commit/5ab172e1c8f4592707d9985833c73e146f8c51ba) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pinctrl settings for UART0 |
-| [b56968b9](https://github.com/RVCK-Project/rvck/commit/b56968b9bb88b537b7b12b27e013a0c5f11b7324) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add Lichee Pi 4M GPIO line names |
-| [82c6e11d](https://github.com/RVCK-Project/rvck/commit/82c6e11dc0c356a97c428b321e9a1a56cf6c0290) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Adjust TH1520 GPIO labels |
-| [4b22cf89](https://github.com/RVCK-Project/rvck/commit/4b22cf897895998530e7c421047a21d94641b834) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 GPIO ranges |
-| [ab37ec57](https://github.com/RVCK-Project/rvck/commit/ab37ec57f2dc3e3e59f8427b08e5cdb3e8b94e63) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pin control nodes |
-| [5c434cb8](https://github.com/RVCK-Project/rvck/commit/5c434cb83cfc45850b89d021d6f9d7f0cb50505e) | 2024-01-03 | Emil Renner Berthing | pinctrl: Add driver for the T-Head TH1520 SoC |
-| [b87c064c](https://github.com/RVCK-Project/rvck/commit/b87c064cba6d42ce77fcd56530b66585471d2d91) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
+| [4a02d8e7](https://github.com/RVCK-Project/rvck/commit/4a02d8e714064b4f244c198de994bf8766306a51) | 2024-09-01 | Han Gao | fix: dts: remove duplicate node |
+| [7532fe0c](https://github.com/RVCK-Project/rvck/commit/7532fe0cc071dcc0eaa3e3e6fc95d134d174d6f3) | 2024-09-01 | Han Gao | Solve problem of hdmi-edid reading |
+| [388b5f0b](https://github.com/RVCK-Project/rvck/commit/388b5f0b2c69b31362b06f0d2046da435f26251f) | 2024-09-01 | Han Gao | riscv:uprobe: fix flush_icache to ensure that instructions are refreshed when sw... |
+| [d2094be5](https://github.com/RVCK-Project/rvck/commit/d2094be5d90ce174bce1418db2c567f45f613cac) | 2024-09-01 | Han Gao | HDMI: fix bug of not being able to light up the external monitor |
+| [46f7708c](https://github.com/RVCK-Project/rvck/commit/46f7708c84cd5154b54b5c36969f4a442f210168) | 2024-09-01 | Han Gao | Fix panel-jadard-jd9365da panel driver problem |
+| [cd1c0375](https://github.com/RVCK-Project/rvck/commit/cd1c037557d6a768a08db5de4545bc6fb9d2b97a) | 2024-09-01 | Han Gao | Fix panel-jadard-jd9365da panel driver problem |
+| [527c4d74](https://github.com/RVCK-Project/rvck/commit/527c4d74969661ea39fe90aa1a73d842de15b772) | 2024-09-01 | Han Gao | sensor: fix bug of channel 1 and channel 2 of video2 failed to run |
+| [3439921f](https://github.com/RVCK-Project/rvck/commit/3439921fd6d86a687aa4273654d904e51e55d1c5) | 2024-09-01 | Han Gao | Expand cma size from 512MB to 768MB to meet the FBO video frame buffer requireme... |
+| [4c82264b](https://github.com/RVCK-Project/rvck/commit/4c82264b7c7c400df11a7fff7c93f8303d70e1dc) | 2024-09-01 | Han Gao | defconfig: th1520: to fix the problem of perf test fail |
+| [06157a56](https://github.com/RVCK-Project/rvck/commit/06157a56afc24223e2e43461425681398993c36a) | 2024-09-01 | Han Gao | Fix: Repair rvbook hall sensor functionality and optimize codebase |
+| [0823a494](https://github.com/RVCK-Project/rvck/commit/0823a494b367219e79f99f182926ded896744007) | 2024-09-01 | Han Gao | riscv:vector: Check datap status in __switch_to_vector |
+| [e4e7f404](https://github.com/RVCK-Project/rvck/commit/e4e7f404637672542db2758b7efcf1906e7dd798) | 2024-09-01 | Han Gao | th1520_defconfig:Enable lowpower settings |
+| [7f5c7603](https://github.com/RVCK-Project/rvck/commit/7f5c76037a3e179b463eaf8e2df171c1f6ad882f) | 2024-09-01 | Han Gao | th1520_defconfig:Enable ebpf settings |
+| [c66747d6](https://github.com/RVCK-Project/rvck/commit/c66747d63db13023a95f211d8680f688b779a55e) | 2024-09-01 | Han Gao | dts: th1520: sd card not try sdio cmds |
+| [e62e0960](https://github.com/RVCK-Project/rvck/commit/e62e0960ab4fb5cdfb45333f3d1824925b06d800) | 2024-09-01 | Han Gao | fix rv_book str |
+| [f6fc01a5](https://github.com/RVCK-Project/rvck/commit/f6fc01a57ba3112f0de0206b31dea667027d0830) | 2024-09-01 | Han Gao | driver usb: optimize pm resume time, do resume in runtime_resume |
+| [d34dcb9e](https://github.com/RVCK-Project/rvck/commit/d34dcb9ee2bbe3cf48d40305be7fc7582d1f28fd) | 2024-09-01 | Han Gao | Solve problem of DSI transfer command failure when hotplug hdmi |
+| [0e60a3fc](https://github.com/RVCK-Project/rvck/commit/0e60a3fc833b7caabb4df0cf2640bf3eb5cfc0cf) | 2024-09-01 | Han Gao | dts: bt: support rtl8822cs |
+| [6a0a83fe](https://github.com/RVCK-Project/rvck/commit/6a0a83fe86fe400667f21dd3c93b32c39e6ca180) | 2024-09-01 | Han Gao | dts: wifi: support rtl8822cs |
+| [f1187b76](https://github.com/RVCK-Project/rvck/commit/f1187b76cb6a859aad677c9755bf01423d69bdab) | 2024-09-01 | Han Gao | defconfig: wifi : add rtl8822cs(for rvbook) |
+| [b1fcb097](https://github.com/RVCK-Project/rvck/commit/b1fcb097e705566a16b8c720d1b965997ad8a755) | 2024-09-01 | Han Gao | riscv:kdump: Fix gen /proc/vmcore |
+| [3c3b3117](https://github.com/RVCK-Project/rvck/commit/3c3b31170a5b5f36ba6f979b847c5b5f8c5b6523) | 2024-09-01 | Han Gao | driver:tee:add tee_driver_pm_ops |
+| [ead030c2](https://github.com/RVCK-Project/rvck/commit/ead030c276ec53b3734d6f5167bb548b829a6f97) | 2024-09-01 | Han Gao | driver:tee:Allow to freeze when tee supplicant is freezed |
+| [047657ba](https://github.com/RVCK-Project/rvck/commit/047657ba0d1f66cc7f43a2e8227b2a363ec90e26) | 2024-09-01 | Han Gao | usb: dwc3: th1520.dtsi: bugfix: fix usb str xhci error |
+| [d009b8eb](https://github.com/RVCK-Project/rvck/commit/d009b8eb21c63e7920e4b37c8f483edcaadbe4f2) | 2024-09-01 | Han Gao | drivers: support virtio_vdmabuf |
+| [23bfa960](https://github.com/RVCK-Project/rvck/commit/23bfa960ae226d084eb26ba188bbf0e0269eec44) | 2024-09-01 | Han Gao | perf:test:fix PERF_RECORD_* events & perf_sample fields in yocto linux |
+| [cc5403ae](https://github.com/RVCK-Project/rvck/commit/cc5403aea288ef06e7f07cf3e3bc534068cc0fa2) | 2024-09-01 | Han Gao | move the place of dts "audio-text-memory-region" property |
+| [64b81566](https://github.com/RVCK-Project/rvck/commit/64b81566e2c299da5c6578b6631ad76ba0b0b1b6) | 2024-09-01 | Han Gao | defconfig: bt: add hid support |
+| [14d71d55](https://github.com/RVCK-Project/rvck/commit/14d71d552efa7fa5d31f0f1897a32e8d7625b616) | 2024-09-01 | Han Gao | defconfig: bt : add rtl8723ds |
+| [1aced01c](https://github.com/RVCK-Project/rvck/commit/1aced01c251bec117577d1e9f217d4224e6a4d0d) | 2024-09-01 | Han Gao | driver: bt : Compatible with RTL8723ds'h5 protocol |
+| [8cb30a9f](https://github.com/RVCK-Project/rvck/commit/8cb30a9fb6d1e9a5e5fa0e7b19461e3fc3d1ccbc) | 2024-09-01 | Han Gao | driver: bt: add rtl8723ds h5 protocol |
+| [e221d6e1](https://github.com/RVCK-Project/rvck/commit/e221d6e1713558b737f7f8c05170b4abf85978f4) | 2024-09-01 | Han Gao | add audio hibernation ops |
+| [33260d4d](https://github.com/RVCK-Project/rvck/commit/33260d4d4599190957b7bb1316d69272bce14881) | 2024-09-01 | Han Gao | DPU: remove panel unprepare process in disable dsi process |
+| [f7a903f4](https://github.com/RVCK-Project/rvck/commit/f7a903f405924dcfbb8cc2902e28c4c27fe5482f) | 2024-09-01 | Han Gao | remove dts "audio_mem" node and add mbox 910r channel |
+| [12ea15a4](https://github.com/RVCK-Project/rvck/commit/12ea15a428bdbcf4fca3afe09380d74e46051ed2) | 2024-09-01 | Han Gao | usb: dwc3-thead: fix usb gadget support |
+| [b5d0929d](https://github.com/RVCK-Project/rvck/commit/b5d0929d8ef0781a21feec33b35db14bea690d8e) | 2024-09-01 | Han Gao | dts: th1520-lichee-pi-4a: update usb hub |
+| [5dc1534a](https://github.com/RVCK-Project/rvck/commit/5dc1534a86028fc7f13890b43a22149a3401b260) | 2024-09-01 | Han Gao | dts: add th1520-lpi4a-dsi0.dts and th1520-lpi4a-hx8279.dts |
+| [7e0a9b6a](https://github.com/RVCK-Project/rvck/commit/7e0a9b6a9c35925caa2a114d6fe8af8744fdc8c0) | 2024-09-01 | Han Gao | dts: add display support for dsi0&dsi1 and dsi0&hdmi |
+| [10b7e953](https://github.com/RVCK-Project/rvck/commit/10b7e9530319f90b3b52a0a8acb2e9cecaa8acba) | 2024-09-01 | Han Gao | dw-axi-dma : dma_chan_prep_dma_memcpy func add chan-\>direction = DMA_MEM_TO_MEM |
+| [1fcd3b36](https://github.com/RVCK-Project/rvck/commit/1fcd3b363566aec984b9be44fae4e70a9961aa7a) | 2024-09-01 | Han Gao | DPU: support DSI/HDMI driver for light-a-val |
+| [1d485c7a](https://github.com/RVCK-Project/rvck/commit/1d485c7a2a3219352832247ba52f573fdc6d5e52) | 2024-09-01 | Han Gao | driver : rfkill : Delete unnecessary code |
+| [e89a384b](https://github.com/RVCK-Project/rvck/commit/e89a384b784239fe4a9e814f10e34b779f719eeb) | 2024-09-01 | Han Gao | dts: rfkill: Delete unnecessary nodes |
+| [c0d9ea0d](https://github.com/RVCK-Project/rvck/commit/c0d9ea0d624f2b486fbfe406a788eda97a18b621) | 2024-09-01 | Han Gao | RISC-V laptop: Add new drivers for specific hardware components |
+| [e83b350e](https://github.com/RVCK-Project/rvck/commit/e83b350eabf2de1bcb3b8b4bfb2123a566a75fde) | 2024-09-01 | Han Gao | rvbook: add th1520-rvbook.dts |
+| [f5358ca6](https://github.com/RVCK-Project/rvck/commit/f5358ca67096b3e8e22c37e0a7c5e6e4a23c2c78) | 2024-09-01 | Han Gao | Add kernel boot rvbook_defconfig |
+| [f76df229](https://github.com/RVCK-Project/rvck/commit/f76df2291ede2124f7fbec9240bb7a64f50235c4) | 2024-09-01 | Han Gao | dts: add GPU device node |
+| [b1a4202f](https://github.com/RVCK-Project/rvck/commit/b1a4202fb9392e54118f5d5584fe45ede5ae3bd5) | 2024-09-01 | Han Gao | perf vendor events riscv: Add PMU event JSON files for TH1520 DDRC PMU |
+| [5e9a3c35](https://github.com/RVCK-Project/rvck/commit/5e9a3c35e8bf344ec595e57a60db04fb87b2c177) | 2024-09-01 | Han Gao | dts: rfkill: Resolving Insmod Failure Issues |
+| [82fcdf74](https://github.com/RVCK-Project/rvck/commit/82fcdf746f11bfceea9467d396dc366ee7a46154) | 2024-09-01 | Han Gao | dts: th1520: add g2d device node |
+| [6690929f](https://github.com/RVCK-Project/rvck/commit/6690929f34296c20da08cc082d995020435759e3) | 2024-08-31 | Han Gao | aic8800: Add AIC8800's config to th1520_defconfig, as well as resolve known issu... |
+| [2e789162](https://github.com/RVCK-Project/rvck/commit/2e7891622d6b0b1cc292e86593d1acc9b4182e5d) | 2024-08-31 | Han Gao | uart: Fix the UART problem |
+| [47c47008](https://github.com/RVCK-Project/rvck/commit/47c470084b7d28443be1a804f78d8e01e61be99b) | 2024-08-31 | Han Gao | rfkill: add aic8800 rfkill support for gpio control of aic8800 wifi/bt |
+| [1c4b2745](https://github.com/RVCK-Project/rvck/commit/1c4b2745047a3bf3743430c9327c2f7858272879) | 2024-08-31 | Han Gao | th1520-lichee-pi-4a.dts: change dts for aic8800 wifi Support aic8800 wifi |
+| [382090bb](https://github.com/RVCK-Project/rvck/commit/382090bbf4c7ea881f63fe053f875c69dbfdd022) | 2024-08-31 | Han Gao | th1520-lichee-pi-4a.dts: change dts for aic8800 bt Support aic8800 bt |
+| [1e929164](https://github.com/RVCK-Project/rvck/commit/1e9291645ec2f901b75fa9ec4ca010ebdd0b4282) | 2024-08-27 | Han Gao | fix: riscv: xtheadvector: fix setup_v_vsize |
+| [80c6d34d](https://github.com/RVCK-Project/rvck/commit/80c6d34dd689b6c0738c2903e332a8907e677f55) | 2024-07-05 | Han Gao | configs: enable rtw88 for 8723ds |
+| [fe95a1d5](https://github.com/RVCK-Project/rvck/commit/fe95a1d553c29280c4b62a8cba4e3eb79a2fdff6) | 2024-06-10 | Han Gao | xtheadvector: fix it used as v-ext when hwprobe is used |
+| [b82bc72c](https://github.com/RVCK-Project/rvck/commit/b82bc72c8b9aa5f906b9a47f8edb08efc2c9eb50) | 2024-03-30 | Han Gao | dts: th1520: add xtheadvector |
+| [433f08e3](https://github.com/RVCK-Project/rvck/commit/433f08e38831e800932657ec2117be070b57a83c) | 2024-03-29 | Han Gao | fix: use has_vector instead of judge ELF_HWCAP |
+| [e8dc1e6b](https://github.com/RVCK-Project/rvck/commit/e8dc1e6b92795db2029aedfff65a55846484cabe) | 2024-03-27 | Han Gao | riscv: xtheadvector: enable vector function |
+| [c7df7e5e](https://github.com/RVCK-Project/rvck/commit/c7df7e5e462138bef9c0d48e30d25921b66dfdec) | 2024-07-03 | Han Gao | configs: init th1520 config |
+| [2d11701b](https://github.com/RVCK-Project/rvck/commit/2d11701b691e663f70e0a2e2af3f7c3a864c28d8) | 2024-07-05 | Han Gao | riscv: dts: lpi4a 16g support |
+| [ab14cf28](https://github.com/RVCK-Project/rvck/commit/ab14cf287865fc3490f16598904307bdb6523c36) | 2024-07-02 | Han Gao | chore: use thead instead of xuantie |
+| [6cc976b5](https://github.com/RVCK-Project/rvck/commit/6cc976b56c3c08324a8fb8a23fe0b22ba46b7c89) | 2024-07-02 | Han Gao | chore: use xuantie instead of thead |
+| [4a90797d](https://github.com/RVCK-Project/rvck/commit/4a90797d27486bf9a3089230b7fd8e20d8ca3cbc) | 2024-01-12 | Han Gao | chore: dtb_install in /boot |
+| [3b65e647](https://github.com/RVCK-Project/rvck/commit/3b65e64751a8ff01be8dc5709695317c9f2644b1) | 2023-09-21 | Han Gao | remove compression for riscv Image |
+| [8f04a06a](https://github.com/RVCK-Project/rvck/commit/8f04a06a4eb58681dc654af1f366aefdf367553b) | 2023-12-06 | Drew Fustini | riscv: dts: thead: Enable LicheePi 4A eMMC and microSD |
+| [16ceb1a7](https://github.com/RVCK-Project/rvck/commit/16ceb1a7a7f56649a0a222593be6c4d3ef436fd6) | 2023-12-06 | Drew Fustini | riscv: dts: thead: Enable BeagleV Ahead eMMC and microSD |
+| [54c8512a](https://github.com/RVCK-Project/rvck/commit/54c8512a81efcf389295261f0fb8d002b4eca4bc) | 2023-12-06 | Drew Fustini | riscv: dts: thead: Add TH1520 mmc controllers and sdhci clock |
+| [f03c0cbe](https://github.com/RVCK-Project/rvck/commit/f03c0cbe2c5eff512e0361ac842a0384937a6653) | 2023-12-06 | Drew Fustini | riscv: defconfig: Enable mmc and dma drivers for T-Head TH1520 |
+| [00dddcaf](https://github.com/RVCK-Project/rvck/commit/00dddcaf394b17b64eeff4dea1c8b28e791c32c5) | 2023-11-14 | Drew Fustini | mmc: sdhci-of-dwcmshc: Add support for T-Head TH1520 |
+| [1e9336fe](https://github.com/RVCK-Project/rvck/commit/1e9336feea9292da1fae35b952036c6b7e33dd46) | 2023-11-14 | Drew Fustini | mmc: sdhci: add __sdhci_execute_tuning() to header |
+| [15aabfca](https://github.com/RVCK-Project/rvck/commit/15aabfca0411ab2448f6b1c61664008e92454329) | 2023-11-14 | Drew Fustini | dt-bindings: mmc: sdhci-of-dwcmhsc: Add T-Head TH1520 support |
+| [890f608c](https://github.com/RVCK-Project/rvck/commit/890f608c2e2b44e829a1706c13ed3eea788d83f0) | 2024-04-25 | Han Gao | fix: remove linux/array_size.h for pinctrl-th1520 |
+| [98c91c3a](https://github.com/RVCK-Project/rvck/commit/98c91c3a111dea0ddde3cc6d285cb4febfcf54ca) | 2024-01-03 | Emil Renner Berthing | riscv: dtb: thead: Add BeagleV Ahead LEDs |
+| [c58027a7](https://github.com/RVCK-Project/rvck/commit/c58027a75bdb67ab93bd5313a661b778e692b7a0) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pinctrl settings for UART0 |
+| [92759dd9](https://github.com/RVCK-Project/rvck/commit/92759dd971b72bf53bf0672b8fbc4311f30b459e) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add Lichee Pi 4M GPIO line names |
+| [78675779](https://github.com/RVCK-Project/rvck/commit/7867577927a345517442c7c1ee7db3285e4d1d4f) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Adjust TH1520 GPIO labels |
+| [adeae344](https://github.com/RVCK-Project/rvck/commit/adeae3445d70fd0bad772cf5474027643f01f8e9) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 GPIO ranges |
+| [e79d4da5](https://github.com/RVCK-Project/rvck/commit/e79d4da549d576065f9299161c0de0f0958142ad) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pin control nodes |
+| [37e32fbc](https://github.com/RVCK-Project/rvck/commit/37e32fbc66638f3c0950f52842c1e29199fc7f4c) | 2024-01-03 | Emil Renner Berthing | pinctrl: Add driver for the T-Head TH1520 SoC |
+| [6cbfdac3](https://github.com/RVCK-Project/rvck/commit/6cbfdac350804dd8f3c09da16996e856d17fc808) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 270 条提交，显示 201-270**
+**共 282 条提交，显示 201-282**
 
 [1](软件所.md) **[2]**
 
@@ -102,5 +114,5 @@
 
 ---
 
-*本页面最后更新于 2026-07-23 17:08:25*
-*数据来源: 主分支 rvck-6.6@61c7f44c*
+*本页面最后更新于 2026-08-05 22:11:45*
+*数据来源: 主分支 rvck-6.6@893c5f58*
