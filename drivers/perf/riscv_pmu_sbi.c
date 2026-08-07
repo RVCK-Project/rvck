@@ -78,6 +78,7 @@ static ssize_t __maybe_unused rvpmu_format_show(struct device *dev, struct devic
 	RVPMU_ATTR_ENTRY(_name, rvpmu_format_show, (char *)_config)
 
 PMU_FORMAT_ATTR(firmware, "config:62-63");
+PMU_FORMAT_ATTR(counterid_mask, "config2:0-31");
 
 static bool sbi_v2_available;
 static bool sbi_v3_available;
@@ -122,6 +123,7 @@ static const struct attribute_group *riscv_sbi_pmu_attr_groups[] = {
 static struct attribute *riscv_cdeleg_pmu_formats_attr[] = {
 	RVPMU_FORMAT_ATTR_ENTRY(event, RVPMU_CDELEG_PMU_FORMAT_ATTR),
 	&format_attr_firmware.attr,
+	&format_attr_counterid_mask.attr,
 	NULL,
 };
 
@@ -1522,24 +1524,85 @@ static int rvpmu_deleg_find_ctrs(void)
 	return num_hw_ctr;
 }
 
+/*
+ * The json file must correctly specify counter 0 or counter 2 is available
+ * in the counter lists for cycle/instret events. Otherwise, the drivers have
+ * no way to figure out if a fixed counter must be used and pick a programmable
+ * counter if available.
+ */
 static int get_deleg_fixed_hw_idx(struct cpu_hw_events *cpuc, struct perf_event *event)
 {
-	return -EINVAL;
+	bool guest_events = event->attr.config1 & RISCV_PMU_CONFIG1_GUEST_EVENTS;
+	int idx;
+
+	/* event_base is 0 on the delegation path; match via the original perf attrs. */
+	if (guest_events) {
+		if (event->attr.type != PERF_TYPE_HARDWARE)
+			return -EINVAL;
+		if (event->attr.config == PERF_COUNT_HW_CPU_CYCLES)
+			idx = 0; /* CY counter */
+		else if (event->attr.config == PERF_COUNT_HW_INSTRUCTIONS)
+			idx = 2; /* IR counter */
+		else
+			return -EINVAL;
+	} else if (event->attr.config2 & RISCV_PMU_CYCLE_FIXED_CTR_MASK) {
+		idx = 0; /* CY counter */
+	} else if (event->attr.config2 & RISCV_PMU_INSTRUCTION_FIXED_CTR_MASK) {
+		idx = 2; /* IR counter */
+	} else {
+		return -EINVAL;
+	}
+
+	/* Take the fixed counter only if delegated and free, else fall back. */
+	if (!(cmask & BIT(idx)) || test_bit(idx, cpuc->used_hw_ctrs))
+		return -EINVAL;
+
+	return idx;
 }
 
 static int get_deleg_next_hpm_hw_idx(struct cpu_hw_events *cpuc, struct perf_event *event)
 {
-	unsigned long hw_ctr_mask = 0;
+	u32 hw_ctr_mask = 0, temp_mask = 0;
+	u32 type = event->attr.type;
+	u64 config = event->attr.config;
+	int ret;
 
-	/*
-	 * TODO: Treat every hpmcounter can monitor every event for now.
-	 * The event to counter mapping should come from the json file.
-	 * The mapping should also tell if sampling is supported or not.
-	 */
+	/* Select only available hpmcounters */
+	hw_ctr_mask = cmask & (~0x7) & ~(cpuc->used_hw_ctrs[0]);
 
-	/* Select only hpmcounters */
-	hw_ctr_mask = cmask & (~0x7);
-	hw_ctr_mask &= ~(cpuc->used_hw_ctrs[0]);
+	switch (type) {
+	case PERF_TYPE_HARDWARE:
+		temp_mask = current_pmu_hw_event_map[config].counterid_mask;
+		break;
+	case PERF_TYPE_HW_CACHE:
+		ret = cdeleg_pmu_event_find_cache(config, NULL, &temp_mask);
+		if (ret)
+			return ret;
+		break;
+	case PERF_TYPE_RAW:
+		/*
+		 * Mask off the counters that can't monitor this event (specified via json)
+		 * The counter mask for this event is set in config2 via the property 'Counter'
+		 * in the json file or manual configuration of config2. If the config2 is not set,
+		 * it is assumed all the available hpmcounters can monitor this event.
+		 * Note: This assumption may fail for virtualization use case where they hypervisor
+		 * (e.g. KVM) virtualizes the counter. Any event to counter mapping provided by the
+		 * guest is meaningless from a hypervisor perspective. Thus, the hypervisor doesn't
+		 * set config2 when creating kernel counter and relies default host mapping.
+		 */
+		if (event->attr.config2)
+			temp_mask = event->attr.config2;
+		break;
+	default:
+		break;
+	}
+
+	if (temp_mask)
+		hw_ctr_mask &= temp_mask;
+
+	if (!hw_ctr_mask)
+		return -EINVAL;
+
 	return __ffs(hw_ctr_mask);
 }
 
@@ -1579,10 +1642,6 @@ static int rvpmu_deleg_ctr_get_idx(struct perf_event *event)
 	u64 priv_filter;
 	int idx;
 
-	/*
-	 * TODO: We should not rely on SBI Perf encoding to check if the event
-	 * is a fixed one or not.
-	 */
 	if (!is_sampling_event(event)) {
 		idx = get_deleg_fixed_hw_idx(cpuc, event);
 		if (idx == 0 || idx == 2) {
@@ -1602,10 +1661,13 @@ static int rvpmu_deleg_ctr_get_idx(struct perf_event *event)
 		goto out_err;
 found_idx:
 	priv_filter = get_deleg_priv_filter_bits(event);
+	if (test_and_set_bit(idx, cpuc->used_hw_ctrs))
+		goto out_err;
 	write_deleg_hpmevent(idx, hwc->config, priv_filter);
+	return idx;
 skip_update:
-	if (!test_and_set_bit(idx, cpuc->used_hw_ctrs))
-		return idx;
+	set_bit(idx, cpuc->used_hw_ctrs);
+	return idx;
 out_err:
 	return -ENOENT;
 }
