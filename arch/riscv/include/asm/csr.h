@@ -258,6 +258,7 @@
 #endif
 
 #define SISELECT_SSCCFG_BASE		0x40
+#define HPMEVENT_MASK			GENMASK_ULL(63, 56)
 
 /* mseccfg bits */
 #define MSECCFG_PMM			ENVCFG_PMM
