@@ -248,6 +248,25 @@
 #define MSECCFG_PMM_PMLEN_7		ENVCFG_PMM_PMLEN_7
 #define MSECCFG_PMM_PMLEN_16		ENVCFG_PMM_PMLEN_16
 
+/* HPMEVENT bits. These are accessible in S-mode via Smcdeleg/Ssccfg */
+#define HPMEVENT_OF			(BIT_ULL(63))
+#define HPMEVENT_MINH			(BIT_ULL(62))
+#define HPMEVENT_SINH			(BIT_ULL(61))
+#define HPMEVENT_UINH			(BIT_ULL(60))
+#define HPMEVENT_VSINH			(BIT_ULL(59))
+#define HPMEVENT_VUINH			(BIT_ULL(58))
+#ifndef CONFIG_64BIT
+#define HPMEVENTH_OF			(BIT(31))
+#define HPMEVENTH_MINH			(BIT(30))
+#define HPMEVENTH_SINH			(BIT(29))
+#define HPMEVENTH_UINH			(BIT(28))
+#define HPMEVENTH_VSINH			(BIT(27))
+#define HPMEVENTH_VUINH			(BIT(26))
+#endif
+
+#define SISELECT_SSCCFG_BASE		0x40
+
+
 /* symbolic CSR names: */
 #define CSR_CYCLE		0xc00
 #define CSR_TIME		0xc01
@@ -322,6 +341,7 @@
 #define CSR_SCOUNTEREN		0x106
 #define CSR_SENVCFG		0x10a
 #define CSR_SSTATEEN0		0x10c
+#define CSR_SCOUNTINHIBIT	0x120
 #define CSR_SSCRATCH		0x140
 #define CSR_SEPC		0x141
 #define CSR_SCAUSE		0x142
