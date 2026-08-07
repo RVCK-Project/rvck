@@ -1,0 +1,9 @@
+diff a/tools/perf/pmu-events/jevents.py b/tools/perf/pmu-events/jevents.py	(rejected hunks)
+@@ -396,6 +396,7 @@ class JsonEvent:
+         ('EnAllSlices', 'enallslices='),
+         ('SliceId', 'sliceid='),
+         ('ThreadMask', 'threadmask='),
++        ('CounterIDMask', 'counterid_mask='),
+     ]
+     for key, value in event_fields:
+       if key in jd and not is_zero(jd[key]):
