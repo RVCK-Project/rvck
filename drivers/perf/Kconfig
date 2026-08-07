@@ -78,13 +78,17 @@ config RISCV_PMU_LEGACY
 
 config RISCV_PMU_SBI
 	depends on RISCV_PMU && RISCV_SBI
-	bool "RISC-V PMU based on SBI PMU extension"
+	bool "RISC-V PMU based on SBI PMU extension and/or counter delegation"
 	default y
 	help
-	  Say y if you want to use the CPU performance monitor
-	  using SBI PMU extension on RISC-V based systems. This option provides
-	  full perf feature support i.e. counter overflow, privilege mode
-	  filtering, counter configuration.
+	  Say y if you want to use the CPU performance monitor on RISC-V based
+	  systems. This single driver supports both hardware counter access
+	  mechanisms: it uses the counter delegation (Smcdeleg/Ssccfg) ISA
+	  extension to program and read the hpmcounters directly in supervisor
+	  mode when available, and uses the SBI PMU extension for firmware
+	  counters and when counter delegation is not present. This option
+	  provides full perf feature support i.e. counter overflow, privilege
+	  mode filtering, counter configuration.
 
 config RISCV_PMU_SSE
 	depends on RISCV_PMU && RISCV_SSE
