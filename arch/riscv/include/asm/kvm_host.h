@@ -78,7 +78,7 @@ struct kvm_vcpu_stat {
 	u64 store_misaligned_exits;
 	u64 load_access_exits;
 	u64 store_access_exits;
-};
+} ____cacheline_aligned;
 
 struct kvm_arch_memory_slot {
 };
