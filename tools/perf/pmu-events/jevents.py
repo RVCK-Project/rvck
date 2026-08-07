@@ -359,6 +359,7 @@ class JsonEvent:
         ('SampleAfterValue', 'period='),
         ('UMask', 'umask='),
         ('NodeType', 'type='),
+        ('CounterIDMask', 'counterid_mask='),
     ]
     for key, value in event_fields:
       if key in jd and jd[key] != '0':
