@@ -20,6 +20,7 @@ properties:
       - rockchip,rk3588-dwcmshc
       - snps,dwcmshc-sdhci
       - thead,th1520-dwcmshc
+      - zhihe,a210-dwcmshc
 
   reg:
     maxItems: 1
@@ -61,6 +62,10 @@ properties:
     description: Specify the number of delay for tx sampling.
     $ref: /schemas/types.yaml#/definitions/uint8
 
+  clk-delay-mmc-hs400:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    maximum: 255
+    description: ZhiHe A210 HS400 clock delay setting.
 
 required:
   - compatible
