@@ -1507,4 +1507,15 @@ config I2C_VIRTIO
           This driver can also be built as a module. If so, the module
           will be called i2c-virtio.
 
+config I2C_LANXIN
+	tristate "Lanxin I2C controller driver"
+	depends on ACPI && COMMON_CLK
+        select REGMAP
+        help
+          If you say yes to this option, support will be included for the
+          Zhaoxin I2C interface
+
+          This driver can also be built as a module.  If so, the module
+          will be called i2c-lanxin.
+
 endmenu

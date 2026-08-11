@@ -176,6 +176,7 @@ config SOC_SPACEMIT_K3
 config SOC_LANXIN
 	bool "Lanxin SoCs."
 	select ARM_AMBA
+	select I2C_LANXIN
         help
           This enables support for Lanxin SoC platform hardware.
 
