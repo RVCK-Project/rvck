@@ -63,6 +63,7 @@ i2c-designware-platform-$(CONFIG_I2C_DESIGNWARE_AMDPSP)	+= i2c-designware-amdpsp
 i2c-designware-platform-$(CONFIG_I2C_DESIGNWARE_BAYTRAIL) += i2c-designware-baytrail.o
 obj-$(CONFIG_I2C_DESIGNWARE_PCI)			+= i2c-designware-pci.o
 i2c-designware-pci-y					:= i2c-designware-pcidrv.o
+obj-$(CONFIG_I2C_LANXIN)				+= i2c-lanxin.o
 obj-$(CONFIG_I2C_LRW_CORE)				+= i2c-lrw-core.o
 i2c-lrw-core-y						+= i2c-lrw-master.o
 obj-$(CONFIG_I2C_LRW_PLATFORM)				+= i2c-lrw-platform.o
