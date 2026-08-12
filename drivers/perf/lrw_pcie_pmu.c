@@ -75,8 +75,8 @@
 
 enum lrw_pcie_event_type {
 	LRW_PCIE_TYPE_INVALID,
-	LRW_PCIE_TIME_BASE_EVENT,
-	LRW_PCIE_LANE_EVENT,
+	LRW_PCIE_TBA_EVENT,
+	LRW_PCIE_EC_EVENT,
 	LRW_PCIE_EVENT_TYPE_MAX,
 };
 
@@ -126,31 +126,6 @@ struct lrw_pcie_format_attr {
 	int config;
 };
 
-u16 pci_find_vsec_capability(struct pci_dev *dev, u16 vendor, int cap)
-{
-	u16 vsec = 0;
-	u32 header;
-	int ret;
-
-	if (vendor != dev->vendor)
-		return 0;
-
-	while ((vsec = pci_find_next_ext_capability(dev, vsec,
-						    PCI_EXT_CAP_ID_VNDR))) {
-		ret = pci_read_config_dword(dev, vsec + PCI_VNDR_HEADER,
-					    &header);
-		if (ret != PCIBIOS_SUCCESSFUL) {
-			pci_err(dev, "Failed to read VSEC header at 0x%x\n",
-				vsec);
-			continue;
-		}
-
-		if (PCI_VNDR_HEADER_ID(header) == cap)
-			return vsec;
-	}
-	return 0;
-}
-
 static ssize_t lrw_pcie_pmu_format_show(struct device *dev,
 					struct device_attribute *attr,
 					char *buf)
@@ -198,10 +173,10 @@ static ssize_t lrw_pcie_event_show(struct device *dev,
 
 	eattr = container_of(attr, typeof(*eattr), attr);
 
-	if (eattr->type == LRW_PCIE_LANE_EVENT)
+	if (eattr->type == LRW_PCIE_EC_EVENT)
 		return sysfs_emit(buf, "eventid=0x%x,type=0x%x,lane=?\n",
 				  eattr->eventid, eattr->type);
-	else if (eattr->type == LRW_PCIE_TIME_BASE_EVENT)
+	else if (eattr->type == LRW_PCIE_TBA_EVENT)
 		return sysfs_emit(buf, "eventid=0x%x,type=0x%x\n",
 				  eattr->eventid, eattr->type);
 
@@ -217,64 +192,55 @@ static ssize_t lrw_pcie_event_show(struct device *dev,
 	} })[0]                                                         \
 		  .attr.attr)
 
-#define LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(_name, _eventid) \
-	LRW_PCIE_EVENT_ATTR(_name, LRW_PCIE_TIME_BASE_EVENT, _eventid, 0)
-#define LRW_PCIE_PMU_LANE_EVENT_ATTR(_name, _eventid) \
-	LRW_PCIE_EVENT_ATTR(_name, LRW_PCIE_LANE_EVENT, _eventid, 0)
+#define LRW_PCIE_PMU_TBA_EVENT_ATTR(_name, _eventid) \
+	LRW_PCIE_EVENT_ATTR(_name, LRW_PCIE_TBA_EVENT, _eventid, 0)
+#define LRW_PCIE_PMU_EC_EVENT_ATTR(_name, _eventid) \
+	LRW_PCIE_EVENT_ATTR(_name, LRW_PCIE_EC_EVENT, _eventid, 0)
 
 static struct attribute *lrw_pcie_pmu_time_event_attrs[] = {
-	/* Time Based Analysis Group #0 */
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(one_cycle, 0x00),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(L1, 0x01),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(L0, 0x02),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(RX_L0S, 0x03),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(TX_L0S, 0x04),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(L1_1, 0x05),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(L1_2, 0x06),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(CFG_RCVRY, 0x07),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(TX_RX_L0S, 0x08),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(L1_AUX, 0x09),
+	/* LRW TBA Group #0 - LTSSM time counters */
+	LRW_PCIE_PMU_TBA_EVENT_ATTR(L1, 0x01),
+	LRW_PCIE_PMU_TBA_EVENT_ATTR(L0, 0x02),
+	LRW_PCIE_PMU_TBA_EVENT_ATTR(cfg_rcvry, 0x07),
 
-	/* Time Based Analysis Group #1 */
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(Rx_PCIe_TLP_Data_Payload, 0x20),
-	LRW_PCIE_PMU_TIME_BASE_EVENT_ATTR(Tx_PCIe_TLP_Data_Payload, 0x21),
+	/* LRW TBA Group #1 - TLP data payload counters */
+	LRW_PCIE_PMU_TBA_EVENT_ATTR(tlp_data_ply_rx, 0x20),
+	LRW_PCIE_PMU_TBA_EVENT_ATTR(tlp_data_ply_tx, 0x21),
 
-	/* Error Counter Group #6 */
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_update_fc_dllp, 0x600),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_ack_dllp, 0x601),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_update_fc_dllp, 0x602),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_ack_dllp, 0x603),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_duplicate_tlp, 0x604),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_nulified_tlp, 0x605),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_nulified_tlp, 0x606),
+	/*
+	 * LRW EC Group #6 - DLLP counters (flow control, ACK),
+	 * Abnormal TLP counters (duplicate/nullified TLP)
+	 */
+	LRW_PCIE_PMU_EC_EVENT_ATTR(update_dllp_fc_tx, 0x600),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(dllp_ack_tx, 0x601),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(update_dllp_fc_rx, 0x602),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(dllp_ack_rx, 0x603),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(dup_tlp_rx, 0x604),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(null_tlp_rx, 0x606),
 
-	/* Error Counter Group #7 */
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_tlp_with_prefix, 0x700),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_deferrable_memory_write_tlp, 0x701),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_memory_write, 0x702),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_memory_read, 0x703),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_io_write, 0x704),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_io_read, 0x705),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_configuration_write, 0x706),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_configuration_read, 0x707),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_completion_without_data, 0x708),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_completion_with_data, 0x709),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_atomic, 0x70a),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_tlp_with_prefix, 0x70b),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_deferrable_memory_write_tlp, 0x70c),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_memory_write, 0x70d),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_memory_read, 0x70e),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_io_write, 0x70F),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_io_read, 0x710),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_configuration_write, 0x711),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_configuration_read, 0x712),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_completion_without_data, 0x713),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_completion_with_data, 0x714),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_atomic, 0x715),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_ccix_tlp, 0x716),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_ccix_tlp, 0x717),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(tx_message_tlp, 0x718),
-	LRW_PCIE_PMU_LANE_EVENT_ATTR(rx_message_tlp, 0x719), NULL
+	/*
+	 * LRW EC Group #7 - TLP transaction counters (Memory, Config,
+	 * Completion, Atomic, Message)
+	 */
+	LRW_PCIE_PMU_EC_EVENT_ATTR(tlp_pfx_tx, 0x700),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(mem_wr_tx, 0x702),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(mem_rd_tx, 0x703),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cfg_wr_tx, 0x706),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cfg_rd_tx, 0x707),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cpl_tx, 0x708),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cpld_tx, 0x709),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(dfr_mem_wr_rx, 0x70c),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(mem_wr_rx, 0x70d),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(mem_rd_rx, 0x70e),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cpl_ca_rx, 0x70F),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cpl_ur_rx, 0x710),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cfg_wr_rx, 0x711),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cfg_rd_rx, 0x712),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cpl_rx, 0x713),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(cpld_rx, 0x714),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(atomic_rx, 0x715),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(msg_tlp_tx, 0x718),
+	LRW_PCIE_PMU_EC_EVENT_ATTR(msg_tlp_rx, 0x719), NULL
 };
 
 static const struct attribute_group lrw_pcie_event_attrs_group = {
@@ -375,16 +341,16 @@ static void lrw_pcie_pmu_event_update(struct perf_event *event)
 	do {
 		prev = local64_read(&hwc->prev_count);
 
-		if (type == LRW_PCIE_LANE_EVENT)
+		if (type == LRW_PCIE_EC_EVENT)
 			now = lrw_pcie_pmu_read_lane_event_counter(pcie_pmu);
-		else if (type == LRW_PCIE_TIME_BASE_EVENT)
+		else if (type == LRW_PCIE_TBA_EVENT)
 			now = lrw_pcie_pmu_read_time_based_counter(pcie_pmu);
 
 	} while (local64_cmpxchg(&hwc->prev_count, prev, now) != prev);
 
-	if (type == LRW_PCIE_LANE_EVENT)
+	if (type == LRW_PCIE_EC_EVENT)
 		delta = (now - prev) & LRW_PCIE_LANE_EVENT_MAX_PERIOD;
-	else if (type == LRW_PCIE_TIME_BASE_EVENT)
+	else if (type == LRW_PCIE_TBA_EVENT)
 		delta = (now - prev) & LRW_PCIE_TIME_BASED_EVENT_MAX_PERIOD;
 	local64_add(delta, &event->count);
 }
@@ -416,7 +382,7 @@ static int lrw_pcie_pmu_event_init(struct perf_event *event)
 			return -EINVAL;
 	}
 
-	if (type == LRW_PCIE_LANE_EVENT) {
+	if (type == LRW_PCIE_EC_EVENT) {
 		lane = LRW_PCIE_EVENT_LANE(event);
 		if (lane < 0 || lane >= pcie_pmu->nr_lanes)
 			return -EINVAL;
@@ -441,9 +407,9 @@ static void lrw_pcie_pmu_event_start(struct perf_event *event, int flags)
 	hwc->state = 0;
 	lrw_pcie_pmu_set_period(hwc);
 
-	if (type == LRW_PCIE_LANE_EVENT)
+	if (type == LRW_PCIE_EC_EVENT)
 		lrw_pcie_pmu_lane_event_enable(pcie_pmu, true);
-	else if (type == LRW_PCIE_TIME_BASE_EVENT)
+	else if (type == LRW_PCIE_TBA_EVENT)
 		lrw_pcie_pmu_time_based_event_enable(pcie_pmu, true);
 }
 
@@ -456,9 +422,9 @@ static void lrw_pcie_pmu_event_stop(struct perf_event *event, int flags)
 	if (event->hw.state & PERF_HES_STOPPED)
 		return;
 
-	if (type == LRW_PCIE_LANE_EVENT)
+	if (type == LRW_PCIE_EC_EVENT)
 		lrw_pcie_pmu_lane_event_enable(pcie_pmu, false);
-	else if (type == LRW_PCIE_TIME_BASE_EVENT)
+	else if (type == LRW_PCIE_TBA_EVENT)
 		lrw_pcie_pmu_time_based_event_enable(pcie_pmu, false);
 
 	lrw_pcie_pmu_event_update(event);
@@ -485,7 +451,7 @@ static int lrw_pcie_pmu_event_add(struct perf_event *event, int flags)
 	pcie_pmu->event[type - 1] = event;
 	hwc->state = PERF_HES_STOPPED | PERF_HES_UPTODATE;
 
-	if (type == LRW_PCIE_LANE_EVENT) {
+	if (type == LRW_PCIE_EC_EVENT) {
 		/* EVENT_COUNTER_DATA_REG needs clear manually */
 		ctrl = FIELD_PREP(LRW_PCIE_CNT_EVENT_SEL, event_id) |
 		       FIELD_PREP(LRW_PCIE_CNT_LANE_SEL, lane) |
@@ -494,7 +460,7 @@ static int lrw_pcie_pmu_event_add(struct perf_event *event, int flags)
 				  LRW_PCIE_EVENT_PER_CLEAR);
 		pci_write_config_dword(pdev, ras_des + LRW_PCIE_EVENT_CNT_CTL,
 				       ctrl);
-	} else if (type == LRW_PCIE_TIME_BASE_EVENT) {
+	} else if (type == LRW_PCIE_TBA_EVENT) {
 		/*
 		 * TIME_BASED_ANAL_DATA_REG is a 64 bit register, we can safely
 		 * use it with any manually controlled duration. And it is
