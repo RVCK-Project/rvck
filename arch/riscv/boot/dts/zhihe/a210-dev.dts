@@ -1,0 +1,96 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/dts-v1/;
+
+#include "a210.dtsi"
+
+/ {
+	model = "Zhihe A210 Development Board";
+	compatible = "zhihe,a210-dev", "zhihe,a210";
+
+	aliases {
+		mmc0 = &emmc;
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+		serial3 = &uart3;
+		serial4 = &uart4;
+		serial5 = &uart5;
+		serial6 = &uart6;
+		serial7 = &uart7;
+		serial8 = &uart8;
+		serial9 = &uart9;
+	};
+};
+
+&emmc {
+	max-frequency = <196608000>;
+	non-removable;
+	mmc-hs400-enhanced-strobe;
+	mmc-hs400-1_8v;
+	mmc-hs200-1_8v;
+	no-sdio;
+	no-sd;
+	bus-width = <8>;
+	cap-mmc-highspeed;
+};
+
+&cluster0_opp {
+	opp0-500000000 {
+		opp-microvolt = <1000000>;
+	};
+	opp0-1200000000 {
+		opp-microvolt = <1000000>;
+	};
+	opp0-1500000000 {
+		opp-microvolt = <1000000>;
+	};
+	opp0-1698000000 {
+		opp-microvolt = <1000000>;
+	};
+	opp0-1896000000 {
+		opp-microvolt = <1000000>;
+	};
+};
+
+&cluster1_opp {
+	opp1-500000000 {
+		opp-microvolt = <1000000>;
+	};
+	opp1-1698000000 {
+		opp-microvolt = <1000000>;
+	};
+	opp1-1896000000 {
+		opp-microvolt = <1000000>;
+	};
+	opp1-2298000000 {
+		opp-microvolt = <1000000>;
+	};
+};
+
+&uart0 {
+	status = "disabled";
+};
+
+&uart1 {
+	status = "disabled";
+};
+
+&uart2 {
+	status = "disabled";
+};
+
+&uart3 {
+	status = "disabled";
+};
+
+&uart6 {
+	status = "disabled";
+};
+
+&uart7 {
+	status = "disabled";
+};
+
+&uart9 {
+	status = "disabled";
+};
