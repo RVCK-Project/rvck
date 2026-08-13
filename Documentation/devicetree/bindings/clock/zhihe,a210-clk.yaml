@@ -1,0 +1,224 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/clock/zhihe,a210-clk.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: ZhiHe A210 Clock Controller
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  The ZhiHe A210 SoC contains several clock controllers spread across
+  different subsystems. Each controller manages PLLs, dividers, gates and
+  muxes for its subsystem. The register regions consumed by a controller
+  depend on the specific compatible string.
+
+properties:
+  compatible:
+    enum:
+      - zhihe,a210-clk
+      - zhihe,a210-peri-clk
+      - zhihe,a210-gpu-clk
+      - zhihe,a210-pcie-clk
+      - zhihe,a210-usb-clk
+      - zhihe,a210-vi-clk
+      - zhihe,a210-vp-clk
+      - zhihe,a210-vo-clk
+      - zhihe,a210-npu-clk
+
+  reg:
+    minItems: 1
+    maxItems: 9
+
+  reg-names:
+    minItems: 1
+    maxItems: 9
+
+  clocks:
+    description: Input reference oscillators.
+    minItems: 1
+    maxItems: 3
+
+  clock-names:
+    minItems: 1
+    maxItems: 3
+    items:
+      enum:
+        - osc-32k
+        - osc-24m
+        - rc-24m
+
+  "#clock-cells":
+    const: 1
+    description:
+      The single cell is the clock ID defined in
+      include/dt-bindings/clock/zhihe,a210-clk.h.
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - "#clock-cells"
+
+allOf:
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-clk
+    then:
+      properties:
+        reg:
+          minItems: 9
+        reg-names:
+          items:
+            - const: pll-wrap
+            - const: top-crg
+            - const: cpu-ss-clk-sysreg
+            - const: cpu-ss-cpu-pll
+            - const: ddr0-sysreg
+            - const: ddr1-sysreg
+            - const: slc-dual-sysreg
+            - const: top-crg-t
+            - const: cpu-ss-ccu
+        clocks:
+          minItems: 3
+        clock-names:
+          items:
+            - const: osc-32k
+            - const: osc-24m
+            - const: rc-24m
+      required:
+        - clocks
+        - clock-names
+
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-peri-clk
+    then:
+      properties:
+        reg:
+          minItems: 5
+          maxItems: 5
+        reg-names:
+          items:
+            - const: peri0-sysreg
+            - const: peri1-sysreg
+            - const: peri2-sysreg
+            - const: peri3-sysreg
+            - const: tee-crg
+
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-gpu-clk
+    then:
+      properties:
+        reg:
+          minItems: 2
+          maxItems: 2
+        reg-names:
+          items:
+            - const: gpu-ss-pwrap-clk-en
+            - const: gpu-ss-top-clk-en
+
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-pcie-clk
+    then:
+      properties:
+        reg:
+          maxItems: 1
+        reg-names:
+          items:
+            - const: pcie-clk-en
+
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-usb-clk
+    then:
+      properties:
+        reg:
+          maxItems: 1
+        reg-names:
+          items:
+            - const: usb-clk-en
+
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-vi-clk
+    then:
+      properties:
+        reg:
+          minItems: 2
+          maxItems: 2
+        reg-names:
+          items:
+            - const: vi-clk
+            - const: vi-misc-ctrl
+
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-vp-clk
+    then:
+      properties:
+        reg:
+          maxItems: 1
+        reg-names:
+          items:
+            - const: vp-clk
+
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-vo-clk
+    then:
+      properties:
+        reg:
+          minItems: 2
+          maxItems: 2
+        reg-names:
+          items:
+            - const: vo-clk
+            - const: vo-path-ctrl
+
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-npu-clk
+    then:
+      properties:
+        reg:
+          minItems: 2
+          maxItems: 2
+        reg-names:
+          items:
+            - const: npu-clk
+            - const: npu-top-clk
+
+additionalProperties: false
+
+examples:
+  - |
+    #include <dt-bindings/clock/zhihe,a210-clk.h>
+
+    clock-controller@260000 {
+        compatible = "zhihe,a210-clk";
+        reg = <0x00260000 0x1000>, <0x00250000 0x1000>,
+              <0x10141600 0x100>, <0x10141400 0x100>,
+              <0x04810000 0x1000>, <0x05810000 0x1000>,
+              <0x04900000 0x1000>, <0x20250000 0x1000>,
+              <0x10140000 0xe00>;
+        reg-names = "pll-wrap", "top-crg", "cpu-ss-clk-sysreg",
+                    "cpu-ss-cpu-pll", "ddr0-sysreg", "ddr1-sysreg",
+                    "slc-dual-sysreg", "top-crg-t", "cpu-ss-ccu";
+        clocks = <&osc_32k>, <&osc_24m>, <&rc_24m>;
+        clock-names = "osc-32k", "osc-24m", "rc-24m";
+        #clock-cells = <1>;
+    };
