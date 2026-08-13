@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0
+
+config CLK_ZHIHE_A210
+	tristate "ZhiHe A210 clock driver"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	default ARCH_ZHIHE
+	help
+	  Build the clock controller driver for the ZhiHe A210 SoC.
+
+	  This driver provides clock tree management including PLLs,
+	  dividers, gates, and muxes for the A210 platform. Say Y if
+	  you are building a kernel for the ZhiHe A210.
