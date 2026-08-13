@@ -22,6 +22,17 @@ config RESET_A10SR
 	  This option enables support for the external reset functions for
 	  peripheral PHYs on the Altera Arria10 System Resource Chip.
 
+config RESET_ZHIHE_A210
+	tristate "ZhiHe A210 reset controller"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	default ARCH_ZHIHE
+	help
+	  Build the reset controller driver for the ZhiHe A210 SoC.
+
+	  This driver provides reset control for the various hardware
+	  blocks in the A210 SoC. Say Y if you are building a kernel
+	  for the ZhiHe A210 platform.
+
 config RESET_ATH79
 	bool "AR71xx Reset Driver" if COMPILE_TEST
 	default ATH79
