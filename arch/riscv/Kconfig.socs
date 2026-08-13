@@ -83,6 +83,19 @@ config ARCH_ULTRARISC
 config ARCH_VIRT
 	def_bool SOC_VIRT
 
+config ARCH_ZHIHE
+	bool "ZhiHe SoCs"
+	select ARCH_HAS_RESET_CONTROLLER
+	select CLK_ZHIHE_A210
+	select CLOCKSOURCE_VALIDATE_LAST_CYCLE
+	select RESET_ZHIHE_A210
+	help
+	  This enables support for ZhiHe SoC platform hardware.
+
+	  ZhiHe SoCs are RISC-V based application processors with
+	  integrated peripherals including clock controllers, power
+	  domains, and reset controllers.
+
 config SOC_VIRT
 	bool "QEMU Virt Machine"
 	select CLINT_TIMER if RISCV_M_MODE
