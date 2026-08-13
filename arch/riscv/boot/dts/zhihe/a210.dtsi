@@ -1,0 +1,930 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+/*
+ * Copyright (C) 2021 Alibaba Group Holding Limited.
+ */
+
+#include <dt-bindings/ata/ahci.h>
+#include <dt-bindings/clock/zhihe,a210-clk.h>
+#include <dt-bindings/i2c/i2c.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/reset/zhihe,a210-resets.h>
+
+/ {
+	compatible = "zhihe,a210";
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	/* The actual capacity will be adjusted through SPL */
+	memory@0 {
+		device_type = "memory";
+		reg = <0x00 0x80000000  0x01 0x00000000>; /* 4G */
+		numa-node-id = <0>;
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		linux,cma {
+			compatible = "shared-dma-pool";
+			reusable;
+			size = <0x00 0x40000000>;
+			alloc-ranges = <0x00 0x90000000 0x00 0x40000000>;
+			linux,cma-default;
+		};
+
+		memory@1c000000 {
+			reg = <0x00 0x1c000000 0x00 0x2000000>;
+			no-map;
+		};
+
+		framebuffer: framebuffer@10000000 {
+			reg = <0x01 0x00 0x00 0x5000000>;
+			no-map;
+		};
+	};
+
+	chosen {
+		stdout-path = "serial4";
+	};
+
+	reg_vref_1v8: regulator-adc-verf {
+		compatible = "regulator-fixed";
+		regulator-name = "vref-1v8";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	cpus: cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		timebase-frequency = <24000000>; /*24M*/
+		c908_0: cpu@0 {
+			device_type = "cpu";
+			reg = <0>;
+			compatible = "riscv";
+			riscv,isa = "rv64imac";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v",
+					     "zicntr", "zicsr", "zifencei", "zihpm",
+					     "zba", "zbb", "zbc", "zbs",
+					     "zicbom", "zicbop", "zicboz",
+					     "svpbmt", "sscofpmf";
+			riscv,cbom-block-size = <64>;
+			riscv,cboz-block-size = <64>;
+			mmu-type = "riscv,sv39";
+			i-cache-block-size = <64>;
+			i-cache-size = <32768>;
+			i-cache-sets = <256>;
+			d-cache-block-size = <64>;
+			d-cache-size = <32768>;
+			d-cache-sets = <256>;
+			next-level-cache = <&c0_l2_cache>;
+			capacity-dmips-mhz = <768>;
+			clocks = <&clk C908_CPU_TO_CDE_CLK_MUX>;
+			operating-points-v2 = <&cluster0_opp>;
+			#cooling-cells = <2>;
+			numa-node-id = <0>;
+			status = "okay";
+			cpu0_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+		c908_1: cpu@1 {
+			device_type = "cpu";
+			reg = <1>;
+			compatible = "riscv";
+			riscv,isa = "rv64imac";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v",
+					     "zicntr", "zicsr", "zifencei", "zihpm",
+					     "zba", "zbb", "zbc", "zbs",
+					     "zicbom", "zicbop", "zicboz",
+					     "svpbmt", "sscofpmf";
+			riscv,cbom-block-size = <64>;
+			riscv,cboz-block-size = <64>;
+			mmu-type = "riscv,sv39";
+			i-cache-block-size = <64>;
+			i-cache-size = <32768>;
+			i-cache-sets = <256>;
+			d-cache-block-size = <64>;
+			d-cache-size = <32768>;
+			d-cache-sets = <256>;
+			next-level-cache = <&c0_l2_cache>;
+			capacity-dmips-mhz = <768>;
+			operating-points-v2 = <&cluster0_opp>;
+			#cooling-cells = <2>;
+			numa-node-id = <0>;
+			status = "okay";
+			cpu1_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+		c908_2: cpu@2 {
+			device_type = "cpu";
+			reg = <2>;
+			compatible = "riscv";
+			riscv,isa = "rv64imac";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v",
+					     "zicntr", "zicsr", "zifencei", "zihpm",
+					     "zba", "zbb", "zbc", "zbs",
+					     "zicbom", "zicbop", "zicboz",
+					     "svpbmt", "sscofpmf";
+			riscv,cbom-block-size = <64>;
+			riscv,cboz-block-size = <64>;
+			mmu-type = "riscv,sv39";
+			i-cache-block-size = <64>;
+			i-cache-size = <32768>;
+			i-cache-sets = <256>;
+			d-cache-block-size = <64>;
+			d-cache-size = <32768>;
+			d-cache-sets = <256>;
+			next-level-cache = <&c0_l2_cache>;
+			capacity-dmips-mhz = <768>;
+			operating-points-v2 = <&cluster0_opp>;
+			#cooling-cells = <2>;
+			numa-node-id = <0>;
+			status = "okay";
+			cpu2_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+		c908_3: cpu@3 {
+			device_type = "cpu";
+			reg = <3>;
+			compatible = "riscv";
+			riscv,isa = "rv64imac";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v",
+					     "zicntr", "zicsr", "zifencei", "zihpm",
+					     "zba", "zbb", "zbc", "zbs",
+					     "zicbom", "zicbop", "zicboz",
+					     "svpbmt", "sscofpmf";
+			riscv,cbom-block-size = <64>;
+			riscv,cboz-block-size = <64>;
+			mmu-type = "riscv,sv39";
+			i-cache-block-size = <64>;
+			i-cache-size = <32768>;
+			i-cache-sets = <256>;
+			d-cache-block-size = <64>;
+			d-cache-size = <32768>;
+			d-cache-sets = <256>;
+			next-level-cache = <&c0_l2_cache>;
+			capacity-dmips-mhz = <768>;
+			operating-points-v2 = <&cluster0_opp>;
+			#cooling-cells = <2>;
+			numa-node-id = <0>;
+			status = "okay";
+			cpu3_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+
+		c920_4: cpu@4 {
+			device_type = "cpu";
+			reg = <4>;
+			compatible = "riscv";
+			riscv,isa = "rv64imac";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v",
+					     "zicntr", "zicsr", "zifencei", "zihpm",
+					     "zba", "zbb", "zbc", "zbs",
+					     "zicbom", "zicbop", "zicboz",
+					     "svpbmt", "sscofpmf";
+			riscv,cbom-block-size = <64>;
+			riscv,cboz-block-size = <64>;
+			mmu-type = "riscv,sv39";
+			i-cache-block-size = <64>;
+			i-cache-size = <65536>;
+			i-cache-sets = <512>;
+			d-cache-block-size = <64>;
+			d-cache-size = <65536>;
+			d-cache-sets = <512>;
+			next-level-cache = <&c1_l2_cache>;
+			capacity-dmips-mhz = <1024>;
+			clocks = <&clk C920_CPU_TO_CDE_CLK_MUX>;
+			operating-points-v2 = <&cluster1_opp>;
+			#cooling-cells = <2>;
+			numa-node-id = <0>;
+			status = "okay";
+			cpu4_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+		c920_5: cpu@5 {
+			device_type = "cpu";
+			reg = <5>;
+			compatible = "riscv";
+			riscv,isa = "rv64imac";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v",
+					     "zicntr", "zicsr", "zifencei", "zihpm",
+					     "zba", "zbb", "zbc", "zbs",
+					     "zicbom", "zicbop", "zicboz",
+					     "svpbmt", "sscofpmf";
+			riscv,cbom-block-size = <64>;
+			riscv,cboz-block-size = <64>;
+			mmu-type = "riscv,sv39";
+			i-cache-block-size = <64>;
+			i-cache-size = <65536>;
+			i-cache-sets = <512>;
+			d-cache-block-size = <64>;
+			d-cache-size = <65536>;
+			d-cache-sets = <512>;
+			next-level-cache = <&c1_l2_cache>;
+			capacity-dmips-mhz = <1024>;
+			operating-points-v2 = <&cluster1_opp>;
+			#cooling-cells = <2>;
+			numa-node-id = <0>;
+			status = "okay";
+			cpu5_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+		c920_6: cpu@6 {
+			device_type = "cpu";
+			reg = <6>;
+			compatible = "riscv";
+			riscv,isa = "rv64imac";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v",
+					     "zicntr", "zicsr", "zifencei", "zihpm",
+					     "zba", "zbb", "zbc", "zbs",
+					     "zicbom", "zicbop", "zicboz",
+					     "svpbmt", "sscofpmf";
+			riscv,cbom-block-size = <64>;
+			riscv,cboz-block-size = <64>;
+			mmu-type = "riscv,sv39";
+			i-cache-block-size = <64>;
+			i-cache-size = <65536>;
+			i-cache-sets = <512>;
+			d-cache-block-size = <64>;
+			d-cache-size = <65536>;
+			d-cache-sets = <512>;
+			next-level-cache = <&c1_l2_cache>;
+			capacity-dmips-mhz = <1024>;
+			operating-points-v2 = <&cluster1_opp>;
+			#cooling-cells = <2>;
+			numa-node-id = <0>;
+			status = "okay";
+			cpu6_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+		c920_7: cpu@7 {
+			device_type = "cpu";
+			reg = <7>;
+			compatible = "riscv";
+			riscv,isa = "rv64imac";
+			riscv,isa-base = "rv64i";
+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "v",
+					     "zicntr", "zicsr", "zifencei", "zihpm",
+					     "zba", "zbb", "zbc", "zbs",
+					     "zicbom", "zicbop", "zicboz",
+					     "svpbmt", "sscofpmf";
+			riscv,cbom-block-size = <64>;
+			riscv,cboz-block-size = <64>;
+			mmu-type = "riscv,sv39";
+			i-cache-block-size = <64>;
+			i-cache-size = <65536>;
+			i-cache-sets = <512>;
+			d-cache-block-size = <64>;
+			d-cache-size = <65536>;
+			d-cache-sets = <512>;
+			next-level-cache = <&c1_l2_cache>;
+			capacity-dmips-mhz = <1024>;
+			operating-points-v2 = <&cluster1_opp>;
+			#cooling-cells = <2>;
+			numa-node-id = <0>;
+			status = "okay";
+			cpu7_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				compatible = "riscv,cpu-intc";
+				interrupt-controller;
+			};
+		};
+
+		c0_l2_cache: c0_l2-cache {
+			compatible = "cache";
+			cache-block-size = <64>;
+			cache-level = <2>;
+			cache-size = <524288>;
+			cache-sets = <512>;
+			cache-unified;
+		};
+		c1_l2_cache: c1_l2-cache {
+			compatible = "cache";
+			cache-block-size = <64>;
+			cache-level = <2>;
+			cache-size = <1048576>;
+			cache-sets = <1024>;
+			cache-unified;
+		};
+
+		cpu-map {
+			cluster0 {
+				core0 {
+					cpu = <&c908_0>;
+				};
+
+				core1 {
+					cpu = <&c908_1>;
+				};
+
+				core2 {
+					cpu = <&c908_2>;
+				};
+
+				core3 {
+					cpu = <&c908_3>;
+				};
+			};
+			cluster1 {
+				core0 {
+					cpu = <&c920_4>;
+				};
+
+				core1 {
+					cpu = <&c920_5>;
+				};
+
+				core2 {
+					cpu = <&c920_6>;
+				};
+
+				core3 {
+					cpu = <&c920_7>;
+				};
+			};
+		};
+
+		idle_states: idle-states {
+			CPU_RET_0_0: cpu-retentive-0-0 {
+				compatible = "riscv,idle-state";
+				riscv,sbi-suspend-param = <0x10000000>;
+				entry-latency-us = <20>;
+				exit-latency-us = <40>;
+				min-residency-us = <80>;
+			};
+
+			CPU_NONRET_0_0: cpu-nonretentive-0-0 {
+				compatible = "riscv,idle-state";
+				riscv,sbi-suspend-param = <0x90000000>;
+				entry-latency-us = <250>;
+				exit-latency-us = <500>;
+				min-residency-us = <950>;
+			};
+
+			CLUSTER_RET_0: cluster-retentive-0 {
+				compatible = "riscv,idle-state";
+				riscv,sbi-suspend-param = <0x11000000>;
+				local-timer-stop;
+				entry-latency-us = <50>;
+				exit-latency-us = <100>;
+				min-residency-us = <250>;
+				wakeup-latency-us = <130>;
+			};
+
+			CLUSTER_NONRET_0: cluster-nonretentive-0 {
+				compatible = "riscv,idle-state";
+				riscv,sbi-suspend-param = <0x91000000>;
+				local-timer-stop;
+				entry-latency-us = <600>;
+				exit-latency-us = <1100>;
+				min-residency-us = <2700>;
+				wakeup-latency-us = <1500>;
+			};
+		};
+	};
+
+	cluster0_opp: opp-table-cluster0 {
+		compatible = "operating-points-v2";
+		opp-shared;
+		opp0-500000000 {
+			opp-hz = /bits/ 64 <500000000>;
+			bus-clk-hz = /bits/ 64 <196608000>;
+			pic-clk-hz = /bits/ 64 <250000000>;
+			cfg-clk-hz = /bits/ 64 <110000000>;
+			com-clk-hz = /bits/ 64 <82500000>;
+			apb-clk-hz = /bits/ 64 <82500000>;
+			opp-microvolt = <700000 800000>;
+		};
+		opp0-1200000000 {
+			opp-hz = /bits/ 64 <1200000000>;
+			bus-clk-hz = /bits/ 64 <660000000>;
+			pic-clk-hz = /bits/ 64 <500000000>;
+			cfg-clk-hz = /bits/ 64 <220000000>;
+			com-clk-hz = /bits/ 64 <165000000>;
+			apb-clk-hz = /bits/ 64 <165000000>;
+			opp-microvolt = <700000 800000>;
+		};
+		opp0-1500000000 {
+			opp-hz = /bits/ 64 <1500000000>;
+			bus-clk-hz = /bits/ 64 <1000000000>;
+			pic-clk-hz = /bits/ 64 <1000000000>;
+			cfg-clk-hz = /bits/ 64 <330000000>;
+			com-clk-hz = /bits/ 64 <165000000>;
+			apb-clk-hz = /bits/ 64 <165000000>;
+			opp-microvolt = <800000 800000>;
+		};
+		opp0-1698000000 {
+			opp-hz = /bits/ 64 <1698000000>;
+			bus-clk-hz = /bits/ 64 <1100000000>;
+			pic-clk-hz = /bits/ 64 <1000000000>;
+			cfg-clk-hz = /bits/ 64 <330000000>;
+			com-clk-hz = /bits/ 64 <165000000>;
+			apb-clk-hz = /bits/ 64 <165000000>;
+			opp-microvolt = <900000 900000>;
+		};
+		opp0-1896000000 {
+			opp-hz = /bits/ 64 <1896000000>;
+			bus-clk-hz = /bits/ 64 <1320000000>;
+			pic-clk-hz = /bits/ 64 <1000000000>;
+			cfg-clk-hz = /bits/ 64 <330000000>;
+			com-clk-hz = /bits/ 64 <165000000>;
+			apb-clk-hz = /bits/ 64 <165000000>;
+			opp-microvolt = <1000000 1000000>;
+		};
+	};
+
+	cluster1_opp: opp-table-cluster1 {
+		compatible = "operating-points-v2";
+		opp-shared;
+		opp1-500000000 {
+			opp-hz = /bits/ 64 <500000000>;
+			opp-microvolt = <800000>;
+		};
+		opp1-1698000000 {
+			opp-hz = /bits/ 64 <1698000000>;
+			opp-microvolt = <900000>;
+		};
+		opp1-1896000000 {
+			opp-hz = /bits/ 64 <1896000000>;
+			opp-microvolt = <1000000>;
+		};
+		opp1-2298000000 {
+			opp-hz = /bits/ 64 <2298000000>;
+			opp-microvolt = <1000000>;
+			turbo-mode;
+		};
+	};
+
+	pmu {
+		compatible = "riscv,pmu";
+		riscv,event-to-mhpmevent =
+			/* PMU_HW_CPU_CYCLES:1 */
+			<0x00001 0x00000000 0x00000000>,
+			/* PMU_HW_INSTRUCTIONS:2 */
+			<0x00002 0x00000000 0x00000000>,
+			/* PMU_HW_CACHE_REFERENCES:3 */
+			/* PMU_HW_CACHE_MISSES:4 */
+			/* PMU_HW_BRANCH_INSTRUCTIONS:5 */
+			<0x00005 0x00000000 0x00000007>,
+			/* PMU_HW_BRANCH_MISSES:6 */
+			<0x00006 0x00000000 0x00000006>,
+			/* PMU_HW_BUS_CYCLES:7 */
+			/* PMU_HW_STALLED_CYCLES_FRONTEND:8 */
+			<0x00008 0x00000000 0x00000027>,
+			/* PMU_HW_STALLED_CYCLES_BACKEND:9 */
+			<0x00009 0x00000000 0x00000028>,
+			/* PMU_HW_REF_CPU_CYCLES:10 */
+			/* L1D_READ_ACCESS:0x10000 */
+			<0x10000 0x00000000 0x0000000c>,
+			/* L1D_READ_MISS:0x10001 */
+			<0x10001 0x00000000 0x0000000d>,
+			/* L1D_WRITE_ACCESS:0x10002 */
+			<0x10002 0x00000000 0x0000000e>,
+			/* L1D_WRITE_MISS:0x10003 */
+			<0x10003 0x00000000 0x0000000f>,
+			/* L1I_READ_ACCESS:0x10008 */
+			<0x10008 0x00000000 0x00000001>,
+			/* L1I_READ_MISS:0x10009 */
+			<0x10009 0x00000000 0x00000002>,
+			/* dTLB read miss :0x10019 */
+			<0x10019 0x00000000 0x00000004>,
+			/* iTLB read miss :0x10021 */
+			<0x10021 0x00000000 0x00000003>;
+			/* LL_READ_ACCESS:0x10010 */
+			/* LL_READ_MISS:0x10011 */
+			/* LL_WRITE_ACCESS:0x10012 */
+			/* LL_WRITE_MISS:0x10013 */
+			/* BPU_READ_ACCESS:0x10028 */
+			/* BPU_READ_MISS:0x10029 */
+		riscv,event-to-mhpmcounters =
+			/* 31 mhpmcounters, bitmap 0xfffffff8 */
+			<0x00001 0x00001 0x00000001>,
+			<0x00002 0x00002 0x00000004>,
+			<0x00005 0x00005 0xfffffff8>,
+			<0x00006 0x00006 0xfffffff8>,
+			<0x00008 0x00008 0xfffffff8>,
+			<0x00009 0x00009 0xfffffff8>,
+			<0x10000 0x10000 0xfffffff8>,
+			<0x10001 0x10001 0xfffffff8>,
+			<0x10002 0x10002 0xfffffff8>,
+			<0x10003 0x10003 0xfffffff8>,
+			<0x10008 0x10008 0xfffffff8>,
+			<0x10009 0x10009 0xfffffff8>,
+			<0x10019 0x10019 0xfffffff8>,
+			<0x10021 0x10021 0xfffffff8>;
+		riscv,raw-event-to-mhpmcounters =
+			/* For raw event ID 0x0 - 0xff */
+			<0x0 0x0 0xffffffff 0xffffff00 0xfffffff8>;
+	};
+
+	clocks {
+
+		osc_32k: clock-osc-32k {
+			compatible = "fixed-clock";
+			clock-frequency = <32768>;
+			clock-output-names = "osc-32k";
+			#clock-cells = <0>;
+		};
+
+		osc_24m: clock-osc-24m {
+			compatible = "fixed-clock";
+			clock-frequency = <24000000>;
+			clock-output-names = "osc-24m";
+			#clock-cells = <0>;
+		};
+
+		aon_110m: clock-osc-110m {
+			compatible = "fixed-clock";
+			clock-frequency = <110000000>;
+			clock-output-names = "aon-110m";
+			#clock-cells = <0>;
+		};
+
+		rc_24m: clock-rc-24m {
+			compatible = "fixed-clock";
+			clock-frequency = <24000000>;
+			clock-output-names = "rc-24m";
+			#clock-cells = <0>;
+		};
+
+		apb_clk: apb-clk-clock {
+			compatible = "fixed-clock";
+			clock-frequency = <62500000>;
+			clock-output-names = "apb-clk";
+			#clock-cells = <0>;
+		};
+	};
+
+	soc {
+		compatible = "simple-bus";
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+		dma-noncoherent;
+
+
+		clint0: clint@1c000000 {
+			compatible = "thead,th1520-clint", "thead,c900-clint";
+			interrupts-extended = <
+				&cpu0_intc  3 &cpu0_intc  7
+				&cpu1_intc  3 &cpu1_intc  7
+				&cpu2_intc  3 &cpu2_intc  7
+				&cpu3_intc  3 &cpu3_intc  7
+				&cpu4_intc  3 &cpu4_intc  7
+				&cpu5_intc  3 &cpu5_intc  7
+				&cpu6_intc  3 &cpu6_intc  7
+				&cpu7_intc  3 &cpu7_intc  7
+			>;
+			reg = <0x00 0x1c000000 0x0 0x0000d000>;
+		};
+
+		clk: clock-controller@260000 {
+			compatible = "zhihe,a210-clk";
+			reg = <0x00 0x00260000 0x0 0x1000>,<0x00 0x00250000 0x0 0x1000>,
+			      <0x00 0x10141600 0x0 0x100>,<0x00 0x10141400 0x0 0x100>,
+			      <0x00 0x04810000 0x0 0x1000>,<0x00 0x05810000 0x0 0x1000>,
+			      <0x00 0x04900000 0x0 0x1000>,<0x00 0x20250000 0x0 0x1000>,
+			      <0x00 0x10140000 0x0 0xE00>;
+			reg-names = "pll-wrap","top-crg","cpu-ss-clk-sysreg","cpu-ss-cpu-pll",
+			"ddr0-sysreg","ddr1-sysreg","slc-dual-sysreg","top-crg-t","cpu-ss-ccu";
+			#clock-cells = <1>;
+			clocks = <&osc_32k>, <&osc_24m>, <&rc_24m>;
+			clock-names = "osc-32k", "osc-24m", "rc-24m";
+			assigned-clocks = <&clk AUDIO0_PLL_FOUTVCO>, <&clk AUDIO1_PLL_FOUTVCO>,
+					  <&clk VIDEO_PLL_FOUTVCO>, <&clk GMAC_PLL_FOUTVCO>,
+					  <&clk DVFS_PLL_FOUTVCO>, <&clk DPU0_PLL_FOUTVCO>,
+					  <&clk DPU1_PLL_FOUTVCO>, <&clk DPU2_PLL_FOUTVCO>,
+					  <&clk TOP_CFG_ACLK_DIV>, <&clk TOP_PCLK_DIV>,
+					  <&clk SW_AMUX_660_CLK_EN>,
+					  <&clk SW_IOMMU_PTW_330_ACLK_EN>,
+					  <&clk SW_NOC_CCLK_EN>, <&clk TOP_CPUSYS_BUS_CLK_DIV>,
+					  <&clk TOP_CPUSYS_PIC_CLK_DIV>;
+			assigned-clock-rates = <2359296000>, <2528870400>,
+					       <2640000000>, <3000000000>,
+					       <1920000000>, <2376000000>,
+					       <2376000000>, <2376000000>,
+					       <330000000>, <165000000>,
+					       <660000000>, <330000000>,
+					       <950000000>, <1320000000>,
+					       <1000000000>;
+			status = "okay";
+		};
+
+		clk_peri: clock-controller@300200 {
+			compatible = "zhihe,a210-peri-clk";
+			reg = <0x00 0x00300200 0x0 0x4>,
+			      <0x00 0x02010200 0x0 0x8>,<0x00 0x08400200 0x0 0x8>,
+			      <0x00 0x00540200 0x0 0x4>,<0x00 0x27420200 0x0 0x200>;
+			reg-names = "peri0-sysreg","peri1-sysreg","peri2-sysreg",
+			"peri3-sysreg","tee-crg";
+			#clock-cells = <1>;
+			assigned-clocks = <&clk TOP_PERI_TIMER_CLK_MUX>,
+					  <&clk TOP_PERI_I2S_2CH0_SRC_CLK_MUX>,
+					  <&clk TOP_PERI_I2S_2CH1_SRC_CLK_MUX>,
+					  <&clk TOP_PERI_I2S_2CH2_SRC_CLK_MUX>,
+					  <&clk TOP_PERI_I2S_8CH0_SRC_CLK_MUX>,
+					  <&clk TOP_PERI_SPI_SSI_CLK0_DIV>,
+					  <&clk TOP_PERI_SPI_SSI_CLK1_DIV>,
+					  <&clk TOP_PERI_QSPI_SSI_CLK_MUX0>,
+					  <&clk TOP_PERI_QSPI_SSI_CLK_MUX1>,
+					  <&clk TOP_PERI_PDM_MCLK_DIV>,
+					  <&clk TOP_PERI_TDM_SRC_CLK_MUX>,
+					  <&clk TOP_PAD_SENSOR_VCLK0_DIV>,
+					  <&clk TOP_PAD_SENSOR_VCLK1_DIV>,
+					  <&clk TOP_PERI_HIRES_CLK0_DIV>,
+					  <&clk TOP_PERI_HIRES_CLK1_DIV>,
+					  <&clk TOP_PERI_EMMC_REF_CLK_DIV>,
+					  <&clk TOP_PERI_MST_ACLK0_DIV>,
+					  <&clk TOP_PERI_MST_CLK1_DIV>,
+					  <&clk TOP_TEE_CLK_DIV>;
+			assigned-clock-rates = <24000000>, <316108800>,
+					       <316108800>, <316108800>,
+					       <316108800>, <421478400>,
+					       <421478400>, <421478400>,
+					       <421478400>, <8426058>,
+					       <316108800>, <74250000>,
+					       <148500000>, <80000000>,
+					       <80000000>, <786432000>,
+					       <330000000>, <440000000>,
+					       <377142858>;
+			status = "okay";
+		};
+		rst_vp: reset-controller@6b20400 {
+			compatible = "zhihe,a210-vp-reset";
+			reg = <0x00 0x06b20400 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		rst_vi: reset-controller@63a0400 {
+			compatible = "zhihe,a210-vi-reset";
+			reg = <0x00 0x063a0400 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		rst_npu: reset-controller@7112200 {
+			compatible = "zhihe,a210-npu-reset";
+			reg = <0x00 0x07112200 0x0 0x10>;
+			#reset-cells = <1>;
+		};
+
+		rst_vo: reset-controller@6720400 {
+			compatible = "zhihe,a210-vo-reset";
+			reg = <0x00 0x06720400 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		rst_peri0: reset-controller@300400 {
+			compatible = "zhihe,a210-peri0-reset";
+			reg = <0x00 0x00300400 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		rst_peri1: reset-controller@2010400 {
+			compatible = "zhihe,a210-peri1-reset";
+			reg = <0x00 0x02010400 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		rst_peri2: reset-controller@8400400 {
+			compatible = "zhihe,a210-peri2-reset";
+			reg = <0x00 0x08400400 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		rst_peri3: reset-controller@540400 {
+			compatible = "zhihe,a210-peri3-reset";
+			reg = <0x00 0x00540400 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		rst_pcie: reset-controller@a000100 {
+			compatible = "zhihe,a210-pcie-reset";
+			reg = <0x00 0x0a000100 0x0 0x100>;
+			#reset-cells = <1>;
+		};
+
+		rst_usb: reset-controller@8000100 {
+			compatible = "zhihe,a210-usb-reset";
+			reg = <0x00 0x08000100 0x0 0x100>;
+			#reset-cells = <1>;
+		};
+
+		rst_tee: reset-controller@27420400 {
+			compatible = "zhihe,a210-tee-reset";
+			reg = <0x00 0x27420400 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		rst_gpu: reset-controller@6d02000 {
+			compatible = "zhihe,a210-gpu-reset";
+			reg = <0x00 0x06d02000 0x0 0x200>;
+			#reset-cells = <1>;
+		};
+
+		intc: interrupt-controller@18000000 {
+			compatible = "zhihe,a210-plic", "sifive,plic-1.0.0";
+			#address-cells = <0>;
+			#interrupt-cells = <1>;
+			interrupt-controller;
+			interrupts-extended = <
+				&cpu0_intc 0xffffffff &cpu0_intc 9
+				&cpu1_intc 0xffffffff &cpu1_intc 9
+				&cpu2_intc 0xffffffff &cpu2_intc 9
+				&cpu3_intc 0xffffffff &cpu3_intc 9
+				&cpu4_intc 0xffffffff &cpu4_intc 9
+				&cpu5_intc 0xffffffff &cpu5_intc 9
+				&cpu6_intc 0xffffffff &cpu6_intc 9
+				&cpu7_intc 0xffffffff &cpu7_intc 9
+			>;
+			reg = <0x00 0x18000000 0x0 0x04000000>;
+			riscv,ndev = <351>;
+		};
+
+		pvt: pvt@3084c000 {
+			compatible = "moortec,mr75203";
+			reg = <0x00 0x3084c000 0x0 0x80>,
+			      <0x00 0x3084c080 0x0 0x180>,
+			      <0x00 0x3084c200 0x0 0x200>,
+			      <0x00 0x3084c400 0x0 0x200>;
+			reg-names = "common", "ts", "pd", "vm";
+			clocks = <&aon_110m>;
+			#thermal-sensor-cells = <1>;
+			moortec,ts-coeff-h = <220000>;
+			moortec,ts-coeff-cal5 = <4094>;
+		};
+
+		watchdog0: watchdog@305000 {
+			compatible = "snps,dw-wdt";
+			reg = <0x00 0x00305000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <331>;
+			clocks = <&clk_peri PERI0_WDT0_PCLK_EN>;
+			clock-names = "tclk";
+			resets = <&rst_peri0 PERI0_WDT0_PRST>;
+		};
+
+		uart0: serial@2014000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x02014000 0x0 0x400>;
+			interrupt-parent = <&intc>;
+			interrupts = <321>;
+			clocks = <&clk_peri PERI1_UART0_SCLK_EN>, <&clk_peri PERI1_UART0_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri1 PERI1_UART0_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart1: serial@2015000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x02015000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <322>;
+			clocks = <&clk_peri PERI1_UART1_SCLK_EN>, <&clk_peri PERI1_UART1_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri1 PERI1_UART1_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart2: serial@2016000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x02016000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <323>;
+			clocks = <&clk_peri PERI1_UART2_SCLK_EN>, <&clk_peri PERI1_UART2_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri1 PERI1_UART2_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart3: serial@2017000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x02017000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <324>;
+			clocks = <&clk_peri PERI1_UART3_SCLK_EN>, <&clk_peri PERI1_UART3_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri1 PERI1_UART3_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart4: serial@8401000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x08401000 0x0 0x400>;
+			interrupt-parent = <&intc>;
+			interrupts = <325>;
+			clocks = <&clk_peri PERI2_UART4_SCLK_EN>, <&clk_peri PERI2_UART4_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			/* Firmware has already configured the boot console UART. */
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart5: serial@8402000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x08402000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <326>;
+			clocks = <&clk_peri PERI2_UART5_SCLK_EN>, <&clk_peri PERI2_UART5_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri2 PERI2_UART5_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart6: serial@8403000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x08403000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <327>;
+			clocks = <&clk_peri PERI2_UART6_SCLK_EN>, <&clk_peri PERI2_UART6_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri2 PERI2_UART6_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart7: serial@8404000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x08404000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <328>;
+			clocks = <&clk_peri PERI2_UART7_SCLK_EN>, <&clk_peri PERI2_UART7_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri2 PERI2_UART7_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart8: serial@8405000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x08405000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <329>;
+			clocks = <&clk_peri PERI2_UART8_SCLK_EN>, <&clk_peri PERI2_UART8_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri2 PERI2_UART8_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		uart9: serial@8406000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x00 0x08406000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <330>;
+			clocks = <&clk_peri PERI2_UART9_SCLK_EN>, <&clk_peri PERI2_UART9_PCLK_EN>;
+			clock-names = "baudclk", "apb_pclk";
+			resets = <&rst_peri2 PERI2_UART9_PRST>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+		};
+
+		emmc: mmc@500000 {
+			compatible = "zhihe,a210-dwcmshc";
+			reg = <0x0 0x00500000 0x0 0x10000>;
+			interrupt-parent = <&intc>;
+			interrupts = <265>;
+			clocks = <&clk_peri PERI3_EMMC_SDIO_REF_CLK_CG_EN>,
+					 <&clk_peri PERI3_EMMC_HCLK_EN>;
+			clock-names = "core", "bus";
+			clk-delay-mmc-hs400 = <24>;
+		};
+
+	};
+};
