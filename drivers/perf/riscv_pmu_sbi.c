@@ -1732,7 +1732,7 @@ out_err:
 
 static irqreturn_t pmu_sbi_ovf_irq_handler(int irq, void *dev)
 {
-	return pmu_sbi_ovf_handler(dev, get_irq_regs(), false);
+	return rvpmu_ovf_handler(dev, get_irq_regs(), false);
 }
 
 #ifdef CONFIG_RISCV_PMU_SSE
@@ -1741,7 +1741,7 @@ static int pmu_sbi_ovf_sse_handler(u32 evt, void *arg, struct pt_regs *regs)
 	struct cpu_hw_events __percpu *hw_events = arg;
 	struct cpu_hw_events *hw_event = raw_cpu_ptr(hw_events);
 
-	pmu_sbi_ovf_handler(hw_event, regs, true);
+	rvpmu_ovf_handler(hw_event, regs, true);
 
 	return 0;
 }
@@ -1976,7 +1976,7 @@ static int rvpmu_setup_irqs(struct riscv_pmu *pmu, struct platform_device *pdev)
 		goto err;
 	}
 
-	ret = request_percpu_irq(riscv_pmu_irq, rvpmu_ovf_handler, "riscv-pmu", hw_events);
+	ret = request_percpu_irq(riscv_pmu_irq, pmu_sbi_ovf_irq_handler, "riscv-pmu", hw_events);
 	if (ret) {
 		pr_err("registering percpu irq failed [%d]\n", ret);
 		irq_dispose_mapping(riscv_pmu_irq);
