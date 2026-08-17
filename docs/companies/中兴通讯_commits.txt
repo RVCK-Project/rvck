@@ -1,9 +1,10 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 431 个提交
-# 生成时间: 2026-08-05 22:11:45
+# 共 432 个提交
+# 生成时间: 2026-08-17 12:28:01
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+97bce747 | 2026-02-27 | Jinyu Tang | KVM: riscv: Skip CSR restore if VCPU is reloaded on the same core
 2b132026 | 2026-07-07 | hu.yuye | riscv: defconfig: Enable CONFIG_RTC_DRV_EFI config
 240522a4 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements
 aff2242e | 2025-03-12 | Conor Dooley | dt-bindings: riscv: add vector sub-extension dependencies

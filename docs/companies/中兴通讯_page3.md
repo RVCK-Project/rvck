@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 431</li>
-<li><strong>统计时间</strong>: 2026-08-05 22:11:45</li>
+<li><strong>贡献提交数</strong>: 432</li>
+<li><strong>统计时间</strong>: 2026-08-17 12:28:01</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [764f3040](https://github.com/RVCK-Project/rvck/commit/764f30407895479089a935f41ae67ced8d03e9e2) | 2024-04-09 | Baoquan He | kexec: fix the unexpected kexec_dprintk() macro |
 | [de08fcbb](https://github.com/RVCK-Project/rvck/commit/de08fcbbf0969a11718341e25ba2519562407508) | 2024-07-30 | Sunil V L | kexec_file, parisc: print out debugging message if required |
 | [d9fce8be](https://github.com/RVCK-Project/rvck/commit/d9fce8be282c3782f6e3ae2183d1bf88fa70c5e9) | 2023-12-13 | Baoquan He | kexec_file, power: print out debugging message if required |
 | [972a93f4](https://github.com/RVCK-Project/rvck/commit/972a93f4a29ed19c873056e8b3b2a808468bef5d) | 2023-12-13 | Baoquan He | kexec_file, riscv: print out debugging message if required |
@@ -51,7 +52,7 @@
 | [463c51d8](https://github.com/RVCK-Project/rvck/commit/463c51d8439336acee4dde6c2b5e3856d62e4352) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 431 条提交，显示 401-431**
+**共 432 条提交，显示 401-432**
 
 [1](中兴通讯.md) [2](中兴通讯_page2.md) **[3]**
 
@@ -62,5 +63,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-05 22:11:45*
-*数据来源: 主分支 rvck-6.6@893c5f58*
+*本页面最后更新于 2026-08-17 12:28:01*
+*数据来源: 主分支 rvck-6.6@d185f474*

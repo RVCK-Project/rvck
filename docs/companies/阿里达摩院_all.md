@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 394</li>
-<li><strong>统计时间</strong>: 2026-08-05 22:11:45</li>
+<li><strong>贡献提交数</strong>: 404</li>
+<li><strong>统计时间</strong>: 2026-08-17 12:28:01</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,16 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [00c25351](https://github.com/RVCK-Project/rvck/commit/00c25351fed584120d683f0d7265c08c595c9832) | 2024-01-03 | Leonardo Bras | riscv: Introduce set_compat_task() in asm/compat.h |
+| [61b68c85](https://github.com/RVCK-Project/rvck/commit/61b68c855b8d6009b59a6d19e12edd74c7e6815e) | 2024-01-03 | Leonardo Bras | riscv: Introduce is_compat_thread() into compat.h |
+| [3be3edb8](https://github.com/RVCK-Project/rvck/commit/3be3edb85c5c35d8a5adffdebd2af883a3a9e7fe) | 2024-01-03 | Leonardo Bras | riscv: add compile-time test into is_compat_task() |
+| [97ba3dc1](https://github.com/RVCK-Project/rvck/commit/97ba3dc1d1ef13c3c270b7d36b802f3b4c0abff3) | 2024-01-03 | Leonardo Bras | riscv: Replace direct thread flag check with is_compat_task() |
+| [087336c2](https://github.com/RVCK-Project/rvck/commit/087336c2f5b4e0aac54828688442b72396d825e7) | 2024-10-16 | Samuel Holland | KVM: riscv: selftests: Add Smnpm and Ssnpm to get-reg-list test |
+| [2cc14333](https://github.com/RVCK-Project/rvck/commit/2cc14333f4d94d1ebcb099460add8fa259bf1290) | 2024-10-16 | Samuel Holland | riscv: selftests: Add a pointer masking test |
+| [5ec42921](https://github.com/RVCK-Project/rvck/commit/5ec4292177141253683004393da9e2e2d513dd62) | 2024-10-16 | Samuel Holland | riscv: Allow ptrace control of the tagged address ABI |
+| [99ccaaa6](https://github.com/RVCK-Project/rvck/commit/99ccaaa6d526eb057a7bac4248191d9c375a0134) | 2024-10-16 | Samuel Holland | riscv: Add support for the tagged address ABI |
+| [adda9ed0](https://github.com/RVCK-Project/rvck/commit/adda9ed07324e5bf07a1addae5a675e141337b5d) | 2024-10-16 | Samuel Holland | riscv: Add support for userspace pointer masking |
+| [9f154479](https://github.com/RVCK-Project/rvck/commit/9f154479daa93e7eb54688bb46e486930de1ec9b) | 2024-10-16 | Samuel Holland | riscv: Add CSR definitions for pointer masking |
 | [f684fbb1](https://github.com/RVCK-Project/rvck/commit/f684fbb18cf03b87cc96bef05a2b9b618524c65b) | 2026-04-03 | Chen Pei | riscv: vdso_cfi: Add clean rule for copied sources |
 | [4d775427](https://github.com/RVCK-Project/rvck/commit/4d7754274701c5816f321f86f85353128af53691) | 2026-04-04 | Charlie Jenkins | selftests: riscv: Add license to cfi selftest |
 | [7d8f9a62](https://github.com/RVCK-Project/rvck/commit/7d8f9a624632a3b5bd33e3477ed7f49adbc76ed3) | 2026-04-04 | Paul Walmsley | prctl: cfi: change the branch landing pad prctl()s to be more descriptive |
@@ -414,7 +424,7 @@
 | [a3ee0cc8](https://github.com/RVCK-Project/rvck/commit/a3ee0cc804392b4498ca0891742611bc1dc21603) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 394 条提交（显示全部）**
+**共 404 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -423,5 +433,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-05 22:11:45*
-*数据来源: 主分支 rvck-6.6@893c5f58*
+*本页面最后更新于 2026-08-17 12:28:01*
+*数据来源: 主分支 rvck-6.6@d185f474*

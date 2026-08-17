@@ -1,9 +1,19 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 394 个提交
-# 生成时间: 2026-08-05 22:11:45
+# 共 404 个提交
+# 生成时间: 2026-08-17 12:28:01
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+00c25351 | 2024-01-03 | Leonardo Bras | riscv: Introduce set_compat_task() in asm/compat.h
+61b68c85 | 2024-01-03 | Leonardo Bras | riscv: Introduce is_compat_thread() into compat.h
+3be3edb8 | 2024-01-03 | Leonardo Bras | riscv: add compile-time test into is_compat_task()
+97ba3dc1 | 2024-01-03 | Leonardo Bras | riscv: Replace direct thread flag check with is_compat_task()
+087336c2 | 2024-10-16 | Samuel Holland | KVM: riscv: selftests: Add Smnpm and Ssnpm to get-reg-list test
+2cc14333 | 2024-10-16 | Samuel Holland | riscv: selftests: Add a pointer masking test
+5ec42921 | 2024-10-16 | Samuel Holland | riscv: Allow ptrace control of the tagged address ABI
+99ccaaa6 | 2024-10-16 | Samuel Holland | riscv: Add support for the tagged address ABI
+adda9ed0 | 2024-10-16 | Samuel Holland | riscv: Add support for userspace pointer masking
+9f154479 | 2024-10-16 | Samuel Holland | riscv: Add CSR definitions for pointer masking
 f684fbb1 | 2026-04-03 | Chen Pei | riscv: vdso_cfi: Add clean rule for copied sources
 4d775427 | 2026-04-04 | Charlie Jenkins | selftests: riscv: Add license to cfi selftest
 7d8f9a62 | 2026-04-04 | Paul Walmsley | prctl: cfi: change the branch landing pad prctl()s to be more descriptive

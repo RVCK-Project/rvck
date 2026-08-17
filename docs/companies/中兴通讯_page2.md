@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 431</li>
-<li><strong>统计时间</strong>: 2026-08-05 22:11:45</li>
+<li><strong>贡献提交数</strong>: 432</li>
+<li><strong>统计时间</strong>: 2026-08-17 12:28:01</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [b2a3625e](https://github.com/RVCK-Project/rvck/commit/b2a3625e37fe9d78e7155646de5c3c845ddfc21f) | 2023-10-04 | Clément Léger | riscv: report perf event for misaligned fault |
 | [90e05858](https://github.com/RVCK-Project/rvck/commit/90e058581aac845083b8fe87ee9a537a6830705e) | 2023-10-04 | Clément Léger | riscv: add support for misaligned trap handling in S-mode |
 | [3a7e7f90](https://github.com/RVCK-Project/rvck/commit/3a7e7f90ef44642ab1cd069080c35e1bc79ec6a7) | 2026-01-17 | Lu Peng | riscv: defconfig: Enable more ACPI_APEI configs |
 | [f84b0f0f](https://github.com/RVCK-Project/rvck/commit/f84b0f0f2ec952b2d6b662f890d5e2a419a9aa3d) | 2025-07-23 | Ignacio Encinas | riscv: introduce asm/swab.h |
@@ -217,10 +218,9 @@
 | [778abe04](https://github.com/RVCK-Project/rvck/commit/778abe04f2147f1e7b6175765ea6cc751399402c) | 2023-09-13 | Jason Gunthorpe | iommu: Add IOMMU_DOMAIN_PLATFORM |
 | [8f310e00](https://github.com/RVCK-Project/rvck/commit/8f310e00bbbb0c8dafd20ddae37d3267674dd7a6) | 2023-09-13 | Jason Gunthorpe | iommu: Add iommu_ops-\>identity_domain |
 | [946babcd](https://github.com/RVCK-Project/rvck/commit/946babcd6a814eebd821864364ac9e4543e53757) | 2025-07-29 | gaorui | Revert "iommu: Handle race with default domain setup" |
-| [764f3040](https://github.com/RVCK-Project/rvck/commit/764f30407895479089a935f41ae67ced8d03e9e2) | 2024-04-09 | Baoquan He | kexec: fix the unexpected kexec_dprintk() macro |
 ---
 
-**共 431 条提交，显示 201-400**
+**共 432 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-05 22:11:45*
-*数据来源: 主分支 rvck-6.6@893c5f58*
+*本页面最后更新于 2026-08-17 12:28:01*
+*数据来源: 主分支 rvck-6.6@d185f474*

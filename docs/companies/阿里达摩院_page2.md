@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 394</li>
-<li><strong>统计时间</strong>: 2026-08-05 22:11:45</li>
+<li><strong>贡献提交数</strong>: 404</li>
+<li><strong>统计时间</strong>: 2026-08-17 12:28:01</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,16 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [7e21e9f9](https://github.com/RVCK-Project/rvck/commit/7e21e9f9625d30a4f49c933417e95036a5736df5) | 2023-12-25 | Jisheng Zhang | riscv: select DCACHE_WORD_ACCESS for efficient unaligned access HW |
+| [b16bf190](https://github.com/RVCK-Project/rvck/commit/b16bf1906d7cc4fa860e0750adfa33f75dcf089a) | 2023-12-25 | Jisheng Zhang | riscv: introduce RISCV_EFFICIENT_UNALIGNED_ACCESS |
+| [a2526a2c](https://github.com/RVCK-Project/rvck/commit/a2526a2c798d924dbf0ae72a82b09bea11f9b52c) | 2023-11-23 | Ben Dooks | riscv; fix __user annotation in save_v_state() |
+| [d7f40b50](https://github.com/RVCK-Project/rvck/commit/d7f40b5027dfb3060e12fd1d8d1d4ec0a1d44a45) | 2023-11-23 | Ben Dooks | riscv: fix __user annotation in traps_misaligned.c |
+| [d6e0714e](https://github.com/RVCK-Project/rvck/commit/d6e0714e763e8ae3094cdda154be64ca6a40bd45) | 2023-11-06 | Evan Green | RISC-V: Show accurate per-hart isa in /proc/cpuinfo |
+| [3f565ada](https://github.com/RVCK-Project/rvck/commit/3f565adaa5426efde747c53173b3321d713ff19f) | 2026-02-02 | Chen Pei | Revert "riscv:uprobe: fix flush_icache to ensure that instructions are refreshed... |
+| [b9bccde2](https://github.com/RVCK-Project/rvck/commit/b9bccde2b9be41fdd3c8879389244f8c77160077) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated SM4 |
+| [ca49cf6c](https://github.com/RVCK-Project/rvck/commit/ca49cf6c3eece53d9fb04b7017110e679c573a5e) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated SM3 |
+| [0ae0af05](https://github.com/RVCK-Project/rvck/commit/0ae0af053b8de05c7914d9cb0d7f0f159d910797) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated SHA-{512,384} |
+| [b3a1259e](https://github.com/RVCK-Project/rvck/commit/b3a1259e4625c858079e7d68fd044f0df1b55c08) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated SHA-{256,224} |
 | [2f425963](https://github.com/RVCK-Project/rvck/commit/2f4259637ccabce52e7a8e2f4eea21365c359d8c) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated GHASH |
 | [c7815f55](https://github.com/RVCK-Project/rvck/commit/c7815f552fc0f628b1de78229652a0a7e9dd61b0) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated ChaCha20 |
 | [5b22a6a6](https://github.com/RVCK-Project/rvck/commit/5b22a6a65a9c57773a850dadf23e485d203d7bf5) | 2024-01-21 | Jerry Shih | crypto: riscv - add vector crypto accelerated AES-{ECB,CBC,CTR,XTS} |
@@ -208,15 +218,11 @@
 | [72d2cf28](https://github.com/RVCK-Project/rvck/commit/72d2cf2859478c842732bb5dfdf3aa268e81c298) | 2024-05-22 | tingming | riscv: dts: thead: to add th1520 clk nodes |
 | [d151f7ca](https://github.com/RVCK-Project/rvck/commit/d151f7caac16e9c949b47421e6e2ea4fee3c177f) | 2024-05-22 | tingming | drivers: clk: to add thead th1520 clk driver |
 | [df47fa95](https://github.com/RVCK-Project/rvck/commit/df47fa9514615d06882abc5ba8b3ad1e6dbc3f1e) | 2024-05-17 | Xiangyi Zeng | dt-bindings: adc: Add Documentation for THEAD TH1520 ADC |
-| [dbf6d761](https://github.com/RVCK-Project/rvck/commit/dbf6d761de873fa2c596a625dccf5f2009faef9c) | 2024-05-17 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 ADC device node |
-| [495b64a6](https://github.com/RVCK-Project/rvck/commit/495b64a61477df795228d671f35dd8d9f1949bcd) | 2024-05-17 | Xiangyi Zeng | drivers/iio/adc: Add THEAD TH1520 ADC driver |
-| [926acbfd](https://github.com/RVCK-Project/rvck/commit/926acbfd00f758f67e9e71995f41a19e330f5f76) | 2024-06-29 | Chen Pei | riscv: ptrace: Fix ptrace using uninitialized riscv_v_vsize |
-| [a3ee0cc8](https://github.com/RVCK-Project/rvck/commit/a3ee0cc804392b4498ca0891742611bc1dc21603) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 394 条提交，显示 201-394**
+**共 404 条提交，显示 201-400**
 
-[1](阿里达摩院.md) **[2]**
+[1](阿里达摩院.md) **[2]** [3](阿里达摩院_page3.md)
 
 [显示全部](阿里达摩院_all.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -225,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-05 22:11:45*
-*数据来源: 主分支 rvck-6.6@893c5f58*
+*本页面最后更新于 2026-08-17 12:28:01*
+*数据来源: 主分支 rvck-6.6@d185f474*

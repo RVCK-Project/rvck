@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 431</li>
-<li><strong>统计时间</strong>: 2026-08-05 22:11:45</li>
+<li><strong>贡献提交数</strong>: 432</li>
+<li><strong>统计时间</strong>: 2026-08-17 12:28:01</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [97bce747](https://github.com/RVCK-Project/rvck/commit/97bce7479dad509a53314425ce4405765a126301) | 2026-02-27 | Jinyu Tang | KVM: riscv: Skip CSR restore if VCPU is reloaded on the same core |
 | [2b132026](https://github.com/RVCK-Project/rvck/commit/2b132026f885a0f80d26c4bd4d5342d1ef0c555a) | 2026-07-07 | hu.yuye | riscv: defconfig: Enable CONFIG_RTC_DRV_EFI config |
 | [240522a4](https://github.com/RVCK-Project/rvck/commit/240522a44b0305ecc0650d9f78fcf0a807330306) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements |
 | [aff2242e](https://github.com/RVCK-Project/rvck/commit/aff2242ed29091957eff58492976937414b8390d) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: add vector sub-extension dependencies |
@@ -451,7 +452,7 @@
 | [463c51d8](https://github.com/RVCK-Project/rvck/commit/463c51d8439336acee4dde6c2b5e3856d62e4352) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 431 条提交（显示全部）**
+**共 432 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -460,5 +461,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-05 22:11:45*
-*数据来源: 主分支 rvck-6.6@893c5f58*
+*本页面最后更新于 2026-08-17 12:28:01*
+*数据来源: 主分支 rvck-6.6@d185f474*
