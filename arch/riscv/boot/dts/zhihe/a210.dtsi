@@ -1066,6 +1066,40 @@
 			reg-io-width = <4>;
 		};
 
+		spi0: spi@2023000 {
+			compatible = "snps,dw-apb-ssi";
+			reg = <0x00 0x02023000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <310>;
+			clocks = <&clk_peri PERI1_SPI0_SSI_CLK_EN>,
+				 <&clk_peri PERI1_SPI0_PCLK_EN>;
+			clock-names = "ssi_clk", "pclk";
+			resets = <&rst_peri1 PERI1_SPI0_RST>;
+			reset-names = "spi";
+			dmas = <&dmac0 9>, <&dmac0 8>;
+			dma-names = "tx", "rx";
+			num-cs = <2>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		spi1: spi@8413000 {
+			compatible = "snps,dw-apb-ssi";
+			reg = <0x00 0x08413000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <311>;
+			clocks = <&clk_peri PERI2_SPI1_SSI_CLK_EN>,
+				 <&clk_peri PERI2_SPI1_PCLK_EN>;
+			clock-names = "ssi_clk", "pclk";
+			resets = <&rst_peri2 PERI2_SPI1_RST>;
+			reset-names = "spi";
+			dmas = <&dmac0 62>, <&dmac0 61>;
+			dma-names = "tx", "rx";
+			num-cs = <2>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
 		emmc: mmc@500000 {
 			compatible = "zhihe,a210-dwcmshc";
 			reg = <0x0 0x00500000 0x0 0x10000>;
