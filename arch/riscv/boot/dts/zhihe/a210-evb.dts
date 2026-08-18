@@ -483,6 +483,11 @@
 	status = "disabled";
 };
 
+/* USB2 port 0 is not populated on the A210 EVB */
+&usb2_0 {
+	status = "disabled";
+};
+
 &aon {
 	/delete-node/ regulators;
 };
@@ -490,8 +495,6 @@
 &watchdog0 {
 	/delete-property/ power-domains;
 };
-
-/delete-node/ &power;
 
 &aon_gpio0 {
 	status = "okay";
