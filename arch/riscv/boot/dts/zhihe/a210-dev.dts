@@ -26,6 +26,8 @@
 &gmac0 {
 	phy-mode = "rgmii-id";
 	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&gmac0_pins>;
 	rx-clk-delay = <0x00>;
 	tx-clk-delay = <0x00>;
 	phy-handle = <&phy0>;
@@ -35,6 +37,338 @@
 	phy0: ethernet-phy@0 {
 		reg = <0x0>;
 	};
+};
+
+&peri1_padctrl {
+	gmac0_pins: gmac0-0 {
+		txclk-pins {
+			pins = "GPIO0_0", /* GMAC0_TX_CLK */
+			       "GPIO0_12"; /* GMAC0_MDC */
+			function = "gmac0";
+			bias-disable;
+			drive-strength = <13>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		tx-pins {
+			pins = "GPIO0_2", /* GMAC0_TXEN */
+			       "GPIO0_3", /* GMAC0_TXD0 */
+			       "GPIO0_4", /* GMAC0_TXD1 */
+			       "GPIO0_5", /* GMAC0_TXD2 */
+			       "GPIO0_6"; /* GMAC0_TXD3 */
+			function = "gmac0";
+			bias-disable;
+			drive-strength = <20>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO0_1",  /* GMAC0_RX_CLK */
+			       "GPIO0_7",  /* GMAC0_RXDV */
+			       "GPIO0_8",  /* GMAC0_RXD0 */
+			       "GPIO0_9",  /* GMAC0_RXD1 */
+			       "GPIO0_10", /* GMAC0_RXD2 */
+			       "GPIO0_11", /* GMAC0_RXD3 */
+			       "GPIO0_13"; /* GMAC0_MDIO */
+			function = "gmac0";
+			bias-disable;
+			drive-strength = <13>;
+			input-enable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+	};
+	uart3_pins: uart3-0 {
+		tx-pins {
+			pins = "GPIO0_3", "GPIO0_6"; /* TXD, RTSN */
+			function = "uart3";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO0_4", "GPIO0_5"; /* RXD, CTSN */
+			function = "uart3";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	uart0_pins: uart0-0 {
+		tx-pins {
+			pins = "GPIO0_14", "GPIO0_17"; /* TXD, RTSN */
+			function = "uart0";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO0_15", "GPIO0_16"; /* RXD, CTSN */
+			function = "uart0";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	uart1_pins: uart1-1 {
+		tx-pins {
+			pins = "GPIO0_28", "GPIO0_31"; /* TXD, RTSN */
+			function = "uart1";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO0_29", "GPIO0_30"; /* RXD, CTSN */
+			function = "uart1";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	uart2_pins: uart2-0 {
+		tx-pins {
+			pins = "GPIO1_1";
+			function = "uart2";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO1_0";
+			function = "uart2";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+};
+
+&peri2_padctrl {
+	uart4_pins: uart4-0 {
+		tx-pins {
+			pins = "GPIO2_0";
+			function = "uart4";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO2_1";
+			function = "uart4";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	uart5_pins: uart5-0 {
+		tx-pins {
+			pins = "GPIO2_2";
+			function = "uart5";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO2_3";
+			function = "uart5";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	uart6_pins: uart6-0 {
+		tx-pins {
+			pins = "GPIO2_4", "GPIO2_9"; /* TXD, RTSN */
+			function = "uart6";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO2_5", "GPIO2_8"; /* RXD, CTSN */
+			function = "uart6";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	uart7_pins: uart7-0 {
+		tx-pins {
+			pins = "GPIO2_6";
+			function = "uart7";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO2_7";
+			function = "uart7";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	uart9_pins: uart9-0 {
+		tx-pins {
+			pins = "GPIO2_10";
+			function = "uart9";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO2_11";
+			function = "uart9";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	sen_vclk_pin0: sen-vclk-0 {
+		sen-vclk0-pins {
+			pins = "GPIO3_0";
+			function = "sen_vclk";
+			bias-disable;
+			drive-strength = <7>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	sen_vclk_pin1: sen-vclk-1 {
+		sen-vclk1-pins {
+			pins = "GPIO3_1";
+			function = "sen_vclk";
+			bias-disable;
+			drive-strength = <7>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+	uart8_pins: uart8-1 {
+		tx-pins {
+			pins = "GPIO3_2";
+			function = "uart8";
+			bias-disable;
+			drive-strength = <3>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO3_3";
+			function = "uart8";
+			bias-disable;
+			drive-strength = <1>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+};
+
+&uart2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart2_pins>;
+};
+
+&uart3 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart3_pins>;
+};
+
+&uart4 {
+	/*
+	 * Keep the console UART independent of the optional A210 pinctrl
+	 * driver.  The boot firmware has already configured these pins.
+	 */
+};
+
+&uart7 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart7_pins>;
+};
+
+&uart8 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart8_pins>;
+};
+
+&uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_pins>;
+};
+
+&uart1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart1_pins>;
+};
+
+&uart5 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart5_pins>;
+};
+
+&uart6 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart6_pins>;
+};
+
+&uart9 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart9_pins>;
 };
 
 &emmc {
