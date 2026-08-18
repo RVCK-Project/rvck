@@ -371,6 +371,8 @@ SECTIONS
 	PERCPU_SECTION(INTERNODE_CACHE_BYTES)
 #endif
 
+	RUNTIME_CONST_VARIABLES
+
 	. = ALIGN(PAGE_SIZE);
 
 	/* freed after init ends here */
