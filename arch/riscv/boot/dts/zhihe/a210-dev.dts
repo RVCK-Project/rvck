@@ -8,6 +8,7 @@
 	compatible = "zhihe,a210-dev", "zhihe,a210";
 
 	aliases {
+		ethernet0 = &gmac0;
 		mmc0 = &emmc;
 		serial0 = &uart0;
 		serial1 = &uart1;
@@ -19,6 +20,20 @@
 		serial7 = &uart7;
 		serial8 = &uart8;
 		serial9 = &uart9;
+	};
+};
+
+&gmac0 {
+	phy-mode = "rgmii-id";
+	status = "okay";
+	rx-clk-delay = <0x00>;
+	tx-clk-delay = <0x00>;
+	phy-handle = <&phy0>;
+};
+
+&mdio0 {
+	phy0: ethernet-phy@0 {
+		reg = <0x0>;
 	};
 };
 
