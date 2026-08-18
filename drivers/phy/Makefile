@@ -37,4 +37,5 @@ obj-y					+= allwinner/	\
 					   ti/		\
 					   xilinx/	\
 					   spacemit/	\
-					   synopsys/
+					   synopsys/	\
+					   zhihe/
