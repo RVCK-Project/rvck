@@ -1422,6 +1422,123 @@
 			resets = <&rst_peri0 PERI0_TIMER1_RST>;
 		};
 
+		i2c0: i2c@2020000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x02020000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <293>;
+			clocks = <&clk_peri PERI1_I2C0_IC_CLK_EN>,
+				 <&clk_peri PERI1_I2C0_PCLK_EN>;
+			clock-names = "ref", "pclk";
+			resets = <&rst_peri1 PERI1_I2C0_RST>;
+			dmas = <&dmac0 21>, <&dmac0 20>;
+			dma-names = "tx", "rx";
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		i2c1: i2c@2021000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x02021000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <294>;
+			clocks = <&clk_peri PERI1_I2C1_IC_CLK_EN>,
+				 <&clk_peri PERI1_I2C1_PCLK_EN>;
+			clock-names = "ref", "pclk";
+			resets = <&rst_peri1 PERI1_I2C1_RST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		i2c2: i2c@2022000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x02022000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <295>;
+			clocks = <&clk_peri PERI1_I2C2_IC_CLK_EN>,
+				 <&clk_peri PERI1_I2C2_PCLK_EN>;
+			clock-names = "ref", "pclk";
+			resets = <&rst_peri1 PERI1_I2C2_RST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		i2c3: i2c@8415000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x08415000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <296>;
+			clocks = <&clk_peri PERI2_I2C3_IC_CLK_EN>,
+				 <&clk_peri PERI2_I2C3_PCLK_EN>;
+			clock-names = "ref", "pclk";
+			resets = <&rst_peri2 PERI2_I2C3_RST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		i2c4: i2c@8416000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x08416000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <297>;
+			clocks = <&clk_peri PERI2_I2C4_IC_CLK_EN>,
+				 <&clk_peri PERI2_I2C4_PCLK_EN>;
+			clock-names = "ref", "pclk";
+			resets = <&rst_peri2 PERI2_I2C4_RST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		i2c5: i2c@8417000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x08417000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <298>;
+			clocks = <&clk_peri PERI2_I2C5_IC_CLK_EN>,
+				 <&clk_peri PERI2_I2C5_PCLK_EN>;
+			clock-names = "ref", "pclk";
+			resets = <&rst_peri2 PERI2_I2C5_RST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		i2c6: i2c@8418000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x08418000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <299>;
+			clocks = <&clk_peri PERI2_I2C6_IC_CLK_EN>,
+				 <&clk_peri PERI2_I2C6_PCLK_EN>;
+			clock-names = "ref", "pclk";
+			resets = <&rst_peri2 PERI2_I2C6_RST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		i2c7: i2c@8419000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x08419000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <300>;
+			clocks = <&clk_peri PERI2_I2C7_IC_CLK_EN>,
+				 <&clk_peri PERI2_I2C7_PCLK_EN>;
+			clock-names = "ref", "pclk";
+			resets = <&rst_peri2 PERI2_I2C7_RST>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		aoi2c1: i2c@30891000 {
+			compatible = "snps,designware-i2c";
+			reg = <0x00 0x30891000 0x0 0x1000>;
+			interrupt-parent = <&intc>;
+			interrupts = <20>;
+			clocks = <&aon_110m>;
+			clock-names = "ref";
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
 		mbox_920: mailbox@321000 {
 			compatible = "zhihe,a210-mailbox-v2";
 			reg = <0x00 0x00321000 0x0 0x1000>,
