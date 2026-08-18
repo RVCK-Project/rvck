@@ -1,0 +1,81 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/usb/zhihe,a210-dwc3.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: ZhiHe A210 DWC3 Glue
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  The ZhiHe A210 USB 3.1 wrapper provides SoC glue logic around a Synopsys
+  DesignWare USB3 controller.
+
+properties:
+  compatible:
+    const: zhihe,usb31
+
+  reg:
+    maxItems: 1
+
+  syscon:
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  clocks:
+    minItems: 1
+    maxItems: 4
+
+  phys:
+    maxItems: 1
+
+  "#address-cells":
+    const: 2
+
+  "#size-cells":
+    const: 2
+
+  ranges: true
+
+patternProperties:
+  "^usb@[0-9a-f]+$":
+    $ref: snps,dwc3.yaml#
+    unevaluatedProperties: false
+
+required:
+  - compatible
+  - reg
+  - syscon
+  - clocks
+  - "#address-cells"
+  - "#size-cells"
+  - ranges
+
+additionalProperties: false
+
+examples:
+  - |
+    #include <dt-bindings/clock/zhihe,a210-clk.h>
+
+    bus {
+        #address-cells = <2>;
+        #size-cells = <2>;
+
+        usb3@8100000 {
+            compatible = "zhihe,usb31";
+            reg = <0x00 0x08100000 0x0 0x100000>;
+            syscon = <&clk_usb>;
+            clocks = <&clk_usb USB31_PCLK_EN>;
+            #address-cells = <2>;
+            #size-cells = <2>;
+            ranges;
+
+            usb@8100000 {
+                compatible = "snps,dwc3";
+                reg = <0x00 0x08100000 0x0 0x100000>;
+                interrupts = <183>;
+                dr_mode = "host";
+            };
+        };
+    };
