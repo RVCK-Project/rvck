@@ -100,5 +100,6 @@ source "drivers/phy/intel/Kconfig"
 source "drivers/phy/xilinx/Kconfig"
 source "drivers/phy/synopsys/Kconfig"
 source "drivers/phy/spacemit/Kconfig"
+source "drivers/phy/zhihe/Kconfig"
 
 endmenu
