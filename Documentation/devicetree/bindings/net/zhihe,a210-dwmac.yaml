@@ -1,0 +1,153 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/net/zhihe,a210-dwmac.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: ZhiHe A210 DWMAC Ethernet controller
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  The ZhiHe A210 integrates a Synopsys DesignWare MAC (dwmac-5.20) with
+  an SoC-specific glue layer for clock gating, reset sequencing, interface
+  selection and link-speed configuration.
+
+select:
+  properties:
+    compatible:
+      contains:
+        const: zhihe,a210-dwmac
+  required:
+    - compatible
+
+properties:
+  compatible:
+    items:
+      - const: zhihe,a210-dwmac
+      - const: snps,dwmac-5.20
+
+  reg:
+    maxItems: 1
+
+  reg-names:
+    const: gmac
+
+  interrupts:
+    maxItems: 1
+
+  interrupt-names:
+    const: macirq
+
+  clocks:
+    items:
+      - description: GMAC main clock
+      - description: GMAC AHB peripheral clock
+      - description: X2H AXI clock
+      - description: X2H AHB clock
+
+  clock-names:
+    items:
+      - const: stmmaceth
+      - const: pclk
+      - const: x2h_aclk
+      - const: x2h_hclk
+
+  resets:
+    items:
+      - description: GMAC reset
+      - description: X2H reset
+
+  reset-names:
+    items:
+      - const: stmmaceth
+      - const: ahb
+
+  zhihe,gmacsys:
+    $ref: /schemas/types.yaml#/definitions/phandle
+    description:
+      Phandle to the syscon node controlling GMAC interface mode and
+      link speed.
+
+  rx-clk-delay:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description: RGMII RX clock delay setting.
+
+  tx-clk-delay:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description: RGMII TX clock delay setting.
+
+  snps,pbl:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description: Programmable burst length.
+    enum: [1, 2, 4, 8, 16, 32]
+
+  snps,fixed-burst:
+    type: boolean
+    description: Program the DMA to use fixed burst mode.
+
+  snps,tso:
+    type: boolean
+    description: Enable TCP segmentation offload.
+
+  snps,axi-config:
+    $ref: /schemas/types.yaml#/definitions/phandle
+    description: Phandle to the AXI bus mode configuration node.
+
+  mdio:
+    $ref: mdio.yaml#
+    unevaluatedProperties: false
+
+    properties:
+      compatible:
+        const: snps,dwmac-mdio
+
+    required:
+      - compatible
+
+required:
+  - compatible
+  - reg
+  - clocks
+  - clock-names
+  - interrupts
+  - interrupt-names
+  - phy-mode
+  - resets
+  - reset-names
+  - zhihe,gmacsys
+
+allOf:
+  - $ref: snps,dwmac.yaml#
+
+unevaluatedProperties: false
+
+examples:
+  - |
+    ethernet@2100000 {
+        compatible = "zhihe,a210-dwmac", "snps,dwmac-5.20";
+        reg = <0x02100000 0x10000>;
+        reg-names = "gmac";
+        interrupts = <277>;
+        interrupt-names = "macirq";
+        phy-mode = "rgmii-id";
+        clocks = <&clk 0>, <&clk 1>, <&clk 2>, <&clk 3>;
+        clock-names = "stmmaceth", "pclk", "x2h_aclk", "x2h_hclk";
+        resets = <&rst 0>, <&rst 1>;
+        reset-names = "stmmaceth", "ahb";
+        snps,pbl = <32>;
+        snps,fixed-burst;
+        zhihe,gmacsys = <&gmac0_sys>;
+        phy-handle = <&phy0>;
+
+        mdio {
+            compatible = "snps,dwmac-mdio";
+            #address-cells = <1>;
+            #size-cells = <0>;
+
+            phy0: ethernet-phy@0 {
+                reg = <0>;
+            };
+        };
+    };
