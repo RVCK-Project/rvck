@@ -12,3 +12,16 @@ config PHY_ZHIHE_SNPS_USB2
 
 	  To compile this driver as a module, choose M here: the module
 	  will be called phy-zhihe-snps-usb2.
+
+config PHY_ZHIHE_SNPS_C10PHY
+	tristate "ZhiHe A210 C10 USB 3.1 PHY driver"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	depends on HAS_IOMEM
+	select GENERIC_PHY
+	default USB_DWC3 if ARCH_ZHIHE
+	help
+	  Enable this to support the ZHIHE C10PHY USB3.1 PHY.
+	  This PHY is used in ZHIHE A210 SoCs for USB 3.1 functionality.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called phy-zhihe-snps-c10phy.
