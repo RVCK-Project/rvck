@@ -25,6 +25,7 @@
 };
 
 &gmac0 {
+	/delete-property/ power-domains;
 	phy-mode = "rgmii-id";
 	status = "okay";
 	pinctrl-names = "default";
@@ -41,6 +42,7 @@
 };
 
 &gmac1 {
+	/delete-property/ power-domains;
 	phy-mode = "rgmii-id";
 	status = "disabled";
 	pinctrl-names = "default";
@@ -515,3 +517,13 @@
 &peri3_padctrl {
 	status = "disabled";
 };
+
+&aon {
+	/delete-node/ regulators;
+};
+
+&watchdog0 {
+	/delete-property/ power-domains;
+};
+
+/delete-node/ &power;
