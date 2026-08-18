@@ -1028,5 +1028,184 @@
 			clock-names = "pclk";
 		};
 
+		mbox_920: mailbox@321000 {
+			compatible = "zhihe,a210-mailbox-v2";
+			reg = <0x00 0x00321000 0x0 0x1000>,
+			      <0x00 0x00320000 0x0 0x1000>,
+			      <0x00 0x00311000 0x0 0x1000>;
+			reg-names = "interrupt",
+				    "local0",
+				    "remote0";
+			clocks = <&clk_peri PERI0_MBOX0_PCLK_EN>,
+				 <&clk_peri PERI0_MBOX1_PCLK_EN>;
+			resets = <&rst_peri0 PERI0_MBOX0_PRST>,
+				 <&rst_peri0 PERI0_MBOX1_PRST>;
+			interrupt-parent = <&intc>;
+			interrupts = <336>;
+			zhihe,icu-cpu-id = <0>;
+			#mbox-cells = <2>;
+		};
+
+		aon: aon-subsys@308f8000 {
+			compatible = "zhihe,a210-aon";
+			reg = <0x00 0x308f8000 0x0 0x10000>,
+			      <0x00 0x30842018 0x0 0x4>,
+			      <0x00 0x30846144 0x0 0x4>;
+			reg-names = "aon-base",
+				"aon-reset",
+				"aon-sync";
+			firmware-name = "a210-aon.bin";
+			mboxes = <&mbox_920 1 0>;
+			mbox-names = "aon0";
+			#mbox-cells = <2>;
+
+			regulators {
+				compatible = "zhihe,a210-aon-regulator";
+
+				avdd33_emmc_reg: avdd33-emmc {
+					zhihe,regulator-id = <0>;
+					regulator-name = "avdd33_emmc";
+					regulator-always-on;
+				};
+
+				avdd33_usb2_reg: avdd33-usb2 {
+					zhihe,regulator-id = <1>;
+					regulator-name = "avdd33_usb2";
+					regulator-always-on;
+				};
+
+				dvdd08_aon_reg: dvdd08-aon {
+					zhihe,regulator-id = <2>;
+					regulator-name = "dvdd08_aon";
+					regulator-always-on;
+				};
+
+				avdd18_aon_reg: avdd18-aon {
+					zhihe,regulator-id = <3>;
+					regulator-name = "avdd18_aon";
+					regulator-always-on;
+				};
+
+				avdd18_emmc_usb2_reg: avdd18-emmc-usb2 {
+					zhihe,regulator-id = <4>;
+					regulator-name = "avdd18_emmc_usb2";
+					regulator-always-on;
+				};
+
+				avdd18_emmc_peri_reg: avdd18-emmc-peri {
+					zhihe,regulator-id = <5>;
+					regulator-name = "avdd18_emmc_peri";
+					regulator-always-on;
+				};
+
+				avdd18_top_reg: avdd18-top {
+					zhihe,regulator-id = <6>;
+					regulator-name = "avdd18_top";
+					regulator-always-on;
+				};
+
+				avdd18_pll_reg: avdd18-pll {
+					zhihe,regulator-id = <7>;
+					regulator-name = "avdd18_pll";
+					regulator-always-on;
+				};
+
+				avdd18_reg: avdd18 {
+					zhihe,regulator-id = <8>;
+					regulator-name = "avdd18";
+					regulator-always-on;
+				};
+
+				dvdd18_ddr_vaa_reg: dvdd18-ddr-vaa {
+					zhihe,regulator-id = <9>;
+					regulator-name = "dvdd18_ddr_vaa";
+					regulator-always-on;
+				};
+
+				p3v3_reg: p3v3 {
+					zhihe,regulator-id = <10>;
+					regulator-name = "p3v3";
+					regulator-always-on;
+				};
+
+				dvdd08_top_reg: dvdd08-top {
+					zhihe,regulator-id = <11>;
+					regulator-name = "dvdd08_top";
+					regulator-always-on;
+				};
+
+				dvdd06_ddr_vddqlp_reg: dvdd06-ddr-vddqlp {
+					zhihe,regulator-id = <12>;
+					regulator-name = "dvdd06_ddr_vddqlp";
+					regulator-always-on;
+				};
+
+				dvdd08_ddr_reg: dvdd08-ddr {
+					zhihe,regulator-id = <13>;
+					regulator-name = "dvdd08_ddr";
+					regulator-min-microvolt = <750000>;
+					regulator-max-microvolt = <800000>;
+					regulator-ramp-delay = <100>;
+					regulator-always-on;
+				};
+
+				dvdd_cpu_reg: dvdd-cpu {
+					zhihe,regulator-id = <14>;
+					regulator-name = "dvdd_cpu";
+					regulator-min-microvolt = <600000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+					regulator-always-on;
+				};
+
+				dvddm_cpu_reg: dvddm-cpu {
+					zhihe,regulator-id = <15>;
+					regulator-name = "dvddm_cpu";
+					regulator-min-microvolt = <800000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+					regulator-always-on;
+				};
+
+				dvdd_vp_reg: dvdd-vp {
+					zhihe,regulator-id = <16>;
+					regulator-name = "dvdd_vp";
+					regulator-min-microvolt = <750000>;
+					regulator-max-microvolt = <800000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+				};
+
+				dvdd_npu_vip_reg: dvdd-npu-vip {
+					zhihe,regulator-id = <17>;
+					regulator-name = "dvdd_npu_vip";
+					regulator-min-microvolt = <750000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+				};
+
+				dvdd_cpu_p_reg: dvdd-cpu-p {
+					zhihe,regulator-id = <18>;
+					regulator-name = "dvdd_cpu_p";
+					regulator-min-microvolt = <800000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+					regulator-always-on;
+				};
+
+				dvdd_gpu_reg: dvdd-gpu {
+					zhihe,regulator-id = <19>;
+					regulator-name = "dvdd_gpu";
+					regulator-min-microvolt = <750000>;
+					regulator-max-microvolt = <800000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+				};
+			};
+		};
 	};
 };
