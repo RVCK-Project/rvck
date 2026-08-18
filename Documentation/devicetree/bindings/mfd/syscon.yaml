@@ -70,6 +70,7 @@ properties:
               - rockchip,rv1126-qos
               - starfive,jh7100-sysmain
               - zhihe,a210-gmac-syscon
+              - zhihe,a210-usb-syscon
 
           - const: syscon
 

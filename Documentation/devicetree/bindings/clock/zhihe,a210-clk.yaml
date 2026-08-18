@@ -17,16 +17,20 @@ description:
 
 properties:
   compatible:
-    enum:
-      - zhihe,a210-clk
-      - zhihe,a210-peri-clk
-      - zhihe,a210-gpu-clk
-      - zhihe,a210-pcie-clk
-      - zhihe,a210-usb-clk
-      - zhihe,a210-vi-clk
-      - zhihe,a210-vp-clk
-      - zhihe,a210-vo-clk
-      - zhihe,a210-npu-clk
+    oneOf:
+      - enum:
+          - zhihe,a210-clk
+          - zhihe,a210-peri-clk
+          - zhihe,a210-gpu-clk
+          - zhihe,a210-pcie-clk
+          - zhihe,a210-usb-clk
+          - zhihe,a210-vi-clk
+          - zhihe,a210-vp-clk
+          - zhihe,a210-vo-clk
+          - zhihe,a210-npu-clk
+      - items:
+          - const: zhihe,a210-usb-clk
+          - const: syscon
 
   reg:
     minItems: 1
