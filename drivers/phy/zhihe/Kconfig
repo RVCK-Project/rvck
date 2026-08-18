@@ -14,3 +14,19 @@ config PHY_ZHIHE_A210_USB2
 
 	  To compile this driver as a module, choose M here: the module
 	  will be called phy-zhihe-a210-usb2.
+
+config PHY_ZHIHE_A210_USB3
+	tristate "ZhiHe A210 USB 3.1 PHY driver"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	depends on HAS_IOMEM
+	depends on OF
+	depends on TYPEC
+	depends on EXTCON || EXTCON=n
+	depends on USB_COMMON
+	select GENERIC_PHY
+	help
+	  Enable this to support the ZhiHe A210 USB 3.1 PHY.
+	  This PHY is used in ZHIHE A210 SoCs for USB 3.1 functionality.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called phy-zhihe-a210-usb3.
