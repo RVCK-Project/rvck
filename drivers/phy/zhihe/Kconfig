@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config PHY_ZHIHE_A210_USB2
+	tristate "ZhiHe A210 USB 2.0 PHY driver"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	depends on HAS_IOMEM
+	depends on OF
+	depends on USB_COMMON
+	select GENERIC_PHY
+	select MFD_SYSCON
+	help
+	  Enable this to support the USB 2.0 PHY instances in
+	  ZhiHe A210 SoCs, including the PHY shared with the DWC3 controller.
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called phy-zhihe-a210-usb2.
