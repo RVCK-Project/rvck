@@ -18,6 +18,9 @@ properties:
     oneOf:
       - const: brcm,bcm2835-usb
       - const: hisilicon,hi6220-usb
+      - items:
+          - const: zhihe,a210-usb
+          - const: snps,dwc2
       - const: ingenic,jz4775-otg
       - const: ingenic,jz4780-otg
       - const: ingenic,x1000-otg
@@ -130,6 +133,17 @@ properties:
       order to perform OTG operation, used on STM32MP15 SoCs.
 
   dr_mode: true
+
+  maximum-speed: true
+
+  reg-io-width:
+    description: Register access width in bytes.
+    $ref: /schemas/types.yaml#/definitions/uint32
+    enum: [1, 2, 4]
+
+  reg-shift:
+    description: Quantity to shift register offsets by.
+    $ref: /schemas/types.yaml#/definitions/uint32
 
   otg-rev: true
 
