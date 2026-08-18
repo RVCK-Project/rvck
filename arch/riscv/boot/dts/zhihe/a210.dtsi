@@ -1175,6 +1175,165 @@
 			clock-names = "pclk";
 		};
 
+		aon_gpio0: gpio@30841000 {
+			compatible = "snps,dw-apb-gpio";
+			reg = <0x00 0x30841000 0x0 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clocks = <&aon_110m>, <&osc_32k>;
+			clock-names = "bus", "db";
+
+			ao_gpio0: gpio-controller@0 {
+				compatible = "snps,dw-apb-gpio-port";
+				gpio-controller;
+				#gpio-cells = <2>;
+				ngpios = <32>;
+				reg = <0>;
+
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				interrupt-parent = <&intc>;
+				interrupts = <17>;
+			};
+		};
+
+		aon_gpio1: gpio@30897000 {
+			compatible = "snps,dw-apb-gpio";
+			reg = <0x00 0x30897000 0x0 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clocks = <&aon_110m>, <&osc_32k>;
+			clock-names = "bus", "db";
+
+			ao_gpio1: gpio-controller@0 {
+				compatible = "snps,dw-apb-gpio-port";
+				gpio-controller;
+				#gpio-cells = <2>;
+				ngpios = <10>;
+				reg = <0>;
+
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				interrupt-parent = <&intc>;
+				interrupts = <10>;
+			};
+		};
+
+		peri1_gpio0: gpio@2012000 {
+			compatible = "snps,dw-apb-gpio";
+			reg = <0x00 0x02012000 0x0 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clocks = <&clk_peri PERI1_GPIO0_PCLK_EN>,
+				 <&clk_peri PERI1_GPIO0_DBCLK_EN>;
+			clock-names = "bus", "db";
+
+			gpio0: gpio-controller@0 {
+				compatible = "snps,dw-apb-gpio-port";
+				gpio-controller;
+				#gpio-cells = <2>;
+				ngpios = <32>;
+				reg = <0>;
+
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				interrupt-parent = <&intc>;
+				interrupts = <289>;
+			};
+		};
+
+		peri1_gpio1: gpio@2013000 {
+			compatible = "snps,dw-apb-gpio";
+			reg = <0x00 0x02013000 0x0 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clocks = <&clk_peri PERI1_GPIO1_PCLK_EN>,
+				 <&clk_peri PERI1_GPIO1_DBCLK_EN>;
+			clock-names = "bus", "db";
+
+			gpio1: gpio-controller@0 {
+				compatible = "snps,dw-apb-gpio-port";
+				gpio-controller;
+				#gpio-cells = <2>;
+				ngpios = <18>;
+				reg = <0>;
+
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				interrupt-parent = <&intc>;
+				interrupts = <290>;
+			};
+		};
+
+		peri2_gpio2: gpio@8410000 {
+			compatible = "snps,dw-apb-gpio";
+			reg = <0x00 0x08410000 0x0 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clocks = <&clk_peri PERI2_GPIO2_PCLK_EN>,
+				 <&clk_peri PERI2_GPIO2_DBCLK_EN>;
+			clock-names = "bus", "db";
+
+			gpio2: gpio-controller@0 {
+				compatible = "snps,dw-apb-gpio-port";
+				gpio-controller;
+				#gpio-cells = <2>;
+				ngpios = <32>;
+				reg = <0>;
+
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				interrupt-parent = <&intc>;
+				interrupts = <291>;
+			};
+		};
+
+		peri2_gpio3: gpio@8412000 {
+			compatible = "snps,dw-apb-gpio";
+			reg = <0x00 0x08412000 0x0 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clocks = <&clk_peri PERI2_GPIO3_PCLK_EN>,
+				 <&clk_peri PERI2_GPIO3_DBCLK_EN>;
+			clock-names = "bus", "db";
+
+			gpio3: gpio-controller@0 {
+				compatible = "snps,dw-apb-gpio-port";
+				gpio-controller;
+				#gpio-cells = <2>;
+				ngpios = <11>;
+				reg = <0>;
+
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				interrupt-parent = <&intc>;
+				interrupts = <292>;
+			};
+		};
+
+		peri3_gpio: gpio@550000 {
+			compatible = "snps,dw-apb-gpio";
+			reg = <0x00 0x00550000 0x0 0x10000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clocks = <&clk_peri PERI3_GPIO4_PCLK_EN>,
+				 <&clk_peri PERI3_GPIO4_DBCLK_EN>;
+			clock-names = "bus", "db";
+
+			gpio4: gpio-controller@0 {
+				compatible = "snps,dw-apb-gpio-port";
+				gpio-controller;
+				#gpio-cells = <2>;
+				ngpios = <6>;
+				reg = <0>;
+
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				interrupt-parent = <&intc>;
+				interrupts = <52>;
+			};
+		};
+
 		mbox_920: mailbox@321000 {
 			compatible = "zhihe,a210-mailbox-v2";
 			reg = <0x00 0x00321000 0x0 0x1000>,

@@ -527,3 +527,7 @@
 };
 
 /delete-node/ &power;
+
+&peri3_gpio {
+	status = "disabled";
+};
