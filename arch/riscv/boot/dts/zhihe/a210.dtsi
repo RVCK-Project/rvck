@@ -1000,5 +1000,33 @@
 			};
 		};
 
+		aon_padctrl: aon-padctrl@30848000 {
+			compatible = "zhihe,a210-aon-pinctrl";
+			reg = <0x00 0x30848000 0x0 0x2000>;
+			clocks = <&aon_110m>;
+			clock-names = "pclk";
+		};
+
+		peri1_padctrl: peri1-padctrl@2026000 {
+			compatible = "zhihe,a210-peri1-pinctrl";
+			reg = <0x00 0x02026000 0x0 0x1000>;
+			clocks = <&clk_peri PERI1_PAD_CTRL_PCLK_EN>;
+			clock-names = "pclk";
+		};
+
+		peri2_padctrl: peri2-padctrl@8411000 {
+			compatible = "zhihe,a210-peri2-pinctrl";
+			reg = <0x00 0x08411000 0x0 0x1000>;
+			clocks = <&clk_peri PERI2_PAD_CTRL_PCLK_EN>;
+			clock-names = "pclk";
+		};
+
+		peri3_padctrl: peri3-padctrl@542000 {
+			compatible = "zhihe,a210-peri3-pinctrl";
+			reg = <0x00 0x00542000 0x0 0x1000>;
+			clocks = <&clk_peri PERI3_PAD_CTRL_PCLK_EN>;
+			clock-names = "pclk";
+		};
+
 	};
 };
