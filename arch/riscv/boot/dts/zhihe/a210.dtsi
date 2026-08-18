@@ -1334,6 +1334,94 @@
 			};
 		};
 
+		timer0: timer@303000 {
+			compatible = "snps,dw-apb-timer";
+			reg = <0x00 0x00303000 0x0 0x14>;
+			interrupt-parent = <&intc>;
+			interrupts = <313>;
+			clocks = <&clk_peri PERI0_TIMER0_CCLK_EN>,
+				 <&clk_peri PERI0_TIMER0_PCLK_EN>;
+			clock-names = "timer", "pclk";
+			resets = <&rst_peri0 PERI0_TIMER0_RST>;
+		};
+
+		timer1: timer@303014 {
+			compatible = "snps,dw-apb-timer";
+			reg = <0x00 0x00303014 0x0 0x14>;
+			interrupt-parent = <&intc>;
+			interrupts = <314>;
+			clocks = <&clk_peri PERI0_TIMER0_CCLK_EN>,
+				 <&clk_peri PERI0_TIMER0_PCLK_EN>;
+			clock-names = "timer", "pclk";
+			resets = <&rst_peri0 PERI0_TIMER0_RST>;
+		};
+
+		timer2: timer@303028 {
+			compatible = "snps,dw-apb-timer";
+			reg = <0x00 0x00303028 0x0 0x14>;
+			interrupt-parent = <&intc>;
+			interrupts = <315>;
+			clocks = <&clk_peri PERI0_TIMER0_CCLK_EN>,
+				 <&clk_peri PERI0_TIMER0_PCLK_EN>;
+			clock-names = "timer", "pclk";
+			resets = <&rst_peri0 PERI0_TIMER0_RST>;
+		};
+
+		timer3: timer@30303c {
+			compatible = "snps,dw-apb-timer";
+			reg = <0x00 0x0030303c 0x0 0x14>;
+			interrupt-parent = <&intc>;
+			interrupts = <316>;
+			clocks = <&clk_peri PERI0_TIMER0_CCLK_EN>,
+				 <&clk_peri PERI0_TIMER0_PCLK_EN>;
+			clock-names = "timer", "pclk";
+			resets = <&rst_peri0 PERI0_TIMER0_RST>;
+		};
+
+		timer4: timer@304000 {
+			compatible = "snps,dw-apb-timer";
+			reg = <0x00 0x00304000 0x0 0x14>;
+			interrupt-parent = <&intc>;
+			interrupts = <317>;
+			clocks = <&clk_peri PERI0_TIMER1_CCLK_EN>,
+				 <&clk_peri PERI0_TIMER1_PCLK_EN>;
+			clock-names = "timer", "pclk";
+			resets = <&rst_peri0 PERI0_TIMER1_RST>;
+		};
+
+		timer5: timer@304014 {
+			compatible = "snps,dw-apb-timer";
+			reg = <0x00 0x00304014 0x0 0x14>;
+			interrupt-parent = <&intc>;
+			interrupts = <318>;
+			clocks = <&clk_peri PERI0_TIMER1_CCLK_EN>,
+				 <&clk_peri PERI0_TIMER1_PCLK_EN>;
+			clock-names = "timer", "pclk";
+			resets = <&rst_peri0 PERI0_TIMER1_RST>;
+		};
+
+		timer6: timer@304028 {
+			compatible = "snps,dw-apb-timer";
+			reg = <0x00 0x00304028 0x0 0x14>;
+			interrupt-parent = <&intc>;
+			interrupts = <319>;
+			clocks = <&clk_peri PERI0_TIMER1_CCLK_EN>,
+				 <&clk_peri PERI0_TIMER1_PCLK_EN>;
+			clock-names = "timer", "pclk";
+			resets = <&rst_peri0 PERI0_TIMER1_RST>;
+		};
+
+		timer7: timer@30403c {
+			compatible = "snps,dw-apb-timer";
+			reg = <0x00 0x0030403c 0x0 0x14>;
+			interrupt-parent = <&intc>;
+			interrupts = <320>;
+			clocks = <&clk_peri PERI0_TIMER1_CCLK_EN>,
+				 <&clk_peri PERI0_TIMER1_PCLK_EN>;
+			clock-names = "timer", "pclk";
+			resets = <&rst_peri0 PERI0_TIMER1_RST>;
+		};
+
 		mbox_920: mailbox@321000 {
 			compatible = "zhihe,a210-mailbox-v2";
 			reg = <0x00 0x00321000 0x0 0x1000>,
