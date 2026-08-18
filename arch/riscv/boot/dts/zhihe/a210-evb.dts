@@ -491,8 +491,6 @@
 	/delete-property/ power-domains;
 };
 
-/delete-node/ &power;
-
 &aon_gpio0 {
 	status = "okay";
 };
