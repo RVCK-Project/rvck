@@ -23999,6 +23999,13 @@ L:	linux-kernel@vger.kernel.org
 S:	Maintained
 F:	arch/x86/kernel/cpu/zhaoxin.c
 
+ZHIHE A210 DWMAC DRIVER
+M:	Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+L:	netdev@vger.kernel.org
+S:	Maintained
+F:	Documentation/devicetree/bindings/net/zhihe,a210-dwmac.yaml
+F:	drivers/net/ethernet/stmicro/stmmac/dwmac-zhihe.c
+
 ZONEFS FILESYSTEM
 M:	Damien Le Moal <dlemoal@kernel.org>
 M:	Naohiro Aota <naohiro.aota@wdc.com>

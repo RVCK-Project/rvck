@@ -236,6 +236,18 @@ config DWMAC_THEAD
 	  the stmmac device driver. This driver is used for XuanTie TH1520
 	  ethernet controller.
 
+config DWMAC_ZHIHE
+	tristate "ZhiHe dwmac support"
+	depends on OF && (ARCH_ZHIHE || COMPILE_TEST)
+	default STMMAC_ETH if ARCH_ZHIHE
+	select MFD_SYSCON
+	help
+	  Support for the Synopsys DesignWare MAC Ethernet controller
+	  found on ZhiHe SoCs, through a platform glue layer for the
+	  stmmac driver. It handles the clock and reset configuration
+	  specific to the ZhiHe A210 platform. Say Y or M here if you
+	  are building a kernel for a ZhiHe A210 based board.
+
 config DWMAC_IMX8
 	tristate "NXP IMX8 DWMAC support"
 	default ARCH_MXC
