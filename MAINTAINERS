@@ -24006,6 +24006,16 @@ S:	Maintained
 F:	Documentation/devicetree/bindings/net/zhihe,a210-dwmac.yaml
 F:	drivers/net/ethernet/stmicro/stmmac/dwmac-zhihe.c
 
+ZHIHE A210 USB SUPPORT
+M:	Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+L:	linux-phy@lists.infradead.org
+L:	linux-usb@vger.kernel.org
+S:	Maintained
+F:	Documentation/devicetree/bindings/phy/zhihe,a210-*.yaml
+F:	Documentation/devicetree/bindings/usb/zhihe,a210-dwc3.yaml
+F:	drivers/phy/zhihe/
+F:	drivers/usb/dwc3/dwc3-zhihe.c
+
 ZONEFS FILESYSTEM
 M:	Damien Le Moal <dlemoal@kernel.org>
 M:	Naohiro Aota <naohiro.aota@wdc.com>
