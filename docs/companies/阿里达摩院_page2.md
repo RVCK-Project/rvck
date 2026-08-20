@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 404</li>
-<li><strong>统计时间</strong>: 2026-08-17 12:28:01</li>
+<li><strong>贡献提交数</strong>: 426</li>
+<li><strong>统计时间</strong>: 2026-08-20 19:14:20</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,28 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [f95b2008](https://github.com/RVCK-Project/rvck/commit/f95b2008f90e055223dba4c8a7ff34297a7d423d) | 2025-03-04 | Andrew Jones | riscv: Annotate unaligned access init functions |
+| [33c82e59](https://github.com/RVCK-Project/rvck/commit/33c82e59e78ce0a303feef44ed75623ae019754f) | 2024-10-17 | Jesse Taube | RISC-V: hwprobe: Document unaligned vector perf key |
+| [4c3749d1](https://github.com/RVCK-Project/rvck/commit/4c3749d183e53ee405f625ae293aea5ca030ec28) | 2024-10-17 | Jesse Taube | RISC-V: Report vector unaligned access speed hwprobe |
+| [935ef3d7](https://github.com/RVCK-Project/rvck/commit/935ef3d72da7a78d3592e41aadea433608473d50) | 2024-10-17 | Jesse Taube | RISC-V: Detect unaligned vector accesses supported |
+| [dd3d33b4](https://github.com/RVCK-Project/rvck/commit/dd3d33b4ba7abe32e4c1fe778ce86009aa6fcf51) | 2024-10-17 | Jesse Taube | RISC-V: Replace RISCV_MISALIGNED with RISCV_SCALAR_MISALIGNED |
+| [1f050b62](https://github.com/RVCK-Project/rvck/commit/1f050b627cddaa6a5a4756b6848bc9a8a6cccb70) | 2024-10-17 | Jesse Taube | RISC-V: Scalar unaligned access emulated on hotplug CPUs |
+| [26da2185](https://github.com/RVCK-Project/rvck/commit/26da21856d9de48986a6922014cf8e87be6928ed) | 2024-10-17 | Jesse Taube | RISC-V: Check scalar unaligned access on all CPUs |
+| [21b324e9](https://github.com/RVCK-Project/rvck/commit/21b324e9dec8255a4d2de5d5da418f503cfd5df2) | 2024-08-14 | Samuel Holland | riscv: misaligned: Restrict user access to kernel memory |
+| [6e299b02](https://github.com/RVCK-Project/rvck/commit/6e299b020c72d579f3d9cd6fa751f2d49ac02b4a) | 2024-08-09 | Evan Green | RISC-V: hwprobe: Add SCALAR to misaligned perf defines |
+| [0954983f](https://github.com/RVCK-Project/rvck/commit/0954983f457913295426b71cc063a5e8774db529) | 2024-08-09 | Evan Green | RISC-V: hwprobe: Add MISALIGNED_PERF key |
+| [251ae2cd](https://github.com/RVCK-Project/rvck/commit/251ae2cdf1479b31b16e22b6d291fb9823723927) | 2024-03-17 | Xingyou Chen | riscv: typo in comment for get_f64_reg |
+| [f193b1f5](https://github.com/RVCK-Project/rvck/commit/f193b1f536c330044029809fa596479f609739e5) | 2024-03-08 | Charlie Jenkins | riscv: Set unaligned access speed at compile time |
+| [395c43a1](https://github.com/RVCK-Project/rvck/commit/395c43a1ad7b5bcd1629d1f73f0c05b3b2ffedef) | 2024-03-08 | Charlie Jenkins | riscv: Decouple emulated unaligned accesses from access speed |
+| [eb373d80](https://github.com/RVCK-Project/rvck/commit/eb373d80b8c6377e330ee0a3fd0eeb44680e78eb) | 2024-03-08 | Charlie Jenkins | riscv: Only check online cpus for emulated accesses |
+| [dbdbe8df](https://github.com/RVCK-Project/rvck/commit/dbdbe8dffd5032da7273580c5a0c6bac2aace05a) | 2024-03-08 | Charlie Jenkins | riscv: lib: Introduce has_fast_unaligned_access() |
+| [8ef550e4](https://github.com/RVCK-Project/rvck/commit/8ef550e481c27470d232426232f7eb685e22ebdf) | 2024-02-12 | Eric Biggers | crypto: riscv - add vector crypto accelerated AES-CBC-CTS |
+| [91548d88](https://github.com/RVCK-Project/rvck/commit/91548d88b505a7ab1fde4bbb588cd2e488ea4911) | 2024-02-06 | Clément Léger | riscv: misaligned: remove CONFIG_RISCV_M_MODE specific code |
+| [73602a58](https://github.com/RVCK-Project/rvck/commit/73602a58a0d051e83d6ecf208901887508c033c1) | 2024-01-08 | Charlie Jenkins | kunit: Add tests for csum_ipv6_magic and ip_fast_csum |
+| [265d0468](https://github.com/RVCK-Project/rvck/commit/265d0468edbef8bb731700bd06455350ebf3005c) | 2024-01-08 | Charlie Jenkins | riscv: Add checksum library |
+| [b484fa23](https://github.com/RVCK-Project/rvck/commit/b484fa231ccb8e910a7a3ab951bfbe17dac858a4) | 2024-01-08 | Charlie Jenkins | riscv: Add checksum header |
+| [12727e15](https://github.com/RVCK-Project/rvck/commit/12727e15e58860ab7cb0b7e01e706345533ea163) | 2024-01-08 | Charlie Jenkins | riscv: Add static key for misaligned accesses |
+| [1419fbbe](https://github.com/RVCK-Project/rvck/commit/1419fbbe7fb47f11dcd56651e3b89799d005d141) | 2024-01-08 | Charlie Jenkins | asm-generic: Improve csum_fold |
 | [7e21e9f9](https://github.com/RVCK-Project/rvck/commit/7e21e9f9625d30a4f49c933417e95036a5736df5) | 2023-12-25 | Jisheng Zhang | riscv: select DCACHE_WORD_ACCESS for efficient unaligned access HW |
 | [b16bf190](https://github.com/RVCK-Project/rvck/commit/b16bf1906d7cc4fa860e0750adfa33f75dcf089a) | 2023-12-25 | Jisheng Zhang | riscv: introduce RISCV_EFFICIENT_UNALIGNED_ACCESS |
 | [a2526a2c](https://github.com/RVCK-Project/rvck/commit/a2526a2c798d924dbf0ae72a82b09bea11f9b52c) | 2023-11-23 | Ben Dooks | riscv; fix __user annotation in save_v_state() |
@@ -196,31 +218,9 @@
 | [084c28c4](https://github.com/RVCK-Project/rvck/commit/084c28c4c4d967a5bd58853401abb64a049709f8) | 2024-06-04 | xianbing Zhu | net:dwmac-thead: dd ptp clk set and enable |
 | [acdbce27](https://github.com/RVCK-Project/rvck/commit/acdbce27a0990afb10b6b1fee41747ee54c39c34) | 2024-06-05 | Esther Z | configs: Enable th1520 mailbox. |
 | [2f41c2ee](https://github.com/RVCK-Project/rvck/commit/2f41c2eed31f86a60612e48ba6d208ea68edc78d) | 2024-06-04 | Esther Z | drivers:ipc: update th1520 rpc msg version 2 |
-| [9072d257](https://github.com/RVCK-Project/rvck/commit/9072d25733a765511cf211b389273d237e73d318) | 2021-08-10 | fugang.duan | firmware: thead: c910_aon: add th1520 Aon protocol driver |
-| [d6684186](https://github.com/RVCK-Project/rvck/commit/d6684186bb6da015bf7fce6433af855573f0b0e3) | 2024-06-04 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 add delay line in different mode and sdio rxclk del... |
-| [4f0c2f6d](https://github.com/RVCK-Project/rvck/commit/4f0c2f6d4ab6ea1631993d6938413640c44398a2) | 2024-06-03 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 larger tuning max loop count to 128 |
-| [222ca244](https://github.com/RVCK-Project/rvck/commit/222ca244ee641240466d96fa164fbecfc7b9c52b) | 2024-05-31 | xianbing Zhu | dts: th1520: enable sdio1 for wifi card in lichee-pi-4a |
-| [e8fddaca](https://github.com/RVCK-Project/rvck/commit/e8fddacaff36c09d5c745e0bcb64fc5267486454) | 2024-05-31 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 sdhci add fix io voltage 1v8 |
-| [e82095af](https://github.com/RVCK-Project/rvck/commit/e82095afba9f5c7694e51b83f2829ccb65d0ba79) | 2024-05-30 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 resolve accss rpmb error in hs400 |
-| [3d2a7ef6](https://github.com/RVCK-Project/rvck/commit/3d2a7ef690344a8bd5b7266e38c68579dc9cd5bf) | 2024-05-30 | Xiangyi Zeng | drivers/dmac: add pm suspend/resume for dma driver |
-| [a735a67d](https://github.com/RVCK-Project/rvck/commit/a735a67d810c08676d4b5eb9ad5aaf9d7e26fa46) | 2023-08-21 | David Li | audio: th1520: add dma chan str for dmaengine |
-| [51581f00](https://github.com/RVCK-Project/rvck/commit/51581f005133c773f33bf2fca7cee344b9aa0614) | 2024-05-30 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 dmac1 and dmac2 device node |
-| [50f53710](https://github.com/RVCK-Project/rvck/commit/50f53710406f50a833f624b77cf248b2b1b250f2) | 2023-08-22 | sanyi | STR: fix pca953x resume bug |
-| [55051a43](https://github.com/RVCK-Project/rvck/commit/55051a43e1de360d4f99f91a055d131e25245a0e) | 2024-05-28 | Xiangyi Zeng | drivers/iio/adc: add sysfs_remove_file when adc driver removed |
-| [1e6f87c5](https://github.com/RVCK-Project/rvck/commit/1e6f87c5df7a748cd7ee9ff11c54a0de99a8ce60) | 2024-05-27 | Xiangyi Zeng | drivers/pvt: add mr75203 driver pm feature and correct temperature coefficient |
-| [2c5b6f76](https://github.com/RVCK-Project/rvck/commit/2c5b6f76cdd679f75f61e6eb1b1d5cd492eb87f2) | 2024-05-27 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 SPI/QSPI device node |
-| [23242dbf](https://github.com/RVCK-Project/rvck/commit/23242dbfa65acfd4500bc523b837e4b3ccec8dce) | 2024-05-27 | Xiangyi Zeng | dt-bindings: spi/qspi: Add Documentation for THEAD TH1520 SPI/QSPI |
-| [63480b92](https://github.com/RVCK-Project/rvck/commit/63480b92b4ad054cdcd1d47a1e75163402b311c2) | 2024-05-27 | Xiangyi Zeng | drivers/spi: Add THEAD TH1520 QSPI driver |
-| [8b09191a](https://github.com/RVCK-Project/rvck/commit/8b09191a84d1485987756f06161311fd2ee11704) | 2024-05-27 | tingming | reset: th1520: to support npu/fce reset feature |
-| [80e510b7](https://github.com/RVCK-Project/rvck/commit/80e510b72b1b9b4e353cab1f23925d23829a7255) | 2024-05-19 | Wei Fu | riscv: dts: thead: Add XuanTie TH1520 Mailbox device node |
-| [ce3401c1](https://github.com/RVCK-Project/rvck/commit/ce3401c135165b001f8daab8f24451b710800d99) | 2024-05-17 | Fugang Duan | mailbox: add XuanTie TH1520 Mailbox IPC driver |
-| [03a17e1c](https://github.com/RVCK-Project/rvck/commit/03a17e1ccb2bf6938129ac0edcba2058d16250c1) | 2024-05-19 | Wei Fu | dt-bindings: mailbox: Add a binding file for XuanTie TH1520 Mailbox |
-| [72d2cf28](https://github.com/RVCK-Project/rvck/commit/72d2cf2859478c842732bb5dfdf3aa268e81c298) | 2024-05-22 | tingming | riscv: dts: thead: to add th1520 clk nodes |
-| [d151f7ca](https://github.com/RVCK-Project/rvck/commit/d151f7caac16e9c949b47421e6e2ea4fee3c177f) | 2024-05-22 | tingming | drivers: clk: to add thead th1520 clk driver |
-| [df47fa95](https://github.com/RVCK-Project/rvck/commit/df47fa9514615d06882abc5ba8b3ad1e6dbc3f1e) | 2024-05-17 | Xiangyi Zeng | dt-bindings: adc: Add Documentation for THEAD TH1520 ADC |
 ---
 
-**共 404 条提交，显示 201-400**
+**共 426 条提交，显示 201-400**
 
 [1](阿里达摩院.md) **[2]** [3](阿里达摩院_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-17 12:28:01*
-*数据来源: 主分支 rvck-6.6@d185f474*
+*本页面最后更新于 2026-08-20 19:14:20*
+*数据来源: 主分支 rvck-6.6@0b96b6c8*

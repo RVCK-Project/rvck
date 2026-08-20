@@ -1,9 +1,31 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 404 个提交
-# 生成时间: 2026-08-17 12:28:01
+# 共 426 个提交
+# 生成时间: 2026-08-20 19:14:20
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+d7256c5b | 2024-05-10 | Andy Chiu | riscv: vector: adjust minimum Vector requirement to ZVE32X
+155ddd6b | 2025-09-19 | Han Gao | riscv: dts: thead: add xtheadvector to the th1520 devicetree
+dfda703a | 2025-11-19 | Sergey Matyukevich | riscv: dts: allwinner: d1: fix vlenb property
+4b9b1677 | 2025-10-18 | Paul Walmsley | riscv: cpufeature: avoid uninitialized variable in has_thead_homogeneous_vlenb()
+b1bb0ee7 | 2025-05-23 | Han Gao | riscv: vector: Fix context save/restore with xtheadvector
+2884a8f7 | 2024-11-13 | Charlie Jenkins | selftests: riscv: Support xtheadvector in vector tests
+27f057b1 | 2024-11-13 | Charlie Jenkins | selftests: riscv: Fix vector tests
+94617258 | 2024-11-13 | Charlie Jenkins | riscv: hwprobe: Document thead vendor extensions and xtheadvector extension
+2d648bef | 2024-11-13 | Charlie Jenkins | riscv: vector: Support xtheadvector save/restore
+8584fd03 | 2024-11-13 | Charlie Jenkins | riscv: Add xtheadvector instruction definitions
+37f6149e | 2024-11-13 | Charlie Jenkins | riscv: csr: Add CSR encodings for CSR_VXRM/CSR_VXSAT
+4f74900b | 2024-11-13 | Heiko Stuebner | RISC-V: define the elements of the VCSR vector CSR
+0b8bcae6 | 2024-11-13 | Charlie Jenkins | riscv: vector: Use vlenb from DT for thead
+df2d6219 | 2024-11-13 | Charlie Jenkins | riscv: Add thead and xtheadvector as a vendor extension
+0a40f748 | 2024-11-13 | Charlie Jenkins | riscv: dts: allwinner: Add xtheadvector to the D1/D1s devicetree
+b8521557 | 2024-11-13 | Charlie Jenkins | dt-bindings: cpus: add a thead vlen register length property
+75ff6485 | 2024-11-13 | Charlie Jenkins | dt-bindings: riscv: Add xtheadvector ISA extension description
+36ac25f5 | 2023-10-09 | Conor Dooley | riscv: dts: allwinner: convert isa detection to new properties
+8c9a6bd0 | 2026-07-29 | ZhenXing Zhu | Revert "T-Head C9xx cores implement an older version (0.7.1) of the vector specification."
+d817d9a7 | 2026-07-29 | ZhenXing Zhu | Revert "riscv: xtheadvector: enable vector function"
+8346d72a | 2026-07-29 | ZhenXing Zhu | Revert "xtheadvector: fix it used as v-ext when hwprobe is used"
+26169645 | 2026-07-29 | ZhenXing Zhu | Revert "fix: riscv: xtheadvector: fix setup_v_vsize"
 00c25351 | 2024-01-03 | Leonardo Bras | riscv: Introduce set_compat_task() in asm/compat.h
 61b68c85 | 2024-01-03 | Leonardo Bras | riscv: Introduce is_compat_thread() into compat.h
 3be3edb8 | 2024-01-03 | Leonardo Bras | riscv: add compile-time test into is_compat_task()

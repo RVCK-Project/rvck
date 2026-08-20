@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 404</li>
-<li><strong>统计时间</strong>: 2026-08-17 12:28:01</li>
+<li><strong>贡献提交数</strong>: 426</li>
+<li><strong>统计时间</strong>: 2026-08-20 19:14:20</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,28 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [d7256c5b](https://github.com/RVCK-Project/rvck/commit/d7256c5b87ed10f137a359e050dbfabbcbf3ef09) | 2024-05-10 | Andy Chiu | riscv: vector: adjust minimum Vector requirement to ZVE32X |
+| [155ddd6b](https://github.com/RVCK-Project/rvck/commit/155ddd6bc1949d512e9502e3a2ba7edf0452c086) | 2025-09-19 | Han Gao | riscv: dts: thead: add xtheadvector to the th1520 devicetree |
+| [dfda703a](https://github.com/RVCK-Project/rvck/commit/dfda703a26be39504aed1fb72f72831379b8a7c7) | 2025-11-19 | Sergey Matyukevich | riscv: dts: allwinner: d1: fix vlenb property |
+| [4b9b1677](https://github.com/RVCK-Project/rvck/commit/4b9b16773bfc7fade33e6565a7b088e9b19ad18d) | 2025-10-18 | Paul Walmsley | riscv: cpufeature: avoid uninitialized variable in has_thead_homogeneous_vlenb() |
+| [b1bb0ee7](https://github.com/RVCK-Project/rvck/commit/b1bb0ee7011335a74be4ae21b3ebe2610ab5715a) | 2025-05-23 | Han Gao | riscv: vector: Fix context save/restore with xtheadvector |
+| [2884a8f7](https://github.com/RVCK-Project/rvck/commit/2884a8f70e74eca10fb9a3299539234a8b1a8f75) | 2024-11-13 | Charlie Jenkins | selftests: riscv: Support xtheadvector in vector tests |
+| [27f057b1](https://github.com/RVCK-Project/rvck/commit/27f057b1dd9a839da990070322db0420e76c2715) | 2024-11-13 | Charlie Jenkins | selftests: riscv: Fix vector tests |
+| [94617258](https://github.com/RVCK-Project/rvck/commit/94617258e88d362c3dc17aadbca67d3b70397160) | 2024-11-13 | Charlie Jenkins | riscv: hwprobe: Document thead vendor extensions and xtheadvector extension |
+| [2d648bef](https://github.com/RVCK-Project/rvck/commit/2d648bef0517986c301b82e335b4791f811341b7) | 2024-11-13 | Charlie Jenkins | riscv: vector: Support xtheadvector save/restore |
+| [8584fd03](https://github.com/RVCK-Project/rvck/commit/8584fd0381544334e17a229a010c8b7e6bf1a387) | 2024-11-13 | Charlie Jenkins | riscv: Add xtheadvector instruction definitions |
+| [37f6149e](https://github.com/RVCK-Project/rvck/commit/37f6149ee07b9f391d24723b0f942a1fd00128e2) | 2024-11-13 | Charlie Jenkins | riscv: csr: Add CSR encodings for CSR_VXRM/CSR_VXSAT |
+| [4f74900b](https://github.com/RVCK-Project/rvck/commit/4f74900b4020379976b964bb9d4bd70b2885bf34) | 2024-11-13 | Heiko Stuebner | RISC-V: define the elements of the VCSR vector CSR |
+| [0b8bcae6](https://github.com/RVCK-Project/rvck/commit/0b8bcae618197493d1c488a45e474afba9e7c39d) | 2024-11-13 | Charlie Jenkins | riscv: vector: Use vlenb from DT for thead |
+| [df2d6219](https://github.com/RVCK-Project/rvck/commit/df2d6219c227f5170be8178290a44d465a29616e) | 2024-11-13 | Charlie Jenkins | riscv: Add thead and xtheadvector as a vendor extension |
+| [0a40f748](https://github.com/RVCK-Project/rvck/commit/0a40f7486d64b34395486ab2c33f414b6cbd3b50) | 2024-11-13 | Charlie Jenkins | riscv: dts: allwinner: Add xtheadvector to the D1/D1s devicetree |
+| [b8521557](https://github.com/RVCK-Project/rvck/commit/b85215574123ffea6cd581fe069a7d2d7bbde982) | 2024-11-13 | Charlie Jenkins | dt-bindings: cpus: add a thead vlen register length property |
+| [75ff6485](https://github.com/RVCK-Project/rvck/commit/75ff6485cb8c535f525fe93c11ab72da661139ed) | 2024-11-13 | Charlie Jenkins | dt-bindings: riscv: Add xtheadvector ISA extension description |
+| [36ac25f5](https://github.com/RVCK-Project/rvck/commit/36ac25f5286d22f26bfa74fcec0d007e04431a23) | 2023-10-09 | Conor Dooley | riscv: dts: allwinner: convert isa detection to new properties |
+| [8c9a6bd0](https://github.com/RVCK-Project/rvck/commit/8c9a6bd06a115d1d8c33614c1fbff9a97f518b2e) | 2026-07-29 | ZhenXing Zhu | Revert "T-Head C9xx cores implement an older version (0.7.1) of the vector speci... |
+| [d817d9a7](https://github.com/RVCK-Project/rvck/commit/d817d9a79608f0e7a9b348ce196f682455cf7fb3) | 2026-07-29 | ZhenXing Zhu | Revert "riscv: xtheadvector: enable vector function" |
+| [8346d72a](https://github.com/RVCK-Project/rvck/commit/8346d72a6d110e87449942d5ae079155b19d399b) | 2026-07-29 | ZhenXing Zhu | Revert "xtheadvector: fix it used as v-ext when hwprobe is used" |
+| [26169645](https://github.com/RVCK-Project/rvck/commit/261696453dd7e73f315a7f12cb50bfa116050d76) | 2026-07-29 | ZhenXing Zhu | Revert "fix: riscv: xtheadvector: fix setup_v_vsize" |
 | [00c25351](https://github.com/RVCK-Project/rvck/commit/00c25351fed584120d683f0d7265c08c595c9832) | 2024-01-03 | Leonardo Bras | riscv: Introduce set_compat_task() in asm/compat.h |
 | [61b68c85](https://github.com/RVCK-Project/rvck/commit/61b68c855b8d6009b59a6d19e12edd74c7e6815e) | 2024-01-03 | Leonardo Bras | riscv: Introduce is_compat_thread() into compat.h |
 | [3be3edb8](https://github.com/RVCK-Project/rvck/commit/3be3edb85c5c35d8a5adffdebd2af883a3a9e7fe) | 2024-01-03 | Leonardo Bras | riscv: add compile-time test into is_compat_task() |
@@ -424,7 +446,7 @@
 | [a3ee0cc8](https://github.com/RVCK-Project/rvck/commit/a3ee0cc804392b4498ca0891742611bc1dc21603) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 404 条提交（显示全部）**
+**共 426 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -433,5 +455,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-17 12:28:01*
-*数据来源: 主分支 rvck-6.6@d185f474*
+*本页面最后更新于 2026-08-20 19:14:20*
+*数据来源: 主分支 rvck-6.6@0b96b6c8*
