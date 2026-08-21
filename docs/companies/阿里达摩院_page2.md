@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 426</li>
-<li><strong>统计时间</strong>: 2026-08-20 19:14:20</li>
+<li><strong>贡献提交数</strong>: 439</li>
+<li><strong>统计时间</strong>: 2026-08-21 16:26:45</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,19 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [3a55c894](https://github.com/RVCK-Project/rvck/commit/3a55c89488c555a1f8c90e9eb6ebe7dae2b538fd) | 2023-08-17 | Andrew Jones | KVM: selftests: Add array order helpers to riscv get-reg-list |
+| [3df148da](https://github.com/RVCK-Project/rvck/commit/3df148daf693f60b6eca6efc2708bbe4388a2332) | 2024-01-22 | Haibo Xu | KVM: riscv: selftests: Switch to use macro from csr.h |
+| [cace0170](https://github.com/RVCK-Project/rvck/commit/cace01707f63134ed08dba354616370ce756818f) | 2024-01-22 | Haibo Xu | tools: riscv: Add header file vdso/processor.h |
+| [fd98d2cc](https://github.com/RVCK-Project/rvck/commit/fd98d2cc6fe214b5bc814200e247b508dc642342) | 2024-01-22 | Haibo Xu | tools: riscv: Add header file csr.h |
+| [35dd1cb4](https://github.com/RVCK-Project/rvck/commit/35dd1cb45ab95c73b65f5ffe5b9d4587c51460aa) | 2024-11-08 | Charlie Jenkins | riscv: Fix default misaligned access trap |
+| [8b600487](https://github.com/RVCK-Project/rvck/commit/8b600487a34b9f815f1a3fbce7d5c024d295f54f) | 2025-12-06 | Eric Biggers | lib/crypto: riscv: Depend on RISCV_EFFICIENT_VECTOR_UNALIGNED_ACCESS |
+| [9aab5c59](https://github.com/RVCK-Project/rvck/commit/9aab5c59d8500af8595244ed0ab146ff798a6391) | 2025-03-04 | Andrew Jones | Documentation/kernel-parameters: Add riscv unaligned speed parameters |
+| [0ee4f4f8](https://github.com/RVCK-Project/rvck/commit/0ee4f4f8cc813d709e06b5496fa0f69072f7ab5c) | 2025-03-04 | Andrew Jones | riscv: Add parameter for skipping access speed tests |
+| [cc37dd06](https://github.com/RVCK-Project/rvck/commit/cc37dd064342bfffd6acd7722e9abcb2fe858bf0) | 2025-03-04 | Andrew Jones | riscv: Fix set up of vector cpu hotplug callback |
+| [d2bfb092](https://github.com/RVCK-Project/rvck/commit/d2bfb0928845e152984131a10e8f2f58ea6959ae) | 2025-03-04 | Andrew Jones | riscv: Fix set up of cpu hotplug callbacks |
+| [81f480af](https://github.com/RVCK-Project/rvck/commit/81f480af4bc096d6f8e90040ba58cc6f3636c33d) | 2025-03-04 | Andrew Jones | riscv: Change check_unaligned_access_speed_all_cpus to void |
+| [090c5110](https://github.com/RVCK-Project/rvck/commit/090c5110cf4104c60cce984601d8e4f5d980cbb8) | 2025-03-04 | Andrew Jones | riscv: Fix check_unaligned_access_all_cpus |
+| [23a2d89e](https://github.com/RVCK-Project/rvck/commit/23a2d89e1aa2bce5e4ff788bb7d66fc5f7fa976a) | 2025-03-04 | Andrew Jones | riscv: Fix riscv_online_cpu_vec |
 | [f95b2008](https://github.com/RVCK-Project/rvck/commit/f95b2008f90e055223dba4c8a7ff34297a7d423d) | 2025-03-04 | Andrew Jones | riscv: Annotate unaligned access init functions |
 | [33c82e59](https://github.com/RVCK-Project/rvck/commit/33c82e59e78ce0a303feef44ed75623ae019754f) | 2024-10-17 | Jesse Taube | RISC-V: hwprobe: Document unaligned vector perf key |
 | [4c3749d1](https://github.com/RVCK-Project/rvck/commit/4c3749d183e53ee405f625ae293aea5ca030ec28) | 2024-10-17 | Jesse Taube | RISC-V: Report vector unaligned access speed hwprobe |
@@ -205,22 +218,9 @@
 | [5acfb3f2](https://github.com/RVCK-Project/rvck/commit/5acfb3f2bf561023ad136a69e6afcf059d86bb70) | 2024-06-05 | abing | th1520.dtsi: refine usb dts |
 | [9bb512fa](https://github.com/RVCK-Project/rvck/commit/9bb512fabb885cea6288fa10bea60e32b69650f2) | 2024-06-06 | Xiangyi Zeng | riscv:dts:thead: Add TH1520 event and watchdog device node |
 | [a43037a3](https://github.com/RVCK-Project/rvck/commit/a43037a36a1bb953f7c14af69475717f436bc50d) | 2024-06-06 | Xiangyi Zeng | dt-bindings:wdt: Add Documentation for THEAD TH1520 pmic watchdog |
-| [8204544a](https://github.com/RVCK-Project/rvck/commit/8204544a3bd3967c1340eec5ec6291c7ad8a1092) | 2024-06-06 | Xiangyi Zeng | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver |
-| [797f143c](https://github.com/RVCK-Project/rvck/commit/797f143c884850e853d4527d57641148ea34dbcf) | 2024-06-06 | Xiangyi Zeng | dt-bindings:event: Add Documentation for THEAD TH1520 event driver |
-| [dd93fd47](https://github.com/RVCK-Project/rvck/commit/dd93fd4756e64da71d9af5a47169aa5b76b17888) | 2024-06-06 | Xiangyi Zeng | drivers/soc/event: Add THEAD TH1520 event driver |
-| [ff06728d](https://github.com/RVCK-Project/rvck/commit/ff06728d90a6785493a19920e1d1066b0444d207) | 2024-06-07 | xiaojin.cxj | fix rpmsg addr cast warning |
-| [76adc918](https://github.com/RVCK-Project/rvck/commit/76adc918122ad282f206a2eb5e8d86d6e6ac2a51) | 2024-06-07 | xiaojin.cxj | fix lp32 compile warnoing for rpmsg |
-| [0080415a](https://github.com/RVCK-Project/rvck/commit/0080415a17035538f94157b09bd5f4cba5017c36) | 2024-06-07 | xiaojin.cxj | fix proc log warning |
-| [194b25c3](https://github.com/RVCK-Project/rvck/commit/194b25c3eaf5e6243d98404bc3dd8afe2166dbcb) | 2024-06-06 | xiaojin.cxj | fix rpmsg warning |
-| [cbe3e6f8](https://github.com/RVCK-Project/rvck/commit/cbe3e6f8d65939b728ffa2b70bf8bb32d01fb45f) | 2024-06-06 | xiaojin.cxj | add c906 audio support |
-| [f2c87c74](https://github.com/RVCK-Project/rvck/commit/f2c87c746c5cbf85d27805dcbd53f6058fe22059) | 2024-06-05 | xianbing Zhu | net:stmmac: increase timeout for dma reset |
-| [23632e09](https://github.com/RVCK-Project/rvck/commit/23632e091863c6e853a1a7addc4b1dfc882b5d77) | 2024-06-05 | xianbing Zhu | stmmac:dwmac-thead: add support for suspend/resume feature |
-| [084c28c4](https://github.com/RVCK-Project/rvck/commit/084c28c4c4d967a5bd58853401abb64a049709f8) | 2024-06-04 | xianbing Zhu | net:dwmac-thead: dd ptp clk set and enable |
-| [acdbce27](https://github.com/RVCK-Project/rvck/commit/acdbce27a0990afb10b6b1fee41747ee54c39c34) | 2024-06-05 | Esther Z | configs: Enable th1520 mailbox. |
-| [2f41c2ee](https://github.com/RVCK-Project/rvck/commit/2f41c2eed31f86a60612e48ba6d208ea68edc78d) | 2024-06-04 | Esther Z | drivers:ipc: update th1520 rpc msg version 2 |
 ---
 
-**共 426 条提交，显示 201-400**
+**共 439 条提交，显示 201-400**
 
 [1](阿里达摩院.md) **[2]** [3](阿里达摩院_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-20 19:14:20*
-*数据来源: 主分支 rvck-6.6@0b96b6c8*
+*本页面最后更新于 2026-08-21 16:26:45*
+*数据来源: 主分支 rvck-6.6@e08b8b52*

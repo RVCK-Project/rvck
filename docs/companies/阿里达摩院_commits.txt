@@ -1,9 +1,20 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 426 个提交
-# 生成时间: 2026-08-20 19:14:20
+# 共 439 个提交
+# 生成时间: 2026-08-21 16:26:45
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+a487797b | 2026-08-13 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 support
+bbf96fa5 | 2026-08-13 | Zhiguo Zhu | riscv: dts: add ZhiHe A210 device tree support
+f1f2dffe | 2026-08-13 | Zhiguo Zhu | irqchip/sifive-plic: add ZhiHe A210 PLIC support
+0c855249 | 2026-08-11 | Zhiguo Zhu | mmc: sdhci-of-dwcmshc: add ZhiHe A210 support
+20f85c51 | 2026-08-13 | Zhiguo Zhu | reset: zhihe: add A210 reset controller driver
+7913f6b2 | 2026-08-13 | Zhiguo Zhu | clk: zhihe: add A210 clock controller driver
+65b60ab8 | 2026-08-13 | Zhiguo Zhu | riscv: add Kconfig option for ZHIHE SoC family
+d26dea1a | 2026-08-13 | Zhiguo Zhu | dt-bindings: interrupt-controller: sifive,plic: add ZhiHe A210
+8c602a62 | 2026-08-11 | Zhiguo Zhu | dt-bindings: mmc: snps,dwcmshc: add ZhiHe A210
+97b7a4d9 | 2026-08-13 | Zhiguo Zhu | dt-bindings: reset: zhihe: add reset controller for A210
+4a5e637c | 2026-08-13 | Zhiguo Zhu | dt-bindings: clock: zhihe: add clock controller for A210
 d7256c5b | 2024-05-10 | Andy Chiu | riscv: vector: adjust minimum Vector requirement to ZVE32X
 155ddd6b | 2025-09-19 | Han Gao | riscv: dts: thead: add xtheadvector to the th1520 devicetree
 dfda703a | 2025-11-19 | Sergey Matyukevich | riscv: dts: allwinner: d1: fix vlenb property
@@ -26,6 +37,8 @@ b8521557 | 2024-11-13 | Charlie Jenkins | dt-bindings: cpus: add a thead vlen re
 d817d9a7 | 2026-07-29 | ZhenXing Zhu | Revert "riscv: xtheadvector: enable vector function"
 8346d72a | 2026-07-29 | ZhenXing Zhu | Revert "xtheadvector: fix it used as v-ext when hwprobe is used"
 26169645 | 2026-07-29 | ZhenXing Zhu | Revert "fix: riscv: xtheadvector: fix setup_v_vsize"
+613474b1 | 2026-08-13 | Zhiguo Zhu | dt-bindings: riscv: zhihe: Add A210 evaluation board
+6e87db83 | 2026-08-13 | Zhiguo Zhu | dt-bindings: vendor-prefixes: add ZhiHe
 00c25351 | 2024-01-03 | Leonardo Bras | riscv: Introduce set_compat_task() in asm/compat.h
 61b68c85 | 2024-01-03 | Leonardo Bras | riscv: Introduce is_compat_thread() into compat.h
 3be3edb8 | 2024-01-03 | Leonardo Bras | riscv: add compile-time test into is_compat_task()

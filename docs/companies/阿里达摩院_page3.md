@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 426</li>
-<li><strong>统计时间</strong>: 2026-08-20 19:14:20</li>
+<li><strong>贡献提交数</strong>: 439</li>
+<li><strong>统计时间</strong>: 2026-08-21 16:26:45</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,19 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [8204544a](https://github.com/RVCK-Project/rvck/commit/8204544a3bd3967c1340eec5ec6291c7ad8a1092) | 2024-06-06 | Xiangyi Zeng | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver |
+| [797f143c](https://github.com/RVCK-Project/rvck/commit/797f143c884850e853d4527d57641148ea34dbcf) | 2024-06-06 | Xiangyi Zeng | dt-bindings:event: Add Documentation for THEAD TH1520 event driver |
+| [dd93fd47](https://github.com/RVCK-Project/rvck/commit/dd93fd4756e64da71d9af5a47169aa5b76b17888) | 2024-06-06 | Xiangyi Zeng | drivers/soc/event: Add THEAD TH1520 event driver |
+| [ff06728d](https://github.com/RVCK-Project/rvck/commit/ff06728d90a6785493a19920e1d1066b0444d207) | 2024-06-07 | xiaojin.cxj | fix rpmsg addr cast warning |
+| [76adc918](https://github.com/RVCK-Project/rvck/commit/76adc918122ad282f206a2eb5e8d86d6e6ac2a51) | 2024-06-07 | xiaojin.cxj | fix lp32 compile warnoing for rpmsg |
+| [0080415a](https://github.com/RVCK-Project/rvck/commit/0080415a17035538f94157b09bd5f4cba5017c36) | 2024-06-07 | xiaojin.cxj | fix proc log warning |
+| [194b25c3](https://github.com/RVCK-Project/rvck/commit/194b25c3eaf5e6243d98404bc3dd8afe2166dbcb) | 2024-06-06 | xiaojin.cxj | fix rpmsg warning |
+| [cbe3e6f8](https://github.com/RVCK-Project/rvck/commit/cbe3e6f8d65939b728ffa2b70bf8bb32d01fb45f) | 2024-06-06 | xiaojin.cxj | add c906 audio support |
+| [f2c87c74](https://github.com/RVCK-Project/rvck/commit/f2c87c746c5cbf85d27805dcbd53f6058fe22059) | 2024-06-05 | xianbing Zhu | net:stmmac: increase timeout for dma reset |
+| [23632e09](https://github.com/RVCK-Project/rvck/commit/23632e091863c6e853a1a7addc4b1dfc882b5d77) | 2024-06-05 | xianbing Zhu | stmmac:dwmac-thead: add support for suspend/resume feature |
+| [084c28c4](https://github.com/RVCK-Project/rvck/commit/084c28c4c4d967a5bd58853401abb64a049709f8) | 2024-06-04 | xianbing Zhu | net:dwmac-thead: dd ptp clk set and enable |
+| [acdbce27](https://github.com/RVCK-Project/rvck/commit/acdbce27a0990afb10b6b1fee41747ee54c39c34) | 2024-06-05 | Esther Z | configs: Enable th1520 mailbox. |
+| [2f41c2ee](https://github.com/RVCK-Project/rvck/commit/2f41c2eed31f86a60612e48ba6d208ea68edc78d) | 2024-06-04 | Esther Z | drivers:ipc: update th1520 rpc msg version 2 |
 | [9072d257](https://github.com/RVCK-Project/rvck/commit/9072d25733a765511cf211b389273d237e73d318) | 2021-08-10 | fugang.duan | firmware: thead: c910_aon: add th1520 Aon protocol driver |
 | [d6684186](https://github.com/RVCK-Project/rvck/commit/d6684186bb6da015bf7fce6433af855573f0b0e3) | 2024-06-04 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 add delay line in different mode and sdio rxclk del... |
 | [4f0c2f6d](https://github.com/RVCK-Project/rvck/commit/4f0c2f6d4ab6ea1631993d6938413640c44398a2) | 2024-06-03 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 larger tuning max loop count to 128 |
@@ -46,7 +59,7 @@
 | [a3ee0cc8](https://github.com/RVCK-Project/rvck/commit/a3ee0cc804392b4498ca0891742611bc1dc21603) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 426 条提交，显示 401-426**
+**共 439 条提交，显示 401-439**
 
 [1](阿里达摩院.md) [2](阿里达摩院_page2.md) **[3]**
 
@@ -57,5 +70,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-20 19:14:20*
-*数据来源: 主分支 rvck-6.6@0b96b6c8*
+*本页面最后更新于 2026-08-21 16:26:45*
+*数据来源: 主分支 rvck-6.6@e08b8b52*

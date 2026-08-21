@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 426</li>
-<li><strong>统计时间</strong>: 2026-08-20 19:14:20</li>
+<li><strong>贡献提交数</strong>: 439</li>
+<li><strong>统计时间</strong>: 2026-08-21 16:26:45</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,17 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [a487797b](https://github.com/RVCK-Project/rvck/commit/a487797bd0606017caede015c3ea5f3eb6fb9e32) | 2026-08-13 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 support |
+| [bbf96fa5](https://github.com/RVCK-Project/rvck/commit/bbf96fa5eac723c120437abda29b5864674fe315) | 2026-08-13 | Zhiguo Zhu | riscv: dts: add ZhiHe A210 device tree support |
+| [f1f2dffe](https://github.com/RVCK-Project/rvck/commit/f1f2dffed4d48903c2e4f8cc56f092cba05dca35) | 2026-08-13 | Zhiguo Zhu | irqchip/sifive-plic: add ZhiHe A210 PLIC support |
+| [0c855249](https://github.com/RVCK-Project/rvck/commit/0c855249f4b57fe0587a1d89a52772167e3b1417) | 2026-08-11 | Zhiguo Zhu | mmc: sdhci-of-dwcmshc: add ZhiHe A210 support |
+| [20f85c51](https://github.com/RVCK-Project/rvck/commit/20f85c51d836fc53dd6726895469336c01a826f0) | 2026-08-13 | Zhiguo Zhu | reset: zhihe: add A210 reset controller driver |
+| [7913f6b2](https://github.com/RVCK-Project/rvck/commit/7913f6b2d398663f92620bc1059bf966a72fea67) | 2026-08-13 | Zhiguo Zhu | clk: zhihe: add A210 clock controller driver |
+| [65b60ab8](https://github.com/RVCK-Project/rvck/commit/65b60ab8c28237648474d8fdb1cbefec1d24a87e) | 2026-08-13 | Zhiguo Zhu | riscv: add Kconfig option for ZHIHE SoC family |
+| [d26dea1a](https://github.com/RVCK-Project/rvck/commit/d26dea1ac78c88e4ae865d4b95bd2227b6739f99) | 2026-08-13 | Zhiguo Zhu | dt-bindings: interrupt-controller: sifive,plic: add ZhiHe A210 |
+| [8c602a62](https://github.com/RVCK-Project/rvck/commit/8c602a62c21ce8908fa4fd7610bd9c0760b0e456) | 2026-08-11 | Zhiguo Zhu | dt-bindings: mmc: snps,dwcmshc: add ZhiHe A210 |
+| [97b7a4d9](https://github.com/RVCK-Project/rvck/commit/97b7a4d95e1a84d6fb62927204fe6bc722b8bd82) | 2026-08-13 | Zhiguo Zhu | dt-bindings: reset: zhihe: add reset controller for A210 |
+| [4a5e637c](https://github.com/RVCK-Project/rvck/commit/4a5e637c01bb7e7bfdeffc04bb3fd6c182db2232) | 2026-08-13 | Zhiguo Zhu | dt-bindings: clock: zhihe: add clock controller for A210 |
 | [d7256c5b](https://github.com/RVCK-Project/rvck/commit/d7256c5b87ed10f137a359e050dbfabbcbf3ef09) | 2024-05-10 | Andy Chiu | riscv: vector: adjust minimum Vector requirement to ZVE32X |
 | [155ddd6b](https://github.com/RVCK-Project/rvck/commit/155ddd6bc1949d512e9502e3a2ba7edf0452c086) | 2025-09-19 | Han Gao | riscv: dts: thead: add xtheadvector to the th1520 devicetree |
 | [dfda703a](https://github.com/RVCK-Project/rvck/commit/dfda703a26be39504aed1fb72f72831379b8a7c7) | 2025-11-19 | Sergey Matyukevich | riscv: dts: allwinner: d1: fix vlenb property |
@@ -40,6 +51,8 @@
 | [d817d9a7](https://github.com/RVCK-Project/rvck/commit/d817d9a79608f0e7a9b348ce196f682455cf7fb3) | 2026-07-29 | ZhenXing Zhu | Revert "riscv: xtheadvector: enable vector function" |
 | [8346d72a](https://github.com/RVCK-Project/rvck/commit/8346d72a6d110e87449942d5ae079155b19d399b) | 2026-07-29 | ZhenXing Zhu | Revert "xtheadvector: fix it used as v-ext when hwprobe is used" |
 | [26169645](https://github.com/RVCK-Project/rvck/commit/261696453dd7e73f315a7f12cb50bfa116050d76) | 2026-07-29 | ZhenXing Zhu | Revert "fix: riscv: xtheadvector: fix setup_v_vsize" |
+| [613474b1](https://github.com/RVCK-Project/rvck/commit/613474b16047993473d91faa62685caa30af3693) | 2026-08-13 | Zhiguo Zhu | dt-bindings: riscv: zhihe: Add A210 evaluation board |
+| [6e87db83](https://github.com/RVCK-Project/rvck/commit/6e87db83ac2ee2ed1bd8e4536bfe8f061a3a309a) | 2026-08-13 | Zhiguo Zhu | dt-bindings: vendor-prefixes: add ZhiHe |
 | [00c25351](https://github.com/RVCK-Project/rvck/commit/00c25351fed584120d683f0d7265c08c595c9832) | 2024-01-03 | Leonardo Bras | riscv: Introduce set_compat_task() in asm/compat.h |
 | [61b68c85](https://github.com/RVCK-Project/rvck/commit/61b68c855b8d6009b59a6d19e12edd74c7e6815e) | 2024-01-03 | Leonardo Bras | riscv: Introduce is_compat_thread() into compat.h |
 | [3be3edb8](https://github.com/RVCK-Project/rvck/commit/3be3edb85c5c35d8a5adffdebd2af883a3a9e7fe) | 2024-01-03 | Leonardo Bras | riscv: add compile-time test into is_compat_task() |
@@ -446,7 +459,7 @@
 | [a3ee0cc8](https://github.com/RVCK-Project/rvck/commit/a3ee0cc804392b4498ca0891742611bc1dc21603) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 426 条提交（显示全部）**
+**共 439 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -455,5 +468,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-20 19:14:20*
-*数据来源: 主分支 rvck-6.6@0b96b6c8*
+*本页面最后更新于 2026-08-21 16:26:45*
+*数据来源: 主分支 rvck-6.6@e08b8b52*
