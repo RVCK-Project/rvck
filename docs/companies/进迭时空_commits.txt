@@ -1,9 +1,23 @@
 # 进迭时空 提交列表（纯文本视图）
-# 共 154 个提交
-# 生成时间: 2026-08-21 16:26:45
+# 共 168 个提交
+# 生成时间: 2026-08-25 12:44:42
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+1a3a2716 | 2026-05-21 | Yixun Lan | riscv: dts: spacemit: k3: Add pwm support
+c1a13392 | 2026-04-28 | Yixun Lan | pwm: pxa: Add optional bus clock
+16fd9ea4 | 2025-04-29 | Guodong Xu | pwm: pxa: Add optional reset control
+4353aad7 | 2025-03-13 | Uwe Kleine-König | pwm: pxa: Improve using dev_err_probe()
+6785c09c | 2024-06-10 | Jeff Johnson | pwm: add missing MODULE_DESCRIPTION() macros
+6d5b0f35 | 2024-02-14 | Uwe Kleine-König | pwm: pxa: Make use of devm_pwmchip_alloc() function
+9363792d | 2024-01-09 | Uwe Kleine-König | pwm: Drop useless member .of_pwm_n_cells of struct pwm_chip
+ee6e2111 | 2023-10-09 | Rob Herring | pwm: pxa: Explicitly include correct DT includes
+b8007d63 | 2026-07-22 | Yongchao Jia | pwm: sophgo: remove unused .owner field
+162e20ac | 2023-08-04 | Uwe Kleine-König | pwm: Manage owner assignment implicitly for drivers
+f607c819 | 2026-04-28 | Yixun Lan | dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K3 PWM support
+b08184a1 | 2025-04-29 | Guodong Xu | dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K1 PWM support
+136d65b4 | 2024-04-30 | Binbin Zhou | dt-bindings: pwm: marvell,pxa: Do not require pwm-cells twice
+f4fb0aff | 2024-01-07 | Duje Mihanović | dt-bindings: pxa-pwm: Convert to YAML
 aa205a39 | 2026-07-23 | Yongchao Jia | riscv: config: enable dma driver for spacemit k1 and k3
 19dc2538 | 2026-05-18 | Troy Mitchell | riscv: dts: spacemit: Add PDMA controller node for K3 SoC
 abc4b61c | 2026-05-18 | Guodong Xu | dmaengine: mmp_pdma: add SpacemiT K3 support
