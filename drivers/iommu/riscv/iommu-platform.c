@@ -17,6 +17,7 @@
 #include <linux/of_irq.h>
 #include <linux/of_platform.h>
 #include <linux/platform_device.h>
+#include <asm/sbi.h>
 
 #include "iommu-bits.h"
 #include "iommu.h"
@@ -76,6 +77,13 @@ static int riscv_iommu_platform_probe(struct platform_device *pdev)
 		iommu->irqs_count = RISCV_IOMMU_INTR_COUNT;
 
 	igs = FIELD_GET(RISCV_IOMMU_CAPABILITIES_IGS, iommu->caps);
+
+	/* Add quirk for LANXIN LX500 chip */
+	if (sbi_get_marchid() == 0x8000000000000109 && sbi_get_mimpid() == 0x14250606 &&
+	    iommu->irqs_count > 0) {
+		igs = RISCV_IOMMU_CAPABILITIES_IGS_WSI;
+	}
+
 	switch (igs) {
 	case RISCV_IOMMU_CAPABILITIES_IGS_BOTH:
 	case RISCV_IOMMU_CAPABILITIES_IGS_MSI:
