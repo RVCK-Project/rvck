@@ -1,9 +1,13 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 439 个提交
-# 生成时间: 2026-08-25 12:44:42
+# 共 443 个提交
+# 生成时间: 2026-08-26 13:07:02
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+c4401162 | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 Ethernet controllers
+fad0dc54 | 2026-08-18 | Zhiguo Zhu | net: stmmac: add ZhiHe A210 DWMAC glue layer
+3edc74fa | 2026-08-18 | Zhiguo Zhu | dt-bindings: net: zhihe: add A210 DWMAC
+2c6823ce | 2026-08-20 | Zhiguo Zhu | dt-bindings: mfd: syscon: add ZhiHe A210 GMAC syscon
 a487797b | 2026-08-13 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 support
 bbf96fa5 | 2026-08-13 | Zhiguo Zhu | riscv: dts: add ZhiHe A210 device tree support
 f1f2dffe | 2026-08-13 | Zhiguo Zhu | irqchip/sifive-plic: add ZhiHe A210 PLIC support

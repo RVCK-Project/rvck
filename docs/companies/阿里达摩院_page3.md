@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 439</li>
-<li><strong>统计时间</strong>: 2026-08-25 12:44:42</li>
+<li><strong>贡献提交数</strong>: 443</li>
+<li><strong>统计时间</strong>: 2026-08-26 13:07:02</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [250635ba](https://github.com/RVCK-Project/rvck/commit/250635bad2697ed10f3c5e828412b24e57588970) | 2024-06-05 | abing | drivers: usb: add dwc3-thead.c |
+| [5acfb3f2](https://github.com/RVCK-Project/rvck/commit/5acfb3f2bf561023ad136a69e6afcf059d86bb70) | 2024-06-05 | abing | th1520.dtsi: refine usb dts |
+| [9bb512fa](https://github.com/RVCK-Project/rvck/commit/9bb512fabb885cea6288fa10bea60e32b69650f2) | 2024-06-06 | Xiangyi Zeng | riscv:dts:thead: Add TH1520 event and watchdog device node |
+| [a43037a3](https://github.com/RVCK-Project/rvck/commit/a43037a36a1bb953f7c14af69475717f436bc50d) | 2024-06-06 | Xiangyi Zeng | dt-bindings:wdt: Add Documentation for THEAD TH1520 pmic watchdog |
 | [8204544a](https://github.com/RVCK-Project/rvck/commit/8204544a3bd3967c1340eec5ec6291c7ad8a1092) | 2024-06-06 | Xiangyi Zeng | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver |
 | [797f143c](https://github.com/RVCK-Project/rvck/commit/797f143c884850e853d4527d57641148ea34dbcf) | 2024-06-06 | Xiangyi Zeng | dt-bindings:event: Add Documentation for THEAD TH1520 event driver |
 | [dd93fd47](https://github.com/RVCK-Project/rvck/commit/dd93fd4756e64da71d9af5a47169aa5b76b17888) | 2024-06-06 | Xiangyi Zeng | drivers/soc/event: Add THEAD TH1520 event driver |
@@ -59,7 +63,7 @@
 | [a3ee0cc8](https://github.com/RVCK-Project/rvck/commit/a3ee0cc804392b4498ca0891742611bc1dc21603) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 439 条提交，显示 401-439**
+**共 443 条提交，显示 401-443**
 
 [1](阿里达摩院.md) [2](阿里达摩院_page2.md) **[3]**
 
@@ -70,5 +74,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-25 12:44:42*
-*数据来源: 主分支 rvck-6.6@e112b11c*
+*本页面最后更新于 2026-08-26 13:07:02*
+*数据来源: 主分支 rvck-6.6@3cba41cd*

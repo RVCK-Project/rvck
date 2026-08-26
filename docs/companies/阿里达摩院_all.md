@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 439</li>
-<li><strong>统计时间</strong>: 2026-08-25 12:44:42</li>
+<li><strong>贡献提交数</strong>: 443</li>
+<li><strong>统计时间</strong>: 2026-08-26 13:07:02</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [c4401162](https://github.com/RVCK-Project/rvck/commit/c44011629661bf406a86c550dd660ed405819892) | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 Ethernet controllers |
+| [fad0dc54](https://github.com/RVCK-Project/rvck/commit/fad0dc54a748be5eee55ed75f14ad48bd2b5eafa) | 2026-08-18 | Zhiguo Zhu | net: stmmac: add ZhiHe A210 DWMAC glue layer |
+| [3edc74fa](https://github.com/RVCK-Project/rvck/commit/3edc74fa7980353f0e32dfe6e91e7f101530522b) | 2026-08-18 | Zhiguo Zhu | dt-bindings: net: zhihe: add A210 DWMAC |
+| [2c6823ce](https://github.com/RVCK-Project/rvck/commit/2c6823ce55b0dde1a7aac68c56ab26d041a4c218) | 2026-08-20 | Zhiguo Zhu | dt-bindings: mfd: syscon: add ZhiHe A210 GMAC syscon |
 | [a487797b](https://github.com/RVCK-Project/rvck/commit/a487797bd0606017caede015c3ea5f3eb6fb9e32) | 2026-08-13 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 support |
 | [bbf96fa5](https://github.com/RVCK-Project/rvck/commit/bbf96fa5eac723c120437abda29b5864674fe315) | 2026-08-13 | Zhiguo Zhu | riscv: dts: add ZhiHe A210 device tree support |
 | [f1f2dffe](https://github.com/RVCK-Project/rvck/commit/f1f2dffed4d48903c2e4f8cc56f092cba05dca35) | 2026-08-13 | Zhiguo Zhu | irqchip/sifive-plic: add ZhiHe A210 PLIC support |
@@ -459,7 +463,7 @@
 | [a3ee0cc8](https://github.com/RVCK-Project/rvck/commit/a3ee0cc804392b4498ca0891742611bc1dc21603) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 439 条提交（显示全部）**
+**共 443 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -468,5 +472,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-25 12:44:42*
-*数据来源: 主分支 rvck-6.6@e112b11c*
+*本页面最后更新于 2026-08-26 13:07:02*
+*数据来源: 主分支 rvck-6.6@3cba41cd*

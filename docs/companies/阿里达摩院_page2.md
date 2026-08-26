@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 439</li>
-<li><strong>统计时间</strong>: 2026-08-25 12:44:42</li>
+<li><strong>贡献提交数</strong>: 443</li>
+<li><strong>统计时间</strong>: 2026-08-26 13:07:02</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [4afb49ff](https://github.com/RVCK-Project/rvck/commit/4afb49ff44b2c1a6551e9593c3d67793ae6fde2e) | 2023-12-13 | Andrew Jones | RISC-V: KVM: Make SBI uapi consistent with ISA uapi |
+| [751470f8](https://github.com/RVCK-Project/rvck/commit/751470f83e15b26824183cc926c9e055c34131a5) | 2023-11-28 | Anup Patel | KVM: riscv: selftests: Generate ISA extension reg_list using macros |
+| [dc616474](https://github.com/RVCK-Project/rvck/commit/dc616474da0cc50bd4ea6c3ad45c42476295d002) | 2023-10-19 | Thomas Huth | KVM: selftests: Use TAP in the steal_time test |
+| [fa536524](https://github.com/RVCK-Project/rvck/commit/fa536524fc6528577a25c8109f52fcd23c1f54ab) | 2023-09-20 | Andrew Jones | KVM: riscv: selftests: get-reg-list print_reg should never fail |
 | [3a55c894](https://github.com/RVCK-Project/rvck/commit/3a55c89488c555a1f8c90e9eb6ebe7dae2b538fd) | 2023-08-17 | Andrew Jones | KVM: selftests: Add array order helpers to riscv get-reg-list |
 | [3df148da](https://github.com/RVCK-Project/rvck/commit/3df148daf693f60b6eca6efc2708bbe4388a2332) | 2024-01-22 | Haibo Xu | KVM: riscv: selftests: Switch to use macro from csr.h |
 | [cace0170](https://github.com/RVCK-Project/rvck/commit/cace01707f63134ed08dba354616370ce756818f) | 2024-01-22 | Haibo Xu | tools: riscv: Add header file vdso/processor.h |
@@ -214,13 +218,9 @@
 | [5429364d](https://github.com/RVCK-Project/rvck/commit/5429364d6177eeaf85c6fde597e04fbc51c13be3) | 2024-06-11 | xiaojin.cxj | add 902 share mem log |
 | [5a4df95f](https://github.com/RVCK-Project/rvck/commit/5a4df95f53c3186cc22eff0a4989fb5308a6bf46) | 2024-06-05 | abing | refine thead,th1520-usb.yaml |
 | [8a356247](https://github.com/RVCK-Project/rvck/commit/8a356247191d8c2626eff37334bf0e948afa3e70) | 2024-06-05 | abing | drivers: usb: dwc3: add usb_mode usb_speed param for mode speed change when insm... |
-| [250635ba](https://github.com/RVCK-Project/rvck/commit/250635bad2697ed10f3c5e828412b24e57588970) | 2024-06-05 | abing | drivers: usb: add dwc3-thead.c |
-| [5acfb3f2](https://github.com/RVCK-Project/rvck/commit/5acfb3f2bf561023ad136a69e6afcf059d86bb70) | 2024-06-05 | abing | th1520.dtsi: refine usb dts |
-| [9bb512fa](https://github.com/RVCK-Project/rvck/commit/9bb512fabb885cea6288fa10bea60e32b69650f2) | 2024-06-06 | Xiangyi Zeng | riscv:dts:thead: Add TH1520 event and watchdog device node |
-| [a43037a3](https://github.com/RVCK-Project/rvck/commit/a43037a36a1bb953f7c14af69475717f436bc50d) | 2024-06-06 | Xiangyi Zeng | dt-bindings:wdt: Add Documentation for THEAD TH1520 pmic watchdog |
 ---
 
-**共 439 条提交，显示 201-400**
+**共 443 条提交，显示 201-400**
 
 [1](阿里达摩院.md) **[2]** [3](阿里达摩院_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-25 12:44:42*
-*数据来源: 主分支 rvck-6.6@e112b11c*
+*本页面最后更新于 2026-08-26 13:07:02*
+*数据来源: 主分支 rvck-6.6@3cba41cd*
