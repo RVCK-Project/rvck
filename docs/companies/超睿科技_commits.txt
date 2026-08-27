@@ -1,9 +1,10 @@
 # 超睿科技 提交列表（纯文本视图）
-# 共 89 个提交
-# 生成时间: 2026-08-26 13:07:02
+# 共 90 个提交
+# 生成时间: 2026-08-27 15:47:01
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+7c859489 | 2026-08-20 | Jia Wang | riscv: rvck_defconfig: refresh with savedefconfig
 c132cde1 | 2024-01-06 | Sun Haiyong | perf tools: Fix calloc() arguments to address error introduced in gcc-14
 2c40b7ad | 2023-12-04 | Sun Haiyong | perf top: Remove needless malloc(0) call that triggers -Walloc-size
 d3e46d50 | 2024-07-19 | Eric Lin | perf arch events: Fix duplicate RISC-V SBI firmware event name
