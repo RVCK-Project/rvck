@@ -1,0 +1,82 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/firmware/zhihe,a210-aon.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Zhihe A210 AON (Always-On) Subsystem Firmware
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  The Always-On (AON) subsystem of the Zhihe A210 SoC runs a dedicated
+  firmware and communicates with the application processor over a
+  mailbox. This node describes the AON control registers, its firmware
+  image and the mailbox channel used to reach it.
+
+properties:
+  compatible:
+    const: zhihe,a210-aon
+
+  reg:
+    minItems: 3
+    maxItems: 3
+
+  reg-names:
+    minItems: 3
+    maxItems: 3
+    items:
+      enum:
+        - aon-base
+        - aon-reset
+        - aon-sync
+
+  firmware-name:
+    maxItems: 1
+    description: Name of the AON firmware image to load.
+
+  mboxes:
+    maxItems: 1
+
+  mbox-names:
+    items:
+      - const: aon0
+
+  zhihe,protocol-version:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description: AON protocol version.
+
+  "#mbox-cells":
+    const: 2
+
+  regulators:
+    type: object
+    description: Regulators controlled by the AON firmware.
+    properties:
+      compatible:
+        const: zhihe,a210-aon-regulator
+    additionalProperties: true
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - mboxes
+
+additionalProperties: false
+
+examples:
+  - |
+    aon@308f8000 {
+        compatible = "zhihe,a210-aon";
+        reg = <0x308f8000 0x10000>,
+              <0x30842018 0x4>,
+              <0x30846144 0x4>;
+        reg-names = "aon-base", "aon-reset", "aon-sync";
+        firmware-name = "a210-aon.bin";
+        mboxes = <&mbox_920 1 0>;
+        mbox-names = "aon0";
+        #mbox-cells = <2>;
+        zhihe,protocol-version = <1>;
+    };
