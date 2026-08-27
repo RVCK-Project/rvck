@@ -1,9 +1,10 @@
 # 软件所 提交列表（纯文本视图）
-# 共 282 个提交
-# 生成时间: 2026-08-27 15:47:01
+# 共 283 个提交
+# 生成时间: 2026-08-27 19:46:15
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+99b1d5ec | 2026-08-27 | Chen Wang | riscv: remove k1_defconfig
 893c5f58 | 2026-07-17 | Yanteng Si | RISCV: rvck: Restore all upstream linux-6.6.y configs
 73a5e8ff | 2026-07-17 | Yanteng Si | RISCV: rvck: Clean up redundant board-specific BSP configs
 d61020d0 | 2026-07-17 | Yanteng Si | RISCV: rvck: Create dedicated rvck_defconfig by copying existing defconfig

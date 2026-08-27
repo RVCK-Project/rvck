@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 282</li>
-<li><strong>统计时间</strong>: 2026-08-27 15:47:01</li>
+<li><strong>贡献提交数</strong>: 283</li>
+<li><strong>统计时间</strong>: 2026-08-27 19:46:15</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -19,6 +19,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [99b1d5ec](https://github.com/RVCK-Project/rvck/commit/99b1d5ecbc59b012a0d437a6366ce8257f6a051f) | 2026-08-27 | Chen Wang | riscv: remove k1_defconfig |
 | [893c5f58](https://github.com/RVCK-Project/rvck/commit/893c5f58be210700d1bb3453b57c47ab7b888ddb) | 2026-07-17 | Yanteng Si | RISCV: rvck: Restore all upstream linux-6.6.y configs |
 | [73a5e8ff](https://github.com/RVCK-Project/rvck/commit/73a5e8ff20aa6386c84378071d075b65adca89d9) | 2026-07-17 | Yanteng Si | RISCV: rvck: Clean up redundant board-specific BSP configs |
 | [d61020d0](https://github.com/RVCK-Project/rvck/commit/d61020d08bfed12ffc04faf83a5b3086bd00c0ec) | 2026-07-17 | Yanteng Si | RISCV: rvck: Create dedicated rvck_defconfig by copying existing defconfig |
@@ -303,7 +304,7 @@
 | [6cbfdac3](https://github.com/RVCK-Project/rvck/commit/6cbfdac350804dd8f3c09da16996e856d17fc808) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 282 条提交（显示全部）**
+**共 283 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -312,5 +313,5 @@
 
 ---
 
-*本页面最后更新于 2026-08-27 15:47:01*
-*数据来源: 主分支 rvck-6.6@0e8225f2*
+*本页面最后更新于 2026-08-27 19:46:15*
+*数据来源: 主分支 rvck-6.6@90916ce3*
