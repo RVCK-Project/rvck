@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/clock/zhihe,a210-ccu.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Zhihe A210 Clock Control Unit (CCU)
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  The CCU (Clock Control Unit) is a hardware-level automatic clock
+  management block embedded in each power domain of the Zhihe A210 SoC.
+  Unlike the main clock controller (zhihe,a210-clk) which provides PLL,
+  divider, gate and mux operations driven by software, the CCU
+  autonomously sequences clock gating or scaling delays when its parent
+  power domain transitions between power states. It does not expose
+  clock outputs to consumers.
+
+properties:
+  compatible:
+    const: zhihe,a210-ccu
+
+  reg:
+    minItems: 1
+    maxItems: 16
+
+  zhihe,ccu-mode:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    default: 0
+    description:
+      CCU operating mode. 0 (default) selects gating mode where clocks
+      are simply gated/ungated during power transitions. 1 selects
+      scaling mode where clock frequencies are ramped gradually.
+      Most power domains use gating mode; this property can be omitted
+      in that case.
+
+  zhihe,ccu-dly-time:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: Per-CCU delay time value.
+
+  zhihe,ccu-dly-time-step:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: Per-CCU delay time step value.
+
+  zhihe,ccu-ratio:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: Per-CCU divider ratio (scaling mode only).
+
+required:
+  - compatible
+  - reg
+  - zhihe,ccu-dly-time
+  - zhihe,ccu-dly-time-step
+
+additionalProperties: false
+
+examples:
+  - |
+    clock-controller@5910000 {
+        compatible = "zhihe,a210-ccu";
+        reg = <0x05910000 0x2c>, <0x05920000 0x2c>;
+        zhihe,ccu-dly-time = <0x5e 0x5e>;
+        zhihe,ccu-dly-time-step = <0x3 0x3>;
+    };
