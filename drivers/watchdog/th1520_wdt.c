@@ -11,6 +11,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/moduleparam.h>
+#include <linux/of.h>
 #include <linux/of_address.h>
 #include <linux/platform_device.h>
 #include <linux/regmap.h>
@@ -400,6 +401,9 @@ static int __init th1520_wdt_init(void)
 {
 	static struct platform_device *pdev;
 	int ret;
+
+	if (!of_machine_is_compatible("thead,th1520"))
+		return -ENODEV;
 
 	pdev = platform_device_register_simple(DRV_NAME, -1, NULL, 0);
 	if (IS_ERR(pdev))
