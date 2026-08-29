@@ -71,6 +71,11 @@
 	status = "okay";
 };
 
+/*
+ * Linux domains use EDK2 PCI segments divided by two:
+ * pcie1=0, pcie0=1, pcie3=2, pcie2=3, pcie4=4.
+ */
+
 &pcie0 {
 	bus-range = <0x00 0xff>;
 	linux,pci-domain = <1>;
