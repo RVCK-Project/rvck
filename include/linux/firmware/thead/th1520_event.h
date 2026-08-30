@@ -19,17 +19,6 @@ enum th1520_rebootmode_index {
 #if IS_ENABLED(CONFIG_TH1520_REBOOTMODE)
 extern int th1520_event_set_rebootmode(enum th1520_rebootmode_index mode);
 extern int th1520_event_get_rebootmode(enum th1520_rebootmode_index *mode);
-#else
-static int th1520_event_set_rebootmode(enum th1520_rebootmode_index mode)
-{
-	return 0;
-}
-static int th1520_event_get_rebootmode(enum th1520_rebootmode_index *mode)
-{
-	*mode = TH1520_EVENT_MAX;
-
-	return 0;
-}
 #endif
 
 #endif
