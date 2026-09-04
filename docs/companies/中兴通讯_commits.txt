@@ -1,438 +1,438 @@
 # 中兴通讯 提交列表（纯文本视图）
 # 共 432 个提交
-# 生成时间: 2026-08-27 19:46:15
+# 生成时间: 2026-09-04 11:16:31
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-97bce747 | 2026-02-27 | Jinyu Tang | KVM: riscv: Skip CSR restore if VCPU is reloaded on the same core
-2b132026 | 2026-07-07 | hu.yuye | riscv: defconfig: Enable CONFIG_RTC_DRV_EFI config
-240522a4 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements
-aff2242e | 2025-03-12 | Conor Dooley | dt-bindings: riscv: add vector sub-extension dependencies
-ac668f28 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: d requires f
-eefab86f | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zaamo and Zalrsc ISA extension description
-7371a985 | 2024-11-03 | Alexandre Ghiti | dt-bindings: riscv: Add Zabha ISA extension description
-33ca9663 | 2024-10-16 | Samuel Holland | dt-bindings: riscv: Add pointer masking ISA extensions
-52e3d209 | 2024-07-17 | Alexandre Ghiti | dt-bindings: riscv: Add Svvptc ISA extension description
-e6dbcd40 | 2024-04-26 | Andrew Jones | dt-bindings: riscv: Add Zawrs ISA extension description
-300cac07 | 2025-02-13 | Inochi Amaoto | dt-bindings: riscv: add bfloat16 ISA extension description
-10884418 | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zcmop ISA extension description
-d3dbe7ec | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zca, Zcf, Zcd and Zcb ISA extension description
-9c94a8b4 | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zimop ISA extension description
-2d7f3faa | 2024-05-10 | Andy Chiu | dt-bindings: riscv: add Zve32[xf] Zve64[xfd] ISA extension description
-1f33c18c | 2024-02-22 | Yu Chien Peter Lin | dt-bindings: riscv: Add Andes PMU extension description
-758d197d | 2023-12-08 | Conor Dooley | dt-bindings: riscv: permit numbers in "riscv,isa"
-e9021b7c | 2023-12-20 | Clément Léger | dt-bindings: riscv: add Zacas ISA extension description
-6ae411bd | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zfa ISA extension description
-24121035 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zvfh[min] ISA extension description
-ca6d2930 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zihintntl ISA extension description
-546a571a | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zfh[min] ISA extensions description
-216c19bb | 2023-11-14 | Clément Léger | dt-bindings: riscv: add vector crypto ISA extensions description
-eaa7f178 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add scalar crypto ISA extensions description
-b2059c66 | 2023-09-25 | Anup Patel | dt-bindings: riscv: Add Zicond extension entry
-80a58f7a | 2026-06-17 | bailu | iommu/riscv: add dma_wmb before cmpxchg_relaxed
-dfce1bda | 2026-06-30 | heyilin | PERF: Update LRW PMU Event Encoding
-54a4ba67 | 2026-01-28 | Yicong Yang | ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn()
-c1499a7f | 2025-11-17 | Anup Patel | RISC-V: Enable HOTPLUG_PARALLEL for secondary CPUs
-40ab3e25 | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Provide weak fallback for arch_cpuhp_init_parallel_bringup()
-fcb8e917 | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Make HOTPLUG_PARALLEL independent of HOTPLUG_SMT
-eccdf8f2 | 2026-05-29 | Lu Peng | riscv: Fix incorrect use of REG_L for 32-bit types in sse_entry.S
-b896b25b | 2026-04-03 | Feng Jiang | riscv: lib: add strrchr() implementation
-93923613 | 2026-04-03 | Feng Jiang | riscv: lib: add strchr() implementation
-adaeb4ba | 2026-04-03 | Feng Jiang | riscv: lib: add strnlen() implementation
-fe42631d | 2026-04-03 | Feng Jiang | lib/string_kunit: extend benchmarks to strnlen() and chr searches
-5c4b41f3 | 2026-04-03 | Feng Jiang | lib/string_kunit: add performance benchmark for strlen()
-62d2eb17 | 2026-04-03 | Feng Jiang | lib/string_kunit: add correctness test for strrchr()
-7373322b | 2026-04-03 | Feng Jiang | lib/string_kunit: add correctness test for strnlen()
-1c4c3135 | 2026-04-03 | Feng Jiang | lib/string_kunit: add correctness test for strlen()
-988d809b | 2024-04-24 | Kees Cook | string_kunit: Move strtomem KUnit test to string_kunit.c
-acf28076 | 2024-04-09 | Kees Cook | string.h: Introduce memtostr() and memtostr_pad()
-2dd085f2 | 2024-04-19 | Kees Cook | string: Convert KUnit test names to standard convention
-c3dfae5e | 2024-04-19 | Kees Cook | string: Merge strcat KUnit tests into string_kunit.c
-891fc7a4 | 2024-04-19 | Kees Cook | string: Prepare to merge strcat KUnit tests into string_kunit.c
-b610fd98 | 2024-04-19 | Kees Cook | string: Merge strscpy KUnit tests into string_kunit.c
-07496498 | 2024-04-19 | Kees Cook | string: Prepare to merge strscpy_kunit.c into string_kunit.c
-f59f5bc5 | 2024-04-18 | Ivan Orlov | string_kunit: Add test cases for str*cmp functions
-1d9e3319 | 2024-03-01 | Kees Cook | string: Convert helpers selftest to KUnit
-84ce7e51 | 2024-03-01 | Kees Cook | string: Convert selftest to KUnit
-4912e51f | 2024-02-29 | Andy Shevchenko | lib/string_helpers: Add flags param to string_get_size()
-4f7895de | 2022-04-25 | Kent Overstreet | lib/string_helpers: string_get_size() now returns characters wrote
-0accb025 | 2026-05-18 | Liu Qingtao | tmpfs: don't enable large folios if not supported
-97e45d9a | 2026-05-20 | guowu | add LRW PCIE PMU support
-a9c05fdb | 2026-04-16 | Lu Peng | riscv: add hardware error trap handler support
-5b29d0b1 | 2026-05-12 | Lu Peng | riscv: defconfig: Enable EDAC & EDAC_GHES config
-36db654f | 2025-02-17 | Andrew Jones | riscv: KVM: Fix SBI sleep_type use
-3d10b10a | 2024-10-17 | Andrew Jones | KVM: riscv: selftests: Add SBI SUSP to get-reg-list test
-655dea9b | 2024-10-17 | Andrew Jones | RISC-V: KVM: Add SBI system suspend support
-9502e270 | 2024-04-17 | Yong-Xuan Wang | RISCV: KVM: Introduce vcpu->reset_cntx_lock
-a20545c8 | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit
-33151772 | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use
-fb29c900 | 2024-08-15 | Anup Patel | RISC-V: KVM: Don't zero-out PMU snapshot area before freeing data
-c181ddf8 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Split huge pages during fault handling for dirty logging
-9d67af59 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Fix lost write protection on huge pages during dirty logging
-d3603fbe | 2026-02-26 | Wang Yechao | RISC-V: KVM: Skip THP support check during dirty logging
-764f290d | 2025-11-27 | Jessica Liu | RISC-V: KVM: Transparent huge page support
-87218b63 | 2025-01-08 | Andrew Bresticker | riscv: Support huge pfnmaps
-3f12c037 | 2025-06-18 | Anup Patel | RISC-V: KVM: Pass VMID as parameter to kvm_riscv_hfence_xyz() APIs
-10d81414 | 2025-06-18 | Anup Patel | RISC-V: KVM: Factor-out g-stage page table management
-10a7ccdf | 2025-06-18 | Anup Patel | RISC-V: KVM: Add vmid field to struct kvm_riscv_hfence
-88d66633 | 2025-06-18 | Anup Patel | RISC-V: KVM: Introduce struct kvm_gstage_mapping
-3ac06155 | 2025-06-18 | Anup Patel | RISC-V: KVM: Factor-out MMU related declarations into separate headers
-fcb0427a | 2025-06-18 | Anup Patel | RISC-V: KVM: Use ncsr_xyz() in kvm_riscv_vcpu_trap_redirect()
-34417642 | 2025-06-18 | Anup Patel | RISC-V: KVM: Implement kvm_arch_flush_remote_tlbs_range()
-408378bb | 2025-06-18 | Anup Patel | RISC-V: KVM: Don't flush TLB when PTE is unchanged
-4fe222a0 | 2025-06-18 | Anup Patel | RISC-V: KVM: Replace KVM_REQ_HFENCE_GVMA_VMID_ALL with KVM_REQ_TLB_FLUSH
-04fd50d5 | 2025-06-18 | Anup Patel | RISC-V: KVM: Rename and move kvm_riscv_local_tlb_sanitize()
-597c82fc | 2025-06-18 | Anup Patel | RISC-V: KVM: Drop the return value of kvm_riscv_vcpu_aia_init()
-f5b590ce | 2025-06-18 | Anup Patel | RISC-V: KVM: Check kvm_riscv_vcpu_alloc_vector_context() return value
-00a20d5b | 2025-06-02 | Cyril Bur | riscv: uaccess: Only restore the CSR_STATUS SUM bit
-6f3fb61a | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning in __get_user_error()
-5db39e3d | 2025-06-10 | Palmer Dabbelt | RISC-V: uaccess: Wrap the get_user_8 uaccess macro
-2ac2b642 | 2025-07-25 | Aurelien Jarno | riscv: uaccess: fix __put_user_nocheck for unaligned accesses
-79c1240b | 2025-07-15 | Nathan Chancellor | riscv: uaccess: Fix -Wuninitialized and -Wshadow in __put_user_nocheck
-9e3ebd82 | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning about different address spaces
-934cb438 | 2025-08-05 | Radim Krčmář | RISC-V: KVM: fix stack overrun when loading vlenb
-cd77642f | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: add 'vlenb' Vector CSR
-a81d4589 | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: set 'vlenb' in kvm_riscv_vcpu_alloc_vector_context()
-6bb59334 | 2024-10-21 | Anup Patel | RISC-V: KVM: Use NACL HFENCEs for KVM request based HFENCEs
-52e9a532 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save trap CSRs in kvm_riscv_vcpu_enter_exit()
-7d03c033 | 2024-10-21 | Anup Patel | RISC-V: KVM: Use SBI sync SRET call when available
-851d6fa7 | 2024-10-21 | Anup Patel | RISC-V: KVM: Use nacl_csr_xyz() for accessing AIA CSRs
-871312ac | 2024-10-21 | Anup Patel | RISC-V: KVM: Use nacl_csr_xyz() for accessing H-extension CSRs
-c1f82f52 | 2024-10-21 | Anup Patel | RISC-V: KVM: Add common nested acceleration support
-94c752da | 2024-10-21 | Anup Patel | RISC-V: Add defines for the SBI nested acceleration extension
-961958e5 | 2024-10-21 | Anup Patel | RISC-V: KVM: Don't setup SGEI for zero guest external interrupts
-3f1d30e9 | 2024-10-21 | Anup Patel | RISC-V: KVM: Replace aia_set_hvictl() with aia_hvictl_value()
-54cf9cc4 | 2024-10-21 | Anup Patel | RISC-V: KVM: Break down the __kvm_riscv_switch_to() into macros
-5b632d98 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore SCOUNTEREN in C source
-7e774e12 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore HSTATUS in C source
-5cf4e7e6 | 2024-10-21 | Anup Patel | RISC-V: KVM: Order the object files alphabetically
-4159f879 | 2024-07-08 | Jinjie Ruan | riscv: stacktrace: Add USER_STACKTRACE support
-90126f94 | 2023-10-24 | Clément Léger | riscv: kvm: use ".L" local labels in assembly when applicable
-e99e29a8 | 2023-10-24 | Clément Léger | riscv: kvm: Use SYM_*() assembly macros instead of deprecated ones
-b3ce01ba | 2025-08-18 | Anup Patel | MAINTAINERS: Add entry for RISC-V RPMI and MPXY drivers
-e50686be | 2025-08-18 | Anup Patel | RISC-V: Enable GPIO keyboard and event device in RV64 defconfig
-990991da | 2025-08-18 | Sunil V L | irqchip/riscv-rpmi-sysmsi: Add ACPI support
-2f6e95e0 | 2025-08-18 | Sunil V L | mailbox/riscv-sbi-mpxy: Add ACPI support
-3fc9b419 | 2025-08-18 | Sunil V L | irqchip/irq-riscv-imsic-early: Export imsic_acpi_get_fwnode()
-0f28268c | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add RPMI System MSI to GSI mapping
-2741db1c | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add support to update gsi range
-f5e90474 | 2025-08-18 | Sunil V L | ACPI: RISC-V: Create interrupt controller list in sorted order
-e08e730b | 2025-08-18 | Sunil V L | ACPI: scan: Update honor list for RPMI System MSI
-2d037b2d | 2025-08-18 | Sunil V L | ACPI: Add support for nargs_prop in acpi_fwnode_get_reference_args()
-50ffcd6d | 2025-08-18 | Sunil V L | ACPI: property: Refactor acpi_fwnode_get_reference_args() to support nargs_prop
-1377a965 | 2025-08-18 | Anup Patel | irqchip: Add driver for the RPMI system MSI service group
-f978b643 | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI interrupt controller bindings
-51b095f5 | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI message proxy bindings
-d60e8d65 | 2025-08-18 | Rahul Pathak | clk: Add clock driver for the RISC-V RPMI clock service group
-34bef0c7 | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service controller bindings
-1eaf8ef7 | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service message proxy bindings
-80d7e78a | 2025-08-18 | Anup Patel | mailbox: Add RISC-V SBI message proxy (MPXY) based mailbox driver
-26a7f0a5 | 2025-08-18 | Anup Patel | byteorder: Add memcpy_to_le32() and memcpy_from_le32()
-d4dd998b | 2025-08-18 | Anup Patel | mailbox: Add common header for RPMI messages sent via mailbox
-9bd63151 | 2025-08-18 | Anup Patel | RISC-V: Add defines for the SBI message proxy extension
-d7b2dcee | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RISC-V SBI MPXY extension
-8f5a7916 | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RPMI shared memory transport
-d1a9f9bc | 2025-02-12 | Andy Shevchenko | driver core: Split devres APIs to device/devres.h
-dcd2c9bb | 2023-12-26 | Tanzir Hasan | lib/string: shrink lib/string.i via IWYU
-bdc0d839 | 2023-12-26 | Tanzir Hasan | kernel.h: removed REPEAT_BYTE from kernel.h
-ed8390d2 | 2025-04-09 | Sakari Ailus | Documentation: ACPI: Use all-string data node references
-bda812be | 2023-11-06 | Rafael J. Wysocki | ACPI: property: Support using strings in reference properties
-406108de | 2025-06-20 | Nam Cao | Revert "riscv: misaligned: fix sleeping function called during misaligned access handling"
-49a259db | 2025-06-20 | Alexandre Ghiti | riscv: Move all duplicate insn parsing macros into asm/insn.h
-4dfdb24c | 2025-06-20 | Alexandre Ghiti | riscv: Strengthen duplicate and inconsistent definition of RV_X()
-43b74cfb | 2025-06-20 | Alexandre Ghiti | riscv: Fix typo EXRACT -> EXTRACT
-64eebc67 | 2025-07-10 | Andreas Schwab | riscv: traps_misaligned: properly sign extend value in misaligned load handler
-d429f6b9 | 2025-05-23 | Clément Léger | RISC-V: KVM: add support for SBI_FWFT_MISALIGNED_DELEG
-26d58997 | 2025-05-23 | Clément Léger | RISC-V: KVM: add support for FWFT SBI extension
-2005c448 | 2025-05-23 | Clément Léger | RISC-V: KVM: add SBI extension reset callback
-d036c91a | 2025-05-23 | Clément Léger | RISC-V: KVM: add SBI extension init()/deinit() functions
-b5cd78f5 | 2025-05-23 | Clément Léger | riscv: misaligned: add a function to check misalign trap delegability
-cc2bb47f | 2025-05-23 | Clément Léger | riscv: misaligned: move emulated access uniformity check in a function
-3a9b686a | 2025-05-23 | Clément Léger | riscv: misaligned: declare misaligned_access_speed under CONFIG_RISCV_MISALIGNED
-2e52c0fe | 2025-05-23 | Clément Léger | riscv: misaligned: use on_each_cpu() for scalar misaligned access probing
-72e07829 | 2025-05-23 | Clément Léger | riscv: misaligned: request misaligned exception from SBI
-f86e4154 | 2025-05-23 | Clément Léger | riscv: sbi: add SBI FWFT extension calls
-8085cfd3 | 2025-05-23 | Clément Léger | riscv: sbi: add FWFT extension interface
-39aa0b4a | 2025-05-23 | Clément Léger | riscv: sbi: add new SBI error mappings
-6d073536 | 2025-05-23 | Clément Léger | riscv: sbi: remove useless parenthesis
-2ac30766 | 2025-05-23 | Clément Léger | riscv: sbi: add Firmware Feature (FWFT) SBI extensions definitions
-7fcae403 | 2024-04-02 | Chao Du | RISC-V: KVM: selftests: Add ebreak test support
-00f0afd5 | 2024-04-02 | Chao Du | RISC-V: KVM: Handle breakpoint exits for VCPU
-0c149db7 | 2024-04-02 | Chao Du | RISC-V: KVM: Implement kvm_arch_vcpu_ioctl_set_guest_debug()
-f217d3a6 | 2024-01-11 | Paolo Bonzini | KVM: define __KVM_HAVE_GUEST_DEBUG unconditionally
-61430bbe | 2025-04-09 | Andrew Jones | riscv: Fix unaligned access info messages
-784d31c9 | 2024-08-29 | Alexandre Ghiti | riscv: Fix RISCV_ALTERNATIVE_EARLY
-a048e45a | 2024-03-22 | Alexandre Ghiti | riscv: Improve sbi_ecall() code generation by reordering arguments
-6f4302e6 | 2024-03-21 | Samuel Holland | riscv: Add tracepoints for SBI calls and returns
-ccf998ad | 2025-04-22 | Clément Léger | riscv: misaligned: use get_user() instead of __get_user()
-91850154 | 2025-04-22 | Clément Léger | riscv: misaligned: enable IRQs while handling misaligned accesses
-7d8b19bb | 2025-04-22 | Clément Léger | riscv: misaligned: factorize trap handling
-2b112363 | 2025-04-11 | Nylon Chen | riscv: misaligned: Add handling for ZCB instructions
-0eb925d8 | 2025-04-11 | Nylon Chen | riscv: misaligned: fix sleeping function called during misaligned access handling
-e3190432 | 2025-02-28 | Alexandre Ghiti | riscv: Fix missing __free_pages() in check_vector_unaligned_access()
-753a9bc2 | 2025-02-28 | Tingbo Liao | riscv: Fix the __riscv_copy_vec_words_unaligned implementation
-d5c36537 | 2025-10-20 | Xu Lu | RISC-V: KVM: Allow Zalasr extensions for Guest/VM
-088e0fe4 | 2025-07-24 | Aleksa Paunovic | riscv: hwprobe: Add MIPS vendor extension probing
-4b74c4cf | 2025-04-18 | Cyan Yang | riscv: hwprobe: Add SiFive vendor extension support and probe for xsfqmaccdod and xsfqmaccqoq
-4a4d9188 | 2025-04-18 | Cyan Yang | riscv: hwprobe: Document SiFive xsfvqmaccdod and xsfvqmaccqoq vendor extensions
-ca454e19 | 2024-11-13 | Charlie Jenkins | riscv: hwprobe: Add thead vendor extension probing
-30350521 | 2025-10-20 | Xu Lu | riscv: Introduce Zalasr instructions
-272b8952 | 2025-10-20 | Xu Lu | riscv: hwprobe: Export Zalasr extension
-2a903c7d | 2025-10-20 | Xu Lu | dt-bindings: riscv: Add Zalasr ISA extension description
-366ad911 | 2025-10-20 | Xu Lu | riscv: Add ISA extension parsing for Zalasr
-c35585c2 | 2025-04-21 | Alexandre Ghiti | riscv: hwprobe: export Zabha extension
-fa75ee4d | 2024-03-01 | Samuel Holland | riscv: mm: Fix prototype to avoid discarding const
-2b622a46 | 2024-01-30 | Alexandre Ghiti | riscv: Fix arch_tlbbatch_flush() by clearing the batch cpumask
-4c6e17d4 | 2024-01-08 | Alexandre Ghiti | riscv: Add support for BATCHED_UNMAP_TLB_FLUSH
-d55f0517 | 2023-10-30 | Alexandre Ghiti | riscv: Improve flush_tlb_range() for hugetlb pages
-434c0a0b | 2026-02-05 | shenlin | perf vendor events riscv: fix lrw core PMU event mapping
-8de0f53a | 2024-06-05 | Björn Töpel | riscv: Enable DAX VMEMMAP optimization
-8f15a6e6 | 2024-06-05 | Björn Töpel | riscv: mm: Add support for ZONE_DEVICE
-196eaa42 | 2024-06-05 | Björn Töpel | virtio-mem: Enable virtio-mem for RISC-V
-12dbbdf9 | 2024-06-05 | Björn Töpel | riscv: Enable memory hotplugging for RISC-V
-4081e5aa | 2024-06-05 | Björn Töpel | riscv: mm: Take memory hotplug read-lock during kernel page table dump
-4db8a879 | 2024-06-05 | Björn Töpel | riscv: mm: Add memory hotplugging support
-0579e619 | 2024-06-05 | Björn Töpel | riscv: mm: Add pfn_to_kaddr() implementation
-64f63d7a | 2024-06-05 | Björn Töpel | riscv: mm: Refactor create_linear_mapping_range() for memory hot add
-0c5dd568 | 2024-06-05 | Björn Töpel | riscv: mm: Change attribute from __init to __meminit for page functions
-488d00f5 | 2024-06-05 | Björn Töpel | riscv: mm: Pre-allocate vmemmap/direct map/kasan PGD entries
-3f0da30a | 2024-06-05 | Björn Töpel | riscv: mm: Properly forward vmemmap_populate() altmap parameter
-4eed6ede | 2023-12-14 | Alexandre Ghiti | riscv: Use hugepage mappings for vmemmap
-b270f8ca | 2023-11-06 | Evan Green | RISC-V: Probe misaligned access speed in parallel
-44a424ec | 2023-11-06 | Evan Green | RISC-V: Remove __init on unaligned_emulation_finish()
-ce7a99b6 | 2023-10-04 | Clément Léger | riscv: add support for PR_SET_UNALIGN and PR_GET_UNALIGN
-b3f6edae | 2023-10-04 | Clément Léger | riscv: report misaligned accesses emulation to hwprobe
-92b415fc | 2023-10-04 | Clément Léger | riscv: add support for sysctl unaligned_enabled control
-754751a2 | 2023-10-04 | Clément Léger | riscv: add floating point insn support to misaligned access emulation
-b2a3625e | 2023-10-04 | Clément Léger | riscv: report perf event for misaligned fault
-90e05858 | 2023-10-04 | Clément Léger | riscv: add support for misaligned trap handling in S-mode
-3a7e7f90 | 2026-01-17 | Lu Peng | riscv: defconfig: Enable more ACPI_APEI configs
-f84b0f0f | 2025-07-23 | Ignacio Encinas | riscv: introduce asm/swab.h
-51083c76 | 2026-01-07 | hu.yuye | riscv:defconfig:Enable PCIE_EDR
-bc758cab | 2025-12-31 | Yunhui Cui | arch_topology: move parse_acpi_topology() to common code
-a662b7c5 | 2025-12-31 | Yicong Yang | arm64: topology: Support SMT control on ACPI based system
-36f1f4bc | 2025-12-31 | Yicong Yang | arch_topology: Support SMT control for OF based system
-051ce298 | 2025-12-31 | Yicong Yang | cpu/SMT: Provide a default topology_is_primary_thread()
-e90f62a4 | 2025-01-24 | Andy Shevchenko | serial: 8250_core: Remove unneeded ->iotype assignment
-f460f094 | 2025-12-30 | hu.yuye | Revert "mango pci hack:broadcast when no MSI source known"
-34322718 | 2025-12-22 | Clément Léger | riscv: uaccess: do not do misaligned accesses in get/put_user()
-e8611785 | 2025-12-22 | Alexandre Ghiti | riscv: make unsafe user copy routines use existing assembly routines
-87795d62 | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use 'asm_goto_output' for get_user()
-f0b78bc3 | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use 'asm goto' for put_user()
-2bd13946 | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use input constraints for ptr of __put_user()
-599e6210 | 2025-12-22 | Jisheng Zhang | riscv: implement user_access_begin() and families
-31f00279 | 2025-12-22 | Ben Dooks | riscv: save the SR_SUM status over switches
-1a2cdca8 | 2011-12-08 | Tejun Heo | Revert "mm: Modify __find_max_addr for memory hole"
-6185e7dd | 2021-12-06 | Alexandre Ghiti | Revert "riscv: mm: Clear compilation warning about last_cpupid"
-82e0ac31 | 2025-11-12 | shenlin | perf vendor events riscv: add lrw core JSON file with metric support
-d9b21c3d | 2025-11-11 | Fei Liu | i2c: Add driver for the LRW I2C
-c5779ba8 | 2025-09-29 | Fei Liu | dt-bindings: i2c: Add binding for LRW I2C
-70fe6fdc | 2025-11-12 | Jie Feng | drivers/perf: add LRW DDR PMU support
-6853a5c8 | 2025-09-04 | Wenhong Liu | serial: Add driver for the LRW UART
-21c231b0 | 2025-09-04 | Wenhong Liu | dt-bindings: serial: Add binding for LRW UART
-35d77459 | 2025-10-16 | Wenhong Liu | riscv: defconfig: remove CONFIG_CMDLINE and CONFIG_CMDLINE_EXTEND as mainline does
-9a5093ea | 2025-08-27 | Himanshu Chauhan | riscv: Enable APEI and NMI safe cmpxchg options required for RAS
-eb05dea0 | 2025-08-27 | Himanshu Chauhan | riscv: Add config option to enable APEI SSE handler
-ff3cb07b | 2025-08-27 | Himanshu Chauhan | riscv: Introduce HEST SSE notification handlers
-4eb2accb | 2025-08-27 | Himanshu Chauhan | riscv: Add RISC-V entries in processor type and ISA strings
-164106d5 | 2025-08-27 | Himanshu Chauhan | riscv: Add functions to register ghes having SSE notification
-c34d853f | 2025-08-27 | Himanshu Chauhan | riscv: conditionally compile GHES NMI spool function
-ddf6488d | 2025-08-27 | Himanshu Chauhan | riscv: Add fixmap indices for GHES IRQ and SSE contexts
-77626872 | 2025-08-27 | Himanshu Chauhan | acpi: Introduce SSE in HEST notification types
-3045c1ba | 2025-08-27 | Himanshu Chauhan | riscv: Define arch_apei_get_mem_attribute for RISC-V
-692bc0cf | 2025-08-27 | Himanshu Chauhan | riscv: Define ioremap_cache for RISC-V
-6e720689 | 2025-08-27 | Clément Léger | selftests/riscv: add SSE test module
-8579fb20 | 2025-08-27 | Clément Léger | perf: RISC-V: add support for SSE event
-c7bd7543 | 2025-08-27 | Clément Léger | drivers: firmware: add riscv SSE support
-5fa672c2 | 2025-08-27 | Clément Léger | riscv: add support for SBI Supervisor Software Events extension
-e3ecea66 | 2025-08-08 | Clément Léger | riscv: add SBI SSE extension definitions
-db14ed6a | 2025-10-14 | Sunil V L | iommu/riscv: Add ACPI support
-ce0b200d | 2025-10-14 | Sunil V L | ACPI: scan: Add support for RISC-V in acpi_iommu_configure_id()
-a31d7ca0 | 2025-10-14 | Sunil V L | ACPI: RISC-V: Add support for RIMT
-d5583c77 | 2025-10-13 | Sunil V L | ACPICA: actbl2: Add definitions for RIMT
-f2c35982 | 2025-09-20 | shenlin | perf vendor events riscv: add lrw core JSON file
-0bf5700f | 2025-04-21 | Alexandre Ghiti | riscv: Add support for Zicbop
-6e0815f3 | 2025-04-21 | Alexandre Ghiti | riscv: Introduce Zicbop instructions
-1a1090de | 2025-02-26 | Yunhui Cui | RISC-V: Enable cbo.clean/flush in usermode
-6da49de1 | 2024-08-14 | Samuel Holland | riscv: Add support for per-thread envcfg CSR values
-da300fa8 | 2024-06-19 | Clément Léger | RISC-V: KVM: Allow Zaamo/Zalrsc extensions for Guest/VM
-25fe07e4 | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zaamo and Zalrsc extensions
-d6ce74af | 2024-06-19 | Clément Léger | riscv: add parsing for Zaamo and Zalrsc extensions
-2668b7fc | 2025-02-13 | Inochi Amaoto | riscv: hwprobe: export bfloat16 ISA extension
-0de4f11f | 2025-02-13 | Inochi Amaoto | riscv: add ISA extension parsing for bfloat16 ISA extension
-3262fa69 | 2024-05-24 | Xiao Wang | riscv, bpf: Introduce shift add helper with Zba optimization
-bb576f0f | 2024-05-16 | Xiao Wang | riscv, bpf: Optimize zextw insn with Zba extension
-19dfa4c8 | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize bswap insns with Zbb support
-70274b9e | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize sign-extention mov insns with Zbb support
-02245c70 | 2024-01-15 | Pu Lehui | riscv, bpf: Add necessary Zbb instructions
-8d6be801 | 2024-01-15 | Pu Lehui | riscv, bpf: Simplify sext and zext logics in branch instructions
-8b8f5309 | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit zero-extension to emit_zextw
-54846d2d | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit sign-extension to emit_sextw
-5d8adffd | 2025-03-12 | Robin Murphy | iommu: Don't warn prematurely about dodgy probes
-a107d30e | 2024-10-09 | Lu Baolu | iommu: Remove iommu_domain_alloc()
-68f994dc | 2024-10-09 | Lu Baolu | iommu: Remove iommu_present()
-1d4ee3ac | 2024-09-02 | Lu Baolu | drm/tegra: Use iommu_paging_domain_alloc()
-a56415fd | 2024-09-02 | Lu Baolu | drm/rockchip: Use iommu_paging_domain_alloc()
-c04b577a | 2024-06-10 | Lu Baolu | RDMA/usnic: Use iommu_paging_domain_alloc()
-bb0b57d5 | 2024-08-12 | Lu Baolu | soc: fsl: qbman: Use iommu_paging_domain_alloc()
-e7541a2a | 2024-08-12 | Lu Baolu | remoteproc: Use iommu_paging_domain_alloc()
-284b4a7d | 2024-08-12 | Lu Baolu | media: venus: firmware: Use iommu_paging_domain_alloc()
-36167560 | 2024-08-12 | Lu Baolu | media: nvidia: tegra: Use iommu_paging_domain_alloc()
-d8c5e065 | 2024-08-12 | Lu Baolu | gpu: host1x: Use iommu_paging_domain_alloc()
-daf284fb | 2024-09-02 | Lu Baolu | drm/nouveau/tegra: Use iommu_paging_domain_alloc()
-195b1ab2 | 2024-06-10 | Lu Baolu | wifi: ath11k: Use iommu_paging_domain_alloc()
-09d24eed | 2024-06-10 | Lu Baolu | wifi: ath10k: Use iommu_paging_domain_alloc()
-abef5c35 | 2024-06-10 | Lu Baolu | drm/msm: Use iommu_paging_domain_alloc()
-5ee6affd | 2024-06-10 | Lu Baolu | vhost-vdpa: Use iommu_paging_domain_alloc()
-4c5cd712 | 2024-06-10 | Lu Baolu | vfio/type1: Use iommu_paging_domain_alloc()
-29a9791c | 2024-06-10 | Lu Baolu | iommufd: Use iommu_paging_domain_alloc()
-308f2e02 | 2024-06-10 | Lu Baolu | iommu: Add iommu_paging_domain_alloc() interface
-240827dd | 2025-02-28 | Robin Murphy | iommu: Get DT/ACPI parsing into the proper probe path
-dea68812 | 2025-02-28 | Robin Murphy | iommu: Keep dev->iommu state consistent
-902a2ea5 | 2025-02-28 | Robin Murphy | iommu: Resolve ops in iommu_init_device()
-781720c3 | 2025-02-28 | Robin Murphy | iommu: Handle race with default domain setup
-afe9c9b3 | 2025-02-27 | Robin Murphy | iommu: Unexport iommu_fwspec_free()
-5336d787 | 2024-07-02 | Robin Murphy | iommu: Remove iommu_fwspec ops
-89128469 | 2024-07-02 | Robin Murphy | OF: Simplify of_iommu_configure()
-9f39fe5e | 2024-07-02 | Robin Murphy | ACPI: Retire acpi_iommu_fwspec_ops()
-4ccd2933 | 2024-07-02 | Robin Murphy | iommu: Resolve fwspec ops automatically
-d2313d39 | 2023-12-07 | Jason Gunthorpe | acpi: Do not return struct iommu_ops from acpi_iommu_configure_id()
-ede1a175 | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_priv_set() with a lockdep
-9619038c | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_get() with lockdep
-84589df0 | 2023-12-07 | Jason Gunthorpe | iommu/of: Use -ENODEV consistently in of_iommu_configure()
-a40f1040 | 2023-12-07 | Jason Gunthorpe | iommmu/of: Do not return struct iommu_ops from of_iommu_configure()
-d22cbaa6 | 2023-12-07 | Jason Gunthorpe | iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops()
-b6e7b74a | 2023-11-21 | Robin Murphy | iommu: Clean up open-coded ownership checks
-b348e443 | 2023-11-21 | Robin Murphy | iommu: Retire bus ops
-1963af0e | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_domain_alloc() from bus ops
-1a18bee6 | 2023-11-21 | Robin Murphy | iommu: Validate that devices match domains
-fcdea3c4 | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_present() from bus ops
-63c370c9 | 2023-11-21 | Robin Murphy | iommu: Factor out some helpers
-1c0b768c | 2024-03-13 | Xiao Wang | riscv: uaccess: Relax the threshold for fast path
-56f65498 | 2024-03-13 | Xiao Wang | riscv: uaccess: Allow the last potential unrolled copy
-56391ea0 | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps
-58e82bd0 | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events
-e379398e | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest
-127e556c | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver
-89c0b50f | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it
-46e76426 | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi
-686282f7 | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Paging domain support
-5c0f0caf | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Command and fault queue support
-474b27d2 | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Device directory management.
-9eff902f | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Enable IOMMU registration and device probe.
-5f6441cd | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU PCIe device driver
-1124580e | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU platform device driver
-0f7eb0fe | 2024-10-15 | Tomasz Jeznach | dt-bindings: iommu: riscv: Add bindings for RISC-V IOMMU
-e75bfde6 | 2024-04-13 | Pasha Tatashin | iommu/vt-d: add wrapper functions for page allocations
-0fab6a95 | 2024-02-16 | Krzysztof Kozlowski | iommu: constify of_phandle_args in xlate
-ccdb6362 | 2023-11-22 | Matt Coster | sizes.h: Add entries between SZ_32G and SZ_64T
-ba4f00ea | 2024-03-05 | Lu Baolu | iommu: Add static iommu_ops->release_domain
-5f700119 | 2023-09-27 | Jason Gunthorpe | iommufd: Convert to alloc_domain_paging()
-f61dc880 | 2024-04-13 | Pasha Tatashin | iommu: Move IOMMU_DOMAIN_BLOCKED global statics to ops->blocked_domain
-6ecfdf7a | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new userspace mappings with Svvptc
-6c0987bc | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new vmalloc mappings
-77f3cac0 | 2023-10-20 | Anup Patel | KVM: riscv: selftests: Add SBI DBCN extension to get-reg-list test
-7f280e8d | 2022-07-22 | Anup Patel | RISC-V: KVM: Forward SBI DBCN extension to user-space
-93ae59ea | 2023-10-11 | Anup Patel | RISC-V: KVM: Allow some SBI extensions to be disabled by default
-0ef86b27 | 2023-10-10 | Anup Patel | RISC-V: KVM: Change the SBI specification version to v2.0
-166fcee4 | 2022-07-22 | Anup Patel | RISC-V: Add defines for SBI debug console extension
-d9f176ca | 2023-11-24 | Anup Patel | RISC-V: Enable SBI based earlycon support
-38cf24f9 | 2023-11-24 | Atish Patra | tty: Add SBI debug console support to HVC SBI driver
-0b5ce852 | 2023-11-24 | Anup Patel | tty/serial: Add RISC-V SBI debug console based earlycon
-d2d6eee1 | 2023-11-24 | Anup Patel | RISC-V: Add SBI debug console helper routines
-4821885a | 2023-11-24 | Anup Patel | RISC-V: Add stubs for sbi_console_putchar/getchar()
-2b594a30 | 2024-04-03 | Björn Töpel | riscv: Fix vector state restore in rt_sigreturn()
-5ffac9ca | 2024-01-15 | Andy Chiu | riscv: vector: allow kernel-mode Vector with preemption
-fba28844 | 2024-01-15 | Andy Chiu | riscv: vector: use kmem_cache to manage vector context
-885bc445 | 2024-01-15 | Andy Chiu | riscv: vector: use a mask to write vstate_ctrl
-17d16056 | 2024-01-15 | Andy Chiu | riscv: vector: do not pass task_struct into riscv_v_vstate_{save,restore}()
-d4d7bb0d | 2024-01-15 | Andy Chiu | riscv: fpu: drop SR_SD bit checking
-e6353e7d | 2024-01-15 | Andy Chiu | riscv: lib: vectorize copy_to_user/copy_from_user
-918881d5 | 2024-01-15 | Andy Chiu | riscv: sched: defer restoring Vector context for user
-3c119df7 | 2024-01-15 | Greentime Hu | riscv: Add vector extension XOR implementation
-eb095b77 | 2024-01-15 | Andy Chiu | riscv: vector: make Vector always available for softirq context
-13c4e454 | 2024-01-15 | Greentime Hu | riscv: Add support for kernel mode vector
-e5e80093 | 2023-10-24 | Clément Léger | riscv: kernel: Use correct SYM_DATA_*() macro for data
-e98ffeb4 | 2023-10-24 | Clément Léger | riscv: Use SYM_*() assembly macros instead of deprecated ones
-4985b459 | 2023-10-24 | Clément Léger | riscv: use ".L" local labels in assembly when applicable
-112fb750 | 2024-11-03 | Alexandre Ghiti | riscv: Add qspinlock support
-23cddd81 | 2024-11-03 | Alexandre Ghiti | riscv: Implement xchg8/16() using Zabha
-c31de8bb | 2024-11-03 | Alexandre Ghiti | riscv: Implement arch_cmpxchg128() using Zacas
-a572dec0 | 2024-11-03 | Alexandre Ghiti | riscv: Improve zacas fully-ordered cmpxchg()
-426451d8 | 2024-07-26 | Yong-Xuan Wang | RISC-V: KVM: Add Svade and Svadu Extensions Support for Guest/VM
-12c2e4a9 | 2024-10-16 | Samuel Holland | RISC-V: KVM: Allow Smnpm and Ssnpm extensions for guests
-e2af09be | 2024-04-26 | Andrew Jones | KVM: riscv: Support guest wrs.nto
-0b61c6ce | 2024-06-19 | Clément Léger | RISC-V: KVM: Allow Zcmop extension for Guest/VM
-d32fb3f6 | 2024-06-19 | Clément Léger | RISC-V: KVM: Allow Zca, Zcf, Zcd and Zcb extensions for Guest/VM
-282ed525 | 2024-06-19 | Clément Léger | RISC-V: KVM: Allow Zimop extension for Guest/VM
-2ff25bca | 2024-02-13 | Anup Patel | RISC-V: KVM: Allow Zacas extension for Guest/VM
-2654d16b | 2024-02-13 | Anup Patel | RISC-V: KVM: Allow Ztso extension for Guest/VM
-42e2b187 | 2024-02-13 | Anup Patel | RISC-V: KVM: Forward SEED CSR access to user space
-c4e19672 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zfa extension for Guest/VM
-4000739c | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zvfh[min] extensions for Guest/VM
-87be3f1c | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zihintntl extension for Guest/VM
-ee3a2bc0 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zfh[min] extensions for Guest/VM
-a833d091 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow vector crypto extensions for Guest/VM
-d3c9a5be | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow scalar crypto extensions for Guest/VM
-7789fa79 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zbc extension for Guest/VM
-a8fd12df | 2023-09-15 | Anup Patel | RISC-V: KVM: Allow Zicond extension for Guest/VM
-be1af223 | 2023-11-12 | Xiao Wang | riscv: Optimize hweight API with Zbb extension
-f0561162 | 2023-10-31 | Xiao Wang | riscv: Optimize bitops with Zbb extension
-2a2adcf2 | 2024-06-21 | Xiao Wang | riscv: Optimize crc32 with Zbc extension
-bc444731 | 2025-02-28 | Robin Murphy | iommu: Handle race with default domain setup
-72f8c986 | 2023-10-03 | Jason Gunthorpe | iommu: Do not use IOMMU_DOMAIN_DMA if CONFIG_IOMMU_DMA is not enabled
-b3fd3e49 | 2023-09-13 | Jason Gunthorpe | iommu: Convert remaining simple drivers to domain_alloc_paging()
-2b7dd9a1 | 2023-09-13 | Jason Gunthorpe | iommu: Convert simple drivers with DOMAIN_DMA to domain_alloc_paging()
-a7e8111a | 2023-09-13 | Jason Gunthorpe | iommu: Add ops->domain_alloc_paging()
-c7096476 | 2023-09-13 | Jason Gunthorpe | iommu: Add __iommu_group_domain_alloc()
-73b30c55 | 2023-09-13 | Jason Gunthorpe | iommu: Require a default_domain for all iommu drivers
-66afe9cd | 2023-09-13 | Jason Gunthorpe | iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN
-0fcfca2c | 2023-09-13 | Jason Gunthorpe | iommu/mtk_iommu: Add an IOMMU_IDENTITIY_DOMAIN
-534df3e3 | 2023-09-13 | Jason Gunthorpe | iommu/ipmmu: Add an IOMMU_IDENTITIY_DOMAIN
-d73cfa7c | 2023-09-13 | Jason Gunthorpe | iommu/qcom_iommu: Add an IOMMU_IDENTITIY_DOMAIN
-3bbde9af | 2023-09-13 | Jason Gunthorpe | iommu: Remove ops->set_platform_dma_ops()
-126c7616 | 2023-09-13 | Jason Gunthorpe | iommu/msm: Implement an IDENTITY domain
-238f07d2 | 2023-09-13 | Jason Gunthorpe | iommu/omap: Implement an IDENTITY domain
-3d4da6eb | 2023-09-13 | Jason Gunthorpe | iommu/tegra-smmu: Support DMA domains in tegra
-a38cab0e | 2023-09-13 | Jason Gunthorpe | iommu/tegra-smmu: Implement an IDENTITY domain
-8c08923a | 2023-09-13 | Jason Gunthorpe | iommu/exynos: Implement an IDENTITY domain
-2b72a435 | 2023-09-13 | Jason Gunthorpe | iommu: Allow an IDENTITY domain as the default_domain in ARM32
-5d97b974 | 2023-09-13 | Jason Gunthorpe | iommu: Reorganize iommu_get_default_domain_type() to respect def_domain_type()
-8ddd2306 | 2023-09-13 | Jason Gunthorpe | iommu/mtk_iommu_v1: Implement an IDENTITY domain
-385d495a | 2023-09-13 | Jason Gunthorpe | iommu/fsl_pamu: Implement a PLATFORM domain
-d07c48f8 | 2023-09-13 | Jason Gunthorpe | iommu: Add IOMMU_DOMAIN_PLATFORM for S390
-778abe04 | 2023-09-13 | Jason Gunthorpe | iommu: Add IOMMU_DOMAIN_PLATFORM
-8f310e00 | 2023-09-13 | Jason Gunthorpe | iommu: Add iommu_ops->identity_domain
-946babcd | 2025-07-29 | gaorui | Revert "iommu: Handle race with default domain setup"
-764f3040 | 2024-04-09 | Baoquan He | kexec: fix the unexpected kexec_dprintk() macro
-de08fcbb | 2024-07-30 | Sunil V L | kexec_file, parisc: print out debugging message if required
-d9fce8be | 2023-12-13 | Baoquan He | kexec_file, power: print out debugging message if required
-972a93f4 | 2023-12-13 | Baoquan He | kexec_file, riscv: print out debugging message if required
-1af28d13 | 2023-12-13 | Baoquan He | kexec_file, arm64: print out debugging message if required
-92a4137a | 2023-12-13 | Baoquan He | kexec_file, x86: print out debugging message if required
-75563d30 | 2023-12-13 | Baoquan He | kexec_file: print out debugging message if required
-86039f35 | 2023-12-13 | Baoquan He | kexec_file: add kexec_file flag to control debug printing
-5672de17 | 2025-04-03 | Radim Krčmář | KVM: RISC-V: reset smstateen CSRs
-e781e005 | 2023-12-24 | Anup Patel | RISC-V: KVM: Fix indentation in kvm_riscv_vcpu_set_reg_csr()
-9fc674f9 | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add sstateen0 to ONE_REG
-b62a2310 | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add sstateen0 context save/restore
-d43e75ca | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add senvcfg context save/restore
-a01c2b3d | 2023-09-13 | Mayuresh Chitale | RISC-V: KVM: Enable Smstateen accesses
-6678467e | 2023-09-13 | Mayuresh Chitale | RISC-V: KVM: Add kvm_vcpu_config
-63e6d2d0 | 2024-07-30 | Sunil V L | serial: 8250_platform: Enable generic 16550A platform devices
-f39073c0 | 2025-04-09 | Song Shuai | riscv: kexec_file: Support loading Image binary file
-818fd7d2 | 2025-07-25 | gaorui | riscv: kexec_file: Split the loading of kernel and others
-4faacbb7 | 2025-07-25 | gaorui | Revert "riscv: kexec: Add image loader for kexec file"
-d5891044 | 2023-11-30 | Samuel Ortiz | RISC-V: Implement archrandom when Zkr is available
-fab9bde2 | 2024-02-08 | Sunil V L | cpufreq: Move CPPC configs to common Kconfig and add RISC-V
-5c7a1422 | 2024-02-08 | Sunil V L | ACPI: RISC-V: Add CPPC driver
-05f3c7c1 | 2024-06-17 | Yunhui Cui | RISC-V: Select ACPI PPTT drivers
-12a6930a | 2024-05-02 | Sia Jee Heng | RISC-V: ACPI: Enable SPCR table for console output on RISC-V
-8b75c23e | 2024-07-18 | Ryo Takakura | RISC-V: Enable IPI CPU Backtrace
-b2389329 | 2024-06-13 | Haibo Xu | riscv: dmi: Add SMBIOS/DMI support
-f175cd80 | 2024-06-13 | Haibo Xu | ACPI: NUMA: replace pr_info with pr_debug in arch_acpi_numa_init
-446f383c | 2025-04-25 | gaorui | ACPI: NUMA: change the ACPI_NUMA to a hidden option
-853227aa | 2025-04-25 | gaorui | ACPI: NUMA: Make some NUMA-related functions available for RISC-V
-14e1ee9d | 2024-06-13 | Haibo Xu | ACPI: NUMA: Add handler for SRAT RINTC affinity structure
-6922b1e4 | 2024-06-13 | Haibo Xu | ACPI: RISCV: Add NUMA support based on SRAT and SLIT
-463c51d8 | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure
+82843f54 | 2026-02-27 | Jinyu Tang | KVM: riscv: Skip CSR restore if VCPU is reloaded on the same core
+0bc5c575 | 2026-07-07 | hu.yuye | riscv: defconfig: Enable CONFIG_RTC_DRV_EFI config
+7570810e | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements
+66698246 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: add vector sub-extension dependencies
+08a3b3c0 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: d requires f
+63c3c68b | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zaamo and Zalrsc ISA extension description
+0716ee15 | 2024-11-03 | Alexandre Ghiti | dt-bindings: riscv: Add Zabha ISA extension description
+c1d9ed9c | 2024-10-16 | Samuel Holland | dt-bindings: riscv: Add pointer masking ISA extensions
+1ee5dff6 | 2024-07-17 | Alexandre Ghiti | dt-bindings: riscv: Add Svvptc ISA extension description
+215d1a64 | 2024-04-26 | Andrew Jones | dt-bindings: riscv: Add Zawrs ISA extension description
+bbe3bc8d | 2025-02-13 | Inochi Amaoto | dt-bindings: riscv: add bfloat16 ISA extension description
+c2ee9602 | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zcmop ISA extension description
+228d48ac | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zca, Zcf, Zcd and Zcb ISA extension description
+f737f477 | 2024-06-19 | Clément Léger | dt-bindings: riscv: add Zimop ISA extension description
+16593d25 | 2024-05-10 | Andy Chiu | dt-bindings: riscv: add Zve32[xf] Zve64[xfd] ISA extension description
+b80b6b7d | 2024-02-22 | Yu Chien Peter Lin | dt-bindings: riscv: Add Andes PMU extension description
+926a4da5 | 2023-12-08 | Conor Dooley | dt-bindings: riscv: permit numbers in "riscv,isa"
+ce277148 | 2023-12-20 | Clément Léger | dt-bindings: riscv: add Zacas ISA extension description
+75fe5d20 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zfa ISA extension description
+d7b59d58 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zvfh[min] ISA extension description
+931d4b79 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zihintntl ISA extension description
+dfccdc98 | 2023-11-14 | Clément Léger | dt-bindings: riscv: add Zfh[min] ISA extensions description
+97dc016d | 2023-11-14 | Clément Léger | dt-bindings: riscv: add vector crypto ISA extensions description
+e513d05e | 2023-11-14 | Clément Léger | dt-bindings: riscv: add scalar crypto ISA extensions description
+d8798309 | 2023-09-25 | Anup Patel | dt-bindings: riscv: Add Zicond extension entry
+c0bf20dd | 2026-06-17 | bailu | iommu/riscv: add dma_wmb before cmpxchg_relaxed
+906cc098 | 2026-06-30 | heyilin | PERF: Update LRW PMU Event Encoding
+65d821da | 2026-01-28 | Yicong Yang | ACPI: scan: Use async schedule function in acpi_scan_clear_dep_fn()
+64134261 | 2025-11-17 | Anup Patel | RISC-V: Enable HOTPLUG_PARALLEL for secondary CPUs
+e05d6632 | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Provide weak fallback for arch_cpuhp_init_parallel_bringup()
+f32f0b31 | 2024-07-16 | Jiaxun Yang | cpu/hotplug: Make HOTPLUG_PARALLEL independent of HOTPLUG_SMT
+0d581ca9 | 2026-05-29 | Lu Peng | riscv: Fix incorrect use of REG_L for 32-bit types in sse_entry.S
+116b5128 | 2026-04-03 | Feng Jiang | riscv: lib: add strrchr() implementation
+ee1a6c97 | 2026-04-03 | Feng Jiang | riscv: lib: add strchr() implementation
+dc5b4fe0 | 2026-04-03 | Feng Jiang | riscv: lib: add strnlen() implementation
+53f60beb | 2026-04-03 | Feng Jiang | lib/string_kunit: extend benchmarks to strnlen() and chr searches
+e80fec53 | 2026-04-03 | Feng Jiang | lib/string_kunit: add performance benchmark for strlen()
+bec0ae99 | 2026-04-03 | Feng Jiang | lib/string_kunit: add correctness test for strrchr()
+45881303 | 2026-04-03 | Feng Jiang | lib/string_kunit: add correctness test for strnlen()
+a01478e3 | 2026-04-03 | Feng Jiang | lib/string_kunit: add correctness test for strlen()
+5f1f86ee | 2024-04-24 | Kees Cook | string_kunit: Move strtomem KUnit test to string_kunit.c
+e25f6e44 | 2024-04-09 | Kees Cook | string.h: Introduce memtostr() and memtostr_pad()
+bfc80d33 | 2024-04-19 | Kees Cook | string: Convert KUnit test names to standard convention
+ac96ae28 | 2024-04-19 | Kees Cook | string: Merge strcat KUnit tests into string_kunit.c
+725313d1 | 2024-04-19 | Kees Cook | string: Prepare to merge strcat KUnit tests into string_kunit.c
+a8223575 | 2024-04-19 | Kees Cook | string: Merge strscpy KUnit tests into string_kunit.c
+43ad76aa | 2024-04-19 | Kees Cook | string: Prepare to merge strscpy_kunit.c into string_kunit.c
+f5073586 | 2024-04-18 | Ivan Orlov | string_kunit: Add test cases for str*cmp functions
+4e368b07 | 2024-03-01 | Kees Cook | string: Convert helpers selftest to KUnit
+67201037 | 2024-03-01 | Kees Cook | string: Convert selftest to KUnit
+b54d1b96 | 2024-02-29 | Andy Shevchenko | lib/string_helpers: Add flags param to string_get_size()
+87c70e28 | 2022-04-25 | Kent Overstreet | lib/string_helpers: string_get_size() now returns characters wrote
+20ae0fa2 | 2026-05-18 | Liu Qingtao | tmpfs: don't enable large folios if not supported
+2a39a556 | 2026-05-20 | guowu | add LRW PCIE PMU support
+74a95419 | 2026-04-16 | Lu Peng | riscv: add hardware error trap handler support
+6009d9cd | 2026-05-12 | Lu Peng | riscv: defconfig: Enable EDAC & EDAC_GHES config
+a3625342 | 2025-02-17 | Andrew Jones | riscv: KVM: Fix SBI sleep_type use
+a7c06f38 | 2024-10-17 | Andrew Jones | KVM: riscv: selftests: Add SBI SUSP to get-reg-list test
+7ac829bb | 2024-10-17 | Andrew Jones | RISC-V: KVM: Add SBI system suspend support
+5fb47345 | 2024-04-17 | Yong-Xuan Wang | RISCV: KVM: Introduce vcpu->reset_cntx_lock
+aa954bc9 | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit
+375e687f | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use
+ab197f8e | 2024-08-15 | Anup Patel | RISC-V: KVM: Don't zero-out PMU snapshot area before freeing data
+2148b4f0 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Split huge pages during fault handling for dirty logging
+8443fff5 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Fix lost write protection on huge pages during dirty logging
+194686c5 | 2026-02-26 | Wang Yechao | RISC-V: KVM: Skip THP support check during dirty logging
+e551a8c3 | 2025-11-27 | Jessica Liu | RISC-V: KVM: Transparent huge page support
+c83fc6d1 | 2025-01-08 | Andrew Bresticker | riscv: Support huge pfnmaps
+b26d8dc2 | 2025-06-18 | Anup Patel | RISC-V: KVM: Pass VMID as parameter to kvm_riscv_hfence_xyz() APIs
+38fafb3c | 2025-06-18 | Anup Patel | RISC-V: KVM: Factor-out g-stage page table management
+d7c3d16c | 2025-06-18 | Anup Patel | RISC-V: KVM: Add vmid field to struct kvm_riscv_hfence
+404a0f23 | 2025-06-18 | Anup Patel | RISC-V: KVM: Introduce struct kvm_gstage_mapping
+57f6f34d | 2025-06-18 | Anup Patel | RISC-V: KVM: Factor-out MMU related declarations into separate headers
+4d4794f7 | 2025-06-18 | Anup Patel | RISC-V: KVM: Use ncsr_xyz() in kvm_riscv_vcpu_trap_redirect()
+ce49c6ac | 2025-06-18 | Anup Patel | RISC-V: KVM: Implement kvm_arch_flush_remote_tlbs_range()
+63ecb8c7 | 2025-06-18 | Anup Patel | RISC-V: KVM: Don't flush TLB when PTE is unchanged
+c6db40c5 | 2025-06-18 | Anup Patel | RISC-V: KVM: Replace KVM_REQ_HFENCE_GVMA_VMID_ALL with KVM_REQ_TLB_FLUSH
+752560bb | 2025-06-18 | Anup Patel | RISC-V: KVM: Rename and move kvm_riscv_local_tlb_sanitize()
+84e3ddb2 | 2025-06-18 | Anup Patel | RISC-V: KVM: Drop the return value of kvm_riscv_vcpu_aia_init()
+bf740451 | 2025-06-18 | Anup Patel | RISC-V: KVM: Check kvm_riscv_vcpu_alloc_vector_context() return value
+50012ed5 | 2025-06-02 | Cyril Bur | riscv: uaccess: Only restore the CSR_STATUS SUM bit
+96717947 | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning in __get_user_error()
+4effa8f5 | 2025-06-10 | Palmer Dabbelt | RISC-V: uaccess: Wrap the get_user_8 uaccess macro
+59c10166 | 2025-07-25 | Aurelien Jarno | riscv: uaccess: fix __put_user_nocheck for unaligned accesses
+73e79733 | 2025-07-15 | Nathan Chancellor | riscv: uaccess: Fix -Wuninitialized and -Wshadow in __put_user_nocheck
+0fde35ec | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning about different address spaces
+12deaa1a | 2025-08-05 | Radim Krčmář | RISC-V: KVM: fix stack overrun when loading vlenb
+b42bde75 | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: add 'vlenb' Vector CSR
+cf8fe298 | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: set 'vlenb' in kvm_riscv_vcpu_alloc_vector_context()
+08f38b52 | 2024-10-21 | Anup Patel | RISC-V: KVM: Use NACL HFENCEs for KVM request based HFENCEs
+2ccc4c88 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save trap CSRs in kvm_riscv_vcpu_enter_exit()
+1697c923 | 2024-10-21 | Anup Patel | RISC-V: KVM: Use SBI sync SRET call when available
+a7737658 | 2024-10-21 | Anup Patel | RISC-V: KVM: Use nacl_csr_xyz() for accessing AIA CSRs
+f3785ebe | 2024-10-21 | Anup Patel | RISC-V: KVM: Use nacl_csr_xyz() for accessing H-extension CSRs
+05a37c8e | 2024-10-21 | Anup Patel | RISC-V: KVM: Add common nested acceleration support
+a180f1f5 | 2024-10-21 | Anup Patel | RISC-V: Add defines for the SBI nested acceleration extension
+a167a8b9 | 2024-10-21 | Anup Patel | RISC-V: KVM: Don't setup SGEI for zero guest external interrupts
+71256434 | 2024-10-21 | Anup Patel | RISC-V: KVM: Replace aia_set_hvictl() with aia_hvictl_value()
+f96ce9fd | 2024-10-21 | Anup Patel | RISC-V: KVM: Break down the __kvm_riscv_switch_to() into macros
+9e9d0138 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore SCOUNTEREN in C source
+805c3956 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore HSTATUS in C source
+9d4fa73d | 2024-10-21 | Anup Patel | RISC-V: KVM: Order the object files alphabetically
+d4b887c0 | 2024-07-08 | Jinjie Ruan | riscv: stacktrace: Add USER_STACKTRACE support
+c9864cbf | 2023-10-24 | Clément Léger | riscv: kvm: use ".L" local labels in assembly when applicable
+770698bf | 2023-10-24 | Clément Léger | riscv: kvm: Use SYM_*() assembly macros instead of deprecated ones
+e2448004 | 2025-08-18 | Anup Patel | MAINTAINERS: Add entry for RISC-V RPMI and MPXY drivers
+00386e9c | 2025-08-18 | Anup Patel | RISC-V: Enable GPIO keyboard and event device in RV64 defconfig
+a6b6cfba | 2025-08-18 | Sunil V L | irqchip/riscv-rpmi-sysmsi: Add ACPI support
+22ee536f | 2025-08-18 | Sunil V L | mailbox/riscv-sbi-mpxy: Add ACPI support
+fab5569c | 2025-08-18 | Sunil V L | irqchip/irq-riscv-imsic-early: Export imsic_acpi_get_fwnode()
+5454b09b | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add RPMI System MSI to GSI mapping
+1251f083 | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add support to update gsi range
+791dc981 | 2025-08-18 | Sunil V L | ACPI: RISC-V: Create interrupt controller list in sorted order
+eee5e4bc | 2025-08-18 | Sunil V L | ACPI: scan: Update honor list for RPMI System MSI
+8d51c7f0 | 2025-08-18 | Sunil V L | ACPI: Add support for nargs_prop in acpi_fwnode_get_reference_args()
+88072fca | 2025-08-18 | Sunil V L | ACPI: property: Refactor acpi_fwnode_get_reference_args() to support nargs_prop
+cdbdb33f | 2025-08-18 | Anup Patel | irqchip: Add driver for the RPMI system MSI service group
+eb9447a6 | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI interrupt controller bindings
+70fee9ad | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI message proxy bindings
+d9e03267 | 2025-08-18 | Rahul Pathak | clk: Add clock driver for the RISC-V RPMI clock service group
+01f8c0a6 | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service controller bindings
+6ed60836 | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service message proxy bindings
+e48a01cd | 2025-08-18 | Anup Patel | mailbox: Add RISC-V SBI message proxy (MPXY) based mailbox driver
+2a69b173 | 2025-08-18 | Anup Patel | byteorder: Add memcpy_to_le32() and memcpy_from_le32()
+9dea8d02 | 2025-08-18 | Anup Patel | mailbox: Add common header for RPMI messages sent via mailbox
+655b0809 | 2025-08-18 | Anup Patel | RISC-V: Add defines for the SBI message proxy extension
+e04c6023 | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RISC-V SBI MPXY extension
+874a07e8 | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RPMI shared memory transport
+317b717c | 2025-02-12 | Andy Shevchenko | driver core: Split devres APIs to device/devres.h
+76a1ce44 | 2023-12-26 | Tanzir Hasan | lib/string: shrink lib/string.i via IWYU
+c905b309 | 2023-12-26 | Tanzir Hasan | kernel.h: removed REPEAT_BYTE from kernel.h
+707d632c | 2025-04-09 | Sakari Ailus | Documentation: ACPI: Use all-string data node references
+d88a3c02 | 2023-11-06 | Rafael J. Wysocki | ACPI: property: Support using strings in reference properties
+2fb3ac9c | 2025-06-20 | Nam Cao | Revert "riscv: misaligned: fix sleeping function called during misaligned access handling"
+01ba7979 | 2025-06-20 | Alexandre Ghiti | riscv: Move all duplicate insn parsing macros into asm/insn.h
+cb52fc20 | 2025-06-20 | Alexandre Ghiti | riscv: Strengthen duplicate and inconsistent definition of RV_X()
+11c85ba1 | 2025-06-20 | Alexandre Ghiti | riscv: Fix typo EXRACT -> EXTRACT
+52a161ba | 2025-07-10 | Andreas Schwab | riscv: traps_misaligned: properly sign extend value in misaligned load handler
+a221db21 | 2025-05-23 | Clément Léger | RISC-V: KVM: add support for SBI_FWFT_MISALIGNED_DELEG
+8749e0db | 2025-05-23 | Clément Léger | RISC-V: KVM: add support for FWFT SBI extension
+c3b9c1c9 | 2025-05-23 | Clément Léger | RISC-V: KVM: add SBI extension reset callback
+d2df8f5a | 2025-05-23 | Clément Léger | RISC-V: KVM: add SBI extension init()/deinit() functions
+625ee647 | 2025-05-23 | Clément Léger | riscv: misaligned: add a function to check misalign trap delegability
+b8f9c3be | 2025-05-23 | Clément Léger | riscv: misaligned: move emulated access uniformity check in a function
+338a929d | 2025-05-23 | Clément Léger | riscv: misaligned: declare misaligned_access_speed under CONFIG_RISCV_MISALIGNED
+610dd008 | 2025-05-23 | Clément Léger | riscv: misaligned: use on_each_cpu() for scalar misaligned access probing
+8a90b988 | 2025-05-23 | Clément Léger | riscv: misaligned: request misaligned exception from SBI
+1f78aab1 | 2025-05-23 | Clément Léger | riscv: sbi: add SBI FWFT extension calls
+766e0232 | 2025-05-23 | Clément Léger | riscv: sbi: add FWFT extension interface
+6c3d6bbd | 2025-05-23 | Clément Léger | riscv: sbi: add new SBI error mappings
+7c2d3a1b | 2025-05-23 | Clément Léger | riscv: sbi: remove useless parenthesis
+017558b5 | 2025-05-23 | Clément Léger | riscv: sbi: add Firmware Feature (FWFT) SBI extensions definitions
+2e489f60 | 2024-04-02 | Chao Du | RISC-V: KVM: selftests: Add ebreak test support
+1c34124b | 2024-04-02 | Chao Du | RISC-V: KVM: Handle breakpoint exits for VCPU
+92d4b46d | 2024-04-02 | Chao Du | RISC-V: KVM: Implement kvm_arch_vcpu_ioctl_set_guest_debug()
+ab06941e | 2024-01-11 | Paolo Bonzini | KVM: define __KVM_HAVE_GUEST_DEBUG unconditionally
+9fce1f58 | 2025-04-09 | Andrew Jones | riscv: Fix unaligned access info messages
+9655c898 | 2024-08-29 | Alexandre Ghiti | riscv: Fix RISCV_ALTERNATIVE_EARLY
+0288c5cb | 2024-03-22 | Alexandre Ghiti | riscv: Improve sbi_ecall() code generation by reordering arguments
+1647cb4c | 2024-03-21 | Samuel Holland | riscv: Add tracepoints for SBI calls and returns
+2a240981 | 2025-04-22 | Clément Léger | riscv: misaligned: use get_user() instead of __get_user()
+055bcc29 | 2025-04-22 | Clément Léger | riscv: misaligned: enable IRQs while handling misaligned accesses
+3ae13094 | 2025-04-22 | Clément Léger | riscv: misaligned: factorize trap handling
+82cc10b9 | 2025-04-11 | Nylon Chen | riscv: misaligned: Add handling for ZCB instructions
+64dcec2e | 2025-04-11 | Nylon Chen | riscv: misaligned: fix sleeping function called during misaligned access handling
+1a0a10c9 | 2025-02-28 | Alexandre Ghiti | riscv: Fix missing __free_pages() in check_vector_unaligned_access()
+f6129836 | 2025-02-28 | Tingbo Liao | riscv: Fix the __riscv_copy_vec_words_unaligned implementation
+954b77cb | 2025-10-20 | Xu Lu | RISC-V: KVM: Allow Zalasr extensions for Guest/VM
+5c37f806 | 2025-07-24 | Aleksa Paunovic | riscv: hwprobe: Add MIPS vendor extension probing
+893a4c19 | 2025-04-18 | Cyan Yang | riscv: hwprobe: Add SiFive vendor extension support and probe for xsfqmaccdod and xsfqmaccqoq
+5439608a | 2025-04-18 | Cyan Yang | riscv: hwprobe: Document SiFive xsfvqmaccdod and xsfvqmaccqoq vendor extensions
+fdbda8d0 | 2024-11-13 | Charlie Jenkins | riscv: hwprobe: Add thead vendor extension probing
+a7760e73 | 2025-10-20 | Xu Lu | riscv: Introduce Zalasr instructions
+5ddca5a0 | 2025-10-20 | Xu Lu | riscv: hwprobe: Export Zalasr extension
+148c42a0 | 2025-10-20 | Xu Lu | dt-bindings: riscv: Add Zalasr ISA extension description
+ffb89f4b | 2025-10-20 | Xu Lu | riscv: Add ISA extension parsing for Zalasr
+d03c91dc | 2025-04-21 | Alexandre Ghiti | riscv: hwprobe: export Zabha extension
+87e50f0c | 2024-03-01 | Samuel Holland | riscv: mm: Fix prototype to avoid discarding const
+6784baa3 | 2024-01-30 | Alexandre Ghiti | riscv: Fix arch_tlbbatch_flush() by clearing the batch cpumask
+3708c5b8 | 2024-01-08 | Alexandre Ghiti | riscv: Add support for BATCHED_UNMAP_TLB_FLUSH
+6ce49edc | 2023-10-30 | Alexandre Ghiti | riscv: Improve flush_tlb_range() for hugetlb pages
+e29cde66 | 2026-02-05 | shenlin | perf vendor events riscv: fix lrw core PMU event mapping
+dc926035 | 2024-06-05 | Björn Töpel | riscv: Enable DAX VMEMMAP optimization
+59a8a552 | 2024-06-05 | Björn Töpel | riscv: mm: Add support for ZONE_DEVICE
+da1734f3 | 2024-06-05 | Björn Töpel | virtio-mem: Enable virtio-mem for RISC-V
+c77889d5 | 2024-06-05 | Björn Töpel | riscv: Enable memory hotplugging for RISC-V
+3be99213 | 2024-06-05 | Björn Töpel | riscv: mm: Take memory hotplug read-lock during kernel page table dump
+b8219760 | 2024-06-05 | Björn Töpel | riscv: mm: Add memory hotplugging support
+10c8fb41 | 2024-06-05 | Björn Töpel | riscv: mm: Add pfn_to_kaddr() implementation
+c54c7d1d | 2024-06-05 | Björn Töpel | riscv: mm: Refactor create_linear_mapping_range() for memory hot add
+1c63d4ef | 2024-06-05 | Björn Töpel | riscv: mm: Change attribute from __init to __meminit for page functions
+43550492 | 2024-06-05 | Björn Töpel | riscv: mm: Pre-allocate vmemmap/direct map/kasan PGD entries
+b14b58ec | 2024-06-05 | Björn Töpel | riscv: mm: Properly forward vmemmap_populate() altmap parameter
+2ce6df7c | 2023-12-14 | Alexandre Ghiti | riscv: Use hugepage mappings for vmemmap
+305b4efa | 2023-11-06 | Evan Green | RISC-V: Probe misaligned access speed in parallel
+dab845da | 2023-11-06 | Evan Green | RISC-V: Remove __init on unaligned_emulation_finish()
+a4709f4c | 2023-10-04 | Clément Léger | riscv: add support for PR_SET_UNALIGN and PR_GET_UNALIGN
+6e3726b2 | 2023-10-04 | Clément Léger | riscv: report misaligned accesses emulation to hwprobe
+bb88ca4b | 2023-10-04 | Clément Léger | riscv: add support for sysctl unaligned_enabled control
+90c8cee1 | 2023-10-04 | Clément Léger | riscv: add floating point insn support to misaligned access emulation
+b9d04e67 | 2023-10-04 | Clément Léger | riscv: report perf event for misaligned fault
+0a9586f1 | 2023-10-04 | Clément Léger | riscv: add support for misaligned trap handling in S-mode
+648cbf0f | 2026-01-17 | Lu Peng | riscv: defconfig: Enable more ACPI_APEI configs
+989e1d47 | 2025-07-23 | Ignacio Encinas | riscv: introduce asm/swab.h
+3f8cbebc | 2026-01-07 | hu.yuye | riscv:defconfig:Enable PCIE_EDR
+b89225bc | 2025-12-31 | Yunhui Cui | arch_topology: move parse_acpi_topology() to common code
+98915277 | 2025-12-31 | Yicong Yang | arm64: topology: Support SMT control on ACPI based system
+0b86ba70 | 2025-12-31 | Yicong Yang | arch_topology: Support SMT control for OF based system
+7dfc4ed4 | 2025-12-31 | Yicong Yang | cpu/SMT: Provide a default topology_is_primary_thread()
+6f25c1f6 | 2025-01-24 | Andy Shevchenko | serial: 8250_core: Remove unneeded ->iotype assignment
+ad018464 | 2025-12-30 | hu.yuye | Revert "mango pci hack:broadcast when no MSI source known"
+031a2194 | 2025-12-22 | Clément Léger | riscv: uaccess: do not do misaligned accesses in get/put_user()
+e804dead | 2025-12-22 | Alexandre Ghiti | riscv: make unsafe user copy routines use existing assembly routines
+81c7e8d8 | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use 'asm_goto_output' for get_user()
+ad411c68 | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use 'asm goto' for put_user()
+6a166b46 | 2025-12-22 | Jisheng Zhang | riscv: uaccess: use input constraints for ptr of __put_user()
+1cf91b87 | 2025-12-22 | Jisheng Zhang | riscv: implement user_access_begin() and families
+40030969 | 2025-12-22 | Ben Dooks | riscv: save the SR_SUM status over switches
+913d927f | 2011-12-08 | Tejun Heo | Revert "mm: Modify __find_max_addr for memory hole"
+8baed5b7 | 2021-12-06 | Alexandre Ghiti | Revert "riscv: mm: Clear compilation warning about last_cpupid"
+bb77e911 | 2025-11-12 | shenlin | perf vendor events riscv: add lrw core JSON file with metric support
+81cfc9aa | 2025-11-11 | Fei Liu | i2c: Add driver for the LRW I2C
+db8e354e | 2025-09-29 | Fei Liu | dt-bindings: i2c: Add binding for LRW I2C
+fdcc4001 | 2025-11-12 | Jie Feng | drivers/perf: add LRW DDR PMU support
+d3a0b1f5 | 2025-09-04 | Wenhong Liu | serial: Add driver for the LRW UART
+992f63e7 | 2025-09-04 | Wenhong Liu | dt-bindings: serial: Add binding for LRW UART
+f1f3b690 | 2025-10-16 | Wenhong Liu | riscv: defconfig: remove CONFIG_CMDLINE and CONFIG_CMDLINE_EXTEND as mainline does
+0efc44af | 2025-08-27 | Himanshu Chauhan | riscv: Enable APEI and NMI safe cmpxchg options required for RAS
+ba8b3c84 | 2025-08-27 | Himanshu Chauhan | riscv: Add config option to enable APEI SSE handler
+4d32578e | 2025-08-27 | Himanshu Chauhan | riscv: Introduce HEST SSE notification handlers
+5b3e7581 | 2025-08-27 | Himanshu Chauhan | riscv: Add RISC-V entries in processor type and ISA strings
+82c340f8 | 2025-08-27 | Himanshu Chauhan | riscv: Add functions to register ghes having SSE notification
+a79ae759 | 2025-08-27 | Himanshu Chauhan | riscv: conditionally compile GHES NMI spool function
+1e74705a | 2025-08-27 | Himanshu Chauhan | riscv: Add fixmap indices for GHES IRQ and SSE contexts
+5d7d2dd0 | 2025-08-27 | Himanshu Chauhan | acpi: Introduce SSE in HEST notification types
+25eb9f2e | 2025-08-27 | Himanshu Chauhan | riscv: Define arch_apei_get_mem_attribute for RISC-V
+c56c762b | 2025-08-27 | Himanshu Chauhan | riscv: Define ioremap_cache for RISC-V
+5f0aad5a | 2025-08-27 | Clément Léger | selftests/riscv: add SSE test module
+b21320fa | 2025-08-27 | Clément Léger | perf: RISC-V: add support for SSE event
+d0409839 | 2025-08-27 | Clément Léger | drivers: firmware: add riscv SSE support
+1900448d | 2025-08-27 | Clément Léger | riscv: add support for SBI Supervisor Software Events extension
+ec1132ea | 2025-08-08 | Clément Léger | riscv: add SBI SSE extension definitions
+64810910 | 2025-10-14 | Sunil V L | iommu/riscv: Add ACPI support
+b5d95fc5 | 2025-10-14 | Sunil V L | ACPI: scan: Add support for RISC-V in acpi_iommu_configure_id()
+1e210453 | 2025-10-14 | Sunil V L | ACPI: RISC-V: Add support for RIMT
+8340c3b3 | 2025-10-13 | Sunil V L | ACPICA: actbl2: Add definitions for RIMT
+bf311a32 | 2025-09-20 | shenlin | perf vendor events riscv: add lrw core JSON file
+fbcba60f | 2025-04-21 | Alexandre Ghiti | riscv: Add support for Zicbop
+eb757a93 | 2025-04-21 | Alexandre Ghiti | riscv: Introduce Zicbop instructions
+6c55e184 | 2025-02-26 | Yunhui Cui | RISC-V: Enable cbo.clean/flush in usermode
+9e36e5cc | 2024-08-14 | Samuel Holland | riscv: Add support for per-thread envcfg CSR values
+1f0b454b | 2024-06-19 | Clément Léger | RISC-V: KVM: Allow Zaamo/Zalrsc extensions for Guest/VM
+26975721 | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zaamo and Zalrsc extensions
+2bf0abb7 | 2024-06-19 | Clément Léger | riscv: add parsing for Zaamo and Zalrsc extensions
+20aefbbb | 2025-02-13 | Inochi Amaoto | riscv: hwprobe: export bfloat16 ISA extension
+27f80a3e | 2025-02-13 | Inochi Amaoto | riscv: add ISA extension parsing for bfloat16 ISA extension
+bbb460c1 | 2024-05-24 | Xiao Wang | riscv, bpf: Introduce shift add helper with Zba optimization
+b8d7a0bc | 2024-05-16 | Xiao Wang | riscv, bpf: Optimize zextw insn with Zba extension
+4b49e2ea | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize bswap insns with Zbb support
+c817e186 | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize sign-extention mov insns with Zbb support
+a7680b8f | 2024-01-15 | Pu Lehui | riscv, bpf: Add necessary Zbb instructions
+b8942eff | 2024-01-15 | Pu Lehui | riscv, bpf: Simplify sext and zext logics in branch instructions
+5d694d2a | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit zero-extension to emit_zextw
+b76aaf9b | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit sign-extension to emit_sextw
+cd6039ec | 2025-03-12 | Robin Murphy | iommu: Don't warn prematurely about dodgy probes
+839611f4 | 2024-10-09 | Lu Baolu | iommu: Remove iommu_domain_alloc()
+6301d796 | 2024-10-09 | Lu Baolu | iommu: Remove iommu_present()
+71efdcc8 | 2024-09-02 | Lu Baolu | drm/tegra: Use iommu_paging_domain_alloc()
+99ac413d | 2024-09-02 | Lu Baolu | drm/rockchip: Use iommu_paging_domain_alloc()
+69485253 | 2024-06-10 | Lu Baolu | RDMA/usnic: Use iommu_paging_domain_alloc()
+cc539205 | 2024-08-12 | Lu Baolu | soc: fsl: qbman: Use iommu_paging_domain_alloc()
+9571a62c | 2024-08-12 | Lu Baolu | remoteproc: Use iommu_paging_domain_alloc()
+c2cea553 | 2024-08-12 | Lu Baolu | media: venus: firmware: Use iommu_paging_domain_alloc()
+cf9c7827 | 2024-08-12 | Lu Baolu | media: nvidia: tegra: Use iommu_paging_domain_alloc()
+6e087105 | 2024-08-12 | Lu Baolu | gpu: host1x: Use iommu_paging_domain_alloc()
+c8a8cabf | 2024-09-02 | Lu Baolu | drm/nouveau/tegra: Use iommu_paging_domain_alloc()
+beab98bd | 2024-06-10 | Lu Baolu | wifi: ath11k: Use iommu_paging_domain_alloc()
+7e77f939 | 2024-06-10 | Lu Baolu | wifi: ath10k: Use iommu_paging_domain_alloc()
+7906b8b5 | 2024-06-10 | Lu Baolu | drm/msm: Use iommu_paging_domain_alloc()
+ac3c7bde | 2024-06-10 | Lu Baolu | vhost-vdpa: Use iommu_paging_domain_alloc()
+bc408eb4 | 2024-06-10 | Lu Baolu | vfio/type1: Use iommu_paging_domain_alloc()
+e9596b5c | 2024-06-10 | Lu Baolu | iommufd: Use iommu_paging_domain_alloc()
+0f33e98f | 2024-06-10 | Lu Baolu | iommu: Add iommu_paging_domain_alloc() interface
+f8423f5e | 2025-02-28 | Robin Murphy | iommu: Get DT/ACPI parsing into the proper probe path
+0ce2c3ec | 2025-02-28 | Robin Murphy | iommu: Keep dev->iommu state consistent
+9aa94dab | 2025-02-28 | Robin Murphy | iommu: Resolve ops in iommu_init_device()
+9095eb9b | 2025-02-28 | Robin Murphy | iommu: Handle race with default domain setup
+897b572e | 2025-02-27 | Robin Murphy | iommu: Unexport iommu_fwspec_free()
+fdd5f0a9 | 2024-07-02 | Robin Murphy | iommu: Remove iommu_fwspec ops
+751bed38 | 2024-07-02 | Robin Murphy | OF: Simplify of_iommu_configure()
+6ad41c4a | 2024-07-02 | Robin Murphy | ACPI: Retire acpi_iommu_fwspec_ops()
+94367b42 | 2024-07-02 | Robin Murphy | iommu: Resolve fwspec ops automatically
+dfff8792 | 2023-12-07 | Jason Gunthorpe | acpi: Do not return struct iommu_ops from acpi_iommu_configure_id()
+ff8e26f2 | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_priv_set() with a lockdep
+122ddecd | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_get() with lockdep
+ee8a5634 | 2023-12-07 | Jason Gunthorpe | iommu/of: Use -ENODEV consistently in of_iommu_configure()
+32ececed | 2023-12-07 | Jason Gunthorpe | iommmu/of: Do not return struct iommu_ops from of_iommu_configure()
+7385c321 | 2023-12-07 | Jason Gunthorpe | iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops()
+eece2c5c | 2023-11-21 | Robin Murphy | iommu: Clean up open-coded ownership checks
+dfa4c1cf | 2023-11-21 | Robin Murphy | iommu: Retire bus ops
+82d440e3 | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_domain_alloc() from bus ops
+f2157bae | 2023-11-21 | Robin Murphy | iommu: Validate that devices match domains
+182f942b | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_present() from bus ops
+2b997d09 | 2023-11-21 | Robin Murphy | iommu: Factor out some helpers
+377e6bbe | 2024-03-13 | Xiao Wang | riscv: uaccess: Relax the threshold for fast path
+9ab60fd9 | 2024-03-13 | Xiao Wang | riscv: uaccess: Allow the last potential unrolled copy
+190f9eb4 | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps
+ca142333 | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events
+25a673c2 | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest
+4c66d558 | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver
+3b462e45 | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it
+ee93628d | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi
+bd20eab6 | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Paging domain support
+2732dfc9 | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Command and fault queue support
+b71b85b9 | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Device directory management.
+cfd28c5b | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Enable IOMMU registration and device probe.
+91a49b75 | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU PCIe device driver
+44192805 | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU platform device driver
+93783ef1 | 2024-10-15 | Tomasz Jeznach | dt-bindings: iommu: riscv: Add bindings for RISC-V IOMMU
+b995fa9d | 2024-04-13 | Pasha Tatashin | iommu/vt-d: add wrapper functions for page allocations
+41510883 | 2024-02-16 | Krzysztof Kozlowski | iommu: constify of_phandle_args in xlate
+0c6c0489 | 2023-11-22 | Matt Coster | sizes.h: Add entries between SZ_32G and SZ_64T
+f1cde8b3 | 2024-03-05 | Lu Baolu | iommu: Add static iommu_ops->release_domain
+49cef219 | 2023-09-27 | Jason Gunthorpe | iommufd: Convert to alloc_domain_paging()
+f0389ffb | 2024-04-13 | Pasha Tatashin | iommu: Move IOMMU_DOMAIN_BLOCKED global statics to ops->blocked_domain
+c2bb831c | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new userspace mappings with Svvptc
+efd7f449 | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new vmalloc mappings
+52da8434 | 2023-10-20 | Anup Patel | KVM: riscv: selftests: Add SBI DBCN extension to get-reg-list test
+46936216 | 2022-07-22 | Anup Patel | RISC-V: KVM: Forward SBI DBCN extension to user-space
+ba498668 | 2023-10-11 | Anup Patel | RISC-V: KVM: Allow some SBI extensions to be disabled by default
+bec9526b | 2023-10-10 | Anup Patel | RISC-V: KVM: Change the SBI specification version to v2.0
+5be9d152 | 2022-07-22 | Anup Patel | RISC-V: Add defines for SBI debug console extension
+c9b05fb7 | 2023-11-24 | Anup Patel | RISC-V: Enable SBI based earlycon support
+c358d86f | 2023-11-24 | Atish Patra | tty: Add SBI debug console support to HVC SBI driver
+b559acc2 | 2023-11-24 | Anup Patel | tty/serial: Add RISC-V SBI debug console based earlycon
+859491b1 | 2023-11-24 | Anup Patel | RISC-V: Add SBI debug console helper routines
+f8277a94 | 2023-11-24 | Anup Patel | RISC-V: Add stubs for sbi_console_putchar/getchar()
+6932dbac | 2024-04-03 | Björn Töpel | riscv: Fix vector state restore in rt_sigreturn()
+9d5c63fb | 2024-01-15 | Andy Chiu | riscv: vector: allow kernel-mode Vector with preemption
+7cbb7bf9 | 2024-01-15 | Andy Chiu | riscv: vector: use kmem_cache to manage vector context
+b637198b | 2024-01-15 | Andy Chiu | riscv: vector: use a mask to write vstate_ctrl
+cc805193 | 2024-01-15 | Andy Chiu | riscv: vector: do not pass task_struct into riscv_v_vstate_{save,restore}()
+5284a6e2 | 2024-01-15 | Andy Chiu | riscv: fpu: drop SR_SD bit checking
+bc336f8b | 2024-01-15 | Andy Chiu | riscv: lib: vectorize copy_to_user/copy_from_user
+fed40dc4 | 2024-01-15 | Andy Chiu | riscv: sched: defer restoring Vector context for user
+91cfef79 | 2024-01-15 | Greentime Hu | riscv: Add vector extension XOR implementation
+3135e21e | 2024-01-15 | Andy Chiu | riscv: vector: make Vector always available for softirq context
+28b72514 | 2024-01-15 | Greentime Hu | riscv: Add support for kernel mode vector
+b66619c2 | 2023-10-24 | Clément Léger | riscv: kernel: Use correct SYM_DATA_*() macro for data
+96528d7f | 2023-10-24 | Clément Léger | riscv: Use SYM_*() assembly macros instead of deprecated ones
+0948d6ce | 2023-10-24 | Clément Léger | riscv: use ".L" local labels in assembly when applicable
+f2bde542 | 2024-11-03 | Alexandre Ghiti | riscv: Add qspinlock support
+ed9fb072 | 2024-11-03 | Alexandre Ghiti | riscv: Implement xchg8/16() using Zabha
+05e5658c | 2024-11-03 | Alexandre Ghiti | riscv: Implement arch_cmpxchg128() using Zacas
+d7100d75 | 2024-11-03 | Alexandre Ghiti | riscv: Improve zacas fully-ordered cmpxchg()
+4cbf25c0 | 2024-07-26 | Yong-Xuan Wang | RISC-V: KVM: Add Svade and Svadu Extensions Support for Guest/VM
+29a8b020 | 2024-10-16 | Samuel Holland | RISC-V: KVM: Allow Smnpm and Ssnpm extensions for guests
+b0733330 | 2024-04-26 | Andrew Jones | KVM: riscv: Support guest wrs.nto
+fdd7073e | 2024-06-19 | Clément Léger | RISC-V: KVM: Allow Zcmop extension for Guest/VM
+25b3b104 | 2024-06-19 | Clément Léger | RISC-V: KVM: Allow Zca, Zcf, Zcd and Zcb extensions for Guest/VM
+a74af32b | 2024-06-19 | Clément Léger | RISC-V: KVM: Allow Zimop extension for Guest/VM
+8e14270e | 2024-02-13 | Anup Patel | RISC-V: KVM: Allow Zacas extension for Guest/VM
+a2ecc96b | 2024-02-13 | Anup Patel | RISC-V: KVM: Allow Ztso extension for Guest/VM
+6c53d8fc | 2024-02-13 | Anup Patel | RISC-V: KVM: Forward SEED CSR access to user space
+360d8356 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zfa extension for Guest/VM
+e7d2a825 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zvfh[min] extensions for Guest/VM
+1dd3dbb7 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zihintntl extension for Guest/VM
+dc7e2080 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zfh[min] extensions for Guest/VM
+66ba13c3 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow vector crypto extensions for Guest/VM
+24e940b0 | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow scalar crypto extensions for Guest/VM
+16c8fa4c | 2023-11-27 | Anup Patel | RISC-V: KVM: Allow Zbc extension for Guest/VM
+3eba211c | 2023-09-15 | Anup Patel | RISC-V: KVM: Allow Zicond extension for Guest/VM
+bbc1b36c | 2023-11-12 | Xiao Wang | riscv: Optimize hweight API with Zbb extension
+fc9f031c | 2023-10-31 | Xiao Wang | riscv: Optimize bitops with Zbb extension
+934de2f1 | 2024-06-21 | Xiao Wang | riscv: Optimize crc32 with Zbc extension
+84dbe015 | 2025-02-28 | Robin Murphy | iommu: Handle race with default domain setup
+ee0b74e8 | 2023-10-03 | Jason Gunthorpe | iommu: Do not use IOMMU_DOMAIN_DMA if CONFIG_IOMMU_DMA is not enabled
+924bb2a4 | 2023-09-13 | Jason Gunthorpe | iommu: Convert remaining simple drivers to domain_alloc_paging()
+1ecfbb9f | 2023-09-13 | Jason Gunthorpe | iommu: Convert simple drivers with DOMAIN_DMA to domain_alloc_paging()
+f822742d | 2023-09-13 | Jason Gunthorpe | iommu: Add ops->domain_alloc_paging()
+0924fe0f | 2023-09-13 | Jason Gunthorpe | iommu: Add __iommu_group_domain_alloc()
+3b46893b | 2023-09-13 | Jason Gunthorpe | iommu: Require a default_domain for all iommu drivers
+86cb3c48 | 2023-09-13 | Jason Gunthorpe | iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN
+0613c123 | 2023-09-13 | Jason Gunthorpe | iommu/mtk_iommu: Add an IOMMU_IDENTITIY_DOMAIN
+1e7475d8 | 2023-09-13 | Jason Gunthorpe | iommu/ipmmu: Add an IOMMU_IDENTITIY_DOMAIN
+5c2572d7 | 2023-09-13 | Jason Gunthorpe | iommu/qcom_iommu: Add an IOMMU_IDENTITIY_DOMAIN
+13d6d92f | 2023-09-13 | Jason Gunthorpe | iommu: Remove ops->set_platform_dma_ops()
+ef811cac | 2023-09-13 | Jason Gunthorpe | iommu/msm: Implement an IDENTITY domain
+59788e1d | 2023-09-13 | Jason Gunthorpe | iommu/omap: Implement an IDENTITY domain
+fd222ae8 | 2023-09-13 | Jason Gunthorpe | iommu/tegra-smmu: Support DMA domains in tegra
+2ce0a668 | 2023-09-13 | Jason Gunthorpe | iommu/tegra-smmu: Implement an IDENTITY domain
+d7da524d | 2023-09-13 | Jason Gunthorpe | iommu/exynos: Implement an IDENTITY domain
+ebd14022 | 2023-09-13 | Jason Gunthorpe | iommu: Allow an IDENTITY domain as the default_domain in ARM32
+00300f24 | 2023-09-13 | Jason Gunthorpe | iommu: Reorganize iommu_get_default_domain_type() to respect def_domain_type()
+4939da99 | 2023-09-13 | Jason Gunthorpe | iommu/mtk_iommu_v1: Implement an IDENTITY domain
+679a1244 | 2023-09-13 | Jason Gunthorpe | iommu/fsl_pamu: Implement a PLATFORM domain
+7c83e76b | 2023-09-13 | Jason Gunthorpe | iommu: Add IOMMU_DOMAIN_PLATFORM for S390
+dc1b2410 | 2023-09-13 | Jason Gunthorpe | iommu: Add IOMMU_DOMAIN_PLATFORM
+84703f58 | 2023-09-13 | Jason Gunthorpe | iommu: Add iommu_ops->identity_domain
+0d45c54f | 2025-07-29 | gaorui | Revert "iommu: Handle race with default domain setup"
+8a32574d | 2024-04-09 | Baoquan He | kexec: fix the unexpected kexec_dprintk() macro
+cc29b0eb | 2024-07-30 | Sunil V L | kexec_file, parisc: print out debugging message if required
+eba5ed9d | 2023-12-13 | Baoquan He | kexec_file, power: print out debugging message if required
+b93850b2 | 2023-12-13 | Baoquan He | kexec_file, riscv: print out debugging message if required
+14a9e50c | 2023-12-13 | Baoquan He | kexec_file, arm64: print out debugging message if required
+3c368919 | 2023-12-13 | Baoquan He | kexec_file, x86: print out debugging message if required
+42a77eaf | 2023-12-13 | Baoquan He | kexec_file: print out debugging message if required
+c60c5f03 | 2023-12-13 | Baoquan He | kexec_file: add kexec_file flag to control debug printing
+73d6aa7f | 2025-04-03 | Radim Krčmář | KVM: RISC-V: reset smstateen CSRs
+34cf9013 | 2023-12-24 | Anup Patel | RISC-V: KVM: Fix indentation in kvm_riscv_vcpu_set_reg_csr()
+28b08a85 | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add sstateen0 to ONE_REG
+d6595ad9 | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add sstateen0 context save/restore
+d8f58da4 | 2023-09-13 | Mayuresh Chitale | RISCV: KVM: Add senvcfg context save/restore
+f76ccc13 | 2023-09-13 | Mayuresh Chitale | RISC-V: KVM: Enable Smstateen accesses
+7237ca11 | 2023-09-13 | Mayuresh Chitale | RISC-V: KVM: Add kvm_vcpu_config
+45a14a58 | 2024-07-30 | Sunil V L | serial: 8250_platform: Enable generic 16550A platform devices
+28c255bc | 2025-04-09 | Song Shuai | riscv: kexec_file: Support loading Image binary file
+801d3d3c | 2025-07-25 | gaorui | riscv: kexec_file: Split the loading of kernel and others
+57bba7c7 | 2025-07-25 | gaorui | Revert "riscv: kexec: Add image loader for kexec file"
+2e2ccc0e | 2023-11-30 | Samuel Ortiz | RISC-V: Implement archrandom when Zkr is available
+73e6c9f9 | 2024-02-08 | Sunil V L | cpufreq: Move CPPC configs to common Kconfig and add RISC-V
+aadc78bd | 2024-02-08 | Sunil V L | ACPI: RISC-V: Add CPPC driver
+2bc9557b | 2024-06-17 | Yunhui Cui | RISC-V: Select ACPI PPTT drivers
+264d78cd | 2024-05-02 | Sia Jee Heng | RISC-V: ACPI: Enable SPCR table for console output on RISC-V
+3ebaecbb | 2024-07-18 | Ryo Takakura | RISC-V: Enable IPI CPU Backtrace
+41873c93 | 2024-06-13 | Haibo Xu | riscv: dmi: Add SMBIOS/DMI support
+658ba5a2 | 2024-06-13 | Haibo Xu | ACPI: NUMA: replace pr_info with pr_debug in arch_acpi_numa_init
+d095cc12 | 2025-04-25 | gaorui | ACPI: NUMA: change the ACPI_NUMA to a hidden option
+9fe5013d | 2025-04-25 | gaorui | ACPI: NUMA: Make some NUMA-related functions available for RISC-V
+2150a23e | 2024-06-13 | Haibo Xu | ACPI: NUMA: Add handler for SRAT RINTC affinity structure
+e0eacf9f | 2024-06-13 | Haibo Xu | ACPI: RISCV: Add NUMA support based on SRAT and SLIT
+48e1d183 | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure

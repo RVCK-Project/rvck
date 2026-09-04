@@ -1,174 +1,174 @@
 # 进迭时空 提交列表（纯文本视图）
 # 共 168 个提交
-# 生成时间: 2026-08-27 19:46:15
+# 生成时间: 2026-09-04 11:16:31
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-1a3a2716 | 2026-05-21 | Yixun Lan | riscv: dts: spacemit: k3: Add pwm support
-c1a13392 | 2026-04-28 | Yixun Lan | pwm: pxa: Add optional bus clock
-16fd9ea4 | 2025-04-29 | Guodong Xu | pwm: pxa: Add optional reset control
-4353aad7 | 2025-03-13 | Uwe Kleine-König | pwm: pxa: Improve using dev_err_probe()
-6785c09c | 2024-06-10 | Jeff Johnson | pwm: add missing MODULE_DESCRIPTION() macros
-6d5b0f35 | 2024-02-14 | Uwe Kleine-König | pwm: pxa: Make use of devm_pwmchip_alloc() function
-9363792d | 2024-01-09 | Uwe Kleine-König | pwm: Drop useless member .of_pwm_n_cells of struct pwm_chip
-ee6e2111 | 2023-10-09 | Rob Herring | pwm: pxa: Explicitly include correct DT includes
-b8007d63 | 2026-07-22 | Yongchao Jia | pwm: sophgo: remove unused .owner field
-162e20ac | 2023-08-04 | Uwe Kleine-König | pwm: Manage owner assignment implicitly for drivers
-f607c819 | 2026-04-28 | Yixun Lan | dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K3 PWM support
-b08184a1 | 2025-04-29 | Guodong Xu | dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K1 PWM support
-136d65b4 | 2024-04-30 | Binbin Zhou | dt-bindings: pwm: marvell,pxa: Do not require pwm-cells twice
-f4fb0aff | 2024-01-07 | Duje Mihanović | dt-bindings: pxa-pwm: Convert to YAML
-aa205a39 | 2026-07-23 | Yongchao Jia | riscv: config: enable dma driver for spacemit k1 and k3
-19dc2538 | 2026-05-18 | Troy Mitchell | riscv: dts: spacemit: Add PDMA controller node for K3 SoC
-abc4b61c | 2026-05-18 | Guodong Xu | dmaengine: mmp_pdma: add SpacemiT K3 support
-b8be58af | 2026-05-18 | Guodong Xu | dmaengine: mmp_pdma: refactor DRCMR access with helper function
-44a6f59b | 2025-09-18 | Guodong Xu | dmaengine: mmp_pdma: fix DMA mask handling
-f8f66d97 | 2025-08-22 | Guodong Xu | dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing
-b593e1de | 2025-08-22 | Guodong Xu | dmaengine: mmp_pdma: Add operations structure for controller abstraction
-d98286b3 | 2025-08-22 | Guodong Xu | dmaengine: mmp_pdma: Add reset controller support
-87210cf4 | 2025-08-22 | Guodong Xu | dmaengine: mmp_pdma: Add clock support
-d94434d5 | 2023-10-06 | Rob Herring | dmaengine: Drop unnecessary of_match_device() calls
-e4bad7c8 | 2023-09-19 | Uwe Kleine-König | dmaengine: mmp_pdma: Convert to platform remove callback returning void
-7bbd808d | 2026-05-18 | Guodong Xu | dt-bindings: dmaengine: Add SpacemiT K3 DMA compatible string
-c02cf9f9 | 2025-08-22 | Guodong Xu | dt-bindings: dma: Add SpacemiT K1 PDMA controller
-149c6aa0 | 2026-07-22 | Yongchao Jia | Revert "driver: k1: add dma driver support for spacemit k1"
-adc55366 | 2026-07-22 | Yongchao Jia | Revert "riscv: config: enable dma driver for spacemit k1"
-be3c1bfb | 2026-07-03 | Yongchao Jia | riscv: dts: spacemit: add K3 USB3 support for com260
-968fad26 | 2026-07-03 | Yongchao Jia | phy: spacemit: add K3 USB3 combo PHY driver
-f25cdcc7 | 2025-10-17 | Ze Huang | phy: spacemit: support K1 USB2.0 PHY controller
-5da39375 | 2025-09-13 | Ze Huang | usb: dwc3: add generic driver to support flattened
-55364ccb | 2025-04-14 | Bjorn Andersson | usb: dwc3: core: Expose core driver as library
-19a57459 | 2026-02-04 | Zhang Meng | driver: clk: k3: keep some system based clock always on
-d39c541e | 2026-01-21 | Zhang Meng | riscv: k3: config: enable some modules for spacemit k3
-4068d433 | 2026-01-21 | Zhang Meng | riscv: defconfig: make CONFIG_REGULATOR_FIXED_VOLTAGE builtin
-2328c536 | 2026-01-21 | Zhang Meng | riscv: dts: k3: enable sdhci support
-9e675c1a | 2026-01-21 | Zhang Meng | mmc: k1: update driver for spacemit k3 supporting
-6478a70e | 2026-01-21 | Zhang Meng | riscv: dts: k3: enable ethernet for spacemit k3
-4150688b | 2026-01-21 | Zhang Meng | net: k3: support emac controller in spacemit k3 soc
-69e02bdf | 2026-01-21 | Zhang Meng | riscv: dts: k3: add pmic and power tree support
-a9bd28d2 | 2026-01-21 | Zhang Meng | riscv: dts: k3: add board Com260-Kit of spacemit support
-563cf856 | 2026-01-21 | Zhang Meng | riscv: dts: k3: add i2cs description for spacemit k3
-c5e21319 | 2026-01-21 | Zhang Meng | riscv: dts: k3: add gpio description for spacemit k3
-cc168d08 | 2026-01-21 | Zhang Meng | gpio: k3: add k3 gpio support
-444ec629 | 2026-01-21 | Zhang Meng | riscv: dts: k3: add pinctrl description
-58146706 | 2026-01-21 | Zhang Meng | pinctrl: k3: add k3 pinctrl support
-e4094dec | 2026-01-21 | Zhang Meng | driver: reset: fix issues in the k3 reset
-af49cd87 | 2026-01-21 | Zhang Meng | riscv: dts: k3: fix issues in clock defines
-a3c95df2 | 2026-01-21 | Zhang Meng | driver: clk: fix issues in the clock driver
-e9d6a273 | 2026-01-21 | Zhang Meng | dt-bindings: soc: spacemit: fix errors in clocks define
-3225c50f | 2026-01-19 | zhangmeng | riscv: dts: Fix the clock missing issue
-8ce78d44 | 2026-01-19 | zhangmeng | mmc: k1: fix the bug that mmc driver is mismatched with clk driver
-dfec769d | 2026-01-19 | zhangmeng | i2c: k1: fix clk driver mismatch issue
-c4908d7a | 2026-01-19 | zhangmeng | gpio: k1: fix clk driver mismatch issue
-93e1258d | 2026-01-19 | zhangmeng | pinctrl: k1: fix clk driver mismatch issue
-24e0ad49 | 2025-11-28 | Zhang Meng | riscv: defconfig: enable spacemit k3 soc
-094904c4 | 2025-11-26 | Zhang Meng | riscv: dts: enable uart0 for spacemit k3
-9437a90d | 2025-11-26 | Zhang Meng | riscv: dts: add clock tree related representations
-6080710b | 2025-11-26 | Zhang Meng | riscv: k3: config: enable clock and reset for spacemit k3
-e0c294cc | 2025-11-26 | Zhang Meng | reset: spacemit: add support for SpacemiT K3 CCU resets
-48f8221f | 2025-11-26 | Zhang Meng | driver: clk: add spacemit k3 clk driver support
-2f7eb622 | 2025-11-25 | Zhang Meng | riscv: k3: add spacemit k3 soc support
-965d2117 | 2025-11-26 | Zhang Meng | driver: clk: use the mainline clock and reset driver for spacemit k1
-cc23e2d4 | 2025-07-02 | Alex Elder | reset: spacemit: add support for SpacemiT CCU resets
-00030835 | 2025-09-11 | Troy Mitchell | clk: spacemit: fix i2s clock
-e703cfd7 | 2025-09-11 | Troy Mitchell | dt-bindings: clock: spacemit: introduce i2s pre-clock to fix i2s clock
-b6c54ae6 | 2025-08-11 | Brian Masney | clk: spacemit: ccu_pll: convert from round_rate() to determine_rate()
-e80a1c9f | 2025-08-11 | Brian Masney | clk: spacemit: ccu_mix: convert from round_rate() to determine_rate()
-407aaa70 | 2025-08-11 | Brian Masney | clk: spacemit: ccu_ddn: convert from round_rate() to determine_rate()
-bf131396 | 2025-08-11 | Troy Mitchell | clk: spacemit: fix sspax_clk
-c86489c2 | 2025-08-11 | Troy Mitchell | dt-bindings: clock: spacemit: CLK_SSPA_I2S_BCLK for SSPA
-baa25cff | 2025-07-23 | Akhilesh Patil | clk: spacemit: ccu_pll: fix error return value in recalc_rate callback
-b8d1d970 | 2025-06-12 | Alex Elder | clk: spacemit: mark K1 pll1_d8 as critical
-d6e791a0 | 2025-07-02 | Alex Elder | clk: spacemit: define three reset-only CCUs
-5daa70cd | 2025-07-02 | Alex Elder | clk: spacemit: set up reset auxiliary devices
-05e9656f | 2025-07-02 | Alex Elder | soc: spacemit: create a header for clock/reset registers
-53ed7eae | 2025-07-02 | Alex Elder | dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
-abd51b9a | 2025-04-16 | Haylen Chu | clk: spacemit: k1: Add TWSI8 bus and function clocks
-c48c5c07 | 2025-04-16 | Haylen Chu | clk: spacemit: Add clock support for SpacemiT K1 SoC
-ae12c690 | 2025-04-16 | Haylen Chu | dt-bindings: clock: spacemit: Add spacemit,k1-pll
-8d7bf61f | 2025-04-16 | Haylen Chu | dt-bindings: soc: spacemit: Add spacemit,k1-syscon
-291da9af | 2025-11-24 | Zhang Meng | driver: clk: remove the obsolete clk driver of spacemit k1
-15f16bf4 | 2025-11-24 | Zhang Meng | riscv: defconfig: enable CONFIG_RISCV_ISA_ZICBOM for support non-coherent dma
-0df13089 | 2025-11-24 | Zhang Meng | riscv: defconfig: unified naming for k1 chip
-9e9061fd | 2025-11-24 | Zhang Meng | riscv: kconfig: unified naming for k1 chip
-fa183163 | 2025-11-22 | Zhang Meng | riscv: kconfig.socs: delete the unused k1x definition
-5284a9db | 2025-11-23 | Zhang Meng | riscv: dts: unified naming for k1 chip
-da29394f | 2025-11-23 | Zhang Meng | driver: ethernet: unified naming for k1 chip
-d55f755f | 2025-11-23 | Zhang Meng | driver: dma: unified naming for k1 chip
-f2dd0f4b | 2025-11-23 | Zhang Meng | driver: i2c: unified naming for k1 chip
-f13c4a03 | 2025-11-23 | Zhang Meng | driver: spi: unified naming for k1 chip
-6bee9488 | 2025-11-22 | Zhang Meng | driver: gpio: Unified naming for k1 chip
-344e150a | 2025-11-22 | Zhang Meng | driver: pinctrl: Unified naming for k1 chip
-a17e36ce | 2025-11-22 | Zhang Meng | driver: reset: Unified naming for k1 chip
-2085ef10 | 2025-11-22 | Zhang Meng | driver: clk: Unified naming for k1 chip
-8bfc8c80 | 2025-11-22 | Zhang Meng | riscv: k1: dts: change uart driver to 8250_of with compaible 'intel,xscale-uart'
-cadce011 | 2025-11-22 | Zhang Meng | serial: k1: remove k1 uart driver
-75023258 | 2025-04-11 | Alex Elder | serial: 8250_of: manage bus clock in suspend/resume
-dc8413e6 | 2025-04-09 | Alex Elder | serial: 8250_of: add support for an optional bus clock
-e7b929f4 | 2025-01-24 | Andy Shevchenko | serial: 8250_of: Remove unneeded ->iotype assignment
-0bd6ba34 | 2024-04-05 | Bastien Curutchet | serial: 8250_of: Add clock_notifier
-c09f23aa | 2024-03-04 | Andy Shevchenko | serial: 8250_of: Switch to use uart_read_port_properties()
-1ff61df4 | 2024-02-15 | Andy Shevchenko | serial: 8250_of: Drop quirk fot NPCM from 8250_port
-68231e4e | 2023-09-19 | Andy Shevchenko | serial: 8250_of: Use devm_clk_get_enabled()
-2ca661dc | 2023-09-12 | Andy Shevchenko | serial: 8250_of: Use dev_err_probe() instead of dev_warn()
-91bbda66 | 2025-08-26 | zhangmeng | riscv: k1: dts: enable eth0/eth1 for bananapi f3 board
-619518cf | 2025-08-26 | zhangmeng | riscv: config: enable emac driver for spacemit k1
-c1fcb15f | 2025-08-26 | zhangmeng | riscv: k1: dts: add emacs controllers support for spacemit k1
-2a23be3d | 2025-08-26 | zhangmeng | net: k1: support emac controller in spacemit k1 soc
-2fe69e8c | 2025-08-25 | zhangmeng | riscv: k1: dts: enable sdhci-0/1/2 for bananapi f3 board
-4527a172 | 2025-08-25 | zhangmeng | riscv: config: enable sdhci driver for spacemit k1
-9d98aceb | 2025-08-25 | zhangmeng | riscv: k1: dts: add sdhci controller support for spacemit k1
-47681d12 | 2025-08-25 | zhangmeng | mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
-7db17885 | 2025-08-25 | zhangmeng | dt-bindings: mmc: spacemit,sdhci: add support for K1 SoC
-13c2653b | 2025-08-24 | zhangmeng | driver: k1/spi: Fixed compilation errors reported when enable CONFIG_PM_SLEEP
-140a1f61 | 2025-05-28 | zhangmeng | riscv: config: enable CONFIG_RISCV_ISA_ZICBOM for spacemit k1
-189706a7 | 2025-05-20 | zhangmeng | riscv: config: enable spacemit p1 driver for spacemit k1
-932f404b | 2025-05-21 | zhangmeng | riscv: dts: add spacemit p1 pmic support for bananapi f3
-ca7e4300 | 2025-05-20 | zhangmeng | driver: iio/adc: add spacemit p1 adc driver support
-eb8d991e | 2025-05-20 | zhangmeng | driver: rtc: add spacemit p1 rtc driver support
-06c6c3e3 | 2025-05-19 | zhangmeng | driver: pinctrl: add spacemit p1 pinctrl driver support
-ebc06fc9 | 2025-05-19 | zhangmeng | driver: input: add spacemit p1 key driver support
-9ac916e8 | 2025-05-19 | zhangmeng | driver: regulator: add spacemit p1 regulator driver support
-3945e104 | 2025-05-19 | zhangmeng | driver: mfd: add spacemit p1 mfd driver support
-a42d21e2 | 2025-05-21 | zhangmeng | riscv: k1: dts: enable pwm for bananapi f3 board
-fb45a13a | 2025-05-20 | zhangmeng | riscv: config: enable pxa-pwm driver for spacemit k1
-9c63b2a3 | 2025-05-19 | zhangmeng | riscv: k1: dts: add pwm support for spacemit k1
-5dc9ca71 | 2025-05-19 | zhangmeng | driver: pwm: update pwm-pxa for support spacemit k1
-7f18d762 | 2025-05-21 | zhangmeng | riscv: k1: dts: enable qspi for bananapi f3 board
-da36fea9 | 2025-05-20 | zhangmeng | riscv: config: enable qspi driver for spacemit k1
-192c4c49 | 2025-05-19 | zhangmeng | riscv: k1: dts: add qspi support for spacemit k1
-b3c4892e | 2025-05-19 | zhangmeng | driver: k1: add qspi driver support for spacemit k1
-c55134bc | 2025-05-21 | zhangmeng | riscv: k1: dts: enable spi-3 for bananapi f3 board
-b7035f7a | 2025-05-20 | zhangmeng | riscv: config: enable spi driver for spacemit k1
-73480310 | 2025-05-19 | zhangmeng | riscv: k1: dts: add spi support for spacemit k1
-4e511a44 | 2025-05-19 | zhangmeng | driver: k1: add spi driver support for spacemit k1
-7d028201 | 2025-05-21 | zhangmeng | riscv: k1: dts: enable i2c2 and i2c8 for bananapi f3 board
-d55620c0 | 2025-05-20 | zhangmeng | riscv: config: enable i2c driver for spacemit k1
-a07aa630 | 2025-05-19 | zhangmeng | riscv: k1: dts: add i2c support for spacemit k1
-51b76b4a | 2025-05-19 | zhangmeng | driver: k1: add i2c driver support for spacemit k1
-51019b84 | 2025-05-20 | zhangmeng | riscv: config: enable dma driver for spacemit k1
-83a16566 | 2025-05-19 | zhangmeng | riscv: k1: dts: add dma support for spacemit k1
-6667440e | 2025-05-17 | zhangmeng | driver: k1: add dma driver support for spacemit k1
-6fd973cf | 2025-05-19 | zhangmeng | riscv: k1: dt-bindings: support dma binding for spacemit k1 soc
-360e83a6 | 2025-05-20 | zhangmeng | riscv: config: enable memory range driver for spacemit k1
-288f969d | 2025-05-17 | zhangmeng | riscv: k1: dts: add memory ranges define
-19f1b8d2 | 2025-05-17 | zhangmeng | driver: k1: add an interconnect process driver
-ab57327f | 2025-03-01 | zhangmeng | riscv: config: enable serial driver for spacemit k1
-d4b62c42 | 2025-02-20 | zhangmeng | riscv: k1x: dts: add uart support for spacemit k1x soc
-811efa15 | 2025-02-20 | zhangmeng | driver: k1x: add uart serial driver support for spacemit k1x
-839de650 | 2025-02-25 | zhangmeng | riscv: k1x: config: enable gpio driver for spacemit k1
-6a4bfaea | 2025-02-20 | zhangmeng | riscv: k1x: dts: add gpio support spacemit k1x soc
-65f22ab7 | 2025-02-20 | zhangmeng | driver: k1x: add gpio driver for spacemit k1
-dcef3709 | 2025-02-25 | zhangmeng | riscv: k1x: config: enable pinctrl driver for spacemit k1
-3b9a228a | 2025-02-20 | zhangmeng | riscv: k1x: dts: add pinctrl support for spacemit k1x soc
-53c19a6e | 2025-02-20 | zhangmeng | driver: k1x: add pinctrl driver for spacemit k1x
-b58c0291 | 2025-02-20 | zhangmeng | riscv: k1x: dt-bindings: support pinctrl binding for spacemit k1x soc
-e058ad20 | 2025-02-25 | zhangmeng | riscv: k1x: config: enable reset driver for spacemit k1
-81b59f7d | 2025-02-19 | zhangmeng | riscv: k1x: dts: add reset support for spacemit k1
-5b80df28 | 2025-02-19 | zhangmeng | driver: k1x: add reset driver for spacemit k1
-d8ba6617 | 2025-02-19 | zhangmeng | riscv: k1x: dt-bindings: add reset dt-bindings for spacemit k1
-ce00cf6e | 2025-02-25 | zhangmeng | riscv: k1x: config: enable clock driver for spacemit k1
-c9528dab | 2025-02-19 | zhangmeng | riscv: k1x: dts: add clock support for spacemit k1
-5100dba9 | 2025-02-19 | zhangmeng | driver: k1x: clk: add clock driver for spacemit k1
-9bfae5f5 | 2025-02-19 | zhangmeng | riscv: k1x: dt-bindings: add clock dt-bindings for spacemit k1
-4246fa5d | 2025-02-18 | zhangmeng | riscv: k1x: add spacemit k1 soc support
+4982993d | 2026-05-21 | Yixun Lan | riscv: dts: spacemit: k3: Add pwm support
+0ded3299 | 2026-04-28 | Yixun Lan | pwm: pxa: Add optional bus clock
+9a718843 | 2025-04-29 | Guodong Xu | pwm: pxa: Add optional reset control
+2dd91f4a | 2025-03-13 | Uwe Kleine-König | pwm: pxa: Improve using dev_err_probe()
+3fc183c2 | 2024-06-10 | Jeff Johnson | pwm: add missing MODULE_DESCRIPTION() macros
+8c815207 | 2024-02-14 | Uwe Kleine-König | pwm: pxa: Make use of devm_pwmchip_alloc() function
+c66399b3 | 2024-01-09 | Uwe Kleine-König | pwm: Drop useless member .of_pwm_n_cells of struct pwm_chip
+6ddd9571 | 2023-10-09 | Rob Herring | pwm: pxa: Explicitly include correct DT includes
+9c1e0309 | 2026-07-22 | Yongchao Jia | pwm: sophgo: remove unused .owner field
+1cc97cd4 | 2023-08-04 | Uwe Kleine-König | pwm: Manage owner assignment implicitly for drivers
+f8877fee | 2026-04-28 | Yixun Lan | dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K3 PWM support
+dd28b015 | 2025-04-29 | Guodong Xu | dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K1 PWM support
+78a4752b | 2024-04-30 | Binbin Zhou | dt-bindings: pwm: marvell,pxa: Do not require pwm-cells twice
+04427441 | 2024-01-07 | Duje Mihanović | dt-bindings: pxa-pwm: Convert to YAML
+2616f16d | 2026-07-23 | Yongchao Jia | riscv: config: enable dma driver for spacemit k1 and k3
+3190c4c2 | 2026-05-18 | Troy Mitchell | riscv: dts: spacemit: Add PDMA controller node for K3 SoC
+0ea60105 | 2026-05-18 | Guodong Xu | dmaengine: mmp_pdma: add SpacemiT K3 support
+c5a7e2fc | 2026-05-18 | Guodong Xu | dmaengine: mmp_pdma: refactor DRCMR access with helper function
+b8c3faa1 | 2025-09-18 | Guodong Xu | dmaengine: mmp_pdma: fix DMA mask handling
+12463668 | 2025-08-22 | Guodong Xu | dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing
+718e5081 | 2025-08-22 | Guodong Xu | dmaengine: mmp_pdma: Add operations structure for controller abstraction
+bbf41855 | 2025-08-22 | Guodong Xu | dmaengine: mmp_pdma: Add reset controller support
+d0422cf5 | 2025-08-22 | Guodong Xu | dmaengine: mmp_pdma: Add clock support
+29ea7436 | 2023-10-06 | Rob Herring | dmaengine: Drop unnecessary of_match_device() calls
+139f2831 | 2023-09-19 | Uwe Kleine-König | dmaengine: mmp_pdma: Convert to platform remove callback returning void
+e2a84465 | 2026-05-18 | Guodong Xu | dt-bindings: dmaengine: Add SpacemiT K3 DMA compatible string
+b74c283b | 2025-08-22 | Guodong Xu | dt-bindings: dma: Add SpacemiT K1 PDMA controller
+3a7917e4 | 2026-07-22 | Yongchao Jia | Revert "driver: k1: add dma driver support for spacemit k1"
+42feaf52 | 2026-07-22 | Yongchao Jia | Revert "riscv: config: enable dma driver for spacemit k1"
+c5d45116 | 2026-07-03 | Yongchao Jia | riscv: dts: spacemit: add K3 USB3 support for com260
+84381f32 | 2026-07-03 | Yongchao Jia | phy: spacemit: add K3 USB3 combo PHY driver
+e68f6beb | 2025-10-17 | Ze Huang | phy: spacemit: support K1 USB2.0 PHY controller
+02aa9063 | 2025-09-13 | Ze Huang | usb: dwc3: add generic driver to support flattened
+4aa48b21 | 2025-04-14 | Bjorn Andersson | usb: dwc3: core: Expose core driver as library
+edb34558 | 2026-02-04 | Zhang Meng | driver: clk: k3: keep some system based clock always on
+1fae2b4d | 2026-01-21 | Zhang Meng | riscv: k3: config: enable some modules for spacemit k3
+9f6bfe57 | 2026-01-21 | Zhang Meng | riscv: defconfig: make CONFIG_REGULATOR_FIXED_VOLTAGE builtin
+96945501 | 2026-01-21 | Zhang Meng | riscv: dts: k3: enable sdhci support
+70d67e76 | 2026-01-21 | Zhang Meng | mmc: k1: update driver for spacemit k3 supporting
+f0000ee8 | 2026-01-21 | Zhang Meng | riscv: dts: k3: enable ethernet for spacemit k3
+f9f38a0f | 2026-01-21 | Zhang Meng | net: k3: support emac controller in spacemit k3 soc
+345a0955 | 2026-01-21 | Zhang Meng | riscv: dts: k3: add pmic and power tree support
+7bf9547e | 2026-01-21 | Zhang Meng | riscv: dts: k3: add board Com260-Kit of spacemit support
+22a8023a | 2026-01-21 | Zhang Meng | riscv: dts: k3: add i2cs description for spacemit k3
+c3827fc1 | 2026-01-21 | Zhang Meng | riscv: dts: k3: add gpio description for spacemit k3
+73136380 | 2026-01-21 | Zhang Meng | gpio: k3: add k3 gpio support
+5fb18a14 | 2026-01-21 | Zhang Meng | riscv: dts: k3: add pinctrl description
+fb391c6c | 2026-01-21 | Zhang Meng | pinctrl: k3: add k3 pinctrl support
+362fdd57 | 2026-01-21 | Zhang Meng | driver: reset: fix issues in the k3 reset
+b1c570e0 | 2026-01-21 | Zhang Meng | riscv: dts: k3: fix issues in clock defines
+1fa183ac | 2026-01-21 | Zhang Meng | driver: clk: fix issues in the clock driver
+f00dcc75 | 2026-01-21 | Zhang Meng | dt-bindings: soc: spacemit: fix errors in clocks define
+6a3a13a5 | 2026-01-19 | zhangmeng | riscv: dts: Fix the clock missing issue
+66e0217d | 2026-01-19 | zhangmeng | mmc: k1: fix the bug that mmc driver is mismatched with clk driver
+fcaa2b73 | 2026-01-19 | zhangmeng | i2c: k1: fix clk driver mismatch issue
+76a6303d | 2026-01-19 | zhangmeng | gpio: k1: fix clk driver mismatch issue
+a73066dc | 2026-01-19 | zhangmeng | pinctrl: k1: fix clk driver mismatch issue
+4c5b1aaf | 2025-11-28 | Zhang Meng | riscv: defconfig: enable spacemit k3 soc
+a64aa2fa | 2025-11-26 | Zhang Meng | riscv: dts: enable uart0 for spacemit k3
+ff57f0c9 | 2025-11-26 | Zhang Meng | riscv: dts: add clock tree related representations
+6250b4e2 | 2025-11-26 | Zhang Meng | riscv: k3: config: enable clock and reset for spacemit k3
+0443b616 | 2025-11-26 | Zhang Meng | reset: spacemit: add support for SpacemiT K3 CCU resets
+173a7554 | 2025-11-26 | Zhang Meng | driver: clk: add spacemit k3 clk driver support
+334c56e7 | 2025-11-25 | Zhang Meng | riscv: k3: add spacemit k3 soc support
+cf829da9 | 2025-11-26 | Zhang Meng | driver: clk: use the mainline clock and reset driver for spacemit k1
+1db1e882 | 2025-07-02 | Alex Elder | reset: spacemit: add support for SpacemiT CCU resets
+bb510c8c | 2025-09-11 | Troy Mitchell | clk: spacemit: fix i2s clock
+c9ddd726 | 2025-09-11 | Troy Mitchell | dt-bindings: clock: spacemit: introduce i2s pre-clock to fix i2s clock
+8dc3b088 | 2025-08-11 | Brian Masney | clk: spacemit: ccu_pll: convert from round_rate() to determine_rate()
+b48a7ae0 | 2025-08-11 | Brian Masney | clk: spacemit: ccu_mix: convert from round_rate() to determine_rate()
+74bb7774 | 2025-08-11 | Brian Masney | clk: spacemit: ccu_ddn: convert from round_rate() to determine_rate()
+69c07371 | 2025-08-11 | Troy Mitchell | clk: spacemit: fix sspax_clk
+bf4bda37 | 2025-08-11 | Troy Mitchell | dt-bindings: clock: spacemit: CLK_SSPA_I2S_BCLK for SSPA
+5e629735 | 2025-07-23 | Akhilesh Patil | clk: spacemit: ccu_pll: fix error return value in recalc_rate callback
+3d832262 | 2025-06-12 | Alex Elder | clk: spacemit: mark K1 pll1_d8 as critical
+bc207e89 | 2025-07-02 | Alex Elder | clk: spacemit: define three reset-only CCUs
+6cbeb6af | 2025-07-02 | Alex Elder | clk: spacemit: set up reset auxiliary devices
+67825fb7 | 2025-07-02 | Alex Elder | soc: spacemit: create a header for clock/reset registers
+ceba33c1 | 2025-07-02 | Alex Elder | dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
+6300c8ab | 2025-04-16 | Haylen Chu | clk: spacemit: k1: Add TWSI8 bus and function clocks
+c510aa43 | 2025-04-16 | Haylen Chu | clk: spacemit: Add clock support for SpacemiT K1 SoC
+61ee767c | 2025-04-16 | Haylen Chu | dt-bindings: clock: spacemit: Add spacemit,k1-pll
+066cb022 | 2025-04-16 | Haylen Chu | dt-bindings: soc: spacemit: Add spacemit,k1-syscon
+401133e6 | 2025-11-24 | Zhang Meng | driver: clk: remove the obsolete clk driver of spacemit k1
+ac1370d3 | 2025-11-24 | Zhang Meng | riscv: defconfig: enable CONFIG_RISCV_ISA_ZICBOM for support non-coherent dma
+838a6e1d | 2025-11-24 | Zhang Meng | riscv: defconfig: unified naming for k1 chip
+22afb5bf | 2025-11-24 | Zhang Meng | riscv: kconfig: unified naming for k1 chip
+cf02cea8 | 2025-11-22 | Zhang Meng | riscv: kconfig.socs: delete the unused k1x definition
+a9fcd6d6 | 2025-11-23 | Zhang Meng | riscv: dts: unified naming for k1 chip
+36441206 | 2025-11-23 | Zhang Meng | driver: ethernet: unified naming for k1 chip
+3c5fa5cc | 2025-11-23 | Zhang Meng | driver: dma: unified naming for k1 chip
+7d659d8d | 2025-11-23 | Zhang Meng | driver: i2c: unified naming for k1 chip
+936a4a2f | 2025-11-23 | Zhang Meng | driver: spi: unified naming for k1 chip
+2fa789d5 | 2025-11-22 | Zhang Meng | driver: gpio: Unified naming for k1 chip
+eccc2c6d | 2025-11-22 | Zhang Meng | driver: pinctrl: Unified naming for k1 chip
+84800d58 | 2025-11-22 | Zhang Meng | driver: reset: Unified naming for k1 chip
+f4d216de | 2025-11-22 | Zhang Meng | driver: clk: Unified naming for k1 chip
+8095ef6d | 2025-11-22 | Zhang Meng | riscv: k1: dts: change uart driver to 8250_of with compaible 'intel,xscale-uart'
+b7ebbc52 | 2025-11-22 | Zhang Meng | serial: k1: remove k1 uart driver
+97d88d48 | 2025-04-11 | Alex Elder | serial: 8250_of: manage bus clock in suspend/resume
+4bba42a5 | 2025-04-09 | Alex Elder | serial: 8250_of: add support for an optional bus clock
+e440152a | 2025-01-24 | Andy Shevchenko | serial: 8250_of: Remove unneeded ->iotype assignment
+d3aa6382 | 2024-04-05 | Bastien Curutchet | serial: 8250_of: Add clock_notifier
+bf623be3 | 2024-03-04 | Andy Shevchenko | serial: 8250_of: Switch to use uart_read_port_properties()
+73850e2c | 2024-02-15 | Andy Shevchenko | serial: 8250_of: Drop quirk fot NPCM from 8250_port
+e97c7119 | 2023-09-19 | Andy Shevchenko | serial: 8250_of: Use devm_clk_get_enabled()
+df0c12d7 | 2023-09-12 | Andy Shevchenko | serial: 8250_of: Use dev_err_probe() instead of dev_warn()
+f05a96d5 | 2025-08-26 | zhangmeng | riscv: k1: dts: enable eth0/eth1 for bananapi f3 board
+ad3f7e70 | 2025-08-26 | zhangmeng | riscv: config: enable emac driver for spacemit k1
+8271d306 | 2025-08-26 | zhangmeng | riscv: k1: dts: add emacs controllers support for spacemit k1
+e2de585c | 2025-08-26 | zhangmeng | net: k1: support emac controller in spacemit k1 soc
+86e97919 | 2025-08-25 | zhangmeng | riscv: k1: dts: enable sdhci-0/1/2 for bananapi f3 board
+75bab63f | 2025-08-25 | zhangmeng | riscv: config: enable sdhci driver for spacemit k1
+cc29d570 | 2025-08-25 | zhangmeng | riscv: k1: dts: add sdhci controller support for spacemit k1
+2b0266e4 | 2025-08-25 | zhangmeng | mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
+bae5c033 | 2025-08-25 | zhangmeng | dt-bindings: mmc: spacemit,sdhci: add support for K1 SoC
+1db860ce | 2025-08-24 | zhangmeng | driver: k1/spi: Fixed compilation errors reported when enable CONFIG_PM_SLEEP
+6e55dab1 | 2025-05-28 | zhangmeng | riscv: config: enable CONFIG_RISCV_ISA_ZICBOM for spacemit k1
+8a92a69b | 2025-05-20 | zhangmeng | riscv: config: enable spacemit p1 driver for spacemit k1
+df1cddec | 2025-05-21 | zhangmeng | riscv: dts: add spacemit p1 pmic support for bananapi f3
+7a65e79d | 2025-05-20 | zhangmeng | driver: iio/adc: add spacemit p1 adc driver support
+2962a2ce | 2025-05-20 | zhangmeng | driver: rtc: add spacemit p1 rtc driver support
+6d2de8c0 | 2025-05-19 | zhangmeng | driver: pinctrl: add spacemit p1 pinctrl driver support
+c18c378d | 2025-05-19 | zhangmeng | driver: input: add spacemit p1 key driver support
+05e17386 | 2025-05-19 | zhangmeng | driver: regulator: add spacemit p1 regulator driver support
+70971e82 | 2025-05-19 | zhangmeng | driver: mfd: add spacemit p1 mfd driver support
+5fad4f2a | 2025-05-21 | zhangmeng | riscv: k1: dts: enable pwm for bananapi f3 board
+a122883f | 2025-05-20 | zhangmeng | riscv: config: enable pxa-pwm driver for spacemit k1
+4e911cb6 | 2025-05-19 | zhangmeng | riscv: k1: dts: add pwm support for spacemit k1
+f619c7fb | 2025-05-19 | zhangmeng | driver: pwm: update pwm-pxa for support spacemit k1
+8a6f4d96 | 2025-05-21 | zhangmeng | riscv: k1: dts: enable qspi for bananapi f3 board
+1f6de5db | 2025-05-20 | zhangmeng | riscv: config: enable qspi driver for spacemit k1
+effd7731 | 2025-05-19 | zhangmeng | riscv: k1: dts: add qspi support for spacemit k1
+efab38e5 | 2025-05-19 | zhangmeng | driver: k1: add qspi driver support for spacemit k1
+5859bbe1 | 2025-05-21 | zhangmeng | riscv: k1: dts: enable spi-3 for bananapi f3 board
+c80c4b85 | 2025-05-20 | zhangmeng | riscv: config: enable spi driver for spacemit k1
+8206501e | 2025-05-19 | zhangmeng | riscv: k1: dts: add spi support for spacemit k1
+51688f39 | 2025-05-19 | zhangmeng | driver: k1: add spi driver support for spacemit k1
+a4b39736 | 2025-05-21 | zhangmeng | riscv: k1: dts: enable i2c2 and i2c8 for bananapi f3 board
+3d2cfb8d | 2025-05-20 | zhangmeng | riscv: config: enable i2c driver for spacemit k1
+2b3fb6e8 | 2025-05-19 | zhangmeng | riscv: k1: dts: add i2c support for spacemit k1
+c32782c6 | 2025-05-19 | zhangmeng | driver: k1: add i2c driver support for spacemit k1
+87213a3c | 2025-05-20 | zhangmeng | riscv: config: enable dma driver for spacemit k1
+058e9254 | 2025-05-19 | zhangmeng | riscv: k1: dts: add dma support for spacemit k1
+d0b9f6b1 | 2025-05-17 | zhangmeng | driver: k1: add dma driver support for spacemit k1
+3d2faf43 | 2025-05-19 | zhangmeng | riscv: k1: dt-bindings: support dma binding for spacemit k1 soc
+0f3abbda | 2025-05-20 | zhangmeng | riscv: config: enable memory range driver for spacemit k1
+30511ddb | 2025-05-17 | zhangmeng | riscv: k1: dts: add memory ranges define
+0fdb0323 | 2025-05-17 | zhangmeng | driver: k1: add an interconnect process driver
+66b4ce30 | 2025-03-01 | zhangmeng | riscv: config: enable serial driver for spacemit k1
+975b7733 | 2025-02-20 | zhangmeng | riscv: k1x: dts: add uart support for spacemit k1x soc
+b02a203d | 2025-02-20 | zhangmeng | driver: k1x: add uart serial driver support for spacemit k1x
+ac66bdeb | 2025-02-25 | zhangmeng | riscv: k1x: config: enable gpio driver for spacemit k1
+bba06dd6 | 2025-02-20 | zhangmeng | riscv: k1x: dts: add gpio support spacemit k1x soc
+4120c3b9 | 2025-02-20 | zhangmeng | driver: k1x: add gpio driver for spacemit k1
+456a7941 | 2025-02-25 | zhangmeng | riscv: k1x: config: enable pinctrl driver for spacemit k1
+00df709b | 2025-02-20 | zhangmeng | riscv: k1x: dts: add pinctrl support for spacemit k1x soc
+37627c42 | 2025-02-20 | zhangmeng | driver: k1x: add pinctrl driver for spacemit k1x
+703f5e26 | 2025-02-20 | zhangmeng | riscv: k1x: dt-bindings: support pinctrl binding for spacemit k1x soc
+929ae2f7 | 2025-02-25 | zhangmeng | riscv: k1x: config: enable reset driver for spacemit k1
+0834a8eb | 2025-02-19 | zhangmeng | riscv: k1x: dts: add reset support for spacemit k1
+4fb717ec | 2025-02-19 | zhangmeng | driver: k1x: add reset driver for spacemit k1
+29b3a292 | 2025-02-19 | zhangmeng | riscv: k1x: dt-bindings: add reset dt-bindings for spacemit k1
+38f7d826 | 2025-02-25 | zhangmeng | riscv: k1x: config: enable clock driver for spacemit k1
+9119fb51 | 2025-02-19 | zhangmeng | riscv: k1x: dts: add clock support for spacemit k1
+a29d3187 | 2025-02-19 | zhangmeng | driver: k1x: clk: add clock driver for spacemit k1
+6e6923ef | 2025-02-19 | zhangmeng | riscv: k1x: dt-bindings: add clock dt-bindings for spacemit k1
+0e1660a6 | 2025-02-18 | zhangmeng | riscv: k1x: add spacemit k1 soc support

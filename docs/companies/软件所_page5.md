@@ -1,0 +1,236 @@
+# 软件所 贡献详情
+
+<div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
+<p><strong>📊 统计信息</strong></p>
+<ul>
+<li><strong>贡献提交数</strong>: 1127</li>
+<li><strong>统计时间</strong>: 2026-09-04 11:16:31</li>
+<li><strong>主分支</strong>: rvck-6.6</li>
+<li><strong>起始标签</strong>: v6.6.148</li>
+</ul>
+</div>
+
+## 📧 识别规则
+
+- **邮箱后缀**: @iscas.ac.cn, @isrc.iscas.ac.cn
+- **特定签名**: Weihao Li <ieiao@outlook.com>
+
+## 📋 提交列表
+
+| 提交哈希 | 日期 | 原始作者 | 标题 |
+|----------|------|----------|------|
+| [7adc70fb](https://github.com/RVCK-Project/rvck/commit/7adc70fbe2b5b5979cf7880f8e201a92eb13aee4) | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use devm_xyz() for managed allocation |
+| [a90a9cad](https://github.com/RVCK-Project/rvck/commit/a90a9cad4732926b5a7fd899b0df2fdf3af0b9e4) | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use dev_xyz() in-place of pr_xyz() |
+| [393d15c1](https://github.com/RVCK-Project/rvck/commit/393d15c13a9e080cec661de897876e82b910826d) | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Convert PLIC driver into a platform driver |
+| [658ba5a2](https://github.com/RVCK-Project/rvck/commit/658ba5a275ad7985507d6551ba4069232484da21) | 2024-06-13 | Haibo Xu | ACPI: NUMA: replace pr_info with pr_debug in arch_acpi_numa_init |
+| [2150a23e](https://github.com/RVCK-Project/rvck/commit/2150a23e52038c0b20a516e957d3111b65826e41) | 2024-06-13 | Haibo Xu | ACPI: NUMA: Add handler for SRAT RINTC affinity structure |
+| [e0eacf9f](https://github.com/RVCK-Project/rvck/commit/e0eacf9f6a01a1840a956be2da0783cf6b4b1156) | 2024-06-13 | Haibo Xu | ACPI: RISCV: Add NUMA support based on SRAT and SLIT |
+| [48e1d183](https://github.com/RVCK-Project/rvck/commit/48e1d183bed68f477ce4663b59390a9542ccde7b) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
+| [2f7ea860](https://github.com/RVCK-Project/rvck/commit/2f7ea8605aa7d1dde06bedb5433f206133decf38) | 2024-02-22 | Yu Chien Peter Lin | riscv: errata: Rename defines for Andes |
+| [3fbba98a](https://github.com/RVCK-Project/rvck/commit/3fbba98a0b64851c12fb26dcca942fd1d433d0c5) | 2024-11-03 | Alexandre Ghiti | riscv: Move cpufeature.h macros into their own header |
+| [32d5824e](https://github.com/RVCK-Project/rvck/commit/32d5824eb0960069014008119eac95c7704acc20) | 2024-07-19 | Charlie Jenkins | riscv: cpufeature: Extract common elements from extension checking |
+| [55ae0ae9](https://github.com/RVCK-Project/rvck/commit/55ae0ae95c55b610c23649db5427991dc36542ad) | 2024-07-19 | Charlie Jenkins | riscv: Introduce vendor variants of extension helpers |
+| [0f3fee79](https://github.com/RVCK-Project/rvck/commit/0f3fee7908469f834ca5ccfc532cf387f3800e07) | 2024-07-17 | Conor Dooley | RISC-V: hwprobe: sort EXT_KEY()s in hwprobe_isa_ext0() alphabetically |
+| [a82a7d4a](https://github.com/RVCK-Project/rvck/commit/a82a7d4a9d9daaf65d2be594fe4c4e9ab9e293e0) | 2024-10-16 | Samuel Holland | riscv: hwprobe: Export the Supm ISA extension |
+| [5aa685cf](https://github.com/RVCK-Project/rvck/commit/5aa685cf88333fcf18d9da7e8123100cf6cfcbfb) | 2024-07-02 | Palmer Dabbelt | RISC-V: Provide the frequency of time CSR via hwprobe |
+| [48468e72](https://github.com/RVCK-Project/rvck/commit/48468e723c62ad0d447e8ed8ae41bc666e5df019) | 2024-04-26 | Andrew Jones | riscv: hwprobe: export Zawrs ISA extension |
+| [aa80170e](https://github.com/RVCK-Project/rvck/commit/aa80170e3abf399f37c2bec82ce6747fdaef8fab) | 2024-04-10 | Clément Léger | riscv: hwprobe: export highest virtual userspace address |
+| [78b6e4b5](https://github.com/RVCK-Project/rvck/commit/78b6e4b53064a5de51355754f84dd1346f8a75bc) | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zcmop ISA extension |
+| [869b80eb](https://github.com/RVCK-Project/rvck/commit/869b80eba4339b487b5932cf52a30ce03eecf07a) | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zca, Zcf, Zcd and Zcb ISA extensions |
+| [c9f38076](https://github.com/RVCK-Project/rvck/commit/c9f38076d91fd1b97ae1c5bcf86328107dd23265) | 2024-06-19 | Clément Léger | riscv: hwprobe: export Zimop ISA extension |
+| [bd1642b9](https://github.com/RVCK-Project/rvck/commit/bd1642b9c81839c678a5876efef09a81fb42c96c) | 2024-05-10 | Andy Chiu | riscv: hwprobe: add zve Vector subextensions into hwprobe interface |
+| [d3b34472](https://github.com/RVCK-Project/rvck/commit/d3b34472e7724ae633e245a054d37530bde3e5b6) | 2024-02-21 | Clément Léger | riscv: hwprobe: export Zihintpause ISA extension |
+| [707b4f0c](https://github.com/RVCK-Project/rvck/commit/707b4f0c9afc177d9169869015b5b82944bc7f05) | 2023-11-22 | Andrew Jones | RISC-V: Move the hwprobe syscall to its own file |
+| [09a0bf8d](https://github.com/RVCK-Project/rvck/commit/09a0bf8dbad26ade19a78218cd2921b59349a434) | 2024-04-09 | Clément Léger | riscv: hwprobe: fix invalid sign extension for RISCV_HWPROBE_EXT_ZVFHMIN |
+| [2685d4ef](https://github.com/RVCK-Project/rvck/commit/2685d4ef125ddda05fc9bd0926fc8efd8ea54956) | 2023-12-20 | Clément Léger | riscv: hwprobe: export Zicond extension |
+| [b372adef](https://github.com/RVCK-Project/rvck/commit/b372adef6cf59c33c49b1d547b5f5b13045c2e9e) | 2023-12-20 | Clément Léger | riscv: hwprobe: export Zacas ISA extension |
+| [12714533](https://github.com/RVCK-Project/rvck/commit/127145332fd38bb8eabd53e12b357b1260c63ef5) | 2023-12-20 | Clément Léger | riscv: hwprobe: export Ztso ISA extension |
+| [d61ca8cb](https://github.com/RVCK-Project/rvck/commit/d61ca8cb3c1594b789bd85bb0556e6f8d384794a) | 2023-11-22 | Andrew Jones | RISC-V: hwprobe: Introduce which-cpus flag |
+| [fa17b5e1](https://github.com/RVCK-Project/rvck/commit/fa17b5e10fd1d43fd595a36d3b757ce4dee05683) | 2023-11-22 | Andrew Jones | RISC-V: hwprobe: Clarify cpus size parameter |
+| [35890020](https://github.com/RVCK-Project/rvck/commit/35890020a496b474851c83c592c3d51ca415bd9f) | 2023-09-18 | Andrew Jones | RISC-V: selftests: Add CBO tests |
+| [90ffeb20](https://github.com/RVCK-Project/rvck/commit/90ffeb204e3fce90ee3af0f6e45cdc081cb07c4d) | 2023-09-18 | Andrew Jones | RISC-V: selftests: Convert hwprobe test to kselftest API |
+| [a404dedc](https://github.com/RVCK-Project/rvck/commit/a404dedc9c861ea5d7572bcf04b1f98f208adee3) | 2023-09-18 | Andrew Jones | RISC-V: selftests: Statically link hwprobe test |
+| [e169e3e6](https://github.com/RVCK-Project/rvck/commit/e169e3e608e478ed781706dfa2d6c9c1d44550d4) | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zfa ISA extension |
+| [7cb975a6](https://github.com/RVCK-Project/rvck/commit/7cb975a6dad30fb6e5504c629492f22192a33a35) | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zvfh[min] ISA extensions |
+| [bef2841f](https://github.com/RVCK-Project/rvck/commit/bef2841fa5f8fd45350d554d7cb1075549aba609) | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zhintntl ISA extension |
+| [9d94e2b8](https://github.com/RVCK-Project/rvck/commit/9d94e2b8a9aeeac09b9b9bc4ab157c9cf32b6c26) | 2023-11-14 | Clément Léger | riscv: hwprobe: export Zfh[min] ISA extensions |
+| [cb0c673d](https://github.com/RVCK-Project/rvck/commit/cb0c673d592f9f5ccb166b62c10de8cf82b3e87a) | 2023-11-14 | Clément Léger | riscv: hwprobe: export vector crypto ISA extensions |
+| [5bae43b6](https://github.com/RVCK-Project/rvck/commit/5bae43b6964e384e1991b1a353e0e413fde6f145) | 2023-11-14 | Clément Léger | riscv: hwprobe: add support for scalar crypto ISA extensions |
+| [86981c18](https://github.com/RVCK-Project/rvck/commit/86981c18ab8f9e631da3d8b898c25e7f0dad7e18) | 2023-11-14 | Clément Léger | riscv: hwprobe: export missing Zbc ISA extension |
+| [32b52d36](https://github.com/RVCK-Project/rvck/commit/32b52d3630072ff701c537ad7b0b361703682cd6) | 2023-09-30 | Costa Shulyupin | docs: move riscv under arch |
+| [e5eac7e2](https://github.com/RVCK-Project/rvck/commit/e5eac7e230a1469f505e830cf1b09456439d5f39) | 2023-09-18 | Andrew Jones | RISC-V: hwprobe: Expose Zicboz extension and its block size |
+| [a9b38f5d](https://github.com/RVCK-Project/rvck/commit/a9b38f5d0013f8f7a8903e2f34d395a214c2c763) | 2024-07-26 | Yong-Xuan Wang | RISC-V: Add Svade and Svadu Extensions Support |
+| [1d0a4641](https://github.com/RVCK-Project/rvck/commit/1d0a4641d16288fdbcf6b37130dda553d15a10f9) | 2024-11-03 | Alexandre Ghiti | riscv: Add ISA extension parsing for Ziccrse |
+| [575c5a56](https://github.com/RVCK-Project/rvck/commit/575c5a56d50ddb95f9d515dd8c5b1a6ce4401d73) | 2024-11-03 | Alexandre Ghiti | riscv: Implement cmpxchg8/16() using Zabha |
+| [639a5198](https://github.com/RVCK-Project/rvck/commit/639a5198df3f70ecc7d81d5d990f269fbd798ea8) | 2024-11-03 | Alexandre Ghiti | riscv: Implement cmpxchg32/64() using Zacas |
+| [9a12d7bc](https://github.com/RVCK-Project/rvck/commit/9a12d7bcd7453013d430e56957788d7c644281d6) | 2024-11-03 | Alexandre Ghiti | riscv: Do not fail to build on byte/halfword operations with Zawrs |
+| [c5b8dece](https://github.com/RVCK-Project/rvck/commit/c5b8dece5c6923b061d57220f1e7aa54a3cc1a48) | 2024-10-16 | Samuel Holland | riscv: Add ISA extension parsing for pointer masking |
+| [1ccefcef](https://github.com/RVCK-Project/rvck/commit/1ccefcefb6f2c0c583cb73da89aa534e7648fa21) | 2024-08-14 | Samuel Holland | riscv: Call riscv_user_isa_enable() only on the boot hart |
+| [b988ae72](https://github.com/RVCK-Project/rvck/commit/b988ae7289ea6df157a6d7f5395709b77c1ca7f0) | 2024-08-14 | Samuel Holland | riscv: Enable cbo.zero only when all harts support Zicboz |
+| [69ba3a37](https://github.com/RVCK-Project/rvck/commit/69ba3a37a18ea1d2cb2be3db2dfb68929913abbc) | 2024-03-12 | Samuel Holland | riscv: Do not save the scratch CSR during suspend |
+| [3a25db3c](https://github.com/RVCK-Project/rvck/commit/3a25db3c26bf377a92a01f784fb62a16ac82abe2) | 2024-01-18 | Sunil V L | cpuidle: RISC-V: Move few functions to arch/riscv |
+| [9c8068c7](https://github.com/RVCK-Project/rvck/commit/9c8068c7e4a9f6f764eff50f00b3f2b92759d893) | 2024-02-27 | Samuel Holland | riscv: Save/restore envcfg CSR during CPU suspend |
+| [27d6c4cd](https://github.com/RVCK-Project/rvck/commit/27d6c4cd1bedc9a96a9f5db3f0034f46db86ddbf) | 2024-07-17 | Alexandre Ghiti | riscv: Add ISA extension parsing for Svvptc |
+| [d20f6f37](https://github.com/RVCK-Project/rvck/commit/d20f6f372435d22b293c53e908dd6d9badaa46d4) | 2024-07-18 | Samuel Holland | riscv: cpufeature: Do not drop Linux-internal extensions |
+| [4c82bada](https://github.com/RVCK-Project/rvck/commit/4c82badaf73ca20cae250c81b287c4cf4eae63d2) | 2024-07-19 | Charlie Jenkins | riscv: Extend cpufeature.c to detect vendor extensions |
+| [676e2fcd](https://github.com/RVCK-Project/rvck/commit/676e2fcd8b6c935ca69cc6a5efba378220d74a98) | 2024-04-26 | Andrew Jones | riscv: Provide a definition for 'pause' |
+| [fff6cc13](https://github.com/RVCK-Project/rvck/commit/fff6cc13e3b82ca2ab006693c866fb50465b1d04) | 2024-04-26 | Christoph Müllner | riscv: Add Zawrs support for spinlocks |
+| [eb36ac03](https://github.com/RVCK-Project/rvck/commit/eb36ac031b8e0df344b2db3add53139d71fc6750) | 2024-05-30 | Alexandre Ghiti | riscv: Fix fully ordered LR/SC xchg[8\|16]() implementations |
+| [79b40989](https://github.com/RVCK-Project/rvck/commit/79b40989d1a2b1e4c50d806dd6dea8a809d2733d) | 2024-03-25 | Jisheng Zhang | riscv: cmpxchg: implement arch_cmpxchg64_{relaxed\|acquire\|release} |
+| [4fb3cd3f](https://github.com/RVCK-Project/rvck/commit/4fb3cd3f78e1e611f872851109eb942aa0941403) | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Implement xchg for variables of size 1 and 2 |
+| [27f23b24](https://github.com/RVCK-Project/rvck/commit/27f23b24f91c4b99635d5e0bd742cb5b82f5bda6) | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Implement cmpxchg for variables of size 1 and 2 |
+| [37764ae6](https://github.com/RVCK-Project/rvck/commit/37764ae6db1ffdb4fdca60bdfb2103dc0628be14) | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Deduplicate cmpxchg() asm and macros |
+| [33594343](https://github.com/RVCK-Project/rvck/commit/33594343c2f0cc8b1961ae8a9cc6936e39c9941e) | 2024-01-03 | Leonardo Bras | riscv/cmpxchg: Deduplicate xchg() asm functions |
+| [7feeb956](https://github.com/RVCK-Project/rvck/commit/7feeb9562b9a3871dc9c33b91447e6e9996523e4) | 2024-02-17 | Eric Chan | riscv/barrier: Consolidate fence definitions |
+| [fd0d2ef4](https://github.com/RVCK-Project/rvck/commit/fd0d2ef4f0509b95903bc133f5c5185e04ebb7aa) | 2024-02-17 | Eric Chan | riscv/barrier: Define RISCV_FULL_BARRIER |
+| [fc72c792](https://github.com/RVCK-Project/rvck/commit/fc72c7922f98c6c3546fd6cbbe025841a5f79b5d) | 2024-06-19 | Clément Léger | riscv: add ISA extension parsing for Zcmop |
+| [d00b98b1](https://github.com/RVCK-Project/rvck/commit/d00b98b1527fada8688db66ee2976004ba7ce4bc) | 2024-06-19 | Clément Léger | riscv: add ISA parsing for Zca, Zcf, Zcd and Zcb |
+| [0a8fffc6](https://github.com/RVCK-Project/rvck/commit/0a8fffc6b3c79a896ad1ab9905acb3ca89eb8995) | 2024-06-19 | Clément Léger | riscv: add ISA extensions validation callback |
+| [e9c59bd6](https://github.com/RVCK-Project/rvck/commit/e9c59bd650780c72a68bea3f58c0edc790542a0f) | 2024-06-19 | Clément Léger | riscv: add ISA extension parsing for Zimop |
+| [f7aba4ac](https://github.com/RVCK-Project/rvck/commit/f7aba4ac0e3aa04e5ecb27e485fb5bba0814c8a6) | 2024-05-10 | Andy Chiu | riscv: vector: adjust minimum Vector requirement to ZVE32X |
+| [efb84810](https://github.com/RVCK-Project/rvck/commit/efb848104760cebc21b69268e0ae45faeb017efc) | 2024-05-10 | Andy Chiu | riscv: cpufeature: add zve32[xf] and zve64[xfd] isa detection |
+| [f00270da](https://github.com/RVCK-Project/rvck/commit/f00270da757d873818aa99f943965800ac29cdcd) | 2024-02-22 | Yu Chien Peter Lin | perf: RISC-V: Introduce Andes PMU to support perf event sampling |
+| [f2316ce5](https://github.com/RVCK-Project/rvck/commit/f2316ce5e0331eb3b680fc963f408c640468ecbe) | 2024-02-22 | Yu Chien Peter Lin | perf: RISC-V: Eliminate redundant interrupt enable/disable operations |
+| [c02868c2](https://github.com/RVCK-Project/rvck/commit/c02868c2bae068a92bd18acbe030ef87c92e09b5) | 2024-05-10 | Andy Chiu | riscv: cpufeature: call match_isa_ext() for single-letter extensions |
+| [3c3eeed5](https://github.com/RVCK-Project/rvck/commit/3c3eeed5aa115f86cc3be9d6c14b2e0ff11f28d4) | 2024-05-10 | Andy Chiu | riscv: vector: add a comment when calling riscv_setup_vsize() |
+| [9d64a94f](https://github.com/RVCK-Project/rvck/commit/9d64a94f3a61da3ebfef95c5aa38aca6dfbf970a) | 2024-05-02 | Charlie Jenkins | riscv: cpufeature: Fix extension subset checking |
+| [e7dd8b45](https://github.com/RVCK-Project/rvck/commit/e7dd8b454001e5d200d843d74e9253a74eb33496) | 2024-02-27 | Samuel Holland | riscv: Add a custom ISA extension for the [ms]envcfg CSR |
+| [8ebaecea](https://github.com/RVCK-Project/rvck/commit/8ebaecea95be15448b7091dc4543b34a81685f9a) | 2023-12-20 | Clément Léger | riscv: add ISA extension parsing for Zacas |
+| [218deeae](https://github.com/RVCK-Project/rvck/commit/218deeaef4538da3446e7d8e44dbcfd9ab3eb707) | 2023-12-20 | Clément Léger | riscv: add ISA extension parsing for Ztso |
+| [615ce32c](https://github.com/RVCK-Project/rvck/commit/615ce32cc49c7f5f803046d37852f40c20e6b906) | 2023-11-10 | Palmer Dabbelt | RISC-V: Remove the removed single-letter extensions |
+| [171c4076](https://github.com/RVCK-Project/rvck/commit/171c4076c3e57b6953d870a207aff246f4f91a91) | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zfa |
+| [e02f9534](https://github.com/RVCK-Project/rvck/commit/e02f953497317389a6fee8ad13851c9aca39b65c) | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zvfh[min] |
+| [1c14f7fc](https://github.com/RVCK-Project/rvck/commit/1c14f7fcce54a3da01ab12a91989e7c517478f20) | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zihintntl |
+| [0f29959b](https://github.com/RVCK-Project/rvck/commit/0f29959bd5acfa13ce86c61d9e803acdbd9dc696) | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zfh/Zfh[min] |
+| [98a48e0e](https://github.com/RVCK-Project/rvck/commit/98a48e0e86796807d2c044c13bcc7dfdae841c64) | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for vector crypto |
+| [e2cb3cde](https://github.com/RVCK-Project/rvck/commit/e2cb3cde2f72f264024153ca95a9c7f9bc64e62e) | 2023-11-14 | Evan Green | riscv: add ISA extension parsing for scalar crypto |
+| [08548107](https://github.com/RVCK-Project/rvck/commit/0854810754fc02d44e94d1431c6fbde6cf404d9a) | 2023-10-04 | Clément Léger | riscv: annotate check_unaligned_access_boot_cpu() with __init |
+| [4a80d1f7](https://github.com/RVCK-Project/rvck/commit/4a80d1f7430fd4b565e2f6eb7b6325938efcb3e2) | 2023-07-26 | Tsukasa OI | RISC-V: clarify the QEMU workaround in ISA parser |
+| [0f7c33f6](https://github.com/RVCK-Project/rvck/commit/0f7c33f61f353ce9febae05a46ef1fd4e763f241) | 2023-10-31 | Xiao Wang | riscv: Rearrange hwcap.h and cpufeature.h |
+| [7ac985b5](https://github.com/RVCK-Project/rvck/commit/7ac985b50d4d30e7e76d5db12b2f3c3a6ee19e4e) | 2023-11-14 | Clément Léger | riscv: add ISA extension parsing for Zbc |
+| [5e9132c4](https://github.com/RVCK-Project/rvck/commit/5e9132c4bc1bd87c39ed471a92e50e71a443b994) | 2023-09-15 | Anup Patel | RISC-V: Detect Zicond from ISA string |
+| [d803d886](https://github.com/RVCK-Project/rvck/commit/d803d8868eae33f8cfb4f09b95e252dfba1f3e51) | 2025-05-19 | Yanteng Si | xuantie: nna: fix build error |
+| [01baae9d](https://github.com/RVCK-Project/rvck/commit/01baae9d56ac351cb48448637bca3f895884d1fa) | 2024-11-13 | Mingzheng Xing | th1520: npu: fix build error |
+| [34d6b013](https://github.com/RVCK-Project/rvck/commit/34d6b01394d0e7e978f655d42111dcbd4389d01b) | 2025-05-08 | siyanteng | Update kernel.yml |
+| [9860d637](https://github.com/RVCK-Project/rvck/commit/9860d637cdab9dd38445550c7039b393d7cee2d5) | 2025-05-08 | Yanteng Si | riscv: spacemit: enable k1x config |
+| [e2099b16](https://github.com/RVCK-Project/rvck/commit/e2099b16ad7371f5014504d2f974de4dd72a8837) | 2025-05-07 | Yanteng Si | riscv: add defconfig |
+| [3a1db45e](https://github.com/RVCK-Project/rvck/commit/3a1db45eebba2743a99110807065c6387c6cb98c) | 2024-04-11 | Anup Patel | RISC-V: KVM: Use IMSIC guest files when available |
+| [1d3826de](https://github.com/RVCK-Project/rvck/commit/1d3826de0a690a5d98648dcd3bd960de30433426) | 2024-04-11 | Anup Patel | RISC-V: KVM: Share APLIC and IMSIC defines with irqchip drivers |
+| [e760a37c](https://github.com/RVCK-Project/rvck/commit/e760a37c0244d3563f679853a7c5f67b5468606f) | 2025-02-12 | Mingzheng Xing | riscv: Kconfig: Enable amdkfd driver config |
+| [6d55f6f6](https://github.com/RVCK-Project/rvck/commit/6d55f6f69c68002bcbc7b9f8d30f193975bac5cf) | 2025-01-10 | Mingzheng Xing | kconfig: fix kernel-mode FPU support |
+| [63df017a](https://github.com/RVCK-Project/rvck/commit/63df017a46d11786f88bb720cb10e510dd74a7f6) | 2024-03-07 | Anup Patel | MAINTAINERS: Add entry for RISC-V AIA drivers |
+| [46cf58fa](https://github.com/RVCK-Project/rvck/commit/46cf58fa6757ec6cf1d2431ac8d3689f2bb9339d) | 2024-03-07 | Anup Patel | RISC-V: Select APLIC and IMSIC drivers |
+| [d83ff3a7](https://github.com/RVCK-Project/rvck/commit/d83ff3a7b72b1d68960d338cfc3c5b34f6aa6b9b) | 2024-11-14 | Samuel Holland | irqchip/riscv-aplic: Prevent crash when MSI domain is missing |
+| [2891c4be](https://github.com/RVCK-Project/rvck/commit/2891c4be593f60544f3160d9a466f695af8b3d27) | 2024-08-09 | Yong-Xuan Wang | irqchip/riscv-aplic: Retrigger MSI interrupt on source configuration |
+| [85042b45](https://github.com/RVCK-Project/rvck/commit/85042b450212f5f7139cfa74c1f546e10961f09a) | 2024-06-03 | Jinjie Ruan | irqchip/riscv-aplic: Simplify the initialization code |
+| [4aed31cc](https://github.com/RVCK-Project/rvck/commit/4aed31ccb068a79894504c683d5ae739a3be62d3) | 2024-04-16 | Dawei Li | irqchip/riscv-aplic-direct: Avoid explicit cpumask allocation on stack |
+| [0987bc1d](https://github.com/RVCK-Project/rvck/commit/0987bc1d3128a9fc417cfc2cb4f4e45724001c7b) | 2024-04-16 | Dawei Li | cpumask: Introduce cpumask_first_and_and() |
+| [2795d54f](https://github.com/RVCK-Project/rvck/commit/2795d54f3cae443e8562b3fae1bd8978d19a873d) | 2024-03-07 | Anup Patel | irqchip/riscv-aplic: Add support for MSI-mode |
+| [d6f34661](https://github.com/RVCK-Project/rvck/commit/d6f3466117991ee2fbe4d827de4735a07a13d2eb) | 2024-08-20 | Dan Carpenter | irqchip/riscv-aplic: Fix an IS_ERR() vs NULL bug in probe() |
+| [f7820f0e](https://github.com/RVCK-Project/rvck/commit/f7820f0eb81431a26282f5b5618b570799a38600) | 2024-03-07 | Anup Patel | irqchip: Add RISC-V advanced PLIC driver for direct-mode |
+| [d96d795d](https://github.com/RVCK-Project/rvck/commit/d96d795dc538eda4477f500163ae824286e4c04c) | 2024-03-07 | Anup Patel | dt-bindings: interrupt-controller: Add RISC-V advanced PLIC |
+| [7854189e](https://github.com/RVCK-Project/rvck/commit/7854189eb9db3783e0f68d34f0823d4e27785e45) | 2024-03-07 | Anup Patel | irqchip/riscv-imsic: Add device MSI domain support for PCI devices |
+| [ae545c47](https://github.com/RVCK-Project/rvck/commit/ae545c4757e1d64cef67331731fe93756f209730) | 2024-09-09 | Andrew Jones | irqchip/riscv-imsic: Fix output text of base address |
+| [bab21247](https://github.com/RVCK-Project/rvck/commit/bab212479e250931bcf5e6c7b6b1c64f3e3ac26a) | 2024-04-13 | Anup Patel | irqchip/riscv-imsic: Fix boot time update effective affinity warning |
+| [c02ce10a](https://github.com/RVCK-Project/rvck/commit/c02ce10a637cc0f08d01c44ef691ec9607cafae8) | 2024-03-07 | Anup Patel | irqchip/riscv-imsic: Add device MSI domain support for platform devices |
+| [96c34950](https://github.com/RVCK-Project/rvck/commit/96c349508f8d3e315dc66f1b03f0a33df335d75d) | 2024-03-07 | Anup Patel | irqchip: Add RISC-V incoming MSI controller early driver |
+| [994e6065](https://github.com/RVCK-Project/rvck/commit/994e6065e2d4626a3e9675d8ec3bfe02a4a6d7f7) | 2024-03-07 | Anup Patel | dt-bindings: interrupt-controller: Add RISC-V incoming MSI controller |
+| [2588293e](https://github.com/RVCK-Project/rvck/commit/2588293e30420a3e75446c32b0db595d803e4d6d) | 2024-02-22 | Björn Töpel | genirq/matrix: Dynamic bitmap allocation |
+| [8adbebd2](https://github.com/RVCK-Project/rvck/commit/8adbebd225cb9064c6c83f063e11b74856ff9034) | 2024-03-12 | Samuel Holland | irqchip/riscv-intc: Fix use of AIA interrupts 32-63 on riscv32 |
+| [048839bd](https://github.com/RVCK-Project/rvck/commit/048839bd14752a0b0e7fc5152601324906ede23d) | 2024-02-26 | Anup Patel | irqchip/riscv-intc: Fix low-level interrupt handler setup for AIA |
+| [5199a3c9](https://github.com/RVCK-Project/rvck/commit/5199a3c9bdae8d23a500106970e2649738d6c2c0) | 2024-02-22 | Anup Patel | irqchip/riscv-intc: Add support for RISC-V AIA |
+| [fa30a7b3](https://github.com/RVCK-Project/rvck/commit/fa30a7b33b73ba402f1b812849f9792f31f6d1c9) | 2023-12-20 | Jisheng Zhang | riscv: enable HAVE_FAST_GUP if MMU |
+| [2f0cb4f7](https://github.com/RVCK-Project/rvck/commit/2f0cb4f71e065eeab8b26347b3f0bea92b813764) | 2023-12-20 | Jisheng Zhang | riscv: enable MMU_GATHER_RCU_TABLE_FREE for SMP && MMU |
+| [3f18f11f](https://github.com/RVCK-Project/rvck/commit/3f18f11f959f9620838e6754bb92c0a6ceb2f6f6) | 2023-12-20 | Jisheng Zhang | riscv: tlb: convert __p*d_free_tlb() to inline functions |
+| [e42af21d](https://github.com/RVCK-Project/rvck/commit/e42af21d27b8409a661413e00454e7fdc50541e8) | 2023-12-20 | Jisheng Zhang | riscv: tlb: fix __p*d_free_tlb() |
+| [0c14683f](https://github.com/RVCK-Project/rvck/commit/0c14683f00d16465cec41b48b395fb6e43808402) | 2023-09-13 | Mayuresh Chitale | dt-bindings: riscv: Add smstateen entry |
+| [0a2d4d90](https://github.com/RVCK-Project/rvck/commit/0a2d4d90c07154b3936f2f71a5d104db67d0f83e) | 2023-09-13 | Mayuresh Chitale | RISC-V: Detect Smstateen extension |
+| [96080cc9](https://github.com/RVCK-Project/rvck/commit/96080cc9af27c952f686a44d41bbcc0ea1652612) | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide MSI_FLAG_PARENT_PM_DEV |
+| [21237729](https://github.com/RVCK-Project/rvck/commit/212377296ce6aa1a9e4e3024b6c573aafa179e37) | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Reroute device MSI create_mapping |
+| [a4929a9d](https://github.com/RVCK-Project/rvck/commit/a4929a9d689a093c527c6eeabd65deed1dea903e) | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide allocation/free functions for "wired" MSI interrupts |
+| [db82b557](https://github.com/RVCK-Project/rvck/commit/db82b557f197958a23028799231fc860834cb404) | 2024-01-27 | Thomas Gleixner | genirq/msi: Optionally use dev-\>fwnode for device domain |
+| [d3049adf](https://github.com/RVCK-Project/rvck/commit/d3049adf58144a416367197bf3ee4485980a40f9) | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide DOMAIN_BUS_WIRED_TO_MSI |
+| [9e8591a3](https://github.com/RVCK-Project/rvck/commit/9e8591a31a77c8a5a1f56793c26d13485ba32bbc) | 2024-01-27 | Thomas Gleixner | genirq/msi: Split msi_domain_alloc_irq_at() |
+| [871e6089](https://github.com/RVCK-Project/rvck/commit/871e608987a4073ecca2e06477f26899cdb03dd0) | 2024-02-20 | Marc Zyngier | genirq/irqdomain: Don't call ops-\>select for DOMAIN_BUS_ANY tokens |
+| [9bdef4ea](https://github.com/RVCK-Project/rvck/commit/9bdef4ea101b1bc9aea0887052db1179253090c6) | 2024-01-27 | Thomas Gleixner | genirq/msi: Provide optional translation op |
+| [c21bcf47](https://github.com/RVCK-Project/rvck/commit/c21bcf475df1eac7960830e4b14447b51c47076c) | 2024-02-15 | Thomas Gleixner | platform-msi: Remove unused interfaces |
+| [33216ec6](https://github.com/RVCK-Project/rvck/commit/33216ec6c7f2c0524d37df21b0d02ccf21b8f1f1) | 2024-01-27 | Thomas Gleixner | irqchip: Convert all platform MSI users to the new API |
+| [18993f6d](https://github.com/RVCK-Project/rvck/commit/18993f6d6abc46084b62da8c8264eeb23289af1f) | 2024-01-27 | Thomas Gleixner | platform-msi: Prepare for real per device domains |
+| [d878a689](https://github.com/RVCK-Project/rvck/commit/d878a6893d08eb72e49209c241507655f803ac24) | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Add DOMAIN_BUS_DEVICE_MSI |
+| [019c1949](https://github.com/RVCK-Project/rvck/commit/019c1949b6485c85803e8c8356b99665affb5d6c) | 2024-01-27 | Thomas Gleixner | genirq/msi: Extend msi_parent_ops |
+| [395375be](https://github.com/RVCK-Project/rvck/commit/395375be608b5af47f22bc2e0d8d9472d7b0b165) | 2024-01-27 | Thomas Gleixner | genirq/irqdomain: Remove the param count restriction from select() |
+| [56920bfb](https://github.com/RVCK-Project/rvck/commit/56920bfb21992039c3d74c425afb4b7943943edf) | 2025-03-03 | Yanteng Si | riscv: xuantie: fix vc8000 build error |
+| [040515b4](https://github.com/RVCK-Project/rvck/commit/040515b49a8067c810b43ea4aa37e8228b1bfd23) | 2025-03-02 | Yanteng Si | riscv: clean up unused defconfig |
+| [2883c3af](https://github.com/RVCK-Project/rvck/commit/2883c3af19d45fe92963ed955b18931f9b70d0cb) | 2025-02-25 | Yanteng Si | riscv: sg2042: Add sg2042_defconfig |
+| [eeb95861](https://github.com/RVCK-Project/rvck/commit/eeb95861e9272f10afa50e643b4fa856e53c2231) | 2025-02-25 | Yanteng Si | riscv: th1520: Add th1520_defconfig |
+| [cb6d4735](https://github.com/RVCK-Project/rvck/commit/cb6d47358a9487df23f2ed289879c46eb050c4f7) | 2024-12-10 | Yafen Fang | fix: Error: unrecognized opcode cbo.clean (a0) |
+| [a4139932](https://github.com/RVCK-Project/rvck/commit/a41399320479a1d16d7c8524a11e33150893e8f2) | 2024-08-23 | CC | add pmbus debugging tool |
+| [c77adb11](https://github.com/RVCK-Project/rvck/commit/c77adb116db5ccd6af99a976ec4b220032c49425) | 2024-03-27 | Han Gao | riscv: sophgo: mango: add xtheadvector for mango-cpus-socket0&1 |
+| [92ad65ca](https://github.com/RVCK-Project/rvck/commit/92ad65ca8d4d9483c856e88b2b452fece356ca26) | 2024-05-28 | Felix Yan | pcie: whitelist and support mellanox connectx-2 |
+| [c6b88528](https://github.com/RVCK-Project/rvck/commit/c6b88528554360959331bbb8672ba14644d5116b) | 2023-01-23 | Khem Raj | perf cpumap: Make counter as unsigned ints |
+| [68910996](https://github.com/RVCK-Project/rvck/commit/68910996a0d4e8c9783688f5d99cc30010839d13) | 2023-02-26 | Icenowy Zheng | nvidia hda: force msi |
+| [ed0016bc](https://github.com/RVCK-Project/rvck/commit/ed0016bc01cf3b47425fe8c293e1feaef6b6d0da) | 2023-02-25 | Icenowy Zheng | radeon hack: force 64-bit msi to fit top intc |
+| [863a339f](https://github.com/RVCK-Project/rvck/commit/863a339fbf3b0abc34b2bd126c1ad9ac9661c2ac) | 2023-02-24 | Icenowy Zheng | amdgpu: disable rebar |
+| [d9af2efc](https://github.com/RVCK-Project/rvck/commit/d9af2efcfe98fad25c4d2659bc33585168ea8a92) | 2023-02-24 | Icenowy Zheng | ttm: disallow cached mapping |
+| [d242ac3f](https://github.com/RVCK-Project/rvck/commit/d242ac3fb970ab5284a95a69a511d5d58bc2bd55) | 2023-01-04 | Icenowy Zheng | riscv: use VA+PA variant of CMO macros for DMA page preparation |
+| [cc391ee4](https://github.com/RVCK-Project/rvck/commit/cc391ee49f5efa474004f8ae7b6492adb91f6601) | 2023-01-04 | Icenowy Zheng | riscv: use VA+PA variant of CMO macros for DMA synchorization |
+| [4b748446](https://github.com/RVCK-Project/rvck/commit/4b7484469e61f402c9daddea646fdfcf0c446204) | 2023-01-04 | Icenowy Zheng | riscv: errata: cmo: add CMO macro variant with both VA and PA |
+| [b639d4fc](https://github.com/RVCK-Project/rvck/commit/b639d4fcae7b1c41b9397de17437575896306c4e) | 2025-01-24 | NekoRouter | dtb: lichee-pi-4a: Add 8723ds BT support config: enable BT_HCIUART_RTL for 8723d... |
+| [fc38e584](https://github.com/RVCK-Project/rvck/commit/fc38e584b761130dbd2bd693788c01b7b65829d9) | 2025-02-14 | Han Gao | config: enable kvm for opensbi-h |
+| [44097836](https://github.com/RVCK-Project/rvck/commit/44097836fbaf4cd9b95228fd935fd547586130fc) | 2025-01-17 | Alphagocc | drivers: wireless: add aic8800 support |
+| [0d7e57d0](https://github.com/RVCK-Project/rvck/commit/0d7e57d09aee38c07eb65b410b9a52865266d3ad) | 2025-01-06 | NekoRouter | config: enable CONFIG_BT_HCIUART_BCM for meles bluetooth |
+| [62d49be2](https://github.com/RVCK-Project/rvck/commit/62d49be262b7339612897bd13e5e95c448ce7b10) | 2025-01-06 | NekoRouter | dts: meles: add bluetooth, modify gpio0 names and range |
+| [d2b0838a](https://github.com/RVCK-Project/rvck/commit/d2b0838ad208ebda2d3af7d067ab51638d15d140) | 2024-12-31 | NekoRouter | config: Add CONFIG_BRCMFMAC_SDIO for meles wifi |
+| [5a744ac2](https://github.com/RVCK-Project/rvck/commit/5a744ac2f82eed7ea74586f4e7b035a4193f7eaa) | 2024-12-24 | NekoRouter | dts: meles: Add i2c, dma, usb |
+| [ea413872](https://github.com/RVCK-Project/rvck/commit/ea4138723777c96863a9ea90f321c1566cbe505b) | 2024-12-23 | Han Gao | dts: meles: add 4g/16g devicetree |
+| [570e6f58](https://github.com/RVCK-Project/rvck/commit/570e6f58010e04ec2fd61fc2df64f190bfc7480f) | 2024-12-23 | Han Gao | dts: meles: add Meles 8G board support |
+| [e007d2e6](https://github.com/RVCK-Project/rvck/commit/e007d2e670e46db6116161a27afcc97d97b3d499) | 2024-09-27 | Han Gao | driver: video-memory: reorganize the code structure |
+| [49ae3006](https://github.com/RVCK-Project/rvck/commit/49ae3006fd53866dbfda1410b0f35be81fd38901) | 2024-09-21 | Han Gao | fix: gpu: fix device tree matching img,gpu |
+| [e79a7b78](https://github.com/RVCK-Project/rvck/commit/e79a7b7875679cb12246cd705d2764f277c3a563) | 2024-09-21 | Han Gao | ci: cleanup forced setting of thread number |
+| [005c07ba](https://github.com/RVCK-Project/rvck/commit/005c07ba734b026a6b5c1367ccac0cc4d0bced8e) | 2024-09-21 | Han Gao | debian: linux-image provide wireguard-modules |
+| [a81575ce](https://github.com/RVCK-Project/rvck/commit/a81575cee5f746a16498b76d6225236fb30c8efb) | 2024-09-21 | Han Gao | config: cleanup unused option |
+| [42c1687c](https://github.com/RVCK-Project/rvck/commit/42c1687c42fc897616d3c1801c9e7046bfc36361) | 2024-09-21 | Han Gao | fix: disable CONFIG_PCI for pvrsrvkm build error |
+| [ca0673e4](https://github.com/RVCK-Project/rvck/commit/ca0673e4b69aa01ff44120dde8c33779401dc2a1) | 2024-09-21 | Han Gao | dts: lpi4a: remove mipi screen |
+| [5c832061](https://github.com/RVCK-Project/rvck/commit/5c8320619fe709e208bb87363965c8708f3668c4) | 2024-09-19 | Han Gao | sync: xuantie: vpu-vc8000e SDK v2.0.2 code |
+| [b9f20b47](https://github.com/RVCK-Project/rvck/commit/b9f20b47a16d647bc06eaca0d1d6907e6a849f77) | 2024-09-19 | Han Gao | sync: xuantie: vpu-vc8000d SDK v2.0.2 code |
+| [b8c31021](https://github.com/RVCK-Project/rvck/commit/b8c310210a73e5f2d244aac950419625d54a81a7) | 2024-08-07 | Han Gao | symbol: gpl: export pud_offset/p4d_offset symbol |
+| [b6a8ed17](https://github.com/RVCK-Project/rvck/commit/b6a8ed172899deb530829db4edc30bda585b78c5) | 2024-09-19 | Han Gao | sync: xuantie: video_memory SDK v2.0.2 code |
+| [38d2039c](https://github.com/RVCK-Project/rvck/commit/38d2039c9210b1f1eeae1fc76abddca0aa3d294a) | 2024-09-19 | Han Gao | sync: img: npu-ax3386: sync SDK V2.0.2 code |
+| [0583ea78](https://github.com/RVCK-Project/rvck/commit/0583ea78006048d1093fb600dd9d1342e6301f55) | 2024-09-16 | Han Gao | ci: kernel auto build on native |
+| [0df08165](https://github.com/RVCK-Project/rvck/commit/0df0816529169f5b4363b2e62a980cd67330d767) | 2024-03-28 | Icenowy Zheng | drm/verisilicon: add format_mod_supported to plane |
+| [acff19de](https://github.com/RVCK-Project/rvck/commit/acff19de6aed6c729844fffaeb72ce7e5c406bed) | 2023-12-28 | Icenowy Zheng | drm/verisilicon: bias fb address for dual-head offset |
+| [a2398ebb](https://github.com/RVCK-Project/rvck/commit/a2398ebb4ec37fdf5245fb07dbec47a43f7660d6) | 2023-12-27 | Icenowy Zheng | drm/verisilicon: finally fix the cursor position |
+| [7d40c83d](https://github.com/RVCK-Project/rvck/commit/7d40c83d2999150c136b18a01407ad40a8512db3) | 2023-12-05 | Icenowy Zheng | drm/verisilicon: fix cursor position |
+| [6ac69af4](https://github.com/RVCK-Project/rvck/commit/6ac69af429d52ae4f7593d550d40edb3d47f6ce3) | 2023-05-08 | Icenowy Zheng | drm: verisilicon: fix fbcon |
+| [d3dd6d36](https://github.com/RVCK-Project/rvck/commit/d3dd6d36d6b10ba5c4f614c2b713cf5490a9e3cb) | 2022-09-14 | Icenowy Zheng | drm/dc8200: disable gamma lut now |
+| [a3efb751](https://github.com/RVCK-Project/rvck/commit/a3efb75189e352c7a41ae75bad82724ce069e62f) | 2024-09-14 | Drew Fustini | cpufreq: th1520-cpufreq: fix cpu_pll1 already disabled warning |
+| [0dc08f80](https://github.com/RVCK-Project/rvck/commit/0dc08f8088dbeec72ca2f2fd33172e3af696b8ce) | 2024-09-13 | Icenowy Zheng | th1520: use etnaviv gpu |
+| [242a33d9](https://github.com/RVCK-Project/rvck/commit/242a33d9f36bd8109e17dcc34660047d733a32d1) | 2023-12-03 | Icenowy Zheng | drm/etnaviv: hack: use only pta id 0 |
+| [213d8858](https://github.com/RVCK-Project/rvck/commit/213d88584fc636784a40b21734c229333efd9d5b) | 2023-12-01 | Icenowy Zheng | drm/etnaviv: add GC620 |
+| [41623cea](https://github.com/RVCK-Project/rvck/commit/41623cea929e2b87b330cfaa97ec7234ae34f223) | 2023-12-01 | Icenowy Zheng | drm/etnaviv: add hwdb entry for TH1520 GC620 |
+| [d710e24b](https://github.com/RVCK-Project/rvck/commit/d710e24b3398be3234127aaa9781b61d0bf60432) | 2023-12-01 | Icenowy Zheng | drm/etnaviv: add workaround for GC620 on TH1520 (0x5552) |
+| [eddc720a](https://github.com/RVCK-Project/rvck/commit/eddc720ad0b344a0babc0ddf3edfa9867d46705d) | 2023-12-01 | Icenowy Zheng | drm/etnaviv: add handle for GPUs with only SECURITY_AHB flag |
+| [b1b6941f](https://github.com/RVCK-Project/rvck/commit/b1b6941f0ef7586ea2a983c0e0bb1437a3d51edf) | 2024-09-13 | Han Gao | config: enable configs for TH1520 |
+| [6d34dc50](https://github.com/RVCK-Project/rvck/commit/6d34dc50799ad1b82e2722b8f89c2dddd24f719e) | 2024-09-13 | Han Gao | config: enable ARCH_XUANTIE |
+| [45dc8263](https://github.com/RVCK-Project/rvck/commit/45dc8263a7a20062bf2ff7ef5002e3e11a671cc0) | 2024-09-13 | Han Gao | config: mmc_block & ext4 builtin |
+| [69a122d8](https://github.com/RVCK-Project/rvck/commit/69a122d84b31eb490bf544565f2378a1f116f693) | 2024-09-13 | Han Gao | config: init revyos defconfig |
+| [1a7544d4](https://github.com/RVCK-Project/rvck/commit/1a7544d46f621f56766b12dc8b8933e10c4838e1) | 2024-09-01 | Han Gao | configs: enable img rogue gpu |
+| [3b029260](https://github.com/RVCK-Project/rvck/commit/3b029260f77e6c6241aa436384ebf46bcf16b783) | 2024-09-01 | Mingzheng Xing | th1520: gpu: Add driver for PowerVR Rogue GPU |
+| [4df53ffc](https://github.com/RVCK-Project/rvck/commit/4df53ffc6309d96a86e5b9f64e6b0da780bf7613) | 2024-09-01 | Han Gao | fix: dts: remove duplicate node |
+| [1027b9a3](https://github.com/RVCK-Project/rvck/commit/1027b9a32b061d8facd4f6d183985f3f632765e5) | 2024-09-01 | Han Gao | Solve problem of hdmi-edid reading |
+| [3cf81ffe](https://github.com/RVCK-Project/rvck/commit/3cf81ffee58ea4f6c922c74c056639eebe06bd2b) | 2024-09-01 | Han Gao | riscv:uprobe: fix flush_icache to ensure that instructions are refreshed when sw... |
+---
+
+**共 1127 条提交，显示 801-1000**
+
+[1](软件所.md) [2](软件所_page2.md) [3](软件所_page3.md) [4](软件所_page4.md) **[5]** [6](软件所_page6.md)
+
+[显示全部](软件所_all.md) | [纯文本视图](软件所_commits.txt)
+## 🔙 返回
+
+[← 返回统计主页](../index.md)
+
+---
+
+*本页面最后更新于 2026-09-04 11:16:31*
+*数据来源: 主分支 rvck-6.6@863dbf9d*
