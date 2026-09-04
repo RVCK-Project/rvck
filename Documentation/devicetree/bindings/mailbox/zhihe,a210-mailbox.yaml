@@ -1,0 +1,109 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/mailbox/zhihe,a210-mailbox.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Zhihe A210 Mailbox Controller
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  Mailbox controller for the Zhihe A210 SoC provides inter-processor
+  communication channels between the application processor and other
+  subsystems such as the AON (Always-On) subsystem.
+
+  The mailbox hardware interconnects up to four processors. Each
+  processor has an associated ICU (Interrupt Control Unit) which owns
+  one local register window of the mailbox and receives the interrupts
+  the mailbox generates for that processor. The property
+  "zhihe,icu-cpu-id" tells the driver which ICU, i.e. which local
+  processor, this mailbox instance belongs to, so it can select its own
+  local register window and map the windows of the remote processors.
+
+properties:
+  compatible:
+    enum:
+      - zhihe,a210-mailbox
+      - zhihe,a210-mailbox-v2
+
+  reg:
+    minItems: 1
+    maxItems: 8
+
+  reg-names:
+    minItems: 1
+    maxItems: 8
+    items:
+      enum:
+        - interrupt
+        - local0
+        - local1
+        - remote0
+        - remote1
+        - remote2
+
+  clocks:
+    minItems: 1
+    maxItems: 2
+
+  resets:
+    minItems: 1
+    maxItems: 2
+
+  interrupts:
+    maxItems: 1
+
+  zhihe,icu-cpu-id:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description:
+      Index of the local processor's ICU (Interrupt Control Unit) this
+      mailbox instance belongs to. Valid values are 0 and 3 for
+      zhihe,a210-mailbox, see the description above.
+
+  "#mbox-cells":
+    const: 2
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - interrupts
+  - "#mbox-cells"
+
+allOf:
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-mailbox-v2
+    then:
+      properties:
+        reg:
+          minItems: 3
+        reg-names:
+          minItems: 3
+    else:
+      properties:
+        reg:
+          minItems: 4
+        reg-names:
+          minItems: 4
+
+additionalProperties: false
+
+examples:
+  - |
+    mailbox@321000 {
+        compatible = "zhihe,a210-mailbox-v2";
+        reg = <0x00321000 0x1000>,
+              <0x00320000 0x1000>,
+              <0x00311000 0x1000>;
+        reg-names = "interrupt", "local0", "remote0";
+        clocks = <&clk_peri 0>, <&clk_peri 1>;
+        resets = <&rst 0>, <&rst 1>;
+        interrupt-parent = <&intc>;
+        interrupts = <336>;
+        zhihe,icu-cpu-id = <0>;
+        #mbox-cells = <2>;
+    };

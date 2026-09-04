@@ -324,5 +324,6 @@ source "drivers/firmware/riscv/Kconfig"
 source "drivers/firmware/smccc/Kconfig"
 source "drivers/firmware/tegra/Kconfig"
 source "drivers/firmware/xilinx/Kconfig"
+source "drivers/firmware/zhihe/Kconfig"
 
 endmenu

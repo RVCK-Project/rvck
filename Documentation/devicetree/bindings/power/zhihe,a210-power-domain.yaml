@@ -1,0 +1,140 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/power/zhihe,a210-power-domain.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Zhihe A210 Power Domain Controller
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description: |
+  The Zhihe A210 power domain controller manages the PCU/PPU power
+  sequencing for the SoC hardware blocks. Each hardware power domain is
+  represented by a child node. The child node compatible string identifies
+  the hardware domain and the child node itself is a generic PM domain
+  provider.
+
+  Some domains may have parent domain dependencies, clock/reset resources,
+  IOPMP protection devices or CCU subnodes used for domain-local clock
+  gating/scaling sequences.
+
+properties:
+  compatible:
+    const: zhihe,a210-power-domain
+
+  "#power-domain-cells":
+    const: 0
+
+  "#address-cells":
+    const: 2
+
+  "#size-cells":
+    const: 2
+
+  ranges: true
+
+patternProperties:
+  "^power-domain-[a-z0-9-]+$":
+    $ref: "#/$defs/power-domain-node"
+    unevaluatedProperties: false
+
+required:
+  - compatible
+
+additionalProperties: false
+
+$defs:
+  power-domain-node:
+    type: object
+    description:
+      A single A210 power domain. Valid compatible strings identify the
+      hardware power domain controlled by this node.
+
+    properties:
+      compatible:
+        enum:
+          - zhihe,a210-pd-gpu
+          - zhihe,a210-pd-npu-wrapper
+          - zhihe,a210-pd-npu-ip
+          - zhihe,a210-pd-d2d
+          - zhihe,a210-pd-pcie0
+          - zhihe,a210-pd-pcie1
+          - zhihe,a210-pd-sata
+          - zhihe,a210-pd-usb
+          - zhihe,a210-pd-vi-wrap
+          - zhihe,a210-pd-vi-isp
+          - zhihe,a210-pd-vo
+          - zhihe,a210-pd-vp-wrap
+          - zhihe,a210-pd-venc
+          - zhihe,a210-pd-vdec
+          - zhihe,a210-pd-top
+          - zhihe,a210-pd-peri0
+          - zhihe,a210-pd-peri1
+          - zhihe,a210-pd-peri2
+          - zhihe,a210-pd-peri3
+          - zhihe,a210-pd-can
+          - zhihe,a210-pd-spi
+          - zhihe,a210-pd-qspi
+          - zhihe,a210-pd-uart
+          - zhihe,a210-pd-pwm
+          - zhihe,a210-pd-emmc
+          - zhihe,a210-pd-sdio
+          - zhihe,a210-pd-dmac
+
+      "#power-domain-cells":
+        const: 0
+
+      "#address-cells":
+        const: 2
+
+      "#size-cells":
+        const: 2
+
+      ranges: true
+
+      power-domains:
+        maxItems: 1
+        description: Parent power domain dependency.
+
+      clocks:
+        minItems: 1
+        maxItems: 32
+
+      resets:
+        minItems: 1
+        maxItems: 32
+
+      iopmps:
+        $ref: /schemas/types.yaml#/definitions/phandle-array
+        description: IOPMP protection devices controlled with this domain.
+
+      pmic-supply:
+        description: Regulator phandle powering this domain.
+
+    patternProperties:
+      "^clock-controller@[0-9a-f]+$":
+        $ref: /schemas/clock/zhihe,a210-ccu.yaml#
+        unevaluatedProperties: false
+
+    required:
+      - compatible
+      - "#power-domain-cells"
+
+examples:
+  - |
+    a210-pds {
+        compatible = "zhihe,a210-power-domain";
+
+        power_top: power-domain-top {
+            compatible = "zhihe,a210-pd-top";
+            #power-domain-cells = <0>;
+        };
+
+        power_emmc: power-domain-emmc {
+            compatible = "zhihe,a210-pd-emmc";
+            power-domains = <&power_top>;
+            #power-domain-cells = <0>;
+        };
+    };

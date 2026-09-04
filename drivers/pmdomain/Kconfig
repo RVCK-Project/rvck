@@ -2,5 +2,6 @@
 menu "PM Domains"
 
 source "drivers/pmdomain/thead/Kconfig"
+source "drivers/pmdomain/zhihe/Kconfig"
 
 endmenu

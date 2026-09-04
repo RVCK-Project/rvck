@@ -593,6 +593,113 @@
 		snps,blen = <16 8 4 0 0 0 0>;
 	};
 
+	power: power-controller {
+		compatible = "zhihe,a210-power-domain";
+		#power-domain-cells = <0>;
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		power_top: power-domain-top {
+			compatible = "zhihe,a210-pd-top";
+			#power-domain-cells = <0>;
+			#address-cells = <2>;
+			#size-cells = <2>;
+			ranges;
+			ddr_ccu: clock-controller@5910000 {
+				compatible = "zhihe,a210-ccu";
+				reg = <0x00 0x05910000 0x0 0x2C>,
+				      <0x00 0x05920000 0x0 0x2C>;
+				zhihe,ccu-dly-time = <0x5E 0x5E>;
+				zhihe,ccu-dly-time-step = <0x3 0x3>;
+			};
+			pcie_ccu: clock-controller@a007400 {
+				compatible = "zhihe,a210-ccu";
+				reg = <0x00 0x0A007400 0x0 0x2C>,
+				      <0x00 0x0A008000 0x0 0x2C>,
+				      <0x00 0x0A008400 0x0 0x2C>;
+				zhihe,ccu-dly-time = <0x5E 0x5E 0x5E>;
+				zhihe,ccu-dly-time-step = <0x3 0x3 0x3>;
+			};
+			tee_ccu: clock-controller@27430000 {
+				compatible = "zhihe,a210-ccu";
+				reg = <0x00 0x27430000 0x0 0x2C>;
+				zhihe,ccu-dly-time = <0x5E>;
+				zhihe,ccu-dly-time-step = <0x3>;
+			};
+			cpu_gating_ccu: clock-controller@10140000 {
+				compatible = "zhihe,a210-ccu";
+				reg = <0x00 0x10140000 0x0 0x2C>,
+				      <0x00 0x10140200 0x0 0x2C>,
+				      <0x00 0x10140400 0x0 0x2C>,
+				      <0x00 0x10140600 0x0 0x2C>,
+				      <0x00 0x10140A00 0x0 0x2C>,
+				      <0x00 0x10140C00 0x0 0x2C>,
+				      <0x00 0x10204000 0x0 0x2C>,
+				      <0x00 0x10204200 0x0 0x2C>,
+				      <0x00 0x10204400 0x0 0x2C>,
+				      <0x00 0x10204600 0x0 0x2C>,
+				      <0x00 0x10204800 0x0 0x2C>,
+				      <0x00 0x10204A00 0x0 0x2C>,
+				      <0x00 0x10205400 0x0 0x2C>;
+				zhihe,ccu-dly-time = <0x34 0x34 0x34
+						      0x34 0x34 0x34
+						      0x34 0x34 0x34
+						      0x34 0x34 0x34
+						      0x34>;
+				zhihe,ccu-dly-time-step = <0x2 0x2 0x2
+							   0x2 0x2 0x2
+							   0x2 0x2 0x2
+							   0x2 0x2 0x2
+							   0x2>;
+			};
+			cpu_scaling_ccu: clock-controller@10140800 {
+				compatible = "zhihe,a210-ccu";
+				reg = <0x00 0x10140800 0x0 0x2C>;
+				zhihe,ccu-mode = <1>;
+				zhihe,ccu-dly-time = <0x34>;
+				zhihe,ccu-dly-time-step = <0x2>;
+				zhihe,ccu-ratio = <63>;
+			};
+		};
+		power_usb: power-domain-usb {
+			compatible = "zhihe,a210-pd-usb";
+			power-domains = <&power_top>;
+			#power-domain-cells = <0>;
+			#address-cells = <2>;
+			#size-cells = <2>;
+			ranges;
+
+			usb_ccu: clock-controller@0 {
+				compatible = "zhihe,a210-ccu";
+				reg = <0x00 0x08004400 0x0 0x2C>,
+				      <0x00 0x08006000 0x0 0x2C>,
+				      <0x00 0x08006400 0x0 0x2C>;
+				zhihe,ccu-dly-time = <0x5E 0x5E 0x5E>;
+				zhihe,ccu-dly-time-step = <0x3 0x3 0x3>;
+			};
+		};
+
+		power_emmc: power-domain-emmc {
+			compatible = "zhihe,a210-pd-emmc";
+			power-domains = <&power_top>;
+			#power-domain-cells = <0>;
+			clocks = <&clk_peri PERI3_EMMC_ACLK_EN>,
+				<&clk_peri PERI3_EMMC_X2X_ACLK_S_EN>,
+				<&clk_peri PERI3_EMMC_X2X_ACLK_M_EN>,
+				<&clk_peri PERI3_EMMC_OSC_CLK_EN>;
+		};
+		power_sdio: power-domain-sdio {
+			compatible = "zhihe,a210-pd-sdio";
+			power-domains = <&power_top>;
+			#power-domain-cells = <0>;
+			clocks = <&clk_peri PERI3_SDIO_ACLK_EN>,
+				<&clk_peri PERI3_SDIO_X2X_ACLK_S_EN>,
+				<&clk_peri PERI3_SDIO_X2X_ACLK_M_EN>,
+				<&clk_peri PERI3_SDIO_OSC_CLK_EN>;
+		};
+	};
+
 	soc {
 		compatible = "simple-bus";
 		#address-cells = <2>;
@@ -687,6 +794,7 @@
 					       <377142858>;
 			status = "okay";
 		};
+
 		rst_vp: reset-controller@6b20400 {
 			compatible = "zhihe,a210-vp-reset";
 			reg = <0x00 0x06b20400 0x0 0x200>;
@@ -957,6 +1065,7 @@
 			resets = <&rst_peri1 PERI1_GMAC0_RST>,
 				 <&rst_peri1 PERI1_GMAC0_X2H_RST>;
 			reset-names = "stmmaceth", "ahb";
+			power-domains = <&power_top>;
 			snps,pbl = <32>;
 			snps,fixed-burst;
 			snps,axi-config = <&stmmac_axi_setup>;
@@ -986,6 +1095,7 @@
 			resets = <&rst_peri1 PERI1_GMAC1_RST>,
 				 <&rst_peri1 PERI1_GMAC1_X2H_RST>;
 			reset-names = "stmmaceth", "ahb";
+			power-domains = <&power_top>;
 			snps,pbl = <32>;
 			snps,fixed-burst;
 			snps,axi-config = <&stmmac_axi_setup>;
@@ -1000,5 +1110,212 @@
 			};
 		};
 
+		aon_padctrl: aon-padctrl@30848000 {
+			compatible = "zhihe,a210-aon-pinctrl";
+			reg = <0x00 0x30848000 0x0 0x2000>;
+			clocks = <&aon_110m>;
+			clock-names = "pclk";
+		};
+
+		peri1_padctrl: peri1-padctrl@2026000 {
+			compatible = "zhihe,a210-peri1-pinctrl";
+			reg = <0x00 0x02026000 0x0 0x1000>;
+			clocks = <&clk_peri PERI1_PAD_CTRL_PCLK_EN>;
+			clock-names = "pclk";
+		};
+
+		peri2_padctrl: peri2-padctrl@8411000 {
+			compatible = "zhihe,a210-peri2-pinctrl";
+			reg = <0x00 0x08411000 0x0 0x1000>;
+			clocks = <&clk_peri PERI2_PAD_CTRL_PCLK_EN>;
+			clock-names = "pclk";
+		};
+
+		peri3_padctrl: peri3-padctrl@542000 {
+			compatible = "zhihe,a210-peri3-pinctrl";
+			reg = <0x00 0x00542000 0x0 0x1000>;
+			clocks = <&clk_peri PERI3_PAD_CTRL_PCLK_EN>;
+			clock-names = "pclk";
+		};
+
+		mbox_920: mailbox@321000 {
+			compatible = "zhihe,a210-mailbox-v2";
+			reg = <0x00 0x00321000 0x0 0x1000>,
+			      <0x00 0x00320000 0x0 0x1000>,
+			      <0x00 0x00311000 0x0 0x1000>;
+			reg-names = "interrupt",
+				    "local0",
+				    "remote0";
+			clocks = <&clk_peri PERI0_MBOX0_PCLK_EN>,
+				 <&clk_peri PERI0_MBOX1_PCLK_EN>;
+			resets = <&rst_peri0 PERI0_MBOX0_PRST>,
+				 <&rst_peri0 PERI0_MBOX1_PRST>;
+			interrupt-parent = <&intc>;
+			interrupts = <336>;
+			zhihe,icu-cpu-id = <0>;
+			#mbox-cells = <2>;
+		};
+
+		aon: aon-subsys@308f8000 {
+			compatible = "zhihe,a210-aon";
+			reg = <0x00 0x308f8000 0x0 0x10000>,
+			      <0x00 0x30842018 0x0 0x4>,
+			      <0x00 0x30846144 0x0 0x4>;
+			reg-names = "aon-base",
+				"aon-reset",
+				"aon-sync";
+			firmware-name = "a210-aon.bin";
+			mboxes = <&mbox_920 1 0>;
+			mbox-names = "aon0";
+			#mbox-cells = <2>;
+
+			regulators {
+				compatible = "zhihe,a210-aon-regulator";
+
+				avdd33_emmc_reg: avdd33-emmc {
+					zhihe,regulator-id = <0>;
+					regulator-name = "avdd33_emmc";
+					regulator-always-on;
+				};
+
+				avdd33_usb2_reg: avdd33-usb2 {
+					zhihe,regulator-id = <1>;
+					regulator-name = "avdd33_usb2";
+					regulator-always-on;
+				};
+
+				dvdd08_aon_reg: dvdd08-aon {
+					zhihe,regulator-id = <2>;
+					regulator-name = "dvdd08_aon";
+					regulator-always-on;
+				};
+
+				avdd18_aon_reg: avdd18-aon {
+					zhihe,regulator-id = <3>;
+					regulator-name = "avdd18_aon";
+					regulator-always-on;
+				};
+
+				avdd18_emmc_usb2_reg: avdd18-emmc-usb2 {
+					zhihe,regulator-id = <4>;
+					regulator-name = "avdd18_emmc_usb2";
+					regulator-always-on;
+				};
+
+				avdd18_emmc_peri_reg: avdd18-emmc-peri {
+					zhihe,regulator-id = <5>;
+					regulator-name = "avdd18_emmc_peri";
+					regulator-always-on;
+				};
+
+				avdd18_top_reg: avdd18-top {
+					zhihe,regulator-id = <6>;
+					regulator-name = "avdd18_top";
+					regulator-always-on;
+				};
+
+				avdd18_pll_reg: avdd18-pll {
+					zhihe,regulator-id = <7>;
+					regulator-name = "avdd18_pll";
+					regulator-always-on;
+				};
+
+				avdd18_reg: avdd18 {
+					zhihe,regulator-id = <8>;
+					regulator-name = "avdd18";
+					regulator-always-on;
+				};
+
+				dvdd18_ddr_vaa_reg: dvdd18-ddr-vaa {
+					zhihe,regulator-id = <9>;
+					regulator-name = "dvdd18_ddr_vaa";
+					regulator-always-on;
+				};
+
+				p3v3_reg: p3v3 {
+					zhihe,regulator-id = <10>;
+					regulator-name = "p3v3";
+					regulator-always-on;
+				};
+
+				dvdd08_top_reg: dvdd08-top {
+					zhihe,regulator-id = <11>;
+					regulator-name = "dvdd08_top";
+					regulator-always-on;
+				};
+
+				dvdd06_ddr_vddqlp_reg: dvdd06-ddr-vddqlp {
+					zhihe,regulator-id = <12>;
+					regulator-name = "dvdd06_ddr_vddqlp";
+					regulator-always-on;
+				};
+
+				dvdd08_ddr_reg: dvdd08-ddr {
+					zhihe,regulator-id = <13>;
+					regulator-name = "dvdd08_ddr";
+					regulator-min-microvolt = <750000>;
+					regulator-max-microvolt = <800000>;
+					regulator-ramp-delay = <100>;
+					regulator-always-on;
+				};
+
+				dvdd_cpu_reg: dvdd-cpu {
+					zhihe,regulator-id = <14>;
+					regulator-name = "dvdd_cpu";
+					regulator-min-microvolt = <600000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+					regulator-always-on;
+				};
+
+				dvddm_cpu_reg: dvddm-cpu {
+					zhihe,regulator-id = <15>;
+					regulator-name = "dvddm_cpu";
+					regulator-min-microvolt = <800000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+					regulator-always-on;
+				};
+
+				dvdd_vp_reg: dvdd-vp {
+					zhihe,regulator-id = <16>;
+					regulator-name = "dvdd_vp";
+					regulator-min-microvolt = <750000>;
+					regulator-max-microvolt = <800000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+				};
+
+				dvdd_npu_vip_reg: dvdd-npu-vip {
+					zhihe,regulator-id = <17>;
+					regulator-name = "dvdd_npu_vip";
+					regulator-min-microvolt = <750000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+				};
+
+				dvdd_cpu_p_reg: dvdd-cpu-p {
+					zhihe,regulator-id = <18>;
+					regulator-name = "dvdd_cpu_p";
+					regulator-min-microvolt = <800000>;
+					regulator-max-microvolt = <1000000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+					regulator-always-on;
+				};
+
+				dvdd_gpu_reg: dvdd-gpu {
+					zhihe,regulator-id = <19>;
+					regulator-name = "dvdd_gpu";
+					regulator-min-microvolt = <750000>;
+					regulator-max-microvolt = <800000>;
+					regulator-ramp-delay = <100>;
+					regulator-enable-ramp-delay = <2000>;
+				};
+			};
+		};
 	};
 };
