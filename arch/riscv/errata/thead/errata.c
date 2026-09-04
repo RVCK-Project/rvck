@@ -10,6 +10,7 @@
 #include <linux/string.h>
 #include <linux/uaccess.h>
 #include <asm/alternative.h>
+#include <asm/bugs.h>
 #include <asm/cacheflush.h>
 #include <asm/cpufeature.h>
 #include <asm/errata_list.h>
@@ -70,6 +71,48 @@ static bool errata_probe_pmu(unsigned int stage,
 	return true;
 }
 
+static bool errata_probe_ghostwrite(unsigned int stage,
+				    unsigned long arch_id, unsigned long impid)
+{
+	if (!IS_ENABLED(CONFIG_ERRATA_THEAD_GHOSTWRITE))
+		return false;
+
+	/*
+	 * target-c9xx cores report arch_id and impid as 0
+	 *
+	 * While ghostwrite may not affect all c9xx cores that implement
+	 * xtheadvector, there is no futher granularity than c9xx. Assume
+	 * vulnerable for this entire class of processors when xtheadvector is
+	 * enabled.
+	 */
+	if (arch_id != 0 || impid != 0)
+		return false;
+
+	if (stage != RISCV_ALTERNATIVES_EARLY_BOOT)
+		return false;
+
+	ghostwrite_set_vulnerable();
+
+	return true;
+}
+
+static bool errata_probe_write_once(unsigned int stage,
+				    unsigned long arch_id, unsigned long impid)
+{
+	if (!IS_ENABLED(CONFIG_ERRATA_THEAD_WRITE_ONCE))
+		return false;
+
+	/* target-c9xx cores report arch_id and impid as 0 */
+	if (arch_id != 0 || impid != 0)
+		return false;
+
+	if (stage == RISCV_ALTERNATIVES_BOOT ||
+	    stage == RISCV_ALTERNATIVES_MODULE)
+		return true;
+
+	return false;
+}
+
 static u32 thead_errata_probe(unsigned int stage,
 			      unsigned long archid, unsigned long impid)
 {
@@ -83,6 +126,10 @@ static u32 thead_errata_probe(unsigned int stage,
 
 	if (errata_probe_pmu(stage, archid, impid))
 		cpu_req_errata |= BIT(ERRATA_THEAD_PMU);
+	if (errata_probe_write_once(stage, archid, impid))
+		cpu_req_errata |= BIT(ERRATA_THEAD_WRITE_ONCE);
+
+	errata_probe_ghostwrite(stage, archid, impid);
 
 	return cpu_req_errata;
 }

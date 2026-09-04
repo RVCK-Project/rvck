@@ -295,12 +295,6 @@ config SPI_DAVINCI
 	help
 	  SPI master controller for DaVinci/DA8x/OMAP-L/AM1x SPI modules.
 
-config SPI_DW_QUAD
-	tristate "DesignWare QSPI controller core support"
-	default n
-	help
-	  general driver for QSPI controller core from  DesignWare
-
 config SPI_DESIGNWARE
 	tristate "DesignWare SPI controller core support"
 	imply SPI_MEM
@@ -979,6 +973,15 @@ config SPI_SPACEMIT_K1_QSPI
 	  This enables support for the Spacemit K1 QuadSPI controller in master mode.
 	  This controller does only support the high-level SPI memory interface
 	  and not support generic SPI messages.
+
+config SPI_SG2044_NOR
+	tristate "SG2044 SPI NOR Controller"
+	depends on ARCH_SOPHGO || COMPILE_TEST
+	help
+	  This enables support for the SG2044 SPI NOR controller,
+	  which supports Dual/Quad read and write operations while
+	  also supporting 3Byte address devices and 4Byte address
+	  devices.
 
 config SPI_SPRD
 	tristate "Spreadtrum SPI controller"
