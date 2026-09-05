@@ -707,6 +707,25 @@ static int dw_pcie_iatu_setup(struct dw_pcie_rp *pp)
 		if (resource_type(entry->res) != IORESOURCE_MEM)
 			continue;
 
+		if (pp->bypass_ob_mem_iatu) {
+			u64 parent_addr = entry->res->start;
+			u64 pci_addr = entry->res->start - entry->offset;
+
+			if (pci->ops && pci->ops->cpu_addr_fixup)
+				parent_addr = pci->ops->cpu_addr_fixup(pci, parent_addr);
+			/*
+			 * The no-match pass-through path preserves the correct
+			 * PCI address only for identity-mapped MEM ranges.
+			 */
+			if (parent_addr != pci_addr) {
+				dev_err(pci->dev,
+					"Cannot bypass outbound iATU for non-identity MEM range %pr\n",
+					entry->res);
+				return -EINVAL;
+			}
+			continue;
+		}
+
 		if (pci->num_ob_windows <= ++i)
 			break;
 
@@ -732,8 +751,7 @@ static int dw_pcie_iatu_setup(struct dw_pcie_rp *pp)
 							pp->io_bus_addr,
 							pp->io_size);
 			if (ret) {
-				dev_err(pci->dev, "Failed to set IO range %pr\n",
-					entry->res);
+				dev_err(pci->dev, "Failed to set IO range\n");
 				return ret;
 			}
 		} else {
