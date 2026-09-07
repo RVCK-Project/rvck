@@ -77,6 +77,8 @@ class ContribStats:
             }
         }
 
+        self.excluded_emails = ["siyanteng@iscas.ac.cn"]
+
         # 输出目录
         self.docs_dir = self.repo_path / "docs"
         self.companies_dir = self.docs_dir / "companies"
@@ -281,6 +283,10 @@ class ContribStats:
             return None
 
         email_lower = email.lower()
+
+        for excl in self.excluded_emails:
+            if excl.lower() == email_lower:
+                return None
 
         for company, info in self.companies.items():
             # 检查邮箱后缀
