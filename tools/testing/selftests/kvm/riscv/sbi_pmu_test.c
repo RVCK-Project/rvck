@@ -67,7 +67,6 @@ unsigned long pmu_csr_read_num(int csr_num)
 
 	switch (csr_num) {
 	switchcase_csr_read_32(CSR_CYCLE, ret)
-	switchcase_csr_read_32(CSR_CYCLEH, ret)
 	default :
 		break;
 	}
@@ -122,17 +121,36 @@ static void stop_counter(unsigned long counter, unsigned long stop_flags)
 			       counter, ret.error);
 }
 
-static void guest_illegal_exception_handler(struct ex_regs *regs)
+static void guest_illegal_exception_handler(struct pt_regs *regs)
 {
+	unsigned long insn;
+	int opcode, csr_num, funct3;
+
 	__GUEST_ASSERT(regs->cause == EXC_INST_ILLEGAL,
 		       "Unexpected exception handler %lx\n", regs->cause);
+
+	insn = regs->badaddr;
+	opcode = (insn & INSN_OPCODE_MASK) >> INSN_OPCODE_SHIFT;
+	__GUEST_ASSERT(opcode == INSN_OPCODE_SYSTEM,
+		       "Unexpected instruction with opcode 0x%x insn 0x%lx\n", opcode, insn);
+
+	csr_num = GET_CSR_NUM(insn);
+	funct3 = GET_RM(insn);
+	/* Validate if it is a CSR read/write operation */
+	__GUEST_ASSERT(funct3 <= 7 && (funct3 != 0 && funct3 != 4),
+		       "Unexpected system opcode with funct3 0x%x csr_num 0x%x\n",
+		       funct3, csr_num);
+
+	/* Validate if it is a HPMCOUNTER CSR operation */
+	__GUEST_ASSERT((csr_num >= CSR_CYCLE && csr_num <= CSR_HPMCOUNTER31),
+		       "Unexpected csr_num 0x%x\n", csr_num);
 
 	illegal_handler_invoked = true;
 	/* skip the trapping instruction */
 	regs->epc += 4;
 }
 
-static void guest_irq_handler(struct ex_regs *regs)
+static void guest_irq_handler(struct pt_regs *regs)
 {
 	unsigned int irq_num = regs->cause & ~CAUSE_IRQ_FLAG;
 	struct riscv_pmu_snapshot_data *snapshot_data = snapshot_gva;
@@ -608,7 +626,7 @@ static void test_vm_events_overflow(void *guest_code)
 
 	vcpu_init_vector_tables(vcpu);
 	/* Initialize guest timer frequency. */
-	vcpu_get_reg(vcpu, RISCV_TIMER_REG(frequency), &timer_freq);
+	timer_freq = vcpu_get_reg(vcpu, RISCV_TIMER_REG(frequency));
 	sync_global_to_guest(vm, timer_freq);
 
 	run_vcpu(vcpu);
