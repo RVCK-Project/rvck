@@ -503,6 +503,100 @@ static struct attribute *qemu_virt_event_group[] = {
 	NULL,
 };
 
+/* ZF PMU events */
+static const struct riscv_pmu_event zf_hw_event_map[PERF_COUNT_HW_MAX] = {
+	PERF_MAP_ALL_UNSUPPORTED,
+	[PERF_COUNT_HW_CPU_CYCLES]		= {0x0000040b, 0xFFFFFFF9},
+	[PERF_COUNT_HW_INSTRUCTIONS]		= {0x00000108, 0xFFFFFFFC},
+	[PERF_COUNT_HW_CACHE_REFERENCES]		= {0x00000201, 0xFFFFFFF8},
+	[PERF_COUNT_HW_CACHE_MISSES]		= {0x00000101, 0xFFFFFFF8},
+	[PERF_COUNT_HW_BRANCH_INSTRUCTIONS]	= {0x00000409, 0xFFFFFFF8},
+	[PERF_COUNT_HW_BRANCH_MISSES]		= {0x00000809, 0xFFFFFFF8},
+	[PERF_COUNT_HW_BUS_CYCLES]		= {0x0000040b, 0xFFFFFFF8},
+	[PERF_COUNT_HW_STALLED_CYCLES_FRONTEND]	= {0x00000106, 0xFFFFFFF8},
+	[PERF_COUNT_HW_STALLED_CYCLES_BACKEND]	= {0x00000206, 0xFFFFFFF8},
+	[PERF_COUNT_HW_REF_CPU_CYCLES]		= {0x0000040b, 0xFFFFFFF8},
+};
+
+static const struct riscv_pmu_event zf_cache_event_map[PERF_COUNT_HW_CACHE_MAX]
+						[PERF_COUNT_HW_CACHE_OP_MAX]
+						[PERF_COUNT_HW_CACHE_RESULT_MAX] = {
+	PERF_CACHE_MAP_ALL_UNSUPPORTED,
+	[C(L1D)][C(OP_READ)][C(RESULT_ACCESS)]	= {0x00001001, 0xFFFFFFF8},
+	[C(L1D)][C(OP_READ)][C(RESULT_MISS)]	= {0x00004001, 0xFFFFFFF8},
+	[C(L1D)][C(OP_WRITE)][C(RESULT_ACCESS)]	= {0x00002001, 0xFFFFFFF8},
+	[C(L1D)][C(OP_WRITE)][C(RESULT_MISS)]	= {0x00008001, 0xFFFFFFF8},
+	[C(L1D)][C(OP_PREFETCH)][C(RESULT_ACCESS)]	= {0x00400001, 0xFFFFFFF8},
+	[C(L1D)][C(OP_PREFETCH)][C(RESULT_MISS)]	= {0x00200001, 0xFFFFFFF8},
+	[C(L1I)][C(OP_READ)][C(RESULT_ACCESS)]	= {0x00000202, 0xFFFFFFF8},
+	[C(L1I)][C(OP_READ)][C(RESULT_MISS)]	= {0x00000402, 0xFFFFFFF8},
+	[C(LL)][C(OP_READ)][C(RESULT_ACCESS)]	= {0x00000204, 0xFFFFFFF8},
+	[C(LL)][C(OP_READ)][C(RESULT_MISS)]	= {0x00000104, 0xFFFFFFF8},
+	[C(DTLB)][C(OP_READ)][C(RESULT_ACCESS)]	= {0x00080000, 0xFFFFFFF8},
+	[C(DTLB)][C(OP_READ)][C(RESULT_MISS)]	= {0x00020000, 0xFFFFFFF8},
+	[C(DTLB)][C(OP_WRITE)][C(RESULT_ACCESS)]	= {0x00100000, 0xFFFFFFF8},
+	[C(DTLB)][C(OP_WRITE)][C(RESULT_MISS)]	= {0x00040000, 0xFFFFFFF8},
+	[C(ITLB)][C(OP_READ)][C(RESULT_ACCESS)]	= {0x00001000, 0xFFFFFFF8},
+	[C(ITLB)][C(OP_READ)][C(RESULT_MISS)]	= {0x00000100, 0xFFFFFFF8},
+};
+
+RVPMU_EVENT_CMASK_ATTR(cycles, cpu_cycles, 0x0000040b, 0xFFFFFFF9);
+RVPMU_EVENT_CMASK_ATTR(instructions, inst_retired, 0x00000108, 0xFFFFFFFC);
+RVPMU_EVENT_CMASK_ATTR(cache-references, l1d_cache, 0x00000201, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(cache-misses, l1d_cache_refill, 0x00000101, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(branches, br_retired, 0x00000409, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(branch-misses, br_mis_pred_retired, 0x00000809, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(bus-cycles, bus_cycles, 0x0000040b, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(stalled-cycles-frontend, stall_frontend, 0x00000106, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(stalled-cycles-backend, stall_backend, 0x00000206, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(ref-cpu-cycles, ref_cpu_cycles, 0x0000040b, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(l1d-load-access, l1d_cache_rd, 0x00001001, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(l1d-load-miss, l1d_cache_refill_rd, 0x00004001, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(l1d-store-access, l1d_cache_wr, 0x00002001, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(l1d-store-miss, l1d_cache_refill_wr, 0x00008001, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(l1d-prefetch-access, ldst_l1_pf_late, 0x00400001, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(l1d-prefetch-miss, ldst_l1_pf_refill, 0x00200001, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(l1i-load-access, l1i_cache, 0x00000202, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(l1i-load-miss, l1i_cache_refill, 0x00000402, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(ll-load-access, ll_cache_rd, 0x00000204, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(ll-load-miss, ll_cache_miss_rd, 0x00000104, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(dtlb-load-access, l1d_tlb_rd, 0x00080000, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(dtlb-load-miss, l1d_tlb_refill_rd, 0x00020000, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(dtlb-store-access, l1d_tlb_wr, 0x00100000, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(dtlb-store-miss, l1d_tlb_refill_wr, 0x00040000, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(itlb-load-access, l1i_tlb, 0x00001000, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(itlb-load-miss, l1i_tlb_refill, 0x00000100, 0xFFFFFFF8);
+
+static struct attribute *zf_event_group[] = {
+	RVPMU_EVENT_ATTR_PTR(cpu_cycles),
+	RVPMU_EVENT_ATTR_PTR(inst_retired),
+	RVPMU_EVENT_ATTR_PTR(l1d_cache),
+	RVPMU_EVENT_ATTR_PTR(l1d_cache_refill),
+	RVPMU_EVENT_ATTR_PTR(br_retired),
+	RVPMU_EVENT_ATTR_PTR(br_mis_pred_retired),
+	RVPMU_EVENT_ATTR_PTR(bus_cycles),
+	RVPMU_EVENT_ATTR_PTR(stall_frontend),
+	RVPMU_EVENT_ATTR_PTR(stall_backend),
+	RVPMU_EVENT_ATTR_PTR(ref_cpu_cycles),
+	RVPMU_EVENT_ATTR_PTR(l1d_cache_rd),
+	RVPMU_EVENT_ATTR_PTR(l1d_cache_refill_rd),
+	RVPMU_EVENT_ATTR_PTR(l1d_cache_wr),
+	RVPMU_EVENT_ATTR_PTR(l1d_cache_refill_wr),
+	RVPMU_EVENT_ATTR_PTR(ldst_l1_pf_late),
+	RVPMU_EVENT_ATTR_PTR(ldst_l1_pf_refill),
+	RVPMU_EVENT_ATTR_PTR(l1i_cache),
+	RVPMU_EVENT_ATTR_PTR(l1i_cache_refill),
+	RVPMU_EVENT_ATTR_PTR(ll_cache_rd),
+	RVPMU_EVENT_ATTR_PTR(ll_cache_miss_rd),
+	RVPMU_EVENT_ATTR_PTR(l1d_tlb_rd),
+	RVPMU_EVENT_ATTR_PTR(l1d_tlb_refill_rd),
+	RVPMU_EVENT_ATTR_PTR(l1d_tlb_wr),
+	RVPMU_EVENT_ATTR_PTR(l1d_tlb_refill_wr),
+	RVPMU_EVENT_ATTR_PTR(l1i_tlb),
+	RVPMU_EVENT_ATTR_PTR(l1i_tlb_refill),
+	NULL,
+};
+
 static struct riscv_vendor_pmu_events pmu_vendor_events_table[] = {
 	RISCV_VENDOR_PMU_EVENTS(QEMU_VIRT_VENDOR_ID, QEMU_VIRT_ARCH_ID, QEMU_VIRT_IMPL_ID,
 				qemu_virt_hw_event_map, qemu_virt_cache_event_map,
@@ -510,6 +604,9 @@ static struct riscv_vendor_pmu_events pmu_vendor_events_table[] = {
 	RISCV_VENDOR_PMU_EVENTS(QEMU_VIRT_VENDOR_ID, QEMU_VIRT_ARCH_ID_SPEC, QEMU_VIRT_IMPL_ID,
 				qemu_virt_hw_event_map, qemu_virt_cache_event_map,
 				qemu_virt_event_group)
+	RISCV_VENDOR_PMU_EVENTS(LPRS_VENDOR_ID, LPRS_ARCH_ID, LPRS_IMPL_ID,
+				zf_hw_event_map, zf_cache_event_map,
+				zf_event_group)
 };
 
 static const struct riscv_pmu_event *current_pmu_hw_event_map;
