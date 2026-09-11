@@ -503,6 +503,34 @@ static struct attribute *qemu_virt_event_group[] = {
 	NULL,
 };
 
+/* LRW PMU events */
+static const struct riscv_pmu_event lrw_hw_event_map[PERF_COUNT_HW_MAX] = {
+	PERF_MAP_ALL_UNSUPPORTED,
+	[PERF_COUNT_HW_CPU_CYCLES]		= {0x0000040b, 0xFFFFFFF9},
+	[PERF_COUNT_HW_INSTRUCTIONS]		= {0x00000108, 0xFFFFFFFC},
+	[PERF_COUNT_HW_BRANCH_INSTRUCTIONS]	= {0x00000409, 0xFFFFFFF8},
+	[PERF_COUNT_HW_BRANCH_MISSES]		= {0x00000809, 0xFFFFFFF8},
+};
+
+static const struct riscv_pmu_event lrw_cache_event_map[PERF_COUNT_HW_CACHE_MAX]
+						[PERF_COUNT_HW_CACHE_OP_MAX]
+						[PERF_COUNT_HW_CACHE_RESULT_MAX] = {
+	PERF_CACHE_MAP_ALL_UNSUPPORTED,
+};
+
+RVPMU_EVENT_CMASK_ATTR(lrw_cycles, lrw_cycles, 0x0000040b, 0xFFFFFFF9);
+RVPMU_EVENT_CMASK_ATTR(lrw_instructions, lrw_instructions, 0x00000108, 0xFFFFFFFC);
+RVPMU_EVENT_CMASK_ATTR(lrw_branches, lrw_branches, 0x00000409, 0xFFFFFFF8);
+RVPMU_EVENT_CMASK_ATTR(lrw_branch_misses, lrw_branch_misses, 0x00000809, 0xFFFFFFF8);
+
+static struct attribute *lrw_event_group[] = {
+	RVPMU_EVENT_ATTR_PTR(lrw_cycles),
+	RVPMU_EVENT_ATTR_PTR(lrw_instructions),
+	RVPMU_EVENT_ATTR_PTR(lrw_branches),
+	RVPMU_EVENT_ATTR_PTR(lrw_branch_misses),
+	NULL,
+};
+
 static struct riscv_vendor_pmu_events pmu_vendor_events_table[] = {
 	RISCV_VENDOR_PMU_EVENTS(QEMU_VIRT_VENDOR_ID, QEMU_VIRT_ARCH_ID, QEMU_VIRT_IMPL_ID,
 				qemu_virt_hw_event_map, qemu_virt_cache_event_map,
@@ -510,6 +538,9 @@ static struct riscv_vendor_pmu_events pmu_vendor_events_table[] = {
 	RISCV_VENDOR_PMU_EVENTS(QEMU_VIRT_VENDOR_ID, QEMU_VIRT_ARCH_ID_SPEC, QEMU_VIRT_IMPL_ID,
 				qemu_virt_hw_event_map, qemu_virt_cache_event_map,
 				qemu_virt_event_group)
+	RISCV_VENDOR_PMU_EVENTS(LRW_VENDOR_ID, LRW_ARCH_ID, LRW_IMPL_ID,
+				lrw_hw_event_map, lrw_cache_event_map,
+				lrw_event_group)
 };
 
 static const struct riscv_pmu_event *current_pmu_hw_event_map;

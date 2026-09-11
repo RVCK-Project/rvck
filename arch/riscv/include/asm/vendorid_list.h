@@ -15,4 +15,8 @@
 /* Newer Qemu reports the spec-allocated marchid 0x2a (42) for non-vendor CPUs */
 #define QEMU_VIRT_ARCH_ID_SPEC		0x2a
 
+#define LRW_VENDOR_ID		0x0
+#define LRW_ARCH_ID		0x8000000000000920
+#define LRW_IMPL_ID		0x3000020240831
+
 #endif
