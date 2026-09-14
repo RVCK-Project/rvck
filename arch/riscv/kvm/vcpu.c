@@ -112,6 +112,9 @@ static void kvm_riscv_reset_vcpu(struct kvm_vcpu *vcpu)
 
 int kvm_arch_vcpu_precreate(struct kvm *kvm, unsigned int id)
 {
+	if (kvm_riscv_aia_initialized(kvm))
+		return -EBUSY;
+
 	return 0;
 }
 
