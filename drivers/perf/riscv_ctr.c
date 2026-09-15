@@ -16,7 +16,7 @@
 #include <linux/perf/riscv_pmu.h>
 #include <linux/cpufeature.h>
 #include <asm/hwcap.h>
-#include <asm/csr_ind.h>
+#include <asm/csr_indirect.h>
 #include <asm/csr.h>
 
 #define CTR_BRANCH_FILTERS_INH  (CTRCTL_EXCINH       | \
@@ -38,8 +38,8 @@
 #define CTR_EXCLUDE_BRANCH_FILTERS (PERF_SAMPLE_BRANCH_ABORT_TX	        | \
 				    PERF_SAMPLE_BRANCH_IN_TX		| \
 				    PERF_SAMPLE_BRANCH_PRIV_SAVE        | \
-				    PERF_SAMPLE_BRANCH_NO_TX            | \
-				    PERF_SAMPLE_BRANCH_COUNTERS)
+				    PERF_SAMPLE_BRANCH_NO_TX)
+//PERF_SAMPLE_BRANCH_COUNTERS   not supported in ctr_v3 patch and not available in rvck 6.6
 
 /* Branch filters supported by CTR extension. */
 #define CTR_ALLOWED_BRANCH_FILTERS (PERF_SAMPLE_BRANCH_USER		| \
@@ -88,32 +88,32 @@ struct riscv_perf_task_context {
 
 static inline u64 get_ctr_src_reg(unsigned int ctr_idx)
 {
-	return csr_ind_read(CSR_SIREG, CTR_ENTRIES_FIRST, ctr_idx);
+	return csr_indirect_read(CSR_SIREG, CTR_ENTRIES_FIRST, ctr_idx);
 }
 
 static inline void set_ctr_src_reg(unsigned int ctr_idx, u64 value)
 {
-	return csr_ind_write(CSR_SIREG, CTR_ENTRIES_FIRST, ctr_idx, value);
+	return csr_indirect_write(CSR_SIREG, CTR_ENTRIES_FIRST, ctr_idx, value);
 }
 
 static inline u64 get_ctr_tgt_reg(unsigned int ctr_idx)
 {
-	return csr_ind_read(CSR_SIREG2, CTR_ENTRIES_FIRST, ctr_idx);
+	return csr_indirect_read(CSR_SIREG2, CTR_ENTRIES_FIRST, ctr_idx);
 }
 
 static inline void set_ctr_tgt_reg(unsigned int ctr_idx, u64 value)
 {
-	return csr_ind_write(CSR_SIREG2, CTR_ENTRIES_FIRST, ctr_idx, value);
+	return csr_indirect_write(CSR_SIREG2, CTR_ENTRIES_FIRST, ctr_idx, value);
 }
 
 static inline u64 get_ctr_data_reg(unsigned int ctr_idx)
 {
-	return csr_ind_read(CSR_SIREG3, CTR_ENTRIES_FIRST, ctr_idx);
+	return csr_indirect_read(CSR_SIREG3, CTR_ENTRIES_FIRST, ctr_idx);
 }
 
 static inline void set_ctr_data_reg(unsigned int ctr_idx, u64 value)
 {
-	return csr_ind_write(CSR_SIREG3, CTR_ENTRIES_FIRST, ctr_idx, value);
+	return csr_indirect_write(CSR_SIREG3, CTR_ENTRIES_FIRST, ctr_idx, value);
 }
 
 static inline bool ctr_record_valid(u64 ctr_src)
@@ -131,7 +131,7 @@ static inline unsigned int ctr_get_cycles(u64 ctr_data)
 	const unsigned int cce = FIELD_GET(CTRDATA_CCE_MASK, ctr_data);
 	const unsigned int ccm = FIELD_GET(CTRDATA_CCM_MASK, ctr_data);
 
-	if (ctr_data & CTRDATA_CCV)
+	if (!(ctr_data & CTRDATA_CCV))
 		return 0;
 
 	/* Formula to calculate cycles from spec: (2^12 + CCM) << CCE-1 */
