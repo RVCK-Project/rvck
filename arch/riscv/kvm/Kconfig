@@ -22,6 +22,7 @@ config KVM
 	depends on RISCV_SBI && MMU
 	select HAVE_KVM_EVENTFD
 	select HAVE_KVM_IRQCHIP
+	select HAVE_KVM_IRQ_BYPASS
 	select HAVE_KVM_IRQFD
 	select HAVE_KVM_IRQ_ROUTING
 	select HAVE_KVM_MSI
