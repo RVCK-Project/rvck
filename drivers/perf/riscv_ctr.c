@@ -131,7 +131,7 @@ static inline unsigned int ctr_get_cycles(u64 ctr_data)
 	const unsigned int cce = FIELD_GET(CTRDATA_CCE_MASK, ctr_data);
 	const unsigned int ccm = FIELD_GET(CTRDATA_CCM_MASK, ctr_data);
 
-	if (ctr_data & CTRDATA_CCV)
+	if (!(ctr_data & CTRDATA_CCV))
 		return 0;
 
 	/* Formula to calculate cycles from spec: (2^12 + CCM) << CCE-1 */
