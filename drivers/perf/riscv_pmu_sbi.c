@@ -1542,7 +1542,7 @@ static irqreturn_t rvpmu_ovf_handler(struct cpu_hw_events *cpu_hw_evt,
 				riscv_pmu_ctr_consume(cpu_hw_evt, event);
 				perf_sample_save_brstack(
 					&data, event,
-					&cpu_hw_evt->branches->branch_stack, NULL);
+					&cpu_hw_evt->branches->branch_stack);
 			}
 
 			/*
@@ -2162,7 +2162,7 @@ static void rvpmu_event_init(struct perf_event *event)
 	else
 		event->hw.flags |= PERF_EVENT_FLAG_LEGACY;
 
-	if (branch_sample_call_stack(event))
+	if (event->attr.branch_sample_type & PERF_SAMPLE_BRANCH_CALL_STACK)
 		event->attach_state |= PERF_ATTACH_TASK_DATA;
 
 }
