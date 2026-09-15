@@ -31,6 +31,7 @@
 #include "pasid.h"
 #include "cap_audit.h"
 #include "perfmon.h"
+#include "../iommu-pages.h"
 
 #define ROOT_SIZE		VTD_PAGE_SIZE
 #define CONTEXT_SIZE		VTD_PAGE_SIZE
