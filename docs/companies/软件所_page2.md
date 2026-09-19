@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 291</li>
-<li><strong>统计时间</strong>: 2026-09-07 16:23:15</li>
+<li><strong>贡献提交数</strong>: 293</li>
+<li><strong>统计时间</strong>: 2026-09-19 22:17:41</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -19,6 +19,8 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [4df53ffc](https://github.com/RVCK-Project/rvck/commit/4df53ffc6309d96a86e5b9f64e6b0da780bf7613) | 2024-09-01 | Han Gao | fix: dts: remove duplicate node |
+| [1027b9a3](https://github.com/RVCK-Project/rvck/commit/1027b9a32b061d8facd4f6d183985f3f632765e5) | 2024-09-01 | Han Gao | Solve problem of hdmi-edid reading |
 | [3cf81ffe](https://github.com/RVCK-Project/rvck/commit/3cf81ffee58ea4f6c922c74c056639eebe06bd2b) | 2024-09-01 | Han Gao | riscv:uprobe: fix flush_icache to ensure that instructions are refreshed when sw... |
 | [c4bb50b2](https://github.com/RVCK-Project/rvck/commit/c4bb50b212f0eb29f24b2e5e96bac379b14e8de6) | 2024-09-01 | Han Gao | HDMI: fix bug of not being able to light up the external monitor |
 | [a4260eaf](https://github.com/RVCK-Project/rvck/commit/a4260eafe40876702c91c4e42cac16451aa5adc2) | 2024-09-01 | Han Gao | Fix panel-jadard-jd9365da panel driver problem |
@@ -112,7 +114,7 @@
 | [ce812556](https://github.com/RVCK-Project/rvck/commit/ce8125566b1d0b0f16449407e014addf451804ea) | 2026-07-06 | Pengpeng Hou | can: ems_usb: validate CPC message lengths |
 ---
 
-**共 291 条提交，显示 201-291**
+**共 293 条提交，显示 201-293**
 
 [1](软件所.md) **[2]**
 
@@ -123,5 +125,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-07 16:23:15*
-*数据来源: 主分支 rvck-6.6@863dbf9d*
+*本页面最后更新于 2026-09-19 22:17:41*
+*数据来源: 主分支 rvck-6.6@0bee6ebb*

@@ -1,9 +1,10 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 460 个提交
-# 生成时间: 2026-09-07 16:23:15
+# 共 461 个提交
+# 生成时间: 2026-09-19 22:17:41
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+7ef025ed | 2026-09-12 | ZhenXing Zhu | firmware: thead: th1520_event: make stubs static inline
 33036c1d | 2026-08-31 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 drivers as modules
 2be278e3 | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 power domains
 3637f441 | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 AON subsystem

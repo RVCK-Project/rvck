@@ -1,9 +1,11 @@
 # 软件所 提交列表（纯文本视图）
-# 共 291 个提交
-# 生成时间: 2026-09-07 16:23:15
+# 共 293 个提交
+# 生成时间: 2026-09-19 22:17:41
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+662edbcb | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add bfloat16 extension to get-reg-list test
+f19afebb | 2024-12-02 | Quan Zhou | KVM: riscv: selftests: Add Svvptc/Zabha/Ziccrse exts to get-reg-list test
 1135ff69 | 2026-08-27 | Chen Wang | riscv: remove k1_defconfig
 9cc2e3ef | 2025-04-02 | Will Pierce | riscv: Use kvmalloc_array on relocation_hashtable
 1871180d | 2024-11-28 | Clément Léger | riscv: module: remove relocation_head rel_entry member allocation

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 432</li>
-<li><strong>统计时间</strong>: 2026-09-07 16:23:15</li>
+<li><strong>贡献提交数</strong>: 480</li>
+<li><strong>统计时间</strong>: 2026-09-19 22:17:41</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,54 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [38f0f66b](https://github.com/RVCK-Project/rvck/commit/38f0f66b0260c4229a196e4affcfdfb7b12db69d) | 2026-09-15 | Gao Rui | iommu/intel: fix build failure due to missing iommu-pages.h |
+| [87dd8684](https://github.com/RVCK-Project/rvck/commit/87dd8684b91f9661fc3bebb1b7265221a08e0023) | 2026-06-01 | Yong-Xuan Wang | KVM: riscv: selftests: Split SBI FWFT into separate feature-specific sublists |
+| [17f3dc03](https://github.com/RVCK-Project/rvck/commit/17f3dc03a7259f9345919a7c8a7bbc03c1cc853f) | 2026-06-01 | Yong-Xuan Wang | KVM: riscv: selftests: Refactor ISA and SBI extension sublist macros |
+| [a8b1eb20](https://github.com/RVCK-Project/rvck/commit/a8b1eb201454e66fabfd6b8c8e50bd8e1cb9d9bc) | 2025-04-30 | Atish Patra | KVM: riscv: selftests: Decode stval to identify exact exception type |
+| [affb3bac](https://github.com/RVCK-Project/rvck/commit/affb3bacfdfa4e8c7092ce5de61ad1bf55bf1e6e) | 2025-04-30 | Atish Patra | KVM: riscv: selftests: Align the trap information wiht pt_regs |
+| [c4424bef](https://github.com/RVCK-Project/rvck/commit/c4424befb9b70a0724caf98d3d93a4f566165eb1) | 2024-11-27 | Sean Christopherson | KVM: selftests: Return a value from vcpu_get_reg() instead of using an out-param |
+| [2cd14f8b](https://github.com/RVCK-Project/rvck/commit/2cd14f8bb02b095bfabea88b8cd48dc6e726ad7a) | 2026-06-01 | Yong-Xuan Wang | KVM: RISC-V: SBI FWFT: Fix stale feature exposure after runtime extension change... |
+| [fadce585](https://github.com/RVCK-Project/rvck/commit/fadce585471a4ac7004a4bed45e00d2d571e3328) | 2026-06-01 | Yong-Xuan Wang | KVM: RISC-V: SBI FWFT: Add optional init() callback for hardware probing |
+| [ce6f5acc](https://github.com/RVCK-Project/rvck/commit/ce6f5acc1b7d39a0bb64148c1196c3cd5743a85b) | 2026-06-01 | Yong-Xuan Wang | KVM: RISC-V: SBI FWFT: Mark vCPU CSRs dirty after setting feature value |
+| [8208e4d8](https://github.com/RVCK-Project/rvck/commit/8208e4d87a88baea6a1dcc5dd98f1149e2f2cb2e) | 2025-10-20 | Xu Lu | RISC-V: KVM: selftests: Add Zalasr extensions to get-reg-list test |
+| [94b74efb](https://github.com/RVCK-Project/rvck/commit/94b74efb02ec33c0090105a301513c9009af1702) | 2025-10-17 | Anup Patel | KVM: riscv: selftests: Add SBI MPXY extension to get-reg-list |
+| [eae556d7](https://github.com/RVCK-Project/rvck/commit/eae556d76347a4f2f7cda3881c4f7feb496fa17f) | 2025-10-17 | Anup Patel | RISC-V: KVM: Add SBI MPXY extension support for Guest |
+| [55bfc4f4](https://github.com/RVCK-Project/rvck/commit/55bfc4f410c38d8e603176daf7223ba7f97a6315) | 2025-10-17 | Anup Patel | RISC-V: KVM: Add separate source for forwarded SBI extensions |
+| [fbaed35f](https://github.com/RVCK-Project/rvck/commit/fbaed35f7165b0b6183a01cb23a2f3322d362fbe) | 2025-10-17 | Anup Patel | RISC-V: KVM: Convert kvm_riscv_vcpu_sbi_forward() into extension handler |
+| [6063b8f1](https://github.com/RVCK-Project/rvck/commit/6063b8f1f710cb3f5d8c332f64936059265ca517) | 2025-08-23 | Anup Patel | KVM: riscv: selftests: Add SBI FWFT to get-reg-list test |
+| [1eb48c03](https://github.com/RVCK-Project/rvck/commit/1eb48c03776f1da861175dc100aac0c20a95f30f) | 2025-08-23 | Anup Patel | RISC-V: KVM: Implement ONE_REG interface for SBI FWFT state |
+| [5efe15c8](https://github.com/RVCK-Project/rvck/commit/5efe15c8e6f5823fc4279d79128e9661f8500299) | 2025-08-23 | Anup Patel | RISC-V: KVM: Move copy_sbi_ext_reg_indices() to SBI implementation |
+| [e82fd7e2](https://github.com/RVCK-Project/rvck/commit/e82fd7e2429dee421089dd6db53f3d5c865850ae) | 2025-08-23 | Anup Patel | RISC-V: KVM: Introduce optional ONE_REG callbacks for SBI extensions |
+| [e42fd152](https://github.com/RVCK-Project/rvck/commit/e42fd1522e67d37c1761c891d6bb3fa9e83ab0b9) | 2025-08-23 | Anup Patel | RISC-V: KVM: Introduce feature specific reset for SBI FWFT |
+| [bdb0e3df](https://github.com/RVCK-Project/rvck/commit/bdb0e3df1473c7f4ee4200f0fa44930d9921aa95) | 2025-08-23 | Anup Patel | RISC-V: KVM: Set initial value of hedeleg in kvm_arch_vcpu_create() |
+| [ff9144be](https://github.com/RVCK-Project/rvck/commit/ff9144be94ac7ad9ee959c9929ca8d490a4b8976) | 2025-01-10 | Samuel Holland | RISC-V: KVM: Add support for SBI_FWFT_POINTER_MASKING_PMLEN |
+| [e23e1006](https://github.com/RVCK-Project/rvck/commit/e23e10064b120403cc87bb00602ff9253cc9d939) | 2025-01-10 | Samuel Holland | RISC-V: KVM: Fix inclusion of Smnpm in the guest ISA bitmap |
+| [802177af](https://github.com/RVCK-Project/rvck/commit/802177afffea47e84b48aa57d2a51d1b058d8bca) | 2025-04-30 | Atish Patra | KVM: riscv: selftests: Add vector extension tests |
+| [08a5533d](https://github.com/RVCK-Project/rvck/commit/08a5533d62bac825446daa1f48bc543f80ade625) | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add Zaamo/Zalrsc extensions to get-reg-list test |
+| [1d2e1507](https://github.com/RVCK-Project/rvck/commit/1d2e1507a993c62cecef71826a24866b1a955899) | 2024-07-26 | Yong-Xuan Wang | KVM: riscv: selftests: Add Svade and Svadu Extension to get-reg-list test |
+| [aa7c481a](https://github.com/RVCK-Project/rvck/commit/aa7c481a304eb9a2e65a3eec97f0ca54d316cd69) | 2024-07-26 | Yong-Xuan Wang | KVM: riscv: selftests: Fix compile error |
+| [ba2105c9](https://github.com/RVCK-Project/rvck/commit/ba2105c91c73b8247557ad402e60c7702ddb7d11) | 2024-04-26 | Andrew Jones | KVM: riscv: selftests: Add Zawrs extension to get-reg-list test |
+| [2adc6c4a](https://github.com/RVCK-Project/rvck/commit/2adc6c4a16332fd2c8e0c9dc5155cf3b4f6d8e64) | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add Zcmop extension to get-reg-list test |
+| [eba59892](https://github.com/RVCK-Project/rvck/commit/eba598924f98252c1bc9675fc2cc498cfa4716ce) | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add some Zc* extensions to get-reg-list test |
+| [14601b9c](https://github.com/RVCK-Project/rvck/commit/14601b9cba0f588c95e37417f95dff5de3b76485) | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add Zimop extension to get-reg-list test |
+| [1f0c3a40](https://github.com/RVCK-Project/rvck/commit/1f0c3a40762727efcc59da982540d031674c8277) | 2024-02-13 | Anup Patel | KVM: riscv: selftests: Add Zacas extension to get-reg-list test |
+| [cf3be956](https://github.com/RVCK-Project/rvck/commit/cf3be956cf8b837ae486df84d9d826d1de5bd7e1) | 2024-02-13 | Anup Patel | KVM: riscv: selftests: Add Ztso extension to get-reg-list test |
+| [ab9b91c2](https://github.com/RVCK-Project/rvck/commit/ab9b91c28a44e733ae752ccde1d7bdef6fdc6585) | 2024-01-22 | Gao Rui | KVM: riscv: selftests: complete backport for change vcpu_has_ext |
+| [3a303405](https://github.com/RVCK-Project/rvck/commit/3a303405af7dcd4b542d67c877a0b75e3d26777e) | 2023-12-06 | Andrew Jones | KVM: selftests: riscv: Remove redundant newlines |
+| [605cd108](https://github.com/RVCK-Project/rvck/commit/605cd1082569b123b0733e30ed240d896fd4bfac) | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zfa extension to get-reg-list test |
+| [440c60d7](https://github.com/RVCK-Project/rvck/commit/440c60d77768c006b86dc470671e61c12da66d86) | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zvfh[min] extensions to get-reg-list test |
+| [fe296c5a](https://github.com/RVCK-Project/rvck/commit/fe296c5a9cb5dea1540ab7521de5037d684ad4f1) | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zihintntl extension to get-reg-list test |
+| [fa35dbc7](https://github.com/RVCK-Project/rvck/commit/fa35dbc79e6ef384261ab02499514b4ec61eb72f) | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zfh[min] extensions to get-reg-list test |
+| [b98b1ba6](https://github.com/RVCK-Project/rvck/commit/b98b1ba6df37a41529884ec017772280a3ded29c) | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add vector crypto extensions to get-reg-list test |
+| [b5c275f7](https://github.com/RVCK-Project/rvck/commit/b5c275f71b5fedfe86762b4f624b1905ec4bbcdb) | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add scaler crypto extensions to get-reg-list test |
+| [46261602](https://github.com/RVCK-Project/rvck/commit/46261602829d30949270e3ee6c57cf18cb8dfbc0) | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zbc extension to get-reg-list test |
+| [f824be18](https://github.com/RVCK-Project/rvck/commit/f824be188581d9b80ca4d25dd70526a5d406655f) | 2023-12-13 | Andrew Jones | RISC-V: KVM: selftests: Treat SBI ext regs like ISA ext regs |
+| [be15f963](https://github.com/RVCK-Project/rvck/commit/be15f963bc4db2cabe60b89099d99b5608415e51) | 2023-12-13 | Andrew Jones | KVM: riscv: selftests: Use register subtypes |
+| [a22bcaa0](https://github.com/RVCK-Project/rvck/commit/a22bcaa087f3ff628603cb73e52e258e4d3e6c21) | 2023-12-13 | Andrew Jones | KVM: riscv: selftests: Drop SBI multi registers |
+| [f488cdc4](https://github.com/RVCK-Project/rvck/commit/f488cdc48e779b14f07733f9990b189b94ec5212) | 2023-12-07 | Andrew Jones | KVM: riscv: selftests: Fix get-reg-list print_reg defaults |
+| [7807eb97](https://github.com/RVCK-Project/rvck/commit/7807eb977631a4fefc1533404b3e738a822002c4) | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add condops extensions to get-reg-list test |
+| [28e0792c](https://github.com/RVCK-Project/rvck/commit/28e0792c679100987a407b63365528e4ea107c85) | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add smstateen registers to get-reg-list test |
+| [aca53b84](https://github.com/RVCK-Project/rvck/commit/aca53b846ccecd8ee7215dc06027d348528a7497) | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add senvcfg register to get-reg-list test |
 | [82843f54](https://github.com/RVCK-Project/rvck/commit/82843f54a09d8822075fe879cdf1286d5623766d) | 2026-02-27 | Jinyu Tang | KVM: riscv: Skip CSR restore if VCPU is reloaded on the same core |
 | [0bc5c575](https://github.com/RVCK-Project/rvck/commit/0bc5c575d6aa048f36acd5f5722d11634179828a) | 2026-07-07 | hu.yuye | riscv: defconfig: Enable CONFIG_RTC_DRV_EFI config |
 | [7570810e](https://github.com/RVCK-Project/rvck/commit/7570810ed782704376ace77ec2cced2d00b2a06d) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements |
@@ -452,7 +500,7 @@
 | [48e1d183](https://github.com/RVCK-Project/rvck/commit/48e1d183bed68f477ce4663b59390a9542ccde7b) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 432 条提交（显示全部）**
+**共 480 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -461,5 +509,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-07 16:23:15*
-*数据来源: 主分支 rvck-6.6@863dbf9d*
+*本页面最后更新于 2026-09-19 22:17:41*
+*数据来源: 主分支 rvck-6.6@0bee6ebb*

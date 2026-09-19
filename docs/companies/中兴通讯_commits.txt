@@ -1,9 +1,57 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 432 个提交
-# 生成时间: 2026-09-07 16:23:15
+# 共 480 个提交
+# 生成时间: 2026-09-19 22:17:41
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+38f0f66b | 2026-09-15 | Gao Rui | iommu/intel: fix build failure due to missing iommu-pages.h
+87dd8684 | 2026-06-01 | Yong-Xuan Wang | KVM: riscv: selftests: Split SBI FWFT into separate feature-specific sublists
+17f3dc03 | 2026-06-01 | Yong-Xuan Wang | KVM: riscv: selftests: Refactor ISA and SBI extension sublist macros
+a8b1eb20 | 2025-04-30 | Atish Patra | KVM: riscv: selftests: Decode stval to identify exact exception type
+affb3bac | 2025-04-30 | Atish Patra | KVM: riscv: selftests: Align the trap information wiht pt_regs
+c4424bef | 2024-11-27 | Sean Christopherson | KVM: selftests: Return a value from vcpu_get_reg() instead of using an out-param
+2cd14f8b | 2026-06-01 | Yong-Xuan Wang | KVM: RISC-V: SBI FWFT: Fix stale feature exposure after runtime extension changes
+fadce585 | 2026-06-01 | Yong-Xuan Wang | KVM: RISC-V: SBI FWFT: Add optional init() callback for hardware probing
+ce6f5acc | 2026-06-01 | Yong-Xuan Wang | KVM: RISC-V: SBI FWFT: Mark vCPU CSRs dirty after setting feature value
+8208e4d8 | 2025-10-20 | Xu Lu | RISC-V: KVM: selftests: Add Zalasr extensions to get-reg-list test
+94b74efb | 2025-10-17 | Anup Patel | KVM: riscv: selftests: Add SBI MPXY extension to get-reg-list
+eae556d7 | 2025-10-17 | Anup Patel | RISC-V: KVM: Add SBI MPXY extension support for Guest
+55bfc4f4 | 2025-10-17 | Anup Patel | RISC-V: KVM: Add separate source for forwarded SBI extensions
+fbaed35f | 2025-10-17 | Anup Patel | RISC-V: KVM: Convert kvm_riscv_vcpu_sbi_forward() into extension handler
+6063b8f1 | 2025-08-23 | Anup Patel | KVM: riscv: selftests: Add SBI FWFT to get-reg-list test
+1eb48c03 | 2025-08-23 | Anup Patel | RISC-V: KVM: Implement ONE_REG interface for SBI FWFT state
+5efe15c8 | 2025-08-23 | Anup Patel | RISC-V: KVM: Move copy_sbi_ext_reg_indices() to SBI implementation
+e82fd7e2 | 2025-08-23 | Anup Patel | RISC-V: KVM: Introduce optional ONE_REG callbacks for SBI extensions
+e42fd152 | 2025-08-23 | Anup Patel | RISC-V: KVM: Introduce feature specific reset for SBI FWFT
+bdb0e3df | 2025-08-23 | Anup Patel | RISC-V: KVM: Set initial value of hedeleg in kvm_arch_vcpu_create()
+ff9144be | 2025-01-10 | Samuel Holland | RISC-V: KVM: Add support for SBI_FWFT_POINTER_MASKING_PMLEN
+e23e1006 | 2025-01-10 | Samuel Holland | RISC-V: KVM: Fix inclusion of Smnpm in the guest ISA bitmap
+802177af | 2025-04-30 | Atish Patra | KVM: riscv: selftests: Add vector extension tests
+08a5533d | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add Zaamo/Zalrsc extensions to get-reg-list test
+1d2e1507 | 2024-07-26 | Yong-Xuan Wang | KVM: riscv: selftests: Add Svade and Svadu Extension to get-reg-list test
+aa7c481a | 2024-07-26 | Yong-Xuan Wang | KVM: riscv: selftests: Fix compile error
+ba2105c9 | 2024-04-26 | Andrew Jones | KVM: riscv: selftests: Add Zawrs extension to get-reg-list test
+2adc6c4a | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add Zcmop extension to get-reg-list test
+eba59892 | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add some Zc* extensions to get-reg-list test
+14601b9c | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add Zimop extension to get-reg-list test
+1f0c3a40 | 2024-02-13 | Anup Patel | KVM: riscv: selftests: Add Zacas extension to get-reg-list test
+cf3be956 | 2024-02-13 | Anup Patel | KVM: riscv: selftests: Add Ztso extension to get-reg-list test
+ab9b91c2 | 2024-01-22 | Gao Rui | KVM: riscv: selftests: complete backport for change vcpu_has_ext
+3a303405 | 2023-12-06 | Andrew Jones | KVM: selftests: riscv: Remove redundant newlines
+605cd108 | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zfa extension to get-reg-list test
+440c60d7 | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zvfh[min] extensions to get-reg-list test
+fe296c5a | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zihintntl extension to get-reg-list test
+fa35dbc7 | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zfh[min] extensions to get-reg-list test
+b98b1ba6 | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add vector crypto extensions to get-reg-list test
+b5c275f7 | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add scaler crypto extensions to get-reg-list test
+46261602 | 2023-11-27 | Anup Patel | KVM: riscv: selftests: Add Zbc extension to get-reg-list test
+f824be18 | 2023-12-13 | Andrew Jones | RISC-V: KVM: selftests: Treat SBI ext regs like ISA ext regs
+be15f963 | 2023-12-13 | Andrew Jones | KVM: riscv: selftests: Use register subtypes
+a22bcaa0 | 2023-12-13 | Andrew Jones | KVM: riscv: selftests: Drop SBI multi registers
+f488cdc4 | 2023-12-07 | Andrew Jones | KVM: riscv: selftests: Fix get-reg-list print_reg defaults
+7807eb97 | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add condops extensions to get-reg-list test
+28e0792c | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add smstateen registers to get-reg-list test
+aca53b84 | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add senvcfg register to get-reg-list test
 82843f54 | 2026-02-27 | Jinyu Tang | KVM: riscv: Skip CSR restore if VCPU is reloaded on the same core
 0bc5c575 | 2026-07-07 | hu.yuye | riscv: defconfig: Enable CONFIG_RTC_DRV_EFI config
 7570810e | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements

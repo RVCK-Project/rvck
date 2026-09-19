@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 460</li>
-<li><strong>统计时间</strong>: 2026-09-07 16:23:15</li>
+<li><strong>贡献提交数</strong>: 461</li>
+<li><strong>统计时间</strong>: 2026-09-19 22:17:41</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [64f63400](https://github.com/RVCK-Project/rvck/commit/64f6340065b4e7bcca9f3dfe108a7c40c71ad741) | 2024-04-20 | Atish Patra | drivers/perf: riscv: Read upper bits of a firmware counter |
 | [dc7513b9](https://github.com/RVCK-Project/rvck/commit/dc7513b9fa3336d39e8f4662e4a57b8e90da9fb6) | 2024-04-20 | Atish Patra | RISC-V: Add FIRMWARE_READ_HI definition |
 | [48bc3a74](https://github.com/RVCK-Project/rvck/commit/48bc3a745a4653a957b19a4b433888a1b0d835ec) | 2024-04-20 | Atish Patra | RISC-V: Fix the typo in Scountovf CSR name |
 | [7cb0909a](https://github.com/RVCK-Project/rvck/commit/7cb0909a2ca45d3950be53e56b33039895887901) | 2023-12-20 | Andrew Jones | RISC-V: KVM: selftests: Add get-reg-list test for STA registers |
@@ -217,10 +218,9 @@
 | [d6fe1bc4](https://github.com/RVCK-Project/rvck/commit/d6fe1bc405f4d498372f3e5bedbd9e555033061f) | 2024-06-23 | tingming | dts: th1520: add npu device node |
 | [c4f3398a](https://github.com/RVCK-Project/rvck/commit/c4f3398a463935a158b2cfc9eafb5a8dbe27b703) | 2024-06-21 | David Li | codec: audio: add codec driver for Lichee-Pi-4A board |
 | [3a54839e](https://github.com/RVCK-Project/rvck/commit/3a54839e88c82c6a4c97abd2be2f33fc8e748196) | 2024-06-20 | Chen Pei | riscv: vector: Fix the boot issue compiled using xuantie-toolchain or upstream-t... |
-| [f507d71b](https://github.com/RVCK-Project/rvck/commit/f507d71b6f313477ea40b3e977e23f5473baade3) | 2024-06-19 | Esther Z | drivers: cpufreq: add cpufreq driver. |
 ---
 
-**共 460 条提交，显示 201-400**
+**共 461 条提交，显示 201-400**
 
 [1](阿里达摩院.md) **[2]** [3](阿里达摩院_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-07 16:23:15*
-*数据来源: 主分支 rvck-6.6@863dbf9d*
+*本页面最后更新于 2026-09-19 22:17:41*
+*数据来源: 主分支 rvck-6.6@0bee6ebb*

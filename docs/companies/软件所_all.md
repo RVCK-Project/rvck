@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 291</li>
-<li><strong>统计时间</strong>: 2026-09-07 16:23:15</li>
+<li><strong>贡献提交数</strong>: 293</li>
+<li><strong>统计时间</strong>: 2026-09-19 22:17:41</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.148</li>
 </ul>
@@ -19,6 +19,8 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [662edbcb](https://github.com/RVCK-Project/rvck/commit/662edbcbabe584ea4c5c01e16cf35aad3bed3630) | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add bfloat16 extension to get-reg-list test |
+| [f19afebb](https://github.com/RVCK-Project/rvck/commit/f19afebb26ca91c2b3dc2418bdaba87262a4eff1) | 2024-12-02 | Quan Zhou | KVM: riscv: selftests: Add Svvptc/Zabha/Ziccrse exts to get-reg-list test |
 | [1135ff69](https://github.com/RVCK-Project/rvck/commit/1135ff69f3c1189c751b7918532c260cfc78bd8c) | 2026-08-27 | Chen Wang | riscv: remove k1_defconfig |
 | [9cc2e3ef](https://github.com/RVCK-Project/rvck/commit/9cc2e3ef189b3a60bb30a50ecc5a75fb957cae1a) | 2025-04-02 | Will Pierce | riscv: Use kvmalloc_array on relocation_hashtable |
 | [1871180d](https://github.com/RVCK-Project/rvck/commit/1871180ddb49c573ad893ec926c93133e14bb2ac) | 2024-11-28 | Clément Léger | riscv: module: remove relocation_head rel_entry member allocation |
@@ -312,7 +314,7 @@
 | [ce812556](https://github.com/RVCK-Project/rvck/commit/ce8125566b1d0b0f16449407e014addf451804ea) | 2026-07-06 | Pengpeng Hou | can: ems_usb: validate CPC message lengths |
 ---
 
-**共 291 条提交（显示全部）**
+**共 293 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -321,5 +323,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-07 16:23:15*
-*数据来源: 主分支 rvck-6.6@863dbf9d*
+*本页面最后更新于 2026-09-19 22:17:41*
+*数据来源: 主分支 rvck-6.6@0bee6ebb*
