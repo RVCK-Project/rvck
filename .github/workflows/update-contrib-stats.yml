@@ -27,13 +27,13 @@ jobs:
 
     steps:
     - name: Checkout contrib-stats branch
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: contrib-stats
         fetch-depth: 0
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v6
       with:
         python-version: '3.10'
 
