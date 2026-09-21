@@ -97,6 +97,8 @@ class ContribStats:
 
     def run_git(self, cmd, cwd=None, check_error=True):
         """运行git命令"""
+        print(f"run_git ===>: {cmd} (cwd={cwd})")
+
         if cwd is None:
             cwd = self.repo_path
 
