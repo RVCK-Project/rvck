@@ -527,3 +527,27 @@
 };
 
 /delete-node/ &power;
+
+&aon_gpio0 {
+	status = "okay";
+};
+
+&aon_gpio1 {
+	status = "okay";
+};
+
+&peri1_gpio0 {
+	status = "okay";
+};
+
+&peri1_gpio1 {
+	status = "okay";
+};
+
+&peri2_gpio2 {
+	status = "okay";
+};
+
+&peri2_gpio3 {
+	status = "okay";
+};
