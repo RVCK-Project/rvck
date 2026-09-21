@@ -927,6 +927,7 @@
 			snps,dma-masters = <1>;
 			snps,data-width = <4>;
 			snps,axi-max-burst-len = <4>;
+			status = "disabled";
 		};
 
 		dmac1: dma-controller@27540000 {
@@ -944,6 +945,7 @@
 			snps,dma-masters = <1>;
 			snps,data-width = <4>;
 			snps,axi-max-burst-len = <16>;
+			status = "disabled";
 		};
 
 		uart0: serial@2014000 {
@@ -1396,6 +1398,7 @@
 				 <&clk_peri PERI0_TIMER0_PCLK_EN>;
 			clock-names = "timer", "pclk";
 			resets = <&rst_peri0 PERI0_TIMER0_RST>;
+			status = "disabled";
 		};
 
 		timer1: timer@303014 {
@@ -1407,6 +1410,7 @@
 				 <&clk_peri PERI0_TIMER0_PCLK_EN>;
 			clock-names = "timer", "pclk";
 			resets = <&rst_peri0 PERI0_TIMER0_RST>;
+			status = "disabled";
 		};
 
 		timer2: timer@303028 {
@@ -1418,6 +1422,7 @@
 				 <&clk_peri PERI0_TIMER0_PCLK_EN>;
 			clock-names = "timer", "pclk";
 			resets = <&rst_peri0 PERI0_TIMER0_RST>;
+			status = "disabled";
 		};
 
 		timer3: timer@30303c {
@@ -1429,6 +1434,7 @@
 				 <&clk_peri PERI0_TIMER0_PCLK_EN>;
 			clock-names = "timer", "pclk";
 			resets = <&rst_peri0 PERI0_TIMER0_RST>;
+			status = "disabled";
 		};
 
 		timer4: timer@304000 {
@@ -1440,6 +1446,7 @@
 				 <&clk_peri PERI0_TIMER1_PCLK_EN>;
 			clock-names = "timer", "pclk";
 			resets = <&rst_peri0 PERI0_TIMER1_RST>;
+			status = "disabled";
 		};
 
 		timer5: timer@304014 {
@@ -1451,6 +1458,7 @@
 				 <&clk_peri PERI0_TIMER1_PCLK_EN>;
 			clock-names = "timer", "pclk";
 			resets = <&rst_peri0 PERI0_TIMER1_RST>;
+			status = "disabled";
 		};
 
 		timer6: timer@304028 {
@@ -1462,6 +1470,7 @@
 				 <&clk_peri PERI0_TIMER1_PCLK_EN>;
 			clock-names = "timer", "pclk";
 			resets = <&rst_peri0 PERI0_TIMER1_RST>;
+			status = "disabled";
 		};
 
 		timer7: timer@30403c {
@@ -1473,6 +1482,7 @@
 				 <&clk_peri PERI0_TIMER1_PCLK_EN>;
 			clock-names = "timer", "pclk";
 			resets = <&rst_peri0 PERI0_TIMER1_RST>;
+			status = "disabled";
 		};
 
 		i2c0: i2c@2020000 {
