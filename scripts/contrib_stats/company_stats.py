@@ -200,31 +200,20 @@ class ContribStats:
             print(f"⚠️ 清理凭据时出错: {e}")
 
     def find_tag_in_clone(self, tmp_dir):
-        """在克隆的仓库中查找tag"""
+        """在克隆的仓库中查找主线分支的基线 tag"""
 
-        print("在克隆中查找tag...")
+        print("在克隆的仓库中查找主线分支的基线 tag...")
 
-        # 获取提交日志，查找tag
-        log_cmd = f"git log --oneline --decorate -n {self.clone_depth}"
+        log_cmd = f"git describe --abbrev=0"
         stdout, stderr, code = self.run_git(log_cmd, cwd=tmp_dir)
 
         if code != 0:
-            print(f"获取日志失败: {stderr}")
+            print(f"获取 tag 失败: {stderr}")
             return None
 
-        # 查找包含tag的行
-        for line in stdout.split('\n'):
-            if 'tag:' in line:
-                # 提取tag名称
-                # 示例: "abc1234 (tag: v6.6.112) commit message"
-                tag_match = re.search(r'tag:\s*([^,\s)]+)', line)
-                if tag_match:
-                    tag = tag_match.group(1)
-                    print(f"找到tag: {tag}")
-                    return tag
-
-        print(f"在最近{self.clone_depth}个提交中未找到tag")
-        return None
+        tag = stdout.strip();
+        print(f"找到 tag: {tag}")
+        return tag
 
     def get_commits_from_clone(self, tmp_dir, tag):
         """从克隆中获取提交列表"""
