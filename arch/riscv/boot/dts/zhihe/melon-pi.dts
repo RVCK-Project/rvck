@@ -330,6 +330,7 @@
 };
 
 &uart4 {
+	status = "okay";
 	/*
 	 * Keep the console UART independent of the optional A210 pinctrl
 	 * driver.  The boot firmware has already configured these pins.
@@ -342,6 +343,7 @@
 };
 
 &uart8 {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart8_pins>;
 };
@@ -357,6 +359,7 @@
 };
 
 &uart5 {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart5_pins>;
 };
@@ -414,34 +417,6 @@
 	opp1-2298000000 {
 		opp-microvolt = <1000000>;
 	};
-};
-
-&uart0 {
-	status = "disabled";
-};
-
-&uart1 {
-	status = "disabled";
-};
-
-&uart2 {
-	status = "disabled";
-};
-
-&uart3 {
-	status = "disabled";
-};
-
-&uart6 {
-	status = "disabled";
-};
-
-&uart7 {
-	status = "disabled";
-};
-
-&uart9 {
-	status = "disabled";
 };
 
 &aon_gpio0 {

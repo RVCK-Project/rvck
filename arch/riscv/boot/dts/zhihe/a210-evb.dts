@@ -392,6 +392,7 @@
 };
 
 &uart4 {
+	status = "okay";
 	/*
 	 * Keep the console UART independent of the optional A210 pinctrl
 	 * driver.  The boot firmware has already configured these pins.
@@ -476,42 +477,6 @@
 	opp1-2298000000 {
 		opp-microvolt = <1000000>;
 	};
-};
-
-&uart0 {
-	status = "disabled";
-};
-
-&uart1 {
-	status = "disabled";
-};
-
-&uart2 {
-	status = "disabled";
-};
-
-&uart3 {
-	status = "disabled";
-};
-
-&uart5 {
-	status = "disabled";
-};
-
-&uart6 {
-	status = "disabled";
-};
-
-&uart7 {
-	status = "disabled";
-};
-
-&uart8 {
-	status = "disabled";
-};
-
-&uart9 {
-	status = "disabled";
 };
 
 &peri3_padctrl {
