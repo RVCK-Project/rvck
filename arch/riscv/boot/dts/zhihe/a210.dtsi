@@ -909,6 +909,43 @@
 			resets = <&rst_peri0 PERI0_WDT0_PRST>;
 		};
 
+		dmac0: dma-controller@520000 {
+			compatible = "zhihe,a210-axi-dma";
+			reg = <0x00 0x00520000 0x0 0x4000>;
+			interrupt-parent = <&intc>;
+			interrupts = <264>;
+			clocks = <&clk_peri PERI3_DMAC_ACLK_EN>, <&clk_peri PERI3_DMAC_HCLK_EN>;
+			clock-names = "core-clk", "cfgr-clk";
+			resets = <&rst_peri3 PERI3_DMAC_ARST>, <&rst_peri3 PERI3_DMAC_HRST>;
+			#dma-cells = <1>;
+			dma-channels = <16>;
+			snps,block-size = <65536 65536 65536 65536
+					    65536 65536 65536 65536
+					    65536 65536 65536 65536
+					    65536 65536 65536 65536>;
+			snps,priority = <0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0>;
+			snps,dma-masters = <1>;
+			snps,data-width = <4>;
+			snps,axi-max-burst-len = <4>;
+		};
+
+		dmac1: dma-controller@27540000 {
+			compatible = "zhihe,a210-axi-dma";
+			reg = <0x00 0x27540000 0x0 0x4000>;
+			interrupt-parent = <&intc>;
+			interrupts = <259>;
+			clocks = <&clk_peri TEE_DMAC_CLKEN>, <&clk_peri TEE_DMAC_CLKEN>;
+			clock-names = "core-clk", "cfgr-clk";
+			resets = <&rst_tee TEE_DMAC_ARST>, <&rst_tee TEE_DMAC_HRST>;
+			#dma-cells = <1>;
+			dma-channels = <4>;
+			snps,block-size = <65536 65536 65536 65536>;
+			snps,priority = <0 0 0 0>;
+			snps,dma-masters = <1>;
+			snps,data-width = <4>;
+			snps,axi-max-burst-len = <16>;
+		};
+
 		uart0: serial@2014000 {
 			compatible = "snps,dw-apb-uart";
 			reg = <0x00 0x02014000 0x0 0x400>;
