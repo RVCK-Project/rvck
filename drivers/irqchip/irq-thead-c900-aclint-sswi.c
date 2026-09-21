@@ -161,7 +161,7 @@ static int __init thead_aclint_sswi_probe(struct fwnode_handle *fwnode)
 			  thead_aclint_sswi_starting_cpu,
 			  thead_aclint_sswi_dying_cpu);
 
-	riscv_ipi_set_virq_range(virq, BITS_PER_BYTE, true);
+	riscv_ipi_set_virq_range(virq, BITS_PER_BYTE);
 
 	/* Announce that SSWI is providing IPIs */
 	pr_info("providing IPIs using THEAD ACLINT SSWI\n");
@@ -239,7 +239,7 @@ static int __init sswi_early_probe(struct fwnode_handle *fwnode)
 		return virq < 0 ? virq : -ENOMEM;
 
 	/* Set vIRQ range */
-	riscv_ipi_set_virq_range(virq, BITS_PER_BYTE, true);
+	riscv_ipi_set_virq_range(virq, BITS_PER_BYTE);
 
 	/* Announce that SSWI is providing IPIs */
 	pr_info("%pfwP: providing IPIs\n", fwnode);

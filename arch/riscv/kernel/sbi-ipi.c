@@ -3,34 +3,20 @@
  * Multiplex several IPIs over a single HW IPI.
  *
  * Copyright (c) 2022 Ventana Micro Systems Inc.
- * Copyright (C) 2024 Alibaba Group Holding Limited.
  */
 
 #define pr_fmt(fmt) "riscv: " fmt
 #include <linux/cpu.h>
 #include <linux/init.h>
 #include <linux/irq.h>
-#include <linux/irqchip.h>
 #include <linux/irqchip/chained_irq.h>
 #include <linux/irqdomain.h>
-#include <linux/of.h>
-#include <linux/of_address.h>
-#include <linux/of_irq.h>
 #include <asm/sbi.h>
 
+DEFINE_STATIC_KEY_FALSE(riscv_sbi_for_rfence);
+EXPORT_SYMBOL_GPL(riscv_sbi_for_rfence);
+
 static int sbi_ipi_virq;
-
-static u32 __iomem *sswi_base;
-
-static void sswi_send_ipi(unsigned int cpu)
-{
-	writel(1, sswi_base + cpuid_to_hartid_map(cpu));
-}
-
-static void sswi_clear_ipi(void)
-{
-	writel(0, sswi_base + cpuid_to_hartid_map(smp_processor_id()));
-}
 
 static void sbi_ipi_handle(struct irq_desc *desc)
 {
@@ -39,9 +25,6 @@ static void sbi_ipi_handle(struct irq_desc *desc)
 	chained_irq_enter(chip, desc);
 
 	csr_clear(CSR_IP, IE_SIE);
-	if (sswi_base)
-		sswi_clear_ipi();
-
 	ipi_mux_process();
 
 	chained_irq_exit(chip, desc);
@@ -74,8 +57,7 @@ void __init sbi_ipi_init(void)
 		return;
 	}
 
-	virq = ipi_mux_create(BITS_PER_BYTE, sswi_base ? sswi_send_ipi
-							: sbi_send_ipi);
+	virq = ipi_mux_create(BITS_PER_BYTE, sbi_send_ipi);
 	if (virq <= 0) {
 		pr_err("unable to create muxed IPIs\n");
 		irq_dispose_mapping(sbi_ipi_virq);
@@ -90,26 +72,15 @@ void __init sbi_ipi_init(void)
 	 * via generic IPI-Mux
 	 */
 	cpuhp_setup_state(CPUHP_AP_IRQ_RISCV_SBI_IPI_STARTING,
-			  sswi_base ?
-			  "irqchip/sswi-ipi:starting" :
 			  "irqchip/sbi-ipi:starting",
 			  sbi_ipi_starting_cpu, NULL);
 
-	riscv_ipi_set_virq_range(virq, BITS_PER_BYTE,
-				sswi_base ? true : false);
-	pr_info("providing IPIs using %s IPI extension\n",
-				sswi_base ? "ACLINT SSWI" : "SBI");
-}
+	riscv_ipi_set_virq_range(virq, BITS_PER_BYTE);
+	pr_info("providing IPIs using SBI IPI extension\n");
 
-static int __init aclint_sswi_probe(struct device_node *node,
-				    struct device_node *parent)
-{
-	sswi_base = of_iomap(node, 0);
-	if (!sswi_base) {
-		pr_err("RISC-V ACLINT SSWI device probe failure\n");
-		return -ENODEV;
-	}
-
-	return 0;
+	/*
+	 * Use the SBI remote fence extension to avoid
+	 * the extra context switch needed to handle IPIs.
+	 */
+	static_branch_enable(&riscv_sbi_for_rfence);
 }
-IRQCHIP_DECLARE(riscv_aclint_sswi, "riscv,aclint-sswi", aclint_sswi_probe);
