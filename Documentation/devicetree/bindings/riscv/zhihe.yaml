@@ -20,7 +20,7 @@ properties:
       - description: Zhihe A210 evaluation board
         items:
           - enum:
-              - zhihe,a210-dev
+              - zhihe,melon-pi
               - zhihe,a210-evb
           - const: zhihe,a210
 
