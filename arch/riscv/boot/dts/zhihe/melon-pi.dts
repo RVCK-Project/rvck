@@ -4,8 +4,8 @@
 #include "a210.dtsi"
 
 / {
-	model = "Zhihe A210 Development Board";
-	compatible = "zhihe,a210-dev", "zhihe,a210";
+	model = "Zhihe Melon Pi";
+	compatible = "zhihe,melon-pi", "zhihe,a210";
 
 	aliases {
 		ethernet0 = &gmac0;
@@ -330,6 +330,7 @@
 };
 
 &uart4 {
+	status = "okay";
 	/*
 	 * Keep the console UART independent of the optional A210 pinctrl
 	 * driver.  The boot firmware has already configured these pins.
@@ -342,6 +343,7 @@
 };
 
 &uart8 {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart8_pins>;
 };
@@ -357,6 +359,7 @@
 };
 
 &uart5 {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart5_pins>;
 };
@@ -416,30 +419,70 @@
 	};
 };
 
-&uart0 {
-	status = "disabled";
+&aon_gpio0 {
+	status = "okay";
 };
 
-&uart1 {
-	status = "disabled";
+&aon_gpio1 {
+	status = "okay";
 };
 
-&uart2 {
-	status = "disabled";
+&peri1_gpio0 {
+	status = "okay";
 };
 
-&uart3 {
-	status = "disabled";
+&peri1_gpio1 {
+	status = "okay";
 };
 
-&uart6 {
-	status = "disabled";
+&peri2_gpio2 {
+	status = "okay";
 };
 
-&uart7 {
-	status = "disabled";
+&peri2_gpio3 {
+	status = "okay";
 };
 
-&uart9 {
-	status = "disabled";
+&peri3_gpio {
+	status = "okay";
+};
+
+&dmac0 {
+	status = "okay";
+};
+
+&dmac1 {
+	status = "okay";
+};
+
+&timer0 {
+	status = "okay";
+};
+
+&timer1 {
+	status = "okay";
+};
+
+&timer2 {
+	status = "okay";
+};
+
+&timer3 {
+	status = "okay";
+};
+
+&timer4 {
+	status = "okay";
+};
+
+&timer5 {
+	status = "okay";
+};
+
+&timer6 {
+	status = "okay";
+};
+
+&timer7 {
+	status = "okay";
 };
