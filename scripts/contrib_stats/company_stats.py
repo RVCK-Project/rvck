@@ -137,6 +137,7 @@ class ContribStats:
         # 1. 访问原始 URL（可能适用于公共仓库）
         clone_cmd = (
             f"git clone --bare --filter=blob:none "
+            f"--branch {self.main_branch} "
             f"--depth={self.clone_depth} "
             f"{self.remote_url} "
             f"{tmp_dir}"
