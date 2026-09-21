@@ -14,14 +14,6 @@ on:
         default: false
         type: boolean
 
-  # 当统计分支有push时触发（统计脚本更新时）
-  push:
-    branches:
-      - contrib-stats
-    paths:
-      - 'scripts/contrib_stats/**'
-      - '.github/workflows/update-contrib-stats.yml'
-
 permissions:
   contents: write
 
