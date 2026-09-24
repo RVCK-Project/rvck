@@ -728,11 +728,14 @@ void kvm_arch_vcpu_put(struct kvm_vcpu *vcpu)
 	}
 }
 
-static void kvm_riscv_check_vcpu_requests(struct kvm_vcpu *vcpu)
+static int kvm_riscv_check_vcpu_requests(struct kvm_vcpu *vcpu)
 {
 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
 
 	if (kvm_request_pending(vcpu)) {
+		if (kvm_check_request(KVM_REQ_VM_DEAD, vcpu))
+			return -EIO;
+
 		if (kvm_check_request(KVM_REQ_SLEEP, vcpu)) {
 			kvm_vcpu_srcu_read_unlock(vcpu);
 			rcuwait_wait_event(wait,
@@ -770,6 +773,8 @@ static void kvm_riscv_check_vcpu_requests(struct kvm_vcpu *vcpu)
 		if (kvm_check_request(KVM_REQ_STEAL_UPDATE, vcpu))
 			kvm_riscv_vcpu_record_steal_time(vcpu);
 	}
+
+	return 1;
 }
 
 static void kvm_riscv_update_hvip(struct kvm_vcpu *vcpu)
@@ -951,7 +956,9 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
 
 		kvm_riscv_gstage_vmid_update(vcpu);
 
-		kvm_riscv_check_vcpu_requests(vcpu);
+		ret = kvm_riscv_check_vcpu_requests(vcpu);
+		if (ret <= 0)
+			continue;
 
 		preempt_disable();
 

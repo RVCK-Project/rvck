@@ -12,9 +12,18 @@
 
 #include <linux/jump_label.h>
 #include <linux/kvm_types.h>
+#include <linux/xarray.h>
 #include <asm/csr.h>
 
+struct kvm_kernel_irqfd;
+
 struct kvm_aia {
+	/*
+	 * irqfd forwarding table, keyed by irqfd pointer, holding the vCPU
+	 * each irqfd's producer is posted to. Serialized by kvm->irqfds.lock.
+	 */
+	struct xarray	irqfd_forwarding;
+
 	/* In-kernel irqchip created */
 	bool		in_kernel;
 
@@ -95,6 +104,7 @@ void kvm_riscv_vcpu_aia_imsic_load(struct kvm_vcpu *vcpu, int cpu);
 void kvm_riscv_vcpu_aia_imsic_put(struct kvm_vcpu *vcpu);
 void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu);
 int kvm_riscv_vcpu_aia_imsic_update(struct kvm_vcpu *vcpu);
+int kvm_riscv_irqfd_unforward(struct kvm_kernel_irqfd *irqfd);
 
 #define KVM_RISCV_AIA_IMSIC_TOPEI	(ISELECT_MASK + 1)
 int kvm_riscv_vcpu_aia_imsic_rmw(struct kvm_vcpu *vcpu, unsigned long isel,
