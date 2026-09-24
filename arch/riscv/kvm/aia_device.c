@@ -651,6 +651,9 @@ void kvm_riscv_aia_init_vm(struct kvm *kvm)
 {
 	struct kvm_aia *aia = &kvm->arch.aia;
 
+	/* Initialize the irqfd forwarding table */
+	xa_init(&aia->irqfd_forwarding);
+
 	if (!kvm_riscv_aia_available())
 		return;
 
@@ -675,6 +678,9 @@ void kvm_riscv_aia_init_vm(struct kvm *kvm)
 
 void kvm_riscv_aia_destroy_vm(struct kvm *kvm)
 {
+	/* Cleanup the irqfd forwarding table */
+	xa_destroy(&kvm->arch.aia.irqfd_forwarding);
+
 	/* Proceed only if AIA was initialized successfully */
 	if (!kvm_riscv_aia_initialized(kvm))
 		return;

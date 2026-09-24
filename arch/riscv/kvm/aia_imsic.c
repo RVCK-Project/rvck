@@ -9,9 +9,12 @@
 
 #include <linux/atomic.h>
 #include <linux/bitmap.h>
+#include <linux/irq.h>
 #include <linux/irqchip/riscv-imsic.h>
 #include <linux/kvm_host.h>
+#include <linux/kvm_irqfd.h>
 #include <linux/math.h>
+#include <linux/msi.h>
 #include <linux/spinlock.h>
 #include <linux/swab.h>
 #include <kvm/iodev.h>
@@ -728,25 +731,94 @@ void kvm_riscv_vcpu_aia_imsic_put(struct kvm_vcpu *vcpu)
 	raw_spin_unlock_irqrestore(&imsic->hgei_lock, flags);
 }
 
+int kvm_riscv_irqfd_unforward(struct kvm_kernel_irqfd *irqfd)
+{
+	struct kvm *kvm = irqfd->kvm;
+	struct kvm_vcpu *vcpu;
+	struct irq_data *irq_data;
+	struct msi_msg msg;
+	int ret;
+
+	lockdep_assert_held(&kvm->irqfds.lock);
+
+	vcpu = xa_load(&kvm->arch.aia.irqfd_forwarding, (unsigned long)irqfd);
+	if (!vcpu)
+		return 0;
+
+	irq_data = irq_get_irq_data(irqfd->producer->irq);
+	if (!irq_data)
+		return -EINVAL;
+
+	ret = irq_chip_compose_msi_msg(irq_data, &msg);
+	if (ret)
+		return ret;
+
+	pci_write_msi_msg(irqfd->producer->irq, &msg);
+	ret = irq_set_vcpu_affinity(irqfd->producer->irq, NULL);
+	if (ret)
+		return ret;
+
+	xa_erase(&kvm->arch.aia.irqfd_forwarding, (unsigned long)irqfd);
+	return 0;
+}
+
+static int imsic_vcpu_unforward(struct kvm_vcpu *vcpu)
+{
+	struct kvm *kvm = vcpu->kvm;
+	struct kvm_kernel_irqfd *irqfd;
+	int ret;
+
+	guard(spinlock_irqsave)(&kvm->irqfds.lock);
+
+	list_for_each_entry(irqfd, &kvm->irqfds.items, list) {
+		if (xa_load(&kvm->arch.aia.irqfd_forwarding,
+			    (unsigned long)irqfd) != vcpu)
+			continue;
+
+		ret = kvm_riscv_irqfd_unforward(irqfd);
+		if (ret)
+			return ret;
+	}
+
+	return 0;
+}
+
 void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu)
 {
-	unsigned long flags;
 	struct imsic_mrif tmrif;
+	struct kvm *kvm = vcpu->kvm;
 	int old_vsfile_hgei, old_vsfile_cpu;
 	struct imsic *imsic = vcpu->arch.aia_context.imsic_state;
+	unsigned long flags;
+	int ret;
 
-	/* Read and clear IMSIC VS-file details */
+	if (!imsic)
+		return;
+
 	write_lock_irqsave(&imsic->vsfile_lock, flags);
+	/* Read old IMSIC VS-file details */
 	old_vsfile_hgei = imsic->vsfile_hgei;
 	old_vsfile_cpu = imsic->vsfile_cpu;
+
+	/* Do nothing, if no IMSIC VS-file to release */
+	if (old_vsfile_cpu < 0) {
+		write_unlock_irqrestore(&imsic->vsfile_lock, flags);
+		return;
+	}
+
+	/* Purge the IOMMU mapping */
+	ret = imsic_vcpu_unforward(vcpu);
+	if (KVM_BUG(ret, kvm,
+		    "Failed to redirect vCPU interrupts to host delivery: %d\n", ret)) {
+		write_unlock_irqrestore(&imsic->vsfile_lock, flags);
+		return;
+	}
+
+	/* Clear IMSIC VS-file details after redirecting every producer. */
 	imsic_vsfile_set_hgei(imsic, -1, -1);
 	imsic->vsfile_va = NULL;
 	imsic->vsfile_pa = 0;
 	write_unlock_irqrestore(&imsic->vsfile_lock, flags);
-
-	/* Do nothing, if no IMSIC VS-file to release */
-	if (old_vsfile_cpu < 0)
-		return;
 
 	/*
 	 * At this point, all interrupt producers are still using
@@ -758,15 +830,16 @@ void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu)
 	kvm_riscv_mmu_iounmap(vcpu->kvm, vcpu->arch.aia_context.imsic_addr,
 			      IMSIC_MMIO_PAGE_SZ);
 
-	/* TODO: Purge the IOMMU mapping ??? */
-
 	/*
 	 * At this point, all interrupt producers have been re-directed
 	 * to somewhere else so we move register state from the old IMSIC
 	 * VS-file to the IMSIC SW-file.
 	 */
 
-	/* Read and clear register state from old IMSIC VS-file */
+	/*
+	 * The remote CPU may be injecting an interrupt and waiting for
+	 * vsfile_lock, so do not hold it across the synchronous IPI.
+	 */
 	memset(&tmrif, 0, sizeof(tmrif));
 	imsic_vsfile_read(old_vsfile_hgei, old_vsfile_cpu, imsic->nr_hw_eix,
 			  true, &tmrif);
