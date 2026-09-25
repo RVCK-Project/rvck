@@ -3,10 +3,10 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 293</li>
-<li><strong>统计时间</strong>: 2026-09-19 22:17:41</li>
+<li><strong>贡献提交数</strong>: 282</li>
+<li><strong>统计时间</strong>: 2026-09-25 21:58:54</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
-<li><strong>起始标签</strong>: v6.6.148</li>
+<li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
 </div>
 
@@ -301,20 +301,9 @@
 | [63ec0d5e](https://github.com/RVCK-Project/rvck/commit/63ec0d5ed219548b454e76df044fb516130f56f6) | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pin control nodes |
 | [494dace4](https://github.com/RVCK-Project/rvck/commit/494dace4bc43b00af56b54b1720c16399f80d1a0) | 2024-01-03 | Emil Renner Berthing | pinctrl: Add driver for the T-Head TH1520 SoC |
 | [3147527a](https://github.com/RVCK-Project/rvck/commit/3147527a28c21c59ac914c885943770c9931cf41) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
-| [18f02354](https://github.com/RVCK-Project/rvck/commit/18f02354ed229b8e4561b580812d026e7eb29c85) | 2026-07-23 | Pengpeng Hou | nfc: microread: validate target discovery payload lengths |
-| [896e8884](https://github.com/RVCK-Project/rvck/commit/896e8884fc2cc25cdc13589c0b47663b968dc08d) | 2026-08-08 | Chunyan Zhang | mm: userfaultfd: add pgtable_supports_uffd_wp() |
-| [5232529e](https://github.com/RVCK-Project/rvck/commit/5232529eaf57f08fe37484e301579a1915b93d14) | 2026-07-24 | Pengpeng Hou | Input: iforce - validate input packet lengths |
-| [6fad06bb](https://github.com/RVCK-Project/rvck/commit/6fad06bb793d7089ae05b9fcf46e11be2dfe4850) | 2026-07-31 | Pengpeng Hou | net: prestera: validate firmware header length |
-| [51e32c55](https://github.com/RVCK-Project/rvck/commit/51e32c5555b07ecf983ffe58c92f613e55ae4277) | 2026-07-23 | Pengpeng Hou | drm/bridge: ps8640: propagate AUX transfer register errors |
-| [cb9c9ec4](https://github.com/RVCK-Project/rvck/commit/cb9c9ec479e0bc9a5d5cdc5c723cbc3c33c62109) | 2026-08-07 | WenTao Liang | ceph: fix refcount leak in ceph_readdir() |
-| [5bdd69e8](https://github.com/RVCK-Project/rvck/commit/5bdd69e8301b1c2cc80c15c68b7ee8d32c47608b) | 2026-07-04 | Pengpeng Hou | can: ctucanfd: add missing MODULE_DEVICE_TABLE() |
-| [6067c878](https://github.com/RVCK-Project/rvck/commit/6067c878e38d02a3d5c43497347e143f85c9064a) | 2026-07-06 | Pengpeng Hou | can: peak_usb: validate uCAN receive record lengths |
-| [ae588e5b](https://github.com/RVCK-Project/rvck/commit/ae588e5b9cc268de1aabf30f939f0870717ca164) | 2026-07-22 | Pengpeng Hou | can: softing: fw_parse(): validate firmware record spans |
-| [695aea15](https://github.com/RVCK-Project/rvck/commit/695aea154bb2d453e6daada1510972fafd075285) | 2026-07-22 | Pengpeng Hou | can: kvaser_usb_leaf: kvaser_usb_leaf_wait_cmd(): validate received command exte... |
-| [ce812556](https://github.com/RVCK-Project/rvck/commit/ce8125566b1d0b0f16449407e014addf451804ea) | 2026-07-06 | Pengpeng Hou | can: ems_usb: validate CPC message lengths |
 ---
 
-**共 293 条提交（显示全部）**
+**共 282 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -323,5 +312,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-19 22:17:41*
+*本页面最后更新于 2026-09-25 21:58:54*
 *数据来源: 主分支 rvck-6.6@0bee6ebb*

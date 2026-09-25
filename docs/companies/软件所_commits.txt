@@ -1,6 +1,6 @@
 # 软件所 提交列表（纯文本视图）
-# 共 293 个提交
-# 生成时间: 2026-09-19 22:17:41
+# 共 282 个提交
+# 生成时间: 2026-09-25 21:58:54
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
@@ -286,14 +286,3 @@ dbf6ef93 | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 GPI
 63ec0d5e | 2024-01-03 | Emil Renner Berthing | riscv: dts: thead: Add TH1520 pin control nodes
 494dace4 | 2024-01-03 | Emil Renner Berthing | pinctrl: Add driver for the T-Head TH1520 SoC
 3147527a | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings
-18f02354 | 2026-07-23 | Pengpeng Hou | nfc: microread: validate target discovery payload lengths
-896e8884 | 2026-08-08 | Chunyan Zhang | mm: userfaultfd: add pgtable_supports_uffd_wp()
-5232529e | 2026-07-24 | Pengpeng Hou | Input: iforce - validate input packet lengths
-6fad06bb | 2026-07-31 | Pengpeng Hou | net: prestera: validate firmware header length
-51e32c55 | 2026-07-23 | Pengpeng Hou | drm/bridge: ps8640: propagate AUX transfer register errors
-cb9c9ec4 | 2026-08-07 | WenTao Liang | ceph: fix refcount leak in ceph_readdir()
-5bdd69e8 | 2026-07-04 | Pengpeng Hou | can: ctucanfd: add missing MODULE_DEVICE_TABLE()
-6067c878 | 2026-07-06 | Pengpeng Hou | can: peak_usb: validate uCAN receive record lengths
-ae588e5b | 2026-07-22 | Pengpeng Hou | can: softing: fw_parse(): validate firmware record spans
-695aea15 | 2026-07-22 | Pengpeng Hou | can: kvaser_usb_leaf: kvaser_usb_leaf_wait_cmd(): validate received command extents
-ce812556 | 2026-07-06 | Pengpeng Hou | can: ems_usb: validate CPC message lengths

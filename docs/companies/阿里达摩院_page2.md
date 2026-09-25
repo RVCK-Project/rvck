@@ -3,10 +3,10 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 461</li>
-<li><strong>统计时间</strong>: 2026-09-19 22:17:41</li>
+<li><strong>贡献提交数</strong>: 460</li>
+<li><strong>统计时间</strong>: 2026-09-25 21:58:54</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
-<li><strong>起始标签</strong>: v6.6.148</li>
+<li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
 </div>
 
@@ -220,7 +220,7 @@
 | [3a54839e](https://github.com/RVCK-Project/rvck/commit/3a54839e88c82c6a4c97abd2be2f33fc8e748196) | 2024-06-20 | Chen Pei | riscv: vector: Fix the boot issue compiled using xuantie-toolchain or upstream-t... |
 ---
 
-**共 461 条提交，显示 201-400**
+**共 460 条提交，显示 201-400**
 
 [1](阿里达摩院.md) **[2]** [3](阿里达摩院_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-19 22:17:41*
+*本页面最后更新于 2026-09-25 21:58:54*
 *数据来源: 主分支 rvck-6.6@0bee6ebb*
