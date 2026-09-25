@@ -284,8 +284,10 @@ int iommu_dma_init_fq(struct iommu_domain *domain)
 	return 0;
 }
 
-static inline size_t cookie_msi_granule(struct iommu_dma_cookie *cookie)
+size_t iommu_dma_msi_granule(const struct iommu_domain *domain)
 {
+	struct iommu_dma_cookie *cookie = domain->iova_cookie;
+
 	if (cookie->type == IOMMU_DMA_IOVA_COOKIE)
 		return cookie->iovad.granule;
 	return PAGE_SIZE;
@@ -1759,22 +1761,19 @@ out_free_pages:
  *
  * Return: 0 on success or negative error code if the mapping failed.
  */
-int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
+int iommu_dma_sw_msi(struct iommu_domain *domain, struct msi_desc *desc,
+		     const phys_addr_t *phys_addrs, unsigned int nr_addrs, size_t granule)
 {
 	struct device *dev = msi_desc_to_dev(desc);
-	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
 	struct iommu_dma_msi_page *msi_page;
 	static DEFINE_MUTEX(msi_prepare_lock); /* see below */
-	phys_addr_t phys_addr;
-	size_t granule;
 
 	if (!domain || !domain->iova_cookie) {
 		msi_desc_set_iommu_msi_iova(desc, 0, 0);
 		return 0;
 	}
-
-	granule = cookie_msi_granule(domain->iova_cookie);
-	phys_addr = ALIGN_DOWN(msi_addr, granule);
+	if (granule != iommu_dma_msi_granule(domain))
+		return -EOPNOTSUPP;
 
 	/*
 	 * In fact the whole prepare operation should already be serialised by
@@ -1782,7 +1781,7 @@ int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
 	 * on its own, so consider this locking as failsafe documentation...
 	 */
 	mutex_lock(&msi_prepare_lock);
-	msi_page = iommu_dma_get_msi_page(dev, &phys_addr, 1, granule, domain);
+	msi_page = iommu_dma_get_msi_page(dev, phys_addrs, nr_addrs, granule, domain);
 	mutex_unlock(&msi_prepare_lock);
 	if (!msi_page)
 		return -ENOMEM;
