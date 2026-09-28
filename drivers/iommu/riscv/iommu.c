@@ -22,12 +22,24 @@
 #include <linux/iopoll.h>
 #include <linux/irqchip/riscv-imsic.h>
 #include <linux/kernel.h>
+#include <linux/moduleparam.h>
+#include <linux/mutex.h>
 #include <linux/pci.h>
 
 #include "../dma-iommu.h"
 #include "../iommu-pages.h"
 #include "iommu-bits.h"
 #include "iommu.h"
+
+#undef MODULE_PARAM_PREFIX
+#define MODULE_PARAM_PREFIX "riscv_iommu."
+
+#define RISCV_IOMMU_DEFAULT_NR_MSI_PTES	512
+
+/* A zero value disables guest MSI table allocation. */
+static unsigned int riscv_iommu_nr_msi_ptes = RISCV_IOMMU_DEFAULT_NR_MSI_PTES;
+module_param_named(nr_msi_ptes, riscv_iommu_nr_msi_ptes, uint, 0644);
+MODULE_PARM_DESC(nr_msi_ptes, "Number of PTEs for new second-stage domains (default: 512)");
 
 /* Number of entries per CMD/FLT queue, should be <= INT_MAX */
 #define RISCV_IOMMU_DEF_CQ_COUNT	8192
@@ -1370,6 +1382,10 @@ static void riscv_iommu_free_paging_domain(struct iommu_domain *iommu_domain)
 		ida_free(&riscv_iommu_gscids, domain->gscid);
 
 	riscv_iommu_pte_free(domain, _io_pte_entry(pfn, _PAGE_TABLE), NULL, true);
+	if (domain->msi_table.root)
+		iommu_free_pages(domain->msi_table.root,
+				 get_order(array_size(domain->msi_table.nr_ptes,
+						      sizeof(*domain->msi_table.root))));
 	kfree(domain);
 }
 
@@ -1405,6 +1421,38 @@ static bool riscv_iommu_iohgatp_supported(struct riscv_iommu_device *iommu,
 	return false;
 }
 
+static int riscv_iommu_msi_table_alloc(struct riscv_iommu_domain *domain,
+				       struct riscv_iommu_device *iommu)
+{
+	struct riscv_iommu_msi_table *msi_table = &domain->msi_table;
+	struct riscv_iommu_msipte *root;
+	size_t size;
+
+	if (!(iommu->caps & RISCV_IOMMU_CAPABILITIES_MSI_FLAT))
+		return 0;
+
+	guard(mutex)(&domain->mutex);
+
+	if (msi_table->root)
+		return 0;
+
+	if (!msi_table->nr_ptes)
+		return 0;
+
+	size = array_size(msi_table->nr_ptes, sizeof(*msi_table->root));
+	if (size == SIZE_MAX)
+		return -EOVERFLOW;
+
+	root = iommu_alloc_pages_node(NUMA_NO_NODE, GFP_KERNEL_ACCOUNT,
+				      get_order(size));
+	if (!root)
+		return -ENOMEM;
+
+	msi_table->root = root;
+
+	return 0;
+}
+
 static int riscv_iommu_attach_paging_domain(struct iommu_domain *iommu_domain,
 					    struct device *dev)
 {
@@ -1414,16 +1462,26 @@ static int riscv_iommu_attach_paging_domain(struct iommu_domain *iommu_domain,
 	struct riscv_iommu_dc dc = { 0 };
 	int new_gscid;
 	int va_bits;
+	int ret;
 
 	if (iommu_domain->type == IOMMU_DOMAIN_UNMANAGED) {
-		if (!riscv_iommu_iohgatp_supported(iommu, domain->pgd_mode))
+		ret = riscv_iommu_msi_table_alloc(domain, iommu);
+		if (ret)
+			return ret;
+
+		mutex_lock(&domain->mutex);
+		if (!riscv_iommu_iohgatp_supported(iommu, domain->pgd_mode)) {
+			mutex_unlock(&domain->mutex);
 			return -ENODEV;
+		}
 
 		if (!domain->gscid) {
 			new_gscid = ida_alloc_range(&riscv_iommu_gscids, 1,
 						    RISCV_IOMMU_MAX_GSCID, GFP_KERNEL);
-			if (new_gscid < 0)
+			if (new_gscid < 0) {
+				mutex_unlock(&domain->mutex);
 				return new_gscid;
+			}
 
 			/* Published before bond_link() and its full barrier. */
 			WRITE_ONCE(domain->gscid, new_gscid);
@@ -1435,6 +1493,8 @@ static int riscv_iommu_attach_paging_domain(struct iommu_domain *iommu_domain,
 			     FIELD_PREP(RISCV_IOMMU_DC_IOHGATP_GSCID, domain->gscid) |
 			     FIELD_PREP(RISCV_IOMMU_DC_IOHGATP_PPN,
 					virt_to_pfn(domain->pgd_root));
+		domain->s2 = true;
+		mutex_unlock(&domain->mutex);
 	} else {
 		if (!riscv_iommu_fsc_supported(iommu, domain->pgd_mode))
 			return -ENODEV;
@@ -1497,6 +1557,7 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
 
 	INIT_LIST_HEAD_RCU(&domain->bonds);
 	spin_lock_init(&domain->lock);
+	mutex_init(&domain->mutex);
 	domain->numa_node = dev_to_node(iommu->dev);
 	domain->amo_enabled = !!(iommu->caps & RISCV_IOMMU_CAPABILITIES_AMO_HWAD);
 	domain->pgd_mode = pgd_mode;
@@ -1518,6 +1579,11 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
 		kfree(domain);
 		return ERR_PTR(-ENOMEM);
 	}
+
+	/* The MSI table capacity must remain stable for the domain lifetime. */
+	kernel_param_lock(THIS_MODULE);
+	domain->msi_table.nr_ptes = riscv_iommu_nr_msi_ptes;
+	kernel_param_unlock(THIS_MODULE);
 
 	/*
 	 * Note: RISC-V Privilege spec mandates that virtual addresses

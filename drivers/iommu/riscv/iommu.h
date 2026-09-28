@@ -27,14 +27,24 @@
 #define RISCV_IOMMU_DDTP_TIMEOUT	10000000
 #define RISCV_IOMMU_IOTINVAL_TIMEOUT	90000000
 
+struct riscv_iommu_msi_table {
+	unsigned int nr_ptes;
+	struct riscv_iommu_msipte *root;
+	u64 msi_addr_mask;
+	u64 msi_addr_pattern;
+};
+
 /* This struct contains protection domain specific IOMMU driver data. */
 struct riscv_iommu_domain {
 	struct iommu_domain domain;
 	struct list_head bonds;
 	spinlock_t lock;		/* protect bonds list updates. */
+	struct mutex mutex;		/* serialize domain state updates */
 	int pscid;
 	int gscid;
+	struct riscv_iommu_msi_table msi_table;
 	bool amo_enabled;
+	bool s2;			/* true if this is a second-stage domain */
 	int numa_node;
 	unsigned int pgd_mode;
 	unsigned long *pgd_root;
