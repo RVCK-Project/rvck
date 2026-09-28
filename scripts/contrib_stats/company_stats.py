@@ -83,7 +83,7 @@ class ContribStats:
             }
         }
 
-        self.maintainer_emails = ("siyanteng@iscas.ac.cn","gaohan@iscas.ac.cn")
+        self.maintainer_emails = ("siyanteng@iscas.ac.cn",)
 
         # 输出目录
         self.docs_dir = self.repo_path / "docs"
@@ -343,12 +343,17 @@ class ContribStats:
 
                 # 4. 初始化统计数据结构
                 stats = {
+                    # 提交统计
                     'total_commits': len(commits),
                     'commits_with_company': 0,
                     'total_insertions': 0,
                     'total_deletions': 0,
                     'companies': {company: {'count': 0, 'insertions': 0, 'deletions': 0, 'commits': []} for company in self.companies},
                     'no_company_commits': [],
+                    # 贡献统计
+                    'total_contribution': 0,
+                    'companies_contribution': {company: {'count': 0, 'insertions': 0, 'deletions': 0, 'commits': []} for company in self.companies},
+                    # 其他统计数据
                     'generated_at': self.timestamp,
                     'main_branch': self.main_branch,
                     'main_commit': self.main_commit,
@@ -380,9 +385,11 @@ class ContribStats:
                     for i in range(len(signatures) - 1, -1, -1):
                         if any(email in signatures[i] for email in self.maintainer_emails):
                             del signatures[i]
+                            break
                     filtered_signatures = signatures
                     dprint(f"排除掉 RVCK 维护人员签名的 SOB 列表信息：{filtered_signatures}")
 
+                    dprint(f"按 “提交” 的思路进行统计 =======================")
                     # 从后往前遍历过滤后的签名列表，找到第一个匹配的可识别机构就退出
                     signature_companies = set()
                     for sig in reversed(filtered_signatures):
@@ -429,6 +436,28 @@ class ContribStats:
                             dprint(f"该提交的 author 不是维护人员邮箱: 归入其他 ...")
                             stats['no_company_commits'].append(commit)
 
+                    dprint(f"按照 “贡献” 的定义进行统计 (只要有 SOB 匹配到机构就算贡献) =======================")
+                    filtered_signatures.append(commit['author_name'] + " <" + commit['author_email'] + ">")
+                    dprint(f"补充作者后的 SOB 列表信息：{filtered_signatures}")
+                    signature_companies = set()
+                    for sig in filtered_signatures:
+                    # 从签名中提取邮箱
+                        email_match = re.search(r'<([^>]+)>', sig)
+                        if email_match:
+                            email = email_match.group(1)
+                            company = self.get_company_by_email(email)
+                            if company:
+                               signature_companies.add(company)
+                    dprint(f"针对该提交的 SOB 检测参与贡献的公司结果：{signature_companies}")
+                    if signature_companies:
+                        # 统计所有出现的机构
+                        for company in signature_companies:
+                            stats['total_contribution'] += 1
+                            stats['companies_contribution'][company]['count'] += 1
+                            stats['companies_contribution'][company]['insertions'] += commit_stats['insertions']
+                            stats['companies_contribution'][company]['deletions'] += commit_stats['deletions']
+                            stats['companies_contribution'][company]['commits'].append(commit)
+
                 return stats
 
             finally:
@@ -437,7 +466,26 @@ class ContribStats:
 
     def generate_main_page(self, stats):
         """生成统计主页"""
+
+        # 按 “贡献” 所做的统计 ======
         # 按贡献数排序
+        sorted_companies_contribution = sorted(
+            [(company, stats['companies_contribution'][company]['count']) for company in self.companies],
+            key=lambda x: x[1],
+            reverse=True
+        )
+
+        # 生成概览段落中的机构列表
+        company_contribution_details = []
+        for company, count in sorted_companies_contribution:
+            if count > 0 and stats['total_contribution'] > 0:
+                percentage = (count / stats['total_contribution'] * 100)
+                company_contribution_details.append(f"{company} {count} 条 ({percentage:.1f}%)")
+
+        overview_text_contribution = "，".join(company_contribution_details) if company_contribution_details else "暂无机构贡献数据"
+
+        # 按 "提交" 所做的统计 ======
+        # 按提交数排序
         sorted_companies = sorted(
             [(company, stats['companies'][company]['count']) for company in self.companies],
             key=lambda x: x[1],
@@ -453,7 +501,7 @@ class ContribStats:
 
         overview_text = "，".join(company_details) if company_details else "暂无机构贡献数据"
 
-        # 生成Markdown内容
+        # 生成 Markdown 内容
         content = f"""# 📊 内核贡献统计报告
 
 **最后更新时间**: {stats['generated_at']}
@@ -465,33 +513,27 @@ class ContribStats:
 
 ## 总体统计
 
-| 项目 | 数量 |
-|------|------|
-| 总提交数 | {stats['total_commits']} |
-| 有机构贡献的提交 | {stats['commits_with_company']} |
-| 无机构贡献的提交 | {len(stats['no_company_commits'])} |
+### 📊 累计代码修改概览
+
+目前 RVCK 基于统计起始点 `{stats['start_tag']}`，已累计合入 {stats['total_commits']} 个补丁，累计合入的补丁涉及代码修改：insert 🟢 +{stats.get('total_insertions', 0)} delete 🔴 -{stats.get('total_deletions', 0)} （截至 {stats['generated_at'][:10]}）。
 
 ### 📌 累计贡献概览
 
-目前 RVCK 基于统计起始点 `{stats['start_tag']}`，已累计合入 {stats['total_commits']} 个补丁（截至 {stats['generated_at'][:10]}），其中，{overview_text}。
+目前 RVCK 基于统计起始点 `{stats['start_tag']}`，各机构累计有参与贡献工作量为 {stats['total_contribution']} 条记录（截至 {stats['generated_at'][:10]}），其中，{overview_text_contribution}。
 
-### 📊 代码修改统计
+## 各机构参与贡献统计
 
-RVCK 累计合入的补丁涉及代码修改：insert 🟢 +{stats.get('total_insertions', 0)} delete 🔴 -{stats.get('total_deletions', 0)}
-
-## 各机构贡献统计
-
-| 机构 | 提交数 | 占比 | 可视化占比 | 代码修改行数 |
-|------|--------|------|------------|--------------|
+| 机构 | 贡献数 | 占比 | 可视化占比 | 参与贡献代码修改行数 |
+|------|--------|------|------------|----------------------|
 """
 
-        for company, count in sorted_companies:
-            company_stat = stats['companies'][company]
+        for company, count in sorted_companies_contribution:
+            company_stat = stats['companies_contribution'][company]
             insertions = company_stat.get('insertions', 0)
             deletions = company_stat.get('deletions', 0)
             total_lines = insertions + deletions
-            if stats['total_commits'] > 0:
-                percentage = (count / stats['total_commits'] * 100)
+            if stats['total_contribution'] > 0:
+                percentage = (count / stats['total_contribution'] * 100)
                 # 生成简单的进度条
                 bar_length = int(percentage / 2)  # 50个字符对应100%
                 bar = "█" * bar_length + "░" * (50 - bar_length)
@@ -507,16 +549,11 @@ pie title 各机构贡献占比
 """
 
         # 添加Mermaid饼图数据
-        for company, count in sorted_companies:
-            if count > 0 and stats['total_commits'] > 0:
+        for company, count in sorted_companies_contribution:
+            if count > 0 and stats['total_contribution'] > 0:
                 # 计算百分比
-                percentage = (count / stats['total_commits'] * 100)
+                percentage = (count / stats['total_contribution'] * 100)
                 content += f'    "{company} ({count}, {percentage:.1f}%)" : {count}\n'
-
-        # 添加无机构贡献的部分
-        if len(stats['no_company_commits']) > 0 and stats['total_commits'] > 0:
-            no_company_percentage = (len(stats['no_company_commits']) / stats['total_commits'] * 100)
-            content += f'    "其他 ({len(stats["no_company_commits"])}, {no_company_percentage:.1f}%)" : {len(stats["no_company_commits"])}\n'
 
         content += """```
 
@@ -532,16 +569,15 @@ pie title 各机构贡献占比
             content += "\n"
 
         content += f"""
-### 2. 提交归属规则
+### 2.贡献归属规则
 
-贡献统计目前只面向对 RVCK 仓库有贡献的参与机构，因此在对主线补丁反合至 RVCK
-等工作中，原补丁作者所属机构暂不计入该统计。
+贡献统计目前只面向对 RVCK 仓库有贡献的参与机构。
 
-在 RVCK 贡献机构范围中，提交归属统计基于以下规则：
+在 RVCK 贡献机构范围中，贡献归属统计基于以下规则：
 
-1. **优先原则**: 如果提交的 Author 邮箱属于某机构，则该提交只计入该机构
-2. **签名统计**: 如果 Author 不属于任何机构，则统计签名中出现的所有机构
-3. **去重规则**: 每个提交对每个机构最多计1次
+1. 如果提交的 Author 邮箱属于某机构，则该机构的贡献数量增加 1
+2. 如果提交的签名列表中出现的签名邮箱属于某机构，则该机构的贡献数量增加 1
+3. 针对每个提交，同一个机构的贡献如果出现多次则最多计 1 次
 
 ### 3. 统计范围
 - 主分支: `{stats['main_branch']}`
