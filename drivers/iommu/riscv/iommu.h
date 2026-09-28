@@ -38,7 +38,7 @@ struct riscv_iommu_msi_table {
 struct riscv_iommu_domain {
 	struct iommu_domain domain;
 	struct list_head bonds;
-	spinlock_t lock;		/* protect bonds list updates. */
+	raw_spinlock_t lock;		/* protect bonds list updates. */
 	struct mutex mutex;		/* serialize domain state updates */
 	int pscid;
 	int gscid;
