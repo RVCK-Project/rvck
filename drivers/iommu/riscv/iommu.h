@@ -38,6 +38,7 @@ struct riscv_iommu_msi_table {
 	u64 msi_addr_mask;
 	u64 msi_addr_pattern;
 	const void *owner;
+	u64 required_caps;
 };
 
 /* This struct contains protection domain specific IOMMU driver data. */
@@ -151,6 +152,8 @@ void riscv_iommu_disable(struct riscv_iommu_device *iommu);
 
 /* Caller must hold rcu_read_lock() while using the returned pointer. */
 struct riscv_iommu_msi_table *riscv_iommu_msi_table_rcu(struct riscv_iommu_info *info);
+bool riscv_iommu_msi_table_check_caps(struct riscv_iommu_msi_table *msi_table,
+				      u64 iommu_caps);
 struct riscv_iommu_dc *riscv_iommu_get_dc(struct riscv_iommu_device *iommu,
 					  unsigned int devid);
 void riscv_iommu_cmd_send(struct riscv_iommu_device *iommu,
