@@ -10,6 +10,7 @@
 - ✅ **手动/自动触发**: 可通过GitHub Actions页面手动运行，每日定时自动更新
 - ✅ **脚本更新触发**: 统计脚本更新时自动运行
 -    **(TODO)**: 暂不支持检测主分支更新及时触发
+
 ## 使用说明
 
 ### 查看统计报告
@@ -42,6 +43,7 @@
 ## 统计规则
 
 ### RVCK 贡献机构识别规则
+
 - 超睿科技: @ultrarisc.com
 - 进迭时空: @spacemit.com, @linux.spacemit.com
 - 中兴通讯: @zte.com.cn
@@ -50,15 +52,15 @@
 - 软件所: @iscas.ac.cn, @isrc.iscas.ac.cn, Weihao Li <ieiao@outlook.com>
 - 蓝芯算力: @lanxincomputing.com
 
-### 提交归属统计规则
+### 贡献归属统计规则
 
-贡献统计目前只面向对 RVCK 仓库有贡献的参与机构，因此在对主线补丁反合至 RVCK 等工作中，原补丁作者所属机构暂不计入该统计。
+贡献统计目前只面向对 RVCK 仓库有贡献的参与机构。
 
-在 RVCK 贡献机构范围中，提交归属统计基于以下规则：
+在 RVCK 贡献机构范围中，贡献归属统计基于以下规则：
 
-1. **优先原则**: 如果提交的 Author 邮箱属于某机构，则该提交只计入该机构
-2. **签名统计**: 如果 Author 不属于任何机构，则统计签名中出现的所有机构
-3. **去重规则**: 每个提交对每个机构最多计1次
+1. 如果提交的 Author 邮箱属于某机构，则该机构的贡献数量增加 1
+2. 如果提交的签名列表中出现的签名邮箱属于某机构，则该机构的贡献数量增加 1
+3. 针对每个提交，同一个机构的贡献如果出现多次则最多计 1 次
 
 ## 文件结构
 
@@ -84,7 +86,9 @@ contrib-stats/
 ## 自定义配置
 
 ### 修改机构配置
+
 编辑 `scripts/contrib_stats/company_stats.py` 中的 `companies` 字典:
+
 ```python
 self.companies = {
     "机构名": {
@@ -97,6 +101,7 @@ self.companies = {
 ```
 
 ### 修改统计参数
+
 - 主分支: 修改 `--main-branch` 参数或设置 `MAIN_BRANCH` secret
 - 克隆深度: 修改 `self.clone_depth` 变量
 - 克隆深度内未找到 tag 时的默认统计数量: 修改 `self.fallback_count` 变量
@@ -114,8 +119,9 @@ self.companies = {
    - 检查统计规则是否符合预期
 
 ### 调试方法
+
 - 查看GitHub Actions运行日志
-- 本地运行脚本测试
+- 本地运行脚本测试，示例：`python scripts/contrib_stats/company_stats.py --remote-url git@github.com:RVCK-Project/rvck.git`
 - 检查生成的JSON数据文件
 
 ## 许可证
