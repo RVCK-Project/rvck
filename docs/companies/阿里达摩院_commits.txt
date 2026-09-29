@@ -1,6 +1,6 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 460 个提交
-# 生成时间: 2026-09-25 21:58:54
+# 共 351 个提交
+# 生成时间: 2026-09-29 10:23:47
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
@@ -20,7 +20,6 @@ c7c9f326 | 2026-08-27 | Zhiguo Zhu | dt-bindings: regulator: zhihe: add A210 AON
 781b0a4b | 2026-08-27 | Zhiguo Zhu | dt-bindings: firmware: zhihe: add A210 AON subsystem
 85a7b9ad | 2026-08-18 | Zhiguo Zhu | pinctrl: zhihe: add A210 pinctrl driver
 6c1baf38 | 2026-08-18 | Zhiguo Zhu | dt-bindings: pinctrl: zhihe: add A210 pinctrl
-b6e72569 | 2024-12-16 | Guo Ren | riscv: Implement smp_cond_load8/16() with Zawrs
 9916733c | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 Ethernet controllers
 1ddaa43b | 2026-08-18 | Zhiguo Zhu | net: stmmac: add ZhiHe A210 DWMAC glue layer
 e1e97633 | 2026-08-18 | Zhiguo Zhu | dt-bindings: net: zhihe: add A210 DWMAC
@@ -70,7 +69,6 @@ b225dbef | 2024-10-16 | Samuel Holland | riscv: selftests: Add a pointer masking
 2330a3ad | 2024-10-16 | Samuel Holland | riscv: Add support for the tagged address ABI
 54d8313c | 2024-10-16 | Samuel Holland | riscv: Add support for userspace pointer masking
 e010f144 | 2024-10-16 | Samuel Holland | riscv: Add CSR definitions for pointer masking
-c2642289 | 2026-04-03 | Chen Pei | riscv: vdso_cfi: Add clean rule for copied sources
 6337a537 | 2026-04-04 | Charlie Jenkins | selftests: riscv: Add license to cfi selftest
 2aec0482 | 2026-04-04 | Paul Walmsley | prctl: cfi: change the branch landing pad prctl()s to be more descriptive
 b541f271 | 2026-04-04 | Zong Li | riscv: cfi: clear CFI lock status in start_thread()
@@ -289,102 +287,9 @@ ac9611a9 | 2023-10-12 | Ian Rogers | perf pmu: Const-ify file APIs
 b51c7666 | 2023-09-01 | Ian Rogers | perf parse-events: Avoid enum casts
 77bb3542 | 2023-09-01 | Ian Rogers | perf parse-events: Tidy up str parameter
 db1e2d30 | 2023-09-01 | Ian Rogers | perf parse-events: Remove unnecessary __maybe_unused
-20242767 | 2025-04-21 | Guo Ren | riscv: xchg: Prefetch the destination word for sc.w
-54ec7214 | 2025-04-21 | Guo Ren | riscv: Add ARCH_HAS_PREFETCH[W] support with Zicbop
-2d470242 | 2025-01-02 | Guo Ren | iommu/riscv: Fixup compile warning
 d1bd257d | 2024-04-22 | Shenlin Liang | perf kvm/riscv: Port perf kvm stat to RISC-V
 8e018be9 | 2024-04-22 | Shenlin Liang | RISCV: KVM: add tracepoints for entry and exit events
-5e6e1a3d | 2024-11-03 | Guo Ren | asm-generic: ticket-lock: Add separate ticket-lock.h
-06154718 | 2024-11-03 | Guo Ren | asm-generic: ticket-lock: Reuse arch_spinlock_t of qspinlock
-bbd18a34 | 2023-09-08 | Guo Ren | asm-generic: ticket-lock: Optimize arch_spin_value_unlocked()
-86863f62 | 2023-09-18 | Baolin Wang | mm: add statistics for PUD level pagetable
-af381240 | 2024-09-01 | xianbing Zhu | hibernate: reduce logs in nosave_region register/remove
-e6454d28 | 2024-09-01 | Xiangyi Zeng | drivers: pwm_bl: fix adjusting failure of pwm backlight when resume from str
-4adfa935 | 2024-09-01 | David Li | audio: th1520: solve misalignment dma addr problem when HDMI playback
-1ac85039 | 2024-09-01 | Xiangyi Zeng | drivers: i2c-hid: fix rvbook i2c-hid wake-up error
-8fa7056b | 2024-09-01 | xianbing Zhu | hibernate: add blkdev flush op berfore poweroff
-dfe77738 | 2024-09-01 | David Li | audio: light: i2s dma channel acquire change to dynamic
-6bbc0b7a | 2024-09-01 | Xiangyi Zeng | dts: crash: enable watchdog0 and watchdog1 in crash kernel
-9e76f783 | 2024-09-01 | tingming | defconfig: th1520: to fix problem of do_compile_kernelmodules fail
-9f14639b | 2024-09-01 | tingming | defconfig: th1520: to add configs of media
-ceece375 | 2024-09-01 | Xiangyi Zeng | dts: som: add gpio-keys node
-9e78abf2 | 2024-09-01 | Xiangyi Zeng | driver: wdt: th1520_wdt: add th1520_wdt driver pm ops
-aae61b27 | 2024-09-01 | Xiangyi Zeng | drivers: mtd: nand: spi: support new winbond-spi-nand devices
-fb0eee98 | 2024-09-01 | tingming | config: th1520: to modify MEMBLOCK&LOCALVERSION_AUTO config
-798c04ec | 2024-09-01 | xianbing Zhu | dts:th1520: fix sd card wprtn issue
-488124da | 2024-09-01 | xianbing Zhu | dts:th1520: add aliases for basic interface
-b00df971 | 2024-09-01 | shuofeng.ren | audio: light_fm: change hdmi config for ap i2s hdmi audio
-ed9057f9 | 2024-09-01 | Huaming | driver:i2c:fix rx_over miss re-try
-aee11e2e | 2024-09-01 | Esther Z | drivers: cpufreq: fix cpufreq em model regsiter warn.
-b9a1f099 | 2024-09-01 | Xiangyi Zeng | drivers: pwm: fix pwm enable status check error
-a30f0fc0 | 2024-09-01 | xianbing Zhu | th1520: sdhci: add quirks for th1520-a-val board
-235aa330 | 2024-09-01 | xianbing Zhu | sdhci:th1520: fixup mmc retune infinitely issue
-42f9fd11 | 2024-09-01 | David Li | dts: audio: update audio pin configuration
-3f41520a | 2024-09-01 | David Li | audio: th1520: workaround to solve noise at the end
-bb2caac0 | 2024-09-01 | tingming | dts: th1520_defconfig: to revert the config CONFIG_USB_GADGET
-931136c5 | 2024-09-01 | Xiangyi Zeng | dts: gpio: add gpio/0/1/2/3 clk gate
-c84635e7 | 2024-09-01 | xianbing Zhu | driver: pty/clk: bootargs options for pty and clk_debug init
-a0a8571c | 2024-09-01 | xianbing Zhu | hibernate: improve crc32 speed by calc compressed data
-abd07891 | 2024-09-01 | xianbing Zhu | trace: add bootargs options for trace and ftrace for hibernate resume
-d3a1ecbf | 2024-09-01 | xianbing Zhu | hibernate: restart when resume fail and added resume dev
-204baa09 | 2024-09-01 | xianbing Zhu | hibernate: get buffer page speedup with no GPF_ZERO
-d82a2279 | 2024-09-01 | xianbing Zhu | hibernate: speedup image crc caculation by multi-threads
-d644da55 | 2024-09-01 | xianbing Zhu | hibernate: load image retry in some crc mismatch
-89f1dfd3 | 2024-09-01 | xianbing Zhu | dts: th1520: update mmc sdio clocks
-cdbc8ffa | 2024-09-01 | tingming | dts: rvbook: to modity rvbook dts
-a78aad86 | 2024-09-01 | Xiangyi Zeng | drivers: iopmp: add iopmp driver
-f4c6402f | 2024-09-01 | Xiangyi Zeng | drivers: pct: fix NULL ptr error when pvt resume from ram
-34626e74 | 2024-09-01 | Xiangyi Zeng | drivers: pinctrl: add pinctrl driver pm ops
-5a16afdf | 2024-09-01 | Xiangyi Zeng | dts: th1520: modify kernel memory region, [0x0, 0x20000] is reserved for opensbi
-6f822cbc | 2024-09-01 | tingming | dts: th1520: to modify rvbook dts
-3dc43e5e | 2024-09-01 | Xiangyi Zeng | dts: th1520: add adc vref-supply regulator
-2aca7d5d | 2024-09-01 | David Li | audio: th1520: to support tdm/spdif feature
-ca136593 | 2024-09-01 | David Li | dts: rvbook: to adapt compatible 'thead,th1520' of rvbook
-74039e4e | 2024-09-01 | xianbing Zhu | riscv: hibernate: crash dump memory mark as nosave
-f1b181c1 | 2024-09-01 | xianbing Zhu | hibernate:snaoshot: detail show copied pfn info
-bd4a04c1 | 2024-09-01 | xianbing Zhu | hibernate: extended platform ops for all mode
-b88ce170 | 2024-09-01 | xianbing Zhu | hibernate: add interface for driver to mark no_save region
-d6a2c1a6 | 2024-09-01 | Xiangyi Zeng | drivers: dma: change dw dma runtime pm to sync
-fe98c7bf | 2024-09-01 | Xiangyi Zeng | audio: th1520: fix i2s pause/resume dma fail
-ca98a49e | 2024-09-01 | Hao Li | dma: dw-axi-dmac: fix multi-channel dmatest fail
-787c68b0 | 2024-09-01 | Xiangyi Zeng | audio: th1520: resolve the dma error problem when ap i2s audio stop play
-a3a69f65 | 2024-09-01 | Xiangyi Zeng | watchdog: dw_wdt: ap watchdog timeout report different strategies
-6a33d407 | 2024-09-01 | Xiangyi Zeng | drivers: wdt: drop DW wdt restart function for th1520 soc
-fe287fe2 | 2024-09-01 | Xiangyi Zeng | drivers: hwmon: bugfix for mr75203
-76d74439 | 2024-09-01 | Xiangyi Zeng | spi: spidev: add spidev speed sysfs for debug
-11b20132 | 2024-09-01 | Huaming | dtb:th15210: correct vi camera2 path cfg
-87814a25 | 2024-09-01 | David Li | dts: update pin/regulator configuration in rvbook dts file
-945cb49d | 2024-09-01 | Xiangyi Zeng | dts: th1520: add th1520-a-val-crash.dts and th1520-lpi4a-product-crash.dts for kdump
-f7840dcf | 2024-09-01 | Xiangyi Zeng | drivers: pinctrl: correct th1520 audio i2c1 bit mapping table
-62dcd615 | 2024-09-01 | Huaming | dtb:th1520: LA Board correct cma cfg
-b6ad7535 | 2024-09-01 | Xiangyi Zeng | dts: th1520: add cpu thermal node and device thermal node
-05b615dc | 2024-09-01 | David Li | perf: sync vendor event path with torvalds/linux
-273847ec | 2024-09-01 | David Li | dts: audio: to support i2s-8ch feature
-ce99ffb6 | 2024-09-01 | tingming | th1520: system_monitor: to add system_monitor driver
-e1565ccd | 2024-09-01 | David Li | dts: audio: to adapt compatible 'thead,th1520'
-35166888 | 2024-09-01 | Huaming | dtb:th1520:light add vi module
-e3b0cd9c | 2024-09-01 | xiaojin.cxj | regdump:add regdump support for lpi4a and light-a && rename some dts name from "thead" to "xuantie"
-949d6ae3 | 2024-09-01 | Huaming | driver:i2c:add i2c mode for tx transfer
-6ace84e2 | 2024-09-01 | David Li | dts: audio: correct audiosys pinctrl name
-c8306df4 | 2024-09-01 | David Li | audio: th1520: support audiosys pinctrl feature
-7354fae0 | 2024-09-01 | Xiangyi Zeng | dts: th1520: remove usb hub node from th1520-a board
-f54f81e5 | 2024-09-01 | tingming | hwspinlock: th1520: to add th1520 hwspinlock driver
-0658401c | 2024-09-01 | Xiangyi Zeng | dts: th1520: add rambus eip_28 device node
-f96e4c7e | 2024-09-01 | Esther Z | dts: th1520: add LA regulator support.
-7963a130 | 2024-09-01 | Xiangyi Zeng | drivers:misc:dsmart: add th1520 iso7816 driver
-f4e00a27 | 2024-09-01 | Xiangyi Zeng | drivers:nvmem:efuse: add th1520 efuse driver
-3474cf4a | 2024-09-01 | David Li | audio: th1520: add soundcard dts node of th1520-a-val board
-1448edad | 2024-09-01 | tingming | dts: th1520: to add npu device node
-c21ef22f | 2024-09-01 | Xiangyi Zeng | riscv:dts:som: add th1520-lpi4a-product and th1520-lpi4a-product-sec dts file
-2f335340 | 2024-09-01 | Xiangyi Zeng | dts:th1520-a: add th1520-a-val.dts and th1520-a-val-sec.dts
 c281baff | 2024-06-21 | Huaming | defconfig:th1520: enable cma config
-c7b83803 | 2024-09-01 | Huaming | dtb:lipi:enable VI module config
-6bc7adfc | 2024-09-01 | xianbing Zhu | riscv: config: add MAX_ORDER config for riscv and th1520
-5626a67b | 2024-09-01 | xianbing Zhu | dts: th1520: add vdec venc and video mem device node
-b70cb356 | 2024-08-31 | xianbing Zhu | mm: export sysmbol __pte_offset_map_lock for modules outside
-64be2fe0 | 2024-08-31 | David Li | audio: th1520: add pa aw87519 driver for XuanTie TH1520 SoC
-d003ac84 | 2024-08-31 | David Li | audio: th1520: add spdif driver for XuanTie TH1520 SoC
-701b99b5 | 2024-08-31 | David Li | audio: th1520: add tdm driver for XuanTie TH1520 SoC
 85ebbeaf | 2024-09-06 | Guo Ren | riscv: mm: Add support for Svinval extension
 3ea68e28 | 2024-09-04 | Guo Ren | riscv: Add ACLINT SSWI support
 afda97a8 | 2024-07-29 | forain | drm: Fix HDMI hot-plug problem
@@ -418,26 +323,15 @@ f70dc8cd | 2024-06-17 | Xiangyi Zeng | riscv:dts: fix spi/qspi1 cs pin duplicate
 b406b57d | 2024-06-15 | David Li | i2s: add i2s driver for XuanTie TH1520 SoC
 4cf4d42c | 2024-06-15 | David Li | configs: xuantie: correct definition of SoC Architecture
 da1f3192 | 2024-06-11 | lst | i2c: designware: add support for hcnt/lcnt got from dt
-7716cd25 | 2024-06-11 | xiaojin.cxj | add 902 share mem log
-3957d177 | 2024-06-05 | abing | refine thead,th1520-usb.yaml
-377c9258 | 2024-06-05 | abing | drivers: usb: dwc3: add usb_mode usb_speed param for mode speed change when insmod ko
-14943c75 | 2024-06-05 | abing | drivers: usb: add dwc3-thead.c
-7cfe0b39 | 2024-06-05 | abing | th1520.dtsi: refine usb dts
 ef7c33b4 | 2024-06-06 | Xiangyi Zeng | riscv:dts:thead: Add TH1520 event and watchdog device node
 018157f0 | 2024-06-06 | Xiangyi Zeng | dt-bindings:wdt: Add Documentation for THEAD TH1520 pmic watchdog
 9713cd7d | 2024-06-06 | Xiangyi Zeng | drivers/watchdog: Add THEAD TH1520 pmic watchdog driver
 5c25f346 | 2024-06-06 | Xiangyi Zeng | dt-bindings:event: Add Documentation for THEAD TH1520 event driver
 aabce927 | 2024-06-06 | Xiangyi Zeng | drivers/soc/event: Add THEAD TH1520 event driver
-ee573f87 | 2024-06-07 | xiaojin.cxj | fix rpmsg addr cast warning
-8e405f7f | 2024-06-07 | xiaojin.cxj | fix lp32 compile warnoing for rpmsg
-677c7db7 | 2024-06-07 | xiaojin.cxj | fix proc log warning
-3502c6c6 | 2024-06-06 | xiaojin.cxj | fix rpmsg warning
-a1815b3f | 2024-06-06 | xiaojin.cxj | add c906 audio support
 bf51dbc2 | 2024-06-05 | xianbing Zhu | net:stmmac: increase timeout for dma reset
 6a097c65 | 2024-06-05 | xianbing Zhu | stmmac:dwmac-thead: add support for suspend/resume feature
 efd98840 | 2024-06-04 | xianbing Zhu | net:dwmac-thead: dd ptp clk set and enable
 8ffb7665 | 2024-06-05 | Esther Z | configs: Enable th1520 mailbox.
-d3fc5b28 | 2024-06-04 | Esther Z | drivers:ipc: update th1520 rpc msg version 2
 8e06ffc0 | 2021-08-10 | fugang.duan | firmware: thead: c910_aon: add th1520 Aon protocol driver
 1adb3527 | 2024-06-04 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 add delay line in different mode and sdio rxclk delay
 22623955 | 2024-06-03 | xianbing Zhu | mmc:sdhci-of-dwcmshc: th1520 larger tuning max loop count to 128
@@ -453,12 +347,9 @@ bc086151 | 2024-05-27 | Xiangyi Zeng | drivers/pvt: add mr75203 driver pm featur
 358a60ba | 2024-05-27 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 SPI/QSPI device node
 a396b852 | 2024-05-27 | Xiangyi Zeng | dt-bindings: spi/qspi: Add Documentation for THEAD TH1520 SPI/QSPI
 af7b2652 | 2024-05-27 | Xiangyi Zeng | drivers/spi: Add THEAD TH1520 QSPI driver
-5d839a02 | 2024-05-27 | tingming | reset: th1520: to support npu/fce reset feature
 e9c5805e | 2024-05-19 | Wei Fu | riscv: dts: thead: Add XuanTie TH1520 Mailbox device node
 f298c8d9 | 2024-05-17 | Fugang Duan | mailbox: add XuanTie TH1520 Mailbox IPC driver
 ff65097c | 2024-05-19 | Wei Fu | dt-bindings: mailbox: Add a binding file for XuanTie TH1520 Mailbox
-66505b78 | 2024-05-22 | tingming | riscv: dts: thead: to add th1520 clk nodes
-7704f176 | 2024-05-22 | tingming | drivers: clk: to add thead th1520 clk driver
 ba80255a | 2024-05-17 | Xiangyi Zeng | dt-bindings: adc: Add Documentation for THEAD TH1520 ADC
 3fefcc38 | 2024-05-17 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 ADC device node
 8794a252 | 2024-05-17 | Xiangyi Zeng | drivers/iio/adc: Add THEAD TH1520 ADC driver

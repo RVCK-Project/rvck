@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 480</li>
-<li><strong>统计时间</strong>: 2026-09-25 21:58:54</li>
+<li><strong>贡献提交数</strong>: 509</li>
+<li><strong>统计时间</strong>: 2026-09-29 10:23:47</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
@@ -40,8 +40,10 @@
 | [bdb0e3df](https://github.com/RVCK-Project/rvck/commit/bdb0e3df1473c7f4ee4200f0fa44930d9921aa95) | 2025-08-23 | Anup Patel | RISC-V: KVM: Set initial value of hedeleg in kvm_arch_vcpu_create() |
 | [ff9144be](https://github.com/RVCK-Project/rvck/commit/ff9144be94ac7ad9ee959c9929ca8d490a4b8976) | 2025-01-10 | Samuel Holland | RISC-V: KVM: Add support for SBI_FWFT_POINTER_MASKING_PMLEN |
 | [e23e1006](https://github.com/RVCK-Project/rvck/commit/e23e10064b120403cc87bb00602ff9253cc9d939) | 2025-01-10 | Samuel Holland | RISC-V: KVM: Fix inclusion of Smnpm in the guest ISA bitmap |
+| [662edbcb](https://github.com/RVCK-Project/rvck/commit/662edbcbabe584ea4c5c01e16cf35aad3bed3630) | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add bfloat16 extension to get-reg-list test |
 | [802177af](https://github.com/RVCK-Project/rvck/commit/802177afffea47e84b48aa57d2a51d1b058d8bca) | 2025-04-30 | Atish Patra | KVM: riscv: selftests: Add vector extension tests |
 | [08a5533d](https://github.com/RVCK-Project/rvck/commit/08a5533d62bac825446daa1f48bc543f80ade625) | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add Zaamo/Zalrsc extensions to get-reg-list test |
+| [f19afebb](https://github.com/RVCK-Project/rvck/commit/f19afebb26ca91c2b3dc2418bdaba87262a4eff1) | 2024-12-02 | Quan Zhou | KVM: riscv: selftests: Add Svvptc/Zabha/Ziccrse exts to get-reg-list test |
 | [1d2e1507](https://github.com/RVCK-Project/rvck/commit/1d2e1507a993c62cecef71826a24866b1a955899) | 2024-07-26 | Yong-Xuan Wang | KVM: riscv: selftests: Add Svade and Svadu Extension to get-reg-list test |
 | [aa7c481a](https://github.com/RVCK-Project/rvck/commit/aa7c481a304eb9a2e65a3eec97f0ca54d316cd69) | 2024-07-26 | Yong-Xuan Wang | KVM: riscv: selftests: Fix compile error |
 | [ba2105c9](https://github.com/RVCK-Project/rvck/commit/ba2105c91c73b8247557ad402e60c7702ddb7d11) | 2024-04-26 | Andrew Jones | KVM: riscv: selftests: Add Zawrs extension to get-reg-list test |
@@ -66,8 +68,14 @@
 | [7807eb97](https://github.com/RVCK-Project/rvck/commit/7807eb977631a4fefc1533404b3e738a822002c4) | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add condops extensions to get-reg-list test |
 | [28e0792c](https://github.com/RVCK-Project/rvck/commit/28e0792c679100987a407b63365528e4ea107c85) | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add smstateen registers to get-reg-list test |
 | [aca53b84](https://github.com/RVCK-Project/rvck/commit/aca53b846ccecd8ee7215dc06027d348528a7497) | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add senvcfg register to get-reg-list test |
+| [b6e72569](https://github.com/RVCK-Project/rvck/commit/b6e725697a4203d94699ab11477a5a8d1075dba6) | 2024-12-16 | Guo Ren | riscv: Implement smp_cond_load8/16() with Zawrs |
 | [82843f54](https://github.com/RVCK-Project/rvck/commit/82843f54a09d8822075fe879cdf1286d5623766d) | 2026-02-27 | Jinyu Tang | KVM: riscv: Skip CSR restore if VCPU is reloaded on the same core |
 | [0bc5c575](https://github.com/RVCK-Project/rvck/commit/0bc5c575d6aa048f36acd5f5722d11634179828a) | 2026-07-07 | hu.yuye | riscv: defconfig: Enable CONFIG_RTC_DRV_EFI config |
+| [b50b8f5e](https://github.com/RVCK-Project/rvck/commit/b50b8f5e1b7205305d8e3758a62ed078f5fe2ffa) | 2025-08-27 | Pincheng Wang | KVM: riscv: selftests: add Zilsd and Zclsd extension to get-reg-list test |
+| [58e40771](https://github.com/RVCK-Project/rvck/commit/58e4077159303fb790bddf544507045bf9dd9ee1) | 2025-08-27 | Pincheng Wang | riscv: KVM: allow Zilsd and Zclsd extensions for Guest/VM |
+| [6abfe4ec](https://github.com/RVCK-Project/rvck/commit/6abfe4ec5d323cd5e09d266567d56ec748ad43d9) | 2025-08-27 | Pincheng Wang | riscv: hwprobe: export Zilsd and Zclsd ISA extensions |
+| [f0546115](https://github.com/RVCK-Project/rvck/commit/f054611556ab94a9dba217141944ebc9f611ace7) | 2025-08-27 | Pincheng Wang | riscv: add ISA extension parsing for Zilsd and Zclsd |
+| [c92b3359](https://github.com/RVCK-Project/rvck/commit/c92b3359407a254f247f261ff6d7faaade21f1ea) | 2025-08-27 | Pincheng Wang | dt-bindings: riscv: add Zilsd and Zclsd extension descriptions |
 | [7570810e](https://github.com/RVCK-Project/rvck/commit/7570810ed782704376ace77ec2cced2d00b2a06d) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements |
 | [66698246](https://github.com/RVCK-Project/rvck/commit/666982461637d11867a26b6152066cd171f66297) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: add vector sub-extension dependencies |
 | [08a3b3c0](https://github.com/RVCK-Project/rvck/commit/08a3b3c0a91d62fb8cad3a079471776922a5baf8) | 2025-03-12 | Conor Dooley | dt-bindings: riscv: d requires f |
@@ -128,7 +136,9 @@
 | [5fb47345](https://github.com/RVCK-Project/rvck/commit/5fb47345c3bff4462fb26972e5fbe439eb74115a) | 2024-04-17 | Yong-Xuan Wang | RISCV: KVM: Introduce vcpu-\>reset_cntx_lock |
 | [aa954bc9](https://github.com/RVCK-Project/rvck/commit/aa954bc97330d74f2d40e4f71b2201285b87f86a) | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
 | [375e687f](https://github.com/RVCK-Project/rvck/commit/375e687f1e2d9ca1910cd14953eb923ab1990ae5) | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use |
+| [bfafded0](https://github.com/RVCK-Project/rvck/commit/bfafded0bcf526599329b2587d3deee6a03c9b4d) | 2025-02-21 | BillXiang | riscv: KVM: Remove unnecessary vcpu kick |
 | [ab197f8e](https://github.com/RVCK-Project/rvck/commit/ab197f8e1112a02a61f2318394997bc8cdd6f81c) | 2024-08-15 | Anup Patel | RISC-V: KVM: Don't zero-out PMU snapshot area before freeing data |
+| [8eadf7e3](https://github.com/RVCK-Project/rvck/commit/8eadf7e3e0980f9691f5b16df46da88920a0eaa4) | 2026-02-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_gstage_get_leaf() |
 | [2148b4f0](https://github.com/RVCK-Project/rvck/commit/2148b4f0ddf76dc12402ef3bb614273fd4f4f612) | 2026-03-30 | Wang Yechao | RISC-V: KVM: Split huge pages during fault handling for dirty logging |
 | [8443fff5](https://github.com/RVCK-Project/rvck/commit/8443fff550735aae8999530244d57ea0ca17322a) | 2026-03-30 | Wang Yechao | RISC-V: KVM: Fix lost write protection on huge pages during dirty logging |
 | [194686c5](https://github.com/RVCK-Project/rvck/commit/194686c5e11493e164e85f2f9e716d040736068e) | 2026-02-26 | Wang Yechao | RISC-V: KVM: Skip THP support check during dirty logging |
@@ -168,6 +178,8 @@
 | [9e9d0138](https://github.com/RVCK-Project/rvck/commit/9e9d0138d97a49fbade53aeecae2709418bb3f6b) | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore SCOUNTEREN in C source |
 | [805c3956](https://github.com/RVCK-Project/rvck/commit/805c3956ae12957b3c46b7e634197cce29116da3) | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore HSTATUS in C source |
 | [9d4fa73d](https://github.com/RVCK-Project/rvck/commit/9d4fa73d5c8862076fc99b71285ac5c8ae5b2f51) | 2024-10-21 | Anup Patel | RISC-V: KVM: Order the object files alphabetically |
+| [4fbf34bd](https://github.com/RVCK-Project/rvck/commit/4fbf34bd780bbe58c5af6796f18c9efa73bdd134) | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling |
+| [b3447555](https://github.com/RVCK-Project/rvck/commit/b34475553f4baab043a49acb3e047cdc9968cb15) | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction |
 | [d4b887c0](https://github.com/RVCK-Project/rvck/commit/d4b887c0bfa6b267b86edd5e05098dd592b810f1) | 2024-07-08 | Jinjie Ruan | riscv: stacktrace: Add USER_STACKTRACE support |
 | [c9864cbf](https://github.com/RVCK-Project/rvck/commit/c9864cbfe2a9057dbafe1ee1bef3c68af3ac1fda) | 2023-10-24 | Clément Léger | riscv: kvm: use ".L" local labels in assembly when applicable |
 | [770698bf](https://github.com/RVCK-Project/rvck/commit/770698bf331afc3ad9e1a9b4abd75b0a8343ed2a) | 2023-10-24 | Clément Léger | riscv: kvm: Use SYM_*() assembly macros instead of deprecated ones |
@@ -234,6 +246,12 @@
 | [1a0a10c9](https://github.com/RVCK-Project/rvck/commit/1a0a10c98b5c2af41b5dcdb3a7ce070ff0bc20cd) | 2025-02-28 | Alexandre Ghiti | riscv: Fix missing __free_pages() in check_vector_unaligned_access() |
 | [f6129836](https://github.com/RVCK-Project/rvck/commit/f6129836ba62aa2749c0a3aed8adf4ad55690562) | 2025-02-28 | Tingbo Liao | riscv: Fix the __riscv_copy_vec_words_unaligned implementation |
 | [954b77cb](https://github.com/RVCK-Project/rvck/commit/954b77cb1dd3be9b77a0996be206614433017343) | 2025-10-20 | Xu Lu | RISC-V: KVM: Allow Zalasr extensions for Guest/VM |
+| [4b986e08](https://github.com/RVCK-Project/rvck/commit/4b986e0873b3ef8c098df1a5d9a886ce7215c653) | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add Zicbop extension to get-reg-list test |
+| [1ad1220e](https://github.com/RVCK-Project/rvck/commit/1ad1220e7bf592df5a3f33ced1c57542e8b47999) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow bfloat16 extension for Guest/VM |
+| [8bed7a44](https://github.com/RVCK-Project/rvck/commit/8bed7a445828501ff5fbdf89cea67d1b07ebb604) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow Zicbop extension for Guest/VM |
+| [fc798ece](https://github.com/RVCK-Project/rvck/commit/fc798ece2c1b8f4372c96fbfc57bec802c11340a) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Provide UAPI for Zicbop block size |
+| [198f5c9d](https://github.com/RVCK-Project/rvck/commit/198f5c9d8e1cb24e251da0ed07de18a64192f940) | 2025-08-08 | Quan Zhou | RISC-V: KVM: Change zicbom/zicboz block size to depend on the host isa |
+| [2d238382](https://github.com/RVCK-Project/rvck/commit/2d23838236cde3ab94f42577f59c1edf54d7d54f) | 2025-11-19 | Yao Zihong | riscv: hwprobe: Expose Zicbop extension and its block size |
 | [5c37f806](https://github.com/RVCK-Project/rvck/commit/5c37f806b7f3679b07d4c7618a26ceb0201bcff2) | 2025-07-24 | Aleksa Paunovic | riscv: hwprobe: Add MIPS vendor extension probing |
 | [893a4c19](https://github.com/RVCK-Project/rvck/commit/893a4c198ae0adae2ef8d3ebd94c6f20d3c62925) | 2025-04-18 | Cyan Yang | riscv: hwprobe: Add SiFive vendor extension support and probe for xsfqmaccdod an... |
 | [5439608a](https://github.com/RVCK-Project/rvck/commit/5439608a1075dc4ea8242a1bbfff87edd8216a6c) | 2025-04-18 | Cyan Yang | riscv: hwprobe: Document SiFive xsfvqmaccdod and xsfvqmaccqoq vendor extensions |
@@ -313,6 +331,8 @@
 | [1e210453](https://github.com/RVCK-Project/rvck/commit/1e210453bfa30af3e1eba38f452cbffdf421dc84) | 2025-10-14 | Sunil V L | ACPI: RISC-V: Add support for RIMT |
 | [8340c3b3](https://github.com/RVCK-Project/rvck/commit/8340c3b3fff916f157d23700313d3be0d0c8a951) | 2025-10-13 | Sunil V L | ACPICA: actbl2: Add definitions for RIMT |
 | [bf311a32](https://github.com/RVCK-Project/rvck/commit/bf311a326abe4fb62522c024c536c83d73dd56bd) | 2025-09-20 | shenlin | perf vendor events riscv: add lrw core JSON file |
+| [20242767](https://github.com/RVCK-Project/rvck/commit/202427673bf8c4feb85b0c87afe45eef326f096e) | 2025-04-21 | Guo Ren | riscv: xchg: Prefetch the destination word for sc.w |
+| [54ec7214](https://github.com/RVCK-Project/rvck/commit/54ec72147d01b158423333f598ef5cbc1841696d) | 2025-04-21 | Guo Ren | riscv: Add ARCH_HAS_PREFETCH[W] support with Zicbop |
 | [fbcba60f](https://github.com/RVCK-Project/rvck/commit/fbcba60f62609ca549a09fcc8f2139ee71571948) | 2025-04-21 | Alexandre Ghiti | riscv: Add support for Zicbop |
 | [eb757a93](https://github.com/RVCK-Project/rvck/commit/eb757a931e8cd8244e99c155ce9de57cb17ec900) | 2025-04-21 | Alexandre Ghiti | riscv: Introduce Zicbop instructions |
 | [6c55e184](https://github.com/RVCK-Project/rvck/commit/6c55e1843e5021337b06475d8358a44dc68c7ca2) | 2025-02-26 | Yunhui Cui | RISC-V: Enable cbo.clean/flush in usermode |
@@ -374,7 +394,10 @@
 | [9ab60fd9](https://github.com/RVCK-Project/rvck/commit/9ab60fd9e12be40a88d70c2d9e70f0d1d5ce218e) | 2024-03-13 | Xiao Wang | riscv: uaccess: Allow the last potential unrolled copy |
 | [190f9eb4](https://github.com/RVCK-Project/rvck/commit/190f9eb4c34c31d09c2ac8e84d29d4948e4dbc88) | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps |
 | [ca142333](https://github.com/RVCK-Project/rvck/commit/ca142333422542d38cb126e3eabce021ca13aec4) | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events |
+| [d9681c38](https://github.com/RVCK-Project/rvck/commit/d9681c3801eafd40fe781b72dff08ea01a2fc56d) | 2024-12-24 | Quan Zhou | RISC-V: KVM: Redirect instruction access fault trap to guest |
 | [25a673c2](https://github.com/RVCK-Project/rvck/commit/25a673c269cd2dea126ce3b80f686238da625eb4) | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest |
+| [9bdba5af](https://github.com/RVCK-Project/rvck/commit/9bdba5afc0a780db7f97f551a424812b78f0286b) | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys |
+| [2d470242](https://github.com/RVCK-Project/rvck/commit/2d470242309d8cd9e72b5037d4f7078b7970a87e) | 2025-01-02 | Guo Ren | iommu/riscv: Fixup compile warning |
 | [4c66d558](https://github.com/RVCK-Project/rvck/commit/4c66d55885695e35f5d0901856cbf3c9a9aea08b) | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver |
 | [3b462e45](https://github.com/RVCK-Project/rvck/commit/3b462e4517bd023d8f115cf67b47435fe6daa73e) | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it |
 | [ee93628d](https://github.com/RVCK-Project/rvck/commit/ee93628da06f2c8d8a08ea669f5857e587fea6db) | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi |
@@ -418,9 +441,15 @@
 | [96528d7f](https://github.com/RVCK-Project/rvck/commit/96528d7f175b15fe70a4f317f46d354a3e028089) | 2023-10-24 | Clément Léger | riscv: Use SYM_*() assembly macros instead of deprecated ones |
 | [0948d6ce](https://github.com/RVCK-Project/rvck/commit/0948d6ce904b416e65eb259da64e337384780280) | 2023-10-24 | Clément Léger | riscv: use ".L" local labels in assembly when applicable |
 | [f2bde542](https://github.com/RVCK-Project/rvck/commit/f2bde542e3fd16ed44a33b1cfb78bcde1f5d4eb9) | 2024-11-03 | Alexandre Ghiti | riscv: Add qspinlock support |
+| [5e6e1a3d](https://github.com/RVCK-Project/rvck/commit/5e6e1a3d57cd8c699337909a8ec735340075d388) | 2024-11-03 | Guo Ren | asm-generic: ticket-lock: Add separate ticket-lock.h |
+| [06154718](https://github.com/RVCK-Project/rvck/commit/06154718a93b58dd6a0faf62bec15fb715b3272d) | 2024-11-03 | Guo Ren | asm-generic: ticket-lock: Reuse arch_spinlock_t of qspinlock |
 | [ed9fb072](https://github.com/RVCK-Project/rvck/commit/ed9fb0721c3e0203cfdb9021a82b767c67fe1ea6) | 2024-11-03 | Alexandre Ghiti | riscv: Implement xchg8/16() using Zabha |
 | [05e5658c](https://github.com/RVCK-Project/rvck/commit/05e5658c626ee972e2e0f5e44fa15de3edf21a65) | 2024-11-03 | Alexandre Ghiti | riscv: Implement arch_cmpxchg128() using Zacas |
 | [d7100d75](https://github.com/RVCK-Project/rvck/commit/d7100d7553b434e74f745a04eb7fa0bb309819a8) | 2024-11-03 | Alexandre Ghiti | riscv: Improve zacas fully-ordered cmpxchg() |
+| [bbd18a34](https://github.com/RVCK-Project/rvck/commit/bbd18a34ce1e1254629a4c0180e82e13167cdcd8) | 2023-09-08 | Guo Ren | asm-generic: ticket-lock: Optimize arch_spin_value_unlocked() |
+| [30580d90](https://github.com/RVCK-Project/rvck/commit/30580d9090f0ef3a50d059fc92343329e7faad16) | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Ziccrse extension for Guest/VM |
+| [7ffb8346](https://github.com/RVCK-Project/rvck/commit/7ffb8346f39d3fcfa1eab821a8892fef5aa6036d) | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Zabha extension for Guest/VM |
+| [89b37fdf](https://github.com/RVCK-Project/rvck/commit/89b37fdf85f9b249d0c3aef19935e6ac1501d4a2) | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Svvptc extension for Guest/VM |
 | [4cbf25c0](https://github.com/RVCK-Project/rvck/commit/4cbf25c06285f9f5531306bd167df3cd2333485a) | 2024-07-26 | Yong-Xuan Wang | RISC-V: KVM: Add Svade and Svadu Extensions Support for Guest/VM |
 | [29a8b020](https://github.com/RVCK-Project/rvck/commit/29a8b02084c5f1b13cab569564453c605a1e19c9) | 2024-10-16 | Samuel Holland | RISC-V: KVM: Allow Smnpm and Ssnpm extensions for guests |
 | [b0733330](https://github.com/RVCK-Project/rvck/commit/b0733330382a2a91574651d9dc2d6aaf311e2634) | 2024-04-26 | Andrew Jones | KVM: riscv: Support guest wrs.nto |
@@ -500,7 +529,7 @@
 | [48e1d183](https://github.com/RVCK-Project/rvck/commit/48e1d183bed68f477ce4663b59390a9542ccde7b) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 480 条提交（显示全部）**
+**共 509 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -509,5 +538,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-25 21:58:54*
+*本页面最后更新于 2026-09-29 10:23:47*
 *数据来源: 主分支 rvck-6.6@0bee6ebb*

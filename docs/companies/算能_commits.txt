@@ -1,6 +1,6 @@
 # 算能 提交列表（纯文本视图）
-# 共 98 个提交
-# 生成时间: 2026-09-25 21:58:54
+# 共 88 个提交
+# 生成时间: 2026-09-29 10:23:47
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
@@ -58,8 +58,6 @@ a90a9cad | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use dev_xyz() in-place
 3bc5c6a1 | 2024-11-16 | fengchun.li | drivers:pci: SC11 support msi-x
 51ba1bb1 | 2024-08-30 | zhencheng.zhang | driver: spifmc: fix spif bug when bs of dd exceed 64k
 34d5a131 | 2024-10-25 | Xiaoguang Xing | riscv:mm: Use old __set_pte_at() because highmem is in use
-f8ec5319 | 2024-09-05 | zhaohui-yan | Fixed the problem of getting stuck when loading rtcbmc driver
-a8f05fbd | 2024-09-04 | zhaohui-yan | MSIX interrupts are allocated starting from bit 14 of the top register.
 e4971162 | 2024-08-17 | lin peng | add null event check logic in riscv_pmu_sbi.c
 ff45b4f5 | 2024-07-25 | chunzhi.lin | riscv:dts:add i2c4 node for multi chips
 4dd2ae16 | 2024-05-23 | chunzhi.lin | riscv:dts:capricorn:add i2c-rtc device
@@ -74,17 +72,10 @@ be6431b4 | 2024-03-26 | Xiaoguang Xing | riscv: defconfig: Add openeuler defconf
 9a3079d2 | 2023-07-31 | Chao Wei | driver: radeon: deinit device during kexec
 8c34e844 | 2023-08-29 | Xiaoguang Xing | kernel: schedule: Fix set_task_cpu() bug
 5e9a29f8 | 2023-10-17 | Xiaoguang Xing | mm: Modify __find_max_addr for memory hole
-8ba2f917 | 2023-02-16 | xiaoguang.xing | riscv: kernel: Optimize apply_relocate_add()
-b2164f92 | 2023-02-16 | xiaoguang.xing | riscv: mm: Clear compilation warning about last_cpupid
 934e8034 | 2023-11-16 | haijiao.liu | kernel: tick: filter unnecessary printing
 d06d8624 | 2023-10-21 | haijiao.liu | kernel: Adjust the log level of the tick_switch_to_oneshot function
 4693e525 | 2024-03-21 | Xiaoguang Xing | driver: clk: Modify the timer clock is turned off defaultly
 12d078fe | 2024-03-21 | Xiaoguang Xing | drivers: clock: Add sophgo sg2042 multi-chip clock synchronous support
-69cbdfa5 | 2024-03-20 | Xiaoguang Xing | riscv: mm: Add high memory on riscv64 using sv39
-82ecf0fd | 2023-02-16 | xiaoguang.xing | riscv: kexec: Add image loader for kexec file
-9036a77b | 2024-03-06 | Xiaoguang Xing | drm/amd/display: Support DRM_AMD_DC_FP on RISC-V
-9ade5f26 | 2024-03-06 | Xiaoguang Xing | riscv: Factor out riscv-march-y to a separate Makefile
-8950b74b | 2024-03-06 | Xiaoguang Xing | riscv: Add support for kernel-mode FPU
 f3cce1ad | 2024-01-26 | Xiaoguang Xing | mango pci hack:broadcast when no MSI source known
 dc200c91 | 2023-07-12 | Xiaoguang Xing | driver: soc: Add sophgo sg2042 soc support
 4a716b39 | 2024-03-21 | Xiaoguang Xing | drivers: pcie: sophgo: Create msi-x whitelist,turn on msi-x for top intr
@@ -96,7 +87,6 @@ e1cdf1b5 | 2024-03-21 | Xiaoguang Xing | driver: mmc: Add sophgo sg2042 soc supp
 8b295494 | 2023-07-12 | Xiaoguang Xing | driver: pinctrl: Add sophgo sg2042 soc support
 4cbcda28 | 2023-07-12 | Xiaoguang Xing | driver: clk: Add sophgo sg2042 soc support
 ae3446af | 2023-10-21 | haijiao.liu | riscv: spinlock: Fix deadlock issue
-2142e193 | 2023-05-25 | xiaoguang.xing | riscv: add smp_cond_load_acquire()
 9901ae25 | 2024-01-29 | Xiaoguang Xing | riscv: add ioremap_wc for gpu
 8af75338 | 2023-10-19 | Xiaoguang Xing | riscv: errata: thead: Make cache clean to flush
 6e7505f8 | 2024-01-22 | Xiaoguang Xing | riscv: errata: Replace thead cache clean with flush

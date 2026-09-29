@@ -1,6 +1,6 @@
 # 超睿科技 提交列表（纯文本视图）
-# 共 91 个提交
-# 生成时间: 2026-09-25 21:58:54
+# 共 90 个提交
+# 生成时间: 2026-09-29 10:23:47
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
@@ -70,7 +70,6 @@ d5ccd7ac | 2025-10-27 | Xincheng Zhang | pcie: ultrarisc: Add suspend/resume sup
 b411e529 | 2025-09-22 | Jia Wang | riscv: defconfig: update UltraRISC platform configurations
 d92f8054 | 2025-09-18 | Jia Wang | riscv: dp1000: plic: add plic early init supports
 2b24372b | 2025-09-18 | Jia Wang | riscv: pci: msi: fix compile error when disable PCIE_CADENCE_SOPHGO
-605c4565 | 2025-09-18 | Jia Wang | Revert "riscv: pci: Restrict check_vendor_id invocation to Sophgo platform via CONFIG_ARCH_SOPHGO"
 5b6c4c62 | 2025-09-16 | Jia Wang | drivers: pci/mmc: Fix build errors when ARCH_SOPHGO is disabled
 223fe3b8 | 2025-09-15 | Jia Wang | riscv: drm: img-rogue: Convert structure initializations to designated initializers
 cc9418bd | 2025-09-09 | Jia Wang | riscv: dp1000: dts: Move mmc0 node from SoC to board DTS

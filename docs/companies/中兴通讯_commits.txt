@@ -1,6 +1,6 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 480 个提交
-# 生成时间: 2026-09-25 21:58:54
+# 共 509 个提交
+# 生成时间: 2026-09-29 10:23:47
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
@@ -26,8 +26,10 @@ e42fd152 | 2025-08-23 | Anup Patel | RISC-V: KVM: Introduce feature specific res
 bdb0e3df | 2025-08-23 | Anup Patel | RISC-V: KVM: Set initial value of hedeleg in kvm_arch_vcpu_create()
 ff9144be | 2025-01-10 | Samuel Holland | RISC-V: KVM: Add support for SBI_FWFT_POINTER_MASKING_PMLEN
 e23e1006 | 2025-01-10 | Samuel Holland | RISC-V: KVM: Fix inclusion of Smnpm in the guest ISA bitmap
+662edbcb | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add bfloat16 extension to get-reg-list test
 802177af | 2025-04-30 | Atish Patra | KVM: riscv: selftests: Add vector extension tests
 08a5533d | 2024-06-19 | Clément Léger | KVM: riscv: selftests: Add Zaamo/Zalrsc extensions to get-reg-list test
+f19afebb | 2024-12-02 | Quan Zhou | KVM: riscv: selftests: Add Svvptc/Zabha/Ziccrse exts to get-reg-list test
 1d2e1507 | 2024-07-26 | Yong-Xuan Wang | KVM: riscv: selftests: Add Svade and Svadu Extension to get-reg-list test
 aa7c481a | 2024-07-26 | Yong-Xuan Wang | KVM: riscv: selftests: Fix compile error
 ba2105c9 | 2024-04-26 | Andrew Jones | KVM: riscv: selftests: Add Zawrs extension to get-reg-list test
@@ -52,8 +54,14 @@ f488cdc4 | 2023-12-07 | Andrew Jones | KVM: riscv: selftests: Fix get-reg-list p
 7807eb97 | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add condops extensions to get-reg-list test
 28e0792c | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add smstateen registers to get-reg-list test
 aca53b84 | 2023-09-15 | Anup Patel | KVM: riscv: selftests: Add senvcfg register to get-reg-list test
+b6e72569 | 2024-12-16 | Guo Ren | riscv: Implement smp_cond_load8/16() with Zawrs
 82843f54 | 2026-02-27 | Jinyu Tang | KVM: riscv: Skip CSR restore if VCPU is reloaded on the same core
 0bc5c575 | 2026-07-07 | hu.yuye | riscv: defconfig: Enable CONFIG_RTC_DRV_EFI config
+b50b8f5e | 2025-08-27 | Pincheng Wang | KVM: riscv: selftests: add Zilsd and Zclsd extension to get-reg-list test
+58e40771 | 2025-08-27 | Pincheng Wang | riscv: KVM: allow Zilsd and Zclsd extensions for Guest/VM
+6abfe4ec | 2025-08-27 | Pincheng Wang | riscv: hwprobe: export Zilsd and Zclsd ISA extensions
+f0546115 | 2025-08-27 | Pincheng Wang | riscv: add ISA extension parsing for Zilsd and Zclsd
+c92b3359 | 2025-08-27 | Pincheng Wang | dt-bindings: riscv: add Zilsd and Zclsd extension descriptions
 7570810e | 2025-03-12 | Conor Dooley | dt-bindings: riscv: document vector crypto requirements
 66698246 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: add vector sub-extension dependencies
 08a3b3c0 | 2025-03-12 | Conor Dooley | dt-bindings: riscv: d requires f
@@ -114,7 +122,9 @@ a7c06f38 | 2024-10-17 | Andrew Jones | KVM: riscv: selftests: Add SBI SUSP to ge
 5fb47345 | 2024-04-17 | Yong-Xuan Wang | RISCV: KVM: Introduce vcpu->reset_cntx_lock
 aa954bc9 | 2025-03-17 | Atish Patra | RISC-V: KVM: Teardown riscv specific bits after kvm_exit
 375e687f | 2025-02-17 | Andrew Jones | riscv: KVM: Fix hart suspend_type use
+bfafded0 | 2025-02-21 | BillXiang | riscv: KVM: Remove unnecessary vcpu kick
 ab197f8e | 2024-08-15 | Anup Patel | RISC-V: KVM: Don't zero-out PMU snapshot area before freeing data
+8eadf7e3 | 2026-02-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_gstage_get_leaf()
 2148b4f0 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Split huge pages during fault handling for dirty logging
 8443fff5 | 2026-03-30 | Wang Yechao | RISC-V: KVM: Fix lost write protection on huge pages during dirty logging
 194686c5 | 2026-02-26 | Wang Yechao | RISC-V: KVM: Skip THP support check during dirty logging
@@ -154,6 +164,8 @@ f96ce9fd | 2024-10-21 | Anup Patel | RISC-V: KVM: Break down the __kvm_riscv_swi
 9e9d0138 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore SCOUNTEREN in C source
 805c3956 | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore HSTATUS in C source
 9d4fa73d | 2024-10-21 | Anup Patel | RISC-V: KVM: Order the object files alphabetically
+4fbf34bd | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling
+b3447555 | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction
 d4b887c0 | 2024-07-08 | Jinjie Ruan | riscv: stacktrace: Add USER_STACKTRACE support
 c9864cbf | 2023-10-24 | Clément Léger | riscv: kvm: use ".L" local labels in assembly when applicable
 770698bf | 2023-10-24 | Clément Léger | riscv: kvm: Use SYM_*() assembly macros instead of deprecated ones
@@ -220,6 +232,12 @@ ab06941e | 2024-01-11 | Paolo Bonzini | KVM: define __KVM_HAVE_GUEST_DEBUG uncon
 1a0a10c9 | 2025-02-28 | Alexandre Ghiti | riscv: Fix missing __free_pages() in check_vector_unaligned_access()
 f6129836 | 2025-02-28 | Tingbo Liao | riscv: Fix the __riscv_copy_vec_words_unaligned implementation
 954b77cb | 2025-10-20 | Xu Lu | RISC-V: KVM: Allow Zalasr extensions for Guest/VM
+4b986e08 | 2025-08-08 | Quan Zhou | KVM: riscv: selftests: Add Zicbop extension to get-reg-list test
+1ad1220e | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow bfloat16 extension for Guest/VM
+8bed7a44 | 2025-08-08 | Quan Zhou | RISC-V: KVM: Allow Zicbop extension for Guest/VM
+fc798ece | 2025-08-08 | Quan Zhou | RISC-V: KVM: Provide UAPI for Zicbop block size
+198f5c9d | 2025-08-08 | Quan Zhou | RISC-V: KVM: Change zicbom/zicboz block size to depend on the host isa
+2d238382 | 2025-11-19 | Yao Zihong | riscv: hwprobe: Expose Zicbop extension and its block size
 5c37f806 | 2025-07-24 | Aleksa Paunovic | riscv: hwprobe: Add MIPS vendor extension probing
 893a4c19 | 2025-04-18 | Cyan Yang | riscv: hwprobe: Add SiFive vendor extension support and probe for xsfqmaccdod and xsfqmaccqoq
 5439608a | 2025-04-18 | Cyan Yang | riscv: hwprobe: Document SiFive xsfvqmaccdod and xsfvqmaccqoq vendor extensions
@@ -299,6 +317,8 @@ b5d95fc5 | 2025-10-14 | Sunil V L | ACPI: scan: Add support for RISC-V in acpi_i
 1e210453 | 2025-10-14 | Sunil V L | ACPI: RISC-V: Add support for RIMT
 8340c3b3 | 2025-10-13 | Sunil V L | ACPICA: actbl2: Add definitions for RIMT
 bf311a32 | 2025-09-20 | shenlin | perf vendor events riscv: add lrw core JSON file
+20242767 | 2025-04-21 | Guo Ren | riscv: xchg: Prefetch the destination word for sc.w
+54ec7214 | 2025-04-21 | Guo Ren | riscv: Add ARCH_HAS_PREFETCH[W] support with Zicbop
 fbcba60f | 2025-04-21 | Alexandre Ghiti | riscv: Add support for Zicbop
 eb757a93 | 2025-04-21 | Alexandre Ghiti | riscv: Introduce Zicbop instructions
 6c55e184 | 2025-02-26 | Yunhui Cui | RISC-V: Enable cbo.clean/flush in usermode
@@ -360,7 +380,10 @@ f2157bae | 2023-11-21 | Robin Murphy | iommu: Validate that devices match domain
 9ab60fd9 | 2024-03-13 | Xiao Wang | riscv: uaccess: Allow the last potential unrolled copy
 190f9eb4 | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps
 ca142333 | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events
+d9681c38 | 2024-12-24 | Quan Zhou | RISC-V: KVM: Redirect instruction access fault trap to guest
 25a673c2 | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest
+9bdba5af | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys
+2d470242 | 2025-01-02 | Guo Ren | iommu/riscv: Fixup compile warning
 4c66d558 | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver
 3b462e45 | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it
 ee93628d | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi
@@ -404,9 +427,15 @@ b66619c2 | 2023-10-24 | Clément Léger | riscv: kernel: Use correct SYM_DATA_*(
 96528d7f | 2023-10-24 | Clément Léger | riscv: Use SYM_*() assembly macros instead of deprecated ones
 0948d6ce | 2023-10-24 | Clément Léger | riscv: use ".L" local labels in assembly when applicable
 f2bde542 | 2024-11-03 | Alexandre Ghiti | riscv: Add qspinlock support
+5e6e1a3d | 2024-11-03 | Guo Ren | asm-generic: ticket-lock: Add separate ticket-lock.h
+06154718 | 2024-11-03 | Guo Ren | asm-generic: ticket-lock: Reuse arch_spinlock_t of qspinlock
 ed9fb072 | 2024-11-03 | Alexandre Ghiti | riscv: Implement xchg8/16() using Zabha
 05e5658c | 2024-11-03 | Alexandre Ghiti | riscv: Implement arch_cmpxchg128() using Zacas
 d7100d75 | 2024-11-03 | Alexandre Ghiti | riscv: Improve zacas fully-ordered cmpxchg()
+bbd18a34 | 2023-09-08 | Guo Ren | asm-generic: ticket-lock: Optimize arch_spin_value_unlocked()
+30580d90 | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Ziccrse extension for Guest/VM
+7ffb8346 | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Zabha extension for Guest/VM
+89b37fdf | 2024-12-02 | Quan Zhou | RISC-V: KVM: Allow Svvptc extension for Guest/VM
 4cbf25c0 | 2024-07-26 | Yong-Xuan Wang | RISC-V: KVM: Add Svade and Svadu Extensions Support for Guest/VM
 29a8b020 | 2024-10-16 | Samuel Holland | RISC-V: KVM: Allow Smnpm and Ssnpm extensions for guests
 b0733330 | 2024-04-26 | Andrew Jones | KVM: riscv: Support guest wrs.nto
