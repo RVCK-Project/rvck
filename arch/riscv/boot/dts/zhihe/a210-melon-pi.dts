@@ -4,8 +4,8 @@
 #include "a210.dtsi"
 
 / {
-	model = "Zhihe A210 Development Board";
-	compatible = "zhihe,a210-dev", "zhihe,a210";
+	model = "Zhihe Melon Pi";
+	compatible = "zhihe,melon-pi", "zhihe,a210";
 
 	aliases {
 		ethernet0 = &gmac0;
