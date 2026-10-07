@@ -1,9 +1,34 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 351 个提交
-# 生成时间: 2026-09-29 10:23:47
+# 共 376 个提交
+# 生成时间: 2026-10-07 23:47:35
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+361c7181 | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: disable unused A210 UARTs by default
+3dfaf0ec | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: enable GPIO controllers on A210 boards
+3d4be82f | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 SPI controllers
+6d2b7c96 | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 I2C controllers
+881d3f11 | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 DW APB timers
+9f1fdc76 | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 GPIO controllers
+4fde0290 | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 DMA controllers
+67ca24bd | 2026-09-21 | Zhiguo Zhu | dmaengine: dw-axi-dmac: add ZhiHe A210 support
+f930ce7b | 2026-09-21 | Zhiguo Zhu | dt-bindings: dma: snps,dw-axi-dmac: add ZhiHe A210
+42a476b2 | 2026-09-30 | Zhiguo Zhu | riscv: dts: zhihe: rename A210 board to Melon Pi
+1a53cbef | 2026-09-30 | Zhiguo Zhu | dt-bindings: riscv: zhihe: rename A210 board to Melon Pi
+13d0521b | 2025-10-20 | Vivian Wang | riscv: tests: Make RISCV_KPROBES_KUNIT tristate
+625b6ac2 | 2025-05-13 | Nam Cao | riscv: Add kprobes KUnit test
+0b2b6b8d | 2023-11-01 | Charlie Jenkins | riscv: Add tests for riscv module loading
+c0d18a42 | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_ITYPE_IMM
+b4807327 | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_UTYPE_IMM
+eb40e6c8 | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_RD_REG
+1a0f43b6 | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RVC_EXTRACT_BTYPE_IMM
+9a9c4bb8 | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RVC_EXTRACT_C2_RS1_REG
+e3f4f91f | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RVC_EXTRACT_JTYPE_IMM
+b435153d | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_BTYPE_IMM
+43ebb13b | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_RS1_REG
+6b8cb40d | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_JTYPE_IMM
+b9b4b492 | 2025-05-11 | Nam Cao | riscv: kprobes: Move branch_funct3 to insn.h
+dddc26df | 2025-05-11 | Nam Cao | riscv: kprobes: Move branch_rs2_idx to insn.h
 7ef025ed | 2026-09-12 | ZhenXing Zhu | firmware: thead: th1520_event: make stubs static inline
 33036c1d | 2026-08-31 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 drivers as modules
 2be278e3 | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 power domains

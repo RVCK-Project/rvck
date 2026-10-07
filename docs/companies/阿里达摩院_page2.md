@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 351</li>
-<li><strong>统计时间</strong>: 2026-09-29 10:23:47</li>
+<li><strong>贡献提交数</strong>: 376</li>
+<li><strong>统计时间</strong>: 2026-10-07 23:47:35</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
@@ -18,6 +18,31 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [faff089c](https://github.com/RVCK-Project/rvck/commit/faff089cc91ee97e4c76c975d17b81800b135b26) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add SBI PMU selftest |
+| [a4d8ceac](https://github.com/RVCK-Project/rvck/commit/a4d8ceac0969dfad69f8891a35c8b32cbc9504b8) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add SBI PMU extension definitions |
+| [a13fb217](https://github.com/RVCK-Project/rvck/commit/a13fb2174710bd06dad320676aad35a01519d573) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add Sscofpmf to get-reg-list test |
+| [6c4314e0](https://github.com/RVCK-Project/rvck/commit/6c4314e0b3bf61d6fc7e3d2dba0644d392c021fc) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add helper functions for extension checks |
+| [4c713332](https://github.com/RVCK-Project/rvck/commit/4c7133323d13bdc63a6c077441a0b2c38bb2abe2) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Move sbi definitions to its own header file |
+| [b1085331](https://github.com/RVCK-Project/rvck/commit/b108533106e56daf856d7656619ca18f4a670add) | 2024-01-22 | Haibo Xu | KVM: riscv: selftests: Add sstc timer test |
+| [f7e9dbbc](https://github.com/RVCK-Project/rvck/commit/f7e9dbbcfbf2e627341c6cfcbfa0c13a29531b5c) | 2024-01-22 | Haibo Xu | KVM: riscv: selftests: Change vcpu_has_ext to a common function |
+| [4b08b137](https://github.com/RVCK-Project/rvck/commit/4b08b137cd42b54e50d44cead24907ba13ebab51) | 2024-01-22 | Haibo Xu | KVM: riscv: selftests: Add guest helper to get vcpu id |
+| [d56230e4](https://github.com/RVCK-Project/rvck/commit/d56230e475666dc86b2a7f655fb5293a6b900dd3) | 2024-01-22 | Haibo Xu | KVM: riscv: selftests: Add exception handling support |
+| [7407f836](https://github.com/RVCK-Project/rvck/commit/7407f836c1a4569ac7ccd3dfad36cba5945b0615) | 2024-01-22 | Haibo Xu | KVM: arm64: selftests: Split arch_timer test code |
+| [98806dbc](https://github.com/RVCK-Project/rvck/commit/98806dbc91b39d7dca3b24b1b0df8018d53b5d1c) | 2024-01-22 | Paolo Bonzini | selftests/kvm: Fix issues with $(SPLIT_TESTS) |
+| [ef5b29d9](https://github.com/RVCK-Project/rvck/commit/ef5b29d9a539b1c814a7d40ceb58b03219b85c6a) | 2024-04-20 | Atish Patra | RISC-V: KVM: Improve firmware counter read function |
+| [2c07f0d7](https://github.com/RVCK-Project/rvck/commit/2c07f0d76505c26f567efbb29b1dafb396e54377) | 2024-04-20 | Atish Patra | RISC-V: KVM: Support 64 bit firmware counters on RV32 |
+| [b639a556](https://github.com/RVCK-Project/rvck/commit/b639a5561bc979ade4cdd285a2667d78c2e4f6b1) | 2024-04-20 | Atish Patra | RISC-V: KVM: Add perf sampling support for guests |
+| [fb755544](https://github.com/RVCK-Project/rvck/commit/fb7555446c8380573f44cb2bfb2f7d03b927c0bd) | 2024-04-20 | Atish Patra | RISC-V: KVM: Implement SBI PMU Snapshot feature |
+| [72c59d43](https://github.com/RVCK-Project/rvck/commit/72c59d43492a4da7a97c2b406951dac1798021fe) | 2024-04-20 | Atish Patra | RISC-V: KVM: No need to exit to the user space if perf event failed |
+| [8bcecc27](https://github.com/RVCK-Project/rvck/commit/8bcecc27a7ac3db31c28bee4d45daa4fe7c3580a) | 2024-04-20 | Atish Patra | RISC-V: KVM: No need to update the counter value during reset |
+| [dd078689](https://github.com/RVCK-Project/rvck/commit/dd078689eff64dbce2793800c3f5735dcd5ce544) | 2024-04-20 | Atish Patra | drivers/perf: riscv: Implement SBI PMU snapshot function |
+| [ca7504ae](https://github.com/RVCK-Project/rvck/commit/ca7504ae79be1db30c351fc817cf93f2e6f7cbfc) | 2024-04-20 | Atish Patra | drivers/perf: riscv: Fix counter mask iteration for RV32 |
+| [77f8772f](https://github.com/RVCK-Project/rvck/commit/77f8772f18c1939b8f838ae83bcbc10a49922ae0) | 2024-04-20 | Atish Patra | RISC-V: Use the minor version mask while computing sbi version |
+| [122df8ef](https://github.com/RVCK-Project/rvck/commit/122df8ef593f820ca28a17edfb05c677772eeeb5) | 2024-04-20 | Atish Patra | RISC-V: KVM: Rename the SBI_STA_SHMEM_DISABLE to a generic name |
+| [aeb2742f](https://github.com/RVCK-Project/rvck/commit/aeb2742f18b4e9e0bf9bed286741a2c120512181) | 2024-04-20 | Atish Patra | RISC-V: Add SBI PMU snapshot definitions |
+| [35e6e642](https://github.com/RVCK-Project/rvck/commit/35e6e64236017318f38abb9011f7ec32de4aac47) | 2024-04-20 | Atish Patra | drivers/perf: riscv: Use BIT macro for shifting operations |
+| [64f63400](https://github.com/RVCK-Project/rvck/commit/64f6340065b4e7bcca9f3dfe108a7c40c71ad741) | 2024-04-20 | Atish Patra | drivers/perf: riscv: Read upper bits of a firmware counter |
+| [dc7513b9](https://github.com/RVCK-Project/rvck/commit/dc7513b9fa3336d39e8f4662e4a57b8e90da9fb6) | 2024-04-20 | Atish Patra | RISC-V: Add FIRMWARE_READ_HI definition |
 | [48bc3a74](https://github.com/RVCK-Project/rvck/commit/48bc3a745a4653a957b19a4b433888a1b0d835ec) | 2024-04-20 | Atish Patra | RISC-V: Fix the typo in Scountovf CSR name |
 | [7cb0909a](https://github.com/RVCK-Project/rvck/commit/7cb0909a2ca45d3950be53e56b33039895887901) | 2023-12-20 | Andrew Jones | RISC-V: KVM: selftests: Add get-reg-list test for STA registers |
 | [9170ea74](https://github.com/RVCK-Project/rvck/commit/9170ea7408698ef6303dc873ae11f6a9fc1c9c6f) | 2023-12-20 | Andrew Jones | RISC-V: KVM: selftests: Add steal_time test support |
@@ -171,7 +196,7 @@
 | [6c6e3235](https://github.com/RVCK-Project/rvck/commit/6c6e32351389ae5c814321d4847ae3d9422a097c) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 351 条提交，显示 201-351**
+**共 376 条提交，显示 201-376**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -182,5 +207,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-29 10:23:47*
-*数据来源: 主分支 rvck-6.6@0bee6ebb*
+*本页面最后更新于 2026-10-07 23:47:35*
+*数据来源: 主分支 rvck-6.6@0037777f*

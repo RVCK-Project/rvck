@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 351</li>
-<li><strong>统计时间</strong>: 2026-09-29 10:23:47</li>
+<li><strong>贡献提交数</strong>: 376</li>
+<li><strong>统计时间</strong>: 2026-10-07 23:47:35</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
@@ -18,6 +18,31 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [361c7181](https://github.com/RVCK-Project/rvck/commit/361c718191f5f55aa1d3206a5ff00173b78e2c9e) | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: disable unused A210 UARTs by default |
+| [3dfaf0ec](https://github.com/RVCK-Project/rvck/commit/3dfaf0eca3ac4da85896744d59fd3948b9072131) | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: enable GPIO controllers on A210 boards |
+| [3d4be82f](https://github.com/RVCK-Project/rvck/commit/3d4be82fea69d0971fa70a0fbb5d6bb3f3cb1a51) | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 SPI controllers |
+| [6d2b7c96](https://github.com/RVCK-Project/rvck/commit/6d2b7c96f3e915af4095d59f6ed462f5112b49db) | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 I2C controllers |
+| [881d3f11](https://github.com/RVCK-Project/rvck/commit/881d3f11207872a9be86649cc88657dc03344c0d) | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 DW APB timers |
+| [9f1fdc76](https://github.com/RVCK-Project/rvck/commit/9f1fdc76b3d4067fe62990b00360847e7357a6dd) | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 GPIO controllers |
+| [4fde0290](https://github.com/RVCK-Project/rvck/commit/4fde0290720836a5ab6b0fc1d2155c9f9a1fa485) | 2026-09-21 | Zhiguo Zhu | riscv: dts: zhihe: add A210 DMA controllers |
+| [67ca24bd](https://github.com/RVCK-Project/rvck/commit/67ca24bd6afaf7bc4c38ccec9562c418c510e290) | 2026-09-21 | Zhiguo Zhu | dmaengine: dw-axi-dmac: add ZhiHe A210 support |
+| [f930ce7b](https://github.com/RVCK-Project/rvck/commit/f930ce7b472ea40af5d8fb9a981f02182967b2b1) | 2026-09-21 | Zhiguo Zhu | dt-bindings: dma: snps,dw-axi-dmac: add ZhiHe A210 |
+| [42a476b2](https://github.com/RVCK-Project/rvck/commit/42a476b2eac26ca02059777ec126195b169a880b) | 2026-09-30 | Zhiguo Zhu | riscv: dts: zhihe: rename A210 board to Melon Pi |
+| [1a53cbef](https://github.com/RVCK-Project/rvck/commit/1a53cbefe2bfbde896d0c3d4a7c3f065a27e555a) | 2026-09-30 | Zhiguo Zhu | dt-bindings: riscv: zhihe: rename A210 board to Melon Pi |
+| [13d0521b](https://github.com/RVCK-Project/rvck/commit/13d0521b65ed90da0b1d68e0f3043023546c7159) | 2025-10-20 | Vivian Wang | riscv: tests: Make RISCV_KPROBES_KUNIT tristate |
+| [625b6ac2](https://github.com/RVCK-Project/rvck/commit/625b6ac20f5fca7313107f4cb61450d815d72cfc) | 2025-05-13 | Nam Cao | riscv: Add kprobes KUnit test |
+| [0b2b6b8d](https://github.com/RVCK-Project/rvck/commit/0b2b6b8d73e4471974c3069e579bbf47b7101ad0) | 2023-11-01 | Charlie Jenkins | riscv: Add tests for riscv module loading |
+| [c0d18a42](https://github.com/RVCK-Project/rvck/commit/c0d18a426dc5001146780349c4ef9a8d279c0f84) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_ITYPE_IMM |
+| [b4807327](https://github.com/RVCK-Project/rvck/commit/b4807327ded6cb2139fc64ca07d4acd0b7f9ef0f) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_UTYPE_IMM |
+| [eb40e6c8](https://github.com/RVCK-Project/rvck/commit/eb40e6c83a31718bf64610fc955fe48faf9a6b40) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_RD_REG |
+| [1a0f43b6](https://github.com/RVCK-Project/rvck/commit/1a0f43b6327984d74d7436837b1650b77bd9e738) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RVC_EXTRACT_BTYPE_IMM |
+| [9a9c4bb8](https://github.com/RVCK-Project/rvck/commit/9a9c4bb8049820dee84d094a01c48f09680769fb) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RVC_EXTRACT_C2_RS1_REG |
+| [e3f4f91f](https://github.com/RVCK-Project/rvck/commit/e3f4f91f74c8423fe58dd47477f177cb41138da5) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RVC_EXTRACT_JTYPE_IMM |
+| [b435153d](https://github.com/RVCK-Project/rvck/commit/b435153d95108ceaa5d4843bfeb15dcb146fc02b) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_BTYPE_IMM |
+| [43ebb13b](https://github.com/RVCK-Project/rvck/commit/43ebb13b0b4a6f02b485e4edd8a4c25e93f7303f) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_RS1_REG |
+| [6b8cb40d](https://github.com/RVCK-Project/rvck/commit/6b8cb40dd90f0840c73a51c327fbaf2d44ea0976) | 2025-05-11 | Nam Cao | riscv: kprobes: Remove duplication of RV_EXTRACT_JTYPE_IMM |
+| [b9b4b492](https://github.com/RVCK-Project/rvck/commit/b9b4b4925e931a6ce93f754e378a1a0b63b3cc03) | 2025-05-11 | Nam Cao | riscv: kprobes: Move branch_funct3 to insn.h |
+| [dddc26df](https://github.com/RVCK-Project/rvck/commit/dddc26df0448f0fdd76682ce2c914e0f18834761) | 2025-05-11 | Nam Cao | riscv: kprobes: Move branch_rs2_idx to insn.h |
 | [7ef025ed](https://github.com/RVCK-Project/rvck/commit/7ef025edefd37b029a839c2d8b9d44a650046a7c) | 2026-09-12 | ZhenXing Zhu | firmware: thead: th1520_event: make stubs static inline |
 | [33036c1d](https://github.com/RVCK-Project/rvck/commit/33036c1d51b1087a60fea803be77258cf3c15deb) | 2026-08-31 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 drivers as modules |
 | [2be278e3](https://github.com/RVCK-Project/rvck/commit/2be278e3abdff45fc25e6791c555acd32c3188b7) | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 power domains |
@@ -371,7 +396,7 @@
 | [6c6e3235](https://github.com/RVCK-Project/rvck/commit/6c6e32351389ae5c814321d4847ae3d9422a097c) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 351 条提交（显示全部）**
+**共 376 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -380,5 +405,5 @@
 
 ---
 
-*本页面最后更新于 2026-09-29 10:23:47*
-*数据来源: 主分支 rvck-6.6@0bee6ebb*
+*本页面最后更新于 2026-10-07 23:47:35*
+*数据来源: 主分支 rvck-6.6@0037777f*
