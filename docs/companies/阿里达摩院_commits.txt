@@ -1,6 +1,6 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 376 个提交
-# 生成时间: 2026-10-07 23:47:35
+# 共 392 个提交
+# 生成时间: 2026-10-08 02:41:29
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
@@ -15,6 +15,22 @@
 f930ce7b | 2026-09-21 | Zhiguo Zhu | dt-bindings: dma: snps,dw-axi-dmac: add ZhiHe A210
 42a476b2 | 2026-09-30 | Zhiguo Zhu | riscv: dts: zhihe: rename A210 board to Melon Pi
 1a53cbef | 2026-09-30 | Zhiguo Zhu | dt-bindings: riscv: zhihe: rename A210 board to Melon Pi
+dacebe56 | 2026-09-17 | ZhenXing Zhu | irqchip: thead-c900-aclint-sswi: Fixup riscv_ipi_set_virq_range() conflict
+409c88ff | 2024-05-22 | Palmer Dabbelt | irqchip: riscv-imsic: Fixup riscv_ipi_set_virq_range() conflict
+6925a0a3 | 2024-03-26 | Samuel Holland | riscv: mm: Always use an ASID to flush mm contexts
+43ca7fae | 2024-03-26 | Samuel Holland | riscv: mm: Preserve global TLB entries when switching contexts
+726fd1fa | 2024-03-26 | Samuel Holland | riscv: mm: Make asid_bits a local variable
+c17978e2 | 2024-03-26 | Samuel Holland | riscv: mm: Use a fixed layout for the MM context ID
+7edc8c08 | 2024-03-26 | Samuel Holland | riscv: mm: Introduce cntx2asid/cntx2version helper macros
+9f9ba183 | 2024-03-26 | Samuel Holland | riscv: Avoid TLB flush loops when affected by SiFive CIP-1200
+0d0dd087 | 2024-03-26 | Samuel Holland | riscv: mm: Combine the SMP and UP TLB flush code
+f5d2ceab | 2024-03-26 | Samuel Holland | riscv: Only send remote fences when some other CPU is online
+7bca8cc9 | 2024-03-26 | Samuel Holland | riscv: mm: Broadcast kernel TLB flushes only when needed
+170f0405 | 2024-03-26 | Samuel Holland | riscv: Use IPIs for remote cache/TLB flushes by default
+938c1653 | 2024-03-26 | Samuel Holland | riscv: Factor out page table TLB synchronization
+8b6bc685 | 2024-03-26 | Samuel Holland | riscv: Flush the instruction cache during SMP bringup
+9df915e0 | 2026-08-11 | ZhenXing Zhu | riscv: dts: thead: add TH1520 ACLINT SSWI interrupt-controller node
+68615b19 | 2026-08-11 | ZhenXing Zhu | Revert "riscv: Add ACLINT SSWI support"
 13d0521b | 2025-10-20 | Vivian Wang | riscv: tests: Make RISCV_KPROBES_KUNIT tristate
 625b6ac2 | 2025-05-13 | Nam Cao | riscv: Add kprobes KUnit test
 0b2b6b8d | 2023-11-01 | Charlie Jenkins | riscv: Add tests for riscv module loading

@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 376</li>
-<li><strong>统计时间</strong>: 2026-10-07 23:47:35</li>
+<li><strong>贡献提交数</strong>: 392</li>
+<li><strong>统计时间</strong>: 2026-10-08 02:41:29</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
@@ -18,6 +18,22 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [e21f4240](https://github.com/RVCK-Project/rvck/commit/e21f4240c8fa544e1790e9867d9cb5284fa0af0a) | 2026-03-10 | ZhenXing Zhu | Revert "drivers: pmdomain: support th1520 Power domain control." |
+| [4df0f1d8](https://github.com/RVCK-Project/rvck/commit/4df0f1d8c85a6faa1cfaea5030bcdee361d35c2c) | 2026-03-10 | ZhenXing Zhu | Revert "dts: add GPU device node" |
+| [766c4d48](https://github.com/RVCK-Project/rvck/commit/766c4d4848fe0c116525f9b0adad598ec6f9175c) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add cpu thermal node and device thermal node" |
+| [d4b2fbc9](https://github.com/RVCK-Project/rvck/commit/d4b2fbc9b3a820216340ea95e6e1625924059a47) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add npu device node" |
+| [e960af43](https://github.com/RVCK-Project/rvck/commit/e960af43e371ab2769478ace4c5b5ab8e2c2743b) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: to add npu device node" |
+| [5ca056ee](https://github.com/RVCK-Project/rvck/commit/5ca056ee3e8f3c17e840c0fc3469e747772cabd9) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add th1520-a-val-crash.dts and th1520-lpi4a-product-crash.d... |
+| [704b8baa](https://github.com/RVCK-Project/rvck/commit/704b8baa99f761ed062daf8a6a6e19a2f08cccb5) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add cpu thermal node and device thermal node" |
+| [748af2cc](https://github.com/RVCK-Project/rvck/commit/748af2ccfef518f2d0f60efd27131c05ca8ff6bd) | 2026-03-10 | ZhenXing Zhu | Revert "dtb:lipi:enable VI module config" |
+| [8ba4a21e](https://github.com/RVCK-Project/rvck/commit/8ba4a21ea3bc7a9f62162fdbb8765ac9313ff458) | 2026-03-10 | ZhenXing Zhu | Revert "dts: th1520: add vdec venc and video mem device node" |
+| [4609e89a](https://github.com/RVCK-Project/rvck/commit/4609e89a5e0c65acdff1f392387348d181330787) | 2026-03-10 | ZhenXing Zhu | Revert "chore: use xuantie instead of thead" |
+| [27e284c4](https://github.com/RVCK-Project/rvck/commit/27e284c4a9731ac37b89e2a4dabb80645ee5991c) | 2023-09-21 | Yu Chien Peter Lin | riscv: Introduce NAPOT field to PTDUMP |
+| [2c4c1440](https://github.com/RVCK-Project/rvck/commit/2c4c144002d70749d672263d36f27383bcbc4906) | 2023-09-21 | Yu Chien Peter Lin | riscv: Introduce PBMT field to PTDUMP |
+| [29f99b6a](https://github.com/RVCK-Project/rvck/commit/29f99b6a2c8ca3a690438cf88ffc230dfac26b72) | 2023-09-21 | Yu Chien Peter Lin | riscv: Improve PTDUMP to show RSW with non-zero value |
+| [d042103f](https://github.com/RVCK-Project/rvck/commit/d042103f790affb596c812d786fa8644c0bef7c5) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add commandline option for SBI PMU test |
+| [ea1c755d](https://github.com/RVCK-Project/rvck/commit/ea1c755d276e431a4c294ba52a4492dafa072652) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add a test for counter overflow |
+| [cac4119d](https://github.com/RVCK-Project/rvck/commit/cac4119dad68b4df040c10656643ff119d550171) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add a test for PMU snapshot functionality |
 | [faff089c](https://github.com/RVCK-Project/rvck/commit/faff089cc91ee97e4c76c975d17b81800b135b26) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add SBI PMU selftest |
 | [a4d8ceac](https://github.com/RVCK-Project/rvck/commit/a4d8ceac0969dfad69f8891a35c8b32cbc9504b8) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add SBI PMU extension definitions |
 | [a13fb217](https://github.com/RVCK-Project/rvck/commit/a13fb2174710bd06dad320676aad35a01519d573) | 2024-04-20 | Atish Patra | KVM: riscv: selftests: Add Sscofpmf to get-reg-list test |
@@ -196,7 +212,7 @@
 | [6c6e3235](https://github.com/RVCK-Project/rvck/commit/6c6e32351389ae5c814321d4847ae3d9422a097c) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 376 条提交，显示 201-376**
+**共 392 条提交，显示 201-392**
 
 [1](阿里达摩院.md) **[2]**
 
@@ -207,5 +223,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-07 23:47:35*
-*数据来源: 主分支 rvck-6.6@0037777f*
+*本页面最后更新于 2026-10-08 02:41:29*
+*数据来源: 主分支 rvck-6.6@3dd145f1*

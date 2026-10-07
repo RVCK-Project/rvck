@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 376</li>
-<li><strong>统计时间</strong>: 2026-10-07 23:47:35</li>
+<li><strong>贡献提交数</strong>: 392</li>
+<li><strong>统计时间</strong>: 2026-10-08 02:41:29</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
@@ -29,6 +29,22 @@
 | [f930ce7b](https://github.com/RVCK-Project/rvck/commit/f930ce7b472ea40af5d8fb9a981f02182967b2b1) | 2026-09-21 | Zhiguo Zhu | dt-bindings: dma: snps,dw-axi-dmac: add ZhiHe A210 |
 | [42a476b2](https://github.com/RVCK-Project/rvck/commit/42a476b2eac26ca02059777ec126195b169a880b) | 2026-09-30 | Zhiguo Zhu | riscv: dts: zhihe: rename A210 board to Melon Pi |
 | [1a53cbef](https://github.com/RVCK-Project/rvck/commit/1a53cbefe2bfbde896d0c3d4a7c3f065a27e555a) | 2026-09-30 | Zhiguo Zhu | dt-bindings: riscv: zhihe: rename A210 board to Melon Pi |
+| [dacebe56](https://github.com/RVCK-Project/rvck/commit/dacebe56c3fce97b13a1ec513b10a0de96bec411) | 2026-09-17 | ZhenXing Zhu | irqchip: thead-c900-aclint-sswi: Fixup riscv_ipi_set_virq_range() conflict |
+| [409c88ff](https://github.com/RVCK-Project/rvck/commit/409c88ff660941468fe2ef2996c67ca7909e8062) | 2024-05-22 | Palmer Dabbelt | irqchip: riscv-imsic: Fixup riscv_ipi_set_virq_range() conflict |
+| [6925a0a3](https://github.com/RVCK-Project/rvck/commit/6925a0a397ca471a4f4a3780f74ae65151cf902f) | 2024-03-26 | Samuel Holland | riscv: mm: Always use an ASID to flush mm contexts |
+| [43ca7fae](https://github.com/RVCK-Project/rvck/commit/43ca7faecf7c97ff4450dde76c6d0286e7b66da4) | 2024-03-26 | Samuel Holland | riscv: mm: Preserve global TLB entries when switching contexts |
+| [726fd1fa](https://github.com/RVCK-Project/rvck/commit/726fd1fa32b104fc264b139b4dc85e9a88cca9ad) | 2024-03-26 | Samuel Holland | riscv: mm: Make asid_bits a local variable |
+| [c17978e2](https://github.com/RVCK-Project/rvck/commit/c17978e2fd47c95c1feb233a4ec5c6791aa61c11) | 2024-03-26 | Samuel Holland | riscv: mm: Use a fixed layout for the MM context ID |
+| [7edc8c08](https://github.com/RVCK-Project/rvck/commit/7edc8c087895610696c9b8129dab06e2cba66574) | 2024-03-26 | Samuel Holland | riscv: mm: Introduce cntx2asid/cntx2version helper macros |
+| [9f9ba183](https://github.com/RVCK-Project/rvck/commit/9f9ba183e72abc01d0b1866c4d2a8dbcf3488ac1) | 2024-03-26 | Samuel Holland | riscv: Avoid TLB flush loops when affected by SiFive CIP-1200 |
+| [0d0dd087](https://github.com/RVCK-Project/rvck/commit/0d0dd087ae481eb55879de6ca42c4453b087a2f0) | 2024-03-26 | Samuel Holland | riscv: mm: Combine the SMP and UP TLB flush code |
+| [f5d2ceab](https://github.com/RVCK-Project/rvck/commit/f5d2ceabebedf3d6c8412ee2d83ba326d5050099) | 2024-03-26 | Samuel Holland | riscv: Only send remote fences when some other CPU is online |
+| [7bca8cc9](https://github.com/RVCK-Project/rvck/commit/7bca8cc97d7cea04fd6d9ea77814e8b8d2d3d374) | 2024-03-26 | Samuel Holland | riscv: mm: Broadcast kernel TLB flushes only when needed |
+| [170f0405](https://github.com/RVCK-Project/rvck/commit/170f0405b9b60504976a83847609154654bb2db3) | 2024-03-26 | Samuel Holland | riscv: Use IPIs for remote cache/TLB flushes by default |
+| [938c1653](https://github.com/RVCK-Project/rvck/commit/938c1653fa9c21b2ea036c05069b8fd3e355a449) | 2024-03-26 | Samuel Holland | riscv: Factor out page table TLB synchronization |
+| [8b6bc685](https://github.com/RVCK-Project/rvck/commit/8b6bc68565a899c9976ea9e936f06c55ff5757c5) | 2024-03-26 | Samuel Holland | riscv: Flush the instruction cache during SMP bringup |
+| [9df915e0](https://github.com/RVCK-Project/rvck/commit/9df915e097804b2e1155e08a790d32f88942559e) | 2026-08-11 | ZhenXing Zhu | riscv: dts: thead: add TH1520 ACLINT SSWI interrupt-controller node |
+| [68615b19](https://github.com/RVCK-Project/rvck/commit/68615b192f8381fec532c4dba6b699f1717a21fb) | 2026-08-11 | ZhenXing Zhu | Revert "riscv: Add ACLINT SSWI support" |
 | [13d0521b](https://github.com/RVCK-Project/rvck/commit/13d0521b65ed90da0b1d68e0f3043023546c7159) | 2025-10-20 | Vivian Wang | riscv: tests: Make RISCV_KPROBES_KUNIT tristate |
 | [625b6ac2](https://github.com/RVCK-Project/rvck/commit/625b6ac20f5fca7313107f4cb61450d815d72cfc) | 2025-05-13 | Nam Cao | riscv: Add kprobes KUnit test |
 | [0b2b6b8d](https://github.com/RVCK-Project/rvck/commit/0b2b6b8d73e4471974c3069e579bbf47b7101ad0) | 2023-11-01 | Charlie Jenkins | riscv: Add tests for riscv module loading |
@@ -396,7 +412,7 @@
 | [6c6e3235](https://github.com/RVCK-Project/rvck/commit/6c6e32351389ae5c814321d4847ae3d9422a097c) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 376 条提交（显示全部）**
+**共 392 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -405,5 +421,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-07 23:47:35*
-*数据来源: 主分支 rvck-6.6@0037777f*
+*本页面最后更新于 2026-10-08 02:41:29*
+*数据来源: 主分支 rvck-6.6@3dd145f1*

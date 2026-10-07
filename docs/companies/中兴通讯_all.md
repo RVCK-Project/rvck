@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 509</li>
-<li><strong>统计时间</strong>: 2026-10-07 23:47:35</li>
+<li><strong>贡献提交数</strong>: 512</li>
+<li><strong>统计时间</strong>: 2026-10-08 02:41:29</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [f084204f](https://github.com/RVCK-Project/rvck/commit/f084204f88e46e7980fefcd7b4d44dce41b98ed1) | 2026-03-03 | Jiakai Xu | RISC-V: KVM: selftests: Add RISC-V SBI STA shmem alignment tests |
+| [a191c5e1](https://github.com/RVCK-Project/rvck/commit/a191c5e176372ddf12970ca2523165f40efc8b73) | 2026-03-03 | Jiakai Xu | KVM: selftests: Refactor UAPI tests into dedicated function |
+| [423d1fab](https://github.com/RVCK-Project/rvck/commit/423d1faba231e4916e52bd92375d71da9800cc4a) | 2026-03-03 | Jiakai Xu | RISC-V: KVM: Validate SBI STA shmem alignment in kvm_sbi_ext_sta_set_reg() |
 | [38f0f66b](https://github.com/RVCK-Project/rvck/commit/38f0f66b0260c4229a196e4affcfdfb7b12db69d) | 2026-09-15 | Gao Rui | iommu/intel: fix build failure due to missing iommu-pages.h |
 | [87dd8684](https://github.com/RVCK-Project/rvck/commit/87dd8684b91f9661fc3bebb1b7265221a08e0023) | 2026-06-01 | Yong-Xuan Wang | KVM: riscv: selftests: Split SBI FWFT into separate feature-specific sublists |
 | [17f3dc03](https://github.com/RVCK-Project/rvck/commit/17f3dc03a7259f9345919a7c8a7bbc03c1cc853f) | 2026-06-01 | Yong-Xuan Wang | KVM: riscv: selftests: Refactor ISA and SBI extension sublist macros |
@@ -529,7 +532,7 @@
 | [48e1d183](https://github.com/RVCK-Project/rvck/commit/48e1d183bed68f477ce4663b59390a9542ccde7b) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 509 条提交（显示全部）**
+**共 512 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -538,5 +541,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-07 23:47:35*
-*数据来源: 主分支 rvck-6.6@0037777f*
+*本页面最后更新于 2026-10-08 02:41:29*
+*数据来源: 主分支 rvck-6.6@3dd145f1*

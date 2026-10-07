@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 509</li>
-<li><strong>统计时间</strong>: 2026-10-07 23:47:35</li>
+<li><strong>贡献提交数</strong>: 512</li>
+<li><strong>统计时间</strong>: 2026-10-08 02:41:29</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [efd7f449](https://github.com/RVCK-Project/rvck/commit/efd7f4494af1d536d0d39094cb1af533b63784f2) | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new vmalloc mappings |
+| [52da8434](https://github.com/RVCK-Project/rvck/commit/52da843483f7d084ced0a74a5af788aaf6388a12) | 2023-10-20 | Anup Patel | KVM: riscv: selftests: Add SBI DBCN extension to get-reg-list test |
+| [46936216](https://github.com/RVCK-Project/rvck/commit/46936216913856743fe8304a321c3cb00f71c62f) | 2022-07-22 | Anup Patel | RISC-V: KVM: Forward SBI DBCN extension to user-space |
 | [ba498668](https://github.com/RVCK-Project/rvck/commit/ba4986685fc80df55e209f12ac1b9fff795b100c) | 2023-10-11 | Anup Patel | RISC-V: KVM: Allow some SBI extensions to be disabled by default |
 | [bec9526b](https://github.com/RVCK-Project/rvck/commit/bec9526b5db45ab2afb8e9a4b2c47e5f2daed8cb) | 2023-10-10 | Anup Patel | RISC-V: KVM: Change the SBI specification version to v2.0 |
 | [5be9d152](https://github.com/RVCK-Project/rvck/commit/5be9d152f500eaf6f5448729efe8c63fce08178b) | 2022-07-22 | Anup Patel | RISC-V: Add defines for SBI debug console extension |
@@ -129,7 +132,7 @@
 | [48e1d183](https://github.com/RVCK-Project/rvck/commit/48e1d183bed68f477ce4663b59390a9542ccde7b) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 509 条提交，显示 401-509**
+**共 512 条提交，显示 401-512**
 
 [1](中兴通讯.md) [2](中兴通讯_page2.md) **[3]**
 
@@ -140,5 +143,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-07 23:47:35*
-*数据来源: 主分支 rvck-6.6@0037777f*
+*本页面最后更新于 2026-10-08 02:41:29*
+*数据来源: 主分支 rvck-6.6@3dd145f1*

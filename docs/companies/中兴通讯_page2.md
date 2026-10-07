@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 509</li>
-<li><strong>统计时间</strong>: 2026-10-07 23:47:35</li>
+<li><strong>贡献提交数</strong>: 512</li>
+<li><strong>统计时间</strong>: 2026-10-08 02:41:29</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.155</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [52a161ba](https://github.com/RVCK-Project/rvck/commit/52a161ba062cf2f2d8d12b767ae2f33afc2ebb61) | 2025-07-10 | Andreas Schwab | riscv: traps_misaligned: properly sign extend value in misaligned load handler |
+| [a221db21](https://github.com/RVCK-Project/rvck/commit/a221db2198ef5936db4a575f6d13abd7846fab98) | 2025-05-23 | Clément Léger | RISC-V: KVM: add support for SBI_FWFT_MISALIGNED_DELEG |
+| [8749e0db](https://github.com/RVCK-Project/rvck/commit/8749e0db27a66b814281ecf529a1a6e0f050dd0d) | 2025-05-23 | Clément Léger | RISC-V: KVM: add support for FWFT SBI extension |
 | [c3b9c1c9](https://github.com/RVCK-Project/rvck/commit/c3b9c1c97919510bb106915544a8cae4fb7b8790) | 2025-05-23 | Clément Léger | RISC-V: KVM: add SBI extension reset callback |
 | [d2df8f5a](https://github.com/RVCK-Project/rvck/commit/d2df8f5a3f7aa83859a78b718e04f25e7c1b10a7) | 2025-05-23 | Clément Léger | RISC-V: KVM: add SBI extension init()/deinit() functions |
 | [625ee647](https://github.com/RVCK-Project/rvck/commit/625ee64755cc3bc307c02b764a59b5b10297144c) | 2025-05-23 | Clément Léger | riscv: misaligned: add a function to check misalign trap delegability |
@@ -215,12 +218,9 @@
 | [49cef219](https://github.com/RVCK-Project/rvck/commit/49cef219ad1f456c9784056ae244fab7f7a6407e) | 2023-09-27 | Jason Gunthorpe | iommufd: Convert to alloc_domain_paging() |
 | [f0389ffb](https://github.com/RVCK-Project/rvck/commit/f0389ffb064654291c4c88731dcee7a461bc5dc5) | 2024-04-13 | Pasha Tatashin | iommu: Move IOMMU_DOMAIN_BLOCKED global statics to ops-\>blocked_domain |
 | [c2bb831c](https://github.com/RVCK-Project/rvck/commit/c2bb831c1529979aaa41c9c4e6ec3e65685f7466) | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new userspace mappings with Svvpt... |
-| [efd7f449](https://github.com/RVCK-Project/rvck/commit/efd7f4494af1d536d0d39094cb1af533b63784f2) | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new vmalloc mappings |
-| [52da8434](https://github.com/RVCK-Project/rvck/commit/52da843483f7d084ced0a74a5af788aaf6388a12) | 2023-10-20 | Anup Patel | KVM: riscv: selftests: Add SBI DBCN extension to get-reg-list test |
-| [46936216](https://github.com/RVCK-Project/rvck/commit/46936216913856743fe8304a321c3cb00f71c62f) | 2022-07-22 | Anup Patel | RISC-V: KVM: Forward SBI DBCN extension to user-space |
 ---
 
-**共 509 条提交，显示 201-400**
+**共 512 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-07 23:47:35*
-*数据来源: 主分支 rvck-6.6@0037777f*
+*本页面最后更新于 2026-10-08 02:41:29*
+*数据来源: 主分支 rvck-6.6@3dd145f1*

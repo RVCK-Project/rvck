@@ -1,9 +1,12 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 509 个提交
-# 生成时间: 2026-10-07 23:47:35
+# 共 512 个提交
+# 生成时间: 2026-10-08 02:41:29
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+f084204f | 2026-03-03 | Jiakai Xu | RISC-V: KVM: selftests: Add RISC-V SBI STA shmem alignment tests
+a191c5e1 | 2026-03-03 | Jiakai Xu | KVM: selftests: Refactor UAPI tests into dedicated function
+423d1fab | 2026-03-03 | Jiakai Xu | RISC-V: KVM: Validate SBI STA shmem alignment in kvm_sbi_ext_sta_set_reg()
 38f0f66b | 2026-09-15 | Gao Rui | iommu/intel: fix build failure due to missing iommu-pages.h
 87dd8684 | 2026-06-01 | Yong-Xuan Wang | KVM: riscv: selftests: Split SBI FWFT into separate feature-specific sublists
 17f3dc03 | 2026-06-01 | Yong-Xuan Wang | KVM: riscv: selftests: Refactor ISA and SBI extension sublist macros
