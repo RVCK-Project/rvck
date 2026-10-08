@@ -271,13 +271,159 @@ static int riscv_iommu_ir_update_target(struct riscv_iommu_msi_table *msi_table,
 	return 0;
 }
 
-static int riscv_iommu_ir_irq_set_vcpu_affinity_locked(struct irq_data *data,
+static int riscv_iommu_ir_validate_noflat_target(const struct riscv_iommu_ir_vcpu_info *vcpu_info,
+						 const struct riscv_iommu_ir_target *target)
+{
+	u64 addr = target->gpa >> IMSIC_MMIO_PAGE_SHIFT;
+
+	if (!IS_ALIGNED(target->gpa, IMSIC_MMIO_PAGE_SZ) ||
+	    (addr & ~vcpu_info->msi_addr_mask) != vcpu_info->msi_addr_pattern)
+		return -EINVAL;
+
+	/* Without MSI_FLAT there is no MSI page table, so only IMSIC targets work. */
+	if (target->type != RISCV_IOMMU_IR_TARGET_IMSIC)
+		return -EOPNOTSUPP;
+
+	if (!IS_ALIGNED(target->hpa, IMSIC_MMIO_PAGE_SZ) ||
+	    (target->hpa >> IMSIC_MMIO_PAGE_SHIFT) > FIELD_MAX(RISCV_IOMMU_MSIPTE_PPN))
+		return -EINVAL;
+
+	return 0;
+}
+
+/* Caller must hold msi_table->lock. */
+static int riscv_iommu_ir_map_guest_imsic(struct riscv_iommu_msi_table *msi_table,
+					  const struct riscv_iommu_ir_target *target)
+{
+	unsigned long index = target->gpa >> IMSIC_MMIO_PAGE_SHIFT;
+	struct riscv_iommu_noflat_imsic *imsic;
+	int ret;
+
+	imsic = xa_load(&msi_table->noflat_imsics, index);
+	if (imsic) {
+		if (imsic->hpa == target->hpa)
+			return 0;
+
+		ret = riscv_iommu_msi_table_replace_gpa_leaf(msi_table, target->gpa,
+							     imsic->hpa, target->hpa);
+		if (ret)
+			return ret;
+	} else {
+		imsic = kzalloc(sizeof(*imsic), GFP_ATOMIC);
+		if (!imsic)
+			return -ENOMEM;
+
+		ret = xa_err(xa_store(&msi_table->noflat_imsics, index, imsic,
+				      GFP_ATOMIC));
+		if (ret) {
+			kfree(imsic);
+			return ret;
+		}
+
+		ret = riscv_iommu_msi_table_map_gpa(msi_table, target->gpa, target->hpa);
+		if (ret) {
+			xa_erase(&msi_table->noflat_imsics, index);
+			kfree(imsic);
+			return ret;
+		}
+	}
+
+	imsic->hpa = target->hpa;
+	riscv_iommu_msi_table_inval(msi_table, target->gpa);
+	return 0;
+}
+
+static int riscv_iommu_ir_activate_noflat(struct riscv_iommu_msi_table *msi_table,
+					  struct riscv_iommu_ir_vcpu_info *vcpu_info)
+{
+	int ret;
+
+	ret = riscv_iommu_ir_validate_vcpu_info(vcpu_info);
+	if (ret)
+		return ret;
+
+	if (!vcpu_info->targets || !vcpu_info->nr_targets)
+		return -EINVAL;
+
+	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
+		ret = riscv_iommu_ir_validate_noflat_target(vcpu_info, &vcpu_info->targets[i]);
+		if (ret)
+			return ret;
+	}
+
+	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
+		ret = riscv_iommu_ir_map_guest_imsic(msi_table, &vcpu_info->targets[i]);
+		if (ret)
+			return ret;
+	}
+
+	return 0;
+}
+
+static int riscv_iommu_ir_update_target_noflat(struct riscv_iommu_msi_table *msi_table,
+					       struct riscv_iommu_ir_vcpu_info *vcpu_info)
+{
+	const struct riscv_iommu_ir_target *target = &vcpu_info->target;
+	int ret;
+
+	ret = riscv_iommu_ir_validate_vcpu_info(vcpu_info);
+	if (ret)
+		return ret;
+
+	ret = riscv_iommu_ir_validate_noflat_target(vcpu_info, target);
+	if (ret)
+		return ret;
+
+	if (!xa_load(&msi_table->noflat_imsics, target->gpa >> IMSIC_MMIO_PAGE_SHIFT))
+		return -EINVAL;
+
+	return riscv_iommu_ir_map_guest_imsic(msi_table, target);
+}
+
+static int riscv_iommu_ir_irq_set_vcpu_affinity_noflat(struct irq_data *data,
 						       struct riscv_iommu_info *info,
 						       struct riscv_iommu_ir_vcpu_info *vcpu_info,
 						       struct riscv_iommu_msi_table *msi_table)
 {
+	int ret;
+
+	if (!vcpu_info) {
+		/* Mappings persist; only the per-IRQ forwarding state is dropped. */
+		if (irqd_is_forwarded_to_vcpu(data)) {
+			irqd_clr_forwarded_to_vcpu(data);
+			info->nr_forwarded_irqs--;
+		}
+		return 0;
+	}
+
+	ret = vcpu_info->cmd == RISCV_IOMMU_IR_FORWARD ?
+		riscv_iommu_ir_activate_noflat(msi_table, vcpu_info) :
+		riscv_iommu_ir_update_target_noflat(msi_table, vcpu_info);
+	if (!ret) {
+		if (!irqd_is_forwarded_to_vcpu(data)) {
+			irqd_set_forwarded_to_vcpu(data);
+			info->nr_forwarded_irqs++;
+		}
+	} else if (irqd_is_forwarded_to_vcpu(data)) {
+		irqd_clr_forwarded_to_vcpu(data);
+		info->nr_forwarded_irqs--;
+	}
+
+	return ret;
+}
+
+static int riscv_iommu_ir_irq_set_vcpu_affinity_locked(struct irq_data *data,
+						       struct riscv_iommu_info *info,
+						       struct riscv_iommu_ir_vcpu_info *vcpu_info,
+						       struct riscv_iommu_msi_table *msi_table,
+						       bool noflat)
+{
 	struct riscv_iommu_device *iommu = data->domain->host_data;
 	int ret;
+
+	if (noflat)
+		return riscv_iommu_ir_irq_set_vcpu_affinity_noflat(data, info,
+								    vcpu_info, msi_table);
 
 	if (!vcpu_info) {
 		if (WARN_ON_ONCE(!msi_table->nr_forwarded_irqs || !info->nr_forwarded_irqs))
@@ -332,10 +478,12 @@ static int riscv_iommu_ir_irq_set_vcpu_affinity_locked(struct irq_data *data,
 static int riscv_iommu_ir_irq_set_vcpu_affinity(struct irq_data *data, void *arg)
 {
 	struct riscv_iommu_ir_vcpu_info *vcpu_info = arg;
+	struct riscv_iommu_device *iommu = data->domain->host_data;
 	struct riscv_iommu_msi_table *msi_table;
 	struct riscv_iommu_info *info;
 	struct msi_desc *desc;
 	struct device *dev;
+	bool noflat;
 	int ret;
 
 	if (!vcpu_info && !irqd_is_forwarded_to_vcpu(data))
@@ -354,6 +502,8 @@ static int riscv_iommu_ir_irq_set_vcpu_affinity(struct irq_data *data, void *arg
 	if (WARN_ON_ONCE(!info))
 		return -EINVAL;
 
+	noflat = !(iommu->caps & RISCV_IOMMU_CAPABILITIES_MSI_FLAT);
+
 	scoped_guard(rcu) {
 		/*
 		 * RCU keeps the table alive, but the device may switch domains before
@@ -361,7 +511,7 @@ static int riscv_iommu_ir_irq_set_vcpu_affinity(struct irq_data *data, void *arg
 		 */
 		for (;;) {
 			msi_table = riscv_iommu_msi_table_rcu(info);
-			if (!msi_table || !msi_table->root)
+			if (!msi_table || (!noflat && !msi_table->root))
 				return -EOPNOTSUPP;
 
 			raw_spin_lock(&msi_table->lock);
@@ -371,7 +521,8 @@ static int riscv_iommu_ir_irq_set_vcpu_affinity(struct irq_data *data, void *arg
 		}
 	}
 
-	ret = riscv_iommu_ir_irq_set_vcpu_affinity_locked(data, info, vcpu_info, msi_table);
+	ret = riscv_iommu_ir_irq_set_vcpu_affinity_locked(data, info, vcpu_info,
+							  msi_table, noflat);
 	raw_spin_unlock(&msi_table->lock);
 
 	return ret;
