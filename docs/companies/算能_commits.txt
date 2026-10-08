@@ -1,94 +1,94 @@
 # 算能 提交列表（纯文本视图）
 # 共 88 个提交
-# 生成时间: 2026-10-08 02:41:29
+# 生成时间: 2026-10-08 19:27:23
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-eeb97032 | 2025-01-08 | Jingyu Li | drivers: Add ACPI support for thead-c900-aclint-sswi
-d78a58c2 | 2024-10-31 | Inochi Amaoto | irqchip: Add T-HEAD C900 ACLINT SSWI driver
-79137b1e | 2024-10-31 | Inochi Amaoto | dt-bindings: interrupt-controller: Add T-HEAD C900 ACLINT SSWI device
-fe54864c | 2024-02-14 | Michal Wajdeczko | lib/string_choices: Add str_plural() helper
-ab5582f6 | 2024-01-18 | Sunil V L | ACPI: Enable ACPI_PROCESSOR for RISC-V
-9de249bc | 2024-01-18 | Sunil V L | ACPI: RISC-V: Add LPI driver
-b928d7a8 | 2025-04-22 | haijiao.liu | drivers: spi: Add ACPI support for Sophgo SPI Controller
-c9891674 | 2025-04-22 | haijiao.liu | drivers: i2c: Add ACPI support for Sophgo I2C Controller
-b8e1e584 | 2025-05-07 | haijiao.liu | irqchip: Add Sophgo SG2044 MSI controller driver
-256f46f6 | 2025-04-16 | haijiao.liu | serial/8250_dw: Add ACPI ID for SG2044 UART
-1386f006 | 2023-10-18 | Sunil V L | RISC-V: cacheflush: Initialize CBO variables on ACPI systems
-7af91690 | 2023-10-18 | Sunil V L | RISC-V: ACPI: RHCT: Add function to get CBO block sizes
-be400bd4 | 2023-10-18 | Sunil V L | RISC-V: ACPI: Update the return value of acpi_get_rhct()
-06e69092 | 2023-10-18 | Sunil V L | RISC-V: ACPI: Enhance acpi_os_ioremap with MMIO remapping
-c3ab52ae | 2023-09-27 | Sunil V L | clocksource/timer-riscv: ACPI: Add timer_cannot_wakeup_cpu
-3a551c4d | 2024-10-14 | Sunil V L | irqchip/riscv-intc: Fix SMP=n boot with ACPI
-9dfab477 | 2024-08-27 | Sunil V L | irqchip/sifive-plic: Add ACPI support
-3f7c63bf | 2024-08-12 | Sunil V L | irqchip/riscv-aplic: Add ACPI support
-df848cff | 2024-08-12 | Sunil V L | irqchip/riscv-imsic: Add ACPI support
-37eea85e | 2024-08-12 | Sunil V L | irqchip/riscv-imsic-state: Create separate function for DT
-f8c78ea8 | 2024-08-12 | Sunil V L | irqchip/riscv-intc: Add ACPI support for AIA
-39e16301 | 2024-08-12 | Sunil V L | ACPI: RISC-V: Implement function to add implicit dependencies
-f3e0de0c | 2024-08-12 | Sunil V L | ACPI: RISC-V: Initialize GSI mapping structures
-95bcdaf0 | 2024-08-12 | Sunil V L | ACPI: RISC-V: Implement function to reorder irqchip probe entries
-b56d3343 | 2024-08-12 | Sunil V L | ACPI: RISC-V: Implement PCI related functionality
-b157f9f0 | 2024-08-12 | Sunil V L | ACPI: pci_link: Clear the dependencies after probe
-4f251e45 | 2024-08-12 | Sunil V L | ACPI: bus: Add RINTC IRQ model for RISC-V
-6ba4f11c | 2024-08-12 | Sunil V L | ACPI: scan: Define weak function to populate dependencies
-a0e4b8f7 | 2024-08-12 | Sunil V L | ACPI: scan: Add RISC-V interrupt controllers to honor list
-906257c8 | 2024-08-12 | Sunil V L | ACPI: scan: Refactor dependency creation
-e11b6336 | 2023-12-08 | Rafael J. Wysocki | ACPI: utils: Fix white space in struct acpi_handle_list definition
-7fd25d16 | 2023-12-08 | Rafael J. Wysocki | ACPI: utils: Refine acpi_handle_list_equal() slightly
-6506f237 | 2023-12-08 | Rafael J. Wysocki | ACPI: utils: Return bool from acpi_evaluate_reference()
-12acbf65 | 2023-12-08 | Rafael J. Wysocki | ACPI: utils: Rearrange in acpi_evaluate_reference()
-2812cd37 | 2023-12-07 | Rafael J. Wysocki | ACPI: utils: Fix error path in acpi_evaluate_reference()
-d2848768 | 2023-09-27 | Rafael J. Wysocki | ACPI: utils: Dynamically determine acpi_handle_list size
-25548f8b | 2023-11-06 | Rafael J. Wysocki | ACPI: scan: Extract CSI-2 connection graph from _CRS
-e1c481e5 | 2024-08-12 | Sunil V L | ACPI: bus: Add acpi_riscv_init() function
-75c03905 | 2024-08-12 | Sunil V L | ACPI: scan: Add a weak arch_sort_irqchip_probe() to order the IRQCHIP probe
-ea9fbe1b | 2024-08-12 | Sunil V L | arm64: PCI: Migrate ACPI related functions to pci-acpi.c
-4e7a7156 | 2024-08-20 | Anup Patel | irqchip/sifive-plic: Probe plic driver early for Allwinner D1 platform
-9b557df3 | 2024-05-29 | Samuel Holland | irqchip/sifive-plic: Chain to parent IRQ after handlers are ready
-452a39b5 | 2024-04-16 | Dawei Li | irqchip/sifive-plic: Avoid explicit cpumask allocation on stack
-c774d484 | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Improve locking safety by using irqsave/irqrestore
-0ce18b72 | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Parse number of interrupts and contexts early in plic_probe()
-673becec | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Cleanup PLIC contexts upon irqdomain creation failure
-842c861f | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use riscv_get_intc_hwnode() to get parent fwnode
-7adc70fb | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use devm_xyz() for managed allocation
-a90a9cad | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use dev_xyz() in-place of pr_xyz()
-393d15c1 | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Convert PLIC driver into a platform driver
-64bec373 | 2024-12-29 | Xiaoguang Xing | Fix compile error
-3bc5c6a1 | 2024-11-16 | fengchun.li | drivers:pci: SC11 support msi-x
-51ba1bb1 | 2024-08-30 | zhencheng.zhang | driver: spifmc: fix spif bug when bs of dd exceed 64k
-34d5a131 | 2024-10-25 | Xiaoguang Xing | riscv:mm: Use old __set_pte_at() because highmem is in use
-e4971162 | 2024-08-17 | lin peng | add null event check logic in riscv_pmu_sbi.c
-ff45b4f5 | 2024-07-25 | chunzhi.lin | riscv:dts:add i2c4 node for multi chips
-4dd2ae16 | 2024-05-23 | chunzhi.lin | riscv:dts:capricorn:add i2c-rtc device
-df61cda3 | 2024-05-20 | chunzhi.lin | dts:sophgo:x4evb:Apply top interrupt instead of msi on x16 slot
-44c11ffa | 2024-05-09 | Jingyu Li | drivers: rtc: disable BMC RTC device
-c5d67c8e | 2024-04-23 | chunzhi.lin | dts:sophgo:add i2c-rtc ds1307 device node for single chip
-a959055f | 2024-03-28 | chunzhi.lin | riscv:dts:modify dw gpio clock name
-be6431b4 | 2024-03-26 | Xiaoguang Xing | riscv: defconfig: Add openeuler defconfig
-31ded085 | 2024-03-23 | fengchun.li | drivers:pci:remove the err log of parsing pci
-1a2c3604 | 2023-07-12 | Xiaoguang Xing | riscv: configs: Add sophgo sg2042 soc defconfig
-9c9bbedd | 2024-03-21 | Xiaoguang Xing | driver: ipmi: support KVM and IPMI SI for BMC
-9a3079d2 | 2023-07-31 | Chao Wei | driver: radeon: deinit device during kexec
-8c34e844 | 2023-08-29 | Xiaoguang Xing | kernel: schedule: Fix set_task_cpu() bug
-5e9a29f8 | 2023-10-17 | Xiaoguang Xing | mm: Modify __find_max_addr for memory hole
-934e8034 | 2023-11-16 | haijiao.liu | kernel: tick: filter unnecessary printing
-d06d8624 | 2023-10-21 | haijiao.liu | kernel: Adjust the log level of the tick_switch_to_oneshot function
-4693e525 | 2024-03-21 | Xiaoguang Xing | driver: clk: Modify the timer clock is turned off defaultly
-12d078fe | 2024-03-21 | Xiaoguang Xing | drivers: clock: Add sophgo sg2042 multi-chip clock synchronous support
-f3cce1ad | 2024-01-26 | Xiaoguang Xing | mango pci hack:broadcast when no MSI source known
-dc200c91 | 2023-07-12 | Xiaoguang Xing | driver: soc: Add sophgo sg2042 soc support
-4a716b39 | 2024-03-21 | Xiaoguang Xing | drivers: pcie: sophgo: Create msi-x whitelist,turn on msi-x for top intr
-18bffa15 | 2024-03-21 | Xiaoguang Xing | driver: pcie: Add sophgo sg2042 soc support
-78ab2bea | 2023-07-12 | Xiaoguang Xing | driver: net: Add sophgo sg2042 soc support
-6af52dc9 | 2024-03-06 | Xiaoguang Xing | driver: mtd: Add sophgo sg2042 soc support
-e1cdf1b5 | 2024-03-21 | Xiaoguang Xing | driver: mmc: Add sophgo sg2042 soc support
-483f974b | 2023-07-12 | Xiaoguang Xing | driver: reset: Add sophgo sg2042 soc support
-8b295494 | 2023-07-12 | Xiaoguang Xing | driver: pinctrl: Add sophgo sg2042 soc support
-4cbcda28 | 2023-07-12 | Xiaoguang Xing | driver: clk: Add sophgo sg2042 soc support
-ae3446af | 2023-10-21 | haijiao.liu | riscv: spinlock: Fix deadlock issue
-9901ae25 | 2024-01-29 | Xiaoguang Xing | riscv: add ioremap_wc for gpu
-8af75338 | 2023-10-19 | Xiaoguang Xing | riscv: errata: thead: Make cache clean to flush
-6e7505f8 | 2024-01-22 | Xiaoguang Xing | riscv: errata: Replace thead cache clean with flush
-a0493529 | 2023-07-20 | Xiaoguang Xing | riscv: Kconfig: Set vector as default no
-01587528 | 2024-03-06 | Xiaoguang Xing | riscv: Add sophgo sg2042 soc support
+3dc9f3f5 | 2025-01-08 | Jingyu Li | drivers: Add ACPI support for thead-c900-aclint-sswi
+7eb16214 | 2024-10-31 | Inochi Amaoto | irqchip: Add T-HEAD C900 ACLINT SSWI driver
+fea581e1 | 2024-10-31 | Inochi Amaoto | dt-bindings: interrupt-controller: Add T-HEAD C900 ACLINT SSWI device
+c0af3f05 | 2024-02-14 | Michal Wajdeczko | lib/string_choices: Add str_plural() helper
+2570ff86 | 2024-01-18 | Sunil V L | ACPI: Enable ACPI_PROCESSOR for RISC-V
+124fcd66 | 2024-01-18 | Sunil V L | ACPI: RISC-V: Add LPI driver
+807ba713 | 2025-04-22 | haijiao.liu | drivers: spi: Add ACPI support for Sophgo SPI Controller
+d43742b5 | 2025-04-22 | haijiao.liu | drivers: i2c: Add ACPI support for Sophgo I2C Controller
+fe5bbf8c | 2025-05-07 | haijiao.liu | irqchip: Add Sophgo SG2044 MSI controller driver
+9e893019 | 2025-04-16 | haijiao.liu | serial/8250_dw: Add ACPI ID for SG2044 UART
+1d49a499 | 2023-10-18 | Sunil V L | RISC-V: cacheflush: Initialize CBO variables on ACPI systems
+98fd46ea | 2023-10-18 | Sunil V L | RISC-V: ACPI: RHCT: Add function to get CBO block sizes
+dc7d1dac | 2023-10-18 | Sunil V L | RISC-V: ACPI: Update the return value of acpi_get_rhct()
+82b4828d | 2023-10-18 | Sunil V L | RISC-V: ACPI: Enhance acpi_os_ioremap with MMIO remapping
+e932ce42 | 2023-09-27 | Sunil V L | clocksource/timer-riscv: ACPI: Add timer_cannot_wakeup_cpu
+b4e3bd10 | 2024-10-14 | Sunil V L | irqchip/riscv-intc: Fix SMP=n boot with ACPI
+e158e280 | 2024-08-27 | Sunil V L | irqchip/sifive-plic: Add ACPI support
+c17d5fc8 | 2024-08-12 | Sunil V L | irqchip/riscv-aplic: Add ACPI support
+2772f68b | 2024-08-12 | Sunil V L | irqchip/riscv-imsic: Add ACPI support
+55447757 | 2024-08-12 | Sunil V L | irqchip/riscv-imsic-state: Create separate function for DT
+3ff6b768 | 2024-08-12 | Sunil V L | irqchip/riscv-intc: Add ACPI support for AIA
+05b29891 | 2024-08-12 | Sunil V L | ACPI: RISC-V: Implement function to add implicit dependencies
+9debf431 | 2024-08-12 | Sunil V L | ACPI: RISC-V: Initialize GSI mapping structures
+c86c8b61 | 2024-08-12 | Sunil V L | ACPI: RISC-V: Implement function to reorder irqchip probe entries
+98ebc3c3 | 2024-08-12 | Sunil V L | ACPI: RISC-V: Implement PCI related functionality
+e7e8118b | 2024-08-12 | Sunil V L | ACPI: pci_link: Clear the dependencies after probe
+05336b39 | 2024-08-12 | Sunil V L | ACPI: bus: Add RINTC IRQ model for RISC-V
+84350c23 | 2024-08-12 | Sunil V L | ACPI: scan: Define weak function to populate dependencies
+b6d8fe6b | 2024-08-12 | Sunil V L | ACPI: scan: Add RISC-V interrupt controllers to honor list
+893385f6 | 2024-08-12 | Sunil V L | ACPI: scan: Refactor dependency creation
+110606bf | 2023-12-08 | Rafael J. Wysocki | ACPI: utils: Fix white space in struct acpi_handle_list definition
+021d0605 | 2023-12-08 | Rafael J. Wysocki | ACPI: utils: Refine acpi_handle_list_equal() slightly
+ee1fd297 | 2023-12-08 | Rafael J. Wysocki | ACPI: utils: Return bool from acpi_evaluate_reference()
+c6c55937 | 2023-12-08 | Rafael J. Wysocki | ACPI: utils: Rearrange in acpi_evaluate_reference()
+745ce229 | 2023-12-07 | Rafael J. Wysocki | ACPI: utils: Fix error path in acpi_evaluate_reference()
+981ef0b3 | 2023-09-27 | Rafael J. Wysocki | ACPI: utils: Dynamically determine acpi_handle_list size
+94cf076f | 2023-11-06 | Rafael J. Wysocki | ACPI: scan: Extract CSI-2 connection graph from _CRS
+fbc8cc88 | 2024-08-12 | Sunil V L | ACPI: bus: Add acpi_riscv_init() function
+3ad03f0b | 2024-08-12 | Sunil V L | ACPI: scan: Add a weak arch_sort_irqchip_probe() to order the IRQCHIP probe
+0bf7ea0f | 2024-08-12 | Sunil V L | arm64: PCI: Migrate ACPI related functions to pci-acpi.c
+784e5c16 | 2024-08-20 | Anup Patel | irqchip/sifive-plic: Probe plic driver early for Allwinner D1 platform
+c26f9c01 | 2024-05-29 | Samuel Holland | irqchip/sifive-plic: Chain to parent IRQ after handlers are ready
+4c49ffad | 2024-04-16 | Dawei Li | irqchip/sifive-plic: Avoid explicit cpumask allocation on stack
+cbd5b34d | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Improve locking safety by using irqsave/irqrestore
+1b13e584 | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Parse number of interrupts and contexts early in plic_probe()
+c265b54a | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Cleanup PLIC contexts upon irqdomain creation failure
+54d55cef | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use riscv_get_intc_hwnode() to get parent fwnode
+bcbef2cd | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use devm_xyz() for managed allocation
+ba7f8281 | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Use dev_xyz() in-place of pr_xyz()
+90743b6b | 2024-02-22 | Anup Patel | irqchip/sifive-plic: Convert PLIC driver into a platform driver
+d6114a5a | 2024-12-29 | Xiaoguang Xing | Fix compile error
+ff8f38a7 | 2024-11-16 | fengchun.li | drivers:pci: SC11 support msi-x
+1767ab12 | 2024-08-30 | zhencheng.zhang | driver: spifmc: fix spif bug when bs of dd exceed 64k
+9112a3ac | 2024-10-25 | Xiaoguang Xing | riscv:mm: Use old __set_pte_at() because highmem is in use
+8f3f75ed | 2024-08-17 | lin peng | add null event check logic in riscv_pmu_sbi.c
+3f6b7083 | 2024-07-25 | chunzhi.lin | riscv:dts:add i2c4 node for multi chips
+d1a41500 | 2024-05-23 | chunzhi.lin | riscv:dts:capricorn:add i2c-rtc device
+3eb6b5ac | 2024-05-20 | chunzhi.lin | dts:sophgo:x4evb:Apply top interrupt instead of msi on x16 slot
+fe9fcb28 | 2024-05-09 | Jingyu Li | drivers: rtc: disable BMC RTC device
+36e3e468 | 2024-04-23 | chunzhi.lin | dts:sophgo:add i2c-rtc ds1307 device node for single chip
+6554ce4e | 2024-03-28 | chunzhi.lin | riscv:dts:modify dw gpio clock name
+cb42a8c9 | 2024-03-26 | Xiaoguang Xing | riscv: defconfig: Add openeuler defconfig
+3fdf1f23 | 2024-03-23 | fengchun.li | drivers:pci:remove the err log of parsing pci
+99ef6c3d | 2023-07-12 | Xiaoguang Xing | riscv: configs: Add sophgo sg2042 soc defconfig
+2b9b7a09 | 2024-03-21 | Xiaoguang Xing | driver: ipmi: support KVM and IPMI SI for BMC
+c64c5068 | 2023-07-31 | Chao Wei | driver: radeon: deinit device during kexec
+435b6d08 | 2023-08-29 | Xiaoguang Xing | kernel: schedule: Fix set_task_cpu() bug
+fb142371 | 2023-10-17 | Xiaoguang Xing | mm: Modify __find_max_addr for memory hole
+fe878e64 | 2023-11-16 | haijiao.liu | kernel: tick: filter unnecessary printing
+9f49cfd1 | 2023-10-21 | haijiao.liu | kernel: Adjust the log level of the tick_switch_to_oneshot function
+ee467557 | 2024-03-21 | Xiaoguang Xing | driver: clk: Modify the timer clock is turned off defaultly
+abcddb0e | 2024-03-21 | Xiaoguang Xing | drivers: clock: Add sophgo sg2042 multi-chip clock synchronous support
+8260f6e6 | 2024-01-26 | Xiaoguang Xing | mango pci hack:broadcast when no MSI source known
+a0ab7c53 | 2023-07-12 | Xiaoguang Xing | driver: soc: Add sophgo sg2042 soc support
+7bdb20ec | 2024-03-21 | Xiaoguang Xing | drivers: pcie: sophgo: Create msi-x whitelist,turn on msi-x for top intr
+a68aca22 | 2024-03-21 | Xiaoguang Xing | driver: pcie: Add sophgo sg2042 soc support
+4a75950a | 2023-07-12 | Xiaoguang Xing | driver: net: Add sophgo sg2042 soc support
+2866210b | 2024-03-06 | Xiaoguang Xing | driver: mtd: Add sophgo sg2042 soc support
+eac6a742 | 2024-03-21 | Xiaoguang Xing | driver: mmc: Add sophgo sg2042 soc support
+a4da6833 | 2023-07-12 | Xiaoguang Xing | driver: reset: Add sophgo sg2042 soc support
+db7a8d26 | 2023-07-12 | Xiaoguang Xing | driver: pinctrl: Add sophgo sg2042 soc support
+d963cf42 | 2023-07-12 | Xiaoguang Xing | driver: clk: Add sophgo sg2042 soc support
+2f74d7f5 | 2023-10-21 | haijiao.liu | riscv: spinlock: Fix deadlock issue
+3e8353bd | 2024-01-29 | Xiaoguang Xing | riscv: add ioremap_wc for gpu
+715342ac | 2023-10-19 | Xiaoguang Xing | riscv: errata: thead: Make cache clean to flush
+7120d3ec | 2024-01-22 | Xiaoguang Xing | riscv: errata: Replace thead cache clean with flush
+b840a1ee | 2023-07-20 | Xiaoguang Xing | riscv: Kconfig: Set vector as default no
+0d912942 | 2024-03-06 | Xiaoguang Xing | riscv: Add sophgo sg2042 soc support
