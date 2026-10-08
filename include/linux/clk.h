@@ -202,6 +202,18 @@ bool clk_is_match(const struct clk *p, const struct clk *q);
 int clk_rate_exclusive_get(struct clk *clk);
 
 /**
+ * devm_clk_rate_exclusive_get - devm variant of clk_rate_exclusive_get
+ * @dev: device the exclusivity is bound to
+ * @clk: clock source
+ *
+ * Calls clk_rate_exclusive_get() on @clk and registers a devm cleanup handler
+ * on @dev to call clk_rate_exclusive_put().
+ *
+ * Must not be called from within atomic context.
+ */
+int devm_clk_rate_exclusive_get(struct device *dev, struct clk *clk);
+
+/**
  * clk_rate_exclusive_put - release exclusivity over the rate control of a
  *                          producer
  * @clk: clock source
@@ -501,6 +513,24 @@ int __must_check devm_clk_bulk_get_optional(struct device *dev, int num_clks,
 
 int __must_check devm_clk_bulk_get_all(struct device *dev,
 				       struct clk_bulk_data **clks);
+
+/**
+ * devm_clk_bulk_get_all_enabled - Get and enable all clocks of the consumer (managed)
+ * @dev: device for clock "consumer"
+ * @clks: pointer to the clk_bulk_data table of consumer
+ *
+ * Returns a positive value for the number of clocks obtained while the
+ * clock references are stored in the clk_bulk_data table in @clks field.
+ * Returns 0 if there're none and a negative value if something failed.
+ *
+ * This helper function allows drivers to get all clocks of the
+ * consumer and enables them in one operation with management.
+ * The clks will automatically be disabled and freed when the device
+ * is unbound.
+ */
+
+int __must_check devm_clk_bulk_get_all_enabled(struct device *dev,
+					       struct clk_bulk_data **clks);
 
 /**
  * devm_clk_get - lookup and obtain a managed reference to a clock producer.
@@ -975,6 +1005,12 @@ static inline int __must_check devm_clk_bulk_get_all(struct device *dev,
 	return 0;
 }
 
+static inline int __must_check devm_clk_bulk_get_all_enabled(struct device *dev,
+						struct clk_bulk_data **clks)
+{
+	return 0;
+}
+
 static inline struct clk *devm_get_clk_from_child(struct device *dev,
 				struct device_node *np, const char *con_id)
 {
@@ -1063,6 +1099,15 @@ static inline struct clk *clk_get_sys(const char *dev_id, const char *con_id)
 }
 
 #endif
+
+/* Deprecated. Use devm_clk_bulk_get_all_enabled() */
+static inline int __must_check
+devm_clk_bulk_get_all_enable(struct device *dev, struct clk_bulk_data **clks)
+{
+	int ret = devm_clk_bulk_get_all_enabled(dev, clks);
+
+	return ret > 0 ? 0 : ret;
+}
 
 /* clk_prepare_enable helps cases using clk_enable in non-atomic context. */
 static inline int clk_prepare_enable(struct clk *clk)

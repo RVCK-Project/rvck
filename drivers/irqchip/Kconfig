@@ -74,6 +74,9 @@ config ARM_VIC_NR
 	  The maximum number of VICs available in the system, for
 	  power management.
 
+config IRQ_MSI_LIB
+	bool
+
 config ARMADA_370_XP_IRQ
 	bool
 	select GENERIC_IRQ_CHIP
@@ -391,14 +394,6 @@ config LS_SCFG_MSI
 
 config PARTITION_PERCPU
 	bool
-
-config SOPHGO_SG2044_MSI
-	bool "Sophgo SG2044 MSI controller"
-	depends on ARCH_SOPHGO
-	help
-	  Support for the Sophgo SG2044 MSI Controller.
-	  This on-chip interrupt controller enables MSI sources to be
-	  routed to the primary PLIC controller on SoC.
 
 config STM32_EXTI
 	bool
@@ -722,6 +717,18 @@ config MCHP_EIC
 	select IRQ_DOMAIN_HIERARCHY
 	help
 	  Support for Microchip External Interrupt Controller.
+
+config SOPHGO_SG2042_MSI
+	bool "Sophgo SG2042 MSI Controller"
+	depends on ARCH_SOPHGO || COMPILE_TEST
+	depends on PCI
+	select IRQ_DOMAIN_HIERARCHY
+	select IRQ_MSI_LIB
+	select PCI_MSI
+	help
+	  Support for the Sophgo SG2042 MSI Controller.
+	  This on-chip interrupt controller enables MSI sources to be
+	  routed to the primary PLIC controller on SoC.
 
 config SUNPLUS_SP7021_INTC
 	bool "Sunplus SP7021 interrupt controller" if COMPILE_TEST

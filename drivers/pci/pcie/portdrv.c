@@ -681,6 +681,9 @@ static const struct dev_pm_ops pcie_portdrv_pm_ops = {
 static int pcie_portdrv_probe(struct pci_dev *dev,
 					const struct pci_device_id *id)
 {
+	if (dev->dev_flags & PCI_DEV_FLAGS_NO_PORT_SERVICES)
+		return -ENODEV;
+
 	int type = pci_pcie_type(dev);
 	int status;
 

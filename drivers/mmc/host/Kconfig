@@ -233,6 +233,7 @@ config MMC_SDHCI_OF_DWCMSHC
 	depends on MMC_SDHCI_PLTFM
 	depends on OF
 	depends on COMMON_CLK
+	select MMC_CQHCI
 	help
 	  This selects Synopsys DesignWare Cores Mobile Storage Controller
 	  support.
@@ -664,21 +665,6 @@ config MMC_SDHCI_SPRD
 	  If you have a controller with this interface, say Y or M here.
 
 	  If unsure, say N.
-
-config MMC_SDHCI_SOPHGO
-	tristate "Sophgo/BitMain SDIO host Controller"
-	depends on MMC_SDHCI_PLTFM
-	depends on ARCH_SOPHGO
-	help
-	  This selects the SDIO Host Controller in Sophgo/BitMain
-	  SoCs.
-
-	  If you have a controller with this interface, say Y or M here.
-
-	  If unsure, say N.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called sdhci-sophgo.
 
 config MMC_TMIO_CORE
 	tristate

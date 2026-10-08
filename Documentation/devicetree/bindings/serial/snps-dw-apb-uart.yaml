@@ -45,6 +45,7 @@ properties:
           - const: snps,dw-apb-uart
       - items:
           - enum:
+              - sophgo,sg2044-uart
               - starfive,jh7100-hsuart
               - starfive,jh7100-uart
           - const: snps,dw-apb-uart
