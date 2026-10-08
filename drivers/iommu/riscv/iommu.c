@@ -25,6 +25,7 @@
 #include <linux/moduleparam.h>
 #include <linux/mutex.h>
 #include <linux/pci.h>
+#include <linux/pgtable.h>
 
 #include "../dma-iommu.h"
 #include "../iommu-pages.h"
@@ -1377,6 +1378,66 @@ static unsigned long *riscv_iommu_pte_fetch(struct riscv_iommu_domain *domain,
 	return NULL;
 }
 
+/* The x4 root index is masked, so wider GPAs would alias. */
+static bool riscv_iommu_s2_gpa_valid(struct riscv_iommu_domain *domain,
+				     dma_addr_t gpa)
+{
+	int va_bits = riscv_iommu_va_bits(domain->pgd_mode);
+
+	return gpa <= DMA_BIT_MASK(va_bits + 2);
+}
+
+int riscv_iommu_msi_table_map_gpa(struct riscv_iommu_msi_table *msi_table,
+				  dma_addr_t gpa, phys_addr_t hpa)
+{
+	struct riscv_iommu_domain *domain =
+		container_of(msi_table, struct riscv_iommu_domain, msi_table);
+	const int prot = IOMMU_WRITE | IOMMU_NOEXEC | IOMMU_MMIO;
+
+	/* Guest IMSIC GPA mapping only exists in second-stage translations. */
+	if (!domain->gscid)
+		return -EOPNOTSUPP;
+	if (!riscv_iommu_s2_gpa_valid(domain, gpa))
+		return -EINVAL;
+
+	return iommu_map(&domain->domain, gpa, hpa, IMSIC_MMIO_PAGE_SZ, prot,
+			 GFP_ATOMIC);
+}
+
+int riscv_iommu_msi_table_replace_gpa_leaf(struct riscv_iommu_msi_table *msi_table,
+					   dma_addr_t gpa, phys_addr_t old_hpa,
+					   phys_addr_t new_hpa)
+{
+	struct riscv_iommu_domain *domain =
+		container_of(msi_table, struct riscv_iommu_domain, msi_table);
+	unsigned long *ptep;
+	size_t pte_size;
+	u64 old, new;
+
+	if (!IS_ALIGNED(gpa | old_hpa | new_hpa, PAGE_SIZE))
+		return -EINVAL;
+	if (!domain->gscid)
+		return -EOPNOTSUPP;
+	if (!riscv_iommu_s2_gpa_valid(domain, gpa))
+		return -EINVAL;
+
+	ptep = riscv_iommu_pte_fetch(domain, gpa, &pte_size);
+	if (!ptep || pte_size != PAGE_SIZE)
+		return -EADDRINUSE;
+
+	for (;;) {
+		old = READ_ONCE(*ptep);
+		if (!(old & _PAGE_PRESENT) || !(old & _PAGE_LEAF) ||
+		    pfn_to_phys(__page_val_to_pfn(old)) != old_hpa)
+			return -EADDRINUSE;
+
+		new = (old & ~_PAGE_PFN_MASK) |
+		      FIELD_PREP(_PAGE_PFN_MASK, new_hpa >> PAGE_SHIFT);
+		if (cmpxchg64((u64 *)ptep, old, new) == old)
+			return 0;
+	}
+}
+
 static int riscv_iommu_map_pages(struct iommu_domain *iommu_domain,
 				 unsigned long iova, phys_addr_t phys,
 				 size_t pgsize, size_t pgcount, int prot,
@@ -1494,6 +1555,8 @@ static void riscv_iommu_free_paging_domain(struct iommu_domain *iommu_domain)
 {
 	struct riscv_iommu_domain *domain = iommu_domain_to_riscv(iommu_domain);
 	const unsigned long pfn = virt_to_pfn(domain->pgd_root);
+	struct riscv_iommu_noflat_imsic *imsic;
+	unsigned long index;
 
 	WARN_ON(!list_empty(&domain->bonds));
 
@@ -1503,6 +1566,10 @@ static void riscv_iommu_free_paging_domain(struct iommu_domain *iommu_domain)
 		ida_free(&riscv_iommu_pscids, domain->pscid);
 	if (domain->gscid > 0)
 		ida_free(&riscv_iommu_gscids, domain->gscid);
+
+	xa_for_each(&domain->msi_table.noflat_imsics, index, imsic)
+		kfree(imsic);
+	xa_destroy(&domain->msi_table.noflat_imsics);
 
 	riscv_iommu_pte_free(domain, _io_pte_entry(pfn, _PAGE_TABLE), NULL, true);
 	if (domain->msi_table.root)
@@ -1764,6 +1831,7 @@ static struct iommu_domain *riscv_iommu_alloc_paging_domain(struct device *dev)
 	INIT_LIST_HEAD_RCU(&domain->bonds);
 	raw_spin_lock_init(&domain->lock);
 	raw_spin_lock_init(&domain->msi_table.lock);
+	xa_init(&domain->msi_table.noflat_imsics);
 	mutex_init(&domain->mutex);
 	domain->numa_node = dev_to_node(iommu->dev);
 	domain->amo_enabled = !!(iommu->caps & RISCV_IOMMU_CAPABILITIES_AMO_HWAD);
