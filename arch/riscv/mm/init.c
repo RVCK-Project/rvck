@@ -43,7 +43,7 @@
 extern phys_addr_t __init_memblock find_max_low_addr(phys_addr_t limit);
 #endif
 
-u64 new_vmalloc[NR_CPUS / sizeof(u64) + 1];
+u64 new_valid_map_cpus[NR_CPUS / sizeof(u64) + 1];
 
 struct kernel_mapping kernel_map __ro_after_init;
 EXPORT_SYMBOL(kernel_map);
