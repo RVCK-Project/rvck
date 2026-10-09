@@ -37,7 +37,7 @@ static inline void flush_dcache_page(struct page *page)
 #define flush_icache_user_page(vma, pg, addr, len) \
 	flush_icache_mm(vma->vm_mm, 0)
 
-#ifdef CONFIG_64BIT
+#if defined(CONFIG_64BIT) && defined(CONFIG_MMU)
 /* This is accessed in assembly code. cpumask_var_t would be too complex. */
 extern DECLARE_BITMAP(new_valid_map_cpus, NR_CPUS);
 extern char _end[];
