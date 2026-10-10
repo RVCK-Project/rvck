@@ -803,22 +803,36 @@ void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu)
 	/* Read old IMSIC VS-file details */
 	old_vsfile_hgei = imsic->vsfile_hgei;
 	old_vsfile_cpu = imsic->vsfile_cpu;
+	write_unlock_irqrestore(&imsic->vsfile_lock, flags);
 
 	/* Do nothing, if no IMSIC VS-file to release */
-	if (old_vsfile_cpu < 0) {
-		write_unlock_irqrestore(&imsic->vsfile_lock, flags);
+	if (old_vsfile_cpu < 0)
 		return;
-	}
 
-	/* Purge the IOMMU mapping */
+	/*
+	 * Redirect every producer of this vCPU to host delivery before
+	 * the VS-file goes away. The write lock is not held: taking
+	 * irqfds.lock and desc->lock under vsfile_lock can deadlock
+	 * against the interrupt injection path, which takes vsfile_lock
+	 * for reading while holding the IRQ descriptor lock.
+	 */
 	ret = imsic_vcpu_unforward(vcpu);
 	if (KVM_BUG(ret, kvm,
-		    "Failed to redirect vCPU interrupts to host delivery: %d\n", ret)) {
+		    "Failed to redirect vCPU interrupts to host delivery: %d\n", ret))
+		return;
+
+	/* Clear IMSIC VS-file details after redirecting every producer. */
+	write_lock_irqsave(&imsic->vsfile_lock, flags);
+	/*
+	 * A concurrent VS-file update may have published a new file while
+	 * producers were being redirected. That update drains and frees the
+	 * old file itself, so leave the new file untouched.
+	 */
+	if (imsic->vsfile_cpu != old_vsfile_cpu ||
+	    imsic->vsfile_hgei != old_vsfile_hgei) {
 		write_unlock_irqrestore(&imsic->vsfile_lock, flags);
 		return;
 	}
-
-	/* Clear IMSIC VS-file details after redirecting every producer. */
 	imsic_vsfile_set_hgei(imsic, -1, -1);
 	imsic->vsfile_va = NULL;
 	imsic->vsfile_pa = 0;
@@ -1114,13 +1128,19 @@ int kvm_riscv_vcpu_aia_imsic_update(struct kvm_vcpu *vcpu)
 	if (ret)
 		goto fail_free_vsfile_hgei;
 
-	/* Keep target replacement and VS-file publication together. */
-	scoped_guard(write_lock_irqsave, &imsic->vsfile_lock) {
-		/* Update the IOMMU mapping */
-		ret = imsic_vsfile_target_replace(vcpu, new_vsfile_pa);
-		if (ret)
-			goto fail_free_vsfile_hgei;
+	/*
+	 * Update the IOMMU mapping. The write lock is not held: taking
+	 * irqfds.lock and desc->lock under vsfile_lock can deadlock
+	 * against the interrupt injection path, which takes vsfile_lock
+	 * for reading while holding the IRQ descriptor lock. Replacement
+	 * runs before publication so a failure leaves the old VS-file
+	 * details, and the caller's error path, untouched.
+	 */
+	ret = imsic_vsfile_target_replace(vcpu, new_vsfile_pa);
+	if (ret)
+		goto fail_free_vsfile_hgei;
 
+	scoped_guard(write_lock_irqsave, &imsic->vsfile_lock) {
 		/* Update new IMSIC VS-file details in IMSIC context */
 		imsic_vsfile_set_hgei(imsic, vcpu->cpu, new_vsfile_hgei);
 		imsic->vsfile_va = new_vsfile_va;
