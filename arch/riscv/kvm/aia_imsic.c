@@ -868,7 +868,6 @@ static int imsic_vsfile_target_replace(struct kvm_vcpu *vcpu, phys_addr_t vsfile
 {
 	struct kvm *kvm = vcpu->kvm;
 	struct kvm_aia *aia = &kvm->arch.aia;
-	struct imsic *imsic = vcpu->arch.aia_context.imsic_state;
 	struct riscv_iommu_ir_target *target = &aia->targets[vcpu->vcpu_idx];
 	struct riscv_iommu_ir_vcpu_info vcpu_info = {
 		.cmd = RISCV_IOMMU_IR_UPDATE_TARGET,
@@ -880,12 +879,6 @@ static int imsic_vsfile_target_replace(struct kvm_vcpu *vcpu, phys_addr_t vsfile
 
 	guard(spinlock_irqsave)(&kvm->irqfds.lock);
 
-	if (imsic->vsfile_cpu < 0) {
-		target->type = RISCV_IOMMU_IR_TARGET_IMSIC;
-		target->hpa = vsfile_pa;
-		return 0;
-	}
-
 	vcpu_info.msi_addr_pattern = (target->gpa >> IMSIC_MMIO_PAGE_SHIFT) &
 				     ~vcpu_info.msi_addr_mask;
 	vcpu_info.target = *target;
@@ -893,6 +886,10 @@ static int imsic_vsfile_target_replace(struct kvm_vcpu *vcpu, phys_addr_t vsfile
 	vcpu_info.target.hpa = vsfile_pa;
 	list_for_each_entry(irqfd, &kvm->irqfds.items, list) {
 		if (!xa_load(&aia->irqfd_forwarding, (unsigned long)irqfd))
+			continue;
+		/* del_producer may clear producer with the forwarding entry
+		 * still stored after an unforward failure. */
+		if (!irqfd->producer)
 			continue;
 
 		ret = irq_set_vcpu_affinity(irqfd->producer->irq, &vcpu_info);
