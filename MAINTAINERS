@@ -12423,12 +12423,6 @@ S:	Maintained
 F:	Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
 F:	drivers/thermal/loongson2_thermal.c
 
-LRW CORE PERF PMU EVENTS (RISC-V)
-M:	Lin Shen <shen.lin1@zte.com.cn>
-R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
-S:	Maintained
-F:	tools/perf/pmu-events/arch/riscv/lrw/
-
 LRW DDR PMU DRIVER
 M:	Jie Feng <feng.jie8@zte.com.cn>
 R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
@@ -18621,6 +18615,13 @@ F:	include/dt-bindings/clock/thead,th1520-clk-ap.h
 F:	include/dt-bindings/power/thead,th1520-power.h
 F:	include/dt-bindings/reset/thead,th1520-reset.h
 F:	include/linux/firmware/thead/thead,th1520-aon.h
+
+RISC-V ZF(ZhuFeng) SoC SUPPORT
+M: He Yilin <he.yilin@zte.com.cn>
+R: Liu Qingtao <liu.qingtao2@zte.com.cn>
+L: linux-riscv@lists.infradead.org
+S: Maintained
+F: tools/perf/pmu-events/arch/riscv/lprs/
 
 RNBD BLOCK DRIVERS
 M:	Md. Haris Iqbal <haris.iqbal@ionos.com>
