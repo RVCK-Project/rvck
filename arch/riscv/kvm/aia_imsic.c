@@ -925,7 +925,8 @@ static bool imsic_irqfd_is_msix(struct kvm_kernel_irqfd *irqfd)
 static bool imsic_targets_valid(struct kvm_aia *aia)
 {
 	for (unsigned int i = 0; i < aia->nr_targets; i++) {
-		if (aia->targets[i].type != RISCV_IOMMU_IR_TARGET_IMSIC)
+		if (aia->targets[i].type != RISCV_IOMMU_IR_TARGET_IMSIC &&
+		    aia->targets[i].type != RISCV_IOMMU_IR_TARGET_MRIF)
 			return false;
 	}
 
@@ -967,12 +968,12 @@ static int imsic_irqfd_can_forward(struct kvm *kvm,
 	 * MSI-X because pci_write_msi_msg() masks an MSI-X vector around the
 	 * update, which conventional MSI cannot provide.
 	 */
-	if (kvm->arch.aia.mode != KVM_DEV_RISCV_AIA_MODE_HWACCEL ||
+	if (kvm->arch.aia.mode == KVM_DEV_RISCV_AIA_MODE_EMUL ||
 	    !imsic_irqfd_is_msix(irqfd))
 		return -EOPNOTSUPP;
 
 	if (!imsic_targets_valid(&kvm->arch.aia)) {
-		pr_debug("KVM: IMSIC IRQ bypass requires all VS-files\n");
+		pr_debug("KVM: IMSIC IRQ bypass requires IMSIC or MRIF targets\n");
 		return -EOPNOTSUPP;
 	}
 
