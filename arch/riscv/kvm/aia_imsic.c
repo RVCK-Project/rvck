@@ -762,6 +762,57 @@ int kvm_riscv_irqfd_unforward(struct kvm_kernel_irqfd *irqfd)
 	return 0;
 }
 
+static int imsic_irq_host_notice(unsigned int irq, u64 *notice_hpa,
+				 u32 *notice_id)
+{
+	struct irq_data *irq_data = irq_get_irq_data(irq);
+	struct msi_msg msg;
+	u64 addr;
+	int ret;
+
+	if (!irq_data)
+		return -ENODEV;
+
+	ret = irq_chip_compose_msi_msg(irq_data, &msg);
+	if (ret)
+		return ret;
+
+	addr = ((u64)msg.address_hi << 32) | msg.address_lo;
+	*notice_id = msg.data;
+
+#ifdef CONFIG_IRQ_MSI_IOMMU
+	{
+		struct msi_desc *desc = irq_data_get_msi_desc(irq_data);
+
+		/*
+		 * With an IOMMU MSI window the composed host MSI address
+		 * is an IOVA, so recover the physical IMSIC page from it.
+		 */
+		if (desc && desc->iommu_msi_shift) {
+			const struct imsic_global_config *gc;
+			u64 iova_base;
+			unsigned int cpu;
+
+			gc = imsic_get_global_config();
+			iova_base = desc->iommu_msi_iova << desc->iommu_msi_shift;
+			cpu = (addr - iova_base) / IMSIC_MMIO_PAGE_SZ;
+			if (!gc || cpu >= nr_cpu_ids)
+				return -EOPNOTSUPP;
+
+			addr = per_cpu_ptr(gc->local, cpu)->msi_pa;
+		}
+	}
+#endif
+
+	/* Never publish an unusable notice into the domain MSI table */
+	if (!addr || !*notice_id)
+		return -EOPNOTSUPP;
+
+	*notice_hpa = addr;
+
+	return 0;
+}
+
 static int imsic_vcpu_unforward(struct kvm_vcpu *vcpu)
 {
 	struct kvm *kvm = vcpu->kvm;
@@ -783,6 +834,53 @@ static int imsic_vcpu_unforward(struct kvm_vcpu *vcpu)
 
 	target->type = RISCV_IOMMU_IR_TARGET_INVALID;
 	target->hpa = 0;
+
+	return 0;
+}
+
+static bool imsic_target_notice_missing(struct kvm_aia *aia)
+{
+	for (unsigned int i = 0; i < aia->nr_targets; i++) {
+		if (aia->targets[i].type == RISCV_IOMMU_IR_TARGET_MRIF &&
+		    !aia->targets[i].notice_hpa)
+			return true;
+	}
+
+	return false;
+}
+
+static int imsic_target_notice_fill(struct kvm_aia *aia,
+				    struct riscv_iommu_ir_target *target,
+				    struct kvm_kernel_irqfd *irqfd)
+{
+	u64 notice_hpa;
+	u32 notice_id;
+	int ret;
+
+	ret = imsic_irq_host_notice(irqfd->producer->irq, &notice_hpa,
+				    &notice_id);
+	if (ret)
+		return -EOPNOTSUPP;
+
+	for (unsigned int i = 0; i < aia->nr_targets; i++) {
+		struct riscv_iommu_ir_target *t = &aia->targets[i];
+
+		if (t->type != RISCV_IOMMU_IR_TARGET_MRIF)
+			continue;
+
+		/*
+		 * An activating FORWARD programs every MRIF target, and a
+		 * live MRIF page table entry must never carry a zero notice
+		 * because the IOMMU would send the notice MSI to physical
+		 * address zero. The forwarding producer claims its own
+		 * target and every other empty target borrows its notice
+		 * until a producer of its own starts forwarding.
+		 */
+		if (t == target || !t->notice_hpa) {
+			t->notice_hpa = notice_hpa;
+			t->notice_id = notice_id;
+		}
+	}
 
 	return 0;
 }
@@ -1002,6 +1100,7 @@ static int imsic_irqfd_forward(struct kvm_kernel_irqfd *irqfd,
 		.address_lo = irq_entry->msi.address_lo,
 		.data = irq_entry->msi.data,
 	};
+	struct riscv_iommu_ir_target *target;
 	struct kvm_vcpu *vcpu;
 	int ret;
 
@@ -1014,6 +1113,20 @@ static int imsic_irqfd_forward(struct kvm_kernel_irqfd *irqfd,
 	vcpu_info.msi_addr_pattern = (vcpu->arch.aia_context.imsic_addr >> IMSIC_MMIO_PAGE_SHIFT) &
 				     ~vcpu_info.msi_addr_mask;
 
+	/*
+	 * An activating FORWARD programs every MRIF target in the array,
+	 * and a live MRIF page table entry must never carry a zero notice.
+	 * Fill the notice of this producer into its own target and into
+	 * any target which still has none before the table is activated.
+	 */
+	target = &aia->targets[vcpu->vcpu_idx];
+	if (target->type == RISCV_IOMMU_IR_TARGET_MRIF ||
+	    imsic_target_notice_missing(aia)) {
+		ret = imsic_target_notice_fill(aia, target, irqfd);
+		if (ret)
+			return ret;
+	}
+
 	if (xa_is_err(xa_store(&aia->irqfd_forwarding, (unsigned long)irqfd,
 			       vcpu, GFP_ATOMIC)))
 		return -ENOMEM;
@@ -1022,6 +1135,28 @@ static int imsic_irqfd_forward(struct kvm_kernel_irqfd *irqfd,
 	if (ret) {
 		xa_erase(&aia->irqfd_forwarding, (unsigned long)irqfd);
 		return ret;
+	}
+
+	if (target->type == RISCV_IOMMU_IR_TARGET_MRIF) {
+		struct riscv_iommu_ir_vcpu_info update = {
+			.cmd = RISCV_IOMMU_IR_UPDATE_TARGET,
+			.owner = kvm,
+			.msi_addr_mask = vcpu_info.msi_addr_mask,
+			.msi_addr_pattern = vcpu_info.msi_addr_pattern,
+			.target = *target,
+		};
+
+		/*
+		 * FORWARD only counts once the MSI table is active, so
+		 * publish the filled notice; roll the FORWARD back if the
+		 * IOMMU rejects the update.
+		 */
+		ret = irq_set_vcpu_affinity(irqfd->producer->irq, &update);
+		if (ret) {
+			irq_set_vcpu_affinity(irqfd->producer->irq, NULL);
+			xa_erase(&aia->irqfd_forwarding, (unsigned long)irqfd);
+			return ret;
+		}
 	}
 
 	pci_write_msi_msg(irqfd->producer->irq, &msg);
@@ -1064,15 +1199,19 @@ int kvm_arch_update_irqfd_routing(struct kvm *kvm, unsigned int host_irq,
 
 		/*
 		 * Fast path: the producer stays forwarded and the new routing
-		 * still resolves to a vIMSIC. The active MSI page table covers
-		 * every vIMSIC page of the VM, so re-pointing the forwarding
-		 * entry and rewriting the device message is sufficient. No
-		 * IOMMU command is issued, so the IRQ descriptor lock is never
-		 * taken under irqfds.lock.
+		 * still resolves to a vIMSIC backed by a VS-file target. The
+		 * active MSI page table covers every vIMSIC page of the VM, so
+		 * re-pointing the forwarding entry and rewriting the device
+		 * message is sufficient. No IOMMU command is issued, so the
+		 * IRQ descriptor lock is never taken under irqfds.lock. MRIF
+		 * targets need the slow path, which fills and publishes their
+		 * notice.
 		 */
 		if (set && xa_load(&aia->irqfd_forwarding, (unsigned long)irqfd) &&
 		    !imsic_irqfd_can_forward(kvm, irqfd, &irqfd->irq_entry,
-					     &vcpu)) {
+					     &vcpu) &&
+		    aia->targets[vcpu->vcpu_idx].type ==
+					RISCV_IOMMU_IR_TARGET_IMSIC) {
 			if (!xa_is_err(xa_store(&aia->irqfd_forwarding,
 						(unsigned long)irqfd, vcpu,
 						GFP_ATOMIC))) {
