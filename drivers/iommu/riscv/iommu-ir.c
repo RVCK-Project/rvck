@@ -75,24 +75,6 @@ static int riscv_iommu_ir_validate_target(const struct riscv_iommu_ir_vcpu_info 
 	return 0;
 }
 
-static int riscv_iommu_ir_validate_targets(const struct riscv_iommu_ir_vcpu_info *vcpu_info,
-					   size_t nr_ptes, u64 *required_caps)
-{
-	int ret;
-
-	if (!vcpu_info->targets || !vcpu_info->nr_targets || vcpu_info->nr_targets > nr_ptes)
-		return -EINVAL;
-
-	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
-		ret = riscv_iommu_ir_validate_target(vcpu_info, &vcpu_info->targets[i],
-						     required_caps);
-		if (ret)
-			return ret;
-	}
-
-	return 0;
-}
-
 static void riscv_iommu_ir_set_target(struct riscv_iommu_msipte *msipte,
 				      const struct riscv_iommu_ir_target *target)
 {
@@ -141,12 +123,9 @@ static int riscv_iommu_ir_activate(struct riscv_iommu_msi_table *msi_table,
 
 	nr_ptes = riscv_iommu_ir_nr_ptes(vcpu_info);
 
-	ret = riscv_iommu_ir_validate_targets(vcpu_info, nr_ptes, &required_caps);
-	if (ret)
-		return ret;
-
-	if (!riscv_iommu_msi_table_check_caps(msi_table, required_caps))
-		return -EOPNOTSUPP;
+	if (!vcpu_info->targets || !vcpu_info->nr_targets ||
+	    vcpu_info->nr_targets > nr_ptes)
+		return -EINVAL;
 
 	if (nr_ptes > msi_table->nr_ptes) {
 		dev_warn_once(iommu->dev,
@@ -157,17 +136,34 @@ static int riscv_iommu_ir_activate(struct riscv_iommu_msi_table *msi_table,
 
 	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
 		const struct riscv_iommu_ir_target *target = &vcpu_info->targets[i];
-		size_t idx = riscv_iommu_ir_extract(target->gpa >> IMSIC_MMIO_PAGE_SHIFT,
-						    vcpu_info->msi_addr_mask);
-		struct riscv_iommu_msipte *msipte = &msi_table->root[idx];
+		struct riscv_iommu_msipte *msipte;
+		u64 target_caps = 0;
+		size_t idx;
+
+		ret = riscv_iommu_ir_validate_target(vcpu_info, target, &target_caps);
+		if (ret)
+			goto fail;
+
+		/*
+		 * A target the hardware cannot represent is left unprogrammed:
+		 * its producer falls back on its own when KVM's publish of the
+		 * target is rejected, instead of failing the whole table.
+		 */
+		if (!riscv_iommu_msi_table_check_caps(msi_table, target_caps))
+			continue;
+
+		idx = riscv_iommu_ir_extract(target->gpa >> IMSIC_MMIO_PAGE_SHIFT,
+					     vcpu_info->msi_addr_mask);
+		msipte = &msi_table->root[idx];
 
 		/* A populated entry in the initially clear table indicates duplicate targets. */
 		if (msipte->pte || msipte->mrif_info) {
-			memset(msi_table->root, 0, array_size(nr_ptes, sizeof(*msi_table->root)));
-			return -EINVAL;
+			ret = -EINVAL;
+			goto fail;
 		}
 
 		riscv_iommu_ir_set_target(msipte, target);
+		required_caps |= target_caps;
 	}
 
 	msi_table->required_caps = required_caps;
@@ -179,6 +175,10 @@ static int riscv_iommu_ir_activate(struct riscv_iommu_msi_table *msi_table,
 	riscv_iommu_msi_table_update(msi_table, true);
 
 	return 0;
+
+fail:
+	memset(msi_table->root, 0, array_size(nr_ptes, sizeof(*msi_table->root)));
+	return ret;
 }
 
 static int riscv_iommu_ir_deactivate(struct riscv_iommu_msi_table *msi_table)
@@ -263,9 +263,13 @@ static int riscv_iommu_ir_update_target(struct riscv_iommu_msi_table *msi_table,
 	idx = riscv_iommu_ir_extract(target->gpa >> IMSIC_MMIO_PAGE_SHIFT,
 				     msi_table->msi_addr_mask);
 	msipte = &msi_table->root[idx];
-	if (!(READ_ONCE(msipte->pte) & RISCV_IOMMU_MSIPTE_V))
-		return -EINVAL;
 
+	/*
+	 * The entry may be clear because activation skipped this target, or
+	 * because its producers are parked on host delivery. Both states are
+	 * quiesced: no device message names this page until KVM rewrites one,
+	 * so programming the entry here cannot divert an in-flight MSI.
+	 */
 	riscv_iommu_ir_update_msipte(msi_table, msipte, target);
 	msi_table->required_caps = required_caps;
 	return 0;
@@ -345,13 +349,24 @@ static int riscv_iommu_ir_activate_noflat(struct riscv_iommu_msi_table *msi_tabl
 	if (!vcpu_info->targets || !vcpu_info->nr_targets)
 		return -EINVAL;
 
+	/*
+	 * MRIF targets have no no-flat representation, so they are left
+	 * unmapped instead of failing the whole activation. A producer
+	 * routed to such a target is still rejected by its MRIF publish.
+	 */
 	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
+		if (vcpu_info->targets[i].type != RISCV_IOMMU_IR_TARGET_IMSIC)
+			continue;
+
 		ret = riscv_iommu_ir_validate_noflat_target(vcpu_info, &vcpu_info->targets[i]);
 		if (ret)
 			return ret;
 	}
 
 	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
+		if (vcpu_info->targets[i].type != RISCV_IOMMU_IR_TARGET_IMSIC)
+			continue;
+
 		ret = riscv_iommu_ir_map_guest_imsic(msi_table, &vcpu_info->targets[i]);
 		if (ret)
 			return ret;
@@ -374,9 +389,12 @@ static int riscv_iommu_ir_update_target_noflat(struct riscv_iommu_msi_table *msi
 	if (ret)
 		return ret;
 
-	if (!xa_load(&msi_table->noflat_imsics, target->gpa >> IMSIC_MMIO_PAGE_SHIFT))
-		return -EINVAL;
-
+	/*
+	 * The mapping may be missing because activation skipped this target.
+	 * It is quiesced: no device message names this page until KVM
+	 * rewrites one, so creating the mapping here cannot divert an
+	 * in-flight MSI.
+	 */
 	return riscv_iommu_ir_map_guest_imsic(msi_table, target);
 }
 
@@ -404,11 +422,13 @@ static int riscv_iommu_ir_irq_set_vcpu_affinity_noflat(struct irq_data *data,
 			irqd_set_forwarded_to_vcpu(data);
 			info->nr_forwarded_irqs++;
 		}
-	} else if (irqd_is_forwarded_to_vcpu(data)) {
-		irqd_clr_forwarded_to_vcpu(data);
-		info->nr_forwarded_irqs--;
 	}
 
+	/*
+	 * Leave the forwarding state untouched on failure: a rejected
+	 * publish parks the IRQ on host delivery with its marker intact,
+	 * and a failed forward is rolled back explicitly by the caller.
+	 */
 	return ret;
 }
 
