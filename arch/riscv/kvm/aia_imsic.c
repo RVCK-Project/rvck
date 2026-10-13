@@ -813,27 +813,96 @@ static int imsic_irq_host_notice(unsigned int irq, u64 *notice_hpa,
 	return 0;
 }
 
-static int imsic_vcpu_unforward(struct kvm_vcpu *vcpu)
+static u64 imsic_msi_addr_mask(struct kvm *kvm)
+{
+	struct kvm_aia *aia = &kvm->arch.aia;
+	u64 group_mask = BIT_ULL(aia->nr_group_bits) - 1;
+
+	return (group_mask << (aia->nr_group_shift - IMSIC_MMIO_PAGE_SHIFT)) |
+	       (BIT_ULL(aia->nr_hart_bits + aia->nr_guest_bits) - 1);
+}
+
+static int imsic_target_mrif_set(struct kvm_vcpu *vcpu)
 {
 	struct kvm *kvm = vcpu->kvm;
-	struct riscv_iommu_ir_target *target = &kvm->arch.aia.targets[vcpu->vcpu_idx];
+	struct kvm_aia *aia = &kvm->arch.aia;
+	struct imsic *imsic = vcpu->arch.aia_context.imsic_state;
+	struct riscv_iommu_ir_target *target = &aia->targets[vcpu->vcpu_idx];
+	struct riscv_iommu_ir_vcpu_info vcpu_info = {
+		.cmd = RISCV_IOMMU_IR_UPDATE_TARGET,
+		.owner = kvm,
+		.msi_addr_mask = imsic_msi_addr_mask(kvm),
+		.target = {
+			.type = RISCV_IOMMU_IR_TARGET_MRIF,
+			.gpa = target->gpa,
+			.mrif_hpa = imsic->swfile_pa,
+		},
+	};
+	u64 notice_hpa = 0;
+	u32 notice_id = 0;
 	struct kvm_kernel_irqfd *irqfd;
 	int ret;
 
 	guard(spinlock_irqsave)(&kvm->irqfds.lock);
 
+	vcpu_info.msi_addr_pattern = (target->gpa >> IMSIC_MMIO_PAGE_SHIFT) &
+				     ~vcpu_info.msi_addr_mask;
+
+	/*
+	 * The target has a single notice field in the MSI page table of every
+	 * domain which forwards into it, and the notice of any forwarding
+	 * producer is a valid doorbell for all of them. Elect the notice of
+	 * the first producer which reports one and send the same update for
+	 * every producer: within a domain only the first update writes the
+	 * entry, the rest early-out on the identical entry. Without an
+	 * elected notice there is no doorbell to program, so every producer
+	 * falls back to host delivery below.
+	 */
+	list_for_each_entry(irqfd, &kvm->irqfds.items, list) {
+		/*
+		 * del_producer may clear producer with the forwarding entry
+		 * still stored after an unforward failure.
+		 */
+		if (xa_load(&kvm->arch.aia.irqfd_forwarding,
+			    (unsigned long)irqfd) == vcpu && irqfd->producer &&
+		    !imsic_irq_host_notice(irqfd->producer->irq,
+					   &vcpu_info.target.notice_hpa,
+					   &vcpu_info.target.notice_id))
+			break;
+	}
+
 	list_for_each_entry(irqfd, &kvm->irqfds.items, list) {
 		if (xa_load(&kvm->arch.aia.irqfd_forwarding,
-			    (unsigned long)irqfd) != vcpu)
+			    (unsigned long)irqfd) != vcpu || !irqfd->producer)
 			continue;
 
+		if (vcpu_info.target.notice_hpa) {
+			ret = irq_set_vcpu_affinity(irqfd->producer->irq,
+						    &vcpu_info);
+			if (!ret) {
+				notice_hpa = vcpu_info.target.notice_hpa;
+				notice_id = vcpu_info.target.notice_id;
+				continue;
+			}
+
+			/*
+			 * The IOMMU cannot move this IRQ to the SW-file,
+			 * so fall back to host delivery for it.
+			 */
+			if (ret != -EOPNOTSUPP)
+				return ret;
+		}
+
+		/* Fall back to host delivery for this IRQ */
 		ret = kvm_riscv_irqfd_unforward(irqfd);
 		if (ret)
 			return ret;
 	}
 
-	target->type = RISCV_IOMMU_IR_TARGET_INVALID;
-	target->hpa = 0;
+	target->type = RISCV_IOMMU_IR_TARGET_MRIF;
+	target->mrif_hpa = imsic->swfile_pa;
+	target->notice_hpa = notice_hpa;
+	target->notice_id = notice_id;
 
 	return 0;
 }
@@ -885,6 +954,8 @@ static int imsic_target_notice_fill(struct kvm_aia *aia,
 	return 0;
 }
 
+static int imsic_vsfile_target_replace(struct kvm_vcpu *vcpu, phys_addr_t vsfile_pa);
+
 void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu)
 {
 	struct imsic_mrif tmrif;
@@ -908,15 +979,16 @@ void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu)
 		return;
 
 	/*
-	 * Redirect every producer of this vCPU to host delivery before
-	 * the VS-file goes away. The write lock is not held: taking
-	 * irqfds.lock and desc->lock under vsfile_lock can deadlock
-	 * against the interrupt injection path, which takes vsfile_lock
-	 * for reading while holding the IRQ descriptor lock.
+	 * Redirect every producer of this vCPU to the MRIF backed by the
+	 * IMSIC SW-file before the VS-file goes away. The write lock is
+	 * not held: taking irqfds.lock and desc->lock under vsfile_lock
+	 * can deadlock against the interrupt injection path, which takes
+	 * vsfile_lock for reading while holding the IRQ descriptor lock.
 	 */
-	ret = imsic_vcpu_unforward(vcpu);
+	ret = imsic_target_mrif_set(vcpu);
 	if (KVM_BUG(ret, kvm,
-		    "Failed to redirect vCPU interrupts to host delivery: %d\n", ret))
+		    "Failed to redirect vCPU interrupts to SW-file delivery: %d\n",
+		    ret))
 		return;
 
 	/* Clear IMSIC VS-file details after redirecting every producer. */
@@ -924,23 +996,24 @@ void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu)
 	/*
 	 * A concurrent VS-file update may have published a new file while
 	 * producers were being redirected. That update drains and frees the
-	 * old file itself, so leave the new file untouched.
+	 * old file itself, so only re-point the producers to the new file.
 	 */
 	if (imsic->vsfile_cpu != old_vsfile_cpu ||
 	    imsic->vsfile_hgei != old_vsfile_hgei) {
+		phys_addr_t new_vsfile_pa = 0;
+
+		if (imsic->vsfile_cpu >= 0)
+			new_vsfile_pa = imsic->vsfile_pa;
 		write_unlock_irqrestore(&imsic->vsfile_lock, flags);
+
+		if (new_vsfile_pa)
+			imsic_vsfile_target_replace(vcpu, new_vsfile_pa);
 		return;
 	}
 	imsic_vsfile_set_hgei(imsic, -1, -1);
 	imsic->vsfile_va = NULL;
 	imsic->vsfile_pa = 0;
 	write_unlock_irqrestore(&imsic->vsfile_lock, flags);
-
-	/*
-	 * At this point, all interrupt producers are still using
-	 * the old IMSIC VS-file so we first re-direct all interrupt
-	 * producers.
-	 */
 
 	/* Purge the G-stage mapping */
 	kvm_riscv_mmu_iounmap(vcpu->kvm, vcpu->arch.aia_context.imsic_addr,
@@ -965,15 +1038,6 @@ void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu)
 
 	/* Free-up old IMSIC VS-file */
 	kvm_riscv_aia_free_hgei(old_vsfile_cpu, old_vsfile_hgei);
-}
-
-static u64 imsic_msi_addr_mask(struct kvm *kvm)
-{
-	struct kvm_aia *aia = &kvm->arch.aia;
-	u64 group_mask = BIT_ULL(aia->nr_group_bits) - 1;
-
-	return (group_mask << (aia->nr_group_shift - IMSIC_MMIO_PAGE_SHIFT)) |
-	       (BIT_ULL(aia->nr_hart_bits + aia->nr_guest_bits) - 1);
 }
 
 static int imsic_vsfile_target_replace(struct kvm_vcpu *vcpu, phys_addr_t vsfile_pa)
