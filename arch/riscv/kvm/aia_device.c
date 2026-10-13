@@ -321,7 +321,7 @@ static int aia_init(struct kvm *kvm)
 	aia->nr_targets = kvm->created_vcpus;
 
 	kvm_for_each_vcpu(idx, vcpu, kvm)
-		aia->targets[vcpu->vcpu_idx].gpa = vcpu->arch.aia_context.imsic_addr;
+		kvm_riscv_vcpu_aia_imsic_target_init(vcpu);
 
 	/* Set the initialized flag */
 	kvm->arch.aia.initialized = true;

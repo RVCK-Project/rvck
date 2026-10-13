@@ -1750,6 +1750,25 @@ fail_free_imsic:
 	return ret;
 }
 
+void kvm_riscv_vcpu_aia_imsic_target_init(struct kvm_vcpu *vcpu)
+{
+	struct kvm *kvm = vcpu->kvm;
+	struct kvm_aia *aia = &kvm->arch.aia;
+	struct imsic *imsic = vcpu->arch.aia_context.imsic_state;
+	struct riscv_iommu_ir_target *target = &aia->targets[vcpu->vcpu_idx];
+
+	/*
+	 * Until the vCPU acquires an IMSIC VS-file, producers forward
+	 * interrupts into its IMSIC SW-file through an MRIF target. The
+	 * notice MSI is filled in when a producer starts forwarding.
+	 */
+	target->gpa = vcpu->arch.aia_context.imsic_addr;
+	target->type = RISCV_IOMMU_IR_TARGET_MRIF;
+	target->mrif_hpa = imsic->swfile_pa;
+	target->notice_hpa = 0;
+	target->notice_id = 0;
+}
+
 void kvm_riscv_vcpu_aia_imsic_cleanup(struct kvm_vcpu *vcpu)
 {
 	struct kvm *kvm = vcpu->kvm;
