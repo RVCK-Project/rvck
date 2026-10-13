@@ -905,6 +905,8 @@ static int imsic_target_mrif_set(struct kvm_vcpu *vcpu)
 	};
 	u64 notice_hpa = 0;
 	u32 notice_id = 0;
+	struct irq_data *irq_data;
+	struct msi_msg msg;
 	struct kvm_kernel_irqfd *irqfd;
 	int ret;
 
@@ -958,10 +960,22 @@ static int imsic_target_mrif_set(struct kvm_vcpu *vcpu)
 				return ret;
 		}
 
-		/* Fall back to host delivery for this IRQ */
-		ret = kvm_riscv_irqfd_unforward(irqfd);
+		/*
+		 * Park the IRQ on host delivery while keeping its forwarding
+		 * state: rewrite the device message to the host, but keep the
+		 * IOMMU entry and the forwarding marker. Retargeting the
+		 * producers back to a VS-file restores parked IRQs too,
+		 * instead of leaving them stranded on host delivery.
+		 */
+		irq_data = irq_get_irq_data(irqfd->producer->irq);
+		if (!irq_data)
+			return -EINVAL;
+
+		ret = irq_chip_compose_msi_msg(irq_data, &msg);
 		if (ret)
 			return ret;
+
+		pci_write_msi_msg(irqfd->producer->irq, &msg);
 	}
 
 	target->type = RISCV_IOMMU_IR_TARGET_MRIF;
@@ -1115,6 +1129,8 @@ static int imsic_vsfile_target_replace(struct kvm_vcpu *vcpu, phys_addr_t vsfile
 		.owner = kvm,
 		.msi_addr_mask = imsic_msi_addr_mask(kvm),
 	};
+	struct msi_desc *desc;
+	struct msi_msg msg;
 	struct kvm_kernel_irqfd *irqfd;
 	int ret;
 
@@ -1136,6 +1152,33 @@ static int imsic_vsfile_target_replace(struct kvm_vcpu *vcpu, phys_addr_t vsfile
 		ret = irq_set_vcpu_affinity(irqfd->producer->irq, &vcpu_info);
 		if (ret)
 			return ret;
+
+		/*
+		 * Restore producers parked on host delivery by
+		 * imsic_target_mrif_set(); only this vCPU's producers are
+		 * safe to restore, a producer parked for another vCPU
+		 * targets a page whose entry is stale until that vCPU
+		 * re-acquires a VS-file. A live producer already carries
+		 * the guest message, so also compare the cached descriptor
+		 * message before rewriting. The first three words of kvm's
+		 * msi entry are the struct msi_msg fields, in the same
+		 * order.
+		 */
+		if (xa_load(&aia->irqfd_forwarding, (unsigned long)irqfd) != vcpu)
+			continue;
+
+		desc = irq_get_msi_desc(irqfd->producer->irq);
+		if (WARN_ON_ONCE(!desc))
+			return -EINVAL;
+
+		if (!memcmp(&desc->msg, &irqfd->irq_entry.msi,
+			    sizeof(desc->msg)))
+			continue;
+
+		msg.address_hi = irqfd->irq_entry.msi.address_hi;
+		msg.address_lo = irqfd->irq_entry.msi.address_lo;
+		msg.data = irqfd->irq_entry.msi.data;
+		pci_write_msi_msg(irqfd->producer->irq, &msg);
 	}
 	*target = vcpu_info.target;
 
