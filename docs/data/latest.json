@@ -1,8 +1,8 @@
 {
-  "total_commits": 1715,
-  "commits_with_company": 1606,
+  "total_commits": 1716,
+  "commits_with_company": 1607,
   "total_insertions": 1724310,
-  "total_deletions": 96498,
+  "total_deletions": 97053,
   "companies": {
     "超睿科技": {
       "count": 90,
@@ -19312,10 +19312,23 @@
       ]
     },
     "软件所": {
-      "count": 353,
+      "count": 354,
       "insertions": 1424544,
-      "deletions": 40737,
+      "deletions": 41292,
       "commits": [
+        {
+          "hash": "132f1ebe0a49062dd387c48755dd36eca50a5199",
+          "author_name": "Chen Wang",
+          "author_email": "wangchen20@iscas.ac.cn",
+          "date": "2026-10-15 14:26:46 +0800",
+          "subject": "remove lib/test_fortify.log",
+          "insertions": 0,
+          "deletions": 555,
+          "signatures": [
+            "Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>",
+            "Chen Wang <wangchen20@iscas.ac.cn>"
+          ]
+        },
         {
           "hash": "6dd40ebd5958c07c90bc0ec4f57e144816e05a5f",
           "author_name": "Chen Wang",
@@ -26262,7 +26275,7 @@
       ]
     }
   ],
-  "total_contribution": 1755,
+  "total_contribution": 1756,
   "companies_contribution": {
     "超睿科技": {
       "count": 91,
@@ -47397,10 +47410,23 @@
       ]
     },
     "软件所": {
-      "count": 377,
+      "count": 378,
       "insertions": 1424900,
-      "deletions": 40769,
+      "deletions": 41324,
       "commits": [
+        {
+          "hash": "132f1ebe0a49062dd387c48755dd36eca50a5199",
+          "author_name": "Chen Wang",
+          "author_email": "wangchen20@iscas.ac.cn",
+          "date": "2026-10-15 14:26:46 +0800",
+          "subject": "remove lib/test_fortify.log",
+          "insertions": 0,
+          "deletions": 555,
+          "signatures": [
+            "Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>",
+            "Chen Wang <wangchen20@iscas.ac.cn>"
+          ]
+        },
         {
           "hash": "07927e1361c89c21d6d899c4866e4daa3a0d2824",
           "author_name": "Jiakai Xu",
@@ -53226,8 +53252,8 @@
       ]
     }
   },
-  "generated_at": "2026-10-08 19:27:23",
+  "generated_at": "2026-10-15 16:37:11",
   "main_branch": "rvck-6.6",
-  "main_commit": "07927e13",
+  "main_commit": "218b0252",
   "start_tag": "v6.6.158"
 }

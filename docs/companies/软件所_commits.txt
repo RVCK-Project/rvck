@@ -1,9 +1,10 @@
 # 软件所 提交列表（纯文本视图）
-# 共 353 个提交
-# 生成时间: 2026-10-08 19:27:23
+# 共 354 个提交
+# 生成时间: 2026-10-15 16:37:11
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+132f1ebe | 2026-10-15 | Chen Wang | remove lib/test_fortify.log
 6dd40ebd | 2026-08-27 | Chen Wang | riscv: remove k1_defconfig
 4552b267 | 2026-07-17 | Yanteng Si | RISCV: rvck: Restore all upstream linux-6.6.y configs
 45cae3cc | 2026-07-17 | Yanteng Si | RISCV: rvck: Clean up redundant board-specific BSP configs

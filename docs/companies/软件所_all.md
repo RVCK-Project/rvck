@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 353</li>
-<li><strong>统计时间</strong>: 2026-10-08 19:27:23</li>
+<li><strong>贡献提交数</strong>: 354</li>
+<li><strong>统计时间</strong>: 2026-10-15 16:37:11</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -19,6 +19,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [132f1ebe](https://github.com/RVCK-Project/rvck/commit/132f1ebe0a49062dd387c48755dd36eca50a5199) | 2026-10-15 | Chen Wang | remove lib/test_fortify.log |
 | [6dd40ebd](https://github.com/RVCK-Project/rvck/commit/6dd40ebd5958c07c90bc0ec4f57e144816e05a5f) | 2026-08-27 | Chen Wang | riscv: remove k1_defconfig |
 | [4552b267](https://github.com/RVCK-Project/rvck/commit/4552b2678eadb1fc43a09b1f23b571dc49a349bc) | 2026-07-17 | Yanteng Si | RISCV: rvck: Restore all upstream linux-6.6.y configs |
 | [45cae3cc](https://github.com/RVCK-Project/rvck/commit/45cae3ccc4c78e79c912e46efd4822a983031275) | 2026-07-17 | Yanteng Si | RISCV: rvck: Clean up redundant board-specific BSP configs |
@@ -374,7 +375,7 @@
 | [3bee09e1](https://github.com/RVCK-Project/rvck/commit/3bee09e1f70d4b1048b2dd7f43476a615f76f2f0) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 353 条提交（显示全部）**
+**共 354 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -383,5 +384,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-08 19:27:23*
-*数据来源: 主分支 rvck-6.6@07927e13*
+*本页面最后更新于 2026-10-15 16:37:11*
+*数据来源: 主分支 rvck-6.6@218b0252*

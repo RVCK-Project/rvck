@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 353</li>
-<li><strong>统计时间</strong>: 2026-10-08 19:27:23</li>
+<li><strong>贡献提交数</strong>: 354</li>
+<li><strong>统计时间</strong>: 2026-10-15 16:37:11</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -19,6 +19,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [c1270bdf](https://github.com/RVCK-Project/rvck/commit/c1270bdf2ce2051a870f6b7bd120cbe65c420708) | 2024-09-01 | Xiangyi Zeng | drivers: i2c-hid: fix rvbook i2c-hid wake-up error |
 | [048a7f2f](https://github.com/RVCK-Project/rvck/commit/048a7f2f68ee8fefb2380fe28773aeaafe2c9d81) | 2024-09-01 | Han Gao | th1520_defconfig:Enable lowpower settings |
 | [ef358e58](https://github.com/RVCK-Project/rvck/commit/ef358e58daa542ca2c9be7f065198da58eca7d96) | 2024-09-01 | Han Gao | th1520_defconfig:Enable ebpf settings |
 | [4dcba4e8](https://github.com/RVCK-Project/rvck/commit/4dcba4e88499ac2ab2e1713f1cb55055077d971b) | 2024-09-01 | xianbing Zhu | hibernate: add blkdev flush op berfore poweroff |
@@ -174,7 +175,7 @@
 | [3bee09e1](https://github.com/RVCK-Project/rvck/commit/3bee09e1f70d4b1048b2dd7f43476a615f76f2f0) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 353 条提交，显示 201-353**
+**共 354 条提交，显示 201-354**
 
 [1](软件所.md) **[2]**
 
@@ -185,5 +186,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-08 19:27:23*
-*数据来源: 主分支 rvck-6.6@07927e13*
+*本页面最后更新于 2026-10-15 16:37:11*
+*数据来源: 主分支 rvck-6.6@218b0252*
