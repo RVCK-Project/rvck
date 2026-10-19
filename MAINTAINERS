@@ -12536,20 +12536,6 @@ S:	Supported
 F:	drivers/net/pcs/pcs-lynx.c
 F:	include/linux/pcs-lynx.h
 
-LRW SERIAL DEVICE TREE SUPPORT
-M:	Wenhong Liu <liu.wenhong35@zte.com.cn>
-R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
-L:	devicetree@vger.kernel.org
-S:	Maintained
-F:	Documentation/devicetree/bindings/serial/lrw,lrw-uart.yaml
-
-LRW SERIAL DRIVER
-M:	Wenhong Liu <liu.wenhong35@zte.com.cn>
-R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
-L:	linux-serial@vger.kernel.org
-S:	Maintained
-F:	drivers/tty/serial/lrw_uart.c
-
 LRW I2C DEVICE TREE SUPPORT
 M:	Fei Liu <liu.fei16@zte.com.cn>
 M:	Xiaowei Han <han.xiaowei1@zte.com.cn>
@@ -18613,6 +18599,15 @@ F:	include/dt-bindings/clock/thead,th1520-clk-ap.h
 F:	include/dt-bindings/power/thead,th1520-power.h
 F:	include/dt-bindings/reset/thead,th1520-reset.h
 F:	include/linux/firmware/thead/thead,th1520-aon.h
+
+RISC-V ZF(ZhuFeng) SoC SUPPORT
+M: Liu Wenhong <liu.wenhong35@zte.com.cn>
+R: Liu Qingtao <liu.qingtao2@zte.com.cn>
+R: Ye Zhihao <ye.zhihao1@zte.com.cn>
+L: linux-riscv@lists.infradead.org
+S: Maintained
+F: Documentation/devicetree/bindings/serial/lprs,zf-uart.yaml
+F: drivers/tty/serial/zf_uart.c
 
 RNBD BLOCK DRIVERS
 M:	Md. Haris Iqbal <haris.iqbal@ionos.com>
