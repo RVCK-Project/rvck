@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 526</li>
-<li><strong>统计时间</strong>: 2026-10-21 23:47:38</li>
+<li><strong>贡献提交数</strong>: 545</li>
+<li><strong>统计时间</strong>: 2026-10-21 23:57:00</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -18,6 +18,25 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [fa552731](https://github.com/RVCK-Project/rvck/commit/fa5527310bbf843427b62be508bf4e91c4560cf5) | 2026-10-19 | Junyang Han | riscv: rvck_defconfig: enable DINGHAI_PF driver as module |
+| [8620e6c1](https://github.com/RVCK-Project/rvck/commit/8620e6c1e0821fdc9a0f6346b9898bfe4992d5bd) | 2026-08-02 | Junyang Han | dinghai: add hardware register access and PCI capability scanning |
+| [69a74d28](https://github.com/RVCK-Project/rvck/commit/69a74d2881fb64b2afe3af6bb59ad81b1ffca438) | 2026-08-02 | Junyang Han | dinghai: add ZTE network driver support |
+| [76495346](https://github.com/RVCK-Project/rvck/commit/764953460f5d15a56072431f4b0b574c88bb80e8) | 2026-08-07 | Xu Lu | riscv: mm: Apply Svinval in update_mmu_cache() |
+| [d2a2d63c](https://github.com/RVCK-Project/rvck/commit/d2a2d63c14cc982473c7c9d18d4444d2eea2e08f) | 2026-08-07 | Xu Lu | riscv: mm: Use ASID in update_mmu_cache() |
+| [f7dc8d04](https://github.com/RVCK-Project/rvck/commit/f7dc8d048ce70c3df862ced5236012aa268d8ed3) | 2025-11-17 | Vivian Wang | riscv: cmpxchg: Use riscv_has_extension_likely |
+| [db0e7194](https://github.com/RVCK-Project/rvck/commit/db0e7194f5128ef6797b5640aa7e4b30771270d9) | 2025-11-17 | Vivian Wang | riscv: bitops: Use riscv_has_extension_likely |
+| [3d9f8837](https://github.com/RVCK-Project/rvck/commit/3d9f88375f6c153e205c6c0bd3e4e171dddfe761) | 2023-11-12 | Xiao Wang | riscv: Avoid code duplication with generic bitops implementation |
+| [2ebef623](https://github.com/RVCK-Project/rvck/commit/2ebef623b8776a5bbcc4c7e98749c9a1acefa556) | 2025-11-17 | Vivian Wang | riscv: hweight: Use riscv_has_extension_likely |
+| [00deeaae](https://github.com/RVCK-Project/rvck/commit/00deeaaef6fd1436ad66545d521a99aaedf3245e) | 2025-11-17 | Vivian Wang | riscv: checksum: Use riscv_has_extension_likely |
+| [894f59d2](https://github.com/RVCK-Project/rvck/commit/894f59d2a9841ae08122d2d40f1a848b51fc47ff) | 2024-10-24 | Conor Dooley | RISC-V: separate Zbb optimisations requiring and not requiring toolchain support |
+| [c0258572](https://github.com/RVCK-Project/rvck/commit/c0258572213b5ddeea8f11cc7d18a68af3f1ec26) | 2024-01-18 | Charlie Jenkins | riscv: lib: Check if output in asm goto supported |
+| [93693337](https://github.com/RVCK-Project/rvck/commit/93693337a5ca26abc3c37d9fab71cf1dd5d2f4ac) | 2024-10-24 | Conor Dooley | RISC-V: clarify what some RISCV_ISA* config options do |
+| [1f08b2cc](https://github.com/RVCK-Project/rvck/commit/1f08b2cc39b99222cd6e7f3a5347d901b519d8fa) | 2025-11-17 | Vivian Wang | riscv: pgtable: Use riscv_has_extension_unlikely |
+| [d0c52e48](https://github.com/RVCK-Project/rvck/commit/d0c52e48dd954911c787d86786fbdd7dac79fada) | 2025-07-24 | Djordje Todorovic | riscv: errata: Fix the PAUSE Opcode for MIPS P8700 |
+| [eda27352](https://github.com/RVCK-Project/rvck/commit/eda273525c142436c0f293c747886b481c7211af) | 2025-07-24 | Aleksa Paunovic | riscv: Add xmipsexectl instructions |
+| [75ed3904](https://github.com/RVCK-Project/rvck/commit/75ed3904324681a614d34ab1d002fd3dc9a22901) | 2025-07-24 | Aleksa Paunovic | riscv: Add xmipsexectl as a vendor extension |
+| [814bbdb1](https://github.com/RVCK-Project/rvck/commit/814bbdb10d759c46f18240aa1f9a3565f570bbc0) | 2025-07-24 | Aleksa Paunovic | dt-bindings: riscv: Add xmipsexectl ISA extension description |
+| [02f80bad](https://github.com/RVCK-Project/rvck/commit/02f80bad9bdcdaa84f44414a2f2fbd450bbd9e6f) | 2025-01-13 | Alexandre Ghiti | riscv: Call secondary mmu notifier when flushing the tlb |
 | [b450d53d](https://github.com/RVCK-Project/rvck/commit/b450d53dfa1234f76dea128956aaea6be43ac4ed) | 2026-08-17 | sunwenhan | riscv: align pcie bus assign logic with ARM64 |
 | [f343b1bb](https://github.com/RVCK-Project/rvck/commit/f343b1bb03aae61c46bf9fb5ba2350ea7d2fdbcd) | 2026-10-05 | Shao Mingyin | riscv: lib: Fix ZBB strnlen wrap-around regression on huge counts |
 | [171a3ebf](https://github.com/RVCK-Project/rvck/commit/171a3ebf01d52c4b2877736d94ae625903c84639) | 2026-04-13 | Michael Neuling | riscv: lib: Fix ZBB strnlen reading past count boundary |
@@ -546,7 +565,7 @@
 | [6231b91a](https://github.com/RVCK-Project/rvck/commit/6231b91ada62da690799b337eb71cd60825d03b2) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 526 条提交（显示全部）**
+**共 545 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -555,5 +574,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-21 23:47:38*
-*数据来源: 主分支 rvck-6.6@f64cc45f*
+*本页面最后更新于 2026-10-21 23:57:00*
+*数据来源: 主分支 rvck-6.6@ec697bf2*

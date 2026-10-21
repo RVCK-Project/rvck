@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 526</li>
-<li><strong>统计时间</strong>: 2026-10-21 23:47:38</li>
+<li><strong>贡献提交数</strong>: 545</li>
+<li><strong>统计时间</strong>: 2026-10-21 23:57:00</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -18,6 +18,25 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [758fd10c](https://github.com/RVCK-Project/rvck/commit/758fd10cfcf41c817b82da759135292af44d639e) | 2023-12-07 | Jason Gunthorpe | iommmu/of: Do not return struct iommu_ops from of_iommu_configure() |
+| [d44cb1c8](https://github.com/RVCK-Project/rvck/commit/d44cb1c86d932ee02c068f92f372b05bd5ddee93) | 2023-12-07 | Jason Gunthorpe | iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops() |
+| [907fe46e](https://github.com/RVCK-Project/rvck/commit/907fe46eb3dc2fac1257d796d8404614e60fa7ab) | 2023-11-21 | Robin Murphy | iommu: Clean up open-coded ownership checks |
+| [1dc0c604](https://github.com/RVCK-Project/rvck/commit/1dc0c60457f8499e674d124d2ae9d4a73366cd1c) | 2023-11-21 | Robin Murphy | iommu: Retire bus ops |
+| [c6f2a26b](https://github.com/RVCK-Project/rvck/commit/c6f2a26b4875b6615dba41d9127d35b77be8db36) | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_domain_alloc() from bus ops |
+| [14f9ac5b](https://github.com/RVCK-Project/rvck/commit/14f9ac5bc753225ca0520e49345117b1dbcb116d) | 2023-11-21 | Robin Murphy | iommu: Validate that devices match domains |
+| [8aa7e98a](https://github.com/RVCK-Project/rvck/commit/8aa7e98a646791492ed1d32c334cd5f1530d1b5f) | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_present() from bus ops |
+| [fd9a0f2e](https://github.com/RVCK-Project/rvck/commit/fd9a0f2e3a86cad3c8da00ee1ab42c423d2ee518) | 2023-11-21 | Robin Murphy | iommu: Factor out some helpers |
+| [5d5e3344](https://github.com/RVCK-Project/rvck/commit/5d5e3344d1a6eb93cb294a34dddb5f79c929773c) | 2024-03-13 | Xiao Wang | riscv: uaccess: Relax the threshold for fast path |
+| [c1645506](https://github.com/RVCK-Project/rvck/commit/c1645506fb7d0715fc477b63c41af7a07971c368) | 2024-03-13 | Xiao Wang | riscv: uaccess: Allow the last potential unrolled copy |
+| [5472b5e6](https://github.com/RVCK-Project/rvck/commit/5472b5e6e175829bff4fe26b37c56454e5f1cef5) | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps |
+| [3c991cf1](https://github.com/RVCK-Project/rvck/commit/3c991cf175115cf14c29ab9df05543bab37ee675) | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events |
+| [bd4833f3](https://github.com/RVCK-Project/rvck/commit/bd4833f32e4a27ff88438efb0f6ea67c9ac8d720) | 2024-12-24 | Quan Zhou | RISC-V: KVM: Redirect instruction access fault trap to guest |
+| [6d0c1a74](https://github.com/RVCK-Project/rvck/commit/6d0c1a74df56f242b63cd2d0e3b9a9c269de92dc) | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest |
+| [b3321830](https://github.com/RVCK-Project/rvck/commit/b332183004ef3cebc5a6677d76ccc7a19bc9669f) | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys |
+| [ad44f065](https://github.com/RVCK-Project/rvck/commit/ad44f06562f181746350c6eafe35c2ef541c4322) | 2025-01-02 | Guo Ren | iommu/riscv: Fixup compile warning |
+| [126cb477](https://github.com/RVCK-Project/rvck/commit/126cb477d3990f254f2f507fe8a950f7eddd9773) | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver |
+| [395af650](https://github.com/RVCK-Project/rvck/commit/395af650d5163bc63c27d4691b98521b5b547efa) | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it |
+| [e2621031](https://github.com/RVCK-Project/rvck/commit/e2621031bf556df11cbf006978adb900158fb19f) | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi |
 | [5eb432b3](https://github.com/RVCK-Project/rvck/commit/5eb432b3a2e88978c712ad384cf08cf539512a03) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Paging domain support |
 | [f5460960](https://github.com/RVCK-Project/rvck/commit/f5460960845761917ca61bcc59049a7ebbd762e2) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Command and fault queue support |
 | [59cd8866](https://github.com/RVCK-Project/rvck/commit/59cd88663a31c5da3b6bbba0464cd0f8952a4e4a) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Device directory management. |
@@ -146,7 +165,7 @@
 | [6231b91a](https://github.com/RVCK-Project/rvck/commit/6231b91ada62da690799b337eb71cd60825d03b2) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 526 条提交，显示 401-526**
+**共 545 条提交，显示 401-545**
 
 [1](中兴通讯.md) [2](中兴通讯_page2.md) **[3]**
 
@@ -157,5 +176,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-21 23:47:38*
-*数据来源: 主分支 rvck-6.6@f64cc45f*
+*本页面最后更新于 2026-10-21 23:57:00*
+*数据来源: 主分支 rvck-6.6@ec697bf2*

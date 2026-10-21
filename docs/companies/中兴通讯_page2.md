@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 526</li>
-<li><strong>统计时间</strong>: 2026-10-21 23:47:38</li>
+<li><strong>贡献提交数</strong>: 545</li>
+<li><strong>统计时间</strong>: 2026-10-21 23:57:00</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -18,6 +18,25 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [72924f4b](https://github.com/RVCK-Project/rvck/commit/72924f4b609e7fa7530201550cf0ef90208ab439) | 2023-10-24 | Clément Léger | riscv: kvm: Use SYM_*() assembly macros instead of deprecated ones |
+| [7e5e4d39](https://github.com/RVCK-Project/rvck/commit/7e5e4d3942d092bd022d3cadca5082b18b6cb636) | 2025-08-18 | Anup Patel | MAINTAINERS: Add entry for RISC-V RPMI and MPXY drivers |
+| [d7446240](https://github.com/RVCK-Project/rvck/commit/d7446240e37e3afb6f2abba0e72072bfb2f2bc0c) | 2025-08-18 | Anup Patel | RISC-V: Enable GPIO keyboard and event device in RV64 defconfig |
+| [05b025f6](https://github.com/RVCK-Project/rvck/commit/05b025f6eea51c61f52d00bc3d9ecfd14b8a540b) | 2025-08-18 | Sunil V L | irqchip/riscv-rpmi-sysmsi: Add ACPI support |
+| [0a05539f](https://github.com/RVCK-Project/rvck/commit/0a05539f58caf352558757969b3b9c96d58b0dc2) | 2025-08-18 | Sunil V L | mailbox/riscv-sbi-mpxy: Add ACPI support |
+| [74c0de2f](https://github.com/RVCK-Project/rvck/commit/74c0de2fa7d5d8bcd3bed767898bb6b13dec3a55) | 2025-08-18 | Sunil V L | irqchip/irq-riscv-imsic-early: Export imsic_acpi_get_fwnode() |
+| [2fde893c](https://github.com/RVCK-Project/rvck/commit/2fde893c0067641f7dd89ec34069ea178604fbbe) | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add RPMI System MSI to GSI mapping |
+| [7133d277](https://github.com/RVCK-Project/rvck/commit/7133d2770f8e075498216c452149f1980936c208) | 2025-08-18 | Sunil V L | ACPI: RISC-V: Add support to update gsi range |
+| [b4609bbe](https://github.com/RVCK-Project/rvck/commit/b4609bbeb4c7abdc326d245911c86b5e061e3cc7) | 2025-08-18 | Sunil V L | ACPI: RISC-V: Create interrupt controller list in sorted order |
+| [3d7f976a](https://github.com/RVCK-Project/rvck/commit/3d7f976a71a19cd5998903fecb8bdfa687254a63) | 2025-08-18 | Sunil V L | ACPI: scan: Update honor list for RPMI System MSI |
+| [874c1c69](https://github.com/RVCK-Project/rvck/commit/874c1c691c5e24ca4c7abac9753df5c927319cca) | 2025-08-18 | Sunil V L | ACPI: Add support for nargs_prop in acpi_fwnode_get_reference_args() |
+| [7ce2308e](https://github.com/RVCK-Project/rvck/commit/7ce2308e90d22b7b1068809735469f2fb303715f) | 2025-08-18 | Sunil V L | ACPI: property: Refactor acpi_fwnode_get_reference_args() to support nargs_prop |
+| [c0fa12f7](https://github.com/RVCK-Project/rvck/commit/c0fa12f7f4b9daa0bb34f44d41df4fd8c8590404) | 2025-08-18 | Anup Patel | irqchip: Add driver for the RPMI system MSI service group |
+| [0061408a](https://github.com/RVCK-Project/rvck/commit/0061408a4f349b29f88897d1c25f5418153a367f) | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI interrupt controller bindings |
+| [9acaf514](https://github.com/RVCK-Project/rvck/commit/9acaf514fa6c72bec3c2d53e39efeb720675c681) | 2025-08-18 | Anup Patel | dt-bindings: Add RPMI system MSI message proxy bindings |
+| [195b9917](https://github.com/RVCK-Project/rvck/commit/195b991713f2443b7b402a727c95d886fb46d659) | 2025-08-18 | Rahul Pathak | clk: Add clock driver for the RISC-V RPMI clock service group |
+| [aa1bff3f](https://github.com/RVCK-Project/rvck/commit/aa1bff3f2293d9533701f02aa61b0e5df12792c2) | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service controller bindings |
+| [e7c35ffd](https://github.com/RVCK-Project/rvck/commit/e7c35ffd89e8310946a7bbe4de529cf814ea8ec8) | 2025-08-18 | Anup Patel | dt-bindings: clock: Add RPMI clock service message proxy bindings |
+| [b8b40314](https://github.com/RVCK-Project/rvck/commit/b8b40314fd0b8f0fa3ac949ccf16a52d466c5e97) | 2025-08-18 | Anup Patel | mailbox: Add RISC-V SBI message proxy (MPXY) based mailbox driver |
 | [a2b34647](https://github.com/RVCK-Project/rvck/commit/a2b34647467aa494d8e59b7ef0826bf9c20fca0d) | 2025-08-18 | Anup Patel | byteorder: Add memcpy_to_le32() and memcpy_from_le32() |
 | [ab491f56](https://github.com/RVCK-Project/rvck/commit/ab491f56cd5f7494657cef2a1f802c2711961bec) | 2025-08-18 | Anup Patel | mailbox: Add common header for RPMI messages sent via mailbox |
 | [ad2543d3](https://github.com/RVCK-Project/rvck/commit/ad2543d30eaf5be731918d611d3f1ef49021a25f) | 2025-08-18 | Anup Patel | RISC-V: Add defines for the SBI message proxy extension |
@@ -199,28 +218,9 @@
 | [f27506c3](https://github.com/RVCK-Project/rvck/commit/f27506c36593b1095194c001fb4e292c6db7feaa) | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_priv_set() with a lockdep |
 | [fee40fe0](https://github.com/RVCK-Project/rvck/commit/fee40fe06bd922a224f2402ec9ff03ffa468a27e) | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_get() with lockdep |
 | [a77d39fc](https://github.com/RVCK-Project/rvck/commit/a77d39fcb80e1c8ad2e2f3776a9f0bde95cd5995) | 2023-12-07 | Jason Gunthorpe | iommu/of: Use -ENODEV consistently in of_iommu_configure() |
-| [758fd10c](https://github.com/RVCK-Project/rvck/commit/758fd10cfcf41c817b82da759135292af44d639e) | 2023-12-07 | Jason Gunthorpe | iommmu/of: Do not return struct iommu_ops from of_iommu_configure() |
-| [d44cb1c8](https://github.com/RVCK-Project/rvck/commit/d44cb1c86d932ee02c068f92f372b05bd5ddee93) | 2023-12-07 | Jason Gunthorpe | iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops() |
-| [907fe46e](https://github.com/RVCK-Project/rvck/commit/907fe46eb3dc2fac1257d796d8404614e60fa7ab) | 2023-11-21 | Robin Murphy | iommu: Clean up open-coded ownership checks |
-| [1dc0c604](https://github.com/RVCK-Project/rvck/commit/1dc0c60457f8499e674d124d2ae9d4a73366cd1c) | 2023-11-21 | Robin Murphy | iommu: Retire bus ops |
-| [c6f2a26b](https://github.com/RVCK-Project/rvck/commit/c6f2a26b4875b6615dba41d9127d35b77be8db36) | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_domain_alloc() from bus ops |
-| [14f9ac5b](https://github.com/RVCK-Project/rvck/commit/14f9ac5bc753225ca0520e49345117b1dbcb116d) | 2023-11-21 | Robin Murphy | iommu: Validate that devices match domains |
-| [8aa7e98a](https://github.com/RVCK-Project/rvck/commit/8aa7e98a646791492ed1d32c334cd5f1530d1b5f) | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_present() from bus ops |
-| [fd9a0f2e](https://github.com/RVCK-Project/rvck/commit/fd9a0f2e3a86cad3c8da00ee1ab42c423d2ee518) | 2023-11-21 | Robin Murphy | iommu: Factor out some helpers |
-| [5d5e3344](https://github.com/RVCK-Project/rvck/commit/5d5e3344d1a6eb93cb294a34dddb5f79c929773c) | 2024-03-13 | Xiao Wang | riscv: uaccess: Relax the threshold for fast path |
-| [c1645506](https://github.com/RVCK-Project/rvck/commit/c1645506fb7d0715fc477b63c41af7a07971c368) | 2024-03-13 | Xiao Wang | riscv: uaccess: Allow the last potential unrolled copy |
-| [5472b5e6](https://github.com/RVCK-Project/rvck/commit/5472b5e6e175829bff4fe26b37c56454e5f1cef5) | 2024-12-24 | Atish Patra | RISC-V: KVM: Add new exit statstics for redirected traps |
-| [3c991cf1](https://github.com/RVCK-Project/rvck/commit/3c991cf175115cf14c29ab9df05543bab37ee675) | 2024-12-24 | Atish Patra | RISC-V: KVM: Update firmware counters for various events |
-| [bd4833f3](https://github.com/RVCK-Project/rvck/commit/bd4833f32e4a27ff88438efb0f6ea67c9ac8d720) | 2024-12-24 | Quan Zhou | RISC-V: KVM: Redirect instruction access fault trap to guest |
-| [6d0c1a74](https://github.com/RVCK-Project/rvck/commit/6d0c1a74df56f242b63cd2d0e3b9a9c269de92dc) | 2024-04-29 | Yu-Wei Hsu | RISC-V: KVM: Redirect AMO load/store access fault traps to guest |
-| [b3321830](https://github.com/RVCK-Project/rvck/commit/b332183004ef3cebc5a6677d76ccc7a19bc9669f) | 2025-08-20 | XianLiang Huang | iommu/riscv: prevent NULL deref in iova_to_phys |
-| [ad44f065](https://github.com/RVCK-Project/rvck/commit/ad44f06562f181746350c6eafe35c2ef541c4322) | 2025-01-02 | Guo Ren | iommu/riscv: Fixup compile warning |
-| [126cb477](https://github.com/RVCK-Project/rvck/commit/126cb477d3990f254f2f507fe8a950f7eddd9773) | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver |
-| [395af650](https://github.com/RVCK-Project/rvck/commit/395af650d5163bc63c27d4691b98521b5b547efa) | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it |
-| [e2621031](https://github.com/RVCK-Project/rvck/commit/e2621031bf556df11cbf006978adb900158fb19f) | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi |
 ---
 
-**共 526 条提交，显示 201-400**
+**共 545 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-21 23:47:38*
-*数据来源: 主分支 rvck-6.6@f64cc45f*
+*本页面最后更新于 2026-10-21 23:57:00*
+*数据来源: 主分支 rvck-6.6@ec697bf2*

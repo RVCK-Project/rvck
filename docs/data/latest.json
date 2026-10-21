@@ -1,8 +1,8 @@
 {
-  "total_commits": 1747,
-  "commits_with_company": 1638,
-  "total_insertions": 1724590,
-  "total_deletions": 97322,
+  "total_commits": 1766,
+  "commits_with_company": 1657,
+  "total_insertions": 1725662,
+  "total_deletions": 97653,
   "companies": {
     "超睿科技": {
       "count": 90,
@@ -3800,10 +3800,296 @@
       ]
     },
     "中兴通讯": {
-      "count": 526,
-      "insertions": 32641,
-      "deletions": 6221,
+      "count": 545,
+      "insertions": 33713,
+      "deletions": 6552,
       "commits": [
+        {
+          "hash": "fa5527310bbf843427b62be508bf4e91c4560cf5",
+          "author_name": "Junyang Han",
+          "author_email": "han.junyang@zte.com.cn",
+          "date": "2026-10-19 20:48:10 +0800",
+          "subject": "riscv: rvck_defconfig: enable DINGHAI_PF driver as module",
+          "insertions": 2,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Junyang Han <han.junyang@zte.com.cn>",
+            "Signed-off-by: Qingtao Liu <liu.qingtao2@zte.com.cn>",
+            "Junyang Han <han.junyang@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "8620e6c1e0821fdc9a0f6346b9898bfe4992d5bd",
+          "author_name": "Junyang Han",
+          "author_email": "han.junyang@zte.com.cn",
+          "date": "2026-08-02 16:24:31 +0800",
+          "subject": "dinghai: add hardware register access and PCI capability scanning",
+          "insertions": 377,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Junyang Han <han.junyang@zte.com.cn>",
+            "Signed-off-by: Jakub Kicinski <kuba@kernel.org>",
+            "Signed-off-by: Qingtao Liu <liu.qingtao2@zte.com.cn>",
+            "Junyang Han <han.junyang@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "69a74d2881fb64b2afe3af6bb59ad81b1ffca438",
+          "author_name": "Junyang Han",
+          "author_email": "han.junyang@zte.com.cn",
+          "date": "2026-08-02 16:21:04 +0800",
+          "subject": "dinghai: add ZTE network driver support",
+          "insertions": 278,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Junyang Han <han.junyang@zte.com.cn>",
+            "Signed-off-by: Jakub Kicinski <kuba@kernel.org>",
+            "Signed-off-by: Qingtao Liu <liu.qingtao2@zte.com.cn>",
+            "Junyang Han <han.junyang@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "764953460f5d15a56072431f4b0b574c88bb80e8",
+          "author_name": "Xu Lu",
+          "author_email": "luxu.kernel@bytedance.com",
+          "date": "2026-08-07 19:24:29 -0600",
+          "subject": "riscv: mm: Apply Svinval in update_mmu_cache()",
+          "insertions": 26,
+          "deletions": 18,
+          "signatures": [
+            "Signed-off-by: Xu Lu <luxu.kernel@bytedance.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Xu Lu <luxu.kernel@bytedance.com>"
+          ]
+        },
+        {
+          "hash": "d2a2d63c14cc982473c7c9d18d4444d2eea2e08f",
+          "author_name": "Xu Lu",
+          "author_email": "luxu.kernel@bytedance.com",
+          "date": "2026-08-07 19:24:29 -0600",
+          "subject": "riscv: mm: Use ASID in update_mmu_cache()",
+          "insertions": 8,
+          "deletions": 6,
+          "signatures": [
+            "Signed-off-by: Xu Lu <luxu.kernel@bytedance.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Xu Lu <luxu.kernel@bytedance.com>"
+          ]
+        },
+        {
+          "hash": "f7dc8d048ce70c3df862ced5236012aa268d8ed3",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:23 -0700",
+          "subject": "riscv: cmpxchg: Use riscv_has_extension_likely",
+          "insertions": 4,
+          "deletions": 8,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "db0e7194f5128ef6797b5640aa7e4b30771270d9",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:22 -0700",
+          "subject": "riscv: bitops: Use riscv_has_extension_likely",
+          "insertions": 8,
+          "deletions": 24,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "3d9f88375f6c153e205c6c0bd3e4e171dddfe761",
+          "author_name": "Xiao Wang",
+          "author_email": "xiao.w.wang@intel.com",
+          "date": "2023-11-12 17:44:21 +0800",
+          "subject": "riscv: Avoid code duplication with generic bitops implementation",
+          "insertions": 48,
+          "deletions": 122,
+          "signatures": [
+            "Signed-off-by: Xiao Wang <xiao.w.wang@intel.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Xiao Wang <xiao.w.wang@intel.com>"
+          ]
+        },
+        {
+          "hash": "2ebef623b8776a5bbcc4c7e98749c9a1acefa556",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:22 -0700",
+          "subject": "riscv: hweight: Use riscv_has_extension_likely",
+          "insertions": 8,
+          "deletions": 16,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "00deeaaef6fd1436ad66545d521a99aaedf3245e",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:21 -0700",
+          "subject": "riscv: checksum: Use riscv_has_extension_likely",
+          "insertions": 16,
+          "deletions": 50,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "894f59d2a9841ae08122d2d40f1a848b51fc47ff",
+          "author_name": "Conor Dooley",
+          "author_email": "conor.dooley@microchip.com",
+          "date": "2024-10-24 11:19:41 +0100",
+          "subject": "RISC-V: separate Zbb optimisations requiring and not requiring toolchain support",
+          "insertions": 20,
+          "deletions": 33,
+          "signatures": [
+            "Signed-off-by: Conor Dooley <conor.dooley@microchip.com>",
+            "Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Conor Dooley <conor.dooley@microchip.com>"
+          ]
+        },
+        {
+          "hash": "c0258572213b5ddeea8f11cc7d18a68af3f1ec26",
+          "author_name": "Charlie Jenkins",
+          "author_email": "charlie@rivosinc.com",
+          "date": "2024-01-18 14:36:45 -0800",
+          "subject": "riscv: lib: Check if output in asm goto supported",
+          "insertions": 2,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Charlie Jenkins <charlie@rivosinc.com>"
+          ]
+        },
+        {
+          "hash": "93693337a5ca26abc3c37d9fab71cf1dd5d2f4ac",
+          "author_name": "Conor Dooley",
+          "author_email": "conor.dooley@microchip.com",
+          "date": "2024-10-24 11:19:40 +0100",
+          "subject": "RISC-V: clarify what some RISCV_ISA* config options do",
+          "insertions": 19,
+          "deletions": 17,
+          "signatures": [
+            "Signed-off-by: Conor Dooley <conor.dooley@microchip.com>",
+            "Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Conor Dooley <conor.dooley@microchip.com>"
+          ]
+        },
+        {
+          "hash": "1f08b2cc39b99222cd6e7f3a5347d901b519d8fa",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:21 -0700",
+          "subject": "riscv: pgtable: Use riscv_has_extension_unlikely",
+          "insertions": 17,
+          "deletions": 19,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "d0c52e48dd954911c787d86786fbdd7dac79fada",
+          "author_name": "Djordje Todorovic",
+          "author_email": "djordje.todorovic@htecgroup.com",
+          "date": "2025-07-24 17:23:31 +0200",
+          "subject": "riscv: errata: Fix the PAUSE Opcode for MIPS P8700",
+          "insertions": 127,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>",
+            "Signed-off-by: Aleksandar Rikalo <arikalo@gmail.com>",
+            "Signed-off-by: Raj Vishwanathan4 <rvishwanathan@mips.com>",
+            "Signed-off-by: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Djordje Todorovic <djordje.todorovic@htecgroup.com>"
+          ]
+        },
+        {
+          "hash": "eda273525c142436c0f293c747886b481c7211af",
+          "author_name": "Aleksa Paunovic",
+          "author_email": "aleksa.paunovic@htecgroup.com",
+          "date": "2025-07-24 17:23:27 +0200",
+          "subject": "riscv: Add xmipsexectl instructions",
+          "insertions": 19,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Aleksa Paunovic <aleksa.paunovic@htecgroup.com>"
+          ]
+        },
+        {
+          "hash": "75ed3904324681a614d34ab1d002fd3dc9a22901",
+          "author_name": "Aleksa Paunovic",
+          "author_email": "aleksa.paunovic@htecgroup.com",
+          "date": "2025-07-24 17:23:26 +0200",
+          "subject": "riscv: Add xmipsexectl as a vendor extension",
+          "insertions": 65,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Aleksa Paunovic <aleksa.paunovic@htecgroup.com>"
+          ]
+        },
+        {
+          "hash": "814bbdb10d759c46f18240aa1f9a3565f570bbc0",
+          "author_name": "Aleksa Paunovic",
+          "author_email": "aleksa.paunovic@htecgroup.com",
+          "date": "2025-07-24 17:23:25 +0200",
+          "subject": "dt-bindings: riscv: Add xmipsexectl ISA extension description",
+          "insertions": 6,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Aleksa Paunovic <aleksa.paunovic@htecgroup.com>"
+          ]
+        },
+        {
+          "hash": "02f80bad9bdcdaa84f44414a2f2fbd450bbd9e6f",
+          "author_name": "Alexandre Ghiti",
+          "author_email": "alexghiti@rivosinc.com",
+          "date": "2025-01-13 15:24:24 +0100",
+          "subject": "riscv: Call secondary mmu notifier when flushing the tlb",
+          "insertions": 22,
+          "deletions": 15,
+          "signatures": [
+            "Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Alexandre Ghiti <alexghiti@rivosinc.com>"
+          ]
+        },
         {
           "hash": "b450d53dfa1234f76dea128956aaea6be43ac4ed",
           "author_name": "sunwenhan",
@@ -26745,7 +27031,7 @@
       ]
     }
   ],
-  "total_contribution": 1802,
+  "total_contribution": 1826,
   "companies_contribution": {
     "超睿科技": {
       "count": 92,
@@ -30571,10 +30857,296 @@
       ]
     },
     "中兴通讯": {
-      "count": 526,
-      "insertions": 32641,
-      "deletions": 6221,
+      "count": 545,
+      "insertions": 33713,
+      "deletions": 6552,
       "commits": [
+        {
+          "hash": "fa5527310bbf843427b62be508bf4e91c4560cf5",
+          "author_name": "Junyang Han",
+          "author_email": "han.junyang@zte.com.cn",
+          "date": "2026-10-19 20:48:10 +0800",
+          "subject": "riscv: rvck_defconfig: enable DINGHAI_PF driver as module",
+          "insertions": 2,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Junyang Han <han.junyang@zte.com.cn>",
+            "Signed-off-by: Qingtao Liu <liu.qingtao2@zte.com.cn>",
+            "Junyang Han <han.junyang@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "8620e6c1e0821fdc9a0f6346b9898bfe4992d5bd",
+          "author_name": "Junyang Han",
+          "author_email": "han.junyang@zte.com.cn",
+          "date": "2026-08-02 16:24:31 +0800",
+          "subject": "dinghai: add hardware register access and PCI capability scanning",
+          "insertions": 377,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Junyang Han <han.junyang@zte.com.cn>",
+            "Signed-off-by: Jakub Kicinski <kuba@kernel.org>",
+            "Signed-off-by: Qingtao Liu <liu.qingtao2@zte.com.cn>",
+            "Junyang Han <han.junyang@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "69a74d2881fb64b2afe3af6bb59ad81b1ffca438",
+          "author_name": "Junyang Han",
+          "author_email": "han.junyang@zte.com.cn",
+          "date": "2026-08-02 16:21:04 +0800",
+          "subject": "dinghai: add ZTE network driver support",
+          "insertions": 278,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Junyang Han <han.junyang@zte.com.cn>",
+            "Signed-off-by: Jakub Kicinski <kuba@kernel.org>",
+            "Signed-off-by: Qingtao Liu <liu.qingtao2@zte.com.cn>",
+            "Junyang Han <han.junyang@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "764953460f5d15a56072431f4b0b574c88bb80e8",
+          "author_name": "Xu Lu",
+          "author_email": "luxu.kernel@bytedance.com",
+          "date": "2026-08-07 19:24:29 -0600",
+          "subject": "riscv: mm: Apply Svinval in update_mmu_cache()",
+          "insertions": 26,
+          "deletions": 18,
+          "signatures": [
+            "Signed-off-by: Xu Lu <luxu.kernel@bytedance.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Xu Lu <luxu.kernel@bytedance.com>"
+          ]
+        },
+        {
+          "hash": "d2a2d63c14cc982473c7c9d18d4444d2eea2e08f",
+          "author_name": "Xu Lu",
+          "author_email": "luxu.kernel@bytedance.com",
+          "date": "2026-08-07 19:24:29 -0600",
+          "subject": "riscv: mm: Use ASID in update_mmu_cache()",
+          "insertions": 8,
+          "deletions": 6,
+          "signatures": [
+            "Signed-off-by: Xu Lu <luxu.kernel@bytedance.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Xu Lu <luxu.kernel@bytedance.com>"
+          ]
+        },
+        {
+          "hash": "f7dc8d048ce70c3df862ced5236012aa268d8ed3",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:23 -0700",
+          "subject": "riscv: cmpxchg: Use riscv_has_extension_likely",
+          "insertions": 4,
+          "deletions": 8,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "db0e7194f5128ef6797b5640aa7e4b30771270d9",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:22 -0700",
+          "subject": "riscv: bitops: Use riscv_has_extension_likely",
+          "insertions": 8,
+          "deletions": 24,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "3d9f88375f6c153e205c6c0bd3e4e171dddfe761",
+          "author_name": "Xiao Wang",
+          "author_email": "xiao.w.wang@intel.com",
+          "date": "2023-11-12 17:44:21 +0800",
+          "subject": "riscv: Avoid code duplication with generic bitops implementation",
+          "insertions": 48,
+          "deletions": 122,
+          "signatures": [
+            "Signed-off-by: Xiao Wang <xiao.w.wang@intel.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Xiao Wang <xiao.w.wang@intel.com>"
+          ]
+        },
+        {
+          "hash": "2ebef623b8776a5bbcc4c7e98749c9a1acefa556",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:22 -0700",
+          "subject": "riscv: hweight: Use riscv_has_extension_likely",
+          "insertions": 8,
+          "deletions": 16,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "00deeaaef6fd1436ad66545d521a99aaedf3245e",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:21 -0700",
+          "subject": "riscv: checksum: Use riscv_has_extension_likely",
+          "insertions": 16,
+          "deletions": 50,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "894f59d2a9841ae08122d2d40f1a848b51fc47ff",
+          "author_name": "Conor Dooley",
+          "author_email": "conor.dooley@microchip.com",
+          "date": "2024-10-24 11:19:41 +0100",
+          "subject": "RISC-V: separate Zbb optimisations requiring and not requiring toolchain support",
+          "insertions": 20,
+          "deletions": 33,
+          "signatures": [
+            "Signed-off-by: Conor Dooley <conor.dooley@microchip.com>",
+            "Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Conor Dooley <conor.dooley@microchip.com>"
+          ]
+        },
+        {
+          "hash": "c0258572213b5ddeea8f11cc7d18a68af3f1ec26",
+          "author_name": "Charlie Jenkins",
+          "author_email": "charlie@rivosinc.com",
+          "date": "2024-01-18 14:36:45 -0800",
+          "subject": "riscv: lib: Check if output in asm goto supported",
+          "insertions": 2,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Charlie Jenkins <charlie@rivosinc.com>"
+          ]
+        },
+        {
+          "hash": "93693337a5ca26abc3c37d9fab71cf1dd5d2f4ac",
+          "author_name": "Conor Dooley",
+          "author_email": "conor.dooley@microchip.com",
+          "date": "2024-10-24 11:19:40 +0100",
+          "subject": "RISC-V: clarify what some RISCV_ISA* config options do",
+          "insertions": 19,
+          "deletions": 17,
+          "signatures": [
+            "Signed-off-by: Conor Dooley <conor.dooley@microchip.com>",
+            "Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Conor Dooley <conor.dooley@microchip.com>"
+          ]
+        },
+        {
+          "hash": "1f08b2cc39b99222cd6e7f3a5347d901b519d8fa",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:21 -0700",
+          "subject": "riscv: pgtable: Use riscv_has_extension_unlikely",
+          "insertions": 17,
+          "deletions": 19,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "d0c52e48dd954911c787d86786fbdd7dac79fada",
+          "author_name": "Djordje Todorovic",
+          "author_email": "djordje.todorovic@htecgroup.com",
+          "date": "2025-07-24 17:23:31 +0200",
+          "subject": "riscv: errata: Fix the PAUSE Opcode for MIPS P8700",
+          "insertions": 127,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>",
+            "Signed-off-by: Aleksandar Rikalo <arikalo@gmail.com>",
+            "Signed-off-by: Raj Vishwanathan4 <rvishwanathan@mips.com>",
+            "Signed-off-by: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Djordje Todorovic <djordje.todorovic@htecgroup.com>"
+          ]
+        },
+        {
+          "hash": "eda273525c142436c0f293c747886b481c7211af",
+          "author_name": "Aleksa Paunovic",
+          "author_email": "aleksa.paunovic@htecgroup.com",
+          "date": "2025-07-24 17:23:27 +0200",
+          "subject": "riscv: Add xmipsexectl instructions",
+          "insertions": 19,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Aleksa Paunovic <aleksa.paunovic@htecgroup.com>"
+          ]
+        },
+        {
+          "hash": "75ed3904324681a614d34ab1d002fd3dc9a22901",
+          "author_name": "Aleksa Paunovic",
+          "author_email": "aleksa.paunovic@htecgroup.com",
+          "date": "2025-07-24 17:23:26 +0200",
+          "subject": "riscv: Add xmipsexectl as a vendor extension",
+          "insertions": 65,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Aleksa Paunovic <aleksa.paunovic@htecgroup.com>"
+          ]
+        },
+        {
+          "hash": "814bbdb10d759c46f18240aa1f9a3565f570bbc0",
+          "author_name": "Aleksa Paunovic",
+          "author_email": "aleksa.paunovic@htecgroup.com",
+          "date": "2025-07-24 17:23:25 +0200",
+          "subject": "dt-bindings: riscv: Add xmipsexectl ISA extension description",
+          "insertions": 6,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Aleksa Paunovic <aleksa.paunovic@htecgroup.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Aleksa Paunovic <aleksa.paunovic@htecgroup.com>"
+          ]
+        },
+        {
+          "hash": "02f80bad9bdcdaa84f44414a2f2fbd450bbd9e6f",
+          "author_name": "Alexandre Ghiti",
+          "author_email": "alexghiti@rivosinc.com",
+          "date": "2025-01-13 15:24:24 +0100",
+          "subject": "riscv: Call secondary mmu notifier when flushing the tlb",
+          "insertions": 22,
+          "deletions": 15,
+          "signatures": [
+            "Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Alexandre Ghiti <alexghiti@rivosinc.com>"
+          ]
+        },
         {
           "hash": "b450d53dfa1234f76dea128956aaea6be43ac4ed",
           "author_name": "sunwenhan",
@@ -48365,9 +48937,9 @@
       ]
     },
     "软件所": {
-      "count": 392,
-      "insertions": 1424994,
-      "deletions": 41379,
+      "count": 397,
+      "insertions": 1425047,
+      "deletions": 41496,
       "commits": [
         {
           "hash": "2749567d677a44854780fcb4fdf7eb9ee2c3941c",
@@ -48446,6 +49018,81 @@
             "Signed-off-by: Anup Patel <anup@brainfault.org>",
             "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
             "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "f7dc8d048ce70c3df862ced5236012aa268d8ed3",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:23 -0700",
+          "subject": "riscv: cmpxchg: Use riscv_has_extension_likely",
+          "insertions": 4,
+          "deletions": 8,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "db0e7194f5128ef6797b5640aa7e4b30771270d9",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:22 -0700",
+          "subject": "riscv: bitops: Use riscv_has_extension_likely",
+          "insertions": 8,
+          "deletions": 24,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "2ebef623b8776a5bbcc4c7e98749c9a1acefa556",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:22 -0700",
+          "subject": "riscv: hweight: Use riscv_has_extension_likely",
+          "insertions": 8,
+          "deletions": 16,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "00deeaaef6fd1436ad66545d521a99aaedf3245e",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:21 -0700",
+          "subject": "riscv: checksum: Use riscv_has_extension_likely",
+          "insertions": 16,
+          "deletions": 50,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "1f08b2cc39b99222cd6e7f3a5347d901b519d8fa",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2025-11-17 21:19:21 -0700",
+          "subject": "riscv: pgtable: Use riscv_has_extension_unlikely",
+          "insertions": 17,
+          "deletions": 19,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
           ]
         },
         {
@@ -54423,8 +55070,8 @@
       ]
     }
   },
-  "generated_at": "2026-10-21 23:47:38",
+  "generated_at": "2026-10-21 23:57:00",
   "main_branch": "rvck-6.6",
-  "main_commit": "f64cc45f",
+  "main_commit": "ec697bf2",
   "start_tag": "v6.6.158"
 }

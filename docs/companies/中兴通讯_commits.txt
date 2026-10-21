@@ -1,9 +1,28 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 526 个提交
-# 生成时间: 2026-10-21 23:47:38
+# 共 545 个提交
+# 生成时间: 2026-10-21 23:57:00
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+fa552731 | 2026-10-19 | Junyang Han | riscv: rvck_defconfig: enable DINGHAI_PF driver as module
+8620e6c1 | 2026-08-02 | Junyang Han | dinghai: add hardware register access and PCI capability scanning
+69a74d28 | 2026-08-02 | Junyang Han | dinghai: add ZTE network driver support
+76495346 | 2026-08-07 | Xu Lu | riscv: mm: Apply Svinval in update_mmu_cache()
+d2a2d63c | 2026-08-07 | Xu Lu | riscv: mm: Use ASID in update_mmu_cache()
+f7dc8d04 | 2025-11-17 | Vivian Wang | riscv: cmpxchg: Use riscv_has_extension_likely
+db0e7194 | 2025-11-17 | Vivian Wang | riscv: bitops: Use riscv_has_extension_likely
+3d9f8837 | 2023-11-12 | Xiao Wang | riscv: Avoid code duplication with generic bitops implementation
+2ebef623 | 2025-11-17 | Vivian Wang | riscv: hweight: Use riscv_has_extension_likely
+00deeaae | 2025-11-17 | Vivian Wang | riscv: checksum: Use riscv_has_extension_likely
+894f59d2 | 2024-10-24 | Conor Dooley | RISC-V: separate Zbb optimisations requiring and not requiring toolchain support
+c0258572 | 2024-01-18 | Charlie Jenkins | riscv: lib: Check if output in asm goto supported
+93693337 | 2024-10-24 | Conor Dooley | RISC-V: clarify what some RISCV_ISA* config options do
+1f08b2cc | 2025-11-17 | Vivian Wang | riscv: pgtable: Use riscv_has_extension_unlikely
+d0c52e48 | 2025-07-24 | Djordje Todorovic | riscv: errata: Fix the PAUSE Opcode for MIPS P8700
+eda27352 | 2025-07-24 | Aleksa Paunovic | riscv: Add xmipsexectl instructions
+75ed3904 | 2025-07-24 | Aleksa Paunovic | riscv: Add xmipsexectl as a vendor extension
+814bbdb1 | 2025-07-24 | Aleksa Paunovic | dt-bindings: riscv: Add xmipsexectl ISA extension description
+02f80bad | 2025-01-13 | Alexandre Ghiti | riscv: Call secondary mmu notifier when flushing the tlb
 b450d53d | 2026-08-17 | sunwenhan | riscv: align pcie bus assign logic with ARM64
 f343b1bb | 2026-10-05 | Shao Mingyin | riscv: lib: Fix ZBB strnlen wrap-around regression on huge counts
 171a3ebf | 2026-04-13 | Michael Neuling | riscv: lib: Fix ZBB strnlen reading past count boundary
