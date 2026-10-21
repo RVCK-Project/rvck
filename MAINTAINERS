@@ -12425,12 +12425,6 @@ S:	Maintained
 F:	Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
 F:	drivers/thermal/loongson2_thermal.c
 
-LRW DDR PMU DRIVER
-M:	Jie Feng <feng.jie8@zte.com.cn>
-R:	Qingtao Liu <liu.qingtao2@zte.com.cn>
-S:	Maintained
-F:	drivers/perf/lrw_ddr_pmu.c
-
 LSILOGIC MPT FUSION DRIVERS (FC/SAS/SPI)
 M:	Sathya Prakash <sathya.prakash@broadcom.com>
 M:	Sreekanth Reddy <sreekanth.reddy@broadcom.com>
@@ -18575,6 +18569,7 @@ M: Liu Wenhong <liu.wenhong35@zte.com.cn>
 M: Liu Fei <liu.fei16@zte.com.cn>
 M: He Yilin <he.yilin@zte.com.cn>
 M: Guo Wu <guowu1@zte.com.cn>
+M: Feng Jie <feng.jie8@zte.com.cn>
 R: Liu Qingtao <liu.qingtao2@zte.com.cn>
 R: Ye Zhihao <ye.zhihao1@zte.com.cn>
 L: linux-riscv@lists.infradead.org
@@ -18587,6 +18582,7 @@ F: drivers/i2c/busses/i2c-zf-master.c
 F: drivers/i2c/busses/i2c-zf-platdrv.c
 F: tools/perf/pmu-events/arch/riscv/lprs/
 F: drivers/perf/lprs_zf_pcie_pmu.c
+F: drivers/perf/lprs_zf_ddr_pmu.c
 
 RNBD BLOCK DRIVERS
 M:	Md. Haris Iqbal <haris.iqbal@ionos.com>
