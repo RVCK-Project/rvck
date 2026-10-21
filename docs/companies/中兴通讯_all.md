@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 512</li>
-<li><strong>统计时间</strong>: 2026-10-15 16:37:11</li>
+<li><strong>贡献提交数</strong>: 526</li>
+<li><strong>统计时间</strong>: 2026-10-21 23:47:38</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -18,6 +18,20 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [b450d53d](https://github.com/RVCK-Project/rvck/commit/b450d53dfa1234f76dea128956aaea6be43ac4ed) | 2026-08-17 | sunwenhan | riscv: align pcie bus assign logic with ARM64 |
+| [f343b1bb](https://github.com/RVCK-Project/rvck/commit/f343b1bb03aae61c46bf9fb5ba2350ea7d2fdbcd) | 2026-10-05 | Shao Mingyin | riscv: lib: Fix ZBB strnlen wrap-around regression on huge counts |
+| [171a3ebf](https://github.com/RVCK-Project/rvck/commit/171a3ebf01d52c4b2877736d94ae625903c84639) | 2026-04-13 | Michael Neuling | riscv: lib: Fix ZBB strnlen reading past count boundary |
+| [d3da989f](https://github.com/RVCK-Project/rvck/commit/d3da989f646024b290774379ab266c4d09556616) | 2026-04-29 | Nathan Chancellor | riscv: Define __riscv_copy_{,vec_}{words,bytes}_unaligned() using SYM_TYPED_FUNC... |
+| [ae69ddc5](https://github.com/RVCK-Project/rvck/commit/ae69ddc5d1ae7819f1eb94cffc63d16a76edbd29) | 2026-08-07 | Nam Cao | riscv: unaligned: stop using kthread for check_vector_unaligned_access() |
+| [782bb3ca](https://github.com/RVCK-Project/rvck/commit/782bb3ca7295153fa7a758b091e0fa165638fc4d) | 2026-06-12 | Anirudh Srinivasan | riscv: drop __init from vec_check_unaligned_access_speed_all_cpus |
+| [48c240be](https://github.com/RVCK-Project/rvck/commit/48c240be2951f5b4d872fb412af8d723180b2432) | 2026-05-28 | Nam Cao | riscv: traps_misaligned: Avoid redundant unaligned access speed probe |
+| [a47430a3](https://github.com/RVCK-Project/rvck/commit/a47430a330d1b439a98a7131cbf09ababe4bcd34) | 2026-07-21 | Rui Qi | riscv: hwprobe: Register unaligned probes before usermode |
+| [9fbd97e3](https://github.com/RVCK-Project/rvck/commit/9fbd97e3d9b06a2d0edfe97bda2109c7ee43e8fa) | 2026-04-07 | Nam Cao | riscv: Fix fast_unaligned_access_speed_key not getting initialized |
+| [fd6e9bf5](https://github.com/RVCK-Project/rvck/commit/fd6e9bf594d0e4433d599e011a65683d9e31bed3) | 2026-04-03 | Nam Cao | riscv: Reuse compare_unaligned_access() in check_vector_unaligned_access() |
+| [6f6c2f9b](https://github.com/RVCK-Project/rvck/commit/6f6c2f9b6c43ff534cb9611458dc90f22b01192a) | 2026-04-03 | Nam Cao | riscv: Split out compare_unaligned_access() |
+| [d45c4a71](https://github.com/RVCK-Project/rvck/commit/d45c4a713ee7fab0c51c467b73d27a25bd920b15) | 2026-04-03 | Nam Cao | riscv: Reuse measure_cycles() in check_vector_unaligned_access() |
+| [7157683c](https://github.com/RVCK-Project/rvck/commit/7157683c83347dcfd8e3d85d3882e1a01924b429) | 2026-04-03 | Nam Cao | riscv: Split out measure_cycles() for reuse |
+| [95ccd384](https://github.com/RVCK-Project/rvck/commit/95ccd3840fe3c18d0a879eaf9b8471c67d264431) | 2026-04-03 | Nam Cao | riscv: Clean up & optimize unaligned scalar access probe |
 | [07927e13](https://github.com/RVCK-Project/rvck/commit/07927e1361c89c21d6d899c4866e4daa3a0d2824) | 2026-03-03 | Jiakai Xu | RISC-V: KVM: selftests: Add RISC-V SBI STA shmem alignment tests |
 | [eef39d93](https://github.com/RVCK-Project/rvck/commit/eef39d93f60a056b056efe4c8c549653608d52fc) | 2026-03-03 | Jiakai Xu | KVM: selftests: Refactor UAPI tests into dedicated function |
 | [71afbf5f](https://github.com/RVCK-Project/rvck/commit/71afbf5f02004a8bd1e15d2dd6087babba4faa32) | 2026-03-03 | Jiakai Xu | RISC-V: KVM: Validate SBI STA shmem alignment in kvm_sbi_ext_sta_set_reg() |
@@ -532,7 +546,7 @@
 | [6231b91a](https://github.com/RVCK-Project/rvck/commit/6231b91ada62da690799b337eb71cd60825d03b2) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 512 条提交（显示全部）**
+**共 526 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -541,5 +555,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-15 16:37:11*
-*数据来源: 主分支 rvck-6.6@218b0252*
+*本页面最后更新于 2026-10-21 23:47:38*
+*数据来源: 主分支 rvck-6.6@f64cc45f*

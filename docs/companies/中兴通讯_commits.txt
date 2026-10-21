@@ -1,9 +1,23 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 512 个提交
-# 生成时间: 2026-10-15 16:37:11
+# 共 526 个提交
+# 生成时间: 2026-10-21 23:47:38
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+b450d53d | 2026-08-17 | sunwenhan | riscv: align pcie bus assign logic with ARM64
+f343b1bb | 2026-10-05 | Shao Mingyin | riscv: lib: Fix ZBB strnlen wrap-around regression on huge counts
+171a3ebf | 2026-04-13 | Michael Neuling | riscv: lib: Fix ZBB strnlen reading past count boundary
+d3da989f | 2026-04-29 | Nathan Chancellor | riscv: Define __riscv_copy_{,vec_}{words,bytes}_unaligned() using SYM_TYPED_FUNC_START
+ae69ddc5 | 2026-08-07 | Nam Cao | riscv: unaligned: stop using kthread for check_vector_unaligned_access()
+782bb3ca | 2026-06-12 | Anirudh Srinivasan | riscv: drop __init from vec_check_unaligned_access_speed_all_cpus
+48c240be | 2026-05-28 | Nam Cao | riscv: traps_misaligned: Avoid redundant unaligned access speed probe
+a47430a3 | 2026-07-21 | Rui Qi | riscv: hwprobe: Register unaligned probes before usermode
+9fbd97e3 | 2026-04-07 | Nam Cao | riscv: Fix fast_unaligned_access_speed_key not getting initialized
+fd6e9bf5 | 2026-04-03 | Nam Cao | riscv: Reuse compare_unaligned_access() in check_vector_unaligned_access()
+6f6c2f9b | 2026-04-03 | Nam Cao | riscv: Split out compare_unaligned_access()
+d45c4a71 | 2026-04-03 | Nam Cao | riscv: Reuse measure_cycles() in check_vector_unaligned_access()
+7157683c | 2026-04-03 | Nam Cao | riscv: Split out measure_cycles() for reuse
+95ccd384 | 2026-04-03 | Nam Cao | riscv: Clean up & optimize unaligned scalar access probe
 07927e13 | 2026-03-03 | Jiakai Xu | RISC-V: KVM: selftests: Add RISC-V SBI STA shmem alignment tests
 eef39d93 | 2026-03-03 | Jiakai Xu | KVM: selftests: Refactor UAPI tests into dedicated function
 71afbf5f | 2026-03-03 | Jiakai Xu | RISC-V: KVM: Validate SBI STA shmem alignment in kvm_sbi_ext_sta_set_reg()

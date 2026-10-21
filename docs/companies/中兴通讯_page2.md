@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 512</li>
-<li><strong>统计时间</strong>: 2026-10-15 16:37:11</li>
+<li><strong>贡献提交数</strong>: 526</li>
+<li><strong>统计时间</strong>: 2026-10-21 23:47:38</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -18,6 +18,20 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [a2b34647](https://github.com/RVCK-Project/rvck/commit/a2b34647467aa494d8e59b7ef0826bf9c20fca0d) | 2025-08-18 | Anup Patel | byteorder: Add memcpy_to_le32() and memcpy_from_le32() |
+| [ab491f56](https://github.com/RVCK-Project/rvck/commit/ab491f56cd5f7494657cef2a1f802c2711961bec) | 2025-08-18 | Anup Patel | mailbox: Add common header for RPMI messages sent via mailbox |
+| [ad2543d3](https://github.com/RVCK-Project/rvck/commit/ad2543d30eaf5be731918d611d3f1ef49021a25f) | 2025-08-18 | Anup Patel | RISC-V: Add defines for the SBI message proxy extension |
+| [0f137b55](https://github.com/RVCK-Project/rvck/commit/0f137b55d44cd636790718a781a9cd7df1254884) | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RISC-V SBI MPXY extension |
+| [5524a5cf](https://github.com/RVCK-Project/rvck/commit/5524a5cf1fc2f8f38d98a73ad52e51b5fb027394) | 2025-08-18 | Anup Patel | dt-bindings: mailbox: Add bindings for RPMI shared memory transport |
+| [d1421588](https://github.com/RVCK-Project/rvck/commit/d142158875a0f9426ab66a41a6eb7f7c9cc16e43) | 2025-02-12 | Andy Shevchenko | driver core: Split devres APIs to device/devres.h |
+| [a6a23ec4](https://github.com/RVCK-Project/rvck/commit/a6a23ec4378735f0caca94e5910a7792daeb52de) | 2023-12-26 | Tanzir Hasan | lib/string: shrink lib/string.i via IWYU |
+| [b392e14f](https://github.com/RVCK-Project/rvck/commit/b392e14f122c8c3880fd2b89860449f6679d6d52) | 2023-12-26 | Tanzir Hasan | kernel.h: removed REPEAT_BYTE from kernel.h |
+| [67a11a1d](https://github.com/RVCK-Project/rvck/commit/67a11a1dc087f7e224682b57efa1fa07ecfc60ea) | 2025-04-09 | Sakari Ailus | Documentation: ACPI: Use all-string data node references |
+| [96b6f5b1](https://github.com/RVCK-Project/rvck/commit/96b6f5b1fe3287effcc497b3be13156ef3f30d44) | 2023-11-06 | Rafael J. Wysocki | ACPI: property: Support using strings in reference properties |
+| [be81464c](https://github.com/RVCK-Project/rvck/commit/be81464c1c85d990ad275232283a29ca48dd0e91) | 2025-06-20 | Nam Cao | Revert "riscv: misaligned: fix sleeping function called during misaligned access... |
+| [aa478cf7](https://github.com/RVCK-Project/rvck/commit/aa478cf76127f573971059d143ad66728f23127c) | 2025-06-20 | Alexandre Ghiti | riscv: Move all duplicate insn parsing macros into asm/insn.h |
+| [b2c814a6](https://github.com/RVCK-Project/rvck/commit/b2c814a659b01d8c01268fb69f2fb837d4e83e94) | 2025-06-20 | Alexandre Ghiti | riscv: Strengthen duplicate and inconsistent definition of RV_X() |
+| [1b183ab7](https://github.com/RVCK-Project/rvck/commit/1b183ab7a9052ff3a099aa468a6eec97d37ef06e) | 2025-06-20 | Alexandre Ghiti | riscv: Fix typo EXRACT -\> EXTRACT |
 | [f4e16500](https://github.com/RVCK-Project/rvck/commit/f4e1650024384fb712d7e82642da641a3e20332d) | 2025-07-10 | Andreas Schwab | riscv: traps_misaligned: properly sign extend value in misaligned load handler |
 | [1b4bc720](https://github.com/RVCK-Project/rvck/commit/1b4bc720f9c64e7d618d95a3922bb722422fb2cb) | 2025-05-23 | Clément Léger | RISC-V: KVM: add support for SBI_FWFT_MISALIGNED_DELEG |
 | [3fd8b158](https://github.com/RVCK-Project/rvck/commit/3fd8b1586cef0f1c26e330bfa7a1484105dd1fcb) | 2025-05-23 | Clément Léger | RISC-V: KVM: add support for FWFT SBI extension |
@@ -204,23 +218,9 @@
 | [126cb477](https://github.com/RVCK-Project/rvck/commit/126cb477d3990f254f2f507fe8a950f7eddd9773) | 2025-01-03 | Xu Lu | iommu/riscv: Add shutdown function for iommu driver |
 | [395af650](https://github.com/RVCK-Project/rvck/commit/395af650d5163bc63c27d4691b98521b5b547efa) | 2025-01-03 | Xu Lu | iommu/riscv: Empty iommu queue before enabling it |
 | [e2621031](https://github.com/RVCK-Project/rvck/commit/e2621031bf556df11cbf006978adb900158fb19f) | 2024-11-12 | Andrew Jones | iommu/riscv: Add support for platform msi |
-| [5eb432b3](https://github.com/RVCK-Project/rvck/commit/5eb432b3a2e88978c712ad384cf08cf539512a03) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Paging domain support |
-| [f5460960](https://github.com/RVCK-Project/rvck/commit/f5460960845761917ca61bcc59049a7ebbd762e2) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Command and fault queue support |
-| [59cd8866](https://github.com/RVCK-Project/rvck/commit/59cd88663a31c5da3b6bbba0464cd0f8952a4e4a) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Device directory management. |
-| [ed3019dc](https://github.com/RVCK-Project/rvck/commit/ed3019dc2103e36825902e92d3e06b64b510e785) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Enable IOMMU registration and device probe. |
-| [5f5f32e6](https://github.com/RVCK-Project/rvck/commit/5f5f32e6d2ba99bea4cb00230e9654a43aec058c) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU PCIe device driver |
-| [aeee978c](https://github.com/RVCK-Project/rvck/commit/aeee978c021c973825bc84b09e24c3a8a2cf19ee) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU platform device driver |
-| [e90da7a5](https://github.com/RVCK-Project/rvck/commit/e90da7a55eb8a5a03881de0ce842ead749537c32) | 2024-10-15 | Tomasz Jeznach | dt-bindings: iommu: riscv: Add bindings for RISC-V IOMMU |
-| [0cc7d032](https://github.com/RVCK-Project/rvck/commit/0cc7d0328a2325b064574af101d1b9b269fcdfd7) | 2024-04-13 | Pasha Tatashin | iommu/vt-d: add wrapper functions for page allocations |
-| [e4d28f2a](https://github.com/RVCK-Project/rvck/commit/e4d28f2a28e15a29e88218d78c159daa57a6d655) | 2024-02-16 | Krzysztof Kozlowski | iommu: constify of_phandle_args in xlate |
-| [6181cf54](https://github.com/RVCK-Project/rvck/commit/6181cf54d0b0a1622c28bc537d3f1302f4875c29) | 2023-11-22 | Matt Coster | sizes.h: Add entries between SZ_32G and SZ_64T |
-| [e73d28cb](https://github.com/RVCK-Project/rvck/commit/e73d28cb407ac5c8905190bb400efff88453f975) | 2024-03-05 | Lu Baolu | iommu: Add static iommu_ops-\>release_domain |
-| [dcdcbf2f](https://github.com/RVCK-Project/rvck/commit/dcdcbf2f00e122db64ff97eda147e301ade95102) | 2023-09-27 | Jason Gunthorpe | iommufd: Convert to alloc_domain_paging() |
-| [5892f683](https://github.com/RVCK-Project/rvck/commit/5892f68359ee8672933053b9c88a2cb72af274cc) | 2024-04-13 | Pasha Tatashin | iommu: Move IOMMU_DOMAIN_BLOCKED global statics to ops-\>blocked_domain |
-| [a42b450b](https://github.com/RVCK-Project/rvck/commit/a42b450b13b5e8c899ba4c0e6fe3593220342810) | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new userspace mappings with Svvpt... |
 ---
 
-**共 512 条提交，显示 201-400**
+**共 526 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-15 16:37:11*
-*数据来源: 主分支 rvck-6.6@218b0252*
+*本页面最后更新于 2026-10-21 23:47:38*
+*数据来源: 主分支 rvck-6.6@f64cc45f*

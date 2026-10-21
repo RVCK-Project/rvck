@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 512</li>
-<li><strong>统计时间</strong>: 2026-10-15 16:37:11</li>
+<li><strong>贡献提交数</strong>: 526</li>
+<li><strong>统计时间</strong>: 2026-10-21 23:47:38</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -18,6 +18,20 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [5eb432b3](https://github.com/RVCK-Project/rvck/commit/5eb432b3a2e88978c712ad384cf08cf539512a03) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Paging domain support |
+| [f5460960](https://github.com/RVCK-Project/rvck/commit/f5460960845761917ca61bcc59049a7ebbd762e2) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Command and fault queue support |
+| [59cd8866](https://github.com/RVCK-Project/rvck/commit/59cd88663a31c5da3b6bbba0464cd0f8952a4e4a) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Device directory management. |
+| [ed3019dc](https://github.com/RVCK-Project/rvck/commit/ed3019dc2103e36825902e92d3e06b64b510e785) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Enable IOMMU registration and device probe. |
+| [5f5f32e6](https://github.com/RVCK-Project/rvck/commit/5f5f32e6d2ba99bea4cb00230e9654a43aec058c) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU PCIe device driver |
+| [aeee978c](https://github.com/RVCK-Project/rvck/commit/aeee978c021c973825bc84b09e24c3a8a2cf19ee) | 2024-10-15 | Tomasz Jeznach | iommu/riscv: Add RISC-V IOMMU platform device driver |
+| [e90da7a5](https://github.com/RVCK-Project/rvck/commit/e90da7a55eb8a5a03881de0ce842ead749537c32) | 2024-10-15 | Tomasz Jeznach | dt-bindings: iommu: riscv: Add bindings for RISC-V IOMMU |
+| [0cc7d032](https://github.com/RVCK-Project/rvck/commit/0cc7d0328a2325b064574af101d1b9b269fcdfd7) | 2024-04-13 | Pasha Tatashin | iommu/vt-d: add wrapper functions for page allocations |
+| [e4d28f2a](https://github.com/RVCK-Project/rvck/commit/e4d28f2a28e15a29e88218d78c159daa57a6d655) | 2024-02-16 | Krzysztof Kozlowski | iommu: constify of_phandle_args in xlate |
+| [6181cf54](https://github.com/RVCK-Project/rvck/commit/6181cf54d0b0a1622c28bc537d3f1302f4875c29) | 2023-11-22 | Matt Coster | sizes.h: Add entries between SZ_32G and SZ_64T |
+| [e73d28cb](https://github.com/RVCK-Project/rvck/commit/e73d28cb407ac5c8905190bb400efff88453f975) | 2024-03-05 | Lu Baolu | iommu: Add static iommu_ops-\>release_domain |
+| [dcdcbf2f](https://github.com/RVCK-Project/rvck/commit/dcdcbf2f00e122db64ff97eda147e301ade95102) | 2023-09-27 | Jason Gunthorpe | iommufd: Convert to alloc_domain_paging() |
+| [5892f683](https://github.com/RVCK-Project/rvck/commit/5892f68359ee8672933053b9c88a2cb72af274cc) | 2024-04-13 | Pasha Tatashin | iommu: Move IOMMU_DOMAIN_BLOCKED global statics to ops-\>blocked_domain |
+| [a42b450b](https://github.com/RVCK-Project/rvck/commit/a42b450b13b5e8c899ba4c0e6fe3593220342810) | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new userspace mappings with Svvpt... |
 | [644bea27](https://github.com/RVCK-Project/rvck/commit/644bea27bf28737b7d40c24eaf150b4dc4e2c91d) | 2024-07-17 | Alexandre Ghiti | riscv: Stop emitting preventive sfence.vma for new vmalloc mappings |
 | [8d256a39](https://github.com/RVCK-Project/rvck/commit/8d256a3967c56a7fa381cb448e79e017a83a4a2c) | 2023-10-20 | Anup Patel | KVM: riscv: selftests: Add SBI DBCN extension to get-reg-list test |
 | [fc328f99](https://github.com/RVCK-Project/rvck/commit/fc328f997832defd63ac760b62761905c3f90b84) | 2022-07-22 | Anup Patel | RISC-V: KVM: Forward SBI DBCN extension to user-space |
@@ -132,7 +146,7 @@
 | [6231b91a](https://github.com/RVCK-Project/rvck/commit/6231b91ada62da690799b337eb71cd60825d03b2) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 512 条提交，显示 401-512**
+**共 526 条提交，显示 401-526**
 
 [1](中兴通讯.md) [2](中兴通讯_page2.md) **[3]**
 
@@ -143,5 +157,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-15 16:37:11*
-*数据来源: 主分支 rvck-6.6@218b0252*
+*本页面最后更新于 2026-10-21 23:47:38*
+*数据来源: 主分支 rvck-6.6@f64cc45f*

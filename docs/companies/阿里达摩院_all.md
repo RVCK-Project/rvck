@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 392</li>
-<li><strong>统计时间</strong>: 2026-10-15 16:37:11</li>
+<li><strong>贡献提交数</strong>: 409</li>
+<li><strong>统计时间</strong>: 2026-10-21 23:47:38</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.158</li>
 </ul>
@@ -18,6 +18,23 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [36fdd483](https://github.com/RVCK-Project/rvck/commit/36fdd483cc5916348d3380aadf3dfa4ff7091315) | 2026-08-10 | Xie Bo | RISC-V: KVM: Serialize IMSIC attributes with vCPU migration |
+| [2749567d](https://github.com/RVCK-Project/rvck/commit/2749567d677a44854780fcb4fdf7eb9ee2c3941c) | 2026-07-18 | Pengpeng Hou | RISC-V: KVM: Reject overlapping AIA IMSIC address fields |
+| [b2492886](https://github.com/RVCK-Project/rvck/commit/b24928861db1172f166686ee5fd489292cd69663) | 2026-07-28 | Yicong Yang | RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW |
+| [1fd0f06b](https://github.com/RVCK-Project/rvck/commit/1fd0f06b3fd043192c87be6c8e11d0beb0e9d8d9) | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized |
+| [cc738f50](https://github.com/RVCK-Project/rvck/commit/cc738f506058aec835bb01f814e9d343abc26b84) | 2026-02-26 | Jiakai Xu | RISC-V: KVM: Fix null pointer dereference in kvm_riscv_vcpu_aia_rmw_topei() |
+| [33c9e0d8](https://github.com/RVCK-Project/rvck/commit/33c9e0d8717de46655d7dd458ca0d63a097d0898) | 2026-03-04 | Jiakai Xu | RISC-V: KVM: Fix potential UAF in kvm_riscv_aia_imsic_has_attr() |
+| [c9cf102c](https://github.com/RVCK-Project/rvck/commit/c9cf102c33f0d31aead5a78af8de11b78384830c) | 2026-03-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_aia_aplic_has_attr() |
+| [2e2b021b](https://github.com/RVCK-Project/rvck/commit/2e2b021be174fa20c375510a8a3ab174afd78f1a) | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr() |
+| [96d21055](https://github.com/RVCK-Project/rvck/commit/96d2105514f9e0a7e826120ef1f124ae3085a22a) | 2026-01-25 | Jiakai Xu | RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr() |
+| [e3668b3a](https://github.com/RVCK-Project/rvck/commit/e3668b3a8c5d7517b6894dab038199bf1e44224c) | 2026-07-13 | Vivian Wang | mm/sparse-vmemmap: flush_cache_vmap() after hotplugging vmemmap |
+| [663a1a39](https://github.com/RVCK-Project/rvck/commit/663a1a395d8bdc3dce5f9183e0cff7526a71023c) | 2026-10-09 | ZhenXing Zhu | riscv: mm: Make mark_new_valid_map() stuff depend on 64BIT && MMU |
+| [bbe247d1](https://github.com/RVCK-Project/rvck/commit/bbe247d19ec79cfc3bb24608971a7715e7c965de) | 2026-03-03 | Vivian Wang | riscv: mm: Unconditionally sfence.vma for spurious fault |
+| [d1a5b9b3](https://github.com/RVCK-Project/rvck/commit/d1a5b9b38b8f99b362e680f1ea04b8058328b843) | 2026-10-09 | ZhenXing Zhu | riscv: mm: Use the bitmap API for new_valid_map_cpus |
+| [fab26695](https://github.com/RVCK-Project/rvck/commit/fab266950aa918c0367063382fa3862afbcbd584) | 2026-10-09 | ZhenXing Zhu | riscv: mm: Rename new_vmalloc into new_valid_map_cpus |
+| [fb6881dd](https://github.com/RVCK-Project/rvck/commit/fb6881ddcbdd68820e5168e3bd456508e4473dc5) | 2026-03-03 | Vivian Wang | riscv: kfence: Call mark_new_valid_map() for kfence_unprotect() |
+| [281fd988](https://github.com/RVCK-Project/rvck/commit/281fd988662bcad1b496903eaeef02fe37cebe07) | 2026-03-03 | Vivian Wang | riscv: mm: Extract helper mark_new_valid_map() |
+| [0f479920](https://github.com/RVCK-Project/rvck/commit/0f47992009c2020a4f280c5fa1e5ab4bab7c5a88) | 2025-01-03 | Clément Léger | riscv: use local label names instead of global ones in assembly |
 | [a5ff5cce](https://github.com/RVCK-Project/rvck/commit/a5ff5cce240c8e29f608576b9887769e2b42fdbc) | 2026-09-17 | ZhenXing Zhu | irqchip: thead-c900-aclint-sswi: Fixup riscv_ipi_set_virq_range() conflict |
 | [ecff7318](https://github.com/RVCK-Project/rvck/commit/ecff731849dea47dcb964b1d3d3462b9afc707ab) | 2024-05-22 | Palmer Dabbelt | irqchip: riscv-imsic: Fixup riscv_ipi_set_virq_range() conflict |
 | [03872d9f](https://github.com/RVCK-Project/rvck/commit/03872d9f2a34fa5e08d1c0aca011635fe5af6042) | 2024-03-26 | Samuel Holland | riscv: mm: Always use an ASID to flush mm contexts |
@@ -412,7 +429,7 @@
 | [65b7d98e](https://github.com/RVCK-Project/rvck/commit/65b7d98e4a6256d60f7b5f0944ebbaab3be9b0dc) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 392 条提交（显示全部）**
+**共 409 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -421,5 +438,5 @@
 
 ---
 
-*本页面最后更新于 2026-10-15 16:37:11*
-*数据来源: 主分支 rvck-6.6@218b0252*
+*本页面最后更新于 2026-10-21 23:47:38*
+*数据来源: 主分支 rvck-6.6@f64cc45f*

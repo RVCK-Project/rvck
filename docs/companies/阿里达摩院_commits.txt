@@ -1,9 +1,26 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 392 个提交
-# 生成时间: 2026-10-15 16:37:11
+# 共 409 个提交
+# 生成时间: 2026-10-21 23:47:38
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+36fdd483 | 2026-08-10 | Xie Bo | RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
+2749567d | 2026-07-18 | Pengpeng Hou | RISC-V: KVM: Reject overlapping AIA IMSIC address fields
+b2492886 | 2026-07-28 | Yicong Yang | RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW
+1fd0f06b | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized
+cc738f50 | 2026-02-26 | Jiakai Xu | RISC-V: KVM: Fix null pointer dereference in kvm_riscv_vcpu_aia_rmw_topei()
+33c9e0d8 | 2026-03-04 | Jiakai Xu | RISC-V: KVM: Fix potential UAF in kvm_riscv_aia_imsic_has_attr()
+c9cf102c | 2026-03-02 | Jiakai Xu | RISC-V: KVM: Fix use-after-free in kvm_riscv_aia_aplic_has_attr()
+2e2b021b | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()
+96d21055 | 2026-01-25 | Jiakai Xu | RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
+e3668b3a | 2026-07-13 | Vivian Wang | mm/sparse-vmemmap: flush_cache_vmap() after hotplugging vmemmap
+663a1a39 | 2026-10-09 | ZhenXing Zhu | riscv: mm: Make mark_new_valid_map() stuff depend on 64BIT && MMU
+bbe247d1 | 2026-03-03 | Vivian Wang | riscv: mm: Unconditionally sfence.vma for spurious fault
+d1a5b9b3 | 2026-10-09 | ZhenXing Zhu | riscv: mm: Use the bitmap API for new_valid_map_cpus
+fab26695 | 2026-10-09 | ZhenXing Zhu | riscv: mm: Rename new_vmalloc into new_valid_map_cpus
+fb6881dd | 2026-03-03 | Vivian Wang | riscv: kfence: Call mark_new_valid_map() for kfence_unprotect()
+281fd988 | 2026-03-03 | Vivian Wang | riscv: mm: Extract helper mark_new_valid_map()
+0f479920 | 2025-01-03 | Clément Léger | riscv: use local label names instead of global ones in assembly
 a5ff5cce | 2026-09-17 | ZhenXing Zhu | irqchip: thead-c900-aclint-sswi: Fixup riscv_ipi_set_virq_range() conflict
 ecff7318 | 2024-05-22 | Palmer Dabbelt | irqchip: riscv-imsic: Fixup riscv_ipi_set_virq_range() conflict
 03872d9f | 2024-03-26 | Samuel Holland | riscv: mm: Always use an ASID to flush mm contexts

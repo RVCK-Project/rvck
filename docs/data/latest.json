@@ -1,8 +1,8 @@
 {
-  "total_commits": 1716,
-  "commits_with_company": 1607,
-  "total_insertions": 1724310,
-  "total_deletions": 97053,
+  "total_commits": 1747,
+  "commits_with_company": 1638,
+  "total_insertions": 1724590,
+  "total_deletions": 97322,
   "companies": {
     "超睿科技": {
       "count": 90,
@@ -3800,10 +3800,219 @@
       ]
     },
     "中兴通讯": {
-      "count": 512,
-      "insertions": 32479,
-      "deletions": 6028,
+      "count": 526,
+      "insertions": 32641,
+      "deletions": 6221,
       "commits": [
+        {
+          "hash": "b450d53dfa1234f76dea128956aaea6be43ac4ed",
+          "author_name": "sunwenhan",
+          "author_email": "sun.wenhan@zte.com.cn",
+          "date": "2026-08-17 14:52:45 +0800",
+          "subject": "riscv: align pcie bus assign logic with ARM64",
+          "insertions": 5,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: sunwenhan <sun.wenhan@zte.com.cn>",
+            "Signed-off-by: yezhihao <ye.zhihao1@zte.com.cn>",
+            "sunwenhan <sun.wenhan@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "f343b1bb03aae61c46bf9fb5ba2350ea7d2fdbcd",
+          "author_name": "Shao Mingyin",
+          "author_email": "shao.mingyin@zte.com.cn",
+          "date": "2026-10-05 19:02:38 -0600",
+          "subject": "riscv: lib: Fix ZBB strnlen wrap-around regression on huge counts",
+          "insertions": 18,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Shao Mingyin <shao.mingyin@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "171a3ebf01d52c4b2877736d94ae625903c84639",
+          "author_name": "Michael Neuling",
+          "author_email": "mikey@neuling.org",
+          "date": "2026-04-13 01:07:38 +0000",
+          "subject": "riscv: lib: Fix ZBB strnlen reading past count boundary",
+          "insertions": 9,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Michael Neuling <mikey@neuling.org>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Michael Neuling <mikey@neuling.org>"
+          ]
+        },
+        {
+          "hash": "d3da989f646024b290774379ab266c4d09556616",
+          "author_name": "Nathan Chancellor",
+          "author_email": "nathan@kernel.org",
+          "date": "2026-04-29 20:38:17 -0600",
+          "subject": "riscv: Define __riscv_copy_{,vec_}{words,bytes}_unaligned() using SYM_TYPED_FUNC_START",
+          "insertions": 6,
+          "deletions": 4,
+          "signatures": [
+            "Signed-off-by: Nathan Chancellor <nathan@kernel.org>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nathan Chancellor <nathan@kernel.org>"
+          ]
+        },
+        {
+          "hash": "ae69ddc5d1ae7819f1eb94cffc63d16a76edbd29",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-08-07 19:24:30 -0600",
+          "subject": "riscv: unaligned: stop using kthread for check_vector_unaligned_access()",
+          "insertions": 2,
+          "deletions": 12,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "782bb3ca7295153fa7a758b091e0fa165638fc4d",
+          "author_name": "Anirudh Srinivasan",
+          "author_email": "asrinivasan@oss.tenstorrent.com",
+          "date": "2026-06-12 11:24:43 -0500",
+          "subject": "riscv: drop __init from vec_check_unaligned_access_speed_all_cpus",
+          "insertions": 2,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>"
+          ]
+        },
+        {
+          "hash": "48c240be2951f5b4d872fb412af8d723180b2432",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-05-28 23:12:31 +0200",
+          "subject": "riscv: traps_misaligned: Avoid redundant unaligned access speed probe",
+          "insertions": 2,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "a47430a330d1b439a98a7131cbf09ababe4bcd34",
+          "author_name": "Rui Qi",
+          "author_email": "qirui.001@bytedance.com",
+          "date": "2026-07-21 23:05:09 +0800",
+          "subject": "riscv: hwprobe: Register unaligned probes before usermode",
+          "insertions": 7,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Rui Qi <qirui.001@bytedance.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Rui Qi <qirui.001@bytedance.com>"
+          ]
+        },
+        {
+          "hash": "9fbd97e3d9b06a2d0edfe97bda2109c7ee43e8fa",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-07 14:06:39 +0200",
+          "subject": "riscv: Fix fast_unaligned_access_speed_key not getting initialized",
+          "insertions": 4,
+          "deletions": 11,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "fd6e9bf594d0e4433d599e011a65683d9e31bed3",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:48 -0600",
+          "subject": "riscv: Reuse compare_unaligned_access() in check_vector_unaligned_access()",
+          "insertions": 16,
+          "deletions": 39,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "6f6c2f9b6c43ff534cb9611458dc90f22b01192a",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: Split out compare_unaligned_access()",
+          "insertions": 40,
+          "deletions": 19,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "d45c4a713ee7fab0c51c467b73d27a25bd920b15",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: Reuse measure_cycles() in check_vector_unaligned_access()",
+          "insertions": 8,
+          "deletions": 46,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "7157683c83347dcfd8e3d85d3882e1a01924b429",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: Split out measure_cycles() for reuse",
+          "insertions": 33,
+          "deletions": 36,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "95ccd3840fe3c18d0a879eaf9b8471c67d264431",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: Clean up & optimize unaligned scalar access probe",
+          "insertions": 10,
+          "deletions": 18,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
         {
           "hash": "07927e1361c89c21d6d899c4866e4daa3a0d2824",
           "author_name": "Jiakai Xu",
@@ -11953,10 +12162,271 @@
       ]
     },
     "阿里达摩院": {
-      "count": 392,
-      "insertions": 61621,
-      "deletions": 19943,
+      "count": 409,
+      "insertions": 61739,
+      "deletions": 20019,
       "commits": [
+        {
+          "hash": "36fdd483cc5916348d3380aadf3dfa4ff7091315",
+          "author_name": "Xie Bo",
+          "author_email": "xb@ultrarisc.com",
+          "date": "2026-08-10 09:21:15 +0800",
+          "subject": "RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
+          "insertions": 9,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Xie Bo <xb@ultrarisc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Xie Bo <xb@ultrarisc.com>"
+          ]
+        },
+        {
+          "hash": "2749567d677a44854780fcb4fdf7eb9ee2c3941c",
+          "author_name": "Pengpeng Hou",
+          "author_email": "pengpeng@iscas.ac.cn",
+          "date": "2026-07-18 12:35:40 +0800",
+          "subject": "RISC-V: KVM: Reject overlapping AIA IMSIC address fields",
+          "insertions": 6,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Pengpeng Hou <pengpeng@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "b24928861db1172f166686ee5fd489292cd69663",
+          "author_name": "Yicong Yang",
+          "author_email": "yang.yicong@picoheart.com",
+          "date": "2026-07-28 22:19:38 +0800",
+          "subject": "RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW",
+          "insertions": 5,
+          "deletions": 9,
+          "signatures": [
+            "Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Yicong Yang <yang.yicong@picoheart.com>"
+          ]
+        },
+        {
+          "hash": "1fd0f06b3fd043192c87be6c8e11d0beb0e9d8d9",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-27 08:43:13 +0000",
+          "subject": "RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized",
+          "insertions": 4,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "cc738f506058aec835bb01f814e9d343abc26b84",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-02-26 08:51:19 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_vcpu_aia_rmw_topei()",
+          "insertions": 4,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "33c9e0d8717de46655d7dd458ca0d63a097d0898",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-03-04 08:08:04 +0000",
+          "subject": "RISC-V: KVM: Fix potential UAF in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "c9cf102c33f0d31aead5a78af8de11b78384830c",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-03-02 13:27:03 +0000",
+          "subject": "RISC-V: KVM: Fix use-after-free in kvm_riscv_aia_aplic_has_attr()",
+          "insertions": 6,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "2e2b021be174fa20c375510a8a3ab174afd78f1a",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-27 07:22:19 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
+          "insertions": 3,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "96d2105514f9e0a7e826120ef1f124ae3085a22a",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-25 14:33:44 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "e3668b3a8c5d7517b6894dab038199bf1e44224c",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-07-13 11:29:52 -0600",
+          "subject": "mm/sparse-vmemmap: flush_cache_vmap() after hotplugging vmemmap",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "663a1a395d8bdc3dce5f9183e0cff7526a71023c",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:45:33 +0000",
+          "subject": "riscv: mm: Make mark_new_valid_map() stuff depend on 64BIT && MMU",
+          "insertions": 4,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "bbe247d19ec79cfc3bb24608971a7715e7c965de",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:49 +0800",
+          "subject": "riscv: mm: Unconditionally sfence.vma for spurious fault",
+          "insertions": 5,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "d1a5b9b38b8f99b362e680f1ea04b8058328b843",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:44:56 +0000",
+          "subject": "riscv: mm: Use the bitmap API for new_valid_map_cpus",
+          "insertions": 4,
+          "deletions": 6,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "fab266950aa918c0367063382fa3862afbcbd584",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:44:13 +0000",
+          "subject": "riscv: mm: Rename new_vmalloc into new_valid_map_cpus",
+          "insertions": 23,
+          "deletions": 23,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "fb6881ddcbdd68820e5168e3bd456508e4473dc5",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:46 +0800",
+          "subject": "riscv: kfence: Call mark_new_valid_map() for kfence_unprotect()",
+          "insertions": 9,
+          "deletions": 4,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "281fd988662bcad1b496903eaeef02fe37cebe07",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:45 +0800",
+          "subject": "riscv: mm: Extract helper mark_new_valid_map()",
+          "insertions": 14,
+          "deletions": 11,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "0f47992009c2020a4f280c5fa1e5ab4bab7c5a88",
+          "author_name": "Clément Léger",
+          "author_email": "cleger@rivosinc.com",
+          "date": "2025-01-03 15:17:58 +0100",
+          "subject": "riscv: use local label names instead of global ones in assembly",
+          "insertions": 10,
+          "deletions": 10,
+          "signatures": [
+            "Signed-off-by: Clément Léger <cleger@rivosinc.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Clément Léger <cleger@rivosinc.com>"
+          ]
+        },
         {
           "hash": "a5ff5cce240c8e29f608576b9887769e2b42fdbc",
           "author_name": "ZhenXing Zhu",
@@ -26275,13 +26745,28 @@
       ]
     }
   ],
-  "total_contribution": 1756,
+  "total_contribution": 1802,
   "companies_contribution": {
     "超睿科技": {
-      "count": 91,
-      "insertions": 10341,
-      "deletions": 814,
+      "count": 92,
+      "insertions": 10350,
+      "deletions": 816,
       "commits": [
+        {
+          "hash": "36fdd483cc5916348d3380aadf3dfa4ff7091315",
+          "author_name": "Xie Bo",
+          "author_email": "xb@ultrarisc.com",
+          "date": "2026-08-10 09:21:15 +0800",
+          "subject": "RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
+          "insertions": 9,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Xie Bo <xb@ultrarisc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Xie Bo <xb@ultrarisc.com>"
+          ]
+        },
         {
           "hash": "12b40c3ae359bc66887641a7aa73d1b52253cdcc",
           "author_name": "Jia Wang",
@@ -30086,10 +30571,219 @@
       ]
     },
     "中兴通讯": {
-      "count": 512,
-      "insertions": 32479,
-      "deletions": 6028,
+      "count": 526,
+      "insertions": 32641,
+      "deletions": 6221,
       "commits": [
+        {
+          "hash": "b450d53dfa1234f76dea128956aaea6be43ac4ed",
+          "author_name": "sunwenhan",
+          "author_email": "sun.wenhan@zte.com.cn",
+          "date": "2026-08-17 14:52:45 +0800",
+          "subject": "riscv: align pcie bus assign logic with ARM64",
+          "insertions": 5,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: sunwenhan <sun.wenhan@zte.com.cn>",
+            "Signed-off-by: yezhihao <ye.zhihao1@zte.com.cn>",
+            "sunwenhan <sun.wenhan@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "f343b1bb03aae61c46bf9fb5ba2350ea7d2fdbcd",
+          "author_name": "Shao Mingyin",
+          "author_email": "shao.mingyin@zte.com.cn",
+          "date": "2026-10-05 19:02:38 -0600",
+          "subject": "riscv: lib: Fix ZBB strnlen wrap-around regression on huge counts",
+          "insertions": 18,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Shao Mingyin <shao.mingyin@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "171a3ebf01d52c4b2877736d94ae625903c84639",
+          "author_name": "Michael Neuling",
+          "author_email": "mikey@neuling.org",
+          "date": "2026-04-13 01:07:38 +0000",
+          "subject": "riscv: lib: Fix ZBB strnlen reading past count boundary",
+          "insertions": 9,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Michael Neuling <mikey@neuling.org>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Michael Neuling <mikey@neuling.org>"
+          ]
+        },
+        {
+          "hash": "d3da989f646024b290774379ab266c4d09556616",
+          "author_name": "Nathan Chancellor",
+          "author_email": "nathan@kernel.org",
+          "date": "2026-04-29 20:38:17 -0600",
+          "subject": "riscv: Define __riscv_copy_{,vec_}{words,bytes}_unaligned() using SYM_TYPED_FUNC_START",
+          "insertions": 6,
+          "deletions": 4,
+          "signatures": [
+            "Signed-off-by: Nathan Chancellor <nathan@kernel.org>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nathan Chancellor <nathan@kernel.org>"
+          ]
+        },
+        {
+          "hash": "ae69ddc5d1ae7819f1eb94cffc63d16a76edbd29",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-08-07 19:24:30 -0600",
+          "subject": "riscv: unaligned: stop using kthread for check_vector_unaligned_access()",
+          "insertions": 2,
+          "deletions": 12,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "782bb3ca7295153fa7a758b091e0fa165638fc4d",
+          "author_name": "Anirudh Srinivasan",
+          "author_email": "asrinivasan@oss.tenstorrent.com",
+          "date": "2026-06-12 11:24:43 -0500",
+          "subject": "riscv: drop __init from vec_check_unaligned_access_speed_all_cpus",
+          "insertions": 2,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>"
+          ]
+        },
+        {
+          "hash": "48c240be2951f5b4d872fb412af8d723180b2432",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-05-28 23:12:31 +0200",
+          "subject": "riscv: traps_misaligned: Avoid redundant unaligned access speed probe",
+          "insertions": 2,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "a47430a330d1b439a98a7131cbf09ababe4bcd34",
+          "author_name": "Rui Qi",
+          "author_email": "qirui.001@bytedance.com",
+          "date": "2026-07-21 23:05:09 +0800",
+          "subject": "riscv: hwprobe: Register unaligned probes before usermode",
+          "insertions": 7,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Rui Qi <qirui.001@bytedance.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Rui Qi <qirui.001@bytedance.com>"
+          ]
+        },
+        {
+          "hash": "9fbd97e3d9b06a2d0edfe97bda2109c7ee43e8fa",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-07 14:06:39 +0200",
+          "subject": "riscv: Fix fast_unaligned_access_speed_key not getting initialized",
+          "insertions": 4,
+          "deletions": 11,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "fd6e9bf594d0e4433d599e011a65683d9e31bed3",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:48 -0600",
+          "subject": "riscv: Reuse compare_unaligned_access() in check_vector_unaligned_access()",
+          "insertions": 16,
+          "deletions": 39,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "6f6c2f9b6c43ff534cb9611458dc90f22b01192a",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: Split out compare_unaligned_access()",
+          "insertions": 40,
+          "deletions": 19,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "d45c4a713ee7fab0c51c467b73d27a25bd920b15",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: Reuse measure_cycles() in check_vector_unaligned_access()",
+          "insertions": 8,
+          "deletions": 46,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "7157683c83347dcfd8e3d85d3882e1a01924b429",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: Split out measure_cycles() for reuse",
+          "insertions": 33,
+          "deletions": 36,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
+        {
+          "hash": "95ccd3840fe3c18d0a879eaf9b8471c67d264431",
+          "author_name": "Nam Cao",
+          "author_email": "namcao@linutronix.de",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: Clean up & optimize unaligned scalar access probe",
+          "insertions": 10,
+          "deletions": 18,
+          "signatures": [
+            "Signed-off-by: Nam Cao <namcao@linutronix.de>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Nam Cao <namcao@linutronix.de>"
+          ]
+        },
         {
           "hash": "07927e1361c89c21d6d899c4866e4daa3a0d2824",
           "author_name": "Jiakai Xu",
@@ -38239,10 +38933,271 @@
       ]
     },
     "阿里达摩院": {
-      "count": 503,
-      "insertions": 87519,
-      "deletions": 25285,
+      "count": 520,
+      "insertions": 87637,
+      "deletions": 25361,
       "commits": [
+        {
+          "hash": "36fdd483cc5916348d3380aadf3dfa4ff7091315",
+          "author_name": "Xie Bo",
+          "author_email": "xb@ultrarisc.com",
+          "date": "2026-08-10 09:21:15 +0800",
+          "subject": "RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
+          "insertions": 9,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Xie Bo <xb@ultrarisc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Xie Bo <xb@ultrarisc.com>"
+          ]
+        },
+        {
+          "hash": "2749567d677a44854780fcb4fdf7eb9ee2c3941c",
+          "author_name": "Pengpeng Hou",
+          "author_email": "pengpeng@iscas.ac.cn",
+          "date": "2026-07-18 12:35:40 +0800",
+          "subject": "RISC-V: KVM: Reject overlapping AIA IMSIC address fields",
+          "insertions": 6,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Pengpeng Hou <pengpeng@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "b24928861db1172f166686ee5fd489292cd69663",
+          "author_name": "Yicong Yang",
+          "author_email": "yang.yicong@picoheart.com",
+          "date": "2026-07-28 22:19:38 +0800",
+          "subject": "RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW",
+          "insertions": 5,
+          "deletions": 9,
+          "signatures": [
+            "Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Yicong Yang <yang.yicong@picoheart.com>"
+          ]
+        },
+        {
+          "hash": "1fd0f06b3fd043192c87be6c8e11d0beb0e9d8d9",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-27 08:43:13 +0000",
+          "subject": "RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized",
+          "insertions": 4,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "cc738f506058aec835bb01f814e9d343abc26b84",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-02-26 08:51:19 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_vcpu_aia_rmw_topei()",
+          "insertions": 4,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "33c9e0d8717de46655d7dd458ca0d63a097d0898",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-03-04 08:08:04 +0000",
+          "subject": "RISC-V: KVM: Fix potential UAF in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "c9cf102c33f0d31aead5a78af8de11b78384830c",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-03-02 13:27:03 +0000",
+          "subject": "RISC-V: KVM: Fix use-after-free in kvm_riscv_aia_aplic_has_attr()",
+          "insertions": 6,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "2e2b021be174fa20c375510a8a3ab174afd78f1a",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-27 07:22:19 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
+          "insertions": 3,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "96d2105514f9e0a7e826120ef1f124ae3085a22a",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-25 14:33:44 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "e3668b3a8c5d7517b6894dab038199bf1e44224c",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-07-13 11:29:52 -0600",
+          "subject": "mm/sparse-vmemmap: flush_cache_vmap() after hotplugging vmemmap",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "663a1a395d8bdc3dce5f9183e0cff7526a71023c",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:45:33 +0000",
+          "subject": "riscv: mm: Make mark_new_valid_map() stuff depend on 64BIT && MMU",
+          "insertions": 4,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "bbe247d19ec79cfc3bb24608971a7715e7c965de",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:49 +0800",
+          "subject": "riscv: mm: Unconditionally sfence.vma for spurious fault",
+          "insertions": 5,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "d1a5b9b38b8f99b362e680f1ea04b8058328b843",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:44:56 +0000",
+          "subject": "riscv: mm: Use the bitmap API for new_valid_map_cpus",
+          "insertions": 4,
+          "deletions": 6,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "fab266950aa918c0367063382fa3862afbcbd584",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:44:13 +0000",
+          "subject": "riscv: mm: Rename new_vmalloc into new_valid_map_cpus",
+          "insertions": 23,
+          "deletions": 23,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "fb6881ddcbdd68820e5168e3bd456508e4473dc5",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:46 +0800",
+          "subject": "riscv: kfence: Call mark_new_valid_map() for kfence_unprotect()",
+          "insertions": 9,
+          "deletions": 4,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "281fd988662bcad1b496903eaeef02fe37cebe07",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:45 +0800",
+          "subject": "riscv: mm: Extract helper mark_new_valid_map()",
+          "insertions": 14,
+          "deletions": 11,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "0f47992009c2020a4f280c5fa1e5ab4bab7c5a88",
+          "author_name": "Clément Léger",
+          "author_email": "cleger@rivosinc.com",
+          "date": "2025-01-03 15:17:58 +0100",
+          "subject": "riscv: use local label names instead of global ones in assembly",
+          "insertions": 10,
+          "deletions": 10,
+          "signatures": [
+            "Signed-off-by: Clément Léger <cleger@rivosinc.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Clément Léger <cleger@rivosinc.com>"
+          ]
+        },
         {
           "hash": "a5ff5cce240c8e29f608576b9887769e2b42fdbc",
           "author_name": "ZhenXing Zhu",
@@ -47410,10 +48365,121 @@
       ]
     },
     "软件所": {
-      "count": 378,
-      "insertions": 1424900,
-      "deletions": 41324,
+      "count": 392,
+      "insertions": 1424994,
+      "deletions": 41379,
       "commits": [
+        {
+          "hash": "2749567d677a44854780fcb4fdf7eb9ee2c3941c",
+          "author_name": "Pengpeng Hou",
+          "author_email": "pengpeng@iscas.ac.cn",
+          "date": "2026-07-18 12:35:40 +0800",
+          "subject": "RISC-V: KVM: Reject overlapping AIA IMSIC address fields",
+          "insertions": 6,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Pengpeng Hou <pengpeng@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "1fd0f06b3fd043192c87be6c8e11d0beb0e9d8d9",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-27 08:43:13 +0000",
+          "subject": "RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized",
+          "insertions": 4,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "cc738f506058aec835bb01f814e9d343abc26b84",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-02-26 08:51:19 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_vcpu_aia_rmw_topei()",
+          "insertions": 4,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "33c9e0d8717de46655d7dd458ca0d63a097d0898",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-03-04 08:08:04 +0000",
+          "subject": "RISC-V: KVM: Fix potential UAF in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "c9cf102c33f0d31aead5a78af8de11b78384830c",
+          "author_name": "Jiakai Xu",
+          "author_email": "xujiakai2025@iscas.ac.cn",
+          "date": "2026-03-02 13:27:03 +0000",
+          "subject": "RISC-V: KVM: Fix use-after-free in kvm_riscv_aia_aplic_has_attr()",
+          "insertions": 6,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <xujiakai2025@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "2e2b021be174fa20c375510a8a3ab174afd78f1a",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-27 07:22:19 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
+          "insertions": 3,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "96d2105514f9e0a7e826120ef1f124ae3085a22a",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-01-25 14:33:44 +0000",
+          "subject": "RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
         {
           "hash": "132f1ebe0a49062dd387c48755dd36eca50a5199",
           "author_name": "Chen Wang",
@@ -47425,6 +48491,111 @@
           "signatures": [
             "Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>",
             "Chen Wang <wangchen20@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "e3668b3a8c5d7517b6894dab038199bf1e44224c",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-07-13 11:29:52 -0600",
+          "subject": "mm/sparse-vmemmap: flush_cache_vmap() after hotplugging vmemmap",
+          "insertions": 4,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "663a1a395d8bdc3dce5f9183e0cff7526a71023c",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:45:33 +0000",
+          "subject": "riscv: mm: Make mark_new_valid_map() stuff depend on 64BIT && MMU",
+          "insertions": 4,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "bbe247d19ec79cfc3bb24608971a7715e7c965de",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:49 +0800",
+          "subject": "riscv: mm: Unconditionally sfence.vma for spurious fault",
+          "insertions": 5,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "d1a5b9b38b8f99b362e680f1ea04b8058328b843",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:44:56 +0000",
+          "subject": "riscv: mm: Use the bitmap API for new_valid_map_cpus",
+          "insertions": 4,
+          "deletions": 6,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "fab266950aa918c0367063382fa3862afbcbd584",
+          "author_name": "ZhenXing Zhu",
+          "author_email": "zhenxing.zhu@linux.alibaba.com",
+          "date": "2026-10-09 06:44:13 +0000",
+          "subject": "riscv: mm: Rename new_vmalloc into new_valid_map_cpus",
+          "insertions": 23,
+          "deletions": 23,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "fb6881ddcbdd68820e5168e3bd456508e4473dc5",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:46 +0800",
+          "subject": "riscv: kfence: Call mark_new_valid_map() for kfence_unprotect()",
+          "insertions": 9,
+          "deletions": 4,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
+          ]
+        },
+        {
+          "hash": "281fd988662bcad1b496903eaeef02fe37cebe07",
+          "author_name": "Vivian Wang",
+          "author_email": "wangruikang@iscas.ac.cn",
+          "date": "2026-03-03 13:29:45 +0800",
+          "subject": "riscv: mm: Extract helper mark_new_valid_map()",
+          "insertions": 14,
+          "deletions": 11,
+          "signatures": [
+            "Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Vivian Wang <wangruikang@iscas.ac.cn>"
           ]
         },
         {
@@ -53252,8 +54423,8 @@
       ]
     }
   },
-  "generated_at": "2026-10-15 16:37:11",
+  "generated_at": "2026-10-21 23:47:38",
   "main_branch": "rvck-6.6",
-  "main_commit": "218b0252",
+  "main_commit": "f64cc45f",
   "start_tag": "v6.6.158"
 }
