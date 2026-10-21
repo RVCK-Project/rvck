@@ -274,6 +274,12 @@ static int aia_init(struct kvm *kvm)
 	if (aia->nr_sources && aia->aplic_addr == KVM_RISCV_AIA_UNDEF_ADDR)
 		return -EINVAL;
 
+	/* Group index bits must not overlap guest and HART index bits. */
+	if (aia->nr_group_bits &&
+	    aia->nr_group_shift < (IMSIC_MMIO_PAGE_SHIFT +
+	    			   aia->nr_guest_bits + aia->nr_hart_bits))
+		return -EINVAL;
+
 	/* Initialize APLIC */
 	ret = kvm_riscv_aia_aplic_init(kvm);
 	if (ret)
@@ -467,7 +473,7 @@ static int aia_get_attr(struct kvm_device *dev, struct kvm_device_attr *attr)
 
 static int aia_has_attr(struct kvm_device *dev, struct kvm_device_attr *attr)
 {
-	int nr_vcpus;
+	int nr_vcpus, r = -ENXIO;
 
 	switch (attr->group) {
 	case KVM_DEV_RISCV_AIA_GRP_CONFIG:
@@ -496,12 +502,18 @@ static int aia_has_attr(struct kvm_device *dev, struct kvm_device_attr *attr)
 		}
 		break;
 	case KVM_DEV_RISCV_AIA_GRP_APLIC:
-		return kvm_riscv_aia_aplic_has_attr(dev->kvm, attr->attr);
+		mutex_lock(&dev->kvm->lock);
+		r = kvm_riscv_aia_aplic_has_attr(dev->kvm, attr->attr);
+		mutex_unlock(&dev->kvm->lock);
+		break;
 	case KVM_DEV_RISCV_AIA_GRP_IMSIC:
-		return kvm_riscv_aia_imsic_has_attr(dev->kvm, attr->attr);
+		mutex_lock(&dev->kvm->lock);
+		r = kvm_riscv_aia_imsic_has_attr(dev->kvm, attr->attr);
+		mutex_unlock(&dev->kvm->lock);
+		break;
 	}
 
-	return -ENXIO;
+	return r;
 }
 
 struct kvm_device_ops kvm_riscv_aia_device_ops = {
