@@ -530,6 +530,7 @@ void kvm_riscv_vcpu_aia_reset(struct kvm_vcpu *vcpu)
 	if (!kvm_riscv_aia_available())
 		return;
 	memset(csr, 0, sizeof(*csr));
+
 	/* Proceed only if AIA was initialized successfully */
 	if (!kvm_riscv_aia_initialized(vcpu->kvm))
 		return;
