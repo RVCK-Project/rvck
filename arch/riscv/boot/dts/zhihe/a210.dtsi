@@ -74,6 +74,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -107,6 +108,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -139,6 +141,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -171,6 +174,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -204,6 +208,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -237,6 +242,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -269,6 +275,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -301,6 +308,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
