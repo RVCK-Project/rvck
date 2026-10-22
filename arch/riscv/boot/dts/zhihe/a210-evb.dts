@@ -231,27 +231,6 @@
 };
 
 &peri2_padctrl {
-	uart4_pins: uart4-0 {
-		tx-pins {
-			pins = "GPIO2_0";
-			function = "uart4";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "GPIO2_1";
-			function = "uart4";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
 	uart5_pins: uart5-0 {
 		tx-pins {
 			pins = "GPIO2_2";
