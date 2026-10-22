@@ -27,9 +27,9 @@ static void mmu_wp_memory_region(struct kvm *kvm, int slot)
 
 	kvm_riscv_gstage_init(&gstage, kvm);
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 	flush = kvm_riscv_gstage_wp_range(&gstage, start, end);
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 	if (flush)
 		kvm_flush_remote_tlbs_memslot(kvm, memslot);
 }
@@ -64,9 +64,9 @@ int kvm_riscv_mmu_ioremap(struct kvm *kvm, gpa_t gpa, phys_addr_t hpa,
 		if (ret)
 			goto out;
 
-		spin_lock(&kvm->mmu_lock);
+		write_lock(&kvm->mmu_lock);
 		ret = kvm_riscv_gstage_set_pte(&gstage, &pcache, &map);
-		spin_unlock(&kvm->mmu_lock);
+		write_unlock(&kvm->mmu_lock);
 		if (ret)
 			goto out;
 
@@ -85,9 +85,9 @@ void kvm_riscv_mmu_iounmap(struct kvm *kvm, gpa_t gpa, unsigned long size)
 
 	kvm_riscv_gstage_init(&gstage, kvm);
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 	flush = kvm_riscv_gstage_unmap_range(&gstage, gpa, size, false);
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 
 	if (flush)
 		kvm_flush_remote_tlbs_range(kvm, gpa >> PAGE_SHIFT,
@@ -140,9 +140,9 @@ void kvm_arch_flush_shadow_memslot(struct kvm *kvm,
 
 	kvm_riscv_gstage_init(&gstage, kvm);
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 	flush = kvm_riscv_gstage_unmap_range(&gstage, gpa, size, false);
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 	if (flush)
 		kvm_flush_remote_tlbs_range(kvm, gpa >> PAGE_SHIFT,
 					    size >> PAGE_SHIFT);
@@ -563,7 +563,7 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
 	if (logging && !is_write)
 		writable = false;
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 
 	if (mmu_invalidate_retry(kvm, mmu_seq))
 		goto out_unlock;
@@ -586,7 +586,7 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
 		kvm_err("Failed to map in G-stage\n");
 
 out_unlock:
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 	kvm_set_pfn_accessed(hfn);
 	kvm_release_pfn_clean(hfn);
 	return ret;
@@ -618,7 +618,7 @@ void kvm_riscv_mmu_free_pgd(struct kvm *kvm)
 	void *pgd = NULL;
 	bool flush = false;
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 	if (kvm->arch.pgd) {
 		kvm_riscv_gstage_init(&gstage, kvm);
 		flush = kvm_riscv_gstage_unmap_range(&gstage, 0UL,
@@ -628,7 +628,7 @@ void kvm_riscv_mmu_free_pgd(struct kvm *kvm)
 		kvm->arch.pgd_phys = 0;
 		kvm->arch.pgd_levels = 0;
 	}
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 
 	if (flush)
 		kvm_flush_remote_tlbs(kvm);
