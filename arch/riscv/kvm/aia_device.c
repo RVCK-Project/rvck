@@ -11,6 +11,7 @@
 #include <linux/irqchip/riscv-imsic.h>
 #include <linux/kvm_host.h>
 #include <linux/uaccess.h>
+#include <linux/cpufeature.h>
 
 static void unlock_vcpus(struct kvm *kvm, int vcpu_lock_idx)
 {
@@ -51,6 +52,9 @@ static int aia_create(struct kvm_device *dev, u32 type)
 
 	if (irqchip_in_kernel(kvm))
 		return -EEXIST;
+
+	if (!riscv_isa_extension_available(NULL, SSAIA))
+		return -ENODEV;
 
 	ret = -EBUSY;
 	if (!lock_all_vcpus(kvm))
