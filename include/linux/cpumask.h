@@ -204,6 +204,48 @@ unsigned int cpumask_first_and_and(const struct cpumask *srcp1,
 }
 
 /**
+ * cpumask_next_and - get the next cpu in *src1p & *src2p
+ * @n: the cpu prior to the place to search (ie. return will be > @n)
+ * @src1p: the first cpumask pointer
+ * @src2p: the second cpumask pointer
+ *
+ * Returns >= nr_cpu_ids if no further cpus set in both.
+ */
+static inline
+unsigned int cpumask_next_and(int n, const struct cpumask *src1p,
+		     const struct cpumask *src2p)
+{
+	/* -1 is a legal arg here. */
+	if (n != -1)
+		cpumask_check(n);
+	return find_next_and_bit(cpumask_bits(src1p), cpumask_bits(src2p),
+		small_cpumask_bits, n + 1);
+}
+
+/**
+ * cpumask_any_and_but - pick a "random" cpu from *mask1 & *mask2, but not this one.
+ * @mask1: the first input cpumask
+ * @mask2: the second input cpumask
+ * @cpu: the cpu to ignore
+ *
+ * Returns >= nr_cpu_ids if no cpus set.
+ */
+static inline
+unsigned int cpumask_any_and_but(const struct cpumask *mask1,
+				 const struct cpumask *mask2,
+				 unsigned int cpu)
+{
+	unsigned int i;
+
+	cpumask_check(cpu);
+	i = cpumask_first_and(mask1, mask2);
+	if (i != cpu)
+		return i;
+
+	return cpumask_next_and(cpu, mask1, mask2);
+}
+
+/**
  * cpumask_last - get the last CPU in a cpumask
  * @srcp:	- the cpumask pointer
  *
@@ -268,25 +310,6 @@ unsigned int cpumask_any_and_distribute(const struct cpumask *src1p,
 			       const struct cpumask *src2p);
 unsigned int cpumask_any_distribute(const struct cpumask *srcp);
 #endif /* NR_CPUS */
-
-/**
- * cpumask_next_and - get the next cpu in *src1p & *src2p
- * @n: the cpu prior to the place to search (ie. return will be > @n)
- * @src1p: the first cpumask pointer
- * @src2p: the second cpumask pointer
- *
- * Returns >= nr_cpu_ids if no further cpus set in both.
- */
-static inline
-unsigned int cpumask_next_and(int n, const struct cpumask *src1p,
-		     const struct cpumask *src2p)
-{
-	/* -1 is a legal arg here. */
-	if (n != -1)
-		cpumask_check(n);
-	return find_next_and_bit(cpumask_bits(src1p), cpumask_bits(src2p),
-		small_cpumask_bits, n + 1);
-}
 
 /**
  * for_each_cpu - iterate over every cpu in a mask
