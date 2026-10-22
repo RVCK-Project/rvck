@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 /dts-v1/;
 
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/usb/pd.h>
+
 #include "a210.dtsi"
 
 / {
@@ -20,6 +23,33 @@
 		serial7 = &uart7;
 		serial8 = &uart8;
 		serial9 = &uart9;
+	};
+
+	reg_usb2_0_vbus: regulator-usb2-0-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb2_0_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpio = <&aw9535_1 8 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	reg_usb2_1_vbus: regulator-usb2-1-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb2_1_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpio = <&aw9535_1 9 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	reg_usb_typec_vbus: regulator-typec-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb_typec_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpio = <&gpio0 27 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
 	};
 };
 
@@ -386,6 +416,14 @@
 	cap-mmc-highspeed;
 };
 
+&usb2_0 {
+	vbus-supply = <&reg_usb2_0_vbus>;
+};
+
+&usb2_1 {
+	vbus-supply = <&reg_usb2_1_vbus>;
+};
+
 &cluster0_opp {
 	opp0-500000000 {
 		opp-microvolt = <1000000>;
@@ -445,4 +483,153 @@
 
 &peri3_gpio {
 	status = "okay";
+};
+
+&usb3 {
+	dr_mode = "otg";
+	usb-role-switch;
+
+	port {
+		dwc3_0_role_switch: endpoint {
+			remote-endpoint = <&usbc0_role_sw>;
+		};
+	};
+};
+
+&aon_padctrl {
+	aoi2c1_pins: aoi2c1-0 {
+		i2c-pins {
+			pins = "AOI2C1_SCL", "AOI2C1_SDA";
+			function = "aoi2c1";
+			bias-disable;
+			drive-strength = <25>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <1>;
+		};
+	};
+
+	usbc0_int: usbc0-int-0 {
+		usbcc-int-pins {
+			pins = "AOGPIO0_28";
+			function = "aogpio0";
+			bias-pull-up;
+			drive-strength = <13>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+};
+
+&aoi2c1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&aoi2c1_pins>;
+	clock-frequency = <400000>;
+	status = "okay";
+
+	aw9535_0: gpio@20 {
+		compatible = "ti,tca9539";
+		reg = <0x20>;
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-parent = <&ao_gpio1>;
+		interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+		gpio-line-names =
+			"CSI1_PWDN_IO0",
+			"CSI1_RST_IO1",
+			"CSI1_FSIN_IO2",
+			"CSI0_PWDN_IO3",
+			"CSI0_RST_IO4",
+			"CSI0_FSIN_IO5",
+			"MINPCIE_1V5POWER_EN_I06",
+			"MINPCIE_3V3_PWREN_I07",
+			"NULL_I08",
+			"M2_SATA_EN_IO9",
+			"AUDIO_ADC0_INT_IO10",
+			"HP_CTL_H_IO11",
+			"PI6C557_EN_IO12",
+			"DISP_RST_IO13",
+			"M2_SATA_3V3_PWREN_IO14",
+			"MINPCIE_PERST_IO15";
+	};
+
+	aw9535_1: gpio@21 {
+		compatible = "ti,tca9539";
+		reg = <0x21>;
+		gpio-controller;
+		#gpio-cells = <2>;
+		gpio-line-names =
+			"PCIE_ETH_PERSTB_IO0",
+			"AUDIO_3V3_PWREN_IO1",
+			"AUDIO_1V8_PWREN_IO2",
+			"MIPI_CSI0_PWREN_IO3",
+			"MIPI_CSI1_PWREN_IO4",
+			"MIPI_TP_PWREN_IO5",
+			"PCIE_ETH_3V3_PWREN_IO6",
+			"NULL_IO7",
+			"USBCON_PWREN_IO8",
+			"USBCON1_PWREN_IO9",
+			"NULL_IO10",
+			"SDIO_3V3_PWREN_IO11",
+			"SDIO_1V8_PWREN_IO12",
+			"PI6C557_PWREN_IO13",
+			"MIPI_DSI_PWREN_IO14",
+			"BL_EN_IO15";
+	};
+
+	typec-portc@22 {
+		compatible = "fcs,fusb302";
+		reg = <0x22>;
+		interrupt-parent = <&ao_gpio0>;
+		interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&usbc0_int>;
+		vbus-supply = <&reg_usb_typec_vbus>;
+		status = "okay";
+
+		connector {
+			compatible = "usb-c-connector";
+			label = "USB-C";
+			data-role = "dual";
+			power-role = "dual";
+			try-power-role = "sink";
+			sink-pdos = <PDO_FIXED(5000, 1000, PDO_FIXED_USB_COMM)>;
+			source-pdos = <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM)>;
+			op-sink-microwatt = <1000000>;
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				port@0 {
+					reg = <0>;
+
+					usbc0_role_sw: endpoint {
+						remote-endpoint = <&dwc3_0_role_switch>;
+					};
+				};
+
+				port@1 {
+					reg = <1>;
+
+					usbc0_orien_sw: endpoint {
+						remote-endpoint = <&usb3_phy_orientation_switch>;
+					};
+				};
+			};
+		};
+	};
+};
+
+&usb3_phy_dwc3 {
+	orientation-switch;
+	mode-switch;
+	svid = <0xff01>;
+
+	port {
+		usb3_phy_orientation_switch: endpoint {
+			remote-endpoint = <&usbc0_orien_sw>;
+		};
+	};
 };
