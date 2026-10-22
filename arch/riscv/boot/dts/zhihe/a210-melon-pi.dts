@@ -12,6 +12,7 @@
 
 	aliases {
 		ethernet0 = &gmac0;
+		ethernet1 = &gmac1;
 		mmc0 = &emmc;
 		serial0 = &uart0;
 		serial1 = &uart1;
@@ -65,6 +66,20 @@
 
 &mdio0 {
 	phy0: ethernet-phy@0 {
+		reg = <0x0>;
+	};
+};
+
+&gmac1 {
+	phy-mode = "rgmii-id";
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&gmac1_pins>;
+	phy-handle = <&phy1>;
+};
+
+&mdio1 {
+	phy1: ethernet-phy@1 {
 		reg = <0x0>;
 	};
 };
@@ -193,6 +208,49 @@
 			drive-strength = <1>;
 			input-enable;
 			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+
+	gmac1_pins: gmac1-0 {
+		txclk-pins {
+			pins = "GPIO1_2", /* GMAC1_TX_CLK */
+			       "GPIO1_14"; /* GMAC1_MDC */
+			function = "gmac1";
+			bias-disable;
+			drive-strength = <13>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		tx-pins {
+			pins = "GPIO1_4", /* GMAC1_TXEN */
+			       "GPIO1_5", /* GMAC1_TXD0 */
+			       "GPIO1_6", /* GMAC1_TXD1 */
+			       "GPIO1_7", /* GMAC1_TXD2 */
+			       "GPIO1_8"; /* GMAC1_TXD3 */
+			function = "gmac1";
+			bias-disable;
+			drive-strength = <20>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		rx-pins {
+			pins = "GPIO1_3",  /* GMAC1_RX_CLK */
+			       "GPIO1_9",  /* GMAC1_RXDV */
+			       "GPIO1_10", /* GMAC1_RXD0 */
+			       "GPIO1_11", /* GMAC1_RXD1 */
+			       "GPIO1_12", /* GMAC1_RXD2 */
+			       "GPIO1_13", /* GMAC1_RXD3 */
+			       "GPIO1_15"; /* GMAC1_MDIO */
+			function = "gmac1";
+			bias-disable;
+			drive-strength = <13>;
+			input-enable;
+			input-schmitt-disable;
 			slew-rate = <0>;
 		};
 	};
