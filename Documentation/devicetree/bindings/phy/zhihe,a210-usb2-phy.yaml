@@ -1,0 +1,93 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/phy/zhihe,a210-usb2-phy.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: ZhiHe A210 Synopsys USB 2.0 PHY
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  The ZhiHe A210 SoC contains Synopsys USB 2.0 PHY instances for the
+  DWC2 and DWC3 controllers. PHY instances can either have a dedicated
+  register range or share the USB controller syscon block.
+
+properties:
+  compatible:
+    const: zhihe,a210-usb2-phy
+
+  reg:
+    maxItems: 1
+
+  reg-names:
+    const: usb20-blk-sysreg
+
+  syscon:
+    $ref: /schemas/types.yaml#/definitions/phandle
+    description: Syscon used when the PHY registers are shared.
+
+  zhihe,phy-id:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    enum: [0, 1, 2]
+    description: Index of the USB2 PHY instance.
+
+  zhihe,init-seq:
+    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+    description: Register initialization sequence.
+    items:
+      items:
+        - description: Register offset.
+        - description: Register value.
+    minItems: 1
+
+  clocks:
+    minItems: 1
+    maxItems: 4
+
+  resets:
+    maxItems: 1
+
+  reset-names:
+    const: phy-rst
+
+  power-domains:
+    maxItems: 1
+
+  "#phy-cells":
+    const: 0
+
+required:
+  - compatible
+  - zhihe,phy-id
+  - zhihe,init-seq
+  - resets
+  - reset-names
+  - "#phy-cells"
+
+anyOf:
+  - required:
+      - reg
+      - reg-names
+  - required:
+      - syscon
+
+additionalProperties: false
+
+examples:
+  - |
+    #include <dt-bindings/clock/zhihe,a210-clk.h>
+    #include <dt-bindings/reset/zhihe,a210-resets.h>
+
+    phy@8300000 {
+        compatible = "zhihe,a210-usb2-phy";
+        reg = <0x08300000 0x1000>;
+        reg-names = "usb20-blk-sysreg";
+        clocks = <&clk_usb USB20_BUS_CLK>;
+        resets = <&rst_usb USB_USB20_BLK_USB0_PHY_PON_RESET>;
+        reset-names = "phy-rst";
+        #phy-cells = <0>;
+        zhihe,phy-id = <0>;
+        zhihe,init-seq = /bits/ 32 <0x000 0x40b67b5b>;
+    };

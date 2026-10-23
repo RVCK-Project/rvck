@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config PHY_ZHIHE_SNPS_USB2
+	tristate "ZhiHe Synopsys USB 2.0 PHY driver"
+	depends on (ARCH_ZHIHE && OF) || COMPILE_TEST
+	depends on HAS_IOMEM
+	select GENERIC_PHY
+	default USB_DWC3 if ARCH_ZHIHE
+	help
+	  Enable this to support the Synopsys USB 2.0 PHY instances in
+	  ZhiHe A210 SoCs, including the PHY shared with the DWC3 controller.
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called phy-zhihe-snps-usb2.
+
+config PHY_ZHIHE_SNPS_C10PHY
+	tristate "ZhiHe A210 C10 USB 3.1 PHY driver"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	depends on HAS_IOMEM
+	select GENERIC_PHY
+	default USB_DWC3 if ARCH_ZHIHE
+	help
+	  Enable this to support the ZHIHE C10PHY USB3.1 PHY.
+	  This PHY is used in ZHIHE A210 SoCs for USB 3.1 functionality.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called phy-zhihe-snps-c10phy.

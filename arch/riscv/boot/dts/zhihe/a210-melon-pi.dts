@@ -446,3 +446,8 @@
 &peri3_gpio {
 	status = "okay";
 };
+
+&usb3 {
+	dr_mode = "otg";
+	status = "okay";
+};

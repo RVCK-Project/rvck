@@ -209,4 +209,15 @@ config USB_DWC3_GENERIC_PLAT
 	  the dwc3 child node in the device tree.
 	  Say 'Y' or 'M' here if your platform integrates DWC3 in a similar way.
 
+config USB_DWC3_ZHIHE
+	tristate "Zhihe DWC3 Platform"
+	depends on ARCH_ZHIHE || COMPILE_TEST
+	default USB_DWC3
+	help
+	  Support the ZhiHe A210 platform glue for DesignWare Core USB3 IP.
+	  The glue driver manages platform clocks, resets and PHY resources
+	  before registering the controller with the DWC3 core.
+
+	  Say Y or M here if your board uses this integration.
+
 endif
