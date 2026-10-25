@@ -7736,6 +7736,17 @@ This capability is aimed to mitigate the threat that malicious VMs can
 cause CPU stuck (due to event windows don't open up) and make the CPU
 unavailable to host or other VMs.
 
+7.43 KVM_CAP_RISCV_MP_STATE_RESET
+---------------------------------
+
+:Architectures: riscv
+:Type: VM
+:Parameters: None
+:Returns: 0 on success, -EINVAL if arg[0] is not zero
+
+When this capability is enabled, KVM resets the VCPU when setting
+MP_STATE_INIT_RECEIVED through IOCTL.  The original MP_STATE is preserved.
+
 8. Other capabilities.
 ======================
 
