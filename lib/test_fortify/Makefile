@@ -13,7 +13,7 @@ $(obj)/%.log: $(src)/%.c $(srctree)/scripts/test_fortify.sh \
 	      FORCE
 	$(call if_changed,test_fortify)
 
-logs = $(patsubst $(srctree)/$(src)/%.c, %.log, $(wildcard $(srctree)/$(src)/*-*.c))
+logs = $(patsubst $(src)/%.c, %.log, $(wildcard $(src)/*-*.c))
 targets += $(logs)
 
 quiet_cmd_gen_fortify_log = CAT     $@
