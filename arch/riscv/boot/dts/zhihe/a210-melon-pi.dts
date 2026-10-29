@@ -304,28 +304,6 @@
 			slew-rate = <0>;
 		};
 	};
-	sen_vclk_pin0: sen-vclk-0 {
-		sen-vclk0-pins {
-			pins = "GPIO3_0";
-			function = "sen_vclk";
-			bias-disable;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	sen_vclk_pin1: sen-vclk-1 {
-		sen-vclk1-pins {
-			pins = "GPIO3_1";
-			function = "sen_vclk";
-			bias-disable;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
 	uart8_pins: uart8-1 {
 		tx-pins {
 			pins = "GPIO3_2";
