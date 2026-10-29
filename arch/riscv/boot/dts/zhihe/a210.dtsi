@@ -96,6 +96,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c908_1: cpu@1 {
 			device_type = "cpu";
 			reg = <1>;
@@ -129,6 +130,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c908_2: cpu@2 {
 			device_type = "cpu";
 			reg = <2>;
@@ -162,6 +164,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c908_3: cpu@3 {
 			device_type = "cpu";
 			reg = <3>;
@@ -230,6 +233,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c920_5: cpu@5 {
 			device_type = "cpu";
 			reg = <5>;
@@ -263,6 +267,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c920_6: cpu@6 {
 			device_type = "cpu";
 			reg = <6>;
@@ -296,6 +301,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c920_7: cpu@7 {
 			device_type = "cpu";
 			reg = <7>;
@@ -338,6 +344,7 @@
 			cache-sets = <512>;
 			cache-unified;
 		};
+
 		c1_l2_cache: c1_l2-cache {
 			compatible = "cache";
 			cache-block-size = <64>;
@@ -365,6 +372,7 @@
 					cpu = <&c908_3>;
 				};
 			};
+
 			cluster1 {
 				core0 {
 					cpu = <&c920_4>;
@@ -435,6 +443,7 @@
 			apb-clk-hz = /bits/ 64 <82500000>;
 			opp-microvolt = <700000 800000>;
 		};
+
 		opp0-1200000000 {
 			opp-hz = /bits/ 64 <1200000000>;
 			bus-clk-hz = /bits/ 64 <660000000>;
@@ -444,6 +453,7 @@
 			apb-clk-hz = /bits/ 64 <165000000>;
 			opp-microvolt = <700000 800000>;
 		};
+
 		opp0-1500000000 {
 			opp-hz = /bits/ 64 <1500000000>;
 			bus-clk-hz = /bits/ 64 <1000000000>;
@@ -453,6 +463,7 @@
 			apb-clk-hz = /bits/ 64 <165000000>;
 			opp-microvolt = <800000 800000>;
 		};
+
 		opp0-1698000000 {
 			opp-hz = /bits/ 64 <1698000000>;
 			bus-clk-hz = /bits/ 64 <1100000000>;
@@ -462,6 +473,7 @@
 			apb-clk-hz = /bits/ 64 <165000000>;
 			opp-microvolt = <900000 900000>;
 		};
+
 		opp0-1896000000 {
 			opp-hz = /bits/ 64 <1896000000>;
 			bus-clk-hz = /bits/ 64 <1320000000>;
@@ -480,14 +492,17 @@
 			opp-hz = /bits/ 64 <500000000>;
 			opp-microvolt = <800000>;
 		};
+
 		opp1-1698000000 {
 			opp-hz = /bits/ 64 <1698000000>;
 			opp-microvolt = <900000>;
 		};
+
 		opp1-1896000000 {
 			opp-hz = /bits/ 64 <1896000000>;
 			opp-microvolt = <1000000>;
 		};
+
 		opp1-2298000000 {
 			opp-hz = /bits/ 64 <2298000000>;
 			opp-microvolt = <1000000>;
@@ -621,6 +636,7 @@
 				zhihe,ccu-dly-time = <0x5E 0x5E>;
 				zhihe,ccu-dly-time-step = <0x3 0x3>;
 			};
+
 			pcie_ccu: clock-controller@a007400 {
 				compatible = "zhihe,a210-ccu";
 				reg = <0x00 0x0A007400 0x0 0x2C>,
@@ -629,12 +645,14 @@
 				zhihe,ccu-dly-time = <0x5E 0x5E 0x5E>;
 				zhihe,ccu-dly-time-step = <0x3 0x3 0x3>;
 			};
+
 			tee_ccu: clock-controller@27430000 {
 				compatible = "zhihe,a210-ccu";
 				reg = <0x00 0x27430000 0x0 0x2C>;
 				zhihe,ccu-dly-time = <0x5E>;
 				zhihe,ccu-dly-time-step = <0x3>;
 			};
+
 			cpu_gating_ccu: clock-controller@10140000 {
 				compatible = "zhihe,a210-ccu";
 				reg = <0x00 0x10140000 0x0 0x2C>,
@@ -661,6 +679,7 @@
 							   0x2 0x2 0x2
 							   0x2>;
 			};
+
 			cpu_scaling_ccu: clock-controller@10140800 {
 				compatible = "zhihe,a210-ccu";
 				reg = <0x00 0x10140800 0x0 0x2C>;
@@ -670,6 +689,7 @@
 				zhihe,ccu-ratio = <63>;
 			};
 		};
+
 		power_usb: power-domain-usb {
 			compatible = "zhihe,a210-pd-usb";
 			power-domains = <&power_top>;
@@ -697,6 +717,7 @@
 				<&clk_peri PERI3_EMMC_X2X_ACLK_M_EN>,
 				<&clk_peri PERI3_EMMC_OSC_CLK_EN>;
 		};
+
 		power_sdio: power-domain-sdio {
 			compatible = "zhihe,a210-pd-sdio";
 			power-domains = <&power_top>;
