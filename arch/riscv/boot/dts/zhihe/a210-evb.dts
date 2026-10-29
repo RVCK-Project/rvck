@@ -121,6 +121,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart0_pins: uart0-0 {
 		tx-pins {
 			pins = "GPIO0_14", "GPIO0_17"; /* TXD, RTSN */
@@ -142,6 +143,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart1_pins: uart1-1 {
 		tx-pins {
 			pins = "GPIO0_28", "GPIO0_31"; /* TXD, RTSN */
@@ -252,6 +254,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart6_pins: uart6-0 {
 		tx-pins {
 			pins = "GPIO2_4", "GPIO2_9"; /* TXD, RTSN */
@@ -273,6 +276,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart7_pins: uart7-0 {
 		tx-pins {
 			pins = "GPIO2_6";
@@ -294,6 +298,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart9_pins: uart9-0 {
 		tx-pins {
 			pins = "GPIO2_10";
@@ -315,6 +320,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart8_pins: uart8-1 {
 		tx-pins {
 			pins = "GPIO3_2";
@@ -407,15 +413,19 @@
 	opp0-500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1200000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1698000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1896000000 {
 		opp-microvolt = <1000000>;
 	};
@@ -425,12 +435,15 @@
 	opp1-500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-1698000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-1896000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-2298000000 {
 		opp-microvolt = <1000000>;
 	};

@@ -260,15 +260,19 @@
 	opp0-500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1200000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1698000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1896000000 {
 		opp-microvolt = <1000000>;
 	};
@@ -278,12 +282,15 @@
 	opp1-500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-1698000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-1896000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-2298000000 {
 		opp-microvolt = <1000000>;
 	};
