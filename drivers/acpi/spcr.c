@@ -141,34 +141,47 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
 	case ACPI_DBG2_16550_NVIDIA:
 		uart = "uart";
 		break;
+	case ACPI_DBG2_RISCV_SBI_CON:
+		uart = "sbi";
+		break;
 	default:
 		err = -ENOENT;
 		goto done;
 	}
 
-	switch (table->baud_rate) {
-	case 0:
-		/*
-		 * SPCR 1.04 defines 0 as a preconfigured state of UART.
-		 * Assume firmware or bootloader configures console correctly.
-		 */
-		baud_rate = 0;
-		break;
-	case 3:
-		baud_rate = 9600;
-		break;
-	case 4:
-		baud_rate = 19200;
-		break;
-	case 6:
-		baud_rate = 57600;
-		break;
-	case 7:
-		baud_rate = 115200;
-		break;
-	default:
-		err = -ENOENT;
-		goto done;
+	/*
+	 * SPCR 1.09 defines Precise Baud Rate Filed contains a specific
+	 * non-zero baud rate which overrides the value of the Configured
+	 * Baud Rate field. If this field is zero or not present, Configured
+	 * Baud Rate is used.
+	 */
+	if (table->header.revision >= 4 && table->precise_baudrate)
+		baud_rate = table->precise_baudrate;
+	else {
+		switch (table->baud_rate) {
+		case 0:
+			/*
+			 * SPCR 1.04 defines 0 as a preconfigured state of UART.
+			 * Assume firmware or bootloader configures console correctly.
+			 */
+			baud_rate = 0;
+			break;
+		case 3:
+			baud_rate = 9600;
+			break;
+		case 4:
+			baud_rate = 19200;
+			break;
+		case 6:
+			baud_rate = 57600;
+			break;
+		case 7:
+			baud_rate = 115200;
+			break;
+		default:
+			err = -ENOENT;
+			goto done;
+		}
 	}
 
 	/*
