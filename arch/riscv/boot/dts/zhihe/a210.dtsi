@@ -74,6 +74,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -95,6 +96,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c908_1: cpu@1 {
 			device_type = "cpu";
 			reg = <1>;
@@ -107,6 +109,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -127,6 +130,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c908_2: cpu@2 {
 			device_type = "cpu";
 			reg = <2>;
@@ -139,6 +143,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -159,6 +164,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c908_3: cpu@3 {
 			device_type = "cpu";
 			reg = <3>;
@@ -171,6 +177,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -204,6 +211,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -225,6 +233,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c920_5: cpu@5 {
 			device_type = "cpu";
 			reg = <5>;
@@ -237,6 +246,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -257,6 +267,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c920_6: cpu@6 {
 			device_type = "cpu";
 			reg = <6>;
@@ -269,6 +280,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -289,6 +301,7 @@
 				interrupt-controller;
 			};
 		};
+
 		c920_7: cpu@7 {
 			device_type = "cpu";
 			reg = <7>;
@@ -301,6 +314,7 @@
 					     "zicbom", "zicbop", "zicboz",
 					     "svpbmt", "sscofpmf";
 			riscv,cbom-block-size = <64>;
+			riscv,cbop-block-size = <64>;
 			riscv,cboz-block-size = <64>;
 			mmu-type = "riscv,sv39";
 			i-cache-block-size = <64>;
@@ -330,6 +344,7 @@
 			cache-sets = <512>;
 			cache-unified;
 		};
+
 		c1_l2_cache: c1_l2-cache {
 			compatible = "cache";
 			cache-block-size = <64>;
@@ -357,6 +372,7 @@
 					cpu = <&c908_3>;
 				};
 			};
+
 			cluster1 {
 				core0 {
 					cpu = <&c920_4>;
@@ -427,6 +443,7 @@
 			apb-clk-hz = /bits/ 64 <82500000>;
 			opp-microvolt = <700000 800000>;
 		};
+
 		opp0-1200000000 {
 			opp-hz = /bits/ 64 <1200000000>;
 			bus-clk-hz = /bits/ 64 <660000000>;
@@ -436,6 +453,7 @@
 			apb-clk-hz = /bits/ 64 <165000000>;
 			opp-microvolt = <700000 800000>;
 		};
+
 		opp0-1500000000 {
 			opp-hz = /bits/ 64 <1500000000>;
 			bus-clk-hz = /bits/ 64 <1000000000>;
@@ -445,6 +463,7 @@
 			apb-clk-hz = /bits/ 64 <165000000>;
 			opp-microvolt = <800000 800000>;
 		};
+
 		opp0-1698000000 {
 			opp-hz = /bits/ 64 <1698000000>;
 			bus-clk-hz = /bits/ 64 <1100000000>;
@@ -454,6 +473,7 @@
 			apb-clk-hz = /bits/ 64 <165000000>;
 			opp-microvolt = <900000 900000>;
 		};
+
 		opp0-1896000000 {
 			opp-hz = /bits/ 64 <1896000000>;
 			bus-clk-hz = /bits/ 64 <1320000000>;
@@ -472,14 +492,17 @@
 			opp-hz = /bits/ 64 <500000000>;
 			opp-microvolt = <800000>;
 		};
+
 		opp1-1698000000 {
 			opp-hz = /bits/ 64 <1698000000>;
 			opp-microvolt = <900000>;
 		};
+
 		opp1-1896000000 {
 			opp-hz = /bits/ 64 <1896000000>;
 			opp-microvolt = <1000000>;
 		};
+
 		opp1-2298000000 {
 			opp-hz = /bits/ 64 <2298000000>;
 			opp-microvolt = <1000000>;
@@ -613,6 +636,7 @@
 				zhihe,ccu-dly-time = <0x5E 0x5E>;
 				zhihe,ccu-dly-time-step = <0x3 0x3>;
 			};
+
 			pcie_ccu: clock-controller@a007400 {
 				compatible = "zhihe,a210-ccu";
 				reg = <0x00 0x0A007400 0x0 0x2C>,
@@ -621,12 +645,14 @@
 				zhihe,ccu-dly-time = <0x5E 0x5E 0x5E>;
 				zhihe,ccu-dly-time-step = <0x3 0x3 0x3>;
 			};
+
 			tee_ccu: clock-controller@27430000 {
 				compatible = "zhihe,a210-ccu";
 				reg = <0x00 0x27430000 0x0 0x2C>;
 				zhihe,ccu-dly-time = <0x5E>;
 				zhihe,ccu-dly-time-step = <0x3>;
 			};
+
 			cpu_gating_ccu: clock-controller@10140000 {
 				compatible = "zhihe,a210-ccu";
 				reg = <0x00 0x10140000 0x0 0x2C>,
@@ -653,6 +679,7 @@
 							   0x2 0x2 0x2
 							   0x2>;
 			};
+
 			cpu_scaling_ccu: clock-controller@10140800 {
 				compatible = "zhihe,a210-ccu";
 				reg = <0x00 0x10140800 0x0 0x2C>;
@@ -662,6 +689,7 @@
 				zhihe,ccu-ratio = <63>;
 			};
 		};
+
 		power_usb: power-domain-usb {
 			compatible = "zhihe,a210-pd-usb";
 			power-domains = <&power_top>;
@@ -689,6 +717,7 @@
 				<&clk_peri PERI3_EMMC_X2X_ACLK_M_EN>,
 				<&clk_peri PERI3_EMMC_OSC_CLK_EN>;
 		};
+
 		power_sdio: power-domain-sdio {
 			compatible = "zhihe,a210-pd-sdio";
 			power-domains = <&power_top>;
@@ -792,6 +821,25 @@
 					       <80000000>, <786432000>,
 					       <330000000>, <440000000>,
 					       <377142858>;
+			status = "okay";
+		};
+
+		clk_usb: clock-controller@8000000 {
+			compatible = "zhihe,a210-usb-clk";
+			reg = <0x00 0x08000000 0x0 0x24>;
+			reg-names = "usb-clk-en";
+			#clock-cells = <1>;
+			assigned-clocks = <&clk TOP_USB_USB20_SCAN_REF_CLK_DIV>,
+					  <&clk TOP_USB_SCAN_REF_CLK3_DIV>,
+					  <&clk TOP_USB_SCAN_REF_CLK2_DIV>,
+					  <&clk TOP_USB_SCAN_REF_CLK1_DIV>,
+					  <&clk TOP_USB_SCAN_REF_CLK0_DIV>,
+					  <&clk TOP_USB_BUS_ACLK_DIV>,
+					  <&clk TOP_USB_DP_AUX_CLK_DIV>;
+			assigned-clock-rates = <475200000>, <792000000>,
+					       <600000000>, <500000000>,
+					       <396000000>, <330000000>,
+					       <16000000>;
 			status = "okay";
 		};
 
@@ -1235,6 +1283,7 @@
 				gpio-controller;
 				#gpio-cells = <2>;
 				ngpios = <32>;
+				gpio-ranges = <&aon_padctrl 0 8 15>, <&aon_padctrl 21 23 11>;
 				reg = <0>;
 
 				interrupt-controller;
@@ -1258,6 +1307,7 @@
 				gpio-controller;
 				#gpio-cells = <2>;
 				ngpios = <10>;
+				gpio-ranges = <&aon_padctrl 0 34 10>;
 				reg = <0>;
 
 				interrupt-controller;
@@ -1282,6 +1332,7 @@
 				gpio-controller;
 				#gpio-cells = <2>;
 				ngpios = <32>;
+				gpio-ranges = <&peri1_padctrl 0 0 32>;
 				reg = <0>;
 
 				interrupt-controller;
@@ -1306,6 +1357,7 @@
 				gpio-controller;
 				#gpio-cells = <2>;
 				ngpios = <18>;
+				gpio-ranges = <&peri1_padctrl 0 32 17>;
 				reg = <0>;
 
 				interrupt-controller;
@@ -1330,6 +1382,7 @@
 				gpio-controller;
 				#gpio-cells = <2>;
 				ngpios = <32>;
+				gpio-ranges = <&peri2_padctrl 0 0 32>;
 				reg = <0>;
 
 				interrupt-controller;
@@ -1354,6 +1407,7 @@
 				gpio-controller;
 				#gpio-cells = <2>;
 				ngpios = <11>;
+				gpio-ranges = <&peri2_padctrl 0 32 11>;
 				reg = <0>;
 
 				interrupt-controller;
@@ -1378,6 +1432,7 @@
 				gpio-controller;
 				#gpio-cells = <2>;
 				ngpios = <6>;
+				gpio-ranges = <&peri3_padctrl 0 0 6>;
 				reg = <0>;
 
 				interrupt-controller;
@@ -1599,6 +1654,118 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "disabled";
+		};
+
+		usb3_phy_dwc3: usb-phy@8040000 {
+			compatible = "zhihe,a210-usb3-phy";
+			reg = <0x00 0x08040000 0x0 0x3C000>,
+			      <0x00 0x0807C000 0x0 0x2000>,
+			      <0x00 0x08014000 0x0 0x200>;
+			reg-names = "phy_ctrl", "tca", "dptx_sys";
+			clocks = <&clk_usb C10PHY_SUSPEND_CLK_EN>,
+				 <&clk_usb C10PHY_PCLK_EN>;
+			resets = <&rst_usb USB_C10PHY_PHY_RST>,
+				 <&rst_usb USB_C10PHY_APBS_PRST>;
+			reset-names = "phy-rst", "apb-rst";
+			#phy-cells = <0>;
+			power-domains = <&power_usb>;
+
+			usb3_phy_dp: dp-port {
+				#phy-cells = <0>;
+			};
+
+			usb3_phy_u3: u3-port {
+				#phy-cells = <0>;
+			};
+		};
+
+		usb2_phy_dwc2: usb-phy@8300000 {
+			compatible = "zhihe,a210-dwc2-usb2-phy";
+			reg = <0x00 0x08300000 0x0 0x1000>,
+			      <0x00 0x08301000 0x0 0x1000>;
+			reg-names = "usb0", "usb1";
+			resets = <&rst_usb USB_USB20_BLK_USB0_PHY_PON_RESET>,
+				 <&rst_usb USB_USB20_BLK_USB1_PHY_PON_RESET>;
+			reset-names = "usb0", "usb1";
+			#phy-cells = <1>;
+			power-domains = <&power_usb>;
+		};
+
+		usb2_phy_dwc3: usb-phy@80000a0 {
+			compatible = "zhihe,a210-dwc3-usb2-phy";
+			reg = <0x00 0x080000a0 0x0 0x4>;
+			reg-names = "phy";
+			resets = <&rst_usb USB_USB31_PHY_RST>;
+			reset-names = "phy";
+			#phy-cells = <0>;
+		};
+
+		usb3_wrapper: usb-wrapper@8100000 {
+			compatible = "zhihe,a210-dwc3";
+			reg = <0x00 0x08100000 0x0 0x100000>;
+			clocks = <&clk_usb USB31_PCLK_EN>,
+				 <&clk_usb USB31_SLV_AFENCE_ACLK_EN>;
+			clock-names = "pclk", "slave-afence";
+			resets = <&rst_usb USB_USB31_SLV_AFENCE_ARST>,
+				 <&rst_usb USB_USB31_VCC_RST>,
+				 <&rst_usb USB_USB31_APBS_PRST>;
+			power-domains = <&power_usb>;
+			#address-cells = <2>;
+			#size-cells = <2>;
+			ranges = <0x00 0x00 0x00 0x08100000 0x00 0x100000>;
+
+			usb3: usb@0 {
+				compatible = "snps,dwc3";
+				reg = <0x00 0x00 0x00 0x100000>;
+				interrupt-parent = <&intc>;
+				interrupts = <183>;
+				clocks = <&clk_usb USB31_REF_CLK_EN>,
+					 <&clk_usb USB31_BUS_CLK_EN>,
+					 <&clk_usb USB31_SUSPEND_CLK_EN>;
+				clock-names = "ref", "bus_early", "suspend";
+				dr_mode = "host";
+				phys = <&usb2_phy_dwc3>, <&usb3_phy_u3>;
+				phy-names = "usb2-phy", "usb3-phy";
+				snps,usb3_lpm_capable;
+			};
+		};
+
+		usb2_0: usb@8200000 {
+			compatible = "zhihe,a210-usb", "snps,dwc2";
+			reg = <0x00 0x08200000 0x0 0x40000>;
+			interrupt-parent = <&intc>;
+			interrupts = <181>;
+			clocks = <&clk_usb USB20_BUS_CLK>;
+			clock-names = "otg";
+			resets = <&rst_usb USB_USB20_BLK_USB2_WRAP0_HRST>;
+			reset-names = "dwc2";
+			phys = <&usb2_phy_dwc2 0>;
+			phy-names = "usb2-phy";
+			dr_mode = "host";
+			g-np-tx-fifo-size = <16>;
+			g-rx-fifo-size = <275>;
+			g-tx-fifo-size = <256 128 128 64 64 32>;
+			power-domains = <&power_usb>;
+			snps,need-phy-for-wake;
+		};
+
+		usb2_1: usb@8240000 {
+			compatible = "zhihe,a210-usb", "snps,dwc2";
+			reg = <0x00 0x08240000 0x0 0x40000>;
+			interrupt-parent = <&intc>;
+			interrupts = <182>;
+			clocks = <&clk_usb USB20_BUS_CLK>;
+			clock-names = "otg";
+			resets = <&rst_usb USB_USB20_BLK_USB2_WRAP1_HRST>;
+			reset-names = "dwc2";
+			phys = <&usb2_phy_dwc2 1>;
+			phy-names = "usb2-phy";
+			dr_mode = "host";
+			g-np-tx-fifo-size = <16>;
+			g-rx-fifo-size = <275>;
+			g-tx-fifo-size = <256 128 128 64 64 32>;
+			power-domains = <&power_usb>;
+			snps,need-phy-for-wake;
 		};
 
 		mbox_920: mailbox@321000 {

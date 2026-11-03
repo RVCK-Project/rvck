@@ -121,6 +121,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart0_pins: uart0-0 {
 		tx-pins {
 			pins = "GPIO0_14", "GPIO0_17"; /* TXD, RTSN */
@@ -142,6 +143,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart1_pins: uart1-1 {
 		tx-pins {
 			pins = "GPIO0_28", "GPIO0_31"; /* TXD, RTSN */
@@ -231,27 +233,6 @@
 };
 
 &peri2_padctrl {
-	uart4_pins: uart4-0 {
-		tx-pins {
-			pins = "GPIO2_0";
-			function = "uart4";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "GPIO2_1";
-			function = "uart4";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
 	uart5_pins: uart5-0 {
 		tx-pins {
 			pins = "GPIO2_2";
@@ -273,6 +254,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart6_pins: uart6-0 {
 		tx-pins {
 			pins = "GPIO2_4", "GPIO2_9"; /* TXD, RTSN */
@@ -294,6 +276,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart7_pins: uart7-0 {
 		tx-pins {
 			pins = "GPIO2_6";
@@ -315,6 +298,7 @@
 			slew-rate = <0>;
 		};
 	};
+
 	uart9_pins: uart9-0 {
 		tx-pins {
 			pins = "GPIO2_10";
@@ -336,28 +320,7 @@
 			slew-rate = <0>;
 		};
 	};
-	sen_vclk_pin0: sen-vclk-0 {
-		sen-vclk0-pins {
-			pins = "GPIO3_0";
-			function = "sen_vclk";
-			bias-disable;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	sen_vclk_pin1: sen-vclk-1 {
-		sen-vclk1-pins {
-			pins = "GPIO3_1";
-			function = "sen_vclk";
-			bias-disable;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
+
 	uart8_pins: uart8-1 {
 		tx-pins {
 			pins = "GPIO3_2";
@@ -450,15 +413,19 @@
 	opp0-500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1200000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1698000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1896000000 {
 		opp-microvolt = <1000000>;
 	};
@@ -468,18 +435,26 @@
 	opp1-500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-1698000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-1896000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-2298000000 {
 		opp-microvolt = <1000000>;
 	};
 };
 
 &peri3_padctrl {
+	status = "disabled";
+};
+
+/* USB2 port 0 is not populated on the A210 EVB */
+&usb2_0 {
 	status = "disabled";
 };
 
@@ -490,8 +465,6 @@
 &watchdog0 {
 	/delete-property/ power-domains;
 };
-
-/delete-node/ &power;
 
 &aon_gpio0 {
 	status = "okay";

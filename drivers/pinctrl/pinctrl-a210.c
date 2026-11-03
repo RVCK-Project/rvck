@@ -884,6 +884,9 @@ static int a210_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
 			else
 				value &= ~A210_PADCFG_SL;
 			break;
+		case PIN_CONFIG_PERSIST_STATE:
+			/* Pin state is backed up and restored across suspend. */
+			return 0;
 		default:
 			return -EOPNOTSUPP;
 		}

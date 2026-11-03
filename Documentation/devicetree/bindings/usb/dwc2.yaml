@@ -68,6 +68,9 @@ properties:
           - const: snps,dwc2
       - const: samsung,s3c6400-hsotg
       - const: intel,socfpga-agilex-hsotg
+      - items:
+          - const: zhihe,a210-usb
+          - const: snps,dwc2
 
   reg:
     maxItems: 1

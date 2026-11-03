@@ -1,0 +1,104 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/phy/zhihe,a210-usb2-phy.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: ZhiHe A210 USB 2.0 PHY
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  The ZhiHe A210 contains two USB 2.0 PHYs for the DWC2 controllers and
+  another USB 2.0 PHY integrated with the DWC3 controller. All three PHYs
+  have dedicated register ranges.
+
+properties:
+  compatible:
+    enum:
+      - zhihe,a210-dwc2-usb2-phy
+      - zhihe,a210-dwc3-usb2-phy
+
+  reg:
+    minItems: 1
+    maxItems: 2
+
+  reg-names:
+    minItems: 1
+    maxItems: 2
+
+  resets:
+    minItems: 1
+    maxItems: 2
+
+  reset-names:
+    minItems: 1
+    maxItems: 2
+
+  power-domains:
+    maxItems: 1
+
+  "#phy-cells":
+    enum: [0, 1]
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - resets
+  - reset-names
+  - "#phy-cells"
+
+allOf:
+  - if:
+      properties:
+        compatible:
+          const: zhihe,a210-dwc2-usb2-phy
+    then:
+      properties:
+        reg:
+          minItems: 2
+        reg-names:
+          items:
+            - const: usb0
+            - const: usb1
+        resets:
+          minItems: 2
+        reset-names:
+          items:
+            - const: usb0
+            - const: usb1
+        "#phy-cells":
+          const: 1
+    else:
+      properties:
+        reg:
+          maxItems: 1
+        reg-names:
+          items:
+            - const: phy
+        resets:
+          maxItems: 1
+        reset-names:
+          items:
+            - const: phy
+        "#phy-cells":
+          const: 0
+
+additionalProperties: false
+
+examples:
+  - |
+    #include <dt-bindings/reset/zhihe,a210-resets.h>
+
+    usb-phy@8300000 {
+        compatible = "zhihe,a210-dwc2-usb2-phy";
+        reg = <0x08300000 0x1000>,
+              <0x08301000 0x1000>;
+        reg-names = "usb0", "usb1";
+        resets = <&rst_usb USB_USB20_BLK_USB0_PHY_PON_RESET>,
+                 <&rst_usb USB_USB20_BLK_USB1_PHY_PON_RESET>;
+        reset-names = "usb0", "usb1";
+        #phy-cells = <1>;
+    };
