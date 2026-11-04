@@ -28,3 +28,4 @@ obj-$(CONFIG_MESON_DDR_PMU) += amlogic/
 obj-$(CONFIG_CXL_PMU) += cxl_pmu.o
 obj-$(CONFIG_LRW_DDR_PMU) += lrw_ddr_pmu.o
 obj-$(CONFIG_LRW_PCIE_PMU) += lrw_pcie_pmu.o
+obj-$(CONFIG_LPRS_ZF_ZCN_PMU) += lprs_zf_zcn_pmu.o
