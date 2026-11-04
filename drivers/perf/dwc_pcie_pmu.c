@@ -405,6 +405,7 @@ static int dwc_pcie_pmu_validate_group(struct perf_event *event)
 	bool time_event = false;
 	int type;
 
+	bitmap_zero(val_lane_events, 2 * DWC_PCIE_LANE_MAX_EVENTS_PER_GROUP);
 	type = DWC_PCIE_EVENT_TYPE(leader);
 	if (type == DWC_PCIE_TIME_BASE_EVENT)
 		time_event = true;
