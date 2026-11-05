@@ -12,9 +12,19 @@
 
 #include <linux/jump_label.h>
 #include <linux/kvm_types.h>
+#include <linux/xarray.h>
 #include <asm/csr.h>
 
+struct riscv_iommu_ir_target;
+struct kvm_kernel_irqfd;
+
 struct kvm_aia {
+	/*
+	 * irqfd forwarding table, keyed by irqfd pointer, holding the vCPU
+	 * each irqfd's producer is posted to. Serialized by kvm->irqfds.lock.
+	 */
+	struct xarray	irqfd_forwarding;
+
 	/* In-kernel irqchip created */
 	bool		in_kernel;
 
@@ -47,6 +57,10 @@ struct kvm_aia {
 
 	/* Internal state of APLIC */
 	void		*aplic_state;
+
+	/* IOMMU interrupt forwarding targets */
+	struct riscv_iommu_ir_target *targets;
+	unsigned int	nr_targets;
 };
 
 struct kvm_vcpu_aia_csr {
@@ -90,8 +104,13 @@ DECLARE_STATIC_KEY_FALSE(kvm_riscv_aia_available);
 
 extern struct kvm_device_ops kvm_riscv_aia_device_ops;
 
+bool kvm_riscv_vcpu_aia_imsic_has_interrupt(struct kvm_vcpu *vcpu);
+void kvm_riscv_vcpu_aia_imsic_load(struct kvm_vcpu *vcpu, int cpu);
+void kvm_riscv_vcpu_aia_imsic_put(struct kvm_vcpu *vcpu);
 void kvm_riscv_vcpu_aia_imsic_release(struct kvm_vcpu *vcpu);
 int kvm_riscv_vcpu_aia_imsic_update(struct kvm_vcpu *vcpu);
+int kvm_riscv_irqfd_forward(struct kvm_kernel_irqfd *irqfd);
+int kvm_riscv_irqfd_unforward(struct kvm_kernel_irqfd *irqfd);
 
 #define KVM_RISCV_AIA_IMSIC_TOPEI	(ISELECT_MASK + 1)
 int kvm_riscv_vcpu_aia_imsic_rmw(struct kvm_vcpu *vcpu, unsigned long isel,
@@ -104,6 +123,7 @@ void kvm_riscv_vcpu_aia_imsic_reset(struct kvm_vcpu *vcpu);
 int kvm_riscv_vcpu_aia_imsic_inject(struct kvm_vcpu *vcpu,
 				    u32 guest_index, u32 offset, u32 iid);
 int kvm_riscv_vcpu_aia_imsic_init(struct kvm_vcpu *vcpu);
+void kvm_riscv_vcpu_aia_imsic_target_init(struct kvm_vcpu *vcpu);
 void kvm_riscv_vcpu_aia_imsic_cleanup(struct kvm_vcpu *vcpu);
 
 int kvm_riscv_aia_aplic_set_attr(struct kvm *kvm, unsigned long type, u32 v);
@@ -164,7 +184,6 @@ void kvm_riscv_aia_destroy_vm(struct kvm *kvm);
 int kvm_riscv_aia_alloc_hgei(int cpu, struct kvm_vcpu *owner,
 			     void __iomem **hgei_va, phys_addr_t *hgei_pa);
 void kvm_riscv_aia_free_hgei(int cpu, int hgei);
-void kvm_riscv_aia_wakeon_hgei(struct kvm_vcpu *owner, bool enable);
 
 void kvm_riscv_aia_enable(void);
 void kvm_riscv_aia_disable(void);
