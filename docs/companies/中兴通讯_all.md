@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 542</li>
-<li><strong>统计时间</strong>: 2026-11-05 15:48:30</li>
+<li><strong>贡献提交数</strong>: 546</li>
+<li><strong>统计时间</strong>: 2026-11-06 17:36:55</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [99539c3e](https://github.com/RVCK-Project/rvck/commit/99539c3e0665a6954184dfa392ff2a41cd765a7f) | 2026-11-05 | Gao Rui | perf: riscv: Fix passing pointer to sbi_ecall in pmu_sbi_check_event |
+| [c44e3852](https://github.com/RVCK-Project/rvck/commit/c44e3852ff761ca76b9e266114004d544ecf1878) | 2026-08-18 | Xixin Liu | perf: RISC-V: use BIT_ULL for u64 overflow masks |
+| [3bc16937](https://github.com/RVCK-Project/rvck/commit/3bc1693791d24ab7d552c856425600616980fd2b) | 2025-11-14 | Chen Pei | tools: riscv: Fixed misalignment of CSR related definitions |
+| [6bee6d65](https://github.com/RVCK-Project/rvck/commit/6bee6d65558e6cd6895076b98a8ca4241cdc9183) | 2026-11-05 | Gao Rui | KVM: riscv: Fix implicit declaration of kvm_riscv_gstage_mode |
 | [fc4c9d47](https://github.com/RVCK-Project/rvck/commit/fc4c9d476a91e488c937b3beef12035b91f14a87) | 2026-10-19 | Junyang Han | riscv: rvck_defconfig: enable DINGHAI_PF driver as module |
 | [57b1cd62](https://github.com/RVCK-Project/rvck/commit/57b1cd629700b24499ac2f5b66ec00d66f2596a0) | 2026-08-02 | Junyang Han | dinghai: add hardware register access and PCI capability scanning |
 | [0a5e0e6c](https://github.com/RVCK-Project/rvck/commit/0a5e0e6cc420bc647566d7ea9771bd82646a727b) | 2026-08-02 | Junyang Han | dinghai: add ZTE network driver support |
@@ -562,7 +566,7 @@
 | [cbf4f664](https://github.com/RVCK-Project/rvck/commit/cbf4f6644bd0355282d69aa396267bbf334cb104) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 542 条提交（显示全部）**
+**共 546 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -571,5 +575,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-05 15:48:30*
-*数据来源: 主分支 rvck-6.6@fc4c9d47*
+*本页面最后更新于 2026-11-06 17:36:55*
+*数据来源: 主分支 rvck-6.6@dc246d68*

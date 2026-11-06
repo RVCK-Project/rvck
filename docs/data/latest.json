@@ -1,8 +1,8 @@
 {
-  "total_commits": 1760,
-  "commits_with_company": 1651,
-  "total_insertions": 1725608,
-  "total_deletions": 97635,
+  "total_commits": 1764,
+  "commits_with_company": 1655,
+  "total_insertions": 1725631,
+  "total_deletions": 97649,
   "companies": {
     "超睿科技": {
       "count": 90,
@@ -3800,10 +3800,66 @@
       ]
     },
     "中兴通讯": {
-      "count": 542,
-      "insertions": 33676,
-      "deletions": 6538,
+      "count": 546,
+      "insertions": 33699,
+      "deletions": 6552,
       "commits": [
+        {
+          "hash": "99539c3e0665a6954184dfa392ff2a41cd765a7f",
+          "author_name": "Gao Rui",
+          "author_email": "gao.rui@zte.com.cn",
+          "date": "2026-11-05 19:05:08 +0800",
+          "subject": "perf: riscv: Fix passing pointer to sbi_ecall in pmu_sbi_check_event",
+          "insertions": 14,
+          "deletions": 7,
+          "signatures": [
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Gao Rui <gao.rui@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "c44e3852ff761ca76b9e266114004d544ecf1878",
+          "author_name": "Xixin Liu",
+          "author_email": "liuxixin@kylinos.cn",
+          "date": "2026-08-18 17:10:00 +0800",
+          "subject": "perf: RISC-V: use BIT_ULL for u64 overflow masks",
+          "insertions": 3,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Xixin Liu <liuxixin@kylinos.cn>"
+          ]
+        },
+        {
+          "hash": "3bc1693791d24ab7d552c856425600616980fd2b",
+          "author_name": "Chen Pei",
+          "author_email": "cp0613@linux.alibaba.com",
+          "date": "2025-11-14 15:12:15 +0800",
+          "subject": "tools: riscv: Fixed misalignment of CSR related definitions",
+          "insertions": 4,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Chen Pei <cp0613@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "6bee6d65558e6cd6895076b98a8ca4241cdc9183",
+          "author_name": "Gao Rui",
+          "author_email": "gao.rui@zte.com.cn",
+          "date": "2026-11-05 19:21:11 +0800",
+          "subject": "KVM: riscv: Fix implicit declaration of kvm_riscv_gstage_mode",
+          "insertions": 2,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Gao Rui <gao.rui@zte.com.cn>"
+          ]
+        },
         {
           "hash": "fc4c9d476a91e488c937b3beef12035b91f14a87",
           "author_name": "Junyang Han",
@@ -26935,7 +26991,7 @@
       ]
     }
   ],
-  "total_contribution": 1817,
+  "total_contribution": 1822,
   "companies_contribution": {
     "超睿科技": {
       "count": 91,
@@ -30746,10 +30802,66 @@
       ]
     },
     "中兴通讯": {
-      "count": 542,
-      "insertions": 33676,
-      "deletions": 6538,
+      "count": 546,
+      "insertions": 33699,
+      "deletions": 6552,
       "commits": [
+        {
+          "hash": "99539c3e0665a6954184dfa392ff2a41cd765a7f",
+          "author_name": "Gao Rui",
+          "author_email": "gao.rui@zte.com.cn",
+          "date": "2026-11-05 19:05:08 +0800",
+          "subject": "perf: riscv: Fix passing pointer to sbi_ecall in pmu_sbi_check_event",
+          "insertions": 14,
+          "deletions": 7,
+          "signatures": [
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Gao Rui <gao.rui@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "c44e3852ff761ca76b9e266114004d544ecf1878",
+          "author_name": "Xixin Liu",
+          "author_email": "liuxixin@kylinos.cn",
+          "date": "2026-08-18 17:10:00 +0800",
+          "subject": "perf: RISC-V: use BIT_ULL for u64 overflow masks",
+          "insertions": 3,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Xixin Liu <liuxixin@kylinos.cn>"
+          ]
+        },
+        {
+          "hash": "3bc1693791d24ab7d552c856425600616980fd2b",
+          "author_name": "Chen Pei",
+          "author_email": "cp0613@linux.alibaba.com",
+          "date": "2025-11-14 15:12:15 +0800",
+          "subject": "tools: riscv: Fixed misalignment of CSR related definitions",
+          "insertions": 4,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Chen Pei <cp0613@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "6bee6d65558e6cd6895076b98a8ca4241cdc9183",
+          "author_name": "Gao Rui",
+          "author_email": "gao.rui@zte.com.cn",
+          "date": "2026-11-05 19:21:11 +0800",
+          "subject": "KVM: riscv: Fix implicit declaration of kvm_riscv_gstage_mode",
+          "insertions": 2,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Gao Rui <gao.rui@zte.com.cn>"
+          ]
+        },
         {
           "hash": "fc4c9d476a91e488c937b3beef12035b91f14a87",
           "author_name": "Junyang Han",
@@ -39345,10 +39457,25 @@
       ]
     },
     "阿里达摩院": {
-      "count": 517,
-      "insertions": 87621,
-      "deletions": 25357,
+      "count": 518,
+      "insertions": 87625,
+      "deletions": 25360,
       "commits": [
+        {
+          "hash": "3bc1693791d24ab7d552c856425600616980fd2b",
+          "author_name": "Chen Pei",
+          "author_email": "cp0613@linux.alibaba.com",
+          "date": "2025-11-14 15:12:15 +0800",
+          "subject": "tools: riscv: Fixed misalignment of CSR related definitions",
+          "insertions": 4,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Gao Rui <gao.rui@zte.com.cn>",
+            "Chen Pei <cp0613@linux.alibaba.com>"
+          ]
+        },
         {
           "hash": "d8c386c77b9f00c25d2597b17967d45045f38ea3",
           "author_name": "Pengpeng Hou",
@@ -54831,8 +54958,8 @@
       ]
     }
   },
-  "generated_at": "2026-11-05 15:48:30",
+  "generated_at": "2026-11-06 17:36:55",
   "main_branch": "rvck-6.6",
-  "main_commit": "fc4c9d47",
+  "main_commit": "dc246d68",
   "start_tag": "v6.6.161"
 }

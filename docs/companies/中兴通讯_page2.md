@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 542</li>
-<li><strong>统计时间</strong>: 2026-11-05 15:48:30</li>
+<li><strong>贡献提交数</strong>: 546</li>
+<li><strong>统计时间</strong>: 2026-11-06 17:36:55</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [6c739404](https://github.com/RVCK-Project/rvck/commit/6c739404099d81972e927de311f578f8150ae582) | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction |
+| [4f30b283](https://github.com/RVCK-Project/rvck/commit/4f30b2839c50103a5a61921096b55de5c690177c) | 2024-07-08 | Jinjie Ruan | riscv: stacktrace: Add USER_STACKTRACE support |
+| [25596250](https://github.com/RVCK-Project/rvck/commit/255962505f816eb2ff1f489f1664a79920666d70) | 2023-10-24 | Clément Léger | riscv: kvm: use ".L" local labels in assembly when applicable |
+| [26d3c29e](https://github.com/RVCK-Project/rvck/commit/26d3c29ef0ddd806a1d67a16c235a0f6dcb90bcf) | 2023-10-24 | Clément Léger | riscv: kvm: Use SYM_*() assembly macros instead of deprecated ones |
 | [adf41935](https://github.com/RVCK-Project/rvck/commit/adf419353fc7e371460065dbf17c6d0e15b06a86) | 2025-08-18 | Anup Patel | MAINTAINERS: Add entry for RISC-V RPMI and MPXY drivers |
 | [bc9f3acb](https://github.com/RVCK-Project/rvck/commit/bc9f3acb4f0abc2c748479f134e3dbd08599b209) | 2025-08-18 | Anup Patel | RISC-V: Enable GPIO keyboard and event device in RV64 defconfig |
 | [e4893a3a](https://github.com/RVCK-Project/rvck/commit/e4893a3a9281a66bb0c74862268d7f9167b7bbe8) | 2025-08-18 | Sunil V L | irqchip/riscv-rpmi-sysmsi: Add ACPI support |
@@ -214,13 +218,9 @@
 | [fdd1e6af](https://github.com/RVCK-Project/rvck/commit/fdd1e6af9d99ed02e99ea3b8762d83850b25c9a6) | 2024-07-02 | Robin Murphy | iommu: Resolve fwspec ops automatically |
 | [e11e06ce](https://github.com/RVCK-Project/rvck/commit/e11e06cec6d297f460ad2ef636e81c6dad0be527) | 2023-12-07 | Jason Gunthorpe | acpi: Do not return struct iommu_ops from acpi_iommu_configure_id() |
 | [be11e91e](https://github.com/RVCK-Project/rvck/commit/be11e91ed8bf0a2bf621276b780958521ebd5c4f) | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_priv_set() with a lockdep |
-| [26dffd17](https://github.com/RVCK-Project/rvck/commit/26dffd172d97e4e6e00d0349ed2e4ef470d7aa08) | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_get() with lockdep |
-| [38460e71](https://github.com/RVCK-Project/rvck/commit/38460e718bff1be8909864707253ec988cfd3ae8) | 2023-12-07 | Jason Gunthorpe | iommu/of: Use -ENODEV consistently in of_iommu_configure() |
-| [4095aba7](https://github.com/RVCK-Project/rvck/commit/4095aba76f9ad89c207ae945320bd0f6577a79f2) | 2023-12-07 | Jason Gunthorpe | iommmu/of: Do not return struct iommu_ops from of_iommu_configure() |
-| [829df152](https://github.com/RVCK-Project/rvck/commit/829df15253802d7d8c772997b80525caa1a5dec3) | 2023-12-07 | Jason Gunthorpe | iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops() |
 ---
 
-**共 542 条提交，显示 201-400**
+**共 546 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-05 15:48:30*
-*数据来源: 主分支 rvck-6.6@fc4c9d47*
+*本页面最后更新于 2026-11-06 17:36:55*
+*数据来源: 主分支 rvck-6.6@dc246d68*

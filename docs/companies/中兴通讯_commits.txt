@@ -1,9 +1,13 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 542 个提交
-# 生成时间: 2026-11-05 15:48:30
+# 共 546 个提交
+# 生成时间: 2026-11-06 17:36:55
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+99539c3e | 2026-11-05 | Gao Rui | perf: riscv: Fix passing pointer to sbi_ecall in pmu_sbi_check_event
+c44e3852 | 2026-08-18 | Xixin Liu | perf: RISC-V: use BIT_ULL for u64 overflow masks
+3bc16937 | 2025-11-14 | Chen Pei | tools: riscv: Fixed misalignment of CSR related definitions
+6bee6d65 | 2026-11-05 | Gao Rui | KVM: riscv: Fix implicit declaration of kvm_riscv_gstage_mode
 fc4c9d47 | 2026-10-19 | Junyang Han | riscv: rvck_defconfig: enable DINGHAI_PF driver as module
 57b1cd62 | 2026-08-02 | Junyang Han | dinghai: add hardware register access and PCI capability scanning
 0a5e0e6c | 2026-08-02 | Junyang Han | dinghai: add ZTE network driver support

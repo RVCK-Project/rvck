@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 542</li>
-<li><strong>统计时间</strong>: 2026-11-05 15:48:30</li>
+<li><strong>贡献提交数</strong>: 546</li>
+<li><strong>统计时间</strong>: 2026-11-06 17:36:55</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [26dffd17](https://github.com/RVCK-Project/rvck/commit/26dffd172d97e4e6e00d0349ed2e4ef470d7aa08) | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_get() with lockdep |
+| [38460e71](https://github.com/RVCK-Project/rvck/commit/38460e718bff1be8909864707253ec988cfd3ae8) | 2023-12-07 | Jason Gunthorpe | iommu/of: Use -ENODEV consistently in of_iommu_configure() |
+| [4095aba7](https://github.com/RVCK-Project/rvck/commit/4095aba76f9ad89c207ae945320bd0f6577a79f2) | 2023-12-07 | Jason Gunthorpe | iommmu/of: Do not return struct iommu_ops from of_iommu_configure() |
+| [829df152](https://github.com/RVCK-Project/rvck/commit/829df15253802d7d8c772997b80525caa1a5dec3) | 2023-12-07 | Jason Gunthorpe | iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops() |
 | [ad1ed461](https://github.com/RVCK-Project/rvck/commit/ad1ed4614c3cfeb16cb5bd577174bf5f5a96f19d) | 2023-11-21 | Robin Murphy | iommu: Clean up open-coded ownership checks |
 | [421e99d0](https://github.com/RVCK-Project/rvck/commit/421e99d0f5d1c2b97bf3cd1067602b144c52c2bf) | 2023-11-21 | Robin Murphy | iommu: Retire bus ops |
 | [64142af5](https://github.com/RVCK-Project/rvck/commit/64142af5bd5dbb88510cfe67157bdf3129250195) | 2023-11-21 | Robin Murphy | iommu: Decouple iommu_domain_alloc() from bus ops |
@@ -162,7 +166,7 @@
 | [cbf4f664](https://github.com/RVCK-Project/rvck/commit/cbf4f6644bd0355282d69aa396267bbf334cb104) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 542 条提交，显示 401-542**
+**共 546 条提交，显示 401-546**
 
 [1](中兴通讯.md) [2](中兴通讯_page2.md) **[3]**
 
@@ -173,5 +177,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-05 15:48:30*
-*数据来源: 主分支 rvck-6.6@fc4c9d47*
+*本页面最后更新于 2026-11-06 17:36:55*
+*数据来源: 主分支 rvck-6.6@dc246d68*
