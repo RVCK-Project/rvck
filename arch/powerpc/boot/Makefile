@@ -219,7 +219,7 @@ $(addprefix $(obj)/,$(libfdt) $(libfdtheader)): $(obj)/%: $(srctree)/scripts/dtc
 $(obj)/empty.c:
 	$(Q)touch $@
 
-$(obj)/zImage.coff.lds $(obj)/zImage.ps3.lds : $(obj)/%: $(srctree)/$(src)/%.S
+$(obj)/zImage.coff.lds $(obj)/zImage.ps3.lds : $(obj)/%: $(src)/%.S
 	$(Q)cp $< $@
 
 clean-files := $(zlib-) $(zlibheader-) $(zliblinuxheader-) \
@@ -253,9 +253,9 @@ targets		+= $(patsubst $(obj)/%,%,$(obj-boot) wrapper.a) zImage.lds
 extra-y		:= $(obj)/wrapper.a $(obj-plat) $(obj)/empty.o \
 		   $(obj)/zImage.lds $(obj)/zImage.coff.lds $(obj)/zImage.ps3.lds
 
-dtstree		:= $(srctree)/$(src)/dts
+dtstree		:= $(src)/dts
 
-wrapper		:=$(srctree)/$(src)/wrapper
+wrapper		:= $(src)/wrapper
 wrapperbits	:= $(extra-y) $(addprefix $(obj)/,addnote hack-coff mktree) \
 			$(wrapper) FORCE
 
