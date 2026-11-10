@@ -313,11 +313,23 @@ static int aia_init(struct kvm *kvm)
 			goto fail_cleanup_imsics;
 	}
 
+	aia->targets = kcalloc(kvm->created_vcpus, sizeof(*aia->targets), GFP_KERNEL_ACCOUNT);
+	if (!aia->targets) {
+		ret = -ENOMEM;
+		goto fail_cleanup_all_imsics;
+	}
+	aia->nr_targets = kvm->created_vcpus;
+
+	kvm_for_each_vcpu(idx, vcpu, kvm)
+		kvm_riscv_vcpu_aia_imsic_target_init(vcpu);
+
 	/* Set the initialized flag */
 	kvm->arch.aia.initialized = true;
 
 	return 0;
 
+fail_cleanup_all_imsics:
+	idx = kvm->created_vcpus;
 fail_cleanup_imsics:
 	for (i = idx - 1; i >= 0; i--) {
 		vcpu = kvm_get_vcpu(kvm, i);
@@ -651,6 +663,9 @@ void kvm_riscv_aia_init_vm(struct kvm *kvm)
 {
 	struct kvm_aia *aia = &kvm->arch.aia;
 
+	/* Initialize the irqfd forwarding table */
+	xa_init(&aia->irqfd_forwarding);
+
 	if (!kvm_riscv_aia_available())
 		return;
 
@@ -675,10 +690,15 @@ void kvm_riscv_aia_init_vm(struct kvm *kvm)
 
 void kvm_riscv_aia_destroy_vm(struct kvm *kvm)
 {
+	/* Cleanup the irqfd forwarding table */
+	xa_destroy(&kvm->arch.aia.irqfd_forwarding);
+
 	/* Proceed only if AIA was initialized successfully */
 	if (!kvm_riscv_aia_initialized(kvm))
 		return;
 
 	/* Cleanup APLIC context */
 	kvm_riscv_aia_aplic_cleanup(kvm);
+
+	kfree(kvm->arch.aia.targets);
 }

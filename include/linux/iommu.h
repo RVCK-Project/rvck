@@ -1136,8 +1136,6 @@ static inline void iommu_debugfs_setup(void) {}
 #include <linux/msi.h>
 
 int iommu_get_msi_cookie(struct iommu_domain *domain, dma_addr_t base);
-
-int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr);
 void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg);
 
 #else /* CONFIG_IOMMU_DMA */
@@ -1150,16 +1148,28 @@ static inline int iommu_get_msi_cookie(struct iommu_domain *domain, dma_addr_t b
 	return -ENODEV;
 }
 
-static inline int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
-{
-	return 0;
-}
-
 static inline void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
 {
 }
 
 #endif	/* CONFIG_IOMMU_DMA */
+
+#if defined(CONFIG_IRQ_MSI_IOMMU) && defined(CONFIG_IOMMU_API)
+int iommu_dma_prepare_msi_list(struct msi_desc *desc, const phys_addr_t *phys_addrs,
+			       unsigned int nr_addrs, size_t granule);
+int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr);
+#else
+static inline int iommu_dma_prepare_msi_list(struct msi_desc *desc, const phys_addr_t *phys_addrs,
+					     unsigned int nr_addrs, size_t granule)
+{
+	return 0;
+}
+
+static inline int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
+{
+	return 0;
+}
+#endif
 
 /*
  * Newer generations of Tegra SoCs require devices' stream IDs to be directly programmed into

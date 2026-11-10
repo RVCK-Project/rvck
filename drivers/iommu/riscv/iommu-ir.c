@@ -1,0 +1,684 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * IOMMU Interrupt Remapping
+ *
+ * Copyright (c) 2026 Qualcomm Technologies, Inc.
+ */
+#include <linux/cleanup.h>
+#include <linux/irqchip/riscv-imsic.h>
+#include <linux/msi.h>
+#include <linux/slab.h>
+
+#include "iommu.h"
+
+static int riscv_iommu_ir_irq_set_affinity(struct irq_data *data,
+					   const struct cpumask *mask, bool force)
+{
+	if (irqd_is_forwarded_to_vcpu(data))
+		return -EINVAL;
+
+	return irq_chip_set_affinity_parent(data, mask, force);
+}
+
+/* IOMMU extract (RISC-V IOMMU spec section 2.3.3) applied to the two-run IMSIC topology */
+static size_t riscv_iommu_ir_extract(u64 value, u64 mask)
+{
+	/* Separate the optional group index from the low guest and hart indices. */
+	u64 upper_mask = mask & (mask + 1);
+	u64 lower_mask = mask ^ upper_mask;
+	unsigned int shift;
+
+	if (!upper_mask)
+		return value & lower_mask;
+
+	shift = __ffs64(upper_mask) - fls64(lower_mask);
+	return (value & lower_mask) | ((value & upper_mask) >> shift);
+}
+
+static size_t riscv_iommu_ir_nr_ptes(const struct riscv_iommu_ir_vcpu_info *vcpu_info)
+{
+	return riscv_iommu_ir_extract(vcpu_info->msi_addr_mask, vcpu_info->msi_addr_mask) + 1;
+}
+
+static int riscv_iommu_ir_validate_target(const struct riscv_iommu_ir_vcpu_info *vcpu_info,
+					  const struct riscv_iommu_ir_target *target,
+					  u64 *required_caps)
+{
+	u64 addr = target->gpa >> IMSIC_MMIO_PAGE_SHIFT;
+
+	if (!IS_ALIGNED(target->gpa, IMSIC_MMIO_PAGE_SZ) ||
+	    (addr & ~vcpu_info->msi_addr_mask) != vcpu_info->msi_addr_pattern)
+		return -EINVAL;
+
+	switch (target->type) {
+	case RISCV_IOMMU_IR_TARGET_IMSIC:
+		if (!IS_ALIGNED(target->hpa, IMSIC_MMIO_PAGE_SZ) ||
+		    (target->hpa >> IMSIC_MMIO_PAGE_SHIFT) > FIELD_MAX(RISCV_IOMMU_MSIPTE_PPN))
+			return -EINVAL;
+		*required_caps |= RISCV_IOMMU_CAPABILITIES_MSI_FLAT;
+		break;
+	case RISCV_IOMMU_IR_TARGET_MRIF:
+		if (!IS_ALIGNED(target->mrif_hpa, SZ_512) ||
+		    (target->mrif_hpa >> 9) > FIELD_MAX(RISCV_IOMMU_MSIPTE_MRIF_ADDR) ||
+		    !IS_ALIGNED(target->notice_hpa, IMSIC_MMIO_PAGE_SZ) ||
+		    (target->notice_hpa >> IMSIC_MMIO_PAGE_SHIFT) >
+			FIELD_MAX(RISCV_IOMMU_MSIPTE_MRIF_NPPN) ||
+		    target->notice_id >= IMSIC_MAX_ID)
+			return -EINVAL;
+		*required_caps |= RISCV_IOMMU_CAPABILITIES_MSI_FLAT |
+				  RISCV_IOMMU_CAPABILITIES_MSI_MRIF;
+		break;
+	default:
+		return -EINVAL;
+	}
+
+	return 0;
+}
+
+static void riscv_iommu_ir_set_target(struct riscv_iommu_msipte *msipte,
+				      const struct riscv_iommu_ir_target *target)
+{
+	if (target->type == RISCV_IOMMU_IR_TARGET_IMSIC) {
+		riscv_iommu_msipte_set_basic(msipte, target->hpa);
+	} else {
+		riscv_iommu_msipte_set_mrif(msipte, target->mrif_hpa,
+					    target->notice_hpa, target->notice_id);
+	}
+}
+
+static int riscv_iommu_ir_validate_vcpu_info(const struct riscv_iommu_ir_vcpu_info *vcpu_info)
+{
+	u64 pattern = vcpu_info->msi_addr_pattern;
+	u64 mask = vcpu_info->msi_addr_mask;
+
+	if (!vcpu_info->owner || (pattern & mask) ||
+	    ((pattern | mask) & ~RISCV_IOMMU_DC_MSI_ADDR_MASK))
+		return -EINVAL;
+
+	/*
+	 * riscv_iommu_ir_extract() requires the mask to contain the low
+	 * guest/hart index run and at most one additional group index run.
+	 */
+	mask &= mask + 1;
+	if (mask) {
+		mask >>= __ffs64(mask);
+		if (mask & (mask + 1))
+			return -EINVAL;
+	}
+
+	return 0;
+}
+
+static int riscv_iommu_ir_activate(struct riscv_iommu_msi_table *msi_table,
+				   struct riscv_iommu_device *iommu,
+				   struct riscv_iommu_ir_vcpu_info *vcpu_info)
+{
+	u64 required_caps = 0;
+	size_t nr_ptes;
+	int ret;
+
+	ret = riscv_iommu_ir_validate_vcpu_info(vcpu_info);
+	if (ret)
+		return ret;
+
+	nr_ptes = riscv_iommu_ir_nr_ptes(vcpu_info);
+
+	if (!vcpu_info->targets || !vcpu_info->nr_targets ||
+	    vcpu_info->nr_targets > nr_ptes)
+		return -EINVAL;
+
+	if (nr_ptes > msi_table->nr_ptes) {
+		dev_warn_once(iommu->dev,
+			      "guest MSI topology requires %zu PTEs, but the IOMMU domain only supports %u; using host IRQ delivery\n",
+			      nr_ptes, msi_table->nr_ptes);
+		return -EOPNOTSUPP;
+	}
+
+	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
+		const struct riscv_iommu_ir_target *target = &vcpu_info->targets[i];
+		struct riscv_iommu_msipte *msipte;
+		u64 target_caps = 0;
+		size_t idx;
+
+		ret = riscv_iommu_ir_validate_target(vcpu_info, target, &target_caps);
+		if (ret)
+			goto fail;
+
+		/*
+		 * A target the hardware cannot represent is left unprogrammed:
+		 * its producer falls back on its own when KVM's publish of the
+		 * target is rejected, instead of failing the whole table.
+		 */
+		if (!riscv_iommu_msi_table_check_caps(msi_table, target_caps))
+			continue;
+
+		idx = riscv_iommu_ir_extract(target->gpa >> IMSIC_MMIO_PAGE_SHIFT,
+					     vcpu_info->msi_addr_mask);
+		msipte = &msi_table->root[idx];
+
+		/* A populated entry in the initially clear table indicates duplicate targets. */
+		if (msipte->pte || msipte->mrif_info) {
+			ret = -EINVAL;
+			goto fail;
+		}
+
+		riscv_iommu_ir_set_target(msipte, target);
+		required_caps |= target_caps;
+	}
+
+	msi_table->required_caps = required_caps;
+	msi_table->owner = vcpu_info->owner;
+	msi_table->msi_addr_mask = vcpu_info->msi_addr_mask;
+	msi_table->msi_addr_pattern = vcpu_info->msi_addr_pattern;
+
+	riscv_iommu_msi_table_inval_all(msi_table);
+	riscv_iommu_msi_table_update(msi_table, true);
+
+	return 0;
+
+fail:
+	memset(msi_table->root, 0, array_size(nr_ptes, sizeof(*msi_table->root)));
+	return ret;
+}
+
+static int riscv_iommu_ir_deactivate(struct riscv_iommu_msi_table *msi_table)
+{
+	riscv_iommu_msi_table_update(msi_table, false);
+
+	memset(msi_table->root, 0, array_size(msi_table->nr_ptes, sizeof(*msi_table->root)));
+	msi_table->required_caps = 0;
+	msi_table->owner = NULL;
+	msi_table->msi_addr_mask = 0;
+	msi_table->msi_addr_pattern = 0;
+
+	return 0;
+}
+
+static void riscv_iommu_ir_update_msipte(struct riscv_iommu_msi_table *msi_table,
+					 struct riscv_iommu_msipte *msipte,
+					 const struct riscv_iommu_ir_target *target)
+{
+	u64 pte = READ_ONCE(msipte->pte);
+	u64 mrif_info = READ_ONCE(msipte->mrif_info);
+	bool old_mrif = FIELD_GET(RISCV_IOMMU_MSIPTE_M, pte) == RISCV_IOMMU_MSIPTE_M_MRIF;
+	bool new_mrif = target->type == RISCV_IOMMU_IR_TARGET_MRIF;
+	struct riscv_iommu_msipte new = { 0 };
+
+	riscv_iommu_ir_set_target(&new, target);
+
+	if (pte == new.pte && mrif_info == new.mrif_info)
+		return;
+
+	if (!old_mrif && new_mrif) {
+		/* Basic mode ignores mrif_info, so prepare it before switching modes. */
+		WRITE_ONCE(msipte->mrif_info, new.mrif_info);
+		dma_wmb();
+		WRITE_ONCE(msipte->pte, new.pte);
+	} else if (old_mrif && !new_mrif) {
+		/* Basic mode ignores mrif_info, so switch modes before clearing it. */
+		WRITE_ONCE(msipte->pte, new.pte);
+		dma_wmb();
+		riscv_iommu_msi_table_inval(msi_table, target->gpa);
+		WRITE_ONCE(msipte->mrif_info, 0);
+		return;
+	} else if (pte == new.pte) {
+		WRITE_ONCE(msipte->mrif_info, new.mrif_info);
+	} else if (mrif_info == new.mrif_info) {
+		WRITE_ONCE(msipte->pte, new.pte);
+	} else {
+		/*
+		 * Both words are active in MRIF mode, so use break-before-make.
+		 * The UPDATE_TARGET contract requires producers to be quiesced.
+		 */
+		WRITE_ONCE(msipte->pte, 0);
+		dma_wmb();
+		riscv_iommu_msi_table_inval(msi_table, target->gpa);
+		WRITE_ONCE(msipte->mrif_info, new.mrif_info);
+		dma_wmb();
+		WRITE_ONCE(msipte->pte, new.pte);
+		return;
+	}
+
+	dma_wmb();
+	riscv_iommu_msi_table_inval(msi_table, target->gpa);
+}
+
+static int riscv_iommu_ir_update_target(struct riscv_iommu_msi_table *msi_table,
+					struct riscv_iommu_ir_vcpu_info *vcpu_info)
+{
+	const struct riscv_iommu_ir_target *target = &vcpu_info->target;
+	struct riscv_iommu_msipte *msipte;
+	u64 required_caps = 0;
+	size_t idx;
+	int ret;
+
+	ret = riscv_iommu_ir_validate_target(vcpu_info, target, &required_caps);
+	if (ret)
+		return ret;
+
+	required_caps |= msi_table->required_caps;
+	if (!riscv_iommu_msi_table_check_caps(msi_table, required_caps))
+		return -EOPNOTSUPP;
+
+	idx = riscv_iommu_ir_extract(target->gpa >> IMSIC_MMIO_PAGE_SHIFT,
+				     msi_table->msi_addr_mask);
+	msipte = &msi_table->root[idx];
+
+	/*
+	 * The entry may be clear because activation skipped this target, or
+	 * because its producers are parked on host delivery. Both states are
+	 * quiesced: no device message names this page until KVM rewrites one,
+	 * so programming the entry here cannot divert an in-flight MSI.
+	 */
+	riscv_iommu_ir_update_msipte(msi_table, msipte, target);
+	msi_table->required_caps = required_caps;
+	return 0;
+}
+
+static int riscv_iommu_ir_validate_noflat_target(const struct riscv_iommu_ir_vcpu_info *vcpu_info,
+						 const struct riscv_iommu_ir_target *target)
+{
+	u64 addr = target->gpa >> IMSIC_MMIO_PAGE_SHIFT;
+
+	if (!IS_ALIGNED(target->gpa, IMSIC_MMIO_PAGE_SZ) ||
+	    (addr & ~vcpu_info->msi_addr_mask) != vcpu_info->msi_addr_pattern)
+		return -EINVAL;
+
+	/* Without MSI_FLAT there is no MSI page table, so only IMSIC targets work. */
+	if (target->type != RISCV_IOMMU_IR_TARGET_IMSIC)
+		return -EOPNOTSUPP;
+
+	if (!IS_ALIGNED(target->hpa, IMSIC_MMIO_PAGE_SZ) ||
+	    (target->hpa >> IMSIC_MMIO_PAGE_SHIFT) > FIELD_MAX(RISCV_IOMMU_MSIPTE_PPN))
+		return -EINVAL;
+
+	return 0;
+}
+
+/* Caller must hold msi_table->lock. */
+static int riscv_iommu_ir_map_guest_imsic(struct riscv_iommu_msi_table *msi_table,
+					  const struct riscv_iommu_ir_target *target)
+{
+	unsigned long index = target->gpa >> IMSIC_MMIO_PAGE_SHIFT;
+	struct riscv_iommu_noflat_imsic *imsic;
+	int ret;
+
+	imsic = xa_load(&msi_table->noflat_imsics, index);
+	if (imsic) {
+		if (imsic->hpa == target->hpa)
+			return 0;
+
+		ret = riscv_iommu_msi_table_replace_gpa_leaf(msi_table, target->gpa,
+							     imsic->hpa, target->hpa);
+		if (ret)
+			return ret;
+	} else {
+		imsic = kzalloc(sizeof(*imsic), GFP_ATOMIC);
+		if (!imsic)
+			return -ENOMEM;
+
+		ret = xa_err(xa_store(&msi_table->noflat_imsics, index, imsic,
+				      GFP_ATOMIC));
+		if (ret) {
+			kfree(imsic);
+			return ret;
+		}
+
+		ret = riscv_iommu_msi_table_map_gpa(msi_table, target->gpa, target->hpa);
+		if (ret) {
+			xa_erase(&msi_table->noflat_imsics, index);
+			kfree(imsic);
+			return ret;
+		}
+	}
+
+	imsic->hpa = target->hpa;
+	riscv_iommu_msi_table_inval(msi_table, target->gpa);
+	return 0;
+}
+
+static int riscv_iommu_ir_activate_noflat(struct riscv_iommu_msi_table *msi_table,
+					  struct riscv_iommu_ir_vcpu_info *vcpu_info)
+{
+	int ret;
+
+	ret = riscv_iommu_ir_validate_vcpu_info(vcpu_info);
+	if (ret)
+		return ret;
+
+	if (!vcpu_info->targets || !vcpu_info->nr_targets)
+		return -EINVAL;
+
+	/*
+	 * MRIF targets have no no-flat representation, so they are left
+	 * unmapped instead of failing the whole activation. A producer
+	 * routed to such a target is still rejected by its MRIF publish.
+	 */
+	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
+		if (vcpu_info->targets[i].type != RISCV_IOMMU_IR_TARGET_IMSIC)
+			continue;
+
+		ret = riscv_iommu_ir_validate_noflat_target(vcpu_info, &vcpu_info->targets[i]);
+		if (ret)
+			return ret;
+	}
+
+	for (unsigned int i = 0; i < vcpu_info->nr_targets; i++) {
+		if (vcpu_info->targets[i].type != RISCV_IOMMU_IR_TARGET_IMSIC)
+			continue;
+
+		ret = riscv_iommu_ir_map_guest_imsic(msi_table, &vcpu_info->targets[i]);
+		if (ret)
+			return ret;
+	}
+
+	return 0;
+}
+
+static int riscv_iommu_ir_update_target_noflat(struct riscv_iommu_msi_table *msi_table,
+					       struct riscv_iommu_ir_vcpu_info *vcpu_info)
+{
+	const struct riscv_iommu_ir_target *target = &vcpu_info->target;
+	int ret;
+
+	ret = riscv_iommu_ir_validate_vcpu_info(vcpu_info);
+	if (ret)
+		return ret;
+
+	ret = riscv_iommu_ir_validate_noflat_target(vcpu_info, target);
+	if (ret)
+		return ret;
+
+	/*
+	 * The mapping may be missing because activation skipped this target.
+	 * It is quiesced: no device message names this page until KVM
+	 * rewrites one, so creating the mapping here cannot divert an
+	 * in-flight MSI.
+	 */
+	return riscv_iommu_ir_map_guest_imsic(msi_table, target);
+}
+
+static int riscv_iommu_ir_irq_set_vcpu_affinity_noflat(struct irq_data *data,
+						       struct riscv_iommu_info *info,
+						       struct riscv_iommu_ir_vcpu_info *vcpu_info,
+						       struct riscv_iommu_msi_table *msi_table)
+{
+	int ret;
+
+	if (!vcpu_info) {
+		/* Mappings persist; only the per-IRQ forwarding state is dropped. */
+		if (irqd_is_forwarded_to_vcpu(data)) {
+			irqd_clr_forwarded_to_vcpu(data);
+			info->nr_forwarded_irqs--;
+		}
+		return 0;
+	}
+
+	ret = vcpu_info->cmd == RISCV_IOMMU_IR_FORWARD ?
+		riscv_iommu_ir_activate_noflat(msi_table, vcpu_info) :
+		riscv_iommu_ir_update_target_noflat(msi_table, vcpu_info);
+	if (!ret) {
+		if (!irqd_is_forwarded_to_vcpu(data)) {
+			irqd_set_forwarded_to_vcpu(data);
+			info->nr_forwarded_irqs++;
+		}
+	}
+
+	/*
+	 * Leave the forwarding state untouched on failure: a rejected
+	 * publish parks the IRQ on host delivery with its marker intact,
+	 * and a failed forward is rolled back explicitly by the caller.
+	 */
+	return ret;
+}
+
+static int riscv_iommu_ir_irq_set_vcpu_affinity_locked(struct irq_data *data,
+						       struct riscv_iommu_info *info,
+						       struct riscv_iommu_ir_vcpu_info *vcpu_info,
+						       struct riscv_iommu_msi_table *msi_table,
+						       bool noflat)
+{
+	struct riscv_iommu_device *iommu = data->domain->host_data;
+	int ret;
+
+	if (noflat)
+		return riscv_iommu_ir_irq_set_vcpu_affinity_noflat(data, info,
+								    vcpu_info, msi_table);
+
+	if (!vcpu_info) {
+		if (WARN_ON_ONCE(!msi_table->nr_forwarded_irqs || !info->nr_forwarded_irqs))
+			return -EINVAL;
+
+		if (msi_table->nr_forwarded_irqs == 1) {
+			ret = riscv_iommu_ir_deactivate(msi_table);
+			if (ret)
+				return ret;
+		}
+
+		msi_table->nr_forwarded_irqs--;
+		info->nr_forwarded_irqs--;
+		irqd_clr_forwarded_to_vcpu(data);
+
+		return 0;
+	}
+
+	if (!msi_table->nr_forwarded_irqs) {
+		if (vcpu_info->cmd == RISCV_IOMMU_IR_UPDATE_TARGET ||
+		    irqd_is_forwarded_to_vcpu(data))
+			return -EINVAL;
+
+		ret = riscv_iommu_ir_activate(msi_table, iommu, vcpu_info);
+		if (ret)
+			return ret;
+
+		msi_table->nr_forwarded_irqs++;
+		info->nr_forwarded_irqs++;
+		irqd_set_forwarded_to_vcpu(data);
+
+		return 0;
+	}
+
+	if (msi_table->owner != vcpu_info->owner ||
+	    msi_table->msi_addr_mask != vcpu_info->msi_addr_mask ||
+	    msi_table->msi_addr_pattern != vcpu_info->msi_addr_pattern)
+		return -EOPNOTSUPP;
+
+	if (vcpu_info->cmd == RISCV_IOMMU_IR_FORWARD) {
+		if (!irqd_is_forwarded_to_vcpu(data)) {
+			msi_table->nr_forwarded_irqs++;
+			info->nr_forwarded_irqs++;
+			irqd_set_forwarded_to_vcpu(data);
+		}
+		return 0;
+	}
+
+	return riscv_iommu_ir_update_target(msi_table, vcpu_info);
+}
+
+static int riscv_iommu_ir_irq_set_vcpu_affinity(struct irq_data *data, void *arg)
+{
+	struct riscv_iommu_ir_vcpu_info *vcpu_info = arg;
+	struct riscv_iommu_device *iommu = data->domain->host_data;
+	struct riscv_iommu_msi_table *msi_table;
+	struct riscv_iommu_info *info;
+	struct msi_desc *desc;
+	struct device *dev;
+	bool noflat;
+	int ret;
+
+	if (!vcpu_info && !irqd_is_forwarded_to_vcpu(data))
+		return 0;
+
+	if (vcpu_info && vcpu_info->cmd != RISCV_IOMMU_IR_FORWARD &&
+	    (vcpu_info->cmd != RISCV_IOMMU_IR_UPDATE_TARGET || !irqd_is_forwarded_to_vcpu(data)))
+		return -EINVAL;
+
+	desc = irq_data_get_msi_desc(data);
+	if (WARN_ON_ONCE(!desc))
+		return -EINVAL;
+
+	dev = msi_desc_to_dev(desc);
+	info = dev_iommu_priv_get(dev);
+	if (WARN_ON_ONCE(!info))
+		return -EINVAL;
+
+	noflat = !(iommu->caps & RISCV_IOMMU_CAPABILITIES_MSI_FLAT);
+
+	scoped_guard(rcu) {
+		/*
+		 * RCU keeps the table alive, but the device may switch domains before
+		 * the table is locked. Recheck the association under the lock.
+		 */
+		for (;;) {
+			msi_table = riscv_iommu_msi_table_rcu(info);
+			if (!msi_table || (!noflat && !msi_table->root))
+				return -EOPNOTSUPP;
+
+			raw_spin_lock(&msi_table->lock);
+			if (msi_table == riscv_iommu_msi_table_rcu(info))
+				break;
+			raw_spin_unlock(&msi_table->lock);
+		}
+	}
+
+	ret = riscv_iommu_ir_irq_set_vcpu_affinity_locked(data, info, vcpu_info,
+							  msi_table, noflat);
+	raw_spin_unlock(&msi_table->lock);
+
+	return ret;
+}
+
+static struct irq_chip riscv_iommu_ir_irq_chip = {
+	.name			= "IOMMU-IR",
+	.irq_ack		= irq_chip_ack_parent,
+	.irq_mask		= irq_chip_mask_parent,
+	.irq_unmask		= irq_chip_unmask_parent,
+	.irq_set_affinity	= riscv_iommu_ir_irq_set_affinity,
+	.irq_set_vcpu_affinity	= riscv_iommu_ir_irq_set_vcpu_affinity,
+};
+
+static int riscv_iommu_ir_irq_domain_alloc_irqs(struct irq_domain *irqdomain,
+						unsigned int irq_base, unsigned int nr_irqs,
+						void *arg)
+{
+	int ret;
+
+	ret = irq_domain_alloc_irqs_parent(irqdomain, irq_base, nr_irqs, arg);
+	if (ret)
+		return ret;
+
+	for (unsigned int i = 0; i < nr_irqs; i++) {
+		ret = irq_domain_set_hwirq_and_chip(irqdomain, irq_base + i,
+						    irq_base + i,
+						    &riscv_iommu_ir_irq_chip, NULL);
+		if (ret) {
+			irq_domain_free_irqs_parent(irqdomain, irq_base, nr_irqs);
+			return ret;
+		}
+	}
+
+	return 0;
+}
+
+static const struct irq_domain_ops riscv_iommu_ir_irq_domain_ops = {
+	.alloc			= riscv_iommu_ir_irq_domain_alloc_irqs,
+	.free			= irq_domain_free_irqs_parent,
+};
+
+static const struct msi_parent_ops riscv_iommu_ir_msi_parent_ops = {
+	.prefix			= "IR-",
+	.supported_flags	= MSI_GENERIC_FLAGS_MASK |
+				  MSI_FLAG_PCI_MSIX,
+	.required_flags		= MSI_FLAG_USE_DEF_DOM_OPS |
+				  MSI_FLAG_USE_DEF_CHIP_OPS,
+	.init_dev_msi_info	= msi_parent_init_dev_msi_info,
+};
+
+static struct irq_domain *riscv_iommu_ir_irq_domain_create(struct riscv_iommu_device *iommu,
+							   struct irq_domain *irqparent)
+{
+	char *fwname __free(kfree) = NULL;
+	struct irq_domain *irqdomain;
+	struct fwnode_handle *fn;
+
+	fwname = kasprintf(GFP_KERNEL, "IOMMU-IR-%s", dev_name(iommu->dev));
+	if (!fwname)
+		return ERR_PTR(-ENOMEM);
+
+	fn = irq_domain_alloc_named_fwnode(fwname);
+	if (!fn)
+		return ERR_PTR(-ENOMEM);
+
+	irqdomain = irq_domain_create_hierarchy(irqparent, 0, 0, fn,
+						&riscv_iommu_ir_irq_domain_ops, iommu);
+	if (!irqdomain) {
+		irq_domain_free_fwnode(fn);
+		return ERR_PTR(-ENOMEM);
+	}
+
+	/*
+	 * The RISC-V IOMMU doesn't validate MSI data, so we can't set
+	 * IRQ_DOMAIN_FLAG_ISOLATED_MSI. The means VFIO requires its
+	 * allow_unsafe_interrupts module parameter.
+	 */
+	irqdomain->flags |= IRQ_DOMAIN_FLAG_MSI_PARENT;
+	irqdomain->msi_parent_ops = &riscv_iommu_ir_msi_parent_ops;
+	irq_domain_update_bus_token(irqdomain, DOMAIN_BUS_MSI_REMAP);
+
+	return irqdomain;
+}
+
+void riscv_iommu_ir_irq_domain_remove(struct riscv_iommu_device *iommu)
+{
+	struct irq_domain *irqdomain = iommu->irqdomain;
+	struct fwnode_handle *fn;
+
+	if (!irqdomain)
+		return;
+
+	fn = irqdomain->fwnode;
+	irq_domain_remove(irqdomain);
+	iommu->irqdomain = NULL;
+	irq_domain_free_fwnode(fn);
+}
+
+int riscv_iommu_ir_probe_device(struct riscv_iommu_device *iommu, struct device *dev,
+				struct riscv_iommu_info *info)
+{
+	struct irq_domain *msi_parent = dev_get_msi_domain(iommu->dev);
+	struct irq_domain *irqdomain;
+
+	info->old_msi_parent = NULL;
+
+	if (iommu->fctl & RISCV_IOMMU_FCTL_WSI)
+		msi_parent = imsic_get_base_domain();
+	else if (!imsic_dev_has_imsic_msi_parent(iommu->dev))
+		return 0;
+
+	if (!msi_parent || dev_get_msi_domain(dev) != msi_parent)
+		return 0;
+
+	irqdomain = iommu->irqdomain;
+	if (!irqdomain) {
+		irqdomain = riscv_iommu_ir_irq_domain_create(iommu, msi_parent);
+		if (IS_ERR(irqdomain))
+			return PTR_ERR(irqdomain);
+		iommu->irqdomain = irqdomain;
+	} else if (irqdomain->parent != msi_parent) {
+		return 0;
+	}
+
+	if (!device_link_add(dev, iommu->dev, DL_FLAG_AUTOREMOVE_SUPPLIER))
+		return -ENODEV;
+
+	info->old_msi_parent = msi_parent;
+	dev_set_msi_domain(dev, irqdomain);
+
+	return 0;
+}
+
+void riscv_iommu_ir_release_device(struct device *dev, struct riscv_iommu_info *info)
+{
+	if (info->old_msi_parent)
+		dev_set_msi_domain(dev, info->old_msi_parent);
+}
