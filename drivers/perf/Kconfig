@@ -291,4 +291,18 @@ config LRW_PCIE_PMU
 
 	  If you are not using LRW PCIe hardware or do not require performance monitoring,
 	  say N.
+
+config LPRS_ZF_ZCN_PMU
+	tristate "Enable LeapRise ZF ZCN performance monitoring"
+	depends on ACPI
+	help
+	  This option enables the PMU driver for the LeapRise ZF ZCN fabric,
+	  which provides performance monitoring of ZCN interconnect events
+	  through the perf framework.
+
+	  Say Y here to include the driver in the kernel, or M to build it as
+	  a module named lprs_zf_zcn_pmu.ko.
+
+	  If you are not using LeapRise ZF hardware or do not require
+	  performance monitoring, say N.
 endmenu
