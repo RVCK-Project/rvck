@@ -99,8 +99,11 @@ static int riscv_vr_get(struct task_struct *target,
 	struct __riscv_v_ext_state *vstate = &target->thread.vstate;
 	struct __riscv_v_regset_state ptrace_vstate;
 
-	if (!riscv_v_vstate_query(task_pt_regs(target)))
+	if (!(has_vector() || has_xtheadvector()))
 		return -EINVAL;
+
+	if (!riscv_v_vstate_query(task_pt_regs(target)))
+		return -ENODATA;
 
 	/*
 	 * Ensure the vector registers have been saved to the memory before
@@ -125,6 +128,92 @@ static int riscv_vr_get(struct task_struct *target,
 	return membuf_write(&to, vstate->datap, riscv_v_vsize);
 }
 
+static int invalid_ptrace_v_csr(struct __riscv_v_ext_state *vstate,
+				struct __riscv_v_regset_state *ptrace)
+{
+	unsigned long vsew, vlmul, vfrac, vl;
+	unsigned long elen, vlen;
+	unsigned long sew, lmul;
+	unsigned long reserved;
+
+	vlen = vstate->vlenb * 8;
+	if (vstate->vlenb != ptrace->vlenb)
+		return 1;
+
+	/* do not allow to set vcsr/vxrm/vxsat reserved bits */
+	reserved = ~(CSR_VXSAT_MASK | (CSR_VXRM_MASK << CSR_VXRM_SHIFT));
+	if (ptrace->vcsr & reserved)
+		return 1;
+
+	if (has_vector()) {
+		/* do not allow to set vtype reserved bits and vill bit */
+		reserved = ~(VTYPE_VSEW | VTYPE_VLMUL | VTYPE_VMA | VTYPE_VTA);
+		if (ptrace->vtype & reserved)
+			return 1;
+
+		elen = riscv_has_extension_unlikely(RISCV_ISA_EXT_ZVE64X) ? 64 : 32;
+		vsew = (ptrace->vtype & VTYPE_VSEW) >> VTYPE_VSEW_SHIFT;
+		sew = 8 << vsew;
+
+		if (sew > elen)
+			return 1;
+
+		vfrac = (ptrace->vtype & VTYPE_VLMUL_FRAC);
+		vlmul = (ptrace->vtype & VTYPE_VLMUL);
+
+		/* RVV 1.0 spec 3.4.2: VLMUL(0x4) reserved */
+		if (vlmul == 4)
+			return 1;
+
+		/* RVV 1.0 spec 3.4.2: (LMUL < SEW_min / ELEN) reserved */
+		if (vlmul == 5 && elen == 32)
+			return 1;
+
+		/* for zero vl verify that at least one element is possible */
+		vl = ptrace->vl ? ptrace->vl : 1;
+
+		if (vfrac) {
+			/* integer 1/LMUL: VL =< VLMAX = VLEN / SEW / LMUL */
+			lmul = 2 << (3 - (vlmul - vfrac));
+			if (vlen < vl * sew * lmul)
+				return 1;
+		} else {
+			/* integer LMUL: VL =< VLMAX = LMUL * VLEN / SEW */
+			lmul = 1 << vlmul;
+			if (vl * sew > lmul * vlen)
+				return 1;
+		}
+	}
+
+	if (has_xtheadvector()) {
+		/* do not allow to set vtype reserved bits and vill bit */
+		reserved = ~(VTYPE_VSEW_THEAD | VTYPE_VLMUL_THEAD | VTYPE_VEDIV_THEAD);
+		if (ptrace->vtype & reserved)
+			return 1;
+
+		/*
+		 * THead ISA Extension spec chapter 16:
+		 * divided element extension ('Zvediv') is not part of XTheadVector
+		 */
+		if (ptrace->vtype & VTYPE_VEDIV_THEAD)
+			return 1;
+
+		vsew = (ptrace->vtype & VTYPE_VSEW_THEAD) >> VTYPE_VSEW_THEAD_SHIFT;
+		sew = 8 << vsew;
+
+		vlmul = (ptrace->vtype & VTYPE_VLMUL_THEAD);
+		lmul = 1 << vlmul;
+
+		/* for zero vl verify that at least one element is possible */
+		vl = ptrace->vl ? ptrace->vl : 1;
+
+		if (vl * sew > lmul * vlen)
+			return 1;
+	}
+
+	return 0;
+}
+
 static int riscv_vr_set(struct task_struct *target,
 			const struct user_regset *regset,
 			unsigned int pos, unsigned int count,
@@ -134,8 +223,11 @@ static int riscv_vr_set(struct task_struct *target,
 	struct __riscv_v_ext_state *vstate = &target->thread.vstate;
 	struct __riscv_v_regset_state ptrace_vstate;
 
-	if (!riscv_v_vstate_query(task_pt_regs(target)))
+	if (!(has_vector() || has_xtheadvector()))
 		return -EINVAL;
+
+	if (!riscv_v_vstate_query(task_pt_regs(target)))
+		return -ENODATA;
 
 	/* Copy rest of the vstate except datap */
 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ptrace_vstate, 0,
@@ -143,7 +235,7 @@ static int riscv_vr_set(struct task_struct *target,
 	if (unlikely(ret))
 		return ret;
 
-	if (vstate->vlenb != ptrace_vstate.vlenb)
+	if (invalid_ptrace_v_csr(vstate, &ptrace_vstate))
 		return -EINVAL;
 
 	vstate->vstart = ptrace_vstate.vstart;
@@ -156,6 +248,17 @@ static int riscv_vr_set(struct task_struct *target,
 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, vstate->datap,
 				 0, riscv_v_vsize);
 	return ret;
+}
+
+static int riscv_vr_active(struct task_struct *target, const struct user_regset *regset)
+{
+	if (!(has_vector() || has_xtheadvector()))
+		return -ENODEV;
+
+	if (!riscv_v_vstate_query(task_pt_regs(target)))
+		return 0;
+
+	return regset->n;
 }
 #endif
 
@@ -269,7 +372,7 @@ static int tagged_addr_ctrl_set(struct task_struct *target,
 }
 #endif
 
-static const struct user_regset riscv_user_regset[] = {
+static struct user_regset riscv_user_regset[] __ro_after_init = {
 	[REGSET_X] = {
 		.core_note_type = NT_PRSTATUS,
 		.n = ELF_NGREG,
@@ -292,11 +395,10 @@ static const struct user_regset riscv_user_regset[] = {
 	[REGSET_V] = {
 		.core_note_type = NT_RISCV_VECTOR,
 		.align = 16,
-		.n = ((32 * RISCV_MAX_VLENB) +
-		      sizeof(struct __riscv_v_regset_state)) / sizeof(__u32),
 		.size = sizeof(__u32),
 		.regset_get = riscv_vr_get,
 		.set = riscv_vr_set,
+		.active = riscv_vr_active,
 	},
 #endif
 #ifdef CONFIG_RISCV_ISA_SUPM
@@ -327,6 +429,14 @@ static const struct user_regset_view riscv_user_native_view = {
 	.regsets = riscv_user_regset,
 	.n = ARRAY_SIZE(riscv_user_regset),
 };
+
+#ifdef CONFIG_RISCV_ISA_V
+void __init update_regset_vector_info(unsigned long size)
+{
+	riscv_user_regset[REGSET_V].n = (size + sizeof(struct __riscv_v_regset_state)) /
+					sizeof(__u32);
+}
+#endif
 
 struct pt_regs_offset {
 	const char *name;
