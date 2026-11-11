@@ -194,6 +194,62 @@ class ContribStats:
             print(f"❌ 设置凭据失败: {e}")
             return False, None
 
+    def parse_dropped_patches(self,file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        blocks = content.split("<begin>")[1:]
+        commands = []
+
+        for block in blocks:
+            block = block.split("<end>")[0]
+
+            author_match = re.search(r"^Author:(.*)$", block, re.MULTILINE)
+            author = author_match.group(1).strip() if author_match else ""
+
+            subject_match = re.search(r"^Subject:(.*)$", block, re.MULTILINE)
+            subject = subject_match.group(1).strip() if subject_match else ""
+
+            body_match = re.search(r"^Body:[ \t]*\n(.*)\Z", block, re.MULTILINE | re.DOTALL)
+            body = body_match.group(1).rstrip("\n") if body_match else ""
+
+            subject = "[DROPPED] " + subject
+
+            message = subject + "\n\n" + body if body else subject
+
+            def shell_quote(s):
+                return "'" + s.replace("'", "'\\''") + "'"
+
+            cmd = (
+                f"git commit --allow-empty "
+                f"--author={shell_quote(author)} "
+                f"-m {shell_quote(message)}"
+            )
+            commands.append(cmd)
+
+        return commands
+
+    def apply_dropped_patches(self, tmp_dir):
+        """应用 dropped-patches.db 中的补丁信息"""
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(script_dir, "dropped-patches.db")
+
+        if not os.path.exists(file_path):
+            print(f"dropped-patches.db 文件不存在: {file_path}")
+            return
+
+        print(f"应用 dropped-patches.db 中的补丁信息...")
+
+        cmds = self.parse_dropped_patches(file_path)
+
+        for cmd in cmds:
+            stdout, stderr, code = self.run_git(cmd, cwd=tmp_dir, check_error=False)
+            if code != 0:
+                print(f"应用补丁失败: {stderr[:200]}")
+            else:
+                print(f"✓ 应用第 {cmds.index(cmd) + 1} 个丢弃的补丁成功")
+
     def cleanup_credentials(self, cred_file):
         """清理凭证文件"""
 
@@ -335,6 +391,9 @@ class ContribStats:
 
                 # 2. 查找tag
                 start_tag = self.find_tag_in_clone(tmp_dir)
+
+                # 补充 drop 的提交信息
+                self.apply_dropped_patches(tmp_dir)
 
                 # 3. 获取提交列表
                 commits = self.get_commits_from_clone(tmp_dir, start_tag)
