@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 546</li>
-<li><strong>统计时间</strong>: 2026-11-06 17:36:55</li>
+<li><strong>贡献提交数</strong>: 549</li>
+<li><strong>统计时间</strong>: 2026-11-12 15:39:57</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [02b14c3d](https://github.com/RVCK-Project/rvck/commit/02b14c3d725f71f3a5a2a22ef61faa429c3923b3) | 2026-11-12 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches |
+| [ea604077](https://github.com/RVCK-Project/rvck/commit/ea60407751cdd2bd226a630a2c62d51a67bdb2ab) | 2026-11-12 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
+| [2d0a0908](https://github.com/RVCK-Project/rvck/commit/2d0a09084d4892e2a91eb454c8e7a97a5d4d5318) | 2026-11-12 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config |
 | [99539c3e](https://github.com/RVCK-Project/rvck/commit/99539c3e0665a6954184dfa392ff2a41cd765a7f) | 2026-11-05 | Gao Rui | perf: riscv: Fix passing pointer to sbi_ecall in pmu_sbi_check_event |
 | [c44e3852](https://github.com/RVCK-Project/rvck/commit/c44e3852ff761ca76b9e266114004d544ecf1878) | 2026-08-18 | Xixin Liu | perf: RISC-V: use BIT_ULL for u64 overflow masks |
 | [3bc16937](https://github.com/RVCK-Project/rvck/commit/3bc1693791d24ab7d552c856425600616980fd2b) | 2025-11-14 | Chen Pei | tools: riscv: Fixed misalignment of CSR related definitions |
@@ -566,7 +569,7 @@
 | [cbf4f664](https://github.com/RVCK-Project/rvck/commit/cbf4f6644bd0355282d69aa396267bbf334cb104) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 546 条提交（显示全部）**
+**共 549 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -575,5 +578,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-06 17:36:55*
+*本页面最后更新于 2026-11-12 15:39:57*
 *数据来源: 主分支 rvck-6.6@dc246d68*

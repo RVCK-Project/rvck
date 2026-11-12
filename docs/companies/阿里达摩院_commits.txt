@@ -1,9 +1,12 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 406 个提交
-# 生成时间: 2026-11-06 17:36:55
+# 共 409 个提交
+# 生成时间: 2026-11-12 15:39:57
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+bf0f24ca | 2026-11-12 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
+6c6a89bc | 2026-11-12 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
+ecf6a13f | 2026-11-12 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()
 d8c386c7 | 2026-07-18 | Pengpeng Hou | RISC-V: KVM: Reject overlapping AIA IMSIC address fields
 a6aa65e0 | 2026-07-28 | Yicong Yang | RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW
 26ea757b | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized

@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 406</li>
-<li><strong>统计时间</strong>: 2026-11-06 17:36:55</li>
+<li><strong>贡献提交数</strong>: 409</li>
+<li><strong>统计时间</strong>: 2026-11-12 15:39:57</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [5d5c7da2](https://github.com/RVCK-Project/rvck/commit/5d5c7da2cd3ebe0308962e4c82aea9dd7779f200) | 2024-05-27 | Xiangyi Zeng | drivers/spi: Add THEAD TH1520 QSPI driver |
+| [d9fd01f7](https://github.com/RVCK-Project/rvck/commit/d9fd01f7d2b46a25193b02a54fe64517b7456a66) | 2024-05-19 | Wei Fu | riscv: dts: thead: Add XuanTie TH1520 Mailbox device node |
+| [a4da68bd](https://github.com/RVCK-Project/rvck/commit/a4da68bd9e3bd2c6e508dea57007a07736e06ac5) | 2024-05-17 | Fugang Duan | mailbox: add XuanTie TH1520 Mailbox IPC driver |
 | [45febcf5](https://github.com/RVCK-Project/rvck/commit/45febcf5dead29f7e74499a1defefc816c4b9f83) | 2024-05-19 | Wei Fu | dt-bindings: mailbox: Add a binding file for XuanTie TH1520 Mailbox |
 | [733807e3](https://github.com/RVCK-Project/rvck/commit/733807e3fd58ecfa42d99c3bb8f44529ec881c82) | 2024-05-17 | Xiangyi Zeng | dt-bindings: adc: Add Documentation for THEAD TH1520 ADC |
 | [3963eaae](https://github.com/RVCK-Project/rvck/commit/3963eaaef55fabaafd468c1b9fd910d6ce6edc11) | 2024-05-17 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 ADC device node |
@@ -26,7 +29,7 @@
 | [ec633acf](https://github.com/RVCK-Project/rvck/commit/ec633acf6cb8c703aa089c9e71eef12fca88079e) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 406 条提交，显示 401-406**
+**共 409 条提交，显示 401-409**
 
 [1](阿里达摩院.md) [2](阿里达摩院_page2.md) **[3]**
 
@@ -37,5 +40,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-06 17:36:55*
+*本页面最后更新于 2026-11-12 15:39:57*
 *数据来源: 主分支 rvck-6.6@dc246d68*

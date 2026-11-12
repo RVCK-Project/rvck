@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 406</li>
-<li><strong>统计时间</strong>: 2026-11-06 17:36:55</li>
+<li><strong>贡献提交数</strong>: 409</li>
+<li><strong>统计时间</strong>: 2026-11-12 15:39:57</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [bf0f24ca](https://github.com/RVCK-Project/rvck/commit/bf0f24cac5d6c8be3235fe371a772ef7b467f1be) | 2026-11-12 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration |
+| [6c6a89bc](https://github.com/RVCK-Project/rvck/commit/6c6a89bc84813d58ab3372921a28da915c279314) | 2026-11-12 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_a... |
+| [ecf6a13f](https://github.com/RVCK-Project/rvck/commit/ecf6a13faa011e705dc537a9502d81a4e895f746) | 2026-11-12 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_at... |
 | [d8c386c7](https://github.com/RVCK-Project/rvck/commit/d8c386c77b9f00c25d2597b17967d45045f38ea3) | 2026-07-18 | Pengpeng Hou | RISC-V: KVM: Reject overlapping AIA IMSIC address fields |
 | [a6aa65e0](https://github.com/RVCK-Project/rvck/commit/a6aa65e038fb03abbd7b6db1a60fd0e1dd6fe28d) | 2026-07-28 | Yicong Yang | RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW |
 | [26ea757b](https://github.com/RVCK-Project/rvck/commit/26ea757b037965fa50ebec00ab304f23fac588c6) | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized |
@@ -426,7 +429,7 @@
 | [ec633acf](https://github.com/RVCK-Project/rvck/commit/ec633acf6cb8c703aa089c9e71eef12fca88079e) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 406 条提交（显示全部）**
+**共 409 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -435,5 +438,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-06 17:36:55*
+*本页面最后更新于 2026-11-12 15:39:57*
 *数据来源: 主分支 rvck-6.6@dc246d68*

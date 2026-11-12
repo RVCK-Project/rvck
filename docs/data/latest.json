@@ -1,6 +1,6 @@
 {
-  "total_commits": 1764,
-  "commits_with_company": 1655,
+  "total_commits": 1770,
+  "commits_with_company": 1661,
   "total_insertions": 1725631,
   "total_deletions": 97649,
   "companies": {
@@ -3800,10 +3800,59 @@
       ]
     },
     "中兴通讯": {
-      "count": 546,
+      "count": 549,
       "insertions": 33699,
       "deletions": 6552,
       "commits": [
+        {
+          "hash": "02b14c3d725f71f3a5a2a22ef61faa429c3923b3",
+          "author_name": "Ben Dooks",
+          "author_email": "ben.dooks@codethink.co.uk",
+          "date": "2026-11-12 15:41:11 +0800",
+          "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>",
+            "Signed-off-by: Cyril Bur <cyrilbur@tenstorrent.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: Rui Gao <gao.rui@zte.com.cn>",
+            "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
+            "Ben Dooks <ben.dooks@codethink.co.uk>"
+          ]
+        },
+        {
+          "hash": "ea60407751cdd2bd226a630a2c62d51a67bdb2ab",
+          "author_name": "Atish Patra",
+          "author_email": "atishp@rivosinc.com",
+          "date": "2026-11-12 15:41:10 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Atish Patra <atishp@rivosinc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
+            "Atish Patra <atishp@rivosinc.com>"
+          ]
+        },
+        {
+          "hash": "2d0a09084d4892e2a91eb454c8e7a97a5d4d5318",
+          "author_name": "Mayuresh Chitale",
+          "author_email": "mchitale@ventanamicro.com",
+          "date": "2026-11-12 15:41:08 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Mayuresh Chitale <mchitale@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: yechao-w <wang.yechao255@zte.com.cn>",
+            "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
+            "Mayuresh Chitale <mchitale@ventanamicro.com>"
+          ]
+        },
         {
           "hash": "99539c3e0665a6954184dfa392ff2a41cd765a7f",
           "author_name": "Gao Rui",
@@ -12455,10 +12504,57 @@
       ]
     },
     "阿里达摩院": {
-      "count": 406,
+      "count": 409,
       "insertions": 61723,
       "deletions": 20015,
       "commits": [
+        {
+          "hash": "bf0f24cac5d6c8be3235fe371a772ef7b467f1be",
+          "author_name": "Xie Bo",
+          "author_email": "xb@ultrarisc.com",
+          "date": "2026-11-12 15:41:10 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Xie Bo <xb@ultrarisc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Xie Bo <xb@ultrarisc.com>"
+          ]
+        },
+        {
+          "hash": "6c6a89bc84813d58ab3372921a28da915c279314",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-11-12 15:41:09 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "ecf6a13faa011e705dc537a9502d81a4e895f746",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-11-12 15:41:08 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
         {
           "hash": "d8c386c77b9f00c25d2597b17967d45045f38ea3",
           "author_name": "Pengpeng Hou",
@@ -26991,13 +27087,28 @@
       ]
     }
   ],
-  "total_contribution": 1822,
+  "total_contribution": 1831,
   "companies_contribution": {
     "超睿科技": {
-      "count": 91,
+      "count": 92,
       "insertions": 10341,
       "deletions": 814,
       "commits": [
+        {
+          "hash": "bf0f24cac5d6c8be3235fe371a772ef7b467f1be",
+          "author_name": "Xie Bo",
+          "author_email": "xb@ultrarisc.com",
+          "date": "2026-11-12 15:41:10 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Xie Bo <xb@ultrarisc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Xie Bo <xb@ultrarisc.com>"
+          ]
+        },
         {
           "hash": "de27ffd8a034342f9450f2f25d1edc66e33b92cc",
           "author_name": "Jia Wang",
@@ -30802,10 +30913,59 @@
       ]
     },
     "中兴通讯": {
-      "count": 546,
+      "count": 549,
       "insertions": 33699,
       "deletions": 6552,
       "commits": [
+        {
+          "hash": "02b14c3d725f71f3a5a2a22ef61faa429c3923b3",
+          "author_name": "Ben Dooks",
+          "author_email": "ben.dooks@codethink.co.uk",
+          "date": "2026-11-12 15:41:11 +0800",
+          "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>",
+            "Signed-off-by: Cyril Bur <cyrilbur@tenstorrent.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: Rui Gao <gao.rui@zte.com.cn>",
+            "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
+            "Ben Dooks <ben.dooks@codethink.co.uk>"
+          ]
+        },
+        {
+          "hash": "ea60407751cdd2bd226a630a2c62d51a67bdb2ab",
+          "author_name": "Atish Patra",
+          "author_email": "atishp@rivosinc.com",
+          "date": "2026-11-12 15:41:10 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Atish Patra <atishp@rivosinc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
+            "Atish Patra <atishp@rivosinc.com>"
+          ]
+        },
+        {
+          "hash": "2d0a09084d4892e2a91eb454c8e7a97a5d4d5318",
+          "author_name": "Mayuresh Chitale",
+          "author_email": "mchitale@ventanamicro.com",
+          "date": "2026-11-12 15:41:08 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Mayuresh Chitale <mchitale@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: yechao-w <wang.yechao255@zte.com.cn>",
+            "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
+            "Mayuresh Chitale <mchitale@ventanamicro.com>"
+          ]
+        },
         {
           "hash": "99539c3e0665a6954184dfa392ff2a41cd765a7f",
           "author_name": "Gao Rui",
@@ -39457,10 +39617,57 @@
       ]
     },
     "阿里达摩院": {
-      "count": 518,
+      "count": 521,
       "insertions": 87625,
       "deletions": 25360,
       "commits": [
+        {
+          "hash": "bf0f24cac5d6c8be3235fe371a772ef7b467f1be",
+          "author_name": "Xie Bo",
+          "author_email": "xb@ultrarisc.com",
+          "date": "2026-11-12 15:41:10 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Xie Bo <xb@ultrarisc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Xie Bo <xb@ultrarisc.com>"
+          ]
+        },
+        {
+          "hash": "6c6a89bc84813d58ab3372921a28da915c279314",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-11-12 15:41:09 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "ecf6a13faa011e705dc537a9502d81a4e895f746",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-11-12 15:41:08 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
         {
           "hash": "3bc1693791d24ab7d552c856425600616980fd2b",
           "author_name": "Chen Pei",
@@ -48857,10 +49064,42 @@
       ]
     },
     "软件所": {
-      "count": 395,
+      "count": 397,
       "insertions": 1425040,
       "deletions": 41494,
       "commits": [
+        {
+          "hash": "6c6a89bc84813d58ab3372921a28da915c279314",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-11-12 15:41:09 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "ecf6a13faa011e705dc537a9502d81a4e895f746",
+          "author_name": "Jiakai Xu",
+          "author_email": "jiakaipeanut@gmail.com",
+          "date": "2026-11-12 15:41:08 +0800",
+          "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
+          "insertions": 0,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>",
+            "Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
+            "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
         {
           "hash": "89c7e7a3741e99fbf88262cb84d1973329512526",
           "author_name": "Vivian Wang",
@@ -54958,7 +55197,7 @@
       ]
     }
   },
-  "generated_at": "2026-11-06 17:36:55",
+  "generated_at": "2026-11-12 15:39:57",
   "main_branch": "rvck-6.6",
   "main_commit": "dc246d68",
   "start_tag": "v6.6.161"

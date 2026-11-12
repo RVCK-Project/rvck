@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 546</li>
-<li><strong>统计时间</strong>: 2026-11-06 17:36:55</li>
+<li><strong>贡献提交数</strong>: 549</li>
+<li><strong>统计时间</strong>: 2026-11-12 15:39:57</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [8014e9b7](https://github.com/RVCK-Project/rvck/commit/8014e9b70473a3232937685b107c85accc228550) | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore HSTATUS in C source |
+| [199d5480](https://github.com/RVCK-Project/rvck/commit/199d54801aa1e491355b9a79b32448045a67731d) | 2024-10-21 | Anup Patel | RISC-V: KVM: Order the object files alphabetically |
+| [5c48f72f](https://github.com/RVCK-Project/rvck/commit/5c48f72f8f9d7c5d4960936b61dff6c7265298c7) | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling |
 | [6c739404](https://github.com/RVCK-Project/rvck/commit/6c739404099d81972e927de311f578f8150ae582) | 2024-10-15 | Quan Zhou | riscv: perf: add guest vs host distinction |
 | [4f30b283](https://github.com/RVCK-Project/rvck/commit/4f30b2839c50103a5a61921096b55de5c690177c) | 2024-07-08 | Jinjie Ruan | riscv: stacktrace: Add USER_STACKTRACE support |
 | [25596250](https://github.com/RVCK-Project/rvck/commit/255962505f816eb2ff1f489f1664a79920666d70) | 2023-10-24 | Clément Léger | riscv: kvm: use ".L" local labels in assembly when applicable |
@@ -215,12 +218,9 @@
 | [73a4fb1e](https://github.com/RVCK-Project/rvck/commit/73a4fb1e5e01e473dc1074b1e39e12998d3611bd) | 2024-07-02 | Robin Murphy | iommu: Remove iommu_fwspec ops |
 | [8b362048](https://github.com/RVCK-Project/rvck/commit/8b362048345c07dc66345649ae34d4efe755df72) | 2024-07-02 | Robin Murphy | OF: Simplify of_iommu_configure() |
 | [6849161a](https://github.com/RVCK-Project/rvck/commit/6849161a9a3750c96b7d9c976c2336f9f0ddde77) | 2024-07-02 | Robin Murphy | ACPI: Retire acpi_iommu_fwspec_ops() |
-| [fdd1e6af](https://github.com/RVCK-Project/rvck/commit/fdd1e6af9d99ed02e99ea3b8762d83850b25c9a6) | 2024-07-02 | Robin Murphy | iommu: Resolve fwspec ops automatically |
-| [e11e06ce](https://github.com/RVCK-Project/rvck/commit/e11e06cec6d297f460ad2ef636e81c6dad0be527) | 2023-12-07 | Jason Gunthorpe | acpi: Do not return struct iommu_ops from acpi_iommu_configure_id() |
-| [be11e91e](https://github.com/RVCK-Project/rvck/commit/be11e91ed8bf0a2bf621276b780958521ebd5c4f) | 2023-12-07 | Jason Gunthorpe | iommu: Mark dev_iommu_priv_set() with a lockdep |
 ---
 
-**共 546 条提交，显示 201-400**
+**共 549 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-06 17:36:55*
+*本页面最后更新于 2026-11-12 15:39:57*
 *数据来源: 主分支 rvck-6.6@dc246d68*

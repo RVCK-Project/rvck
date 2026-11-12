@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 406</li>
-<li><strong>统计时间</strong>: 2026-11-06 17:36:55</li>
+<li><strong>贡献提交数</strong>: 409</li>
+<li><strong>统计时间</strong>: 2026-11-12 15:39:57</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [fe0ffd84](https://github.com/RVCK-Project/rvck/commit/fe0ffd842e9f754586f232d9fd553ceb8c847e68) | 2025-02-19 | Michal Wilczynski | riscv: dts: thead: Introduce power domain nodes with aon firmware |
+| [f00c5970](https://github.com/RVCK-Project/rvck/commit/f00c59701fe0b1d80808eded5eae7ca19879d83e) | 2024-02-08 | Krzysztof Kozlowski | pmdomain: core: constify of_phandle_args in xlate |
+| [b894cee1](https://github.com/RVCK-Project/rvck/commit/b894cee143cb3e07529163f21b4fb462949f2cf0) | 2025-03-11 | Michal Wilczynski | dt-bindings: power: Add TH1520 SoC power domains |
 | [e1b0c756](https://github.com/RVCK-Project/rvck/commit/e1b0c7569244bbada676152de62a303c821cc0d8) | 2023-09-11 | Ulf Hansson | pmdomain: Prepare to move Kconfig files into the pmdomain subsystem |
 | [5a71072e](https://github.com/RVCK-Project/rvck/commit/5a71072ecef367555ba840cbcb0fcd7832c68942) | 2025-03-14 | Arnd Bergmann | pmdomain: thead: fix TH1520_AON_PROTOCOL dependency |
 | [636fe297](https://github.com/RVCK-Project/rvck/commit/636fe2975dcba2c4f4dfd5ae6ebb42621a8d229a) | 2025-03-11 | Michal Wilczynski | pmdomain: thead: Add power-domain driver for TH1520 |
@@ -215,12 +218,9 @@
 | [36e4816b](https://github.com/RVCK-Project/rvck/commit/36e4816bbd22de41b649d7d21b48057d75046f6d) | 2024-05-27 | Xiangyi Zeng | drivers/pvt: add mr75203 driver pm feature and correct temperature coefficient |
 | [736997ff](https://github.com/RVCK-Project/rvck/commit/736997ffe58a3bb32c936e60f3c4d61169a9fcef) | 2024-05-27 | Xiangyi Zeng | riscv: dts: thead: Add THEAD TH1520 SPI/QSPI device node |
 | [f14ed93b](https://github.com/RVCK-Project/rvck/commit/f14ed93b2ee247aa5eaf7057ce9f192ea39ea52b) | 2024-05-27 | Xiangyi Zeng | dt-bindings: spi/qspi: Add Documentation for THEAD TH1520 SPI/QSPI |
-| [5d5c7da2](https://github.com/RVCK-Project/rvck/commit/5d5c7da2cd3ebe0308962e4c82aea9dd7779f200) | 2024-05-27 | Xiangyi Zeng | drivers/spi: Add THEAD TH1520 QSPI driver |
-| [d9fd01f7](https://github.com/RVCK-Project/rvck/commit/d9fd01f7d2b46a25193b02a54fe64517b7456a66) | 2024-05-19 | Wei Fu | riscv: dts: thead: Add XuanTie TH1520 Mailbox device node |
-| [a4da68bd](https://github.com/RVCK-Project/rvck/commit/a4da68bd9e3bd2c6e508dea57007a07736e06ac5) | 2024-05-17 | Fugang Duan | mailbox: add XuanTie TH1520 Mailbox IPC driver |
 ---
 
-**共 406 条提交，显示 201-400**
+**共 409 条提交，显示 201-400**
 
 [1](阿里达摩院.md) **[2]** [3](阿里达摩院_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-06 17:36:55*
+*本页面最后更新于 2026-11-12 15:39:57*
 *数据来源: 主分支 rvck-6.6@dc246d68*
