@@ -474,8 +474,14 @@ size_t vendor_id_list_num = ARRAY_SIZE(vendor_id_list);
 int check_vendor_id(struct pci_dev *dev, struct vendor_id_list vendor_id_list[],
 			size_t vendor_id_list_num)
 {
+	struct pci_host_bridge *bridge = pci_find_host_bridge(dev->bus);
 	uint16_t device_vendor_id;
 	uint16_t device_id;
+
+	/* Only apply the allowlist to devices below a Sophgo host bridge. */
+	if (!of_device_is_compatible(pci_bus_to_OF_node(bridge->bus),
+				     "sophgo,cdns-pcie-host"))
+		return 1;
 
 	if (pci_read_config_word(dev, PCI_VENDOR_ID, &device_vendor_id) != 0) {
 		pr_err("Failed to read device vendor ID\n");
