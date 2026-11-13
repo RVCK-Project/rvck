@@ -1,0 +1,163 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/phy/zhihe,a210-usb3-phy.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: ZhiHe A210 USB 3.1 PHY
+
+maintainers:
+  - Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>
+
+description:
+  The ZhiHe A210 USB 3.1 PHY provides USB3 and DisplayPort PHY ports for the
+  USB 3.1 controller and DisplayPort controller. When connected to a
+  Type-C port controller through OF graph endpoints, the PHY also acts
+  as a Type-C orientation and altmode mode switch, and notifies the
+  DisplayPort host of hotplug events through an extcon device.
+
+properties:
+  compatible:
+    const: zhihe,a210-usb3-phy
+
+  reg:
+    minItems: 3
+    maxItems: 3
+
+  reg-names:
+    items:
+      - const: phy_ctrl
+      - const: tca
+      - const: dptx_sys
+
+  clocks:
+    minItems: 1
+    maxItems: 4
+
+  resets:
+    minItems: 2
+    maxItems: 2
+
+  reset-names:
+    items:
+      - const: phy-rst
+      - const: apb-rst
+
+  power-domains:
+    maxItems: 1
+
+  orientation-switch:
+    description:
+      Flag to indicate the PHY provides a Type-C orientation switch for
+      cable flipping.
+
+  mode-switch:
+    description:
+      Flag to indicate the PHY provides a Type-C altmode mode switch for
+      selecting USB, DisplayPort or combined lane modes.
+
+  svid:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description:
+      Standard Vendor ID of the DisplayPort altmode registered through
+      the Type-C mux interface.
+
+  "#extcon-cells":
+    const: 0
+    description:
+      The PHY exports a DisplayPort hotplug extcon device; no extra cell
+      is required by consumers.
+
+  aux-p-gpios:
+    maxItems: 1
+    description:
+      GPIO controlling the DP AUX_P line polarity on cable flip.
+
+  aux-n-gpios:
+    maxItems: 1
+    description:
+      GPIO controlling the DP AUX_N line polarity on cable flip.
+
+  port:
+    $ref: /schemas/graph.yaml#/properties/port
+    description:
+      OF graph endpoint connecting the PHY to the Type-C connector
+      controller orientation and mode switch endpoints.
+
+  zhihe,dp-lane-mux:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    minItems: 4
+    maxItems: 4
+    description: DisplayPort lane mux selection values.
+
+  "#phy-cells":
+    const: 0
+
+patternProperties:
+  "^(dp|u3)-port$":
+    type: object
+    additionalProperties: false
+    properties:
+      max-link-rate:
+        $ref: /schemas/types.yaml#/definitions/uint32
+        enum: [1620, 2700, 5400, 8100]
+      "#phy-cells":
+        const: 0
+    required:
+      - "#phy-cells"
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - clocks
+  - resets
+  - reset-names
+  - "#phy-cells"
+
+additionalProperties: false
+
+examples:
+  - |
+    #include <dt-bindings/clock/zhihe,a210-clk.h>
+    #include <dt-bindings/reset/zhihe,a210-resets.h>
+
+    usb-phy@8040000 {
+        compatible = "zhihe,a210-usb3-phy";
+        reg = <0x08040000 0x3c000>,
+              <0x0807c000 0x2000>,
+              <0x08014000 0x200>;
+        reg-names = "phy_ctrl", "tca", "dptx_sys";
+        clocks = <&clk_usb C10PHY_SUSPEND_CLK_EN>,
+                 <&clk_usb C10PHY_PCLK_EN>;
+        resets = <&rst_usb USB_C10PHY_PHY_RST>,
+                 <&rst_usb USB_C10PHY_APBS_PRST>;
+        reset-names = "phy-rst", "apb-rst";
+        #phy-cells = <0>;
+        orientation-switch;
+        mode-switch;
+        svid = <0xff01>;
+
+        port {
+            #address-cells = <1>;
+            #size-cells = <0>;
+
+            usbdp_phy0_orientation_switch: endpoint@0 {
+                reg = <0>;
+                remote-endpoint = <&usbc0_orien_sw>;
+            };
+
+            usbdp_phy0_dp_altmode_mux: endpoint@1 {
+                reg = <1>;
+                remote-endpoint = <&dp_altmode_mux>;
+            };
+        };
+
+        dp-port {
+            #phy-cells = <0>;
+        };
+
+        u3-port {
+            #phy-cells = <0>;
+        };
+    };

@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 /dts-v1/;
 
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/usb/pd.h>
+
 #include "a210.dtsi"
 
 / {
@@ -9,17 +12,43 @@
 
 	aliases {
 		ethernet0 = &gmac0;
+		ethernet1 = &gmac1;
 		mmc0 = &emmc;
 		serial0 = &uart0;
 		serial1 = &uart1;
-		serial2 = &uart2;
-		serial3 = &uart3;
 		serial4 = &uart4;
 		serial5 = &uart5;
 		serial6 = &uart6;
 		serial7 = &uart7;
 		serial8 = &uart8;
 		serial9 = &uart9;
+	};
+
+	reg_usb2_0_vbus: regulator-usb2-0-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb2_0_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpio = <&aw9535_1 8 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	reg_usb2_1_vbus: regulator-usb2-1-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb2_1_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpio = <&aw9535_1 9 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	reg_usb_typec_vbus: regulator-typec-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb_typec_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpio = <&gpio0 27 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
 	};
 };
 
@@ -35,6 +64,20 @@
 
 &mdio0 {
 	phy0: ethernet-phy@0 {
+		reg = <0x0>;
+	};
+};
+
+&gmac1 {
+	phy-mode = "rgmii-id";
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&gmac1_pins>;
+	phy-handle = <&phy1>;
+};
+
+&mdio1 {
+	phy1: ethernet-phy@1 {
 		reg = <0x0>;
 	};
 };
@@ -82,117 +125,55 @@
 			slew-rate = <0>;
 		};
 	};
-	uart3_pins: uart3-0 {
-		tx-pins {
-			pins = "GPIO0_3", "GPIO0_6"; /* TXD, RTSN */
-			function = "uart3";
+
+	gmac1_pins: gmac1-0 {
+		txclk-pins {
+			pins = "GPIO1_2", /* GMAC1_TX_CLK */
+			       "GPIO1_14"; /* GMAC1_MDC */
+			function = "gmac1";
 			bias-disable;
-			drive-strength = <3>;
+			drive-strength = <13>;
+			input-disable;
+			input-schmitt-disable;
+			slew-rate = <0>;
+		};
+
+		tx-pins {
+			pins = "GPIO1_4", /* GMAC1_TXEN */
+			       "GPIO1_5", /* GMAC1_TXD0 */
+			       "GPIO1_6", /* GMAC1_TXD1 */
+			       "GPIO1_7", /* GMAC1_TXD2 */
+			       "GPIO1_8"; /* GMAC1_TXD3 */
+			function = "gmac1";
+			bias-disable;
+			drive-strength = <20>;
 			input-disable;
 			input-schmitt-disable;
 			slew-rate = <0>;
 		};
 
 		rx-pins {
-			pins = "GPIO0_4", "GPIO0_5"; /* RXD, CTSN */
-			function = "uart3";
+			pins = "GPIO1_3",  /* GMAC1_RX_CLK */
+			       "GPIO1_9",  /* GMAC1_RXDV */
+			       "GPIO1_10", /* GMAC1_RXD0 */
+			       "GPIO1_11", /* GMAC1_RXD1 */
+			       "GPIO1_12", /* GMAC1_RXD2 */
+			       "GPIO1_13", /* GMAC1_RXD3 */
+			       "GPIO1_15"; /* GMAC1_MDIO */
+			function = "gmac1";
 			bias-disable;
-			drive-strength = <1>;
+			drive-strength = <13>;
 			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	uart0_pins: uart0-0 {
-		tx-pins {
-			pins = "GPIO0_14", "GPIO0_17"; /* TXD, RTSN */
-			function = "uart0";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
 			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "GPIO0_15", "GPIO0_16"; /* RXD, CTSN */
-			function = "uart0";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	uart1_pins: uart1-1 {
-		tx-pins {
-			pins = "GPIO0_28", "GPIO0_31"; /* TXD, RTSN */
-			function = "uart1";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "GPIO0_29", "GPIO0_30"; /* RXD, CTSN */
-			function = "uart1";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	uart2_pins: uart2-0 {
-		tx-pins {
-			pins = "GPIO1_1";
-			function = "uart2";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "GPIO1_0";
-			function = "uart2";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
 			slew-rate = <0>;
 		};
 	};
 };
 
 &peri2_padctrl {
-	uart4_pins: uart4-0 {
+	uart5_pins: uart5-1 {
 		tx-pins {
-			pins = "GPIO2_0";
-			function = "uart4";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "GPIO2_1";
-			function = "uart4";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	uart5_pins: uart5-0 {
-		tx-pins {
-			pins = "GPIO2_2";
+			pins = "GPIO2_18", "GPIO3_10";	// TXD, RTSN
 			function = "uart5";
 			bias-disable;
 			drive-strength = <3>;
@@ -202,7 +183,7 @@
 		};
 
 		rx-pins {
-			pins = "GPIO2_3";
+			pins = "GPIO2_19", "GPIO3_9";	// RXD, CTSN
 			function = "uart5";
 			bias-disable;
 			drive-strength = <1>;
@@ -211,91 +192,7 @@
 			slew-rate = <0>;
 		};
 	};
-	uart6_pins: uart6-0 {
-		tx-pins {
-			pins = "GPIO2_4", "GPIO2_9"; /* TXD, RTSN */
-			function = "uart6";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
 
-		rx-pins {
-			pins = "GPIO2_5", "GPIO2_8"; /* RXD, CTSN */
-			function = "uart6";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	uart7_pins: uart7-0 {
-		tx-pins {
-			pins = "GPIO2_6";
-			function = "uart7";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "GPIO2_7";
-			function = "uart7";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	uart9_pins: uart9-0 {
-		tx-pins {
-			pins = "GPIO2_10";
-			function = "uart9";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "GPIO2_11";
-			function = "uart9";
-			bias-disable;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	sen_vclk_pin0: sen-vclk-0 {
-		sen-vclk0-pins {
-			pins = "GPIO3_0";
-			function = "sen_vclk";
-			bias-disable;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-	sen_vclk_pin1: sen-vclk-1 {
-		sen-vclk1-pins {
-			pins = "GPIO3_1";
-			function = "sen_vclk";
-			bias-disable;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
 	uart8_pins: uart8-1 {
 		tx-pins {
 			pins = "GPIO3_2";
@@ -319,16 +216,6 @@
 	};
 };
 
-&uart2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart2_pins>;
-};
-
-&uart3 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart3_pins>;
-};
-
 &uart4 {
 	status = "okay";
 	/*
@@ -337,41 +224,16 @@
 	 */
 };
 
-&uart7 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart7_pins>;
-};
-
-&uart8 {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart8_pins>;
-};
-
-&uart0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart0_pins>;
-};
-
-&uart1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart1_pins>;
-};
-
 &uart5 {
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart5_pins>;
 };
 
-&uart6 {
+&uart8 {
+	status = "okay";
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart6_pins>;
-};
-
-&uart9 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart9_pins>;
+	pinctrl-0 = <&uart8_pins>;
 };
 
 &emmc {
@@ -386,19 +248,31 @@
 	cap-mmc-highspeed;
 };
 
+&usb2_0 {
+	vbus-supply = <&reg_usb2_0_vbus>;
+};
+
+&usb2_1 {
+	vbus-supply = <&reg_usb2_1_vbus>;
+};
+
 &cluster0_opp {
 	opp0-500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1200000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1698000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp0-1896000000 {
 		opp-microvolt = <1000000>;
 	};
@@ -408,12 +282,15 @@
 	opp1-500000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-1698000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-1896000000 {
 		opp-microvolt = <1000000>;
 	};
+
 	opp1-2298000000 {
 		opp-microvolt = <1000000>;
 	};
@@ -445,4 +322,153 @@
 
 &peri3_gpio {
 	status = "okay";
+};
+
+&usb3 {
+	dr_mode = "otg";
+	usb-role-switch;
+
+	port {
+		dwc3_0_role_switch: endpoint {
+			remote-endpoint = <&usbc0_role_sw>;
+		};
+	};
+};
+
+&aon_padctrl {
+	aoi2c1_pins: aoi2c1-0 {
+		i2c-pins {
+			pins = "AOI2C1_SCL", "AOI2C1_SDA";
+			function = "aoi2c1";
+			bias-disable;
+			drive-strength = <25>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <1>;
+		};
+	};
+
+	usbc0_int: usbc0-int-0 {
+		usbcc-int-pins {
+			pins = "AOGPIO0_28";
+			function = "aogpio0";
+			bias-pull-up;
+			drive-strength = <13>;
+			input-enable;
+			input-schmitt-enable;
+			slew-rate = <0>;
+		};
+	};
+};
+
+&aoi2c1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&aoi2c1_pins>;
+	clock-frequency = <400000>;
+	status = "okay";
+
+	aw9535_0: gpio@20 {
+		compatible = "ti,tca9539";
+		reg = <0x20>;
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-parent = <&ao_gpio1>;
+		interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+		gpio-line-names =
+			"CSI1_PWDN_IO0",
+			"CSI1_RST_IO1",
+			"CSI1_FSIN_IO2",
+			"CSI0_PWDN_IO3",
+			"CSI0_RST_IO4",
+			"CSI0_FSIN_IO5",
+			"MINPCIE_1V5POWER_EN_I06",
+			"MINPCIE_3V3_PWREN_I07",
+			"NULL_I08",
+			"M2_SATA_EN_IO9",
+			"AUDIO_ADC0_INT_IO10",
+			"HP_CTL_H_IO11",
+			"PI6C557_EN_IO12",
+			"DISP_RST_IO13",
+			"M2_SATA_3V3_PWREN_IO14",
+			"MINPCIE_PERST_IO15";
+	};
+
+	aw9535_1: gpio@21 {
+		compatible = "ti,tca9539";
+		reg = <0x21>;
+		gpio-controller;
+		#gpio-cells = <2>;
+		gpio-line-names =
+			"PCIE_ETH_PERSTB_IO0",
+			"AUDIO_3V3_PWREN_IO1",
+			"AUDIO_1V8_PWREN_IO2",
+			"MIPI_CSI0_PWREN_IO3",
+			"MIPI_CSI1_PWREN_IO4",
+			"MIPI_TP_PWREN_IO5",
+			"PCIE_ETH_3V3_PWREN_IO6",
+			"NULL_IO7",
+			"USBCON_PWREN_IO8",
+			"USBCON1_PWREN_IO9",
+			"NULL_IO10",
+			"SDIO_3V3_PWREN_IO11",
+			"SDIO_1V8_PWREN_IO12",
+			"PI6C557_PWREN_IO13",
+			"MIPI_DSI_PWREN_IO14",
+			"BL_EN_IO15";
+	};
+
+	typec-portc@22 {
+		compatible = "fcs,fusb302";
+		reg = <0x22>;
+		interrupt-parent = <&ao_gpio0>;
+		interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&usbc0_int>;
+		vbus-supply = <&reg_usb_typec_vbus>;
+		status = "okay";
+
+		connector {
+			compatible = "usb-c-connector";
+			label = "USB-C";
+			data-role = "dual";
+			power-role = "dual";
+			try-power-role = "sink";
+			sink-pdos = <PDO_FIXED(5000, 1000, PDO_FIXED_USB_COMM)>;
+			source-pdos = <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM)>;
+			op-sink-microwatt = <1000000>;
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				port@0 {
+					reg = <0>;
+
+					usbc0_role_sw: endpoint {
+						remote-endpoint = <&dwc3_0_role_switch>;
+					};
+				};
+
+				port@1 {
+					reg = <1>;
+
+					usbc0_orien_sw: endpoint {
+						remote-endpoint = <&usb3_phy_orientation_switch>;
+					};
+				};
+			};
+		};
+	};
+};
+
+&usb3_phy_dwc3 {
+	orientation-switch;
+	mode-switch;
+	svid = <0xff01>;
+
+	port {
+		usb3_phy_orientation_switch: endpoint {
+			remote-endpoint = <&usbc0_orien_sw>;
+		};
+	};
 };
