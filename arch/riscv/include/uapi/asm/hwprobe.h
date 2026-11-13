@@ -116,6 +116,7 @@ struct riscv_hwprobe {
 #define RISCV_HWPROBE_KEY_ZICBOP_BLOCK_SIZE	15
 #define RISCV_HWPROBE_KEY_IMA_EXT_1		16
 #define		RISCV_HWPROBE_EXT_ZICFISS	(1ULL << 0)
+#define RISCV_HWPROBE_KEY_VENDOR_EXT_LEAPRISE_0	17
 
 /* Increase RISCV_HWPROBE_MAX_KEY when adding items. */
 
