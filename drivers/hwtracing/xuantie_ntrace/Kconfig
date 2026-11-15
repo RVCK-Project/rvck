@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-2.0
+config XUANTIE_NTRACE
+	tristate "XUANTIE NTRACE events"
+	depends on PERF_EVENTS && RISCV && SMP
+	depends on OF
+	help
+	  xuantie_ntrace is an instruction-level trace component
+	  of the CPU. xuantie_ntrace system uses RISC-V Nexus
+	  Trace solution.  Implement a xuantie_ntrace pmu driver
+	  and integrate the trace function into the perf framework
+	  so that the trace function can be used through the perf
+	  command.  The trace topology is described by the device
+	  tree.
