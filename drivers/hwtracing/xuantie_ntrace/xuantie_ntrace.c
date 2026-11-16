@@ -47,6 +47,7 @@
 static struct xuantie_ntrace_drvdata *ntrace_drvdata;
 static LIST_HEAD(xuantie_ntrace_controllers);
 static DEFINE_MUTEX(xuantie_ntrace_lock);
+static struct xuantie_ntrace_pmu xuantie_ntrace_pmu;
 static bool trace_component_detected;
 
 /*
@@ -58,10 +59,237 @@ static bool trace_component_detected;
  */
 static DEFINE_RAW_SPINLOCK(xuantie_ntrace_hw_lock);
 
+// Function Declaration
+static void xuantie_ntrace_event_start(struct perf_event *event, int flags);
+static void xuantie_ntrace_event_stop(struct perf_event *event, int flags);
+static void xuantie_ntrace_session_commit(struct perf_event *event,
+					  bool only_if_started);
+static void ntrace_resolve_sink_configs(void);
+
+PMU_FORMAT_ATTR(start_addr, "config:0-63");
+PMU_FORMAT_ATTR(stop_addr,  "config1:0-63");
+
+static struct attribute *xuantie_ntrace_filter_attrs[] = {
+	&format_attr_start_addr.attr,
+	&format_attr_stop_addr.attr,
+	NULL
+};
+
+static struct attribute_group xuantie_ntrace_filter_attr_group = {
+	.name = "format",
+	.attrs = xuantie_ntrace_filter_attrs,
+};
+
+/*
+ * Explicit commit trigger for the perf tool: writing anything commits the
+ * current session (full deferred blob) into the AUX buffer, synchronously,
+ * in the writer's process context. The tool invokes it from its auxtrace
+ * snapshot-on-exit hook after Ctrl+C, i.e. before its final buffer flush
+ * and while it still holds the event fd and the AUX mmap.
+ * If the session already committed via the task-exit path, or no event was
+ * ever added, this is a no-op (session_committed / hw_configured guards).
+ *
+ * owner_mutex pins aux_owner for the whole call: free_aux() takes it
+ * before clearing the pointer (it always runs in process context, see the
+ * WARN_ON_ONCE(in_atomic()) in __rb_free_aux()), so the event cannot be
+ * torn down under a concurrent writer even if the tool is already exiting.
+ * owner_task detects re-entrance: if this writer's perf_aux_output_end()
+ * drops the last aux reference (mapping already gone), __rb_free_aux()
+ * invokes free_aux() in this very context, which must not take the mutex
+ * it already holds.
+ */
+static DEFINE_MUTEX(xuantie_ntrace_owner_mutex);
+static struct task_struct *xuantie_ntrace_owner_task;
+
+static const struct attribute_group *xuantie_ntrace_attr_groups[] = {
+	&xuantie_ntrace_filter_attr_group,
+	NULL
+};
+
+static void xuantie_ntrace_init_filter_attrs(struct perf_event *event)
+{
+	xuantie_ntrace_pmu.filter_attr.start_addr = event->attr.config;
+	xuantie_ntrace_pmu.filter_attr.stop_addr  = event->attr.config1;
+
+	if (event->attr.exclude_kernel)
+		xuantie_ntrace_pmu.filter_attr.priv_mode = XUANTIE_NTRACE_PRIV_MODE_EXCL_KERN;
+	else if (event->attr.exclude_user)
+		xuantie_ntrace_pmu.filter_attr.priv_mode = XUANTIE_NTRACE_PRIV_MODE_EXCL_USER;
+	else
+		xuantie_ntrace_pmu.filter_attr.priv_mode = XUANTIE_NTRACE_PRIV_MODE_EXCL_NONE;
+
+	pr_debug("start_addr=0x%llx stop_addr=0x%llx priv_mode=%d\n",
+		 xuantie_ntrace_pmu.filter_attr.start_addr,
+		 xuantie_ntrace_pmu.filter_attr.stop_addr,
+		 xuantie_ntrace_pmu.filter_attr.priv_mode);
+}
+
 static int console_msg_out(const char *str)
 {
 	pr_err("%s", str);
 	return 0;
+}
+
+static void
+build_encoder_config_info(struct xuantie_ntrace_component *component,
+			  struct xt_trace_encoder_config_info *encoder_config)
+{
+	memset(encoder_config, 0, sizeof(struct xt_trace_encoder_config_info));
+
+	encoder_config->inst_mode = component->encoder.inst_mode;
+	encoder_config->send_context = component->encoder.send_context;
+	encoder_config->inst_trigger_enable =
+		component->encoder.inst_trigger_enable;
+	encoder_config->inst_stall_ena = component->encoder.stall_enable;
+	encoder_config->inhibit_src = component->encoder.inhibit_src;
+	encoder_config->inst_sync_mode = component->encoder.inst_sync_mode;
+	encoder_config->inst_sync_max = component->encoder.inst_sync_max;
+	encoder_config->record_format = 1; // 6MDO+2MESO
+
+	// inst feature: all false
+	encoder_config->inst_no_addr_diff = false;
+	encoder_config->inst_no_trap_addr = false;
+	encoder_config->inst_en_sequential_tail_jump = false;
+	encoder_config->inst_en_implicit_return = false;
+	encoder_config->inst_en_branch_prediction = false;
+	encoder_config->inst_en_jump_target_cache = false;
+	encoder_config->inst_implicit_return_mode = 0;
+	encoder_config->inst_en_repeated_history = false;
+	encoder_config->inst_en_all_jumps = false;
+	encoder_config->inst_extend_addr_msb = false;
+
+	encoder_config->src_id = component->encoder.src_id;
+	encoder_config->src_bits = component->encoder_info.default_src_bits;
+
+	// data trace: disable
+	encoder_config->data_trace_enable = false;
+
+	// enable timestamp
+	if (component->encoder_info.support_timestamp_enable &&
+	    component->encoder.enable_timestamp) {
+		encoder_config->timestamp_enable = true;
+		encoder_config->timestamp_run_in_debugmode = false;
+		encoder_config->timestamp_type = 1; // timestamp_external
+		encoder_config->timestamp_prescale =
+			component->encoder.timestamp_prescale;
+	}
+}
+
+static void build_filter_one(struct xt_trace_encoder_filter_config_info *filter_config)
+{
+	u32 priv_filter_value = FILTER_U_MODE | FILTER_S_HS_MODE; /* only u+s */
+	bool comparator_enable = false;
+	u32 prim_func = COMPFUNCTION_ALWAYS_TRUE;
+	u32 second_func = COMPFUNCTION_ALWAYS_TRUE;
+
+	if (xuantie_ntrace_pmu.filter_attr.start_addr
+	|| xuantie_ntrace_pmu.filter_attr.stop_addr) {
+		comparator_enable = true;
+
+		if (xuantie_ntrace_pmu.filter_attr.start_addr == 0
+		&& xuantie_ntrace_pmu.filter_attr.stop_addr != 0) {
+			// equal to comparator_enable = true
+			prim_func = COMPFUNCTION_ALWAYS_TRUE;
+			second_func = COMPFUNCTION_EQUAL;
+		} else if (xuantie_ntrace_pmu.filter_attr.start_addr != 0
+		&& xuantie_ntrace_pmu.filter_attr.stop_addr == 0) {
+			prim_func = COMPFUNCTION_EQUAL;
+			second_func = COMPFUNCTION_LESS_THAN;
+		} else {
+			prim_func = COMPFUNCTION_EQUAL;
+			second_func = COMPFUNCTION_EQUAL;
+		}
+	} else
+		comparator_enable = false;
+
+	if (xuantie_ntrace_pmu.filter_attr.priv_mode == XUANTIE_NTRACE_PRIV_MODE_EXCL_KERN)
+		priv_filter_value = FILTER_U_MODE;
+	else if (xuantie_ntrace_pmu.filter_attr.priv_mode == XUANTIE_NTRACE_PRIV_MODE_EXCL_USER)
+		priv_filter_value = FILTER_S_HS_MODE;
+	else
+		priv_filter_value = FILTER_U_MODE | FILTER_S_HS_MODE;
+
+	memset(filter_config, 0, sizeof(struct xt_trace_encoder_filter_config_info));
+
+	filter_config->filter_i = 0;
+	filter_config->filter_match_privilege = true;
+	filter_config->filter_match_ecause = false;
+	filter_config->filter_match_interrupt = false;
+	filter_config->match_privilege_value = priv_filter_value;
+	filter_config->match_value_interrupt = 0;
+	filter_config->match_choice_ecause = 0;
+	filter_config->filter_match_dtype = false;
+	filter_config->filter_match_dsize = false;
+	filter_config->match_value_dtype = 0;
+	filter_config->match_value_dsize = 0;
+
+	// comparator 1
+	filter_config->comparator1_enable = comparator_enable;
+	filter_config->comp1_filter_number = 0;
+	// config
+	filter_config->comp1_primary_input = COMPTYPE_IADDR;       // p_iaddr
+	filter_config->comp1_primary_function = prim_func;
+	filter_config->comp1_primary_notify = false;
+	filter_config->comp1_secondary_input = COMPTYPE_IADDR;     // s_iaddr
+	filter_config->comp1_secondary_function = second_func;
+	filter_config->comp1_secondary_notify = false;
+	// start with primary true, end with secondary true
+	filter_config->comp1_match_mode = COMPMATCHMODE_PRIMARY_TRUE_UNTIL_SECOND_TRUE;
+	filter_config->comp1_primary_match_low_value = xuantie_ntrace_pmu.filter_attr.start_addr;
+	filter_config->comp1_primary_match_high_value = 0x0;
+	filter_config->comp1_secondary_match_low_value = xuantie_ntrace_pmu.filter_attr.stop_addr;
+	filter_config->comp1_secondary_match_high_value = 0x0;
+
+	// comparator 2
+	filter_config->comparator2_enable = false;
+
+	// comparator 3
+	filter_config->comparator3_enable = false;
+}
+
+static void
+build_funnel_config_info(struct xuantie_ntrace_component *component,
+			 struct xt_trace_funnel_config_info *funnel_config)
+{
+	funnel_config->disable_input = 0;
+}
+
+static void
+build_sink_config_info(struct xuantie_ntrace_component *component,
+		       struct xt_trace_sink_config_info *sink_config)
+{
+	memset(sink_config, 0, sizeof(struct xt_trace_sink_config_info));
+
+	sink_config->component_type = TRCOMP_RAMSINK;
+	sink_config->type = TRACE_SMEM_SINK;        // configure to SMEM Sink
+	sink_config->ram_sink_stop_on_wrap = false; // the circular buffer gets full
+	sink_config->ram_sink_mem_format = 0;       // plain bytes
+	sink_config->ram_sink_start = component->sink.start_addr;
+	sink_config->ram_sink_limit = (component->sink.limit_addr & 0xffffffffffffff00) - 4;
+	component->sink.limit_addr = component->sink.limit_addr & 0xffffffffffffff00;
+	sink_config->ram_sink_write_point = component->sink.start_addr;
+}
+
+static void xuantie_build_saved_config(struct xuantie_saved_config *config,
+				struct xuantie_ntrace_component *component,
+				int wrap)
+{
+	memset(config, 0, sizeof(struct xuantie_saved_config));
+
+	/* Save encoder info. */
+	config->_size = sizeof(struct xuantie_saved_config);
+	config->inst_mode = component->encoder.inst_mode;
+	if (!component->encoder.inhibit_src)
+		config->src_bits = component->encoder_info.default_src_bits;
+	else
+		config->src_bits = 0;
+	if (component->encoder.enable_timestamp)
+		config->timestamp_bits = component->encoder_info.timestamp_width;
+	else
+		config->timestamp_bits = 0;
+
+	/* Save trRamWrap. */
+	config->trace_ram_wrap = wrap;
 }
 
 static int trace_register_write(u64 addr, u32 value)
@@ -80,6 +308,856 @@ static int trace_register_read(u64 addr, u32 *value)
 	pr_info("--->read 0x%llx get 0x%x\n", addr, *value);
 #endif
 	return 0;
+}
+
+static int xuantie_ntrace_event_init(struct perf_event *event)
+{
+	if (event->attr.type != xuantie_ntrace_pmu.pmu.type)
+		return -ENOENT;
+
+	/*
+	 * AUX tracing is inherently period based; reject frequency mode
+	 * events (plain counting users such as perf stat).
+	 */
+	if (event->attr.freq)
+		return -EOPNOTSUPP;
+
+	xuantie_ntrace_init_filter_attrs(event);
+
+	/*
+	 * Identify the traced task via event->hw.target, which is fixed at
+	 * perf_event_open() time. Do NOT use event->ctx->task in event_add():
+	 * the perf ctx-swap optimization (context_equiv()) migrates events
+	 * between threads' contexts, so ctx->task does not reliably identify
+	 * the traced thread.
+	 *
+	 * Only directly-created events (!event->parent) are considered;
+	 * inherited events (launch mode child threads) are ignored.
+	 *
+	 * - launch / -p pid: an event targeting the group leader exists
+	 *   (leader is enumerated first), so target_task stays unset and a
+	 *   single thread exit never commits (scenarios 1a/2a/2b).
+	 * - -t tid (non-leader): no leader-targeted event exists, so record
+	 *   target_task to commit when that thread exits (scenario 2e).
+	 */
+	if (!event->parent && event->hw.target) {
+		if (thread_group_leader(event->hw.target)) {
+			WRITE_ONCE(xuantie_ntrace_pmu.has_leader_event, true);
+			WRITE_ONCE(xuantie_ntrace_pmu.target_task, NULL);
+		} else if (!READ_ONCE(xuantie_ntrace_pmu.has_leader_event)) {
+			WRITE_ONCE(xuantie_ntrace_pmu.target_task, event->hw.target);
+		}
+	}
+
+	return 0;
+}
+
+/*
+ * Close every trace component.
+ */
+static void xuantie_ntrace_hw_close(void)
+{
+	struct xuantie_ntrace_component *component;
+
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type == NTRACE_TYPE_ENCODER) {
+			xt_trace_encoder_close(
+				&component->encoder_info,
+				component->encoder.enable_timestamp);
+		} else if (component->type == NTRACE_TYPE_FUNNEL) {
+			xt_trace_funnel_close(&component->funnel_info);
+		} else {
+			xt_trace_sink_close(&component->sink_info);
+		}
+	}
+}
+
+/*
+ * Detect, configure and enable the whole trace pipeline.
+ */
+static int xuantie_ntrace_hw_configure(void)
+{
+	struct xuantie_ntrace_component *component;
+	unsigned long irqflags;
+	bool encoder_find = false;
+	bool funnel_find = false;
+	bool sink_find = false;
+	int ret = 0;
+
+	mutex_lock(&xuantie_ntrace_lock);
+
+	/* Detect all Trace Components. */
+	if (!trace_component_detected) {
+		list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+			if (component->type == NTRACE_TYPE_ENCODER) {
+				xt_init_trace_encoder_control_info(&component->encoder_info, component->reg_base);
+				if (xt_trace_detect_trace_encoder(&component->encoder_info)) {
+					pr_err("Failed to detect trace encoder with base addr 0x%llx.\n",
+						component->encoder_info.base_addr);
+					ret = -ENODEV;
+					goto out;
+				}
+				encoder_find = true;
+			} else if (component->type == NTRACE_TYPE_FUNNEL) {
+				xt_init_trace_funnel_control_info(&component->funnel_info, component->reg_base);
+				if (xt_trace_detect_trace_funnel(&component->funnel_info)) {
+					pr_err("Failed to detect trace funnel with base addr 0x%llx.\n",
+						component->funnel_info.base_addr);
+					ret = -ENODEV;
+					goto out;
+				}
+				funnel_find = true;
+			} else if (component->type == NTRACE_TYPE_SINK_SMEM) {
+				xt_init_trace_sink_control_info(&component->sink_info, component->reg_base);
+				if (xt_trace_detect_trace_sink(&component->sink_info)) {
+					pr_err("Failed to detect trace sink with base addr 0x%llx.\n",
+						component->sink_info.base_addr);
+					ret = -ENODEV;
+					goto out;
+				}
+				sink_find = true;
+			} else {
+				pr_err("Unknown NTrace Component with type %d, base addr 0x%llx.\n",
+					component->type, component->reg_base);
+				ret = -ENODEV;
+				goto out;
+			}
+		}
+		if (!encoder_find || !funnel_find || !sink_find) {
+			pr_err("There is no encoder or funnel or sink find, please check the firmware description.\n");
+			ret = -ENODEV;
+			goto out;
+		}
+
+		/* Mark all components have been detected. */
+		trace_component_detected = true;
+	}
+
+	if (xuantie_ntrace_pmu.hw_configured)
+		goto out;
+
+	/* Config components. */
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type == NTRACE_TYPE_ENCODER) {
+			struct xt_trace_encoder_config_info encoder_config;
+			struct xt_trace_encoder_filter_config_info filter_config;
+
+			build_encoder_config_info(component, &encoder_config);
+			if (xt_trace_encoder_config(&component->encoder_info,
+						    &encoder_config)) {
+				pr_err("Failed to config trace encoder with base addr 0x%llx.\n",
+					component->encoder_info.base_addr);
+				ret = -EIO;
+				goto out;
+			}
+
+			//always use filter 0, pass M-mode
+			build_filter_one(&filter_config);
+			if (xt_trace_filter_config(&component->encoder_info, &filter_config)) {
+				ret = -EIO;
+				goto out;
+			}
+		} else if (component->type == NTRACE_TYPE_FUNNEL) {
+			struct xt_trace_funnel_config_info funnel_config;
+
+			build_funnel_config_info(component, &funnel_config);
+			if (xt_trace_funnel_config(&component->funnel_info,
+						   &funnel_config)) {
+				pr_err("Failed to config trace funnel with base addr 0x%llx.\n",
+					component->funnel_info.base_addr);
+				ret = -EIO;
+				goto out;
+			}
+		} else {
+			struct xt_trace_sink_config_info sink_config;
+
+			build_sink_config_info(component, &sink_config);
+			if (xt_trace_sink_config(&component->sink_info,
+						 &sink_config)) {
+				pr_err("Failed to config trace sink with base addr 0x%llx.\n",
+					component->sink_info.base_addr);
+				ret = -EIO;
+				goto out;
+			}
+		}
+	}
+
+	/* Enable the Sink. */
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type == NTRACE_TYPE_SINK_SMEM) {
+			if (xt_trace_sink_enable(&component->sink_info)) {
+				pr_err("Failed to enable trace sink with base addr 0x%llx.\n",
+					component->sink_info.base_addr);
+				ret = -EIO;
+				goto out;
+			}
+		}
+	}
+
+	/* Enable all Level2 Funnels. */
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type == NTRACE_TYPE_FUNNEL
+			&& component->funnel.level == LEVEL2_FUNNEL) {
+			if (xt_trace_funnel_enable(&component->funnel_info)) {
+				pr_err("Failed to enable trace funnel with base addr 0x%llx.\n",
+					component->funnel_info.base_addr);
+				ret = -EIO;
+				goto out;
+			}
+		}
+	}
+
+	/* Enable all Level1 Funnels. */
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type == NTRACE_TYPE_FUNNEL
+			&& component->funnel.level == LEVEL1_FUNNEL) {
+			if (xt_trace_funnel_enable(&component->funnel_info)) {
+				pr_err("Failed to enable trace funnel with base addr 0x%llx.\n",
+					component->funnel_info.base_addr);
+				ret = -EIO;
+				goto out;
+			}
+		}
+	}
+
+	raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+	xuantie_ntrace_pmu.hw_configured = true;
+	raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+
+	ntrace_resolve_sink_configs();
+
+out:
+	if (ret)
+		xuantie_ntrace_hw_close();
+
+	mutex_unlock(&xuantie_ntrace_lock);
+	return ret;
+}
+
+static int xuantie_ntrace_event_add(struct perf_event *event, int flags)
+{
+	unsigned long irqflags;
+	bool start = true;
+
+	raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+
+	/*
+	 * Session already committed (trace data flushed, hardware closed
+	 * by event_del): do not restart the hardware. Report the event as
+	 * stopped so perf core does not expect any output from it.
+	 *
+	 * A session without hw_configured has no AUX buffer, because
+	 * buffer_setup_aux() is what configures the pipeline; there is nowhere
+	 * for trace data to go, so leave the event stopped as well.
+	 */
+	if (xuantie_ntrace_pmu.session_committed ||
+	    !xuantie_ntrace_pmu.hw_configured) {
+		event->hw.state = PERF_HES_STOPPED;
+		start = false;
+	}
+
+	raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+
+	/*
+	 * Called outside the lock: event_start takes the lock itself and
+	 * re-checks the guards, so a commit racing in between is handled
+	 * there.
+	 */
+	if (start && (flags & PERF_EF_START))
+		xuantie_ntrace_event_start(event, 0);
+
+	return 0;
+}
+
+/*
+ * Close the whole trace path, snapshot the sink write pointer and flush
+ * the trace data into the AUX buffer. Each sink is committed as its own
+ * short-lived AUX transaction (saved_config + data) so the decoder sees
+ * every saved_config at the start of a separate record. Exactly one commit
+ * happens per session: the committed check, the hardware close and the
+ * publication of session_committed all run under hw_lock, so once the
+ * lock drops every other callback
+ * (add/start/stop/del/event_unmapped/commit_store) bails out and the
+ * data copy can safely run outside the lock.
+ *
+ * @event: used to open the per-sink AUX transactions; must be alive for
+ * the whole call (guaranteed inside pmu::del and pmu::event_unmapped,
+ * where the fd is still open, and in commit_store, where the tool holds
+ * the fd and the AUX mmap that pin aux_owner).
+ *
+ * @only_if_started: bail out unless the session actually started
+ * tracing (hw_configured). Used by event_unmapped() and commit_store(),
+ * which fire per buffer teardown / on the tool's exit path and must not
+ * touch the hardware when no event was ever added.
+ */
+static void xuantie_ntrace_session_commit(struct perf_event *event,
+					  bool only_if_started)
+{
+	struct xuantie_ntrace_component *component;
+	struct xuantie_ntrace_component *component_sink = NULL;
+	struct xuantie_saved_config config;
+	struct xuantie_ntrace_aux_buf *buf;
+	unsigned long irqflags;
+	size_t total_needed = 0;
+	bool warned = false;
+
+	raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+
+	/* Session already committed (hardware fully closed) or never started. */
+	if (xuantie_ntrace_pmu.session_committed ||
+	    (only_if_started && !xuantie_ntrace_pmu.hw_configured)) {
+		raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+		return;
+	}
+
+	/* Disable and close all funnels and encoders, just disable the sink. */
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type == NTRACE_TYPE_ENCODER) {
+			xt_trace_encoder_disable(
+				&component->encoder_info,
+				component->encoder.enable_timestamp);
+
+			xt_trace_encoder_close(
+				&component->encoder_info,
+				component->encoder.enable_timestamp);
+		} else if (component->type == NTRACE_TYPE_FUNNEL
+				&& component->funnel.level == LEVEL1_FUNNEL) {
+			xt_trace_funnel_disable(&component->funnel_info);
+			xt_trace_funnel_close(&component->funnel_info);
+		} else if (component->type == NTRACE_TYPE_FUNNEL
+				&& component->funnel.level == LEVEL2_FUNNEL) {
+			xt_trace_funnel_disable(&component->funnel_info);
+			xt_trace_funnel_close(&component->funnel_info);
+		} else if (component->type == NTRACE_TYPE_SINK_SMEM) {
+			component_sink = component;
+			xt_trace_sink_disable(&component->sink_info);
+			/* Get Trace data size. */
+			if (xt_trace_ram_sink_get_data_size(&component->sink_info,
+								&component->sink.write_point)) {
+				pr_err("Failed to get data size in ram sink with base addr 0x%llx.\n",
+					component->sink_info.base_addr);
+				/* This sink's data is dropped: mark incomplete */
+				component->sink.write_point = component->sink.start_addr;
+			}
+			xt_trace_sink_close(&component->sink_info);
+		}
+	}
+
+	/*
+	 * Publish session_committed while still holding the lock:
+	 * once the lock is released, any concurrent add/start/stop
+	 * sees the flag and no longer touches the hardware, so the
+	 * data copy below can safely run outside the lock.
+	 */
+	xuantie_ntrace_pmu.session_committed = true;
+
+	raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+
+	rcu_read_lock();
+
+	/*
+	 * Pre-compute the total trace data size across the sinks whose data can
+	 * actually be decoded, so the buffer-insufficient warning reflects the
+	 * combined requirement rather than a single sink.
+	 */
+	list_for_each_entry_rcu(component, &xuantie_ntrace_controllers, list) {
+		if (component->type != NTRACE_TYPE_SINK_SMEM)
+			continue;
+
+		if (!component->sink_cfg_valid)
+			continue;
+
+		if (component->sink.write_point & 0x1) {
+			total_needed += component->sink.limit_addr -
+				component->sink.start_addr +
+				sizeof(struct xuantie_saved_config);
+		} else if (component->sink.write_point != component->sink.start_addr) {
+			total_needed += component->sink.write_point -
+				component->sink.start_addr +
+				sizeof(struct xuantie_saved_config);
+		}
+	}
+
+	if (total_needed == 0)
+		goto done;
+
+	/*
+	 * Commit each sink as a separate AUX segment (saved_config + data)
+	 * so the decoder sees every saved_config at the start of its own
+	 * record. Using per-sink begin/end pairs means each sink gets its
+	 * own PERF_RECORD_AUX, and the decoder can parse each independently.
+	 */
+	list_for_each_entry_rcu(component, &xuantie_ntrace_controllers, list) {
+		u64 trace_data_section0_start = 0;
+		u32 trace_data_section0_size = 0;
+		u64 trace_data_section1_start = 0;
+		u32 trace_data_section1_size = 0;
+		u32 sink_data_size;
+		size_t space, fits;
+		bool truncated = false;
+		u64 wp;
+
+		if (component->type != NTRACE_TYPE_SINK_SMEM)
+			continue;
+		if (!component->sink_cfg_valid)
+			continue;
+		component_sink = component;
+
+		/* Clamp the hardware write_point into the sink buffer bounds. */
+		wp = component_sink->sink.write_point & 0xfffffffffffffffc;
+		if (wp < component_sink->sink.start_addr ||
+		    wp > component_sink->sink.limit_addr) {
+			pr_warn_ratelimited("%s: sink write_point 0x%llx out of range [0x%llx, 0x%llx], clamping\n",
+				__func__, component_sink->sink.write_point,
+				component_sink->sink.start_addr,
+				component_sink->sink.limit_addr);
+			wp = clamp_t(u64, wp, component_sink->sink.start_addr,
+				     component_sink->sink.limit_addr);
+		}
+
+		/* Get Trace data size. */
+		if (component_sink->sink.write_point & 0x1) {
+			trace_data_section0_start = wp;
+			trace_data_section0_size =
+				component_sink->sink.limit_addr - wp;
+			trace_data_section1_start = component_sink->sink.start_addr;
+			trace_data_section1_size =
+				wp - component_sink->sink.start_addr;
+		} else {
+			trace_data_section0_start = component_sink->sink.start_addr;
+			trace_data_section0_size =
+				wp - component_sink->sink.start_addr;
+		}
+
+		/* make start to offset */
+		trace_data_section0_start -= component_sink->sink.start_addr;
+		trace_data_section1_start -= component_sink->sink.start_addr;
+
+		if (trace_data_section0_size + trace_data_section1_size == 0)
+			continue;
+
+		/* Header of the encoder that feeds this sink. */
+		config = component_sink->sink_cfg;
+		config.trace_ram_wrap = component_sink->sink.write_point & 0x1;
+
+		/*
+		 * Open a per-sink AUX transaction so each saved_config +
+		 * data pair is committed as its own record.
+		 */
+		buf = perf_aux_output_begin(&xuantie_ntrace_pmu.handle, event);
+		if (!buf) {
+			pr_warn("%s:%d perf_aux_output_begin failed, trace data dropped\n",
+				__func__, __LINE__);
+			break;
+		}
+		buf->pos = xuantie_ntrace_pmu.handle.head % buf->length;
+		space = xuantie_ntrace_pmu.handle.size;
+
+		/* Warn once if the combined size exceeds the buffer. */
+		if (!warned && total_needed > buf->length) {
+			unsigned long need_mb = roundup_pow_of_two(
+				max_t(unsigned long, DIV_ROUND_UP(total_needed, SZ_1M), 1));
+
+			pr_warn("Insufficient space in aux map buf: need 0x%zx bytes, have 0x%lx bytes; some data may be lost.\n",
+				total_needed, buf->length);
+			pr_warn("Increase the AUX buffer, e.g. perf record -m,%luM (--mmap-pages size must be a power of 2).\n",
+				need_mb);
+			warned = true;
+		}
+
+		/*
+		 * If this sink's data does not fit in the remaining space,
+		 * commit as much of the beginning of the trace stream as
+		 * fits: the decoder needs the saved config plus at least one
+		 * trace unit (256-bit), and sections are copied in stream
+		 * order, so the tail is what gets lost.
+		 */
+		if ((trace_data_section0_size + trace_data_section1_size +
+		     sizeof(struct xuantie_saved_config)) > space) {
+			if (space < sizeof(struct xuantie_saved_config) +
+				    XUANTIE_NTRACE_DATA_UNIT) {
+				perf_aux_output_flag(&xuantie_ntrace_pmu.handle,
+						     PERF_AUX_FLAG_TRUNCATED);
+				perf_aux_output_end(&xuantie_ntrace_pmu.handle, 0);
+				break;
+			}
+
+			fits = ALIGN_DOWN(space - sizeof(struct xuantie_saved_config),
+					  XUANTIE_NTRACE_DATA_UNIT);
+			if (trace_data_section0_size >= fits) {
+				trace_data_section0_size = fits;
+				trace_data_section1_size = 0;
+			} else {
+				trace_data_section1_size = fits - trace_data_section0_size;
+			}
+			perf_aux_output_flag(&xuantie_ntrace_pmu.handle,
+					     PERF_AUX_FLAG_TRUNCATED);
+			truncated = true;
+		}
+
+		/* Save trace config and trace data to AUX buffer. */
+		memcpy(buf->base + buf->pos, &config,
+		       sizeof(struct xuantie_saved_config));
+		buf->pos += sizeof(struct xuantie_saved_config);
+
+		if (trace_data_section0_size) {
+			memcpy(buf->base + buf->pos,
+			       component_sink->sink.vaddr +
+					trace_data_section0_start,
+			       trace_data_section0_size);
+			buf->pos += trace_data_section0_size;
+		}
+		if (trace_data_section1_size) {
+			memcpy(buf->base + buf->pos,
+			       component_sink->sink.vaddr +
+					trace_data_section1_start,
+			       trace_data_section1_size);
+			buf->pos += trace_data_section1_size;
+		}
+
+		sink_data_size = trace_data_section0_size +
+				 trace_data_section1_size +
+				 sizeof(struct xuantie_saved_config);
+
+		perf_aux_output_end(&xuantie_ntrace_pmu.handle, sink_data_size);
+
+		if (truncated)
+			break;
+	}
+
+done:
+	rcu_read_unlock();
+	complete_all(&xuantie_ntrace_pmu.commit_done);
+}
+
+/*
+ * event_del() is called in various scenarios. Determine whether to commit
+ * trace data to the aux buffer (task exiting) or just stop the hardware:
+ *
+ * Scenario                                      | Behavior        | Condition
+ * ----------------------------------------------|-----------------|------------------------------------------
+ * 1a. Direct launch, child thread exits         | stop HW only    | PF_EXITING && !SIGNAL_GROUP_EXIT
+ * 1b. Direct launch, main thread pthread_exit() | stop HW only    | PF_EXITING && !SIGNAL_GROUP_EXIT
+ * 1c. Direct launch, process exit (exit_group)  | commit          | PF_EXITING && SIGNAL_GROUP_EXIT
+ * 1d. Direct launch, Ctrl+C (fatal SIGINT)      | commit          | PF_EXITING && SIGNAL_GROUP_EXIT
+ * 2a. -p pid attach, child thread exits         | stop HW only    | PF_EXITING && !SIGNAL_GROUP_EXIT
+ * 2b. -p pid attach, main thread pthread_exit() | stop HW only    | PF_EXITING && !SIGNAL_GROUP_EXIT
+ * 2c. -p pid attach, process exit (exit_group)  | commit          | PF_EXITING && SIGNAL_GROUP_EXIT
+ * 2d. -t tid attach (leader), thread exits      | commit          | PF_EXITING && SIGNAL_GROUP_EXIT
+ * 2e. -t tid attach (non-leader), thread exits  | commit          | PF_EXITING && task == target_task
+ * 2f. Ctrl+C, target task still alive (-p/-t)   | commit          | via sysfs commit trigger
+ * 3.  Context switch (schedule out)             | stop HW only    | no PF_EXITING, no STATE_EXIT
+ *
+ * SIGNAL_GROUP_EXIT is process-wide: set by do_group_exit() (exit_group
+ * syscall) and by complete_signal() for fatal signals (Ctrl+C SIGINT on
+ * a launched workload). It is NOT set by pthread_exit(). Because every
+ * dying thread of a group exit sees it, the commit must NOT be limited
+ * to the group leader: the leader may be blocked (e.g. pthread_join)
+ * with its event already OFF (disabled by perf record on Ctrl+C), so
+ * its event_del() may never run. Any dying thread may commit instead.
+ *
+ * Note (2f): event_del() cannot see this case. When perf record is
+ * killed while the target keeps running, the tool first disables the
+ * events (IOC_DISABLE): that del runs with a live task and an ACTIVE
+ * event, so it only stops the encoder. The final remove on fd close
+ * then finds the event OFF and event_sched_out() never calls pmu->del
+ * again. The "state == PERF_EVENT_STATE_EXIT" checks below are kept
+ * only as a safety net: STATE_EXIT is set by perf_event_exit_event()
+ * after pmu->del, and pmu->del is only ever invoked on ACTIVE events,
+ * so they cannot trigger. Instead, the perf tool arms its auxtrace
+ * snapshot-on-exit hook and, after its main loop ends but before its
+ * final buffer flush, writes the PMU sysfs "commit" file: commit_store()
+ * commits the session synchronously (and waits for a racing task-exit
+ * commit to finish flushing via commit_done), so the data is always
+ * visible in the AUX ring when the tool reads it. event_unmapped()
+ * remains only as a backstop that closes the hardware and the AUX
+ * transaction on mapping teardown - by then perf.data is already
+ * written, so it cannot save the data.
+ *
+ * Note (1c/1d): the tool's sysfs trigger fires there too, racing the
+ * task-exit commit; whichever wins commits, the other is a no-op
+ * (session_committed), and commit_store() returns only after the
+ * winning commit has fully landed (commit_done completion).
+ *
+ * Note: target_task is recorded in event_init() from event->hw.target
+ * (fixed at perf_event_open time), only for directly-created events on
+ * non-leader threads when no leader-targeted event exists (-t tid mode).
+ * It must NOT be derived from event->ctx->task in event_add(): the perf
+ * ctx-swap optimization (context_equiv()) migrates events between
+ * threads' contexts, so a leader's original event can show up with
+ * ctx->task pointing at a child thread, which would falsely mark that
+ * thread as the target and commit on its exit.
+ *
+ * Note: multiple events (one per thread) may qualify for commit in the
+ * same session (group exit kills all threads). A session-level flag
+ * session_committed guards perf_aux_output_end(): it is reset in
+ * setup_aux() (once per AUX mmap, i.e. per perf session) and set after
+ * the first commit, so exactly one commit happens per session.
+ * A per-event flag cannot provide this cross-event dedupe, and resetting
+ * a global flag in event_add() breaks it (add/del cycles on sched-in).
+ */
+static void xuantie_ntrace_event_del(struct perf_event *event, int flags)
+{
+	bool is_task_exit = false;
+	struct task_struct *task = event->ctx->task;
+
+	/* Determine if the program has exited */
+	if (task) {
+		if (task->flags & PF_EXITING) {
+			/*
+			 * Task is exiting. SIGNAL_GROUP_EXIT is process-wide:
+			 * it is set by do_group_exit() (exit_group syscall) and
+			 * by complete_signal() for fatal signals (e.g. Ctrl+C
+			 * SIGINT kills the launched workload). Any dying thread
+			 * may commit - do not require the group leader, whose
+			 * event may already be OFF (disabled by perf record)
+			 * and thus never reach event_del().
+			 */
+			is_task_exit = (task->signal->flags & SIGNAL_GROUP_EXIT) ||
+					task == READ_ONCE(xuantie_ntrace_pmu.target_task);
+		} else {
+			/* Safety net only, unreachable: see Note (2f) above */
+			is_task_exit = (event->state == PERF_EVENT_STATE_EXIT);
+		}
+	} else {
+		/* per-cpu event: perf record is killed or Ctrl+C */
+		is_task_exit = (event->state == PERF_EVENT_STATE_EXIT) ||
+					!event->ctx->is_active;
+	}
+
+	if (is_task_exit)
+		xuantie_ntrace_session_commit(event, false);
+	else
+		xuantie_ntrace_event_stop(event, flags);
+}
+
+static void xuantie_ntrace_event_read(struct perf_event *event)
+{
+}
+
+static void xuantie_ntrace_event_start(struct perf_event *event, int flags)
+{
+	struct xuantie_ntrace_component *component;
+	int found_encoder = 0;
+	/*
+	 * Per-thread events (-p/-t) have event->cpu == -1; their pmu
+	 * callbacks run on the CPU the traced task is scheduled on, so
+	 * use smp_processor_id() there. Indexing cpuid_to_hartid_map()
+	 * with -1 would be an out-of-bounds access.
+	 */
+	u32 hartid = cpuid_to_hartid_map(event->cpu >= 0 ? event->cpu :
+					   smp_processor_id());
+	unsigned long irqflags;
+
+	raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+
+	/*
+	 * Session committed: hardware already closed by event_del. Without
+	 * hw_configured the pipeline was never set up (no AUX buffer), so
+	 * enabling an encoder would only produce trace nobody can collect.
+	 */
+	if (xuantie_ntrace_pmu.session_committed ||
+	    !xuantie_ntrace_pmu.hw_configured) {
+		event->hw.state = PERF_HES_STOPPED;
+		raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+		return;
+	}
+
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type == NTRACE_TYPE_ENCODER) {
+			if (component->encoder.hart_id == hartid) {
+				if (xt_trace_encoder_enable(
+					    &component->encoder_info,
+					    component->encoder.enable_timestamp))
+					pr_err("Failed to enable encoder for hart %d\n", hartid);
+				else {
+					found_encoder = 1;
+					break;
+				}
+			}
+		}
+	}
+
+	if (!found_encoder) {
+		pr_warn("no trace encoder enabled for hart %u, event on cpu %d produces no trace\n",
+			hartid, event->cpu);
+		event->hw.state = PERF_HES_STOPPED;
+	}
+
+	raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+}
+
+static void xuantie_ntrace_event_stop(struct perf_event *event, int flags)
+{
+	struct xuantie_ntrace_component *component;
+	u32 hartid = cpuid_to_hartid_map(event->cpu >= 0 ? event->cpu :
+					   smp_processor_id());
+	unsigned long irqflags;
+
+	raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+
+	/* Session committed: hardware already closed by event_del. */
+	if (xuantie_ntrace_pmu.session_committed) {
+		raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+		return;
+	}
+
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type == NTRACE_TYPE_ENCODER) {
+			if (component->encoder.hart_id == hartid) {
+				if (xt_trace_encoder_disable(
+					    &component->encoder_info,
+					    component->encoder.enable_timestamp))
+					pr_err("Failed to disable encoder for hart %d\n",
+						hartid);
+				else
+					break;
+			}
+		}
+	}
+
+	raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+}
+
+/*
+ * aux_buffer_setup() - Setup AUX buffer for diagnostic mode sampling
+ * @event:	Event the buffer is setup for, event->cpu == -1 means current
+ * @pages:	Array of pointers to buffer pages passed from perf core
+ * @nr_pages:	Total pages
+ * @snapshot:	Flag for snapshot mode
+ *
+ * This is the callback when setup an event using AUX buffer. Perf tool can
+ * trigger this by an additional mmap() call on the event. Unlike the buffer
+ * for basic samples, AUX buffer belongs to the event. It is scheduled with
+ * the task among online cpus when it is a per-thread event.
+ *
+ * Return the private AUX buffer structure if success or NULL if fails.
+ */
+static void *xuantie_ntrace_buffer_setup_aux(struct perf_event *event, void **pages,
+					 int nr_pages, bool overwrite)
+{
+	struct xuantie_ntrace_aux_buf *buf;
+	struct page **pagelist;
+	unsigned long irqflags;
+	int ret, i;
+
+	if (overwrite) {
+		pr_warn("Overwrite mode is not supported\n");
+		return NULL;
+	}
+
+	buf = kzalloc(sizeof(*buf), GFP_KERNEL);
+	if (!buf)
+		return NULL;
+
+	pagelist = kcalloc(nr_pages, sizeof(*pagelist), GFP_KERNEL);
+	if (!pagelist)
+		goto err_buf;
+
+	for (i = 0; i < nr_pages; i++)
+		pagelist[i] = virt_to_page(pages[i]);
+
+	buf->base = vmap(pagelist, nr_pages, VM_MAP, PAGE_KERNEL);
+	if (!buf->base) {
+		kfree(pagelist);
+		goto err_buf;
+	}
+	kfree(pagelist);
+
+	buf->nr_pages = nr_pages;
+	buf->length = nr_pages * PAGE_SIZE;
+	buf->pos = 0;
+
+	/*
+	 * New AUX mmap = new trace session: allow one commit for it and let
+	 * the pipeline be configured again.
+	 * (Unlike target_task/has_leader_event, these must be reset here
+	 * rather than in free_aux: the previous session's free_aux can be
+	 * deferred, and a session that ended without committing must not
+	 * leave hw_configured set for the next one.)
+	 */
+	raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+	xuantie_ntrace_pmu.session_committed = false;
+	xuantie_ntrace_pmu.hw_configured = false;
+	reinit_completion(&xuantie_ntrace_pmu.commit_done);
+	raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+
+	/* aux_owner is owner_mutex-protected: see commit_store()/free_aux() */
+	mutex_lock(&xuantie_ntrace_owner_mutex);
+	xuantie_ntrace_pmu.aux_owner = event;
+	mutex_unlock(&xuantie_ntrace_owner_mutex);
+
+	ret = xuantie_ntrace_hw_configure();
+	if (ret)
+		goto err_aux;
+
+	pr_debug("nr_pages=%ld length=%ld\n", buf->nr_pages, buf->length);
+
+	return buf;
+
+err_aux:
+	mutex_lock(&xuantie_ntrace_owner_mutex);
+	xuantie_ntrace_pmu.aux_owner = NULL;
+	mutex_unlock(&xuantie_ntrace_owner_mutex);
+	vunmap(buf->base);
+err_buf:
+	kfree(buf);
+	return NULL;
+}
+
+/*
+ * Callback when freeing AUX buffers.
+ */
+static void xuantie_ntrace_buffer_free_aux(void *aux)
+{
+	struct xuantie_ntrace_aux_buf *buf = aux;
+	unsigned long irqflags;
+	bool close_hw;
+
+	/*
+	 * Session teardown: reset target tracking for the next session.
+	 * (setup_aux is too late - it runs at mmap time, after event_init
+	 * has already recorded target_task/has_leader_event.)
+	 */
+	WRITE_ONCE(xuantie_ntrace_pmu.target_task, NULL);
+	WRITE_ONCE(xuantie_ntrace_pmu.has_leader_event, false);
+
+	/*
+	 * buffer_setup_aux() left the pipeline enabled. If the session never
+	 * committed, nothing else closes it, so do it here: the sink must not
+	 * keep writing into pages that are about to be unmapped.
+	 */
+	raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+	close_hw = xuantie_ntrace_pmu.hw_configured &&
+		   !xuantie_ntrace_pmu.session_committed;
+	if (close_hw)
+		xuantie_ntrace_pmu.hw_configured = false;
+	raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+
+	if (close_hw) {
+		mutex_lock(&xuantie_ntrace_lock);
+		xuantie_ntrace_hw_close();
+		mutex_unlock(&xuantie_ntrace_lock);
+	}
+
+	/*
+	 * Serialize against commit_store(): it uses aux_owner under
+	 * owner_mutex, and blocking here (perf_mmap_close path, always
+	 * process context) keeps the vma -> file -> event reference chain
+	 * alive until the writer is done. Skip the lock when re-entered
+	 * from the writer's own perf_aux_output_end() dropping the last
+	 * aux reference.
+	 */
+	if (xuantie_ntrace_owner_task == current) {
+		xuantie_ntrace_pmu.aux_owner = NULL;
+	} else {
+		mutex_lock(&xuantie_ntrace_owner_mutex);
+		xuantie_ntrace_pmu.aux_owner = NULL;
+		mutex_unlock(&xuantie_ntrace_owner_mutex);
+	}
+
+	vunmap(buf->base);
+	kfree(buf);
 }
 
 /*
@@ -337,6 +1415,186 @@ int xuantie_ntrace_get_hart_id(struct device *dev, u32 *hart_id)
 	return device_property_read_u32(dev, "cpu", hart_id);
 }
 
+static struct xuantie_ntrace_component *
+xuantie_ntrace_peer_of(const struct xuantie_io_port *port)
+{
+	struct xuantie_ntrace_component *component;
+
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list)
+		if (dev_fwnode(&component->pdev->dev) == port->remote)
+			return component;
+
+	return NULL;
+}
+
+/*
+ * What one upstream walk found: how many encoders reach the sink, the settings
+ * of the first of them, and how many of the rest disagree with it.
+ */
+struct ntrace_feeder_info {
+	struct xuantie_saved_config cfg;
+	unsigned int gen;
+	unsigned int nr;
+	unsigned int mismatch;
+};
+
+/*
+ * Walk the connections upstream from @comp, collecting the encoders whose trace
+ * reaches it. Each component is expanded at most once per walk, so the walk
+ * terminates and stays linear even if the firmware describes a cycle.
+ */
+static void ntrace_collect_feeders(struct xuantie_ntrace_component *comp,
+				   struct ntrace_feeder_info *info)
+{
+	struct xuantie_ntrace_component *peer;
+	struct xuantie_saved_config cfg;
+	unsigned int i;
+
+	if (comp->feeder_gen == info->gen)
+		return;
+	comp->feeder_gen = info->gen;
+
+	if (comp->type == NTRACE_TYPE_ENCODER) {
+		xuantie_build_saved_config(&cfg, comp, 0);
+		if (!info->nr++)
+			info->cfg = cfg;
+		else if (memcmp(&cfg, &info->cfg, sizeof(cfg)))
+			info->mismatch++;
+		return;
+	}
+
+	for (i = 0; i < comp->in_num; i++) {
+		peer = xuantie_ntrace_peer_of(comp->in[i]);
+		if (peer)
+			ntrace_collect_feeders(peer, info);
+	}
+}
+
+/*
+ * Give every sink the trace settings of the encoder that actually feeds it, so
+ * the header written ahead of its data describes its own source instead of
+ * whichever encoder was probed last.
+ */
+static void ntrace_resolve_sink_configs(void)
+{
+	static unsigned int generation;
+	struct xuantie_ntrace_component *component;
+	struct ntrace_feeder_info info;
+
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		if (component->type != NTRACE_TYPE_SINK_SMEM)
+			continue;
+
+		memset(&info, 0, sizeof(info));
+		info.gen = ++generation;
+		ntrace_collect_feeders(component, &info);
+
+		if (!info.nr) {
+			component->sink_cfg_valid = false;
+			dev_warn(&component->pdev->dev,
+				 "No encoder reaches this sink; its trace cannot be decoded\n");
+			continue;
+		}
+
+		if (info.mismatch)
+			dev_warn(&component->pdev->dev,
+				 "%u encoders feed this sink with different trace settings; using the first one\n",
+				 info.nr);
+
+		component->sink_cfg = info.cfg;
+		component->sink_cfg_valid = true;
+	}
+}
+
+static bool xuantie_ntrace_all_devices_probed(struct xuantie_ntrace_drvdata *drvdata)
+{
+	if (drvdata->probed_count < drvdata->expected_count) {
+		pr_err("Components not yet fully probed (%u/%u)\n",
+		       drvdata->probed_count, drvdata->expected_count);
+		return false;
+	}
+
+	return true;
+}
+
+static void xuantie_ntrace_dump_ports(const struct xuantie_ntrace_component *comp,
+				      struct xuantie_io_port * const *ports,
+				      u32 num, bool is_input)
+{
+	const char *dir = is_input ? "in" : "out";
+	struct xuantie_ntrace_component *peer;
+	int i;
+
+	for (i = 0; i < num; i++) {
+		peer = xuantie_ntrace_peer_of(ports[i]);
+		if (peer)
+			pr_info("\t %s[%d] port=%u -> %s@0x%llx\n", dir, i,
+				ports[i]->endpoint_num,
+				xuantie_ntrace_type2str(peer->type),
+				peer->phys_base);
+		else
+			pr_info("\t %s[%d] port=%u -> peer not probed\n", dir, i,
+				ports[i]->endpoint_num);
+	}
+}
+
+static void xuantie_ntrace_controllers_dump(void)
+{
+	struct xuantie_ntrace_component *component;
+
+	mutex_lock(&xuantie_ntrace_lock);
+	list_for_each_entry(component, &xuantie_ntrace_controllers, list) {
+		pr_info("type=%s in_num=%d out_num=%d\n",
+			xuantie_ntrace_type2str(component->type),
+			component->in_num, component->out_num);
+		xuantie_ntrace_dump_ports(component, component->in,
+					  component->in_num, true);
+		xuantie_ntrace_dump_ports(component, component->out,
+					  component->out_num, false);
+	}
+	mutex_unlock(&xuantie_ntrace_lock);
+}
+
+static void xuantie_ntrace_try_register_pmu(struct xuantie_ntrace_drvdata *drvdata)
+{
+	int ret;
+
+	if (drvdata->pmu_registered)
+		return;
+
+	if (!xuantie_ntrace_all_devices_probed(drvdata))
+		return;
+
+	pr_info("All components ready, registering PMU\n");
+
+	xuantie_ntrace_pmu.pmu.module		= THIS_MODULE;
+	xuantie_ntrace_pmu.pmu.capabilities	= PERF_PMU_CAP_EXCLUSIVE | PERF_PMU_CAP_ITRACE;
+	xuantie_ntrace_pmu.pmu.task_ctx_nr	= perf_sw_context;
+	xuantie_ntrace_pmu.pmu.attr_groups	= xuantie_ntrace_attr_groups;
+	xuantie_ntrace_pmu.pmu.event_init	= xuantie_ntrace_event_init;
+	xuantie_ntrace_pmu.pmu.setup_aux	= xuantie_ntrace_buffer_setup_aux;
+	xuantie_ntrace_pmu.pmu.free_aux		= xuantie_ntrace_buffer_free_aux;
+	xuantie_ntrace_pmu.pmu.start		= xuantie_ntrace_event_start;
+	xuantie_ntrace_pmu.pmu.stop			= xuantie_ntrace_event_stop;
+	xuantie_ntrace_pmu.pmu.add			= xuantie_ntrace_event_add;
+	xuantie_ntrace_pmu.pmu.del			= xuantie_ntrace_event_del;
+	xuantie_ntrace_pmu.pmu.read			= xuantie_ntrace_event_read;
+
+	init_completion(&xuantie_ntrace_pmu.commit_done);
+
+	ret = perf_pmu_register(&xuantie_ntrace_pmu.pmu, XUANTIE_NTRACE_PMU_NAME, -1);
+	if (ret) {
+		pr_err("Failed to register PMU %s: %d\n", XUANTIE_NTRACE_PMU_NAME, ret);
+		return;
+	}
+	pr_info("%s registered.\n", XUANTIE_NTRACE_PMU_NAME);
+
+	xuantie_ntrace_controllers_dump();
+
+	WRITE_ONCE(drvdata->pmu_registered, true);
+	complete_all(&drvdata->all_probed);
+}
+
 static const struct of_device_id xuantie_ntrace_of_match[] = {
 	{ .compatible = "xuantie,ntrace-encoder",
 	  .data = (void *)NTRACE_TYPE_ENCODER },
@@ -459,6 +1717,9 @@ int xuantie_ntrace_add_device_node(struct platform_device *pdev,
 		 xuantie_ntrace_type2str(type), drvdata->probed_count,
 		 drvdata->expected_count);
 
+	// Try to register PMU if all conditions are met
+	xuantie_ntrace_try_register_pmu(drvdata);
+
 	mutex_unlock(&drvdata->lock);
 
 	return 0;
@@ -473,8 +1734,28 @@ int xuantie_ntrace_remove_device_node(struct platform_device *pdev)
 		return 0;
 
 	mutex_lock(&drvdata->lock);
+	if (drvdata->pmu_registered) {
+		unsigned long irqflags;
+
+		if (atomic_read(&xuantie_ntrace_pmu.pmu.exclusive_cnt))
+			dev_warn(&pdev->dev,
+				 "Unbinding while a %s event is still open: trace data that has not been committed is lost\n",
+				 XUANTIE_NTRACE_PMU_NAME);
+
+		perf_pmu_unregister(&xuantie_ntrace_pmu.pmu);
+		WRITE_ONCE(drvdata->pmu_registered, false);
+		trace_component_detected = false;
+
+		/* Reset the session state too. */
+		raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+		xuantie_ntrace_pmu.session_committed = false;
+		xuantie_ntrace_pmu.hw_configured = false;
+		raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+	}
 	drvdata->probed_count--;
 	mutex_unlock(&drvdata->lock);
+
+	mutex_lock(&xuantie_ntrace_owner_mutex);
 
 	if (node->component) {
 		mutex_lock(&xuantie_ntrace_lock);
@@ -485,6 +1766,8 @@ int xuantie_ntrace_remove_device_node(struct platform_device *pdev)
 
 		synchronize_rcu();
 	}
+
+	mutex_unlock(&xuantie_ntrace_owner_mutex);
 
 	return 0;
 }
@@ -637,6 +1920,11 @@ static void __exit xuantie_ntrace_exit(void)
 
 	if (!drvdata)
 		return;
+
+	if (drvdata->pmu_registered) {
+		perf_pmu_unregister(&xuantie_ntrace_pmu.pmu);
+		drvdata->pmu_registered = false;
+	}
 
 	/* Unbinding every device releases its components through devm. */
 	platform_driver_unregister(&xuantie_ntrace_driver);
