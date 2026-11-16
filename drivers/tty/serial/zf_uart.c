@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0+
 /*
- *  Serial Port driver for LRW
+ *  Driver for ZF(ZhuFeng) serial device.
  *
- *  Copyright (c) 2025, LRW CORPORATION. All rights reserved.
+ *  Copyright (C) 2026, LeapRise Technology Co., Ltd.
  */
 
 #include <linux/module.h>
@@ -35,17 +35,17 @@
 
 #define ISR_PASS_LIMIT		256
 
-#define LRW_UART_NAME		"lrw-uart"
+#define ZF_UART_NAME		"zf-uart"
 
-#define LRW_UART_TTY_PREFIX	"ttyLRW"
+#define ZF_UART_TTY_PREFIX	"ttyZF"
 
-/* LRW_UART_TX_FIFO_DEPTH: depth of the TX FIFO (in bytes) */
-#define LRW_UART_TX_FIFO_DEPTH	16
+/* ZF_UART_TX_FIFO_DEPTH: depth of the TX FIFO (in bytes) */
+#define ZF_UART_TX_FIFO_DEPTH	16
 
-/* LRW_UART_RX_FIFO_DEPTH: depth of the RX FIFO (in bytes) */
-#define LRW_UART_RX_FIFO_DEPTH	16
+/* ZF_UART_RX_FIFO_DEPTH: depth of the RX FIFO (in bytes) */
+#define ZF_UART_RX_FIFO_DEPTH	16
 
-/* LRW UART register offsets */
+/* ZF UART register offsets */
 #define UARTDR			0x00	/* Data register */
 #define UARTRSR			0x04	/* Receive status register */
 #define UARTECR			0x04	/* Error clear register */
@@ -179,7 +179,7 @@ enum {
 	REG_ARRAY_SIZE,
 };
 
-static u16 lrw_uart_std_offsets[REG_ARRAY_SIZE] = {
+static u16 zf_uart_std_offsets[REG_ARRAY_SIZE] = {
 	[REG_DR] = UARTDR,
 	[REG_FCR] = UARTFCR,
 	[REG_FR] = UARTFR,
@@ -213,8 +213,8 @@ struct vendor_data {
 	bool			fixed_options;
 };
 
-static struct vendor_data vendor_lrw = {
-	.reg_offset		= lrw_uart_std_offsets,
+static struct vendor_data vendor_zf = {
+	.reg_offset		= zf_uart_std_offsets,
 	.fcr			= UARTFCR_RXFTRS_RX4_8 | UARTFCR_TXFTRS_TX4_8 | UARTFCR_FEN,
 	.fr_busy		= UARTFR_BUSY,
 	.fr_dsr			= UARTFR_DSR,
@@ -230,18 +230,18 @@ static struct vendor_data vendor_lrw = {
 
 /* Deals with DMA transactions */
 
-struct lrw_uart_dmabuf {
+struct zf_uart_dmabuf {
 	dma_addr_t		dma;
 	size_t			len;
 	char			*buf;
 };
 
-struct lrw_uart_dmarx_data {
+struct zf_uart_dmarx_data {
 	struct dma_chan		*chan;
 	struct completion	complete;
 	bool			use_buf_b;
-	struct lrw_uart_dmabuf	dbuf_a;
-	struct lrw_uart_dmabuf	dbuf_b;
+	struct zf_uart_dmabuf	dbuf_a;
+	struct zf_uart_dmabuf	dbuf_b;
 	dma_cookie_t		cookie;
 	bool			running;
 	struct timer_list	timer;
@@ -252,7 +252,7 @@ struct lrw_uart_dmarx_data {
 	unsigned int poll_timeout;
 };
 
-struct lrw_uart_dmatx_data {
+struct zf_uart_dmatx_data {
 	struct dma_chan		*chan;
 	dma_addr_t		dma;
 	size_t			len;
@@ -260,7 +260,7 @@ struct lrw_uart_dmatx_data {
 	bool			queued;
 };
 
-struct lrw_uart_data {
+struct zf_uart_data {
 	bool (*dma_filter)(struct dma_chan *chan, void *filter_param);
 	void *dma_rx_param;
 	void *dma_tx_param;
@@ -274,7 +274,7 @@ struct lrw_uart_data {
 /*
  * We wrap our port structure around the generic uart_port.
  */
-struct lrw_uart_port {
+struct zf_uart_port {
 	struct uart_port	port;
 	const u16		*reg_offset;
 	struct clk		*clk;
@@ -291,33 +291,33 @@ struct lrw_uart_port {
 	unsigned int		dmacr;		/* dma control reg */
 	bool			using_tx_dma;
 	bool			using_rx_dma;
-	struct lrw_uart_dmarx_data dmarx;
-	struct lrw_uart_dmatx_data dmatx;
+	struct zf_uart_dmarx_data dmarx;
+	struct zf_uart_dmatx_data dmatx;
 	bool			dma_probed;
 #endif
 };
 
-static unsigned int lrw_uart_tx_empty(struct uart_port *port);
+static unsigned int zf_uart_tx_empty(struct uart_port *port);
 
-static unsigned int lrw_uart_reg_to_offset(const struct lrw_uart_port *sup,
+static unsigned int zf_uart_reg_to_offset(const struct zf_uart_port *sup,
 	unsigned int reg)
 {
 	return sup->reg_offset[reg];
 }
 
-static unsigned int lrw_uart_read(const struct lrw_uart_port *sup,
+static unsigned int zf_uart_read(const struct zf_uart_port *sup,
 	unsigned int reg)
 {
-	void __iomem *addr = sup->port.membase + lrw_uart_reg_to_offset(sup, reg);
+	void __iomem *addr = sup->port.membase + zf_uart_reg_to_offset(sup, reg);
 
 	return (sup->port.iotype == UPIO_MEM32) ?
 		readl_relaxed(addr) : readw_relaxed(addr);
 }
 
-static void lrw_uart_write(unsigned int val, const struct lrw_uart_port *sup,
+static void zf_uart_write(unsigned int val, const struct zf_uart_port *sup,
 	unsigned int reg)
 {
-	void __iomem *addr = sup->port.membase + lrw_uart_reg_to_offset(sup, reg);
+	void __iomem *addr = sup->port.membase + zf_uart_reg_to_offset(sup, reg);
 
 	if (sup->port.iotype == UPIO_MEM32)
 		writel_relaxed(val, addr);
@@ -330,7 +330,7 @@ static void lrw_uart_write(unsigned int val, const struct lrw_uart_port *sup,
  * inserts them into the TTY layer. Returns the number of characters
  * read from the FIFO.
  */
-static int lrw_uart_fifo_to_tty(struct lrw_uart_port *sup)
+static int zf_uart_fifo_to_tty(struct zf_uart_port *sup)
 {
 	unsigned int ch, fifotaken;
 	int sysrq;
@@ -338,12 +338,12 @@ static int lrw_uart_fifo_to_tty(struct lrw_uart_port *sup)
 	u8 flag;
 
 	for (fifotaken = 0; fifotaken != 256; fifotaken++) {
-		status = lrw_uart_read(sup, REG_FR);
+		status = zf_uart_read(sup, REG_FR);
 		if (status & UARTFR_RXFE)
 			break;
 
 		/* Take chars from the FIFO and update status */
-		ch = lrw_uart_read(sup, REG_DR) | UART_DUMMY_DR_RX;
+		ch = zf_uart_read(sup, REG_DR) | UART_DUMMY_DR_RX;
 		flag = TTY_NORMAL;
 		sup->port.icount.rx++;
 
@@ -389,37 +389,37 @@ static int lrw_uart_fifo_to_tty(struct lrw_uart_port *sup)
  */
 #ifdef CONFIG_DMA_ENGINE
 
-#define LRW_UART_DMA_BUFFER_SIZE PAGE_SIZE
+#define ZF_UART_DMA_BUFFER_SIZE PAGE_SIZE
 
-static int lrw_uart_dmabuf_init(struct dma_chan *chan, struct lrw_uart_dmabuf *db,
+static int zf_uart_dmabuf_init(struct dma_chan *chan, struct zf_uart_dmabuf *db,
 	enum dma_data_direction dir)
 {
-	db->buf = dma_alloc_coherent(chan->device->dev, LRW_UART_DMA_BUFFER_SIZE,
+	db->buf = dma_alloc_coherent(chan->device->dev, ZF_UART_DMA_BUFFER_SIZE,
 				     &db->dma, GFP_KERNEL);
 	if (!db->buf)
 		return -ENOMEM;
-	db->len = LRW_UART_DMA_BUFFER_SIZE;
+	db->len = ZF_UART_DMA_BUFFER_SIZE;
 
 	return 0;
 }
 
-static void lrw_uart_dmabuf_free(struct dma_chan *chan, struct lrw_uart_dmabuf *db,
+static void zf_uart_dmabuf_free(struct dma_chan *chan, struct zf_uart_dmabuf *db,
 	enum dma_data_direction dir)
 {
 	if (db->buf) {
 		dma_free_coherent(chan->device->dev,
-				  LRW_UART_DMA_BUFFER_SIZE, db->buf, db->dma);
+				  ZF_UART_DMA_BUFFER_SIZE, db->buf, db->dma);
 	}
 }
 
-static void lrw_uart_dma_probe(struct lrw_uart_port *sup)
+static void zf_uart_dma_probe(struct zf_uart_port *sup)
 {
 	/* DMA is the sole user of the platform data right now */
-	struct lrw_uart_data *plat = dev_get_platdata(sup->port.dev);
+	struct zf_uart_data *plat = dev_get_platdata(sup->port.dev);
 	struct device *dev = sup->port.dev;
 	struct dma_slave_config tx_conf = {
 		.dst_addr = sup->port.mapbase +
-				 lrw_uart_reg_to_offset(sup, REG_DR),
+				 zf_uart_reg_to_offset(sup, REG_DR),
 		.dst_addr_width = DMA_SLAVE_BUSWIDTH_1_BYTE,
 		.direction = DMA_MEM_TO_DEV,
 		.dst_maxburst = sup->fifosize >> 1,
@@ -475,7 +475,7 @@ static void lrw_uart_dma_probe(struct lrw_uart_port *sup)
 	if (!IS_ERR(chan)) {
 		struct dma_slave_config rx_conf = {
 			.src_addr = sup->port.mapbase +
-				lrw_uart_reg_to_offset(sup, REG_DR),
+				zf_uart_reg_to_offset(sup, REG_DR),
 			.src_addr_width = DMA_SLAVE_BUSWIDTH_1_BYTE,
 			.direction = DMA_DEV_TO_MEM,
 			.src_maxburst = sup->fifosize >> 2,
@@ -542,7 +542,7 @@ static void lrw_uart_dma_probe(struct lrw_uart_port *sup)
 	}
 }
 
-static void lrw_uart_dma_remove(struct lrw_uart_port *sup)
+static void zf_uart_dma_remove(struct zf_uart_port *sup)
 {
 	if (sup->dmatx.chan)
 		dma_release_channel(sup->dmatx.chan);
@@ -551,17 +551,17 @@ static void lrw_uart_dma_remove(struct lrw_uart_port *sup)
 }
 
 /* Forward declare these for the refill routine */
-static int lrw_uart_dma_tx_refill(struct lrw_uart_port *sup);
-static void lrw_uart_start_tx_pio(struct lrw_uart_port *sup);
+static int zf_uart_dma_tx_refill(struct zf_uart_port *sup);
+static void zf_uart_start_tx_pio(struct zf_uart_port *sup);
 
 /*
  * The current DMA TX buffer has been sent.
  * Try to queue up another DMA buffer.
  */
-static void lrw_uart_dma_tx_callback(void *data)
+static void zf_uart_dma_tx_callback(void *data)
 {
-	struct lrw_uart_port *sup = data;
-	struct lrw_uart_dmatx_data *dmatx = &sup->dmatx;
+	struct zf_uart_port *sup = data;
+	struct zf_uart_dmatx_data *dmatx = &sup->dmatx;
 	unsigned long flags;
 	u16 dmacr;
 
@@ -572,7 +572,7 @@ static void lrw_uart_dma_tx_callback(void *data)
 
 	dmacr = sup->dmacr;
 	sup->dmacr = dmacr & ~UARTFCCR_TXDMAE;
-	lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+	zf_uart_write(sup->dmacr, sup, REG_FCCR);
 
 	/*
 	 * If TX DMA was disabled, it means that we've stopped the DMA for
@@ -590,12 +590,12 @@ static void lrw_uart_dma_tx_callback(void *data)
 		return;
 	}
 
-	if (lrw_uart_dma_tx_refill(sup) <= 0)
+	if (zf_uart_dma_tx_refill(sup) <= 0)
 		/*
 		 * We didn't queue a DMA buffer for some reason, but we
 		 * have data pending to be sent.  Re-enable the TX IRQ.
 		 */
-		lrw_uart_start_tx_pio(sup);
+		zf_uart_start_tx_pio(sup);
 
 	uart_port_unlock_irqrestore(&sup->port, flags);
 }
@@ -608,9 +608,9 @@ static void lrw_uart_dma_tx_callback(void *data)
  *   0 if we didn't want to handle this by DMA
  *  <0 on error
  */
-static int lrw_uart_dma_tx_refill(struct lrw_uart_port *sup)
+static int zf_uart_dma_tx_refill(struct zf_uart_port *sup)
 {
-	struct lrw_uart_dmatx_data *dmatx = &sup->dmatx;
+	struct zf_uart_dmatx_data *dmatx = &sup->dmatx;
 	struct dma_chan *chan = dmatx->chan;
 	struct dma_device *dma_dev = chan->device;
 	struct dma_async_tx_descriptor *desc;
@@ -636,8 +636,8 @@ static int lrw_uart_dma_tx_refill(struct lrw_uart_port *sup)
 	count -= 1;
 
 	/* Else proceed to copy the TX chars to the DMA buffer and fire DMA */
-	if (count > LRW_UART_DMA_BUFFER_SIZE)
-		count = LRW_UART_DMA_BUFFER_SIZE;
+	if (count > ZF_UART_DMA_BUFFER_SIZE)
+		count = ZF_UART_DMA_BUFFER_SIZE;
 
 	if (xmit->tail < xmit->head)
 		memcpy(&dmatx->buf[0], &xmit->buf[xmit->tail], count);
@@ -677,7 +677,7 @@ static int lrw_uart_dma_tx_refill(struct lrw_uart_port *sup)
 	}
 
 	/* Some data to go along to the callback */
-	desc->callback = lrw_uart_dma_tx_callback;
+	desc->callback = zf_uart_dma_tx_callback;
 	desc->callback_param = sup;
 
 	/* All errors should happen at prepare time */
@@ -687,7 +687,7 @@ static int lrw_uart_dma_tx_refill(struct lrw_uart_port *sup)
 	dma_dev->device_issue_pending(chan);
 
 	sup->dmacr |= UARTFCCR_TXDMAE;
-	lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+	zf_uart_write(sup->dmacr, sup, REG_FCCR);
 	sup->dmatx.queued = true;
 
 	/*
@@ -710,7 +710,7 @@ static int lrw_uart_dma_tx_refill(struct lrw_uart_port *sup)
  *   false if we want to use PIO to transmit
  *   true if we queued a DMA buffer
  */
-static bool lrw_uart_dma_tx_irq(struct lrw_uart_port *sup)
+static bool zf_uart_dma_tx_irq(struct zf_uart_port *sup)
 {
 	if (!sup->using_tx_dma)
 		return false;
@@ -722,9 +722,9 @@ static bool lrw_uart_dma_tx_irq(struct lrw_uart_port *sup)
 	 */
 	if (sup->dmatx.queued) {
 		sup->dmacr |= UARTFCCR_TXDMAE;
-		lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+		zf_uart_write(sup->dmacr, sup, REG_FCCR);
 		sup->im &= ~UARTIMSC_TXIM;
-		lrw_uart_write(sup->im, sup, REG_IMSC);
+		zf_uart_write(sup->im, sup, REG_IMSC);
 		return true;
 	}
 
@@ -732,9 +732,9 @@ static bool lrw_uart_dma_tx_irq(struct lrw_uart_port *sup)
 	 * We don't have a TX buffer queued, so try to queue one.
 	 * If we successfully queued a buffer, mask the TX IRQ.
 	 */
-	if (lrw_uart_dma_tx_refill(sup) > 0) {
+	if (zf_uart_dma_tx_refill(sup) > 0) {
 		sup->im &= ~UARTIMSC_TXIM;
-		lrw_uart_write(sup->im, sup, REG_IMSC);
+		zf_uart_write(sup->im, sup, REG_IMSC);
 		return true;
 	}
 	return false;
@@ -744,11 +744,11 @@ static bool lrw_uart_dma_tx_irq(struct lrw_uart_port *sup)
  * Stop the DMA transmit (eg, due to received XOFF).
  * Locking: called with port lock held and IRQs disabled.
  */
-static inline void lrw_uart_dma_tx_stop(struct lrw_uart_port *sup)
+static inline void zf_uart_dma_tx_stop(struct zf_uart_port *sup)
 {
 	if (sup->dmatx.queued) {
 		sup->dmacr &= ~UARTFCCR_TXDMAE;
-		lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+		zf_uart_write(sup->dmacr, sup, REG_FCCR);
 	}
 }
 
@@ -760,7 +760,7 @@ static inline void lrw_uart_dma_tx_stop(struct lrw_uart_port *sup)
  *   false if we want the TX IRQ to be enabled
  *   true if we have a buffer queued
  */
-static inline bool lrw_uart_dma_tx_start(struct lrw_uart_port *sup)
+static inline bool zf_uart_dma_tx_start(struct zf_uart_port *sup)
 {
 	u16 dmacr;
 
@@ -772,15 +772,15 @@ static inline bool lrw_uart_dma_tx_start(struct lrw_uart_port *sup)
 		bool ret = true;
 
 		if (!sup->dmatx.queued) {
-			if (lrw_uart_dma_tx_refill(sup) > 0) {
+			if (zf_uart_dma_tx_refill(sup) > 0) {
 				sup->im &= ~UARTIMSC_TXIM;
-				lrw_uart_write(sup->im, sup, REG_IMSC);
+				zf_uart_write(sup->im, sup, REG_IMSC);
 			} else {
 				ret = false;
 			}
 		} else if (!(sup->dmacr & UARTFCCR_TXDMAE)) {
 			sup->dmacr |= UARTFCCR_TXDMAE;
-			lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+			zf_uart_write(sup->dmacr, sup, REG_FCCR);
 		}
 		return ret;
 	}
@@ -791,9 +791,9 @@ static inline bool lrw_uart_dma_tx_start(struct lrw_uart_port *sup)
 	 */
 	dmacr = sup->dmacr;
 	sup->dmacr &= ~UARTFCCR_TXDMAE;
-	lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+	zf_uart_write(sup->dmacr, sup, REG_FCCR);
 
-	if (lrw_uart_read(sup, REG_FR) & UARTFR_TXFF) {
+	if (zf_uart_read(sup, REG_FR) & UARTFR_TXFF) {
 		/*
 		 * No space in the FIFO, so enable the transmit interrupt
 		 * so we know when there is space.  Note that once we've
@@ -802,13 +802,13 @@ static inline bool lrw_uart_dma_tx_start(struct lrw_uart_port *sup)
 		return false;
 	}
 
-	lrw_uart_write(sup->port.x_char, sup, REG_DR);
+	zf_uart_write(sup->port.x_char, sup, REG_DR);
 	sup->port.icount.tx++;
 	sup->port.x_char = 0;
 
 	/* Success - restore the DMA state */
 	sup->dmacr = dmacr;
-	lrw_uart_write(dmacr, sup, REG_FCCR);
+	zf_uart_write(dmacr, sup, REG_FCCR);
 
 	return true;
 }
@@ -817,12 +817,12 @@ static inline bool lrw_uart_dma_tx_start(struct lrw_uart_port *sup)
  * Flush the transmit buffer.
  * Locking: called with port lock held and IRQs disabled.
  */
-static void lrw_uart_dma_flush_buffer(struct uart_port *port)
+static void zf_uart_dma_flush_buffer(struct uart_port *port)
 __releases(&sup->port.lock)
 __acquires(&sup->port.lock)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
 	if (!sup->using_tx_dma)
 		return;
@@ -834,18 +834,18 @@ __acquires(&sup->port.lock)
 				 sup->dmatx.len, DMA_TO_DEVICE);
 		sup->dmatx.queued = false;
 		sup->dmacr &= ~UARTFCCR_TXDMAE;
-		lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+		zf_uart_write(sup->dmacr, sup, REG_FCCR);
 	}
 }
 
-static void lrw_uart_dma_rx_callback(void *data);
+static void zf_uart_dma_rx_callback(void *data);
 
-static int lrw_uart_dma_rx_trigger_dma(struct lrw_uart_port *sup)
+static int zf_uart_dma_rx_trigger_dma(struct zf_uart_port *sup)
 {
 	struct dma_chan *rxchan = sup->dmarx.chan;
-	struct lrw_uart_dmarx_data *dmarx = &sup->dmarx;
+	struct zf_uart_dmarx_data *dmarx = &sup->dmarx;
 	struct dma_async_tx_descriptor *desc;
-	struct lrw_uart_dmabuf *dbuf;
+	struct zf_uart_dmabuf *dbuf;
 
 	if (!rxchan)
 		return -EIO;
@@ -868,17 +868,17 @@ static int lrw_uart_dma_rx_trigger_dma(struct lrw_uart_port *sup)
 	}
 
 	/* Some data to go along to the callback */
-	desc->callback = lrw_uart_dma_rx_callback;
+	desc->callback = zf_uart_dma_rx_callback;
 	desc->callback_param = sup;
 	dmarx->cookie = dmaengine_submit(desc);
 	dma_async_issue_pending(rxchan);
 
 	sup->dmacr |= UARTFCCR_RXDMAE;
-	lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+	zf_uart_write(sup->dmacr, sup, REG_FCCR);
 	sup->dmarx.running = true;
 
 	sup->im &= ~UARTIMSC_RXIM;
-	lrw_uart_write(sup->im, sup, REG_IMSC);
+	zf_uart_write(sup->im, sup, REG_IMSC);
 
 	return 0;
 }
@@ -888,17 +888,17 @@ static int lrw_uart_dma_rx_trigger_dma(struct lrw_uart_port *sup)
  * the FIFO timeout interrupt occurred. This must be called
  * with the port spinlock sup->port.lock held.
  */
-static void lrw_uart_dma_rx_chars(struct lrw_uart_port *sup,
+static void zf_uart_dma_rx_chars(struct zf_uart_port *sup,
 				  u32 pending, bool use_buf_b,
 				  bool readfifo)
 {
 	struct tty_port *port = &sup->port.state->port;
-	struct lrw_uart_dmabuf *dbuf = use_buf_b ?
+	struct zf_uart_dmabuf *dbuf = use_buf_b ?
 		&sup->dmarx.dbuf_b : &sup->dmarx.dbuf_a;
 	int dma_count = 0;
 	u32 fifotaken = 0; /* only used for vdbg() */
 
-	struct lrw_uart_dmarx_data *dmarx = &sup->dmarx;
+	struct zf_uart_dmarx_data *dmarx = &sup->dmarx;
 	int dmataken = 0;
 
 	if (sup->dmarx.poll_rate) {
@@ -934,7 +934,7 @@ static void lrw_uart_dma_rx_chars(struct lrw_uart_port *sup,
 	 */
 	if (dma_count == pending && readfifo) {
 		/* Clear any error flags */
-		lrw_uart_write(UARTICR_OEIC | UARTICR_BEIC | UARTICR_PEIC |
+		zf_uart_write(UARTICR_OEIC | UARTICR_BEIC | UARTICR_PEIC |
 			      UARTICR_FEIC, sup, REG_ICR);
 
 		/*
@@ -948,7 +948,7 @@ static void lrw_uart_dma_rx_chars(struct lrw_uart_port *sup,
 		 * will always find the error in the FIFO, never in the DMA
 		 * buffer.
 		 */
-		fifotaken = lrw_uart_fifo_to_tty(sup);
+		fifotaken = zf_uart_fifo_to_tty(sup);
 	}
 
 	dev_vdbg(sup->port.dev,
@@ -957,11 +957,11 @@ static void lrw_uart_dma_rx_chars(struct lrw_uart_port *sup,
 	tty_flip_buffer_push(port);
 }
 
-static void lrw_uart_dma_rx_irq(struct lrw_uart_port *sup)
+static void zf_uart_dma_rx_irq(struct zf_uart_port *sup)
 {
-	struct lrw_uart_dmarx_data *dmarx = &sup->dmarx;
+	struct zf_uart_dmarx_data *dmarx = &sup->dmarx;
 	struct dma_chan *rxchan = dmarx->chan;
-	struct lrw_uart_dmabuf *dbuf = dmarx->use_buf_b ?
+	struct zf_uart_dmabuf *dbuf = dmarx->use_buf_b ?
 		&dmarx->dbuf_b : &dmarx->dbuf_a;
 	size_t pending;
 	struct dma_tx_state state;
@@ -969,7 +969,7 @@ static void lrw_uart_dma_rx_irq(struct lrw_uart_port *sup)
 
 	/*
 	 * Pause the transfer so we can trust the current counter,
-	 * do this before we pause the LRW UART block, else we may
+	 * do this before we pause the ZF UART block, else we may
 	 * overflow the FIFO.
 	 */
 	if (dmaengine_pause(rxchan))
@@ -981,12 +981,12 @@ static void lrw_uart_dma_rx_irq(struct lrw_uart_port *sup)
 
 	/* Disable RX DMA - incoming data will wait in the FIFO */
 	sup->dmacr &= ~UARTFCCR_RXDMAE;
-	lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+	zf_uart_write(sup->dmacr, sup, REG_FCCR);
 	sup->dmarx.running = false;
 
 	pending = dbuf->len - state.residue;
-	if (WARN_ON_ONCE(pending > LRW_UART_DMA_BUFFER_SIZE))
-		pending = LRW_UART_DMA_BUFFER_SIZE;
+	if (WARN_ON_ONCE(pending > ZF_UART_DMA_BUFFER_SIZE))
+		pending = ZF_UART_DMA_BUFFER_SIZE;
 
 	/* Then we terminate the transfer - we now know our residue */
 	dmaengine_terminate_all(rxchan);
@@ -995,25 +995,25 @@ static void lrw_uart_dma_rx_irq(struct lrw_uart_port *sup)
 	 * This will take the chars we have so far and insert
 	 * into the framework.
 	 */
-	lrw_uart_dma_rx_chars(sup, pending, dmarx->use_buf_b, true);
+	zf_uart_dma_rx_chars(sup, pending, dmarx->use_buf_b, true);
 
 	/* Switch buffer & re-trigger DMA job */
 	dmarx->use_buf_b = !dmarx->use_buf_b;
-	if (lrw_uart_dma_rx_trigger_dma(sup)) {
+	if (zf_uart_dma_rx_trigger_dma(sup)) {
 		dev_dbg(sup->port.dev,
 			"could not retrigger RX DMA job fall back to interrupt mode\n");
 		sup->im |= UARTIMSC_RXIM;
-		lrw_uart_write(sup->im, sup, REG_IMSC);
+		zf_uart_write(sup->im, sup, REG_IMSC);
 	}
 }
 
-static void lrw_uart_dma_rx_callback(void *data)
+static void zf_uart_dma_rx_callback(void *data)
 {
-	struct lrw_uart_port *sup = data;
-	struct lrw_uart_dmarx_data *dmarx = &sup->dmarx;
+	struct zf_uart_port *sup = data;
+	struct zf_uart_dmarx_data *dmarx = &sup->dmarx;
 	struct dma_chan *rxchan = dmarx->chan;
 	bool lastbuf = dmarx->use_buf_b;
-	struct lrw_uart_dmabuf *dbuf = dmarx->use_buf_b ?
+	struct zf_uart_dmabuf *dbuf = dmarx->use_buf_b ?
 		&dmarx->dbuf_b : &dmarx->dbuf_a;
 	size_t pending;
 	struct dma_tx_state state;
@@ -1033,17 +1033,17 @@ static void lrw_uart_dma_rx_callback(void *data)
 	 */
 	rxchan->device->device_tx_status(rxchan, dmarx->cookie, &state);
 	pending = dbuf->len - state.residue;
-	if (WARN_ON_ONCE(pending > LRW_UART_DMA_BUFFER_SIZE))
-		pending = LRW_UART_DMA_BUFFER_SIZE;
+	if (WARN_ON_ONCE(pending > ZF_UART_DMA_BUFFER_SIZE))
+		pending = ZF_UART_DMA_BUFFER_SIZE;
 
 	/* Then we terminate the transfer - we now know our residue */
 	dmaengine_terminate_all(rxchan);
 
 	sup->dmarx.running = false;
 	dmarx->use_buf_b = !lastbuf;
-	ret = lrw_uart_dma_rx_trigger_dma(sup);
+	ret = zf_uart_dma_rx_trigger_dma(sup);
 
-	lrw_uart_dma_rx_chars(sup, pending, lastbuf, false);
+	zf_uart_dma_rx_chars(sup, pending, lastbuf, false);
 	uart_unlock_and_check_sysrq(&sup->port);
 	/*
 	 * Do this check after we picked the DMA chars so we don't
@@ -1053,7 +1053,7 @@ static void lrw_uart_dma_rx_callback(void *data)
 		dev_dbg(sup->port.dev,
 			"could not retrigger RX DMA job fall back to interrupt mode\n");
 		sup->im |= UARTIMSC_RXIM;
-		lrw_uart_write(sup->im, sup, REG_IMSC);
+		zf_uart_write(sup->im, sup, REG_IMSC);
 	}
 }
 
@@ -1062,14 +1062,14 @@ static void lrw_uart_dma_rx_callback(void *data)
  * suspending this port.
  * Locking: called with port lock held and IRQs disabled.
  */
-static inline void lrw_uart_dma_rx_stop(struct lrw_uart_port *sup)
+static inline void zf_uart_dma_rx_stop(struct zf_uart_port *sup)
 {
 	if (!sup->using_rx_dma)
 		return;
 
 	/* FIXME.  Just disable the DMA enable */
 	sup->dmacr &= ~UARTFCCR_RXDMAE;
-	lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+	zf_uart_write(sup->dmacr, sup, REG_FCCR);
 }
 
 /*
@@ -1077,16 +1077,16 @@ static inline void lrw_uart_dma_rx_stop(struct lrw_uart_port *sup)
  * Every polling, It checks the residue in the dma buffer and transfer
  * data to the tty. Also, last_residue is updated for the next polling.
  */
-static void lrw_uart_dma_rx_poll(struct timer_list *t)
+static void zf_uart_dma_rx_poll(struct timer_list *t)
 {
-	struct lrw_uart_port *sup = from_timer(sup, t, dmarx.timer);
+	struct zf_uart_port *sup = from_timer(sup, t, dmarx.timer);
 	struct tty_port *port = &sup->port.state->port;
-	struct lrw_uart_dmarx_data *dmarx = &sup->dmarx;
+	struct zf_uart_dmarx_data *dmarx = &sup->dmarx;
 	struct dma_chan *rxchan = sup->dmarx.chan;
 	unsigned long flags;
 	unsigned int dmataken = 0;
 	unsigned int size = 0;
-	struct lrw_uart_dmabuf *dbuf;
+	struct zf_uart_dmabuf *dbuf;
 	int dma_count;
 	struct dma_tx_state state;
 
@@ -1110,9 +1110,9 @@ static void lrw_uart_dma_rx_poll(struct timer_list *t)
 	if (jiffies_to_msecs(jiffies - dmarx->last_jiffies)
 			> sup->dmarx.poll_timeout) {
 		uart_port_lock_irqsave(&sup->port, &flags);
-		lrw_uart_dma_rx_stop(sup);
+		zf_uart_dma_rx_stop(sup);
 		sup->im |= UARTIMSC_RXIM;
-		lrw_uart_write(sup->im, sup, REG_IMSC);
+		zf_uart_write(sup->im, sup, REG_IMSC);
 		uart_port_unlock_irqrestore(&sup->port, flags);
 
 		sup->dmarx.running = false;
@@ -1124,33 +1124,33 @@ static void lrw_uart_dma_rx_poll(struct timer_list *t)
 	}
 }
 
-static void lrw_uart_dma_startup(struct lrw_uart_port *sup)
+static void zf_uart_dma_startup(struct zf_uart_port *sup)
 {
 	int ret;
 
 	if (!sup->dma_probed)
-		lrw_uart_dma_probe(sup);
+		zf_uart_dma_probe(sup);
 
 	if (!sup->dmatx.chan)
 		return;
 
-	sup->dmatx.buf = kmalloc(LRW_UART_DMA_BUFFER_SIZE, GFP_KERNEL | __GFP_DMA);
+	sup->dmatx.buf = kmalloc(ZF_UART_DMA_BUFFER_SIZE, GFP_KERNEL | __GFP_DMA);
 	if (!sup->dmatx.buf) {
 		sup->port.fifosize = sup->fifosize;
 		return;
 	}
 
-	sup->dmatx.len = LRW_UART_DMA_BUFFER_SIZE;
+	sup->dmatx.len = ZF_UART_DMA_BUFFER_SIZE;
 
 	/* The DMA buffer is now the FIFO the TTY subsystem can use */
-	sup->port.fifosize = LRW_UART_DMA_BUFFER_SIZE;
+	sup->port.fifosize = ZF_UART_DMA_BUFFER_SIZE;
 	sup->using_tx_dma = true;
 
 	if (!sup->dmarx.chan)
 		goto skip_rx;
 
 	/* Allocate and map DMA RX buffers */
-	ret = lrw_uart_dmabuf_init(sup->dmarx.chan, &sup->dmarx.dbuf_a,
+	ret = zf_uart_dmabuf_init(sup->dmarx.chan, &sup->dmarx.dbuf_a,
 				  DMA_FROM_DEVICE);
 	if (ret) {
 		dev_err(sup->port.dev, "failed to init DMA %s: %d\n",
@@ -1158,12 +1158,12 @@ static void lrw_uart_dma_startup(struct lrw_uart_port *sup)
 		goto skip_rx;
 	}
 
-	ret = lrw_uart_dmabuf_init(sup->dmarx.chan, &sup->dmarx.dbuf_b,
+	ret = zf_uart_dmabuf_init(sup->dmarx.chan, &sup->dmarx.dbuf_b,
 				  DMA_FROM_DEVICE);
 	if (ret) {
 		dev_err(sup->port.dev, "failed to init DMA %s: %d\n",
 			"RX buffer B", ret);
-		lrw_uart_dmabuf_free(sup->dmarx.chan, &sup->dmarx.dbuf_a,
+		zf_uart_dmabuf_free(sup->dmarx.chan, &sup->dmarx.dbuf_a,
 				    DMA_FROM_DEVICE);
 		goto skip_rx;
 	}
@@ -1173,38 +1173,38 @@ static void lrw_uart_dma_startup(struct lrw_uart_port *sup)
 skip_rx:
 	/* Turn on DMA error (RX/TX will be enabled on demand) */
 	sup->dmacr |= UARTFCCR_DMAONERR;
-	lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+	zf_uart_write(sup->dmacr, sup, REG_FCCR);
 
 	if (sup->using_rx_dma) {
-		if (lrw_uart_dma_rx_trigger_dma(sup))
+		if (zf_uart_dma_rx_trigger_dma(sup))
 			dev_dbg(sup->port.dev,
 				"could not trigger initial RX DMA job, fall back to interrupt mode\n");
 		if (sup->dmarx.poll_rate) {
-			timer_setup(&sup->dmarx.timer, lrw_uart_dma_rx_poll, 0);
+			timer_setup(&sup->dmarx.timer, zf_uart_dma_rx_poll, 0);
 			mod_timer(&sup->dmarx.timer,
 				  jiffies + msecs_to_jiffies(sup->dmarx.poll_rate));
-			sup->dmarx.last_residue = LRW_UART_DMA_BUFFER_SIZE;
+			sup->dmarx.last_residue = ZF_UART_DMA_BUFFER_SIZE;
 			sup->dmarx.last_jiffies = jiffies;
 		}
 	}
 }
 
-static void lrw_uart_dma_shutdown(struct lrw_uart_port *sup)
+static void zf_uart_dma_shutdown(struct zf_uart_port *sup)
 {
 	if (!(sup->using_tx_dma || sup->using_rx_dma))
 		return;
 
 	/* Disable RX and TX DMA */
-	while (lrw_uart_read(sup, REG_FR) & sup->vendor->fr_busy)
+	while (zf_uart_read(sup, REG_FR) & sup->vendor->fr_busy)
 		cpu_relax();
 
 	uart_port_lock_irq(&sup->port);
 	sup->dmacr &= ~(UARTFCCR_DMAONERR | UARTFCCR_RXDMAE | UARTFCCR_TXDMAE);
-	lrw_uart_write(sup->dmacr, sup, REG_FCCR);
+	zf_uart_write(sup->dmacr, sup, REG_FCCR);
 	uart_port_unlock_irq(&sup->port);
 
 	if (sup->using_tx_dma) {
-		/* In theory, this should already be done by lrw_uart_dma_flush_buffer */
+		/* In theory, this should already be done by zf_uart_dma_flush_buffer */
 		dmaengine_terminate_all(sup->dmatx.chan);
 		if (sup->dmatx.queued) {
 			dma_unmap_single(sup->dmatx.chan->device->dev,
@@ -1220,79 +1220,79 @@ static void lrw_uart_dma_shutdown(struct lrw_uart_port *sup)
 	if (sup->using_rx_dma) {
 		dmaengine_terminate_all(sup->dmarx.chan);
 		/* Clean up the RX DMA */
-		lrw_uart_dmabuf_free(sup->dmarx.chan, &sup->dmarx.dbuf_a, DMA_FROM_DEVICE);
-		lrw_uart_dmabuf_free(sup->dmarx.chan, &sup->dmarx.dbuf_b, DMA_FROM_DEVICE);
+		zf_uart_dmabuf_free(sup->dmarx.chan, &sup->dmarx.dbuf_a, DMA_FROM_DEVICE);
+		zf_uart_dmabuf_free(sup->dmarx.chan, &sup->dmarx.dbuf_b, DMA_FROM_DEVICE);
 		if (sup->dmarx.poll_rate)
 			del_timer_sync(&sup->dmarx.timer);
 		sup->using_rx_dma = false;
 	}
 }
 
-static inline bool lrw_uart_dma_rx_available(struct lrw_uart_port *sup)
+static inline bool zf_uart_dma_rx_available(struct zf_uart_port *sup)
 {
 	return sup->using_rx_dma;
 }
 
-static inline bool lrw_uart_dma_rx_running(struct lrw_uart_port *sup)
+static inline bool zf_uart_dma_rx_running(struct zf_uart_port *sup)
 {
 	return sup->using_rx_dma && sup->dmarx.running;
 }
 
 #else
 /* Blank functions if the DMA engine is not available */
-static inline void lrw_uart_dma_remove(struct lrw_uart_port *sup)
+static inline void zf_uart_dma_remove(struct zf_uart_port *sup)
 {
 }
 
-static inline void lrw_uart_dma_startup(struct lrw_uart_port *sup)
+static inline void zf_uart_dma_startup(struct zf_uart_port *sup)
 {
 }
 
-static inline void lrw_uart_dma_shutdown(struct lrw_uart_port *sup)
+static inline void zf_uart_dma_shutdown(struct zf_uart_port *sup)
 {
 }
 
-static inline bool lrw_uart_dma_tx_irq(struct lrw_uart_port *sup)
-{
-	return false;
-}
-
-static inline void lrw_uart_dma_tx_stop(struct lrw_uart_port *sup)
-{
-}
-
-static inline bool lrw_uart_dma_tx_start(struct lrw_uart_port *sup)
+static inline bool zf_uart_dma_tx_irq(struct zf_uart_port *sup)
 {
 	return false;
 }
 
-static inline void lrw_uart_dma_rx_irq(struct lrw_uart_port *sup)
+static inline void zf_uart_dma_tx_stop(struct zf_uart_port *sup)
 {
 }
 
-static inline void lrw_uart_dma_rx_stop(struct lrw_uart_port *sup)
+static inline bool zf_uart_dma_tx_start(struct zf_uart_port *sup)
+{
+	return false;
+}
+
+static inline void zf_uart_dma_rx_irq(struct zf_uart_port *sup)
 {
 }
 
-static inline int lrw_uart_dma_rx_trigger_dma(struct lrw_uart_port *sup)
+static inline void zf_uart_dma_rx_stop(struct zf_uart_port *sup)
+{
+}
+
+static inline int zf_uart_dma_rx_trigger_dma(struct zf_uart_port *sup)
 {
 	return -EIO;
 }
 
-static inline bool lrw_uart_dma_rx_available(struct lrw_uart_port *sup)
+static inline bool zf_uart_dma_rx_available(struct zf_uart_port *sup)
 {
 	return false;
 }
 
-static inline bool lrw_uart_dma_rx_running(struct lrw_uart_port *sup)
+static inline bool zf_uart_dma_rx_running(struct zf_uart_port *sup)
 {
 	return false;
 }
 
-#define lrw_uart_dma_flush_buffer	NULL
+#define zf_uart_dma_flush_buffer	NULL
 #endif
 
-static void lrw_uart_rs485_tx_stop(struct lrw_uart_port *sup)
+static void zf_uart_rs485_tx_stop(struct zf_uart_port *sup)
 {
 	/*
 	 * To be on the safe side only time out after twice as many iterations
@@ -1304,7 +1304,7 @@ static void lrw_uart_rs485_tx_stop(struct lrw_uart_port *sup)
 	u32 mcr, mcfg;
 
 	/* Wait until hardware tx queue is empty */
-	while (!lrw_uart_tx_empty(port)) {
+	while (!zf_uart_tx_empty(port)) {
 		if (i > MAX_TX_DRAIN_ITERS) {
 			dev_warn(port->dev,
 				 "timeout while draining hardware tx queue\n");
@@ -1318,70 +1318,70 @@ static void lrw_uart_rs485_tx_stop(struct lrw_uart_port *sup)
 	if (port->rs485.delay_rts_after_send)
 		mdelay(port->rs485.delay_rts_after_send);
 
-	mcr = lrw_uart_read(sup, REG_MCR);
+	mcr = zf_uart_read(sup, REG_MCR);
 
 	if (port->rs485.flags & SER_RS485_RTS_AFTER_SEND)
 		mcr &= ~UARTMCR_RTS;
 	else
 		mcr |= UARTMCR_RTS;
 
-	lrw_uart_write(mcr, sup, REG_MCR);
+	zf_uart_write(mcr, sup, REG_MCR);
 
 	/* Disable the transmitter and reenable the transceiver */
-	mcfg = lrw_uart_read(sup, REG_MCFG);
+	mcfg = zf_uart_read(sup, REG_MCFG);
 	mcfg &= ~UARTMCFG_TXE;
 	mcfg |= UARTMCFG_RXE;
-	lrw_uart_write(mcfg, sup, REG_MCFG);
+	zf_uart_write(mcfg, sup, REG_MCFG);
 
 	sup->rs485_tx_started = false;
 }
 
-static void lrw_uart_stop_tx(struct uart_port *port)
+static void zf_uart_stop_tx(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
 	sup->im &= ~UARTIMSC_TXIM;
-	lrw_uart_write(sup->im, sup, REG_IMSC);
-	lrw_uart_dma_tx_stop(sup);
+	zf_uart_write(sup->im, sup, REG_IMSC);
+	zf_uart_dma_tx_stop(sup);
 
 	if ((port->rs485.flags & SER_RS485_ENABLED) && sup->rs485_tx_started)
-		lrw_uart_rs485_tx_stop(sup);
+		zf_uart_rs485_tx_stop(sup);
 }
 
-static bool lrw_uart_tx_chars(struct lrw_uart_port *sup, bool from_irq);
+static bool zf_uart_tx_chars(struct zf_uart_port *sup, bool from_irq);
 
 /* Start TX with programmed I/O only (no DMA) */
-static void lrw_uart_start_tx_pio(struct lrw_uart_port *sup)
+static void zf_uart_start_tx_pio(struct zf_uart_port *sup)
 {
-	if (lrw_uart_tx_chars(sup, false)) {
+	if (zf_uart_tx_chars(sup, false)) {
 		sup->im |= UARTIMSC_TXIM;
-		lrw_uart_write(sup->im, sup, REG_IMSC);
+		zf_uart_write(sup->im, sup, REG_IMSC);
 	}
 }
 
-static void lrw_uart_rs485_tx_start(struct lrw_uart_port *sup)
+static void zf_uart_rs485_tx_start(struct zf_uart_port *sup)
 {
 	struct uart_port *port = &sup->port;
 	u32 mcr, mcfg;
 
 	/* Enable transmitter */
-	mcfg = lrw_uart_read(sup, REG_MCFG);
+	mcfg = zf_uart_read(sup, REG_MCFG);
 	mcfg |= UARTMCFG_TXE;
 
 	/* Disable receiver if half-duplex */
 	if (!(port->rs485.flags & SER_RS485_RX_DURING_TX))
 		mcfg &= ~UARTMCFG_RXE;
 
-	lrw_uart_write(mcfg, sup, REG_MCFG);
+	zf_uart_write(mcfg, sup, REG_MCFG);
 
-	mcr = lrw_uart_read(sup, REG_MCR);
+	mcr = zf_uart_read(sup, REG_MCR);
 	if (port->rs485.flags & SER_RS485_RTS_ON_SEND)
 		mcr &= ~UARTMCR_RTS;
 	else
 		mcr |= UARTMCR_RTS;
 
-	lrw_uart_write(mcr, sup, REG_MCR);
+	zf_uart_write(mcr, sup, REG_MCR);
 
 	if (port->rs485.delay_rts_before_send)
 		mdelay(port->rs485.delay_rts_before_send);
@@ -1389,54 +1389,54 @@ static void lrw_uart_rs485_tx_start(struct lrw_uart_port *sup)
 	sup->rs485_tx_started = true;
 }
 
-static void lrw_uart_start_tx(struct uart_port *port)
+static void zf_uart_start_tx(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
 	if ((sup->port.rs485.flags & SER_RS485_ENABLED) &&
 	    !sup->rs485_tx_started)
-		lrw_uart_rs485_tx_start(sup);
+		zf_uart_rs485_tx_start(sup);
 
-	if (!lrw_uart_dma_tx_start(sup))
-		lrw_uart_start_tx_pio(sup);
+	if (!zf_uart_dma_tx_start(sup))
+		zf_uart_start_tx_pio(sup);
 }
 
-static void lrw_uart_stop_rx(struct uart_port *port)
+static void zf_uart_stop_rx(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
 	sup->im &= ~(UARTIMSC_RXIM | UARTIMSC_RTIM | UARTIMSC_FEIM |
 		     UARTIMSC_PEIM | UARTIMSC_BEIM | UARTIMSC_OEIM);
-	lrw_uart_write(sup->im, sup, REG_IMSC);
+	zf_uart_write(sup->im, sup, REG_IMSC);
 
-	lrw_uart_dma_rx_stop(sup);
+	zf_uart_dma_rx_stop(sup);
 }
 
-static void lrw_uart_throttle_rx(struct uart_port *port)
+static void zf_uart_throttle_rx(struct uart_port *port)
 {
 	unsigned long flags;
 
 	uart_port_lock_irqsave(port, &flags);
-	lrw_uart_stop_rx(port);
+	zf_uart_stop_rx(port);
 	uart_port_unlock_irqrestore(port, flags);
 }
 
-static void lrw_uart_enable_ms(struct uart_port *port)
+static void zf_uart_enable_ms(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
 	sup->im |= UARTIMSC_RIMIM | UARTIMSC_CTSMIM | UARTIMSC_DCDMIM | UARTIMSC_DSRMIM;
-	lrw_uart_write(sup->im, sup, REG_IMSC);
+	zf_uart_write(sup->im, sup, REG_IMSC);
 }
 
-static void lrw_uart_rx_chars(struct lrw_uart_port *sup)
+static void zf_uart_rx_chars(struct zf_uart_port *sup)
 __releases(&sup->port.lock)
 __acquires(&sup->port.lock)
 {
-	lrw_uart_fifo_to_tty(sup);
+	zf_uart_fifo_to_tty(sup);
 
 	uart_port_unlock(&sup->port);
 	tty_flip_buffer_push(&sup->port.state->port);
@@ -1444,18 +1444,18 @@ __acquires(&sup->port.lock)
 	 * If we were temporarily out of DMA mode for a while,
 	 * attempt to switch back to DMA mode again.
 	 */
-	if (lrw_uart_dma_rx_available(sup)) {
-		if (lrw_uart_dma_rx_trigger_dma(sup)) {
+	if (zf_uart_dma_rx_available(sup)) {
+		if (zf_uart_dma_rx_trigger_dma(sup)) {
 			dev_dbg(sup->port.dev,
 				"could not trigger RX DMA job fall back to interrupt mode again\n");
 			sup->im |= UARTIMSC_RXIM;
-			lrw_uart_write(sup->im, sup, REG_IMSC);
+			zf_uart_write(sup->im, sup, REG_IMSC);
 		} else {
 #ifdef CONFIG_DMA_ENGINE
 			/* Start Rx DMA poll */
 			if (sup->dmarx.poll_rate) {
 				sup->dmarx.last_jiffies = jiffies;
-				sup->dmarx.last_residue	= LRW_UART_DMA_BUFFER_SIZE;
+				sup->dmarx.last_residue	= ZF_UART_DMA_BUFFER_SIZE;
 				mod_timer(&sup->dmarx.timer,
 					  jiffies + msecs_to_jiffies(sup->dmarx.poll_rate));
 			}
@@ -1465,46 +1465,46 @@ __acquires(&sup->port.lock)
 	uart_port_lock(&sup->port);
 }
 
-static bool lrw_uart_tx_char(struct lrw_uart_port *sup, unsigned char c,
+static bool zf_uart_tx_char(struct zf_uart_port *sup, unsigned char c,
 			    bool from_irq)
 {
 	if (unlikely(!from_irq) &&
-	    lrw_uart_read(sup, REG_FR) & UARTFR_TXFF)
+	    zf_uart_read(sup, REG_FR) & UARTFR_TXFF)
 		return false; /* unable to transmit character */
 
-	lrw_uart_write(c, sup, REG_DR);
+	zf_uart_write(c, sup, REG_DR);
 	sup->port.icount.tx++;
 
 	return true;
 }
 
 /* Returns true if tx interrupts have to be (kept) enabled  */
-static bool lrw_uart_tx_chars(struct lrw_uart_port *sup, bool from_irq)
+static bool zf_uart_tx_chars(struct zf_uart_port *sup, bool from_irq)
 {
 	struct circ_buf *xmit = &sup->port.state->xmit;
 	int count = sup->fifosize >> 1;
 
 	if (sup->port.x_char) {
-		if (!lrw_uart_tx_char(sup, sup->port.x_char, from_irq))
+		if (!zf_uart_tx_char(sup, sup->port.x_char, from_irq))
 			return true;
 		sup->port.x_char = 0;
 		--count;
 	}
 
 	if (uart_circ_empty(xmit) || uart_tx_stopped(&sup->port)) {
-		lrw_uart_stop_tx(&sup->port);
+		zf_uart_stop_tx(&sup->port);
 		return false;
 	}
 
 	/* If we are using DMA mode, try to send some characters. */
-	if (lrw_uart_dma_tx_irq(sup))
+	if (zf_uart_dma_tx_irq(sup))
 		return true;
 
 	do {
 		if (likely(from_irq) && count-- == 0)
 			break;
 
-		if (!lrw_uart_tx_char(sup, xmit->buf[xmit->tail], from_irq))
+		if (!zf_uart_tx_char(sup, xmit->buf[xmit->tail], from_irq))
 			break;
 
 		xmit->tail = (xmit->tail + 1) & (UART_XMIT_SIZE - 1);
@@ -1514,17 +1514,17 @@ static bool lrw_uart_tx_chars(struct lrw_uart_port *sup, bool from_irq)
 		uart_write_wakeup(&sup->port);
 
 	if (uart_circ_empty(xmit)) {
-		lrw_uart_stop_tx(&sup->port);
+		zf_uart_stop_tx(&sup->port);
 		return false;
 	}
 	return true;
 }
 
-static void lrw_uart_modem_status(struct lrw_uart_port *sup)
+static void zf_uart_modem_status(struct zf_uart_port *sup)
 {
 	unsigned int status, delta;
 
-	status = lrw_uart_read(sup, REG_FR) & UARTFR_MODEM_ANY;
+	status = zf_uart_read(sup, REG_FR) & UARTFR_MODEM_ANY;
 
 	delta = status ^ sup->old_status;
 	sup->old_status = status;
@@ -1545,55 +1545,55 @@ static void lrw_uart_modem_status(struct lrw_uart_port *sup)
 	wake_up_interruptible(&sup->port.state->port.delta_msr_wait);
 }
 
-static void check_apply_cts_event_workaround(struct lrw_uart_port *sup)
+static void check_apply_cts_event_workaround(struct zf_uart_port *sup)
 {
 	if (!sup->vendor->cts_event_workaround)
 		return;
 
 	/* workaround to make sure that all bits are unlocked.. */
-	lrw_uart_write(0x00, sup, REG_ICR);
+	zf_uart_write(0x00, sup, REG_ICR);
 
 	/*
 	 * WA: introduce 26ns(1 uart clk) delay before W1C;
 	 * single apb access will incur 2 pclk(133.12Mhz) delay,
 	 * so add 2 dummy reads
 	 */
-	lrw_uart_read(sup, REG_ICR);
-	lrw_uart_read(sup, REG_ICR);
+	zf_uart_read(sup, REG_ICR);
+	zf_uart_read(sup, REG_ICR);
 }
 
-static irqreturn_t lrw_uart_int(int irq, void *dev_id)
+static irqreturn_t zf_uart_int(int irq, void *dev_id)
 {
-	struct lrw_uart_port *sup = dev_id;
+	struct zf_uart_port *sup = dev_id;
 	unsigned long flags;
 	unsigned int status, pass_counter = ISR_PASS_LIMIT;
 	int handled = 0;
 
 	uart_port_lock_irqsave(&sup->port, &flags);
-	status = lrw_uart_read(sup, REG_RIS) & sup->im;
+	status = zf_uart_read(sup, REG_RIS) & sup->im;
 	if (status) {
 		do {
 			check_apply_cts_event_workaround(sup);
 
-			lrw_uart_write(status & ~(UARTICR_TXIC | UARTICR_RTIC | UARTICR_RXIC),
+			zf_uart_write(status & ~(UARTICR_TXIC | UARTICR_RTIC | UARTICR_RXIC),
 				      sup, REG_ICR);
 
 			if (status & (UARTICR_RTIC | UARTICR_RXIC)) {
-				if (lrw_uart_dma_rx_running(sup))
-					lrw_uart_dma_rx_irq(sup);
+				if (zf_uart_dma_rx_running(sup))
+					zf_uart_dma_rx_irq(sup);
 				else
-					lrw_uart_rx_chars(sup);
+					zf_uart_rx_chars(sup);
 			}
 			if (status & (UARTICR_DSRMIC | UARTICR_DCDMIC |
 				      UARTICR_CTSMIC | UARTICR_RIMIC))
-				lrw_uart_modem_status(sup);
+				zf_uart_modem_status(sup);
 			if (status & UARTICR_TXIC)
-				lrw_uart_tx_chars(sup, true);
+				zf_uart_tx_chars(sup, true);
 
 			if (pass_counter-- == 0)
 				break;
 
-			status = lrw_uart_read(sup, REG_RIS) & sup->im;
+			status = zf_uart_read(sup, REG_RIS) & sup->im;
 		} while (status != 0);
 		handled = 1;
 	}
@@ -1603,40 +1603,40 @@ static irqreturn_t lrw_uart_int(int irq, void *dev_id)
 	return IRQ_RETVAL(handled);
 }
 
-static unsigned int lrw_uart_tx_empty(struct uart_port *port)
+static unsigned int zf_uart_tx_empty(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
 	/* Allow feature register bits to be inverted to work around errata */
-	unsigned int status = lrw_uart_read(sup, REG_FR) ^ sup->vendor->inv_fr;
+	unsigned int status = zf_uart_read(sup, REG_FR) ^ sup->vendor->inv_fr;
 
 	return status & (sup->vendor->fr_busy | UARTFR_TXFF) ?
 							0 : TIOCSER_TEMT;
 }
 
-static void lrw_uart_maybe_set_bit(bool cond, unsigned int *ptr, unsigned int mask)
+static void zf_uart_maybe_set_bit(bool cond, unsigned int *ptr, unsigned int mask)
 {
 	if (cond)
 		*ptr |= mask;
 }
 
-static unsigned int lrw_uart_get_mctrl(struct uart_port *port)
+static unsigned int zf_uart_get_mctrl(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 	unsigned int result = 0;
-	unsigned int status = lrw_uart_read(sup, REG_FR);
+	unsigned int status = zf_uart_read(sup, REG_FR);
 
-	lrw_uart_maybe_set_bit(status & UARTFR_DCD, &result, TIOCM_CAR);
-	lrw_uart_maybe_set_bit(status & sup->vendor->fr_dsr, &result, TIOCM_DSR);
-	lrw_uart_maybe_set_bit(status & sup->vendor->fr_cts, &result, TIOCM_CTS);
-	lrw_uart_maybe_set_bit(status & sup->vendor->fr_ri, &result, TIOCM_RNG);
+	zf_uart_maybe_set_bit(status & UARTFR_DCD, &result, TIOCM_CAR);
+	zf_uart_maybe_set_bit(status & sup->vendor->fr_dsr, &result, TIOCM_DSR);
+	zf_uart_maybe_set_bit(status & sup->vendor->fr_cts, &result, TIOCM_CTS);
+	zf_uart_maybe_set_bit(status & sup->vendor->fr_ri, &result, TIOCM_RNG);
 
 	return result;
 }
 
-static void lrw_uart_assign_bit(bool cond, unsigned int *ptr, unsigned int mask)
+static void zf_uart_assign_bit(bool cond, unsigned int *ptr, unsigned int mask)
 {
 	if (cond)
 		*ptr |= mask;
@@ -1644,59 +1644,59 @@ static void lrw_uart_assign_bit(bool cond, unsigned int *ptr, unsigned int mask)
 		*ptr &= ~mask;
 }
 
-static void lrw_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
+static void zf_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 	unsigned int mcr;
 	unsigned int mcfg;
 	unsigned int fccr;
 
-	mcr = lrw_uart_read(sup, REG_MCR);
-	mcfg = lrw_uart_read(sup, REG_MCFG);
-	fccr = lrw_uart_read(sup, REG_FCCR);
+	mcr = zf_uart_read(sup, REG_MCR);
+	mcfg = zf_uart_read(sup, REG_MCFG);
+	fccr = zf_uart_read(sup, REG_FCCR);
 
-	lrw_uart_assign_bit(mctrl & TIOCM_RTS, &mcr, UARTMCR_RTS);
-	lrw_uart_assign_bit(mctrl & TIOCM_DTR, &mcr, UARTMCR_DTR);
-	lrw_uart_assign_bit(mctrl & TIOCM_OUT1, &mcr, UARTMCR_OUT1);
-	lrw_uart_assign_bit(mctrl & TIOCM_OUT2, &mcr, UARTMCR_OUT2);
-	lrw_uart_assign_bit(mctrl & TIOCM_LOOP, &mcfg, UARTMCFG_LBE);
+	zf_uart_assign_bit(mctrl & TIOCM_RTS, &mcr, UARTMCR_RTS);
+	zf_uart_assign_bit(mctrl & TIOCM_DTR, &mcr, UARTMCR_DTR);
+	zf_uart_assign_bit(mctrl & TIOCM_OUT1, &mcr, UARTMCR_OUT1);
+	zf_uart_assign_bit(mctrl & TIOCM_OUT2, &mcr, UARTMCR_OUT2);
+	zf_uart_assign_bit(mctrl & TIOCM_LOOP, &mcfg, UARTMCFG_LBE);
 
 	if (port->status & UPSTAT_AUTORTS) {
 		/* We need to disable auto-RTS if we want to turn RTS off */
-		lrw_uart_assign_bit(mctrl & TIOCM_RTS, &fccr, UARTFCCR_RTSEN);
+		zf_uart_assign_bit(mctrl & TIOCM_RTS, &fccr, UARTFCCR_RTSEN);
 	}
 
-	lrw_uart_write(mcr, sup, REG_MCR);
-	lrw_uart_write(mcfg, sup, REG_MCFG);
-	lrw_uart_write(fccr, sup, REG_FCCR);
+	zf_uart_write(mcr, sup, REG_MCR);
+	zf_uart_write(mcfg, sup, REG_MCFG);
+	zf_uart_write(fccr, sup, REG_FCCR);
 }
 
-static void lrw_uart_break_ctl(struct uart_port *port, int break_state)
+static void zf_uart_break_ctl(struct uart_port *port, int break_state)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 	unsigned long flags;
 	unsigned int mcfg;
 
 	uart_port_lock_irqsave(&sup->port, &flags);
-	mcfg = lrw_uart_read(sup, REG_MCFG);
+	mcfg = zf_uart_read(sup, REG_MCFG);
 	if (break_state == -1)
 		mcfg |= UARTMCFG_BRK;
 	else
 		mcfg &= ~UARTMCFG_BRK;
-	lrw_uart_write(mcfg, sup, REG_MCFG);
+	zf_uart_write(mcfg, sup, REG_MCFG);
 	uart_port_unlock_irqrestore(&sup->port, flags);
 }
 
 #ifdef CONFIG_CONSOLE_POLL
 
-static void lrw_uart_quiesce_irqs(struct uart_port *port)
+static void zf_uart_quiesce_irqs(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
-	lrw_uart_write(lrw_uart_read(sup, REG_MIS), sup, REG_ICR);
+	zf_uart_write(zf_uart_read(sup, REG_MIS), sup, REG_ICR);
 	/*
 	 * There is no way to clear TXIM as this is "ready to transmit IRQ", so
 	 * we simply mask it. start_tx() will unmask it.
@@ -1710,46 +1710,46 @@ static void lrw_uart_quiesce_irqs(struct uart_port *port)
 	 * (including tx queue), so we're also fine with start_tx()'s caller
 	 * side.
 	 */
-	lrw_uart_write(lrw_uart_read(sup, REG_IMSC) & ~UARTIMSC_TXIM, sup,
+	zf_uart_write(zf_uart_read(sup, REG_IMSC) & ~UARTIMSC_TXIM, sup,
 		    REG_IMSC);
 }
 
-static int lrw_uart_get_poll_char(struct uart_port *port)
+static int zf_uart_get_poll_char(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 	unsigned int status;
 
 	/*
 	 * The caller might need IRQs lowered, e.g. if used with KDB NMI
 	 * debugger.
 	 */
-	lrw_uart_quiesce_irqs(port);
+	zf_uart_quiesce_irqs(port);
 
-	status = lrw_uart_read(sup, REG_FR);
+	status = zf_uart_read(sup, REG_FR);
 	if (status & UARTFR_RXFE)
 		return NO_POLL_CHAR;
 
-	return lrw_uart_read(sup, REG_DR);
+	return zf_uart_read(sup, REG_DR);
 }
 
-static void lrw_uart_put_poll_char(struct uart_port *port, unsigned char ch)
+static void zf_uart_put_poll_char(struct uart_port *port, unsigned char ch)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
-	while (lrw_uart_read(sup, REG_FR) & UARTFR_TXFF)
+	while (zf_uart_read(sup, REG_FR) & UARTFR_TXFF)
 		cpu_relax();
 
-	lrw_uart_write(ch, sup, REG_DR);
+	zf_uart_write(ch, sup, REG_DR);
 }
 
 #endif /* CONFIG_CONSOLE_POLL */
 
-static int lrw_uart_hwinit(struct uart_port *port)
+static int zf_uart_hwinit(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 	int retval;
 	unsigned int clk;
 
@@ -1771,7 +1771,7 @@ static int lrw_uart_hwinit(struct uart_port *port)
 	}
 
 	/* Clear pending error and receive interrupts */
-	lrw_uart_write(UARTICR_OEIC | UARTICR_BEIC | UARTICR_PEIC |
+	zf_uart_write(UARTICR_OEIC | UARTICR_BEIC | UARTICR_PEIC |
 		      UARTICR_FEIC | UARTICR_RTIC | UARTICR_RXIC,
 		      sup, REG_ICR);
 
@@ -1779,11 +1779,11 @@ static int lrw_uart_hwinit(struct uart_port *port)
 	 * Save interrupts enable mask, and enable RX interrupts in case if
 	 * the interrupt is used for NMI entry.
 	 */
-	sup->im = lrw_uart_read(sup, REG_IMSC);
-	lrw_uart_write(UARTIMSC_RTIM | UARTIMSC_RXIM, sup, REG_IMSC);
+	sup->im = zf_uart_read(sup, REG_IMSC);
+	zf_uart_write(UARTIMSC_RTIM | UARTIMSC_RXIM, sup, REG_IMSC);
 
 	if (dev_get_platdata(sup->port.dev)) {
-		struct lrw_uart_data *plat;
+		struct zf_uart_data *plat;
 
 		plat = dev_get_platdata(sup->port.dev);
 		if (plat->init)
@@ -1792,11 +1792,11 @@ static int lrw_uart_hwinit(struct uart_port *port)
 	return 0;
 }
 
-static int lrw_uart_allocate_irq(struct lrw_uart_port *sup)
+static int zf_uart_allocate_irq(struct zf_uart_port *sup)
 {
-	lrw_uart_write(sup->im, sup, REG_IMSC);
+	zf_uart_write(sup->im, sup, REG_IMSC);
 
-	return request_irq(sup->port.irq, lrw_uart_int, IRQF_SHARED, "lrw-uart", sup);
+	return request_irq(sup->port.irq, zf_uart_int, IRQF_SHARED, "zf-uart", sup);
 }
 
 /*
@@ -1804,7 +1804,7 @@ static int lrw_uart_allocate_irq(struct lrw_uart_port *sup)
  * if initial RX DMA job failed, start in interrupt mode
  * as well.
  */
-static void lrw_uart_enable_interrupts(struct lrw_uart_port *sup)
+static void zf_uart_enable_interrupts(struct zf_uart_port *sup)
 {
 	unsigned long flags;
 	unsigned int i;
@@ -1812,7 +1812,7 @@ static void lrw_uart_enable_interrupts(struct lrw_uart_port *sup)
 	uart_port_lock_irqsave(&sup->port, &flags);
 
 	/* Clear out any spuriously appearing RX interrupts */
-	lrw_uart_write(UARTICR_RTIC | UARTICR_RXIC, sup, REG_ICR);
+	zf_uart_write(UARTICR_RTIC | UARTICR_RXIC, sup, REG_ICR);
 
 	/*
 	 * RXIS is asserted only when the RX FIFO transitions from below
@@ -1821,80 +1821,80 @@ static void lrw_uart_enable_interrupts(struct lrw_uart_port *sup)
 	 * stuck off.  Drain the RX FIFO explicitly to fix this:
 	 */
 	for (i = 0; i < sup->fifosize * 2; ++i) {
-		if (lrw_uart_read(sup, REG_FR) & UARTFR_RXFE)
+		if (zf_uart_read(sup, REG_FR) & UARTFR_RXFE)
 			break;
 
-		lrw_uart_read(sup, REG_DR);
+		zf_uart_read(sup, REG_DR);
 	}
 
 	sup->im = UARTIMSC_RTIM;
-	if (!lrw_uart_dma_rx_running(sup))
+	if (!zf_uart_dma_rx_running(sup))
 		sup->im |= UARTIMSC_RXIM;
-	lrw_uart_write(sup->im, sup, REG_IMSC);
+	zf_uart_write(sup->im, sup, REG_IMSC);
 	uart_port_unlock_irqrestore(&sup->port, flags);
 }
 
-static void lrw_uart_unthrottle_rx(struct uart_port *port)
+static void zf_uart_unthrottle_rx(struct uart_port *port)
 {
-	struct lrw_uart_port *sup = container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup = container_of(port, struct zf_uart_port, port);
 	unsigned long flags;
 
 	uart_port_lock_irqsave(&sup->port, &flags);
 
 	sup->im = UARTIMSC_RTIM;
-	if (!lrw_uart_dma_rx_running(sup))
+	if (!zf_uart_dma_rx_running(sup))
 		sup->im |= UARTIMSC_RXIM;
 
-	lrw_uart_write(sup->im, sup, REG_IMSC);
+	zf_uart_write(sup->im, sup, REG_IMSC);
 
 	uart_port_unlock_irqrestore(&sup->port, flags);
 }
 
-static int lrw_uart_startup(struct uart_port *port)
+static int zf_uart_startup(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 	unsigned int mcr;
 	unsigned int mcfg;
 	int retval;
 
-	retval = lrw_uart_hwinit(port);
+	retval = zf_uart_hwinit(port);
 	if (retval)
 		goto clk_dis;
 
-	retval = lrw_uart_allocate_irq(sup);
+	retval = zf_uart_allocate_irq(sup);
 	if (retval)
 		goto clk_dis;
 
-	lrw_uart_write(sup->vendor->fcr, sup, REG_FCR);
+	zf_uart_write(sup->vendor->fcr, sup, REG_FCR);
 
 	uart_port_lock_irq(&sup->port);
 
-	mcr = lrw_uart_read(sup, REG_MCR);
+	mcr = zf_uart_read(sup, REG_MCR);
 	mcr &= UARTMCR_RTS | UARTMCR_DTR;
 
-	lrw_uart_write(mcr, sup, REG_MCR);
+	zf_uart_write(mcr, sup, REG_MCR);
 
-	mcfg = lrw_uart_read(sup, REG_MCFG);
+	mcfg = zf_uart_read(sup, REG_MCFG);
 
 	mcfg |= UARTMCFG_UARTEN | UARTMCFG_RXE;
 
 	if (!(port->rs485.flags & SER_RS485_ENABLED))
 		mcfg |= UARTMCFG_TXE;
 
-	lrw_uart_write(mcfg, sup, REG_MCFG);
+	zf_uart_write(mcfg, sup, REG_MCFG);
 
 	uart_port_unlock_irq(&sup->port);
 
 	/*
 	 * initialise the old status of the modem signals
 	 */
-	sup->old_status = lrw_uart_read(sup, REG_FR) & UARTFR_MODEM_ANY;
+	sup->old_status = zf_uart_read(sup, REG_FR) & UARTFR_MODEM_ANY;
 
 	/* Startup DMA */
-	lrw_uart_dma_startup(sup);
+	zf_uart_dma_startup(sup);
 
-	lrw_uart_enable_interrupts(sup);
+	zf_uart_enable_interrupts(sup);
 
 	return 0;
 
@@ -1903,18 +1903,18 @@ static int lrw_uart_startup(struct uart_port *port)
 	return retval;
 }
 
-static void lrw_uart_shutdown_channel(struct lrw_uart_port *sup,
+static void zf_uart_shutdown_channel(struct zf_uart_port *sup,
 	unsigned int mcfg, unsigned int fcr)
 {
 	unsigned long val;
 
-	val = lrw_uart_read(sup, mcfg);
+	val = zf_uart_read(sup, mcfg);
 	val &= ~(UARTMCFG_BRK);
-	lrw_uart_write(val, sup, mcfg);
+	zf_uart_write(val, sup, mcfg);
 
-	val = lrw_uart_read(sup, fcr);
+	val = zf_uart_read(sup, fcr);
 	val &= ~(UARTFCR_FEN);
-	lrw_uart_write(val, sup, fcr);
+	zf_uart_write(val, sup, fcr);
 }
 
 /*
@@ -1922,55 +1922,55 @@ static void lrw_uart_shutdown_channel(struct lrw_uart_port *sup,
  * Also RTS and DTR state should be preserved to restore
  * it during startup().
  */
-static void lrw_uart_disable_uart(struct lrw_uart_port *sup)
+static void zf_uart_disable_uart(struct zf_uart_port *sup)
 {
 	unsigned int mcr;
 	unsigned int mcfg;
 
 	sup->port.status &= ~(UPSTAT_AUTOCTS | UPSTAT_AUTORTS);
 	uart_port_lock_irq(&sup->port);
-	mcr = lrw_uart_read(sup, REG_MCR);
+	mcr = zf_uart_read(sup, REG_MCR);
 	mcr &= UARTMCR_RTS | UARTMCR_DTR;
-	lrw_uart_write(mcr, sup, REG_MCR);
+	zf_uart_write(mcr, sup, REG_MCR);
 
-	mcfg = lrw_uart_read(sup, REG_MCFG);
+	mcfg = zf_uart_read(sup, REG_MCFG);
 	mcfg |= UARTMCFG_UARTEN | UARTMCFG_TXE;
-	lrw_uart_write(mcfg, sup, REG_MCFG);
+	zf_uart_write(mcfg, sup, REG_MCFG);
 	uart_port_unlock_irq(&sup->port);
 
 	/*
 	 * disable break condition and fifos
 	 */
-	lrw_uart_shutdown_channel(sup, REG_MCFG, REG_FCR);
+	zf_uart_shutdown_channel(sup, REG_MCFG, REG_FCR);
 }
 
-static void lrw_uart_disable_interrupts(struct lrw_uart_port *sup)
+static void zf_uart_disable_interrupts(struct zf_uart_port *sup)
 {
 	uart_port_lock_irq(&sup->port);
 
 	/* mask all interrupts and clear all pending ones */
 	sup->im = 0;
-	lrw_uart_write(sup->im, sup, REG_IMSC);
-	lrw_uart_write(0xffff, sup, REG_ICR);
+	zf_uart_write(sup->im, sup, REG_IMSC);
+	zf_uart_write(0xffff, sup, REG_ICR);
 
 	uart_port_unlock_irq(&sup->port);
 }
 
-static void lrw_uart_shutdown(struct uart_port *port)
+static void zf_uart_shutdown(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-		container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+		container_of(port, struct zf_uart_port, port);
 
-	lrw_uart_disable_interrupts(sup);
+	zf_uart_disable_interrupts(sup);
 
-	lrw_uart_dma_shutdown(sup);
+	zf_uart_dma_shutdown(sup);
 
 	if ((port->rs485.flags & SER_RS485_ENABLED) && sup->rs485_tx_started)
-		lrw_uart_rs485_tx_stop(sup);
+		zf_uart_rs485_tx_stop(sup);
 
 	free_irq(sup->port.irq, sup);
 
-	lrw_uart_disable_uart(sup);
+	zf_uart_disable_uart(sup);
 
 	/*
 	 * Shut down the clock producer
@@ -1980,7 +1980,7 @@ static void lrw_uart_shutdown(struct uart_port *port)
 	pinctrl_pm_select_sleep_state(port->dev);
 
 	if (dev_get_platdata(sup->port.dev)) {
-		struct lrw_uart_data *plat;
+		struct zf_uart_data *plat;
 
 		plat = dev_get_platdata(sup->port.dev);
 		if (plat->exit)
@@ -1992,7 +1992,7 @@ static void lrw_uart_shutdown(struct uart_port *port)
 }
 
 static void
-lrw_uart_setup_status_masks(struct uart_port *port, struct ktermios *termios)
+zf_uart_setup_status_masks(struct uart_port *port, struct ktermios *termios)
 {
 	port->read_status_mask = UARTDR_OE | 255;
 	if (termios->c_iflag & INPCK)
@@ -2024,11 +2024,11 @@ lrw_uart_setup_status_masks(struct uart_port *port, struct ktermios *termios)
 }
 
 static void
-lrw_uart_set_termios(struct uart_port *port, struct ktermios *termios,
+zf_uart_set_termios(struct uart_port *port, struct ktermios *termios,
 		     const struct ktermios *old)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 	unsigned int frcr;
 	unsigned int mcr, fccr;
 	unsigned int mcfg;
@@ -2108,17 +2108,17 @@ lrw_uart_set_termios(struct uart_port *port, struct ktermios *termios,
 	 */
 	sup->rs485_tx_drain_interval = DIV_ROUND_UP(bits * 1000 * 1000, baud);
 
-	lrw_uart_setup_status_masks(port, termios);
+	zf_uart_setup_status_masks(port, termios);
 
 	if (UART_ENABLE_MS(port, termios->c_cflag))
-		lrw_uart_enable_ms(port);
+		zf_uart_enable_ms(port);
 
 	if (port->rs485.flags & SER_RS485_ENABLED)
 		termios->c_cflag &= ~CRTSCTS;
 
-	mcr = lrw_uart_read(sup, REG_MCR);
-	mcfg = lrw_uart_read(sup, REG_MCFG);
-	fccr = lrw_uart_read(sup, REG_FCCR);
+	mcr = zf_uart_read(sup, REG_MCR);
+	mcfg = zf_uart_read(sup, REG_MCFG);
+	fccr = zf_uart_read(sup, REG_FCCR);
 
 	if (termios->c_cflag & CRTSCTS) {
 		if (mcr & UARTMCR_RTS)
@@ -2132,53 +2132,53 @@ lrw_uart_set_termios(struct uart_port *port, struct ktermios *termios,
 	}
 
 	/* Set baud rate */
-	lrw_uart_write(quot & 0x3f, sup, REG_FD);
-	lrw_uart_write(quot >> 6, sup, REG_IND);
+	zf_uart_write(quot & 0x3f, sup, REG_FD);
+	zf_uart_write(quot >> 6, sup, REG_IND);
 
 	/*
 	 * ----------v----------v----------v----------v-----
 	 * NOTE: REG_FRCR MUST BE WRITTEN AFTER REG_FD & REG_IND.
 	 * ----------^----------^----------^----------^-----
 	 */
-	lrw_uart_write(frcr, sup, REG_FRCR);
+	zf_uart_write(frcr, sup, REG_FRCR);
 
-	lrw_uart_write(fccr, sup, REG_FCCR);
+	zf_uart_write(fccr, sup, REG_FCCR);
 
 	/*
-	 * Receive was disabled by lrw_uart_disable_uart during shutdown.
+	 * Receive was disabled by zf_uart_disable_uart during shutdown.
 	 * Need to reenable receive if you need to use a tty_driver
 	 * returns from tty_find_polling_driver() after a port shutdown.
 	 */
 	mcfg |= UARTMCFG_RXE | UARTMCFG_UARTEN;
-	lrw_uart_write(mcfg, sup, REG_MCFG);
+	zf_uart_write(mcfg, sup, REG_MCFG);
 
 	uart_port_unlock_irqrestore(port, flags);
 }
 
-static const char *lrw_uart_type(struct uart_port *port)
+static const char *zf_uart_type(struct uart_port *port)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
-	return sup->port.type == PORT_LRW ? sup->type : NULL;
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
+	return sup->port.type == PORT_ZF ? sup->type : NULL;
 }
 
 /*
  * Configure/autoconfigure the port.
  */
-static void lrw_uart_config_port(struct uart_port *port, int flags)
+static void zf_uart_config_port(struct uart_port *port, int flags)
 {
 	if (flags & UART_CONFIG_TYPE)
-		port->type = PORT_LRW;
+		port->type = PORT_ZF;
 }
 
 /*
  * verify the new serial_struct (for TIOCSSERIAL).
  */
-static int lrw_uart_verify_port(struct uart_port *port, struct serial_struct *ser)
+static int zf_uart_verify_port(struct uart_port *port, struct serial_struct *ser)
 {
 	int ret = 0;
 
-	if (ser->type != PORT_UNKNOWN && ser->type != PORT_LRW)
+	if (ser->type != PORT_UNKNOWN && ser->type != PORT_ZF)
 		ret = -EINVAL;
 	if (ser->irq < 0 || ser->irq >= nr_irqs)
 		ret = -EINVAL;
@@ -2189,70 +2189,70 @@ static int lrw_uart_verify_port(struct uart_port *port, struct serial_struct *se
 	return ret;
 }
 
-static int lrw_uart_rs485_config(struct uart_port *port, struct ktermios *termios,
+static int zf_uart_rs485_config(struct uart_port *port, struct ktermios *termios,
 			      struct serial_rs485 *rs485)
 {
-	struct lrw_uart_port *sup =
-		container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+		container_of(port, struct zf_uart_port, port);
 
 	if (port->rs485.flags & SER_RS485_ENABLED)
-		lrw_uart_rs485_tx_stop(sup);
+		zf_uart_rs485_tx_stop(sup);
 
 	/* Make sure auto RTS is disabled */
 	if (rs485->flags & SER_RS485_ENABLED) {
-		u32 fccr = lrw_uart_read(sup, REG_FCCR);
+		u32 fccr = zf_uart_read(sup, REG_FCCR);
 
 		fccr &= ~UARTFCCR_RTSEN;
-		lrw_uart_write(fccr, sup, REG_FCCR);
+		zf_uart_write(fccr, sup, REG_FCCR);
 		port->status &= ~UPSTAT_AUTORTS;
 	}
 
 	return 0;
 }
 
-static const struct uart_ops lrw_uart_pops = {
-	.tx_empty	= lrw_uart_tx_empty,
-	.set_mctrl	= lrw_uart_set_mctrl,
-	.get_mctrl	= lrw_uart_get_mctrl,
-	.stop_tx	= lrw_uart_stop_tx,
-	.start_tx	= lrw_uart_start_tx,
-	.stop_rx	= lrw_uart_stop_rx,
-	.throttle	= lrw_uart_throttle_rx,
-	.unthrottle	= lrw_uart_unthrottle_rx,
-	.enable_ms	= lrw_uart_enable_ms,
-	.break_ctl	= lrw_uart_break_ctl,
-	.startup	= lrw_uart_startup,
-	.shutdown	= lrw_uart_shutdown,
-	.flush_buffer	= lrw_uart_dma_flush_buffer,
-	.set_termios	= lrw_uart_set_termios,
-	.type		= lrw_uart_type,
-	.config_port	= lrw_uart_config_port,
-	.verify_port	= lrw_uart_verify_port,
+static const struct uart_ops zf_uart_pops = {
+	.tx_empty	= zf_uart_tx_empty,
+	.set_mctrl	= zf_uart_set_mctrl,
+	.get_mctrl	= zf_uart_get_mctrl,
+	.stop_tx	= zf_uart_stop_tx,
+	.start_tx	= zf_uart_start_tx,
+	.stop_rx	= zf_uart_stop_rx,
+	.throttle	= zf_uart_throttle_rx,
+	.unthrottle	= zf_uart_unthrottle_rx,
+	.enable_ms	= zf_uart_enable_ms,
+	.break_ctl	= zf_uart_break_ctl,
+	.startup	= zf_uart_startup,
+	.shutdown	= zf_uart_shutdown,
+	.flush_buffer	= zf_uart_dma_flush_buffer,
+	.set_termios	= zf_uart_set_termios,
+	.type		= zf_uart_type,
+	.config_port	= zf_uart_config_port,
+	.verify_port	= zf_uart_verify_port,
 #ifdef CONFIG_CONSOLE_POLL
-	.poll_init     = lrw_uart_hwinit,
-	.poll_get_char = lrw_uart_get_poll_char,
-	.poll_put_char = lrw_uart_put_poll_char,
+	.poll_init     = zf_uart_hwinit,
+	.poll_get_char = zf_uart_get_poll_char,
+	.poll_put_char = zf_uart_put_poll_char,
 #endif
 };
 
-static struct lrw_uart_port *lrw_uart_console_ports[UART_NR];
+static struct zf_uart_port *zf_uart_console_ports[UART_NR];
 
-#ifdef CONFIG_SERIAL_LRW_UART_CONSOLE
+#ifdef CONFIG_SERIAL_LPRS_ZF_UART_CONSOLE
 
-static void lrw_uart_console_putchar(struct uart_port *port, unsigned char ch)
+static void zf_uart_console_putchar(struct uart_port *port, unsigned char ch)
 {
-	struct lrw_uart_port *sup =
-	    container_of(port, struct lrw_uart_port, port);
+	struct zf_uart_port *sup =
+	    container_of(port, struct zf_uart_port, port);
 
-	while (lrw_uart_read(sup, REG_FR) & UARTFR_TXFF)
+	while (zf_uart_read(sup, REG_FR) & UARTFR_TXFF)
 		cpu_relax();
-	lrw_uart_write(ch, sup, REG_DR);
+	zf_uart_write(ch, sup, REG_DR);
 }
 
 static void
-lrw_uart_console_write(struct console *co, const char *s, unsigned int count)
+zf_uart_console_write(struct console *co, const char *s, unsigned int count)
 {
-	struct lrw_uart_port *sup = lrw_uart_console_ports[co->index];
+	struct zf_uart_port *sup = zf_uart_console_ports[co->index];
 	unsigned int old_fccr = 0, new_fccr;
 	unsigned int old_mcfg = 0, new_mcfg;
 	unsigned long flags;
@@ -2272,28 +2272,28 @@ lrw_uart_console_write(struct console *co, const char *s, unsigned int count)
 	 *	First save the FCCR then disable the interrupts
 	 */
 	if (!sup->vendor->always_enabled) {
-		old_fccr = lrw_uart_read(sup, REG_FCCR);
+		old_fccr = zf_uart_read(sup, REG_FCCR);
 		new_fccr = old_fccr & ~UARTFCCR_CTSEN;
-		lrw_uart_write(new_fccr, sup, REG_FCCR);
+		zf_uart_write(new_fccr, sup, REG_FCCR);
 
-		old_mcfg = lrw_uart_read(sup, REG_MCFG);
+		old_mcfg = zf_uart_read(sup, REG_MCFG);
 		new_mcfg |= UARTMCFG_UARTEN | UARTMCFG_TXE;
-		lrw_uart_write(new_mcfg, sup, REG_MCFG);
+		zf_uart_write(new_mcfg, sup, REG_MCFG);
 	}
 
-	uart_console_write(&sup->port, s, count, lrw_uart_console_putchar);
+	uart_console_write(&sup->port, s, count, zf_uart_console_putchar);
 
 	/*
 	 *	Finally, wait for transmitter to become empty and restore the
 	 *	TCR. Allow feature register bits to be inverted to work around
 	 *	errata.
 	 */
-	while ((lrw_uart_read(sup, REG_FR) ^ sup->vendor->inv_fr)
+	while ((zf_uart_read(sup, REG_FR) ^ sup->vendor->inv_fr)
 						& sup->vendor->fr_busy)
 		cpu_relax();
 	if (!sup->vendor->always_enabled) {
-		lrw_uart_write(old_fccr, sup, REG_FCCR);
-		lrw_uart_write(old_mcfg, sup, REG_MCFG);
+		zf_uart_write(old_fccr, sup, REG_FCCR);
+		zf_uart_write(old_mcfg, sup, REG_MCFG);
 	}
 
 	if (locked)
@@ -2303,15 +2303,15 @@ lrw_uart_console_write(struct console *co, const char *s, unsigned int count)
 	clk_disable(sup->clk);
 }
 
-static void lrw_uart_console_get_options(struct lrw_uart_port *sup, int *baud,
+static void zf_uart_console_get_options(struct zf_uart_port *sup, int *baud,
 					 int *parity, int *bits)
 {
 	unsigned int frcr, ind, fd;
 
-	if (!(lrw_uart_read(sup, REG_MCFG) & UARTMCFG_UARTEN))
+	if (!(zf_uart_read(sup, REG_MCFG) & UARTMCFG_UARTEN))
 		return;
 
-	frcr = lrw_uart_read(sup, REG_FRCR);
+	frcr = zf_uart_read(sup, REG_FRCR);
 
 	*parity = 'n';
 	if (frcr & UARTFRCR_PEN) {
@@ -2326,15 +2326,15 @@ static void lrw_uart_console_get_options(struct lrw_uart_port *sup, int *baud,
 	else
 		*bits = 8;
 
-	ind = lrw_uart_read(sup, REG_IND);
-	fd = lrw_uart_read(sup, REG_FD);
+	ind = zf_uart_read(sup, REG_IND);
+	fd = zf_uart_read(sup, REG_FD);
 
 	*baud = sup->port.uartclk * 4 / (64 * ind + fd);
 }
 
-static int lrw_uart_console_setup(struct console *co, char *options)
+static int zf_uart_console_setup(struct console *co, char *options)
 {
-	struct lrw_uart_port *sup;
+	struct zf_uart_port *sup;
 	int baud = 38400;
 	int bits = 8;
 	int parity = 'n';
@@ -2349,7 +2349,7 @@ static int lrw_uart_console_setup(struct console *co, char *options)
 	 */
 	if (co->index >= UART_NR)
 		co->index = 0;
-	sup = lrw_uart_console_ports[co->index];
+	sup = zf_uart_console_ports[co->index];
 	if (!sup)
 		return -ENODEV;
 
@@ -2361,7 +2361,7 @@ static int lrw_uart_console_setup(struct console *co, char *options)
 		return ret;
 
 	if (dev_get_platdata(sup->port.dev)) {
-		struct lrw_uart_data *plat;
+		struct zf_uart_data *plat;
 
 		plat = dev_get_platdata(sup->port.dev);
 		if (plat->init)
@@ -2382,38 +2382,38 @@ static int lrw_uart_console_setup(struct console *co, char *options)
 			uart_parse_options(options,
 					   &baud, &parity, &bits, &flow);
 		else
-			lrw_uart_console_get_options(sup, &baud, &parity, &bits);
+			zf_uart_console_get_options(sup, &baud, &parity, &bits);
 	}
 
 	return uart_set_options(&sup->port, co, baud, parity, bits, flow);
 }
 
 /**
- *	lrw_uart_console_match - non-standard console matching
+ *	zf_uart_console_match - non-standard console matching
  *	@co:	  registering console
  *	@name:	  name from console command line
  *	@idx:	  index from console command line
  *	@options: ptr to option string from console command line
  *
  *	Only attempts to match console command lines of the form:
- *	    console=lrw_uart,mmio|mmio32,<addr>[,<options>]
- *	    console=lrw_uart,0x<addr>[,<options>]
+ *	    console=zf_uart,mmio|mmio32,<addr>[,<options>]
+ *	    console=zf_uart,0x<addr>[,<options>]
  *	This form is used to register an initial earlycon boot console and
- *	replace it with the lrw_uart_console at lrw_uart driver init.
+ *	replace it with the zf_uart_console at zf_uart driver init.
  *
  *	Performs console setup for a match (as required by interface)
  *	If no <options> are specified, then assume the h/w is already setup.
  *
  *	Returns 0 if console matches; otherwise non-zero to use default matching
  */
-static int lrw_uart_console_match(struct console *co, char *name, int idx,
+static int zf_uart_console_match(struct console *co, char *name, int idx,
 				  char *options)
 {
 	unsigned char iotype;
 	resource_size_t addr;
 	int i;
 
-	if (strcmp(name, "lrw_uart") != 0)
+	if (strcmp(name, "zf_uart") != 0)
 		return -ENODEV;
 
 	if (uart_parse_earlycon(options, &iotype, &addr, &options))
@@ -2423,41 +2423,41 @@ static int lrw_uart_console_match(struct console *co, char *name, int idx,
 		return -ENODEV;
 
 	/* try to match the port specified on the command line */
-	for (i = 0; i < ARRAY_SIZE(lrw_uart_console_ports); i++) {
+	for (i = 0; i < ARRAY_SIZE(zf_uart_console_ports); i++) {
 		struct uart_port *port;
 
-		if (!lrw_uart_console_ports[i])
+		if (!zf_uart_console_ports[i])
 			continue;
 
-		port = &lrw_uart_console_ports[i]->port;
+		port = &zf_uart_console_ports[i]->port;
 
 		if (port->mapbase != addr)
 			continue;
 
 		co->index = i;
 		port->cons = co;
-		return lrw_uart_console_setup(co, options);
+		return zf_uart_console_setup(co, options);
 	}
 
 	return -ENODEV;
 }
 
-static struct uart_driver lrw_uart_driver;
+static struct uart_driver zf_uart_driver;
 
-static struct console lrw_uart_console = {
-	.name		= LRW_UART_TTY_PREFIX,
-	.write		= lrw_uart_console_write,
+static struct console zf_uart_console = {
+	.name		= ZF_UART_TTY_PREFIX,
+	.write		= zf_uart_console_write,
 	.device		= uart_console_device,
-	.setup		= lrw_uart_console_setup,
-	.match		= lrw_uart_console_match,
+	.setup		= zf_uart_console_setup,
+	.match		= zf_uart_console_match,
 	.flags		= CON_PRINTBUFFER | CON_ANYTIME,
 	.index		= -1,
-	.data		= &lrw_uart_driver,
+	.data		= &zf_uart_driver,
 };
 
-#define LRW_UART_CONSOLE	(&lrw_uart_console)
+#define ZF_UART_CONSOLE	(&zf_uart_console)
 
-static void lrw_uart_putc(struct uart_port *port, unsigned char c)
+static void zf_uart_putc(struct uart_port *port, unsigned char c)
 {
 	while (readl(port->membase + UARTFR) & UARTFR_TXFF)
 		cpu_relax();
@@ -2469,15 +2469,15 @@ static void lrw_uart_putc(struct uart_port *port, unsigned char c)
 		cpu_relax();
 }
 
-static void lrw_uart_early_write(struct console *con, const char *s, unsigned int n)
+static void zf_uart_early_write(struct console *con, const char *s, unsigned int n)
 {
 	struct earlycon_device *dev = con->data;
 
-	uart_console_write(&dev->port, s, n, lrw_uart_putc);
+	uart_console_write(&dev->port, s, n, zf_uart_putc);
 }
 
 #ifdef CONFIG_CONSOLE_POLL
-static int lrw_uart_getc(struct uart_port *port)
+static int zf_uart_getc(struct uart_port *port)
 {
 	if (readl(port->membase + UARTFR) & UARTFR_RXFE)
 		return NO_POLL_CHAR;
@@ -2488,13 +2488,13 @@ static int lrw_uart_getc(struct uart_port *port)
 		return readb(port->membase + UARTDR);
 }
 
-static int lrw_uart_early_read(struct console *con, char *s, unsigned int n)
+static int zf_uart_early_read(struct console *con, char *s, unsigned int n)
 {
 	struct earlycon_device *dev = con->data;
 	int ch, num_read = 0;
 
 	while (num_read < n) {
-		ch = lrw_uart_getc(&dev->port);
+		ch = zf_uart_getc(&dev->port);
 		if (ch == NO_POLL_CHAR)
 			break;
 
@@ -2504,12 +2504,12 @@ static int lrw_uart_early_read(struct console *con, char *s, unsigned int n)
 	return num_read;
 }
 #else
-#define lrw_uart_early_read NULL
+#define zf_uart_early_read NULL
 #endif
 
 /*
  * On non-ACPI systems, earlycon is enabled by specifying
- * "earlycon=lrw_uart,<address>" on the kernel command line.
+ * "earlycon=zf_uart,<address>" on the kernel command line.
  *
  * On ACPI ARM64 systems, an "early" console is enabled via the SPCR table,
  * by specifying only "earlycon" on the command line.  Because it requires
@@ -2517,35 +2517,35 @@ static int lrw_uart_early_read(struct console *con, char *s, unsigned int n)
  * traditional early console.
  *
  * To get the traditional early console that starts before ACPI is parsed,
- * specify the full "earlycon=lrw_uart,<address>" option.
+ * specify the full "earlycon=zf_uart,<address>" option.
  */
-static int __init lrw_uart_early_console_setup(struct earlycon_device *device,
+static int __init zf_uart_early_console_setup(struct earlycon_device *device,
 					      const char *opt)
 {
 	if (!device->port.membase)
 		return -ENODEV;
 
-	device->con->write = lrw_uart_early_write;
-	device->con->read = lrw_uart_early_read;
+	device->con->write = zf_uart_early_write;
+	device->con->read = zf_uart_early_read;
 
 	return 0;
 }
 
-OF_EARLYCON_DECLARE(lrw_uart, "lrw-uart", lrw_uart_early_console_setup);
+OF_EARLYCON_DECLARE(zf_uart, "zf-uart", zf_uart_early_console_setup);
 
 #else
-#define LRW_UART_CONSOLE	NULL
+#define ZF_UART_CONSOLE	NULL
 #endif
 
-static struct uart_driver lrw_uart_driver = {
+static struct uart_driver zf_uart_driver = {
 	.owner			= THIS_MODULE,
-	.driver_name		= LRW_UART_NAME,
-	.dev_name		= LRW_UART_TTY_PREFIX,
+	.driver_name		= ZF_UART_NAME,
+	.dev_name		= ZF_UART_TTY_PREFIX,
 	.nr			= UART_NR,
-	.cons			= LRW_UART_CONSOLE,
+	.cons			= ZF_UART_CONSOLE,
 };
 
-static int lrw_uart_probe_dt_alias(int index, struct device *dev)
+static int zf_uart_probe_dt_alias(int index, struct device *dev)
 {
 	struct device_node *np;
 	static bool seen_dev_with_alias;
@@ -2565,7 +2565,7 @@ static int lrw_uart_probe_dt_alias(int index, struct device *dev)
 		ret = index;
 	} else {
 		seen_dev_with_alias = true;
-		if (ret >= ARRAY_SIZE(lrw_uart_console_ports) || lrw_uart_console_ports[ret]) {
+		if (ret >= ARRAY_SIZE(zf_uart_console_ports) || zf_uart_console_ports[ret]) {
 			dev_warn(dev, "requested serial port %d  not available.\n", ret);
 			ret = index;
 		}
@@ -2578,34 +2578,34 @@ static int lrw_uart_probe_dt_alias(int index, struct device *dev)
 }
 
 /* unregisters the driver also if no more ports are left */
-static void lrw_uart_unregister_port(struct lrw_uart_port *sup)
+static void zf_uart_unregister_port(struct zf_uart_port *sup)
 {
 	int i;
 	bool busy = false;
 
-	for (i = 0; i < ARRAY_SIZE(lrw_uart_console_ports); i++) {
-		if (lrw_uart_console_ports[i] == sup)
-			lrw_uart_console_ports[i] = NULL;
-		else if (lrw_uart_console_ports[i])
+	for (i = 0; i < ARRAY_SIZE(zf_uart_console_ports); i++) {
+		if (zf_uart_console_ports[i] == sup)
+			zf_uart_console_ports[i] = NULL;
+		else if (zf_uart_console_ports[i])
 			busy = true;
 	}
-	lrw_uart_dma_remove(sup);
+	zf_uart_dma_remove(sup);
 	if (!busy)
-		uart_unregister_driver(&lrw_uart_driver);
+		uart_unregister_driver(&zf_uart_driver);
 }
 
-static int lrw_uart_find_free_port(void)
+static int zf_uart_find_free_port(void)
 {
 	int i;
 
-	for (i = 0; i < ARRAY_SIZE(lrw_uart_console_ports); i++)
-		if (!lrw_uart_console_ports[i])
+	for (i = 0; i < ARRAY_SIZE(zf_uart_console_ports); i++)
+		if (!zf_uart_console_ports[i])
 			return i;
 
 	return -EBUSY;
 }
 
-static int lrw_uart_setup_port(struct device *dev, struct lrw_uart_port *sup,
+static int zf_uart_setup_port(struct device *dev, struct zf_uart_port *sup,
 			      struct resource *mmiobase, int index)
 {
 	void __iomem *base;
@@ -2615,13 +2615,13 @@ static int lrw_uart_setup_port(struct device *dev, struct lrw_uart_port *sup,
 	if (IS_ERR(base))
 		return PTR_ERR(base);
 
-	index = lrw_uart_probe_dt_alias(index, dev);
+	index = zf_uart_probe_dt_alias(index, dev);
 
 	sup->port.dev = dev;
 	sup->port.mapbase = mmiobase->start;
 	sup->port.membase = base;
 	sup->port.fifosize = sup->fifosize;
-	sup->port.has_sysrq = IS_ENABLED(CONFIG_SERIAL_LRW_UART_CONSOLE);
+	sup->port.has_sysrq = IS_ENABLED(CONFIG_SERIAL_LPRS_ZF_UART_CONSOLE);
 	sup->port.flags = UPF_BOOT_AUTOCONF;
 	sup->port.line = index;
 
@@ -2629,48 +2629,48 @@ static int lrw_uart_setup_port(struct device *dev, struct lrw_uart_port *sup,
 	if (ret)
 		return ret;
 
-	lrw_uart_console_ports[index] = sup;
+	zf_uart_console_ports[index] = sup;
 
 	return 0;
 }
 
-static int lrw_uart_register_port(struct lrw_uart_port *sup)
+static int zf_uart_register_port(struct zf_uart_port *sup)
 {
 	int ret, i;
 
 	/* Ensure interrupts from this UART are masked and cleared */
-	lrw_uart_write(0, sup, REG_IMSC);
-	lrw_uart_write(0xffff, sup, REG_ICR);
+	zf_uart_write(0, sup, REG_IMSC);
+	zf_uart_write(0xffff, sup, REG_ICR);
 
-	if (!lrw_uart_driver.state) {
-		ret = uart_register_driver(&lrw_uart_driver);
+	if (!zf_uart_driver.state) {
+		ret = uart_register_driver(&zf_uart_driver);
 		if (ret < 0) {
 			dev_err(sup->port.dev,
-				"Failed to register LRW UART driver\n");
-			for (i = 0; i < ARRAY_SIZE(lrw_uart_console_ports); i++)
-				if (lrw_uart_console_ports[i] == sup)
-					lrw_uart_console_ports[i] = NULL;
+				"Failed to register ZF UART driver\n");
+			for (i = 0; i < ARRAY_SIZE(zf_uart_console_ports); i++)
+				if (zf_uart_console_ports[i] == sup)
+					zf_uart_console_ports[i] = NULL;
 			return ret;
 		}
 	}
 
-	ret = uart_add_one_port(&lrw_uart_driver, &sup->port);
+	ret = uart_add_one_port(&zf_uart_driver, &sup->port);
 	if (ret)
-		lrw_uart_unregister_port(sup);
+		zf_uart_unregister_port(sup);
 
 	return ret;
 }
 
-static const struct serial_rs485 lrw_uart_rs485_supported = {
+static const struct serial_rs485 zf_uart_rs485_supported = {
 	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND |
 		 SER_RS485_RX_DURING_TX,
 	.delay_rts_before_send = 1,
 	.delay_rts_after_send = 1,
 };
 
-static int lrw_uart_probe(struct platform_device *pdev)
+static int zf_uart_probe(struct platform_device *pdev)
 {
-	struct lrw_uart_port *sup;
+	struct zf_uart_port *sup;
 	struct resource *r;
 	int portnr, ret;
 	unsigned int clk;
@@ -2694,11 +2694,11 @@ static int lrw_uart_probe(struct platform_device *pdev)
 		baudrate = 115200;
 	}
 
-	portnr = lrw_uart_find_free_port();
+	portnr = zf_uart_find_free_port();
 	if (portnr < 0)
 		return portnr;
 
-	sup = devm_kzalloc(&pdev->dev, sizeof(struct lrw_uart_port),
+	sup = devm_kzalloc(&pdev->dev, sizeof(struct zf_uart_port),
 			   GFP_KERNEL);
 	if (!sup)
 		return -ENOMEM;
@@ -2717,123 +2717,125 @@ static int lrw_uart_probe(struct platform_device *pdev)
 		return ret;
 	sup->port.irq	= ret;
 
-	sup->vendor = &vendor_lrw;
+	sup->vendor = &vendor_zf;
 
 	sup->reg_offset = sup->vendor->reg_offset;
-	sup->fifosize	= LRW_UART_TX_FIFO_DEPTH;
+	sup->fifosize	= ZF_UART_TX_FIFO_DEPTH;
 	sup->port.iotype = sup->vendor->access_32b ? UPIO_MEM32 : UPIO_MEM;
-	sup->port.ops = &lrw_uart_pops;
-	sup->port.rs485_config = lrw_uart_rs485_config;
-	sup->port.rs485_supported = lrw_uart_rs485_supported;
+	sup->port.ops = &zf_uart_pops;
+	sup->port.rs485_config = zf_uart_rs485_config;
+	sup->port.rs485_supported = zf_uart_rs485_supported;
 	sup->fixed_baud = baudrate;
 
-	snprintf(sup->type, sizeof(sup->type), "LRW UART");
+	snprintf(sup->type, sizeof(sup->type), "ZF UART");
 
 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 
-	ret = lrw_uart_setup_port(&pdev->dev, sup, r, portnr);
+	ret = zf_uart_setup_port(&pdev->dev, sup, r, portnr);
 	if (ret)
 		return ret;
 
 	platform_set_drvdata(pdev, sup);
 
-	return lrw_uart_register_port(sup);
+	return zf_uart_register_port(sup);
 }
 
-static int lrw_uart_remove(struct platform_device *dev)
+static int zf_uart_remove(struct platform_device *dev)
 {
-	struct lrw_uart_port *sup = platform_get_drvdata(dev);
+	struct zf_uart_port *sup = platform_get_drvdata(dev);
 
-	uart_remove_one_port(&lrw_uart_driver, &sup->port);
-	lrw_uart_unregister_port(sup);
+	uart_remove_one_port(&zf_uart_driver, &sup->port);
+	zf_uart_unregister_port(sup);
 
 	return 0;
 }
 
 #ifdef CONFIG_PM_SLEEP
-static int lrw_uart_suspend(struct device *dev)
+static int zf_uart_suspend(struct device *dev)
 {
-	struct lrw_uart_port *sup = dev_get_drvdata(dev);
+	struct zf_uart_port *sup = dev_get_drvdata(dev);
 
 	if (!sup)
 		return -EINVAL;
 
-	return uart_suspend_port(&lrw_uart_driver, &sup->port);
+	return uart_suspend_port(&zf_uart_driver, &sup->port);
 }
 
-static int lrw_uart_resume(struct device *dev)
+static int zf_uart_resume(struct device *dev)
 {
-	struct lrw_uart_port *sup = dev_get_drvdata(dev);
+	struct zf_uart_port *sup = dev_get_drvdata(dev);
 
 	if (!sup)
 		return -EINVAL;
 
-	return uart_resume_port(&lrw_uart_driver, &sup->port);
+	return uart_resume_port(&zf_uart_driver, &sup->port);
 }
 #endif
 
-static SIMPLE_DEV_PM_OPS(lrw_uart_pm_ops, lrw_uart_suspend, lrw_uart_resume);
+static SIMPLE_DEV_PM_OPS(zf_uart_pm_ops, zf_uart_suspend, zf_uart_resume);
 
-static const struct of_device_id lrw_uart_of_match[] = {
-	{ .compatible = "lrw,lrw-uart" },
+static const struct of_device_id zf_uart_of_match[] = {
+	{ .compatible = "lprs,zf-uart" },
+	{ .compatible = "lrw,lrw-uart" }, //deprecated, kept for backward compatibility
 	{},
 };
-MODULE_DEVICE_TABLE(of, lrw_uart_of_match);
+MODULE_DEVICE_TABLE(of, zf_uart_of_match);
 
-static const struct acpi_device_id __maybe_unused lrw_uart_acpi_match[] = {
-	{ "LRWX0000", 0 },
+static const struct acpi_device_id __maybe_unused zf_uart_acpi_match[] = {
+	{ "LPRS0000", 0 },
+	{ "LRWX0000", 0 }, //deprecated, kept for backward compatibility
 	{},
 };
-MODULE_DEVICE_TABLE(acpi, lrw_uart_acpi_match);
+MODULE_DEVICE_TABLE(acpi, zf_uart_acpi_match);
 
-static struct platform_driver lrw_uart_platform_driver = {
-	.probe		= lrw_uart_probe,
-	.remove		= lrw_uart_remove,
+static struct platform_driver zf_uart_platform_driver = {
+	.probe		= zf_uart_probe,
+	.remove		= zf_uart_remove,
 	.driver		= {
-		.name	= LRW_UART_NAME,
-		.pm = pm_sleep_ptr(&lrw_uart_pm_ops),
-		.of_match_table = of_match_ptr(lrw_uart_of_match),
-		.acpi_match_table = ACPI_PTR(lrw_uart_acpi_match),
-		.suppress_bind_attrs = IS_BUILTIN(CONFIG_SERIAL_LRW_UART),
+		.name	= ZF_UART_NAME,
+		.pm = pm_sleep_ptr(&zf_uart_pm_ops),
+		.of_match_table = of_match_ptr(zf_uart_of_match),
+		.acpi_match_table = ACPI_PTR(zf_uart_acpi_match),
+		.suppress_bind_attrs = IS_BUILTIN(CONFIG_SERIAL_LPRS_ZF_UART),
 	},
 };
 
-static int __init lrw_uart_init(void)
+static int __init zf_uart_init(void)
 {
-	pr_info("Serial: LRW UART driver\n");
+	pr_info("Serial: ZF UART driver\n");
 
 	int ret;
 
-	ret = uart_register_driver(&lrw_uart_driver);
+	ret = uart_register_driver(&zf_uart_driver);
 	if (ret < 0) {
 		pr_err("Could not register %s driver\n",
-			lrw_uart_driver.driver_name);
+			zf_uart_driver.driver_name);
 		return ret;
 	}
 
-	ret = platform_driver_register(&lrw_uart_platform_driver);
+	ret = platform_driver_register(&zf_uart_platform_driver);
 	if (ret < 0) {
-		pr_err("LRW UART platform driver register failed, e = %d\n", ret);
-		uart_unregister_driver(&lrw_uart_driver);
+		pr_err("ZF UART platform driver register failed, e = %d\n", ret);
+		uart_unregister_driver(&zf_uart_driver);
 		return ret;
 	}
 
 	return 0;
 }
 
-static void __exit lrw_uart_exit(void)
+static void __exit zf_uart_exit(void)
 {
-	platform_driver_unregister(&lrw_uart_platform_driver);
-	uart_unregister_driver(&lrw_uart_driver);
+	platform_driver_unregister(&zf_uart_platform_driver);
+	uart_unregister_driver(&zf_uart_driver);
 }
 
 /*
  * While this can be a module, if builtin it's most likely the console
  * So let's leave module_exit but move module_init to an earlier place
  */
-arch_initcall(lrw_uart_init);
-module_exit(lrw_uart_exit);
+arch_initcall(zf_uart_init);
+module_exit(zf_uart_exit);
 
-MODULE_AUTHOR("Wenhong Liu/Qingtao Liu");
-MODULE_DESCRIPTION("LRW UART serial driver");
+MODULE_DESCRIPTION("LeapRise ZF(ZhuFeng) UART serial driver");
+MODULE_AUTHOR("Liu Wenhong");
 MODULE_LICENSE("GPL");

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0+
 /*
- *  I2C adapter driver for LRW
+ *  LeapRise ZF(ZhuFeng) I2C driver
  *
- *  Copyright (c) 2025, LRW CORPORATION. All rights reserved.
+ *  Copyright (C) 2026, LeapRise Technology Co., Ltd.
  */
 
 #include <linux/delay.h>
@@ -23,7 +23,7 @@
 #include <linux/swab.h>
 #include <linux/types.h>
 #include <linux/units.h>
-#include "i2c-lrw-core.h"
+#include "i2c-zf-core.h"
 
 static char *abort_sources[] = {
 	[ABRT_7B_ADDR_NOACK] = "slave address not acknowledged (7bit mode)",
@@ -49,25 +49,25 @@ static char *abort_sources[] = {
 	[ABRT_SDA_STUCK_AT_LOW] = "SDA line stuck at low timeout",
 };
 
-static int lrw_reg_read(void *context, unsigned int reg, unsigned int *val)
+static int zf_reg_read(void *context, unsigned int reg, unsigned int *val)
 {
-	struct i2c_lrw_dev *dev = context;
+	struct i2c_zf_dev *dev = context;
 
 	*val = readl_relaxed(dev->base + reg);
 
 	return 0;
 }
 
-static int lrw_reg_write(void *context, unsigned int reg, unsigned int val)
+static int zf_reg_write(void *context, unsigned int reg, unsigned int val)
 {
-	struct i2c_lrw_dev *dev = context;
+	struct i2c_zf_dev *dev = context;
 
 	writel_relaxed(val, dev->base + reg);
 
 	return 0;
 }
 
-static int i2c_lrw_acquire_lock(struct i2c_lrw_dev *dev)
+static int i2c_zf_acquire_lock(struct i2c_zf_dev *dev)
 {
 	int ret;
 
@@ -83,22 +83,22 @@ static int i2c_lrw_acquire_lock(struct i2c_lrw_dev *dev)
 	return ret;
 }
 
-static void i2c_lrw_release_lock(struct i2c_lrw_dev *dev)
+static void i2c_zf_release_lock(struct i2c_zf_dev *dev)
 {
 	if (dev->release_lock)
 		dev->release_lock();
 }
 
-static int i2c_lrw_init_regmap(struct i2c_lrw_dev *dev)
+static int i2c_zf_init_regmap(struct i2c_zf_dev *dev)
 {
 	struct regmap_config map_cfg = {
 		.reg_bits = 32,
 		.val_bits = 32,
 		.reg_stride = 4,
 		.disable_locking = true,
-		.reg_read = lrw_reg_read,
-		.reg_write = lrw_reg_write,
-		.max_register = LRW_SMBUS_INTR_STAT,
+		.reg_read = zf_reg_read,
+		.reg_write = zf_reg_write,
+		.max_register = ZF_SMBUS_INTR_STAT,
 	};
 
 	if (dev->map)
@@ -120,7 +120,7 @@ static const u32 supported_speeds[] = {
 	I2C_MAX_STANDARD_MODE_FREQ,
 };
 
-int i2c_lrw_validate_speed(struct i2c_lrw_dev *dev)
+int i2c_zf_validate_speed(struct i2c_zf_dev *dev)
 {
 	struct i2c_timings *t = &dev->timings;
 	unsigned int i;
@@ -136,14 +136,14 @@ int i2c_lrw_validate_speed(struct i2c_lrw_dev *dev)
 
 	return -EINVAL;
 }
-EXPORT_SYMBOL_GPL(i2c_lrw_validate_speed);
+EXPORT_SYMBOL_GPL(i2c_zf_validate_speed);
 
 #ifdef CONFIG_ACPI
 
 #include <linux/dmi.h>
 
-static void i2c_lrw_acpi_params(struct device *device, char method[], u16 *hcnt,
-				u16 *lcnt, u32 *sda_hold, u32 *sda_stuck_timout)
+static void i2c_zf_acpi_params(struct device *device, char method[], u16 *hcnt,
+			       u16 *lcnt, u32 *sda_hold, u32 *sda_stuck_timout)
 {
 	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER };
 	acpi_handle handle = ACPI_HANDLE(device);
@@ -164,17 +164,17 @@ static void i2c_lrw_acpi_params(struct device *device, char method[], u16 *hcnt,
 	kfree(buf.pointer);
 }
 
-int i2c_lrw_acpi_configure(struct device *device)
+int i2c_zf_acpi_configure(struct device *device)
 {
-	struct i2c_lrw_dev *dev = dev_get_drvdata(device);
+	struct i2c_zf_dev *dev = dev_get_drvdata(device);
 	struct i2c_timings *t = &dev->timings;
 	u32 hs_ht = 0, fs_ht = 0;
 	u32 sda_stuck_at_low_timeout;
 
-	i2c_lrw_acpi_params(device, "HSCN", &dev->hs_hcnt, &dev->hs_lcnt,
-				&hs_ht, &sda_stuck_at_low_timeout);
-	i2c_lrw_acpi_params(device, "FMCN", &dev->fs_hcnt, &dev->fs_lcnt,
-				&fs_ht, &sda_stuck_at_low_timeout);
+	i2c_zf_acpi_params(device, "HSCN", &dev->hs_hcnt, &dev->hs_lcnt, &hs_ht,
+			   &sda_stuck_at_low_timeout);
+	i2c_zf_acpi_params(device, "FMCN", &dev->fs_hcnt, &dev->fs_lcnt, &fs_ht,
+			   &sda_stuck_at_low_timeout);
 	dev->sda_stuck_at_low_timeout = sda_stuck_at_low_timeout;
 
 	switch (t->bus_freq_hz) {
@@ -195,9 +195,9 @@ int i2c_lrw_acpi_configure(struct device *device)
 
 	return 0;
 }
-EXPORT_SYMBOL_GPL(i2c_lrw_acpi_configure);
+EXPORT_SYMBOL_GPL(i2c_zf_acpi_configure);
 
-static u32 i2c_lrw_acpi_round_bus_speed(struct device *device)
+static u32 i2c_zf_acpi_round_bus_speed(struct device *device)
 {
 	u32 acpi_speed;
 	int i;
@@ -214,14 +214,14 @@ static u32 i2c_lrw_acpi_round_bus_speed(struct device *device)
 
 #else /* CONFIG_ACPI */
 
-static inline u32 i2c_lrw_acpi_round_bus_speed(struct device *device)
+static inline u32 i2c_zf_acpi_round_bus_speed(struct device *device)
 {
 	return 0;
 }
 
-int i2c_lrw_dt_configure(struct device *device)
+int i2c_zf_dt_configure(struct device *device)
 {
-	struct i2c_lrw_dev *dev = dev_get_drvdata(device);
+	struct i2c_zf_dev *dev = dev_get_drvdata(device);
 	struct device_node *node = device->of_node;
 	u32 raw_property;
 
@@ -235,22 +235,22 @@ int i2c_lrw_dt_configure(struct device *device)
 		of_property_read_u32(node, "fs_lcnt", &raw_property);
 		dev->fs_lcnt = (u16)raw_property;
 		of_property_read_u32(node, "sda_hold_time",
-					&dev->sda_hold_time);
+				     &dev->sda_hold_time);
 		of_property_read_u32(node, "sda_stuck_at_low_timeout",
-					&dev->sda_stuck_at_low_timeout);
+				     &dev->sda_stuck_at_low_timeout);
 	}
 	dev_dbg(dev->dev, "dt dev param = %x, %x, %x, %x, %x, %x\n",
 		dev->hs_hcnt, dev->hs_lcnt, dev->fs_hcnt, dev->fs_lcnt,
 		dev->sda_hold_time, dev->sda_stuck_at_low_timeout);
 	return 0;
 }
-EXPORT_SYMBOL_GPL(i2c_lrw_dt_configure);
+EXPORT_SYMBOL_GPL(i2c_zf_dt_configure);
 
 #endif /* CONFIG_ACPI */
 
-void i2c_lrw_adjust_bus_speed(struct i2c_lrw_dev *dev)
+void i2c_zf_adjust_bus_speed(struct i2c_zf_dev *dev)
 {
-	u32 acpi_speed = i2c_lrw_acpi_round_bus_speed(dev->dev);
+	u32 acpi_speed = i2c_zf_acpi_round_bus_speed(dev->dev);
 	struct i2c_timings *t = &dev->timings;
 
 	if (acpi_speed && t->bus_freq_hz)
@@ -260,52 +260,53 @@ void i2c_lrw_adjust_bus_speed(struct i2c_lrw_dev *dev)
 	else
 		t->bus_freq_hz = I2C_MAX_FAST_MODE_FREQ;
 }
-EXPORT_SYMBOL_GPL(i2c_lrw_adjust_bus_speed);
+EXPORT_SYMBOL_GPL(i2c_zf_adjust_bus_speed);
 
-static u32 i2c_lrw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond,
-				int offset)
+static u32 i2c_zf_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond,
+			   int offset)
 {
 	if (cond)
 		return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * tSYMBOL, 1000000) -
-			5 + offset;
+		       5 + offset;
 	else
 		return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * (tSYMBOL + tf),
-			1000000) - 3 + offset;
+					     1000000) -
+		       3 + offset;
 }
 
-static u32 i2c_lrw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
+static u32 i2c_zf_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
 {
 	return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * (tLOW + tf), 1000000) - 1 +
-		offset;
+	       offset;
 }
 
-static int i2c_lrw_set_sda_hold(struct i2c_lrw_dev *dev)
+static int i2c_zf_set_sda_hold(struct i2c_zf_dev *dev)
 {
 	unsigned int reg;
 	int ret;
 
-	ret = i2c_lrw_acquire_lock(dev);
+	ret = i2c_zf_acquire_lock(dev);
 	if (ret)
 		return ret;
 
-	ret = regmap_read(dev->map, LRW_IC_VERSION, &reg);
+	ret = regmap_read(dev->map, ZF_IC_VERSION, &reg);
 	if (ret)
 		goto err_release_lock;
 
-	if (reg >= LRW_IC_SDA_HOLD_MIN_VERS) {
+	if (reg >= ZF_IC_SDA_HOLD_MIN_VERS) {
 		if (!dev->sda_hold_time) {
-			ret = regmap_read(dev->map, LRW_IC_SDA_HOLD,
-					&dev->sda_hold_time);
+			ret = regmap_read(dev->map, ZF_IC_SDA_HOLD,
+					  &dev->sda_hold_time);
 			if (ret)
 				goto err_release_lock;
 		}
 
-		if (!(dev->sda_hold_time & LRW_IC_SDA_HOLD_RX_MASK))
-			dev->sda_hold_time |= 1 << LRW_IC_SDA_HOLD_RX_SHIFT;
+		if (!(dev->sda_hold_time & ZF_IC_SDA_HOLD_RX_MASK))
+			dev->sda_hold_time |= 1 << ZF_IC_SDA_HOLD_RX_SHIFT;
 
 		dev_dbg(dev->dev, "SDA Hold Time TX:RX = %d:%d\n",
-			dev->sda_hold_time & ~(u32)LRW_IC_SDA_HOLD_RX_MASK,
-			dev->sda_hold_time >> LRW_IC_SDA_HOLD_RX_SHIFT);
+			dev->sda_hold_time & ~(u32)ZF_IC_SDA_HOLD_RX_MASK,
+			dev->sda_hold_time >> ZF_IC_SDA_HOLD_RX_SHIFT);
 	} else if (dev->set_sda_hold_time) {
 		dev->set_sda_hold_time(dev);
 	} else if (dev->sda_hold_time) {
@@ -315,12 +316,12 @@ static int i2c_lrw_set_sda_hold(struct i2c_lrw_dev *dev)
 	}
 
 err_release_lock:
-	i2c_lrw_release_lock(dev);
+	i2c_zf_release_lock(dev);
 
 	return ret;
 }
 
-void __i2c_lrw_disable(struct i2c_lrw_dev *dev)
+void __i2c_zf_disable(struct i2c_zf_dev *dev)
 {
 	unsigned int raw_intr_stats;
 	unsigned int enable;
@@ -329,24 +330,24 @@ void __i2c_lrw_disable(struct i2c_lrw_dev *dev)
 	unsigned int status;
 	int ret;
 
-	regmap_read(dev->map, LRW_IC_CLR_RAW_INTR, &raw_intr_stats);
-	regmap_read(dev->map, LRW_IC_ENABLE, &enable);
+	regmap_read(dev->map, ZF_IC_CLR_RAW_INTR, &raw_intr_stats);
+	regmap_read(dev->map, ZF_IC_ENABLE, &enable);
 
-	abort_needed = raw_intr_stats & LRW_IC_INTR_MST_ON_HOLD;
+	abort_needed = raw_intr_stats & ZF_IC_INTR_MST_ON_HOLD;
 	if (abort_needed) {
-		regmap_write(dev->map, LRW_IC_ENABLE,
-				enable | LRW_IC_ENABLE_ABORT);
-		ret = regmap_read_poll_timeout(dev->map, LRW_IC_ENABLE, enable,
-						!(enable & LRW_IC_ENABLE_ABORT),
-						50, 200);
+		regmap_write(dev->map, ZF_IC_ENABLE,
+			     enable | ZF_IC_ENABLE_ABORT);
+		ret = regmap_read_poll_timeout(dev->map, ZF_IC_ENABLE, enable,
+					       !(enable & ZF_IC_ENABLE_ABORT),
+					       50, 200);
 		if (ret)
 			dev_err(dev->dev,
 				"timeout while trying to abort current transfer\n");
 	}
 
 	do {
-		__i2c_lrw_disable_nowait(dev);
-		regmap_read(dev->map, LRW_IC_STATUS, &status);
+		__i2c_zf_disable_nowait(dev);
+		regmap_read(dev->map, ZF_IC_STATUS, &status);
 		if ((status & 1) == 0)
 			return;
 
@@ -356,20 +357,20 @@ void __i2c_lrw_disable(struct i2c_lrw_dev *dev)
 	dev_warn(dev->dev, "timeout in disabling adapter\n");
 }
 
-int i2c_lrw_bus_recover(struct i2c_adapter *adap)
+int i2c_zf_bus_recover(struct i2c_adapter *adap)
 {
-	struct i2c_lrw_dev *dev = i2c_get_adapdata(adap);
+	struct i2c_zf_dev *dev = i2c_get_adapdata(adap);
 	int timeout = 1000;
 	u32 enabled;
 
 	if (dev->abort_source & IC_ABRT_SDA_STUCK_AT_LOW_POS) {
-		regmap_update_bits(dev->map, LRW_IC_ENABLE,
-				IC_SDA_STUCK_RECOVERY_ENABLE_POS,
-				IC_SDA_STUCK_RECOVERY_ENABLE_POS);
+		regmap_update_bits(dev->map, ZF_IC_ENABLE,
+				   IC_SDA_STUCK_RECOVERY_ENABLE_POS,
+				   IC_SDA_STUCK_RECOVERY_ENABLE_POS);
 		do {
-			regmap_read(dev->map, LRW_IC_ENABLE, &enabled);
+			regmap_read(dev->map, ZF_IC_ENABLE, &enabled);
 			if ((enabled & IC_SDA_STUCK_RECOVERY_ENABLE_POS) ==
-				IC_SDA_STUCK_AT_LOW_RECOVERIED)
+			    IC_SDA_STUCK_AT_LOW_RECOVERIED)
 				break;
 			udelay(10);
 		} while (--timeout);
@@ -383,16 +384,16 @@ int i2c_lrw_bus_recover(struct i2c_adapter *adap)
 	}
 	return 0;
 }
-EXPORT_SYMBOL_GPL(i2c_lrw_bus_recover);
+EXPORT_SYMBOL_GPL(i2c_zf_bus_recover);
 
-static u32 i2c_lrw_clk_rate(struct i2c_lrw_dev *dev)
+static u32 i2c_zf_clk_rate(struct i2c_zf_dev *dev)
 {
 	if (WARN_ON_ONCE(!dev->get_clk_rate_khz))
 		return 0;
 	return dev->get_clk_rate_khz(dev);
 }
 
-int i2c_lrw_prepare_clk(struct i2c_lrw_dev *dev, bool prepare)
+int i2c_zf_prepare_clk(struct i2c_zf_dev *dev, bool prepare)
 {
 	int ret;
 
@@ -413,35 +414,35 @@ int i2c_lrw_prepare_clk(struct i2c_lrw_dev *dev, bool prepare)
 
 	return 0;
 }
-EXPORT_SYMBOL_GPL(i2c_lrw_prepare_clk);
+EXPORT_SYMBOL_GPL(i2c_zf_prepare_clk);
 
-static int i2c_lrw_wait_bus_not_busy(struct i2c_lrw_dev *dev)
+static int i2c_zf_wait_bus_not_busy(struct i2c_zf_dev *dev)
 {
 	u32 status;
 	int ret;
 
-	ret = regmap_read_poll_timeout(dev->map, LRW_IC_STATUS, status,
-					!(status & LRW_IC_STATUS_ACTIVITY), 1100,
-					20000);
+	ret = regmap_read_poll_timeout(dev->map, ZF_IC_STATUS, status,
+				       !(status & ZF_IC_STATUS_ACTIVITY), 1100,
+				       20000);
 	if (ret) {
 		dev_warn(dev->dev, "timeout waiting for bus ready\n");
 
 		i2c_recover_bus(&dev->adapter);
 
-		regmap_read(dev->map, LRW_IC_STATUS, &status);
-		if (!(status & LRW_IC_STATUS_ACTIVITY))
+		regmap_read(dev->map, ZF_IC_STATUS, &status);
+		if (!(status & ZF_IC_STATUS_ACTIVITY))
 			ret = 0;
 	}
 
 	return ret;
 }
 
-static int i2c_lrw_handle_tx_abort(struct i2c_lrw_dev *dev)
+static int i2c_zf_handle_tx_abort(struct i2c_zf_dev *dev)
 {
 	unsigned long abort_source = dev->abort_source;
 	int i;
 
-	if (abort_source & LRW_IC_TX_ABRT_NOACK) {
+	if (abort_source & ZF_IC_TX_ABRT_NOACK) {
 		for_each_set_bit(i, &abort_source, ARRAY_SIZE(abort_sources))
 			dev_dbg(dev->dev, "%s: %s\n", __func__,
 				abort_sources[i]);
@@ -451,17 +452,17 @@ static int i2c_lrw_handle_tx_abort(struct i2c_lrw_dev *dev)
 	for_each_set_bit(i, &abort_source, ARRAY_SIZE(abort_sources))
 		dev_err(dev->dev, "%s: %s\n", __func__, abort_sources[i]);
 
-	if (abort_source & LRW_IC_TX_ARB_LOST)
+	if (abort_source & ZF_IC_TX_ARB_LOST)
 		return -EAGAIN;
-	else if (abort_source & LRW_IC_TX_ABRT_GCALL_READ)
+	else if (abort_source & ZF_IC_TX_ABRT_GCALL_READ)
 		return -EINVAL;
-	else if (abort_source & LRW_IC_TX_ABRT_SDA_STUCK_AT_LOW)
-		return i2c_lrw_bus_recover(&dev->adapter);
+	else if (abort_source & ZF_IC_TX_ABRT_SDA_STUCK_AT_LOW)
+		return i2c_zf_bus_recover(&dev->adapter);
 	else
 		return -EIO;
 }
 
-static int i2c_lrw_set_fifo_size(struct i2c_lrw_dev *dev)
+static int i2c_zf_set_fifo_size(struct i2c_zf_dev *dev)
 {
 	u32 tx_fifo_depth, rx_fifo_depth;
 
@@ -480,39 +481,39 @@ static int i2c_lrw_set_fifo_size(struct i2c_lrw_dev *dev)
 	return 0;
 }
 
-static u32 i2c_lrw_func(struct i2c_adapter *adap)
+static u32 i2c_zf_func(struct i2c_adapter *adap)
 {
-	struct i2c_lrw_dev *dev = i2c_get_adapdata(adap);
+	struct i2c_zf_dev *dev = i2c_get_adapdata(adap);
 
 	return dev->functionality;
 }
 
-static void i2c_lrw_disable(struct i2c_lrw_dev *dev)
+static void i2c_zf_disable(struct i2c_zf_dev *dev)
 {
 	int ret;
 
-	ret = i2c_lrw_acquire_lock(dev);
+	ret = i2c_zf_acquire_lock(dev);
 	if (ret)
 		return;
 
-	__i2c_lrw_disable(dev);
+	__i2c_zf_disable(dev);
 
-	regmap_write(dev->map, LRW_IC_INTR_MASK, 0);
-	regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR, LRW_IC_CLR_INTR,
-			LRW_IC_CLR_INTR);
+	regmap_write(dev->map, ZF_IC_INTR_MASK, 0);
+	regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR, ZF_IC_CLR_INTR,
+			  ZF_IC_CLR_INTR);
 
-	i2c_lrw_release_lock(dev);
+	i2c_zf_release_lock(dev);
 }
 
-static void i2c_lrw_configure_fifo_master(struct i2c_lrw_dev *dev)
+static void i2c_zf_configure_fifo_master(struct i2c_zf_dev *dev)
 {
-	regmap_write(dev->map, LRW_IC_TX_TL, dev->tx_fifo_depth / 2);
-	regmap_write(dev->map, LRW_IC_RX_TL, 0);
+	regmap_write(dev->map, ZF_IC_TX_TL, dev->tx_fifo_depth / 2);
+	regmap_write(dev->map, ZF_IC_RX_TL, 0);
 
-	regmap_write(dev->map, LRW_IC_CON, dev->master_cfg);
+	regmap_write(dev->map, ZF_IC_CON, dev->master_cfg);
 }
 
-static int i2c_lrw_set_timings_master(struct i2c_lrw_dev *dev)
+static int i2c_zf_set_timings_master(struct i2c_zf_dev *dev)
 {
 	u32 sda_falling_time, scl_falling_time;
 	struct i2c_timings *t = &dev->timings;
@@ -523,19 +524,18 @@ static int i2c_lrw_set_timings_master(struct i2c_lrw_dev *dev)
 	sda_falling_time = t->sda_fall_ns ?: 300;
 	scl_falling_time = t->scl_fall_ns ?: 300;
 
-	if ((dev->master_cfg & LRW_IC_CON_SPEED_MASK) ==
-		LRW_IC_CON_SPEED_HIGH) {
+	if ((dev->master_cfg & ZF_IC_CON_SPEED_MASK) == ZF_IC_CON_SPEED_HIGH) {
 		if (!dev->hs_hcnt || !dev->hs_lcnt) {
-			ic_clk = i2c_lrw_clk_rate(dev);
-			dev->hs_hcnt = i2c_lrw_scl_hcnt(ic_clk, 160,
-							sda_falling_time, 0, 0);
-			dev->hs_lcnt = i2c_lrw_scl_lcnt(ic_clk, 320,
-							scl_falling_time, 0);
+			ic_clk = i2c_zf_clk_rate(dev);
+			dev->hs_hcnt = i2c_zf_scl_hcnt(ic_clk, 160,
+						       sda_falling_time, 0, 0);
+			dev->hs_lcnt = i2c_zf_scl_lcnt(ic_clk, 320,
+						       scl_falling_time, 0);
 		} else {
 			dev_err(dev->dev, "High Speed not supported!\n");
 			t->bus_freq_hz = I2C_MAX_FAST_MODE_FREQ;
-			dev->master_cfg &= ~LRW_IC_CON_SPEED_MASK;
-			dev->master_cfg |= LRW_IC_CON_SPEED_STD_FAST;
+			dev->master_cfg &= ~ZF_IC_CON_SPEED_MASK;
+			dev->master_cfg |= ZF_IC_CON_SPEED_STD_FAST;
 			dev->hs_hcnt = 0;
 			dev->hs_lcnt = 0;
 		}
@@ -544,26 +544,26 @@ static int i2c_lrw_set_timings_master(struct i2c_lrw_dev *dev)
 	}
 
 	if (!dev->fs_hcnt || !dev->fs_lcnt) {
-		ic_clk = i2c_lrw_clk_rate(dev);
+		ic_clk = i2c_zf_clk_rate(dev);
 		switch (t->bus_freq_hz) {
 		case I2C_MAX_STANDARD_MODE_FREQ: /* 100kHz */
-			dev->fs_hcnt = i2c_lrw_scl_hcnt(ic_clk, 4000,
-							sda_falling_time, 0, 0);
-			dev->fs_lcnt = i2c_lrw_scl_lcnt(ic_clk, 4700,
-							scl_falling_time, 0);
+			dev->fs_hcnt = i2c_zf_scl_hcnt(ic_clk, 4000,
+						       sda_falling_time, 0, 0);
+			dev->fs_lcnt = i2c_zf_scl_lcnt(ic_clk, 4700,
+						       scl_falling_time, 0);
 			break;
 		case I2C_MAX_FAST_MODE_FREQ: /* 400kHz */
-			dev->fs_hcnt = i2c_lrw_scl_hcnt(ic_clk, 600,
-							sda_falling_time, 0, 0);
-			dev->fs_lcnt = i2c_lrw_scl_lcnt(ic_clk, 1300,
-							scl_falling_time, 0);
+			dev->fs_hcnt = i2c_zf_scl_hcnt(ic_clk, 600,
+						       sda_falling_time, 0, 0);
+			dev->fs_lcnt = i2c_zf_scl_lcnt(ic_clk, 1300,
+						       scl_falling_time, 0);
 			break;
 
 		case I2C_MAX_FAST_MODE_PLUS_FREQ: /* 1MHz */
-			dev->fs_hcnt = i2c_lrw_scl_hcnt(ic_clk, 260,
-							sda_falling_time, 0, 0);
-			dev->fs_lcnt = i2c_lrw_scl_lcnt(ic_clk, 500,
-							scl_falling_time, 0);
+			dev->fs_hcnt = i2c_zf_scl_hcnt(ic_clk, 260,
+						       sda_falling_time, 0, 0);
+			dev->fs_lcnt = i2c_zf_scl_lcnt(ic_clk, 500,
+						       scl_falling_time, 0);
 			fp_str = " Plus";
 			break;
 		default:
@@ -573,7 +573,7 @@ static int i2c_lrw_set_timings_master(struct i2c_lrw_dev *dev)
 			dev->fs_hcnt, dev->fs_lcnt);
 	}
 
-	ret = i2c_lrw_set_sda_hold(dev);
+	ret = i2c_zf_set_sda_hold(dev);
 	if (ret)
 		return ret;
 
@@ -582,61 +582,61 @@ static int i2c_lrw_set_timings_master(struct i2c_lrw_dev *dev)
 	return 0;
 }
 
-static int i2c_lrw_init_master(struct i2c_lrw_dev *dev)
+static int i2c_zf_init_master(struct i2c_zf_dev *dev)
 {
 	int ret;
 
-	ret = i2c_lrw_acquire_lock(dev);
+	ret = i2c_zf_acquire_lock(dev);
 	if (ret)
 		return ret;
 
-	__i2c_lrw_disable(dev);
+	__i2c_zf_disable(dev);
 
-	regmap_write(dev->map, LRW_IC_FS_SCL_HCNT, dev->fs_hcnt);
-	regmap_write(dev->map, LRW_IC_FS_SCL_LCNT, dev->fs_lcnt);
-	regmap_write(dev->map, LRW_IC_SDA_STUCK_AT_LOW_TIMEOUT,
-			dev->sda_stuck_at_low_timeout);
+	regmap_write(dev->map, ZF_IC_FS_SCL_HCNT, dev->fs_hcnt);
+	regmap_write(dev->map, ZF_IC_FS_SCL_LCNT, dev->fs_lcnt);
+	regmap_write(dev->map, ZF_IC_SDA_STUCK_AT_LOW_TIMEOUT,
+		     dev->sda_stuck_at_low_timeout);
 	if (dev->hs_hcnt && dev->hs_lcnt) {
-		regmap_write(dev->map, LRW_IC_HS_SCL_HCNT, dev->hs_hcnt);
-		regmap_write(dev->map, LRW_IC_HS_SCL_LCNT, dev->hs_lcnt);
+		regmap_write(dev->map, ZF_IC_HS_SCL_HCNT, dev->hs_hcnt);
+		regmap_write(dev->map, ZF_IC_HS_SCL_LCNT, dev->hs_lcnt);
 	}
 
 	if (dev->sda_hold_time)
-		regmap_write(dev->map, LRW_IC_SDA_HOLD, dev->sda_hold_time);
+		regmap_write(dev->map, ZF_IC_SDA_HOLD, dev->sda_hold_time);
 
-	i2c_lrw_configure_fifo_master(dev);
-	i2c_lrw_release_lock(dev);
+	i2c_zf_configure_fifo_master(dev);
+	i2c_zf_release_lock(dev);
 
 	return 0;
 }
 
-static void i2c_lrw_xfer_init(struct i2c_lrw_dev *dev)
+static void i2c_zf_xfer_init(struct i2c_zf_dev *dev)
 {
 	struct i2c_msg *msgs = dev->msgs;
 	u32 ic_con = 0, ic_tar = 0;
 
-	__i2c_lrw_disable(dev);
+	__i2c_zf_disable(dev);
 
 	if (msgs[dev->msg_write_idx].flags & I2C_M_TEN) {
-		ic_con = LRW_IC_CON_10BITADDR_MASTER;
-		ic_tar = LRW_IC_TAR_10BITADDR_MASTER;
+		ic_con = ZF_IC_CON_10BITADDR_MASTER;
+		ic_tar = ZF_IC_TAR_10BITADDR_MASTER;
 	}
 
-	regmap_update_bits(dev->map, LRW_IC_CON, LRW_IC_CON_10BITADDR_MASTER,
-			ic_con);
-	regmap_write(dev->map, LRW_IC_TAR,
-			msgs[dev->msg_write_idx].addr | ic_tar);
+	regmap_update_bits(dev->map, ZF_IC_CON, ZF_IC_CON_10BITADDR_MASTER,
+			   ic_con);
+	regmap_write(dev->map, ZF_IC_TAR,
+		     msgs[dev->msg_write_idx].addr | ic_tar);
 
-	regmap_write(dev->map, LRW_IC_INTR_MASK, 0);
+	regmap_write(dev->map, ZF_IC_INTR_MASK, 0);
 
-	__i2c_lrw_enable(dev);
+	__i2c_zf_enable(dev);
 
-	regmap_update_bits(dev->map, LRW_IC_CLR_RAW_INTR, LRW_IC_CLR_INTR,
-			LRW_IC_CLR_INTR);
-	regmap_write(dev->map, LRW_IC_INTR_MASK, LRW_IC_INTR_MASTER_MASK);
+	regmap_update_bits(dev->map, ZF_IC_CLR_RAW_INTR, ZF_IC_CLR_INTR,
+			   ZF_IC_CLR_INTR);
+	regmap_write(dev->map, ZF_IC_INTR_MASK, ZF_IC_INTR_MASTER_MASK);
 }
 
-static void i2c_lrw_xfer_msg(struct i2c_lrw_dev *dev)
+static void i2c_zf_xfer_msg(struct i2c_zf_dev *dev)
 {
 	struct i2c_msg *msgs = dev->msgs;
 	u32 intr_mask;
@@ -648,7 +648,7 @@ static void i2c_lrw_xfer_msg(struct i2c_lrw_dev *dev)
 	bool need_restart = false;
 	unsigned int flr;
 
-	intr_mask = LRW_IC_INTR_MASTER_MASK;
+	intr_mask = ZF_IC_INTR_MASTER_MASK;
 
 	for (; dev->msg_write_idx < dev->msgs_num; dev->msg_write_idx++) {
 		u32 flags = msgs[dev->msg_write_idx].flags;
@@ -664,12 +664,12 @@ static void i2c_lrw_xfer_msg(struct i2c_lrw_dev *dev)
 			buf = msgs[dev->msg_write_idx].buf;
 			buf_len = msgs[dev->msg_write_idx].len;
 
-			if ((dev->master_cfg & LRW_IC_CON_RESTART_EN) &&
-				(dev->msg_write_idx > 0))
+			if ((dev->master_cfg & ZF_IC_CON_RESTART_EN) &&
+			    (dev->msg_write_idx > 0))
 				need_restart = true;
 		}
 
-		regmap_read(dev->map, LRW_IC_FIFO_LEVEL, &fifo_level);
+		regmap_read(dev->map, ZF_IC_FIFO_LEVEL, &fifo_level);
 		flr = fifo_level & I2C_TXFLR_MASK;
 		tx_limit = dev->tx_fifo_depth - flr;
 
@@ -680,7 +680,7 @@ static void i2c_lrw_xfer_msg(struct i2c_lrw_dev *dev)
 			u32 cmd = 0;
 
 			if (dev->msg_write_idx == dev->msgs_num - 1 &&
-				buf_len == 1 && !(flags & I2C_M_RECV_LEN))
+			    buf_len == 1 && !(flags & I2C_M_RECV_LEN))
 				cmd |= BIT(9);
 
 			if (need_restart) {
@@ -692,13 +692,13 @@ static void i2c_lrw_xfer_msg(struct i2c_lrw_dev *dev)
 				if (dev->rx_outstanding >= dev->rx_fifo_depth)
 					break;
 
-				regmap_write(dev->map, LRW_IC_DATA_CMD,
-						cmd | 0x100);
+				regmap_write(dev->map, ZF_IC_DATA_CMD,
+					     cmd | 0x100);
 				rx_limit--;
 				dev->rx_outstanding++;
 			} else {
-				regmap_write(dev->map, LRW_IC_DATA_CMD,
-						cmd | *buf++);
+				regmap_write(dev->map, ZF_IC_DATA_CMD,
+					     cmd | *buf++);
 			}
 			tx_limit--;
 			buf_len--;
@@ -709,7 +709,7 @@ static void i2c_lrw_xfer_msg(struct i2c_lrw_dev *dev)
 
 		if (flags & I2C_M_RECV_LEN) {
 			dev->status |= STATUS_WRITE_IN_PROGRESS;
-			intr_mask &= ~LRW_IC_INTR_TX_EMPTY;
+			intr_mask &= ~ZF_IC_INTR_TX_EMPTY;
 			break;
 		}
 
@@ -722,15 +722,15 @@ static void i2c_lrw_xfer_msg(struct i2c_lrw_dev *dev)
 	}
 
 	if (dev->msg_write_idx == dev->msgs_num)
-		intr_mask &= ~LRW_IC_INTR_TX_EMPTY;
+		intr_mask &= ~ZF_IC_INTR_TX_EMPTY;
 
 	if (dev->msg_err)
 		intr_mask = 0;
 
-	regmap_write(dev->map, LRW_IC_INTR_MASK, intr_mask);
+	regmap_write(dev->map, ZF_IC_INTR_MASK, intr_mask);
 }
 
-static u8 i2c_lrw_recv_len(struct i2c_lrw_dev *dev, u8 len)
+static u8 i2c_zf_recv_len(struct i2c_zf_dev *dev, u8 len)
 {
 	struct i2c_msg *msgs = dev->msgs;
 	u32 flags = msgs[dev->msg_read_idx].flags;
@@ -740,13 +740,13 @@ static u8 i2c_lrw_recv_len(struct i2c_lrw_dev *dev, u8 len)
 	msgs[dev->msg_read_idx].len = len;
 	msgs[dev->msg_read_idx].flags &= ~I2C_M_RECV_LEN;
 
-	regmap_update_bits(dev->map, LRW_IC_INTR_MASK, LRW_IC_INTR_TX_EMPTY,
-			LRW_IC_INTR_TX_EMPTY);
+	regmap_update_bits(dev->map, ZF_IC_INTR_MASK, ZF_IC_INTR_TX_EMPTY,
+			   ZF_IC_INTR_TX_EMPTY);
 
 	return len;
 }
 
-static void i2c_lrw_read(struct i2c_lrw_dev *dev)
+static void i2c_zf_read(struct i2c_zf_dev *dev)
 {
 	struct i2c_msg *msgs = dev->msgs;
 	u32 fifo_level;
@@ -768,19 +768,19 @@ static void i2c_lrw_read(struct i2c_lrw_dev *dev)
 			buf = dev->rx_buf;
 		}
 
-		regmap_read(dev->map, LRW_IC_FIFO_LEVEL, &fifo_level);
+		regmap_read(dev->map, ZF_IC_FIFO_LEVEL, &fifo_level);
 		rx_valid = (fifo_level >> I2C_RXFLR_SHIFT) & I2C_RXFLR_MASK;
 
 		for (; len > 0 && rx_valid > 0; len--, rx_valid--) {
 			u32 flags = msgs[dev->msg_read_idx].flags;
 
-			regmap_read(dev->map, LRW_IC_DATA_CMD, &tmp);
-			tmp &= LRW_IC_DATA_CMD_DAT;
+			regmap_read(dev->map, ZF_IC_DATA_CMD, &tmp);
+			tmp &= ZF_IC_DATA_CMD_DAT;
 			if (flags & I2C_M_RECV_LEN) {
 				if (!tmp || tmp > I2C_SMBUS_BLOCK_MAX)
 					tmp = 1;
 
-				len = i2c_lrw_recv_len(dev, tmp);
+				len = i2c_zf_recv_len(dev, tmp);
 			}
 			*buf++ = tmp;
 			dev->rx_outstanding--;
@@ -796,10 +796,9 @@ static void i2c_lrw_read(struct i2c_lrw_dev *dev)
 	}
 }
 
-static int i2c_lrw_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
-			int num)
+static int i2c_zf_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
 {
-	struct i2c_lrw_dev *dev = i2c_get_adapdata(adap);
+	struct i2c_zf_dev *dev = i2c_get_adapdata(adap);
 	int ret;
 
 	reinit_completion(&dev->cmd_complete);
@@ -812,17 +811,17 @@ static int i2c_lrw_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
 	dev->status = 0;
 	dev->abort_source = 0;
 	dev->rx_outstanding = 0;
-	ret = i2c_lrw_acquire_lock(dev);
+	ret = i2c_zf_acquire_lock(dev);
 	if (ret)
 		goto done_nolock;
-	ret = i2c_lrw_wait_bus_not_busy(dev);
+	ret = i2c_zf_wait_bus_not_busy(dev);
 	if (ret < 0)
 		goto done;
-	i2c_lrw_xfer_init(dev);
+	i2c_zf_xfer_init(dev);
 
 	if (!wait_for_completion_timeout(&dev->cmd_complete, adap->timeout)) {
 		dev_err(dev->dev, "controller timed out\n");
-		i2c_lrw_init_master(dev);
+		i2c_zf_init_master(dev);
 		ret = -ETIMEDOUT;
 		goto done;
 	}
@@ -839,8 +838,8 @@ static int i2c_lrw_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
 		goto disable_controller;
 	}
 
-	if (dev->cmd_err == LRW_IC_ERR_TX_ABRT) {
-		ret = i2c_lrw_handle_tx_abort(dev);
+	if (dev->cmd_err == ZF_IC_ERR_TX_ABRT) {
+		ret = i2c_zf_handle_tx_abort(dev);
 		goto disable_controller;
 	}
 
@@ -854,146 +853,144 @@ static int i2c_lrw_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
 	ret = -EIO;
 
 disable_controller:
-	__i2c_lrw_disable_nowait(dev);
+	__i2c_zf_disable_nowait(dev);
 done:
-	i2c_lrw_release_lock(dev);
+	i2c_zf_release_lock(dev);
 
 done_nolock:
 	return ret;
 }
 
-static const struct i2c_algorithm i2c_lrw_algo = {
-	.master_xfer = i2c_lrw_xfer,
-	.functionality = i2c_lrw_func,
+static const struct i2c_algorithm i2c_zf_algo = {
+	.master_xfer = i2c_zf_xfer,
+	.functionality = i2c_zf_func,
 };
 
-static const struct i2c_adapter_quirks i2c_lrw_quirks = {
+static const struct i2c_adapter_quirks i2c_zf_quirks = {
 	.flags = I2C_AQ_NO_ZERO_LEN,
 };
 
-static u32 i2c_lrw_read_clear_intrbits(struct i2c_lrw_dev *dev)
+static u32 i2c_zf_read_clear_intrbits(struct i2c_zf_dev *dev)
 {
 	u32 stat;
 
-	regmap_read(dev->map, LRW_IC_INTR_STAT, &stat);
+	regmap_read(dev->map, ZF_IC_INTR_STAT, &stat);
 
-	if (stat & LRW_IC_INTR_RX_OVER)
-		regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR,
-				LRW_IC_INTR_RX_OVER, LRW_IC_INTR_RX_OVER);
-	if (stat & LRW_IC_INTR_RD_REQ)
-		regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR,
-				LRW_IC_INTR_RD_REQ, LRW_IC_INTR_RD_REQ);
-	if (stat & LRW_IC_INTR_TX_ABRT) {
-		regmap_read(dev->map, LRW_IC_TX_ABRT_SOURCE,
-				&dev->abort_source);
-		regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR,
-				LRW_IC_INTR_TX_ABRT, LRW_IC_INTR_TX_ABRT);
+	if (stat & ZF_IC_INTR_RX_OVER)
+		regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR,
+				  ZF_IC_INTR_RX_OVER, ZF_IC_INTR_RX_OVER);
+	if (stat & ZF_IC_INTR_RD_REQ)
+		regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR,
+				  ZF_IC_INTR_RD_REQ, ZF_IC_INTR_RD_REQ);
+	if (stat & ZF_IC_INTR_TX_ABRT) {
+		regmap_read(dev->map, ZF_IC_TX_ABRT_SOURCE, &dev->abort_source);
+		regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR,
+				  ZF_IC_INTR_TX_ABRT, ZF_IC_INTR_TX_ABRT);
 	}
-	if (stat & LRW_IC_INTR_RX_DONE)
-		regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR,
-				LRW_IC_INTR_RX_DONE, LRW_IC_INTR_RX_DONE);
-	if (stat & LRW_IC_INTR_ACTIVITY)
-		regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR,
-				LRW_IC_INTR_ACTIVITY, LRW_IC_INTR_ACTIVITY);
-	if (stat & LRW_IC_INTR_STOP_DET)
-		regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR,
-				LRW_IC_INTR_STOP_DET, LRW_IC_INTR_STOP_DET);
-	if (stat & LRW_IC_INTR_START_DET)
-		regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR,
-				LRW_IC_INTR_START_DET,
-				LRW_IC_INTR_START_DET);
-	if (stat & LRW_IC_INTR_GEN_CALL)
-		regmap_write_bits(dev->map, LRW_IC_CLR_RAW_INTR,
-				LRW_IC_INTR_GEN_CALL, LRW_IC_INTR_GEN_CALL);
+	if (stat & ZF_IC_INTR_RX_DONE)
+		regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR,
+				  ZF_IC_INTR_RX_DONE, ZF_IC_INTR_RX_DONE);
+	if (stat & ZF_IC_INTR_ACTIVITY)
+		regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR,
+				  ZF_IC_INTR_ACTIVITY, ZF_IC_INTR_ACTIVITY);
+	if (stat & ZF_IC_INTR_STOP_DET)
+		regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR,
+				  ZF_IC_INTR_STOP_DET, ZF_IC_INTR_STOP_DET);
+	if (stat & ZF_IC_INTR_START_DET)
+		regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR,
+				  ZF_IC_INTR_START_DET, ZF_IC_INTR_START_DET);
+	if (stat & ZF_IC_INTR_GEN_CALL)
+		regmap_write_bits(dev->map, ZF_IC_CLR_RAW_INTR,
+				  ZF_IC_INTR_GEN_CALL, ZF_IC_INTR_GEN_CALL);
 
 	return stat;
 }
 
-static irqreturn_t i2c_lrw_isr(int this_irq, void *dev_id)
+static irqreturn_t i2c_zf_isr(int this_irq, void *dev_id)
 {
-	struct i2c_lrw_dev *dev = dev_id;
+	struct i2c_zf_dev *dev = dev_id;
 	u32 stat, enabled;
 
-	regmap_read(dev->map, LRW_IC_ENABLE, &enabled);
-	regmap_read(dev->map, LRW_IC_CLR_RAW_INTR, &stat);
-	if (!enabled || !(stat & ~LRW_IC_INTR_ACTIVITY))
+	regmap_read(dev->map, ZF_IC_ENABLE, &enabled);
+	regmap_read(dev->map, ZF_IC_CLR_RAW_INTR, &stat);
+	if (!enabled || !(stat & ~ZF_IC_INTR_ACTIVITY))
 		return IRQ_NONE;
 
-	stat = i2c_lrw_read_clear_intrbits(dev);
+	stat = i2c_zf_read_clear_intrbits(dev);
 
 	if (!(dev->status & STATUS_ACTIVE)) {
-		regmap_write(dev->map, LRW_IC_INTR_MASK, 0);
+		regmap_write(dev->map, ZF_IC_INTR_MASK, 0);
 		return IRQ_HANDLED;
 	}
 
-	if (stat & LRW_IC_INTR_TX_ABRT) {
-		dev->cmd_err |= LRW_IC_ERR_TX_ABRT;
+	if (stat & ZF_IC_INTR_TX_ABRT) {
+		dev->cmd_err |= ZF_IC_ERR_TX_ABRT;
 		dev->status &= ~STATUS_MASK;
 		dev->rx_outstanding = 0;
 
 		dev_dbg(dev->dev, "abrt intr:0x%x, abort:0x%x\n", stat,
-			 dev->abort_source);
-		regmap_write(dev->map, LRW_IC_INTR_MASK, 0);
+			dev->abort_source);
+		regmap_write(dev->map, ZF_IC_INTR_MASK, 0);
 		goto tx_aborted;
 	}
 
-	if (stat & LRW_IC_INTR_RX_FULL)
-		i2c_lrw_read(dev);
+	if (stat & ZF_IC_INTR_RX_FULL)
+		i2c_zf_read(dev);
 
-	if (stat & LRW_IC_INTR_TX_EMPTY)
-		i2c_lrw_xfer_msg(dev);
+	if (stat & ZF_IC_INTR_TX_EMPTY)
+		i2c_zf_xfer_msg(dev);
 
 tx_aborted:
-	if (((stat & (LRW_IC_INTR_TX_ABRT | LRW_IC_INTR_STOP_DET)) ||
-		dev->msg_err) &&
-		(dev->rx_outstanding == 0)) {
+	if (((stat & (ZF_IC_INTR_TX_ABRT | ZF_IC_INTR_STOP_DET)) ||
+	     dev->msg_err) &&
+	    (dev->rx_outstanding == 0)) {
 		complete(&dev->cmd_complete);
 	} else {
-		regmap_read(dev->map, LRW_IC_INTR_MASK, &stat);
-		regmap_write(dev->map, LRW_IC_INTR_MASK, 0);
-		regmap_write(dev->map, LRW_IC_INTR_MASK, stat);
+		regmap_read(dev->map, ZF_IC_INTR_MASK, &stat);
+		regmap_write(dev->map, ZF_IC_INTR_MASK, 0);
+		regmap_write(dev->map, ZF_IC_INTR_MASK, stat);
 	}
 
 	return IRQ_HANDLED;
 }
 
-void i2c_lrw_configure_master(struct i2c_lrw_dev *dev)
+void i2c_zf_configure_master(struct i2c_zf_dev *dev)
 {
 	struct i2c_timings *t = &dev->timings;
 
-	dev->functionality = I2C_FUNC_10BIT_ADDR | LRW_IC_DEFAULT_FUNCTIONALITY;
+	dev->functionality = I2C_FUNC_10BIT_ADDR | ZF_IC_DEFAULT_FUNCTIONALITY;
 
-	dev->master_cfg = LRW_IC_CON_MASTER | LRW_IC_CON_RESTART_EN |
-			IC_CON_BUS_CLEAR_CTRL_POS;
+	dev->master_cfg = ZF_IC_CON_MASTER | ZF_IC_CON_RESTART_EN |
+			  IC_CON_BUS_CLEAR_CTRL_POS;
 
 	switch (t->bus_freq_hz) {
 	case I2C_MAX_STANDARD_MODE_FREQ:
 	case I2C_MAX_FAST_MODE_FREQ:
 	case I2C_MAX_FAST_MODE_PLUS_FREQ:
-		dev->master_cfg |= LRW_IC_CON_SPEED_STD_FAST;
+		dev->master_cfg |= ZF_IC_CON_SPEED_STD_FAST;
 		break;
 	case I2C_MAX_HIGH_SPEED_MODE_FREQ:
-		dev->master_cfg |= LRW_IC_CON_SPEED_HIGH;
+		dev->master_cfg |= ZF_IC_CON_SPEED_HIGH;
 		break;
 	default:
 		dev_warn(dev->dev,
 			 "dev bus_freq_hz outlined in the device datasheet?\n");
 	}
 }
-EXPORT_SYMBOL_GPL(i2c_lrw_configure_master);
+EXPORT_SYMBOL_GPL(i2c_zf_configure_master);
 
-static int i2c_lrw_init_recovery_info(struct i2c_lrw_dev *dev)
+static int i2c_zf_init_recovery_info(struct i2c_zf_dev *dev)
 {
 	struct i2c_bus_recovery_info *rinfo = &dev->rinfo;
 	struct i2c_adapter *adap = &dev->adapter;
 
-	rinfo->recover_bus = i2c_lrw_bus_recover;
+	rinfo->recover_bus = i2c_zf_bus_recover;
 	adap->bus_recovery_info = rinfo;
 
 	return 0;
 }
 
-int i2c_lrw_probe_master(struct i2c_lrw_dev *dev)
+int i2c_zf_probe_master(struct i2c_zf_dev *dev)
 {
 	struct i2c_adapter *adap = &dev->adapter;
 	unsigned long irq_flags;
@@ -1002,27 +999,27 @@ int i2c_lrw_probe_master(struct i2c_lrw_dev *dev)
 
 	init_completion(&dev->cmd_complete);
 
-	dev->init = i2c_lrw_init_master;
-	dev->disable = i2c_lrw_disable;
+	dev->init = i2c_zf_init_master;
+	dev->disable = i2c_zf_disable;
 
-	ret = i2c_lrw_init_regmap(dev);
+	ret = i2c_zf_init_regmap(dev);
 	if (ret)
 		return ret;
 
-	ret = i2c_lrw_set_timings_master(dev);
+	ret = i2c_zf_set_timings_master(dev);
 	if (ret)
 		return ret;
 
-	ret = i2c_lrw_set_fifo_size(dev);
+	ret = i2c_zf_set_fifo_size(dev);
 	if (ret)
 		return ret;
 
-	ret = i2c_lrw_acquire_lock(dev);
+	ret = i2c_zf_acquire_lock(dev);
 	if (ret)
 		return ret;
 
-	ret = regmap_read(dev->map, LRW_IC_CON, &ic_con);
-	i2c_lrw_release_lock(dev);
+	ret = regmap_read(dev->map, ZF_IC_CON, &ic_con);
+	i2c_zf_release_lock(dev);
 	if (ret)
 		return ret;
 
@@ -1033,33 +1030,33 @@ int i2c_lrw_probe_master(struct i2c_lrw_dev *dev)
 	if (ret)
 		return ret;
 
-	snprintf(adap->name, sizeof(adap->name), "LRW I2C adapter");
+	snprintf(adap->name, sizeof(adap->name), "ZF I2C adapter");
 	adap->retries = 3;
-	adap->algo = &i2c_lrw_algo;
-	adap->quirks = &i2c_lrw_quirks;
+	adap->algo = &i2c_zf_algo;
+	adap->quirks = &i2c_zf_quirks;
 	adap->dev.parent = dev->dev;
 	i2c_set_adapdata(adap, dev);
 
 	irq_flags = IRQF_SHARED | IRQF_COND_SUSPEND;
 
-	ret = i2c_lrw_acquire_lock(dev);
+	ret = i2c_zf_acquire_lock(dev);
 	if (ret)
 		return ret;
 
-	regmap_write(dev->map, LRW_IC_INTR_MASK, 0);
-	regmap_write(dev->map, LRW_SMBUS_INTR_MASK, 0);
+	regmap_write(dev->map, ZF_IC_INTR_MASK, 0);
+	regmap_write(dev->map, ZF_SMBUS_INTR_MASK, 0);
 
-	i2c_lrw_release_lock(dev);
+	i2c_zf_release_lock(dev);
 
-	ret = devm_request_irq(dev->dev, dev->irq, i2c_lrw_isr, irq_flags,
-				dev_name(dev->dev), dev);
+	ret = devm_request_irq(dev->dev, dev->irq, i2c_zf_isr, irq_flags,
+			       dev_name(dev->dev), dev);
 	if (ret) {
 		dev_err(dev->dev, "failure requesting irq %i: %d\n", dev->irq,
 			ret);
 		return ret;
 	}
 
-	ret = i2c_lrw_init_recovery_info(dev);
+	ret = i2c_zf_init_recovery_info(dev);
 	if (ret)
 		return ret;
 
@@ -1069,7 +1066,8 @@ int i2c_lrw_probe_master(struct i2c_lrw_dev *dev)
 
 	return ret;
 }
-EXPORT_SYMBOL_GPL(i2c_lrw_probe_master);
+EXPORT_SYMBOL_GPL(i2c_zf_probe_master);
 
-MODULE_DESCRIPTION("LRW I2C bus master adapter");
+MODULE_DESCRIPTION("LeapRise ZF(ZhuFeng) I2C bus master adapter");
+MODULE_AUTHOR("Liu Fei");
 MODULE_LICENSE("GPL");

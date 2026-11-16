@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0+
 /*
- *  I2C adapter driver for LRW
+ *  LeapRise ZF(ZhuFeng) I2C driver
  *
- *  Copyright (c) 2025, LRW CORPORATION. All rights reserved.
+ *  Copyright (C) 2026, LeapRise Technology Co., Ltd.
  */
 
 #include <linux/acpi.h>
@@ -27,24 +27,27 @@
 #include <linux/slab.h>
 #include <linux/suspend.h>
 
-#include "i2c-lrw-core.h"
+#include "i2c-zf-core.h"
 
-static u32 i2c_lrw_get_clk_rate_khz(struct i2c_lrw_dev *dev)
+static u32 i2c_zf_get_clk_rate_khz(struct i2c_zf_dev *dev)
 {
 	return clk_get_rate(dev->clk) / 1000;
 }
 
 #ifdef CONFIG_ACPI
-static const struct acpi_device_id i2c_lrw_acpi_match[] = { { "LRWX0002", 0 },
-								{} };
-MODULE_DEVICE_TABLE(acpi, i2c_lrw_acpi_match);
+static const struct acpi_device_id i2c_zf_acpi_match[] = {
+	{ "LPRS0002", 0 },
+	{ "LRWX0002", 0 }, //deprecated, kept for backward compatibility
+	{},
+};
+MODULE_DEVICE_TABLE(acpi, i2c_zf_acpi_match);
 #endif
 
 #ifdef CONFIG_OF
 
-static int i2c_lrw_of_configure(struct platform_device *pdev)
+static int i2c_zf_of_configure(struct platform_device *pdev)
 {
-	struct i2c_lrw_dev *dev = platform_get_drvdata(pdev);
+	struct i2c_zf_dev *dev = platform_get_drvdata(pdev);
 
 	switch (dev->flags & MODEL_MASK) {
 	default:
@@ -54,22 +57,22 @@ static int i2c_lrw_of_configure(struct platform_device *pdev)
 	return 0;
 }
 
-static const struct of_device_id i2c_lrw_of_match[] = {
-	{
-		.compatible = "lrw,sc-i2c",
-	},
+static const struct of_device_id i2c_zf_of_match[] = {
+	{ .compatible = "lprs,zf-i2c" },
+	{ .compatible =
+		  "lrw,sc-i2c" }, //deprecated, kept for backward compatibility
 	{},
 };
-MODULE_DEVICE_TABLE(of, i2c_lrw_of_match);
+MODULE_DEVICE_TABLE(of, i2c_zf_of_match);
 #else
 
-static inline int i2c_lrw_of_configure(struct platform_device *pdev)
+static inline int i2c_zf_of_configure(struct platform_device *pdev)
 {
 	return -ENODEV;
 }
 #endif
 
-static int i2c_lrw_plat_request_regs(struct i2c_lrw_dev *dev)
+static int i2c_zf_plat_request_regs(struct i2c_zf_dev *dev)
 {
 	struct platform_device *pdev = to_platform_device(dev->dev);
 	int ret;
@@ -84,21 +87,21 @@ static int i2c_lrw_plat_request_regs(struct i2c_lrw_dev *dev)
 	return ret;
 }
 
-static const struct dmi_system_id i2c_lrw_hwmon_class_dmi[] = {
+static const struct dmi_system_id i2c_zf_hwmon_class_dmi[] = {
 	{
-		.ident = "lrw 0002",
+		.ident = "lprs 0002",
 		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "lrw"),
+			DMI_MATCH(DMI_SYS_VENDOR, "lprs"),
 			DMI_MATCH(DMI_PRODUCT_NAME, "0002"),
 		},
 	},
 	{ } /* terminate list */
 };
 
-static int i2c_lrw_plat_probe(struct platform_device *pdev)
+static int i2c_zf_plat_probe(struct platform_device *pdev)
 {
 	struct i2c_adapter *adap;
-	struct i2c_lrw_dev *dev;
+	struct i2c_zf_dev *dev;
 	struct i2c_timings *t;
 	int irq, ret;
 
@@ -106,7 +109,7 @@ static int i2c_lrw_plat_probe(struct platform_device *pdev)
 	if (irq < 0)
 		return irq;
 
-	dev = devm_kzalloc(&pdev->dev, sizeof(struct i2c_lrw_dev), GFP_KERNEL);
+	dev = devm_kzalloc(&pdev->dev, sizeof(struct i2c_zf_dev), GFP_KERNEL);
 	if (!dev)
 		return -ENOMEM;
 
@@ -116,7 +119,7 @@ static int i2c_lrw_plat_probe(struct platform_device *pdev)
 
 	platform_set_drvdata(pdev, dev);
 
-	ret = i2c_lrw_plat_request_regs(dev);
+	ret = i2c_zf_plat_request_regs(dev);
 	if (ret)
 		return ret;
 
@@ -129,25 +132,25 @@ static int i2c_lrw_plat_probe(struct platform_device *pdev)
 	t = &dev->timings;
 	i2c_parse_fw_timings(&pdev->dev, t, false);
 
-	i2c_lrw_adjust_bus_speed(dev);
+	i2c_zf_adjust_bus_speed(dev);
 
 	if (pdev->dev.of_node)
-		i2c_lrw_of_configure(pdev);
+		i2c_zf_of_configure(pdev);
 
 	if (has_acpi_companion(&pdev->dev))
-		i2c_lrw_acpi_configure(&pdev->dev);
+		i2c_zf_acpi_configure(&pdev->dev);
 	else
-		i2c_lrw_dt_configure(&pdev->dev);
+		i2c_zf_dt_configure(&pdev->dev);
 
-	ret = i2c_lrw_validate_speed(dev);
+	ret = i2c_zf_validate_speed(dev);
 	if (ret)
 		goto exit_reset;
 
-	ret = i2c_lrw_probe_lock_support(dev);
+	ret = i2c_zf_probe_lock_support(dev);
 	if (ret)
 		goto exit_reset;
 
-	i2c_lrw_configure(dev);
+	i2c_zf_configure(dev);
 
 	dev->pclk = devm_clk_get_optional(&pdev->dev, "pclk");
 	if (IS_ERR(dev->pclk)) {
@@ -161,14 +164,14 @@ static int i2c_lrw_plat_probe(struct platform_device *pdev)
 		goto exit_reset;
 	}
 
-	ret = i2c_lrw_prepare_clk(dev, true);
+	ret = i2c_zf_prepare_clk(dev, true);
 	if (ret)
 		goto exit_reset;
 
 	if (dev->clk) {
 		u64 clk_khz;
 
-		dev->get_clk_rate_khz = i2c_lrw_get_clk_rate_khz;
+		dev->get_clk_rate_khz = i2c_zf_get_clk_rate_khz;
 		clk_khz = dev->get_clk_rate_khz(dev);
 		if (!dev->sda_hold_time && t->sda_hold_ns) {
 			dev->sda_hold_time = div_u64(
@@ -178,14 +181,14 @@ static int i2c_lrw_plat_probe(struct platform_device *pdev)
 
 	adap = &dev->adapter;
 	adap->owner = THIS_MODULE;
-	adap->class = dmi_check_system(i2c_lrw_hwmon_class_dmi) ?
-				I2C_CLASS_HWMON :
-				I2C_CLASS_DEPRECATED;
+	adap->class = dmi_check_system(i2c_zf_hwmon_class_dmi) ?
+			      I2C_CLASS_HWMON :
+			      I2C_CLASS_DEPRECATED;
 	ACPI_COMPANION_SET(&adap->dev, ACPI_COMPANION(&pdev->dev));
 	adap->dev.of_node = pdev->dev.of_node;
 	adap->nr = -1;
 
-	ret = i2c_lrw_probe(dev);
+	ret = i2c_zf_probe(dev);
 	if (ret)
 		goto exit_reset;
 
@@ -196,9 +199,9 @@ exit_reset:
 	return ret;
 }
 
-static void i2c_lrw_plat_remove(struct platform_device *pdev)
+static void i2c_zf_plat_remove(struct platform_device *pdev)
 {
-	struct i2c_lrw_dev *dev = platform_get_drvdata(pdev);
+	struct i2c_zf_dev *dev = platform_get_drvdata(pdev);
 
 	i2c_del_adapter(&dev->adapter);
 
@@ -206,30 +209,30 @@ static void i2c_lrw_plat_remove(struct platform_device *pdev)
 	reset_control_assert(dev->rst);
 }
 
-MODULE_ALIAS("platform:i2c_lrw");
+MODULE_ALIAS("platform:i2c_zf");
 
-static struct platform_driver i2c_lrw_driver = {
-	.probe = i2c_lrw_plat_probe,
-	.remove_new = i2c_lrw_plat_remove,
+static struct platform_driver i2c_zf_driver = {
+	.probe = i2c_zf_plat_probe,
+	.remove_new = i2c_zf_plat_remove,
 	.driver		= {
-		.name	= "i2c_lrw",
-		.of_match_table = of_match_ptr(i2c_lrw_of_match),
-		.acpi_match_table = ACPI_PTR(i2c_lrw_acpi_match),
+		.name	= "i2c_zf",
+		.of_match_table = of_match_ptr(i2c_zf_of_match),
+		.acpi_match_table = ACPI_PTR(i2c_zf_acpi_match),
 	},
 };
 
-static int __init i2c_lrw_init_driver(void)
+static int __init i2c_zf_init_driver(void)
 {
-	return platform_driver_register(&i2c_lrw_driver);
+	return platform_driver_register(&i2c_zf_driver);
 }
-subsys_initcall(i2c_lrw_init_driver);
+subsys_initcall(i2c_zf_init_driver);
 
-static void __exit i2c_lrw_exit_driver(void)
+static void __exit i2c_zf_exit_driver(void)
 {
-	platform_driver_unregister(&i2c_lrw_driver);
+	platform_driver_unregister(&i2c_zf_driver);
 }
-module_exit(i2c_lrw_exit_driver);
+module_exit(i2c_zf_exit_driver);
 
-MODULE_AUTHOR("HXW");
-MODULE_DESCRIPTION("LRW I2C bus adapter");
+MODULE_DESCRIPTION("LeapRise ZF(ZhuFeng) I2C bus master adapter");
+MODULE_AUTHOR("Liu Fei");
 MODULE_LICENSE("GPL");

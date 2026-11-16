@@ -793,6 +793,8 @@ patternProperties:
     description: Loongson Technology Corporation Limited
   "^loongmasses,.*":
     description: Nanjing Loongmasses Ltd.
+  "^lprs,.*":
+    description: LeapRise Co., Ltd.
   "^lsi,.*":
     description: LSI Corp. (LSI Logic)
   "^lunzn,.*":
@@ -1604,8 +1606,6 @@ patternProperties:
     description: ZTE Corp.
   "^zyxel,.*":
     description: ZyXEL Communications Corp.
-  "^lrw,.*":
-    description: LRW Corp.
 
   # Normal property name match without a comma
   # These should catch all node/property names without a prefix
