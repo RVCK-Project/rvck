@@ -583,6 +583,9 @@ TRACE_CONTROL_LIB_API int32_t xt_trace_detect_trace_encoder(
 	int32_t tr_encoder_control = 0;
 	uint32_t tr_encoder_impl = 0;
 	uint32_t tr_te_inst_features = 0;
+	uint32_t tr_te_inst_filters = 0;
+	uint32_t tr_te_data_control = 0;
+	uint32_t tr_ts_control = 0;
 	uint64_t base_addr = encoder_info->base_addr;
 
 	tr_encoder_control = primary_enable_trace_component(base_addr);
@@ -884,6 +887,473 @@ TRACE_CONTROL_LIB_API int32_t xt_trace_detect_trace_encoder(
 	if (xt_trace_register_write(base_addr + OFFSET_TRTEINSTFEATURES,
 				    tr_te_inst_features))
 		return -1;
+
+	// for data trace
+	if (xt_trace_register_read(base_addr + OFFSET_TRTEDATACONTROL,
+				   &tr_te_data_control))
+		return -1;
+	if (u32_get_fields(tr_te_data_control, 0, 0) == 1) {
+		encoder_info->tr_te_data_control_default = tr_te_data_control;
+		encoder_info->data_trace_implemented = true;
+
+		// check value 1 for trTeDataTracing, trTeDataTrigEnable,
+		// trTeDataStallEna, trTeDataDropEna, trTeDataNoValue,
+		// trTeDataNoAddr
+		tr_te_data_control |= 0x30056;
+		tr_te_data_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTEDATACONTROL, tr_te_data_control);
+		if (tr_te_data_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_data_control, 1, 1) == 1)
+			encoder_info->support_data_trace_1 = true;
+		if (u32_get_fields(tr_te_data_control, 2, 2) == 1)
+			encoder_info->support_data_trace_tigger_enable = true;
+		if (u32_get_fields(tr_te_data_control, 4, 4) == 1)
+			encoder_info->support_data_trace_stall_enable = true;
+		if (u32_get_fields(tr_te_data_control, 6, 6) == 1)
+			encoder_info->support_data_trace_drop_enable = true;
+		if (u32_get_fields(tr_te_data_control, 16, 16) == 1)
+			encoder_info->support_data_trace_no_value_1 = true;
+		if (u32_get_fields(tr_te_data_control, 17, 17) == 1)
+			encoder_info->support_data_trace_no_addr_1 = true;
+		// check 0 for trTeDataTracing
+		tr_te_data_control =
+			u32_set_fields(tr_te_data_control, 1, 1, 0);
+		tr_te_data_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTEDATACONTROL, tr_te_data_control);
+		if (tr_te_data_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_data_control, 1, 1) == 0)
+			encoder_info->support_data_trace_0 = true;
+		// check 0 for trTeDataNoValue
+		tr_te_data_control =
+			u32_set_fields(tr_te_data_control, 16, 16, 0);
+		tr_te_data_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTEDATACONTROL, tr_te_data_control);
+		if (tr_te_data_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_data_control, 16, 16) == 0)
+			encoder_info->support_data_trace_no_value_0 = true;
+		// check 0 for trTeDataNoAddr
+		tr_te_data_control =
+			u32_set_fields(tr_te_data_control, 17, 17, 0);
+		tr_te_data_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTEDATACONTROL, tr_te_data_control);
+		if (tr_te_data_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_data_control, 17, 17) == 0)
+			encoder_info->support_data_trace_no_addr_0 = true;
+		// check trTeDataAddrCompress
+		tr_te_data_control =
+			u32_set_fields(tr_te_data_control, 19, 18, 0);
+		tr_te_data_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTEDATACONTROL, tr_te_data_control);
+		if (tr_te_data_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_data_control, 19, 18) == 0)
+			encoder_info
+				->support_data_trace_addr_compress_full_addr =
+				true;
+		tr_te_data_control =
+			u32_set_fields(tr_te_data_control, 19, 18, 1);
+		tr_te_data_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTEDATACONTROL, tr_te_data_control);
+		if (tr_te_data_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_data_control, 19, 18) == 1)
+			encoder_info->support_data_trace_addr_compress_xor =
+				true;
+		tr_te_data_control =
+			u32_set_fields(tr_te_data_control, 19, 18, 2);
+		tr_te_data_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTEDATACONTROL, tr_te_data_control);
+		if (tr_te_data_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_data_control, 19, 18) == 2)
+			encoder_info->support_data_trace_addr_compress_diff =
+				true;
+		tr_te_data_control =
+			u32_set_fields(tr_te_data_control, 19, 18, 3);
+		tr_te_data_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTEDATACONTROL, tr_te_data_control);
+		if (tr_te_data_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_data_control, 19, 18) == 3)
+			encoder_info->support_data_trace_addr_compress_dynamic =
+				true;
+		// clear tr_te_data_control
+		if (xt_trace_register_write(
+			    base_addr + OFFSET_TRTEDATACONTROL,
+			    encoder_info->tr_te_data_control_default))
+			return -1;
+	}
+
+	// check filter
+	tr_te_inst_filters = 0xffff;
+	tr_te_inst_filters = xt_trace_register_readafterwrite(
+		base_addr + OFFSET_TRTEINSTFILTERS, tr_te_inst_filters);
+	if (tr_te_inst_filters == -1)
+		return -1;
+	if (tr_te_inst_filters != 0) {
+		int32_t i = 0;
+		uint32_t tr_te_filter_control = 0;
+		uint32_t tr_te_comp_control = 0;
+
+		// get enconder_info->fileter_count
+		for (i = 15; i >= 0; i--) {
+			if (tr_te_inst_filters >= (1U << i)) {
+				encoder_info->filter_count = i + 1;
+				break;
+			}
+		}
+
+		// clear tr_te_inst_filters
+		if (xt_trace_register_write(base_addr + OFFSET_TRTEINSTFILTERS,
+					    0))
+			return -1;
+
+		// check trTeFilteriControl,
+		tr_te_filter_control =
+			0x301111f; // 0011 0000 0001 0001 0001 0001 1111
+		tr_te_filter_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRFILTERCONTROLI(0),
+			tr_te_filter_control);
+		if (tr_te_filter_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_filter_control, 1, 1) == 1)
+			encoder_info->support_filter_match_privilege = true;
+		if (u32_get_fields(tr_te_filter_control, 2, 2) == 1)
+			encoder_info->support_filter_match_ecause = true;
+		if (u32_get_fields(tr_te_filter_control, 3, 3) == 1)
+			encoder_info->support_filter_match_interrupt = true;
+		if (u32_get_fields(tr_te_filter_control, 4, 4) == 1)
+			encoder_info->support_filter_match_comparator1st = true;
+		if (u32_get_fields(tr_te_filter_control, 7, 5) != 0)
+			encoder_info->default_filter_comparator1st =
+				u32_get_fields(tr_te_filter_control, 7, 5);
+		if (u32_get_fields(tr_te_filter_control, 8, 8) == 1)
+			encoder_info->support_filter_match_comparator2nd = true;
+		if (u32_get_fields(tr_te_filter_control, 11, 9) != 0)
+			encoder_info->default_filter_comparator2nd =
+				u32_get_fields(tr_te_filter_control, 11, 9);
+		if (u32_get_fields(tr_te_filter_control, 12, 12) == 1)
+			encoder_info->support_filter_match_comparator3rd = true;
+		if (u32_get_fields(tr_te_filter_control, 15, 13) != 0)
+			encoder_info->default_filter_comparator3rd =
+				u32_get_fields(tr_te_filter_control, 15, 13);
+		if (u32_get_fields(tr_te_filter_control, 24, 24) == 1)
+			encoder_info->support_filter_match_dtype = true;
+		if (u32_get_fields(tr_te_filter_control, 25, 25) == 1)
+			encoder_info->support_filter_match_dsize = true;
+
+		// FIXME: if someone has implemented trTeFilterCompx as RO
+		// we can't detect the count of the comparators below:
+		if (encoder_info->support_filter_match_comparator1st == true) {
+			tr_te_filter_control = xt_trace_register_readafterwrite(
+				base_addr + OFFSET_TRFILTERCONTROLI(0),
+				u32_set_fields(tr_te_filter_control, 7, 5, 7));
+			if (tr_te_filter_control == -1)
+				return -1;
+			encoder_info->comparator_count =
+				u32_get_fields(tr_te_filter_control, 7, 5) + 1;
+		}
+
+		// comparators
+		// check trTeCompjControl
+		tr_te_comp_control = 0; // check all 0
+		tr_te_comp_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRCOMPCONTROLJ(0),
+			tr_te_comp_control);
+		if (tr_te_comp_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_comp_control, 1, 0) == 0)
+			encoder_info->support_primary_compare_iaddr = true;
+		if (u32_get_fields(tr_te_comp_control, 3, 2) == 0)
+			encoder_info->support_secondary_compare_iaddr = true;
+		if (u32_get_fields(tr_te_comp_control, 6, 4) == 0)
+			encoder_info->support_primary_compare_func_equal = true;
+		if (u32_get_fields(tr_te_comp_control, 10, 8) == 0)
+			encoder_info->support_secondary_compare_func_equal =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 13, 12) == 0)
+			encoder_info->support_compare_primary_true = true;
+		if (u32_get_fields(tr_te_comp_control, 14, 14) == 0)
+			encoder_info->support_compare_primary_notify_0 = true;
+		if (u32_get_fields(tr_te_comp_control, 15, 15) == 0)
+			encoder_info->support_compare_secondary_notify_0 = true;
+		// check all 1
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 1, 0, 1);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 3, 2, 1);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 6, 4, 1);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 10, 8, 1);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 13, 12, 1);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 15, 14, 1);
+		tr_te_comp_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRCOMPCONTROLJ(0),
+			tr_te_comp_control);
+		if (tr_te_comp_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_comp_control, 1, 0) == 1)
+			encoder_info->support_primary_compare_context = true;
+		if (u32_get_fields(tr_te_comp_control, 3, 2) == 1)
+			encoder_info->support_secondary_compare_context = true;
+		if (u32_get_fields(tr_te_comp_control, 6, 4) == 1)
+			encoder_info->support_primary_compare_func_notequal =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 10, 8) == 1)
+			encoder_info->support_secondary_compare_func_notequal =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 13, 12) == 1)
+			encoder_info->support_compare_both_true = true;
+		if (u32_get_fields(tr_te_comp_control, 14, 14) == 1)
+			encoder_info->support_compare_primary_notify_1 = true;
+		if (u32_get_fields(tr_te_comp_control, 15, 15) == 1)
+			encoder_info->support_compare_secondary_notify_1 = true;
+		// check all 2
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 1, 0, 2);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 3, 2, 2);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 6, 4, 2);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 10, 8, 2);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 13, 12, 2);
+		tr_te_comp_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRCOMPCONTROLJ(0),
+			tr_te_comp_control);
+		if (tr_te_comp_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_comp_control, 1, 0) == 2)
+			encoder_info->support_primary_compare_tval = true;
+		if (u32_get_fields(tr_te_comp_control, 3, 2) == 2)
+			encoder_info->support_secondary_compare_tval = true;
+		if (u32_get_fields(tr_te_comp_control, 6, 4) == 2)
+			encoder_info->support_primary_compare_func_lessthan =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 10, 8) == 2)
+			encoder_info->support_secondary_compare_func_lessthan =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 13, 12) == 2)
+			encoder_info->support_compare_either_false = true;
+		// check all 3
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 1, 0, 3);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 3, 2, 3);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 6, 4, 3);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 10, 8, 3);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 13, 12, 3);
+		tr_te_comp_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRCOMPCONTROLJ(0),
+			tr_te_comp_control);
+		if (tr_te_comp_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_comp_control, 1, 0) == 3)
+			encoder_info->support_primary_compare_daddr = true;
+		if (u32_get_fields(tr_te_comp_control, 3, 2) == 3)
+			encoder_info->support_secondary_compare_daddr = true;
+		if (u32_get_fields(tr_te_comp_control, 6, 4) == 3)
+			encoder_info
+				->support_primary_compare_func_lessthanorequal =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 10, 8) == 3)
+			encoder_info
+				->support_secondary_compare_func_lessthanorequal =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 13, 12) == 3)
+			encoder_info
+				->support_compare_between_primary_and_secondary_true =
+				true;
+		// check all 4
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 6, 4, 4);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 10, 8, 4);
+		tr_te_comp_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRCOMPCONTROLJ(0),
+			tr_te_comp_control);
+		if (tr_te_comp_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_comp_control, 6, 4) == 4)
+			encoder_info->support_primary_compare_func_greaterthan =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 10, 8) == 4)
+			encoder_info
+				->support_secondary_compare_func_greaterthan =
+				true;
+		// check all 5
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 6, 4, 5);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 10, 8, 5);
+		tr_te_comp_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRCOMPCONTROLJ(0),
+			tr_te_comp_control);
+		if (tr_te_comp_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_comp_control, 6, 4) == 5)
+			encoder_info
+				->support_primary_compare_func_greaterthanorequal =
+				true;
+		if (u32_get_fields(tr_te_comp_control, 10, 8) == 5)
+			encoder_info
+				->support_secondary_compare_func_greaterthanorequal =
+				true;
+		// check all 6
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 6, 4, 6);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 10, 8, 6);
+		tr_te_comp_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRCOMPCONTROLJ(0),
+			tr_te_comp_control);
+		if (tr_te_comp_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_comp_control, 6, 4) == 6)
+			encoder_info->support_primary_compare_func_false = true;
+		if (u32_get_fields(tr_te_comp_control, 10, 8) == 6)
+			encoder_info->support_secondary_compare_func_false =
+				true;
+		// check all 7
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 6, 4, 7);
+		tr_te_comp_control =
+			u32_set_fields(tr_te_comp_control, 10, 8, 7);
+		tr_te_comp_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRCOMPCONTROLJ(0),
+			tr_te_comp_control);
+		if (tr_te_comp_control == -1)
+			return -1;
+		if (u32_get_fields(tr_te_comp_control, 6, 4) == 7)
+			encoder_info->support_primary_compare_func_true = true;
+		if (u32_get_fields(tr_te_comp_control, 10, 8) == 7)
+			encoder_info->support_secondary_compare_func_true =
+				true;
+
+		// clear trTeFilteriControl
+		if (xt_trace_register_write(
+			    base_addr + OFFSET_TRFILTERCONTROLI(0), 0))
+			return -1;
+	}
+
+	// check timestamp
+	tr_ts_control = 1;
+	tr_ts_control = xt_trace_register_readafterwrite(
+		base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+	if (tr_ts_control == -1)
+		return -1;
+	else if (tr_ts_control != 0) {
+		// get timestamp_width
+		encoder_info->timestamp_width =
+			u32_get_fields(tr_ts_control, 29, 24);
+
+		// check trTsRunInDebug, trTsEnable
+		tr_ts_control = u32_set_fields(tr_ts_control, 3, 3, 1);
+		tr_ts_control = u32_set_fields(tr_ts_control, 15, 15, 1);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 3, 3) == 1)
+			encoder_info->support_timestamp_run_in_debugmode = true;
+		if (u32_get_fields(tr_ts_control, 15, 15) == 1)
+			encoder_info->support_timestamp_enable = true;
+		// check trTsType
+		tr_ts_control = u32_set_fields(tr_ts_control, 6, 4, 0);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 6, 4) == 0)
+			encoder_info->support_timestamp_none = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 6, 4, 1);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 6, 4) == 1)
+			encoder_info->support_timestamp_external = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 6, 4, 2);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 6, 4) == 2)
+			encoder_info->support_timestamp_internal_system = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 6, 4, 3);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 6, 4) == 3)
+			encoder_info->support_timestamp_internal_core = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 6, 4, 4);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 6, 4) == 4)
+			encoder_info->support_timestamp_shared = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 6, 4, 5);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 6, 4) == 5)
+			encoder_info->support_timestamp_vendor5 = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 6, 4, 6);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 6, 4) == 6)
+			encoder_info->support_timestamp_vendor6 = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 6, 4, 7);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 6, 4) == 7)
+			encoder_info->support_timestamp_vendor7 = true;
+		// check trTsPrescale
+		encoder_info->support_timestamp_prescale_1 = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 9, 8, 1);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 9, 8) == 1)
+			encoder_info->support_timestamp_prescale_4 = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 9, 8, 2);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 9, 8) == 2)
+			encoder_info->support_timestamp_prescale_16 = true;
+		tr_ts_control = u32_set_fields(tr_ts_control, 9, 8, 3);
+		tr_ts_control = xt_trace_register_readafterwrite(
+			base_addr + OFFSET_TRTSCONTROL, tr_ts_control);
+		if (tr_ts_control == -1)
+			return -1;
+		if (u32_get_fields(tr_ts_control, 9, 8) == 3)
+			encoder_info->support_timestamp_prescale_64 = true;
+
+		// clear tr_ts_control
+		if (xt_trace_register_write(base_addr + OFFSET_TRTSCONTROL, 0))
+			return -1;
+	}
 
 	// disable this component
 	tr_encoder_control = reset_trace_component(base_addr);
