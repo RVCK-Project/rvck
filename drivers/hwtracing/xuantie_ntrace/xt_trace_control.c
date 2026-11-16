@@ -227,6 +227,79 @@ int32_t xt_trace_register_readafterwrite(uint64_t reg_addr, uint32_t value)
 	return return_value;
 }
 
+uint32_t enable_trace_encoder_inst_tracing(uint64_t base_addr)
+{
+	uint32_t tr_te_control = 0;
+
+	if (xt_trace_register_read(base_addr, &tr_te_control))
+		return -1;
+
+	if ((tr_te_control & TR_ANY_CONTROL_ACTIVE1) == 0)
+		return -1;
+
+	tr_te_control = tr_te_control | (1 << 2);
+
+	if (xt_trace_register_write(base_addr, tr_te_control))
+		return -1;
+
+	return 0;
+}
+
+int32_t enable_trace_encoder_timestamp(uint64_t base_addr)
+{
+	uint32_t tr_ts_control = 0;
+
+	if (xt_trace_register_read(base_addr, &tr_ts_control))
+		return -1;
+
+	if ((tr_ts_control & TR_ANY_CONTROL_ACTIVE1) == 0)
+		return -1;
+
+	// enable trTsEnable
+	tr_ts_control = tr_ts_control | (1 << 15);
+
+	if (xt_trace_register_write(base_addr, tr_ts_control))
+		return -1;
+
+	return 0;
+}
+
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_encoder_enable(struct xt_trace_encoder_control_info *encoder_info,
+			bool enable_timestamp)
+{
+	char str[256] = { '\0' };
+
+	if (enable_timestamp) {
+		if (enable_trace_encoder_timestamp(encoder_info->base_addr +
+						   OFFSET_TRTSCONTROL)) {
+			snprintf(str, sizeof(str),
+				"Fail to enable trTsEnable for the trace encoder(0x%llx).\n",
+				encoder_info->base_addr);
+			xt_trace_msgout(str);
+			return -1;
+		}
+	}
+
+	if (enable_trace_component(encoder_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to enable the trace encoder(0x%llx).\n",
+			encoder_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	// trTeInstTracing can only be written after trTeEnable is 1
+	if (enable_trace_encoder_inst_tracing(encoder_info->base_addr)) {
+		snprintf(str, sizeof(str),
+			"Fail to set trTeInstTracing for the trace encoder(0x%llx).\n",
+			encoder_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
 TRACE_CONTROL_LIB_API int32_t
 xt_trace_sink_enable(struct xt_trace_sink_control_info *sink_info)
 {
@@ -276,6 +349,33 @@ int32_t disable_trace_component(uint64_t base_addr)
 }
 
 TRACE_CONTROL_LIB_API int32_t
+xt_trace_encoder_disable(struct xt_trace_encoder_control_info *encoder_info,
+			 bool disable_timestamp)
+{
+	char str[256];
+
+	if (disable_timestamp) {
+		if (disable_trace_component(encoder_info->base_addr +
+					    OFFSET_TRTSCONTROL)) {
+			snprintf(str, sizeof(str),
+				"Fail to disable timestamp for the trace encoder(0x%llx).\n",
+				encoder_info->base_addr);
+			xt_trace_msgout(str);
+			return -1;
+		}
+	}
+
+	if (disable_trace_component(encoder_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to disable the trace encoder(0x%llx).\n",
+			encoder_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
+TRACE_CONTROL_LIB_API int32_t
 xt_trace_sink_disable(struct xt_trace_sink_control_info *sink_info)
 {
 	char str[256];
@@ -311,6 +411,33 @@ int32_t close_trace_component(uint64_t base_addr)
 	if (i == XT_CHECK_TRANYCONTROL_TIMES) {
 		snprintf(str, sizeof(str), "Timeout closing trace component with base addr 0x%llx.\n",
 			base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_encoder_close(struct xt_trace_encoder_control_info *encoder_info,
+		       bool close_timestamp)
+{
+	char str[256];
+
+	if (close_timestamp) {
+		if (close_trace_component(encoder_info->base_addr +
+					  OFFSET_TRTSCONTROL)) {
+			snprintf(str, sizeof(str),
+				"Fail to close timestamp for the trace encoder(0x%llx).\n",
+				encoder_info->base_addr);
+			xt_trace_msgout(str);
+			return -1;
+		}
+	}
+
+	if (close_trace_component(encoder_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to close the trace encoder(0x%llx).\n",
+			encoder_info->base_addr);
 		xt_trace_msgout(str);
 		return -1;
 	}
