@@ -25,6 +25,7 @@
 		q	quicker (less detailed) decoding
 		A	approximate IPC
 		Z	prefer to ignore timestamps (so-called "timeless" decoding)
+		n	XuanTie N-Trace message print level (see below)
 
 	The default is all events i.e. the same as --itrace=iybxwpe,
 	except for perf script where it is --itrace=ce
@@ -69,3 +70,8 @@
 		o	output to stdout
 
 	If supported, the 'q' option may be repeated to increase the effect.
+
+	If supported, the 'n' option is vendor-specific for XuanTie N-Trace.
+	It takes a number selecting the trace message print level used
+	by perf script output. Refer to linkperf:perf-xuantie-ntrace[1] man
+	page for details. Other AUX area tracing back ends ignore it.

@@ -54,6 +54,7 @@
 #include "arm-spe.h"
 #include "hisi-ptt.h"
 #include "s390-cpumsf.h"
+#include "xuantie-ntrace.h"
 #include "util/mmap.h"
 
 #include <linux/ctype.h>
@@ -1333,6 +1334,9 @@ int perf_event__process_auxtrace_info(struct perf_session *session,
 	case PERF_AUXTRACE_HISI_PTT:
 		err = hisi_ptt_process_auxtrace_info(event, session);
 		break;
+	case PERF_AUXTRACE_XUANTIE_NTRACE:
+		err = xuantie_ntrace_process_auxtrace_info(event, session);
+		break;
 	case PERF_AUXTRACE_UNKNOWN:
 	default:
 		return -EINVAL;
@@ -1644,6 +1648,14 @@ int itrace_do_parse_synth_opts(struct itrace_synth_opts *synth_opts,
 			break;
 		case 'Z':
 			synth_opts->timeless_decoding = true;
+			break;
+		case 'n':
+			synth_opts->ntrace_print_level = strtoul(p, &endptr, 10);
+			if (p == endptr ||
+			    synth_opts->ntrace_print_level > XT_NTRACE_PRINT_LEVEL_MAX)
+				goto out_err;
+			synth_opts->ntrace_print_level_set = true;
+			p = endptr;
 			break;
 		case ' ':
 		case ',':

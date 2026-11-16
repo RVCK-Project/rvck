@@ -49,6 +49,7 @@ enum auxtrace_type {
 	PERF_AUXTRACE_ARM_SPE,
 	PERF_AUXTRACE_S390_CPUMSF,
 	PERF_AUXTRACE_HISI_PTT,
+	PERF_AUXTRACE_XUANTIE_NTRACE,
 };
 
 enum itrace_period_type {
@@ -163,6 +164,8 @@ struct itrace_synth_opts {
 	unsigned int		log_minus_flags;
 	unsigned int		quick;
 	unsigned int		log_on_error_size;
+	unsigned long		ntrace_print_level;
+	bool			ntrace_print_level_set;
 };
 
 /**
