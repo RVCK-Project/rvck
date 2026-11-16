@@ -227,6 +227,21 @@ int32_t xt_trace_register_readafterwrite(uint64_t reg_addr, uint32_t value)
 	return return_value;
 }
 
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_sink_enable(struct xt_trace_sink_control_info *sink_info)
+{
+	char str[256];
+
+	if (enable_trace_component(sink_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to enable the trace sink(0x%llx).\n",
+			sink_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
 int32_t disable_trace_component(uint64_t base_addr)
 {
 	uint32_t i;
@@ -253,6 +268,21 @@ int32_t disable_trace_component(uint64_t base_addr)
 	if (i == XT_CHECK_TRANYCONTROL_TIMES) {
 		snprintf(str, sizeof(str), "Timeout disabling trace component with base addr 0x%llx.\n",
 			base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_sink_disable(struct xt_trace_sink_control_info *sink_info)
+{
+	char str[256];
+
+	if (disable_trace_component(sink_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to disable the trace sink(0x%llx).\n",
+			sink_info->base_addr);
 		xt_trace_msgout(str);
 		return -1;
 	}
@@ -288,3 +318,17 @@ int32_t close_trace_component(uint64_t base_addr)
 	return 0;
 }
 
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_sink_close(struct xt_trace_sink_control_info *sink_info)
+{
+	char str[256];
+
+	if (close_trace_component(sink_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to close the trace sink(0x%llx).\n",
+			sink_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
