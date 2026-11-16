@@ -1254,11 +1254,17 @@ static void xuantie_ntrace_buffer_free_aux(void *aux)
 static void ntrace_remote_put(struct fwnode_handle **remote)
 {
 	struct fwnode_handle *fwnode = *remote;
+	struct acpi_device *adev;
 
 	if (!fwnode)
 		return;
 
-	fwnode_handle_put(fwnode);
+	adev = to_acpi_device_node(fwnode);
+	if (adev)
+		acpi_dev_put(adev);
+	else
+		fwnode_handle_put(fwnode);
+
 	*remote = NULL;
 }
 
@@ -1477,15 +1483,297 @@ static int ntrace_of_graph_parse(struct xuantie_ntrace_component *comp)
 }
 #endif /* CONFIG_OF */
 
+#if IS_ENABLED(CONFIG_ACPI)
+/*
+ * On an ACPI system the topology is described by a _DSD device graph, as the
+ * RISC-V BRS requires of a trace component. Below the Device Graph UUID every
+ * graph entry carries flat links of the form
+ *
+ *	{ source port, destination port, destination device, link type }
+ *
+ * where the link type tells whether the origin port produces (1) or consumes
+ * (0) traffic. BRS requires every link to be declared on both ends, so a
+ * component only reads the links listed in its own _DSD.
+ *
+ * The ACPI core expands the data property and data subnode GUIDs of a _DSD but
+ * not the device graph one, so the raw package is decoded here. Once the
+ * kernel learns the device graph format natively, this can be replaced by the
+ * generic fwnode graph API that the device tree path above already uses.
+ */
+static const guid_t ntrace_device_graph_guid =
+	GUID_INIT(0xab02a46b, 0x74c7, 0x45a2,
+		  0xbd, 0x68, 0xf7, 0xd3, 0x44, 0xef, 0x21, 0x53);
+/* Graph UUID reserved for RISC-V trace, see the BRS trace chapter. */
+static const guid_t ntrace_riscv_graph_guid =
+	GUID_INIT(0x42e66f8f, 0x50fe, 0x4eed,
+		  0x98, 0x97, 0xcd, 0xee, 0xd2, 0x6e, 0xcd, 0x77);
+
+/* Direction of a link as seen from the device declaring it. */
+enum ntrace_link_dir {
+	NTRACE_LINK_IN,		/* origin port consumes: link type 0 */
+	NTRACE_LINK_OUT,	/* origin port produces:  link type 1 */
+	NTRACE_LINK_DIRS
+};
+
+struct ntrace_graph_link {
+	u32 src_port;
+	int dir;
+	const union acpi_object *dest;
+};
+
+/* the package following the device graph UUID inside a _DSD */
+static const union acpi_object *ntrace_dsd_graph(const union acpi_object *dsd)
+{
+	const union acpi_object *guid, *pkg;
+	unsigned int i;
+
+	for (i = 0; i + 1 < dsd->package.count; i += 2) {
+		guid = &dsd->package.elements[i];
+		pkg = &dsd->package.elements[i + 1];
+
+		if (guid->type != ACPI_TYPE_BUFFER || guid->buffer.length != 16)
+			continue;
+		if (!guid_equal((const guid_t *)guid->buffer.pointer,
+				&ntrace_device_graph_guid))
+			continue;
+		if (pkg->type == ACPI_TYPE_PACKAGE)
+			return pkg;
+	}
+
+	return NULL;
+}
+
+static bool ntrace_graph_entry_valid(const union acpi_object *entry,
+				     unsigned int *nr_links)
+{
+	const union acpi_object *uuid;
+
+	if (entry->type != ACPI_TYPE_PACKAGE || entry->package.count < 3)
+		return false;
+	if (entry->package.elements[0].type != ACPI_TYPE_INTEGER ||
+	    entry->package.elements[2].type != ACPI_TYPE_INTEGER)
+		return false;
+
+	uuid = &entry->package.elements[1];
+	if (uuid->type != ACPI_TYPE_BUFFER || uuid->buffer.length != 16)
+		return false;
+	if (!guid_equal((const guid_t *)uuid->buffer.pointer,
+			&ntrace_riscv_graph_guid))
+		return false;
+
+	*nr_links = entry->package.elements[2].integer.value;
+
+	return *nr_links <= entry->package.count - 3;
+}
+
+/*
+ * Hand out the next usable link of @graph. @entry and @link are the caller's
+ * cursor, both starting at 0. Return %NULL once the graph is exhausted.
+ */
+static const union acpi_object *
+ntrace_graph_next_link(const union acpi_object *graph, unsigned int *entry,
+		       unsigned int *link, struct ntrace_graph_link *out)
+{
+	const union acpi_object *e, *l;
+	unsigned int nr_graphs, nr_links, dir;
+
+	if (graph->package.count < 2 ||
+	    graph->package.elements[0].type != ACPI_TYPE_INTEGER ||
+	    graph->package.elements[0].integer.value != 0 ||
+	    graph->package.elements[1].type != ACPI_TYPE_INTEGER)
+		return NULL;
+
+	nr_graphs = graph->package.elements[1].integer.value;
+	if (nr_graphs > graph->package.count - 2)
+		return NULL;
+
+	for (; *entry < nr_graphs; (*entry)++, *link = 0) {
+		e = &graph->package.elements[*entry + 2];
+		if (!ntrace_graph_entry_valid(e, &nr_links))
+			continue;
+
+		for (; *link < nr_links; (*link)++) {
+			l = &e->package.elements[*link + 3];
+
+			if (l->type != ACPI_TYPE_PACKAGE || l->package.count < 4)
+				continue;
+			if (l->package.elements[0].type != ACPI_TYPE_INTEGER ||
+			    l->package.elements[1].type != ACPI_TYPE_INTEGER ||
+			    l->package.elements[3].type != ACPI_TYPE_INTEGER)
+				continue;
+			if (l->package.elements[2].type != ACPI_TYPE_LOCAL_REFERENCE &&
+			    l->package.elements[2].type != ACPI_TYPE_STRING)
+				continue;
+
+			dir = l->package.elements[3].integer.value;
+			if (dir >= NTRACE_LINK_DIRS)
+				continue;
+
+			out->src_port = l->package.elements[0].integer.value;
+			out->dir = dir;
+			out->dest = &l->package.elements[2];
+			(*link)++;
+			return l;
+		}
+	}
+
+	return NULL;
+}
+
+/* the peer device of a link, as a firmware node */
+static struct fwnode_handle *
+ntrace_graph_peer(acpi_handle scope, const union acpi_object *dest)
+{
+	struct acpi_device *peer;
+	acpi_handle handle;
+
+	if (dest->type == ACPI_TYPE_LOCAL_REFERENCE) {
+		handle = dest->reference.handle;
+	} else if (ACPI_FAILURE(acpi_get_handle(scope, dest->string.pointer,
+						&handle))) {
+		pr_debug("ntrace: no ACPI object for %s\n", dest->string.pointer);
+		return NULL;
+	}
+
+	/* acpi_get_acpi_dev() hands back the device with a reference held. */
+	peer = acpi_get_acpi_dev(handle);
+
+	return peer ? acpi_fwnode_handle(peer) : NULL;
+}
+
+static unsigned int ntrace_graph_links(const union acpi_object *graph)
+{
+	struct ntrace_graph_link link;
+	unsigned int entry = 0, idx = 0, total = 0;
+
+	while (ntrace_graph_next_link(graph, &entry, &idx, &link))
+		total++;
+
+	return total;
+}
+
+static void ntrace_graph_drop_ports(struct xuantie_io_port **ports,
+				    unsigned int nr)
+{
+	unsigned int i;
+
+	for (i = 0; i < nr; i++)
+		ntrace_remote_put(&ports[i]->remote);
+}
+
+static int xuantie_ntrace_acpi_graph_parse(struct xuantie_ntrace_component *comp)
+{
+	struct device *dev = &comp->pdev->dev;
+	struct acpi_device *adev = ACPI_COMPANION(dev);
+	struct xuantie_io_port **ports[NTRACE_LINK_DIRS];
+	struct xuantie_io_port *io_port;
+	const union acpi_object *graph;
+	union acpi_object *dsd;
+	struct acpi_buffer buf = { ACPI_ALLOCATE_BUFFER, NULL };
+	unsigned int nr[NTRACE_LINK_DIRS] = { };
+	struct ntrace_graph_link link;
+	unsigned int total, entry = 0, idx = 0;
+	int dir, ret;
+
+	/*
+	 * Evaluate _DSD here rather than reading adev->data.pointer: the ACPI
+	 * core only keeps that copy when the package also carries a property or
+	 * a data-subnode GUID, which a graph-only description does not have.
+	 */
+	if (!adev || ACPI_FAILURE(acpi_evaluate_object_typed(adev->handle, "_DSD",
+							     NULL, &buf,
+							     ACPI_TYPE_PACKAGE))) {
+		dev_err(dev, "No _DSD found for the trace component\n");
+		return -ENODEV;
+	}
+	dsd = buf.pointer;
+
+	graph = ntrace_dsd_graph(dsd);
+	if (!graph) {
+		dev_err(dev, "Failed to find the _DSD device graph\n");
+		ret = -ENODEV;
+		goto out_free;
+	}
+
+	/* Both directions share the number of links as an upper bound. */
+	total = ntrace_graph_links(graph);
+	if (!total) {
+		dev_err(dev, "No trace link found in the device graph\n");
+		ret = -ENODEV;
+		goto out_free;
+	}
+
+	for (dir = 0; dir < NTRACE_LINK_DIRS; dir++) {
+		ports[dir] = devm_kcalloc(dev, total, sizeof(*ports[dir]),
+					  GFP_KERNEL);
+		if (!ports[dir]) {
+			ret = -ENOMEM;
+			goto out_free;
+		}
+	}
+
+	while (ntrace_graph_next_link(graph, &entry, &idx, &link)) {
+		struct fwnode_handle *peer;
+
+		peer = ntrace_graph_peer(adev->handle, link.dest);
+		if (!peer) {
+			dev_err(dev, "Unresolvable graph target of port %u\n",
+				link.src_port);
+			ret = -ENODEV;
+			goto err_drop;
+		}
+
+		/* A peer that is not present is simply not connected. */
+		if (!fwnode_device_is_available(peer)) {
+			ntrace_remote_put(&peer);
+			continue;
+		}
+
+		io_port = devm_kzalloc(dev, sizeof(*io_port), GFP_KERNEL);
+		if (!io_port) {
+			ntrace_remote_put(&peer);
+			ret = -ENOMEM;
+			goto err_drop;
+		}
+
+		io_port->endpoint_num = link.src_port;
+		io_port->is_input = link.dir == NTRACE_LINK_IN;
+		io_port->remote = peer;
+		ports[link.dir][nr[link.dir]++] = io_port;
+	}
+
+	comp->in = ports[NTRACE_LINK_IN];
+	comp->in_num = nr[NTRACE_LINK_IN];
+	comp->out = ports[NTRACE_LINK_OUT];
+	comp->out_num = nr[NTRACE_LINK_OUT];
+
+	ret = 0;
+	goto out_free;
+
+err_drop:
+	for (dir = 0; dir < NTRACE_LINK_DIRS; dir++)
+		ntrace_graph_drop_ports(ports[dir], nr[dir]);
+
+out_free:
+	ACPI_FREE(buf.pointer);
+	return ret;
+}
+#endif /* CONFIG_ACPI */
+
 int xuantie_ntrace_graph_parse(struct xuantie_ntrace_component *comp)
 {
 	struct device *dev = &comp->pdev->dev;
 	int ret;
 
+#if IS_ENABLED(CONFIG_ACPI)
+	if (ACPI_COMPANION(dev))
+		ret = xuantie_ntrace_acpi_graph_parse(comp);
+	else
+#endif
 #if IS_ENABLED(CONFIG_OF)
-	ret = ntrace_of_graph_parse(comp);
+		ret = ntrace_of_graph_parse(comp);
 #else
-	ret = -ENODEV;
+		ret = -ENODEV;
 #endif
 	if (ret)
 		return ret;
@@ -1501,6 +1789,31 @@ int xuantie_ntrace_graph_parse(struct xuantie_ntrace_component *comp)
 int xuantie_ntrace_get_hart_id(struct device *dev, u32 *hart_id)
 {
 	return device_property_read_u32(dev, "cpu", hart_id);
+}
+
+/*
+ * A RISC-V trace component keeps its type in bits [11:8] of the tr*Impl
+ * register, which sits at the same offset in every component, so the type
+ * does not have to be duplicated in the firmware description.
+ */
+static enum xuantie_ntrace_dev_type
+xuantie_ntrace_detect_type(struct device *dev, const void __iomem *base)
+{
+	u32 comp_type, impl = readl(base + XUANTIE_NTRACE_IMPL_OFFSET);
+
+	comp_type = TR_ANY_GET_IMPL_COMP_TYPE(impl);
+	switch (comp_type) {
+	case TRCOMP_ENCODER:
+		return NTRACE_TYPE_ENCODER;
+	case TRCOMP_FUNNEL:
+		return NTRACE_TYPE_FUNNEL;
+	case TRCOMP_RAMSINK:
+		return NTRACE_TYPE_SINK_SMEM;
+	}
+
+	dev_err(dev, "Unknown trace component type %u (tr*Impl=0x%x)\n",
+		comp_type, impl);
+	return NTRACE_TYPE_UNKNOWN;
 }
 
 static struct xuantie_ntrace_component *
@@ -1695,6 +2008,22 @@ static const struct of_device_id xuantie_ntrace_of_match[] = {
 };
 MODULE_DEVICE_TABLE(of, xuantie_ntrace_of_match);
 
+static const struct acpi_device_id xuantie_ntrace_acpi_match[] = {
+	/*
+	 * Only the XUANTIE implementation is claimed here. Firmware declares
+	 * the RISC-V trace class ID as _CID, which is how a generic trace
+	 * driver remains able to bind these parts, but listing that class ID
+	 * here would make this vendor driver claim every RISC-V trace component
+	 * on the machine, including parts from other vendors.
+	 *
+	 * The component type is not in the ID: it is read from the hardware,
+	 * see xuantie_ntrace_detect_type().
+	 */
+	{ XUANTIE_NTRACE_ACPI_HID, NTRACE_TYPE_UNKNOWN },
+	{ }
+};
+MODULE_DEVICE_TABLE(acpi, xuantie_ntrace_acpi_match);
+
 /*
  * Count the trace components the firmware describes, so that the PMU is only
  * registered once the whole trace pipeline has probed. Only one of the two
@@ -1704,6 +2033,9 @@ static void xuantie_ntrace_count_expected_devices(struct xuantie_ntrace_drvdata 
 {
 	u32 expected = 0, nr;
 	int i;
+#if IS_ENABLED(CONFIG_ACPI)
+	struct acpi_device *adev;
+#endif
 
 #if IS_ENABLED(CONFIG_OF)
 	for (i = 0; xuantie_ntrace_of_match[i].compatible[0]; i++) {
@@ -1720,6 +2052,19 @@ static void xuantie_ntrace_count_expected_devices(struct xuantie_ntrace_drvdata 
 			pr_info("Found %u %s device(s) in DT\n", nr,
 				xuantie_ntrace_of_match[i].compatible);
 	}
+#endif
+
+#if IS_ENABLED(CONFIG_ACPI)
+	nr = 0;
+	for_each_acpi_dev_match(adev, XUANTIE_NTRACE_ACPI_HID, NULL, -1)
+		nr++;
+	expected += nr;
+	if (nr)
+		pr_info("Found %u %s device(s) in ACPI\n", nr,
+			XUANTIE_NTRACE_ACPI_HID);
+	else if (acpi_dev_present(XUANTIE_NTRACE_ACPI_CID, NULL, -1))
+		pr_info("Generic %s trace components found, this driver binds %s only\n",
+			XUANTIE_NTRACE_ACPI_CID, XUANTIE_NTRACE_ACPI_HID);
 #endif
 
 	drvdata->expected_count = expected;
@@ -1872,8 +2217,9 @@ static int xuantie_ntrace_probe(struct platform_device *pdev)
 	int ret;
 
 	/*
-	 * A device tree compatible names the component. Absent match data
-	 * becomes NTRACE_TYPE_UNKNOWN.
+	 * A device tree compatible already names the component, an ACPI _HID
+	 * covers every RISC-V trace component and leaves the type to be read
+	 * from the hardware. Absent match data becomes NTRACE_TYPE_UNKNOWN.
 	 */
 	type = (enum xuantie_ntrace_dev_type)(unsigned long)match_data;
 
@@ -1903,6 +2249,8 @@ static int xuantie_ntrace_probe(struct platform_device *pdev)
 	component->phys_base = res->start;
 	component->reg_size = resource_size(res);
 
+	if (type == NTRACE_TYPE_UNKNOWN)
+		type = xuantie_ntrace_detect_type(dev, base);
 	if (type == NTRACE_TYPE_UNKNOWN)
 		return -ENODEV;
 
@@ -1947,6 +2295,7 @@ static struct platform_driver xuantie_ntrace_driver = {
 	.driver	= {
 		.name		= "xuantie-ntrace",
 		.of_match_table	= xuantie_ntrace_of_match,
+		.acpi_match_table = ACPI_PTR(xuantie_ntrace_acpi_match),
 	},
 };
 

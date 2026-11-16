@@ -16,7 +16,24 @@ static int xuantie_ntrace_sink_buffer(struct xuantie_ntrace_component *comp)
 	struct platform_device *pdev = comp->pdev;
 	struct device *dev = &pdev->dev;
 	struct xuantie_ntrace_sink_smem *sink = &comp->sink;
+	struct resource *res;
 	int ret;
+
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+	if (res) {
+		sink->vaddr = devm_memremap(dev, res->start, resource_size(res),
+					    MEMREMAP_WB);
+		if (!sink->vaddr) {
+			dev_err(dev, "Failed to memremap trace buffer %pR\n", res);
+			return -ENOMEM;
+		}
+		sink->start_addr = res->start;
+		sink->limit_addr = res->end;
+		sink->is_resv_mem = true;
+		dev_info(dev, "trace buffer {0x%llx-0x%llx}@0x%px\n",
+			 (u64)sink->start_addr, (u64)sink->limit_addr, sink->vaddr);
+		return 0;
+	}
 
 	if (IS_ENABLED(CONFIG_OF) && dev->of_node) {
 		struct device_node *np;
@@ -48,8 +65,7 @@ static int xuantie_ntrace_sink_buffer(struct xuantie_ntrace_component *comp)
 		}
 	}
 
-	dev_err(dev, "No trace buffer described for the sink\n");
-	return -EINVAL;
+	return 0;
 }
 
 int xuantie_ntrace_sink_init(struct xuantie_ntrace_component *comp)
