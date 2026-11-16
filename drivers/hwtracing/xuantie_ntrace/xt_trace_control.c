@@ -300,6 +300,23 @@ xt_trace_encoder_enable(struct xt_trace_encoder_control_info *encoder_info,
 	return 0;
 }
 
+TRACE_CONTROL_LIB_API int32_t xt_trace_filter_enable(
+	struct xt_trace_encoder_control_info *encoder_info, uint32_t filter_i)
+{
+	char str[256];
+
+	if (enable_trace_component(encoder_info->base_addr +
+				   OFFSET_TRFILTERCONTROLI(filter_i))) {
+		snprintf(str, sizeof(str),
+			"Fail to enable the filter_%d for the trace encoder(0x%llx).\n",
+			filter_i, encoder_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
 TRACE_CONTROL_LIB_API int32_t
 xt_trace_sink_enable(struct xt_trace_sink_control_info *sink_info)
 {
@@ -393,6 +410,23 @@ xt_trace_encoder_disable(struct xt_trace_encoder_control_info *encoder_info,
 	return 0;
 }
 
+TRACE_CONTROL_LIB_API int32_t xt_trace_filter_disable(
+	struct xt_trace_encoder_control_info *encoder_info, uint32_t filter_i)
+{
+	char str[256];
+
+	if (disable_trace_component(encoder_info->base_addr +
+				    OFFSET_TRFILTERCONTROLI(filter_i))) {
+		snprintf(str, sizeof(str),
+			"Fail to disable filter_%d for the trace encoder(0x%llx).\n",
+			filter_i, encoder_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
 TRACE_CONTROL_LIB_API int32_t
 xt_trace_sink_disable(struct xt_trace_sink_control_info *sink_info)
 {
@@ -474,6 +508,23 @@ xt_trace_encoder_close(struct xt_trace_encoder_control_info *encoder_info,
 	if (close_trace_component(encoder_info->base_addr)) {
 		snprintf(str, sizeof(str), "Fail to close the trace encoder(0x%llx).\n",
 			encoder_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
+TRACE_CONTROL_LIB_API int32_t xt_trace_filter_close(
+	struct xt_trace_encoder_control_info *encoder_info, uint32_t filter_i)
+{
+	char str[256];
+
+	if (close_trace_component(encoder_info->base_addr +
+				  OFFSET_TRFILTERCONTROLI(filter_i))) {
+		snprintf(str, sizeof(str),
+			"Fail to close filter_%d for the trace encoder(0x%llx).\n",
+			filter_i, encoder_info->base_addr);
 		xt_trace_msgout(str);
 		return -1;
 	}

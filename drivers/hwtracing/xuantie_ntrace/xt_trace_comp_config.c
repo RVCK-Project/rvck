@@ -4,6 +4,15 @@
 #include <linux/memory.h>
 #include "xt_ntrace_control_interface.h"
 
+struct xt_trace_encoder_filter_config_info *
+xt_trace_add_insn_filter(struct xt_trace_encoder_control_info *encoder_info,
+			 bool filter_priv, uint8_t priv, bool filter_start_addr,
+			 uint64_t start_addr, bool filter_end_addr,
+			 uint64_t end_addr)
+{
+	return NULL;
+}
+
 /*
  * return -1, Unrecoverable error(rw trace register error)
  * return 0, Success
@@ -1007,5 +1016,1068 @@ config_failed:
 		xt_trace_msgout(str);
 		return tr_encoder_control;
 	}
+	return 1;
+}
+
+/*
+ * return -1, Unrecoverable error(rw trace register error)
+ * return 0, Success
+ * return 1, Some configurations do not meet expectation(bits error)
+ */
+int32_t
+xt_trace_filter_config(struct xt_trace_encoder_control_info *encoder_info,
+		       struct xt_trace_encoder_filter_config_info *config_info)
+{
+	// insure the trace encoder has been primary enabled
+	char str[256] = { '\0' };
+	uint32_t tr_te_filter_i_control = 0;
+	uint32_t tr_te_inst_filters = 0;
+	uint32_t read_value_tmp = 0;
+
+	if (encoder_info->has_detected) {
+		// check num
+		if (config_info->filter_i >= encoder_info->filter_count) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Error: encoder configs filter_%d ,but the encoder(0x%llx) supports max count is %d.\n",
+				config_info->filter_i, encoder_info->base_addr,
+				encoder_info->filter_count);
+			xt_trace_msgout(str);
+			return 1;
+		}
+
+		// check trTeFilteriControl
+		if (config_info->filter_match_privilege &&
+		    encoder_info->support_filter_match_privilege == false) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Error: encoder configs filter_match_privilege %d, but the encoder(0x%llx) does not support.\n",
+				config_info->filter_match_privilege,
+				encoder_info->base_addr);
+			xt_trace_msgout(str);
+			return 1;
+		}
+		if (config_info->filter_match_ecause &&
+		    encoder_info->support_filter_match_ecause == false) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Error: encoder configs filter_match_ecause %d, but the encoder(0x%llx) does not support.\n",
+				config_info->filter_match_ecause,
+				encoder_info->base_addr);
+			xt_trace_msgout(str);
+			return 1;
+		}
+		if (config_info->filter_match_interrupt &&
+		    encoder_info->support_filter_match_interrupt == false) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Error: encoder configs filter_match_interrupt %d, but the encoder(0x%llx) does not support.\n",
+				config_info->filter_match_interrupt,
+				encoder_info->base_addr);
+			xt_trace_msgout(str);
+			return 1;
+		}
+		if (config_info->filter_match_dtype &&
+		    encoder_info->support_filter_match_dtype == false) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Error: encoder configs filter_match_dtype %d, but the encoder(0x%llx) does not support.\n",
+				config_info->filter_match_dtype,
+				encoder_info->base_addr);
+			xt_trace_msgout(str);
+			return 1;
+		}
+		if (config_info->match_value_dsize &&
+		    encoder_info->support_filter_match_dsize == false) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Error: encoder configs match_value_dsize %d, but the encoder(0x%llx) does not support.\n",
+				config_info->match_value_dsize,
+				encoder_info->base_addr);
+			xt_trace_msgout(str);
+			return 1;
+		}
+
+		// check trTeCompjControl
+		if (config_info->comparator1_enable) {
+			if ((config_info->comp1_primary_input == 0 &&
+			     encoder_info->support_primary_compare_iaddr ==
+				     false) ||
+			    (config_info->comp1_primary_input == 1 &&
+			     encoder_info->support_primary_compare_context ==
+				     false) ||
+			    (config_info->comp1_primary_input == 2 &&
+			     encoder_info->support_primary_compare_tval ==
+				     false) ||
+			    (config_info->comp1_primary_input == 3 &&
+			     encoder_info->support_primary_compare_daddr ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp1_primary_input %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp1_primary_input,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp1_primary_function == 0 &&
+			     encoder_info->support_primary_compare_func_equal ==
+				     false) ||
+			    (config_info->comp1_primary_function == 1 &&
+			     encoder_info->support_primary_compare_func_notequal ==
+				     false) ||
+			    (config_info->comp1_primary_function == 2 &&
+			     encoder_info->support_primary_compare_func_lessthan ==
+				     false) ||
+			    (config_info->comp1_primary_function == 3 &&
+			     encoder_info->support_primary_compare_func_lessthanorequal ==
+				     false) ||
+			    (config_info->comp1_primary_function == 4 &&
+			     encoder_info->support_primary_compare_func_greaterthan ==
+				     false) ||
+			    (config_info->comp1_primary_function == 5 &&
+			     encoder_info->support_primary_compare_func_greaterthanorequal ==
+				     false) ||
+			    (config_info->comp1_primary_function == 6 &&
+			     encoder_info->support_primary_compare_func_false ==
+				     false) ||
+			    (config_info->comp1_primary_function == 7 &&
+			     encoder_info->support_primary_compare_func_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp1_primary_function %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp1_primary_function,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp1_primary_notify == true &&
+			     encoder_info->support_compare_primary_notify_1 ==
+				     false) ||
+			    (config_info->comp1_primary_notify == false &&
+			     encoder_info->support_compare_primary_notify_0 ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp1_primary_notify %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp1_primary_notify,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp1_secondary_input == 0 &&
+			     encoder_info->support_secondary_compare_iaddr ==
+				     false) ||
+			    (config_info->comp1_secondary_input == 1 &&
+			     encoder_info->support_secondary_compare_context ==
+				     false) ||
+			    (config_info->comp1_secondary_input == 2 &&
+			     encoder_info->support_secondary_compare_tval ==
+				     false) ||
+			    (config_info->comp1_secondary_input == 3 &&
+			     encoder_info->support_secondary_compare_daddr ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp1_secondary_input %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp1_secondary_input,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp1_secondary_function == 0 &&
+			     encoder_info->support_secondary_compare_func_equal ==
+				     false) ||
+			    (config_info->comp1_secondary_function == 1 &&
+			     encoder_info->support_secondary_compare_func_notequal ==
+				     false) ||
+			    (config_info->comp1_secondary_function == 2 &&
+			     encoder_info->support_secondary_compare_func_lessthan ==
+				     false) ||
+			    (config_info->comp1_secondary_function == 3 &&
+			     encoder_info->support_secondary_compare_func_lessthanorequal ==
+				     false) ||
+			    (config_info->comp1_secondary_function == 4 &&
+			     encoder_info->support_secondary_compare_func_greaterthan ==
+				     false) ||
+			    (config_info->comp1_secondary_function == 5 &&
+			     encoder_info->support_secondary_compare_func_greaterthanorequal ==
+				     false) ||
+			    (config_info->comp1_secondary_function == 6 &&
+			     encoder_info->support_secondary_compare_func_false ==
+				     false) ||
+			    (config_info->comp1_secondary_function == 7 &&
+			     encoder_info->support_secondary_compare_func_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp1_secondary_function %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp1_secondary_function,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp1_secondary_notify == true &&
+			     encoder_info->support_compare_secondary_notify_1 ==
+				     false) ||
+			    (config_info->comp1_secondary_notify == false &&
+			     encoder_info->support_compare_secondary_notify_0 ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp1_secondary_notify %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp1_secondary_notify,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp1_match_mode == 0 &&
+			     encoder_info->support_compare_primary_true ==
+				     false) ||
+			    (config_info->comp1_match_mode == 1 &&
+			     encoder_info->support_compare_both_true ==
+				     false) ||
+			    (config_info->comp1_match_mode == 2 &&
+			     encoder_info->support_compare_either_false ==
+				     false) ||
+			    (config_info->comp1_match_mode == 3 &&
+			     encoder_info->support_compare_between_primary_and_secondary_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp1_match_mode %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp1_match_mode,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+		}
+		if (config_info->comparator2_enable) {
+			if ((config_info->comp2_primary_input == 0 &&
+			     encoder_info->support_primary_compare_iaddr ==
+				     false) ||
+			    (config_info->comp2_primary_input == 1 &&
+			     encoder_info->support_primary_compare_context ==
+				     false) ||
+			    (config_info->comp2_primary_input == 2 &&
+			     encoder_info->support_primary_compare_tval ==
+				     false) ||
+			    (config_info->comp2_primary_input == 3 &&
+			     encoder_info->support_primary_compare_daddr ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp2_primary_input %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp2_primary_input,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp2_primary_function == 0 &&
+			     encoder_info->support_primary_compare_func_equal ==
+				     false) ||
+			    (config_info->comp2_primary_function == 1 &&
+			     encoder_info->support_primary_compare_func_notequal ==
+				     false) ||
+			    (config_info->comp2_primary_function == 2 &&
+			     encoder_info->support_primary_compare_func_lessthan ==
+				     false) ||
+			    (config_info->comp2_primary_function == 3 &&
+			     encoder_info->support_primary_compare_func_lessthanorequal ==
+				     false) ||
+			    (config_info->comp2_primary_function == 4 &&
+			     encoder_info->support_primary_compare_func_greaterthan ==
+				     false) ||
+			    (config_info->comp2_primary_function == 5 &&
+			     encoder_info->support_primary_compare_func_greaterthanorequal ==
+				     false) ||
+			    (config_info->comp2_primary_function == 6 &&
+			     encoder_info->support_primary_compare_func_false ==
+				     false) ||
+			    (config_info->comp2_primary_function == 7 &&
+			     encoder_info->support_primary_compare_func_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp2_primary_function %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp2_primary_function,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp2_primary_notify == true &&
+			     encoder_info->support_compare_primary_notify_1 ==
+				     false) ||
+			    (config_info->comp2_primary_notify == false &&
+			     encoder_info->support_compare_primary_notify_0 ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp2_primary_notify %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp2_primary_notify,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp2_secondary_input == 0 &&
+			     encoder_info->support_secondary_compare_iaddr ==
+				     false) ||
+			    (config_info->comp2_secondary_input == 1 &&
+			     encoder_info->support_secondary_compare_context ==
+				     false) ||
+			    (config_info->comp2_secondary_input == 2 &&
+			     encoder_info->support_secondary_compare_tval ==
+				     false) ||
+			    (config_info->comp2_secondary_input == 3 &&
+			     encoder_info->support_secondary_compare_daddr ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp2_secondary_input %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp2_secondary_input,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp2_secondary_function == 0 &&
+			     encoder_info->support_secondary_compare_func_equal ==
+				     false) ||
+			    (config_info->comp2_secondary_function == 1 &&
+			     encoder_info->support_secondary_compare_func_notequal ==
+				     false) ||
+			    (config_info->comp2_secondary_function == 2 &&
+			     encoder_info->support_secondary_compare_func_lessthan ==
+				     false) ||
+			    (config_info->comp2_secondary_function == 3 &&
+			     encoder_info->support_secondary_compare_func_lessthanorequal ==
+				     false) ||
+			    (config_info->comp2_secondary_function == 4 &&
+			     encoder_info->support_secondary_compare_func_greaterthan ==
+				     false) ||
+			    (config_info->comp2_secondary_function == 5 &&
+			     encoder_info->support_secondary_compare_func_greaterthanorequal ==
+				     false) ||
+			    (config_info->comp2_secondary_function == 6 &&
+			     encoder_info->support_secondary_compare_func_false ==
+				     false) ||
+			    (config_info->comp2_secondary_function == 7 &&
+			     encoder_info->support_secondary_compare_func_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp2_secondary_function %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp2_secondary_function,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp2_secondary_notify == true &&
+			     encoder_info->support_compare_secondary_notify_1 ==
+				     false) ||
+			    (config_info->comp2_secondary_notify == false &&
+			     encoder_info->support_compare_secondary_notify_0 ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp2_secondary_notify %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp2_secondary_notify,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp2_match_mode == 0 &&
+			     encoder_info->support_compare_primary_true ==
+				     false) ||
+			    (config_info->comp2_match_mode == 1 &&
+			     encoder_info->support_compare_both_true ==
+				     false) ||
+			    (config_info->comp2_match_mode == 2 &&
+			     encoder_info->support_compare_either_false ==
+				     false) ||
+			    (config_info->comp2_match_mode == 3 &&
+			     encoder_info->support_compare_between_primary_and_secondary_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp2_match_mode %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp2_match_mode,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+		}
+		if (config_info->comparator3_enable) {
+			if ((config_info->comp3_primary_input == 0 &&
+			     encoder_info->support_primary_compare_iaddr ==
+				     false) ||
+			    (config_info->comp3_primary_input == 1 &&
+			     encoder_info->support_primary_compare_context ==
+				     false) ||
+			    (config_info->comp3_primary_input == 2 &&
+			     encoder_info->support_primary_compare_tval ==
+				     false) ||
+			    (config_info->comp3_primary_input == 3 &&
+			     encoder_info->support_primary_compare_daddr ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp3_primary_input %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp3_primary_input,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp3_primary_function == 0 &&
+			     encoder_info->support_primary_compare_func_equal ==
+				     false) ||
+			    (config_info->comp3_primary_function == 1 &&
+			     encoder_info->support_primary_compare_func_notequal ==
+				     false) ||
+			    (config_info->comp3_primary_function == 2 &&
+			     encoder_info->support_primary_compare_func_lessthan ==
+				     false) ||
+			    (config_info->comp3_primary_function == 3 &&
+			     encoder_info->support_primary_compare_func_lessthanorequal ==
+				     false) ||
+			    (config_info->comp3_primary_function == 4 &&
+			     encoder_info->support_primary_compare_func_greaterthan ==
+				     false) ||
+			    (config_info->comp3_primary_function == 5 &&
+			     encoder_info->support_primary_compare_func_greaterthanorequal ==
+				     false) ||
+			    (config_info->comp3_primary_function == 6 &&
+			     encoder_info->support_primary_compare_func_false ==
+				     false) ||
+			    (config_info->comp3_primary_function == 7 &&
+			     encoder_info->support_primary_compare_func_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp3_primary_function %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp3_primary_function,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp3_primary_notify == true &&
+			     encoder_info->support_compare_primary_notify_1 ==
+				     false) ||
+			    (config_info->comp3_primary_notify == false &&
+			     encoder_info->support_compare_primary_notify_0 ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp3_primary_notify %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp3_primary_notify,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp3_secondary_input == 0 &&
+			     encoder_info->support_secondary_compare_iaddr ==
+				     false) ||
+			    (config_info->comp3_secondary_input == 1 &&
+			     encoder_info->support_secondary_compare_context ==
+				     false) ||
+			    (config_info->comp3_secondary_input == 2 &&
+			     encoder_info->support_secondary_compare_tval ==
+				     false) ||
+			    (config_info->comp3_secondary_input == 3 &&
+			     encoder_info->support_secondary_compare_daddr ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp3_secondary_input %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp3_secondary_input,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp3_secondary_function == 0 &&
+			     encoder_info->support_secondary_compare_func_equal ==
+				     false) ||
+			    (config_info->comp3_secondary_function == 1 &&
+			     encoder_info->support_secondary_compare_func_notequal ==
+				     false) ||
+			    (config_info->comp3_secondary_function == 2 &&
+			     encoder_info->support_secondary_compare_func_lessthan ==
+				     false) ||
+			    (config_info->comp3_secondary_function == 3 &&
+			     encoder_info->support_secondary_compare_func_lessthanorequal ==
+				     false) ||
+			    (config_info->comp3_secondary_function == 4 &&
+			     encoder_info->support_secondary_compare_func_greaterthan ==
+				     false) ||
+			    (config_info->comp3_secondary_function == 5 &&
+			     encoder_info->support_secondary_compare_func_greaterthanorequal ==
+				     false) ||
+			    (config_info->comp3_secondary_function == 6 &&
+			     encoder_info->support_secondary_compare_func_false ==
+				     false) ||
+			    (config_info->comp3_secondary_function == 7 &&
+			     encoder_info->support_secondary_compare_func_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp3_secondary_function %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp3_secondary_function,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp3_secondary_notify == true &&
+			     encoder_info->support_compare_secondary_notify_1 ==
+				     false) ||
+			    (config_info->comp3_secondary_notify == false &&
+			     encoder_info->support_compare_secondary_notify_0 ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp3_secondary_notify %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp3_secondary_notify,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+			if ((config_info->comp3_match_mode == 0 &&
+			     encoder_info->support_compare_primary_true ==
+				     false) ||
+			    (config_info->comp3_match_mode == 1 &&
+			     encoder_info->support_compare_both_true ==
+				     false) ||
+			    (config_info->comp3_match_mode == 2 &&
+			     encoder_info->support_compare_either_false ==
+				     false) ||
+			    (config_info->comp3_match_mode == 3 &&
+			     encoder_info->support_compare_between_primary_and_secondary_true ==
+				     false)) {
+				// msg
+				snprintf(str, sizeof(str),
+					"Error: encoder configs comp3_match_mode %d, but the encoder(0x%llx) does not support.\n",
+					config_info->comp3_match_mode,
+					encoder_info->base_addr);
+				xt_trace_msgout(str);
+				return 1;
+			}
+		}
+	}
+
+	// config trTeFilteriControl
+	tr_te_filter_i_control = 1;
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 1, 1,
+			       config_info->filter_match_privilege ? 1 : 0);
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 2, 2,
+			       config_info->filter_match_ecause ? 1 : 0);
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 3, 3,
+			       config_info->filter_match_interrupt ? 1 : 0);
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 4, 4,
+			       config_info->comparator1_enable ? 1 : 0);
+	// FIXME: if trTeFilterComp1 can't be changed??
+	tr_te_filter_i_control = u32_set_fields(
+		tr_te_filter_i_control, 7, 5, config_info->comp1_filter_number);
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 8, 8,
+			       config_info->comparator2_enable ? 1 : 0);
+	// FIXME: if trTeFilterComp2 can't be changed??
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 11, 9,
+			       config_info->comp2_filter_number);
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 12, 12,
+			       config_info->comparator3_enable ? 1 : 0);
+	// FIXME: if trTeFilterComp3 can't be changed??
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 15, 13,
+			       config_info->comp3_filter_number);
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 24, 24,
+			       config_info->match_value_dtype ? 1 : 0);
+	tr_te_filter_i_control =
+		u32_set_fields(tr_te_filter_i_control, 25, 25,
+			       config_info->match_value_dsize ? 1 : 0);
+	read_value_tmp = xt_trace_register_readafterwrite(
+		encoder_info->base_addr +
+			OFFSET_TRFILTERCONTROLI(config_info->filter_i),
+		tr_te_filter_i_control);
+	if (read_value_tmp == -1)
+		return -1;
+	/* For Perf Trace, only comparator1 will be enabled, we will only care bit[7:0] */
+	if ((read_value_tmp & 0xff) != (tr_te_filter_i_control & 0xff)) {
+		// msg
+		snprintf(str, sizeof(str),
+			"Config trTeFilteriControl 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+			tr_te_filter_i_control, encoder_info->base_addr,
+			read_value_tmp);
+		xt_trace_msgout(str);
+		goto config_failed;
+	}
+
+	// config trTeFilteriMatchInst
+	if (config_info->filter_match_ecause ||
+	    config_info->filter_match_interrupt ||
+	    config_info->filter_match_privilege) {
+		uint32_t tr_te_filter_i_match_inst = 0;
+
+		tr_te_filter_i_match_inst =
+			u32_set_fields(tr_te_filter_i_match_inst, 7, 0,
+				       config_info->match_privilege_value);
+		tr_te_filter_i_match_inst = u32_set_fields(
+			tr_te_filter_i_match_inst, 25, 25,
+			config_info->match_value_interrupt ? 1 : 0);
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRFILTERMATCHINSTI(
+					config_info->filter_i),
+			tr_te_filter_i_match_inst);
+
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_filter_i_match_inst) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeFilteriMatchInst 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_filter_i_match_inst,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+	}
+	// config trTeFilteriMatchEcause
+	if (config_info->filter_match_ecause ||
+	    config_info->filter_match_interrupt) {
+		uint32_t tr_te_filter_i_match_ecause = 0;
+
+		tr_te_filter_i_match_ecause = config_info->match_choice_ecause;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRFILTERMATCHECAUSEI(
+					config_info->filter_i),
+			tr_te_filter_i_match_ecause);
+
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_filter_i_match_ecause) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeFilteriMatchEcause 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_filter_i_match_ecause,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+	}
+	// config trTeFilteriMatchData
+	if (config_info->filter_match_dtype ||
+	    config_info->filter_match_dsize) {
+		uint32_t tr_te_filter_i_match_data = 0;
+
+		tr_te_filter_i_match_data =
+			u32_set_fields(tr_te_filter_i_match_data, 15, 0,
+				       config_info->match_value_dtype);
+		tr_te_filter_i_match_data =
+			u32_set_fields(tr_te_filter_i_match_data, 23, 16,
+				       config_info->match_value_dsize);
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRFILTERMATCHDATAI(
+					config_info->filter_i),
+			tr_te_filter_i_match_data);
+
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_filter_i_match_data) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeFilteriMatchData 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_filter_i_match_data,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+	}
+	// config trTeCompjControl
+	if (config_info->comparator1_enable) {
+		uint32_t tr_te_comp_j_control = 0;
+		uint32_t tr_te_comp_j_pmatch_low = 0;
+		uint32_t tr_te_comp_j_pmatch_high = 0;
+		uint32_t tr_te_comp_j_smatch_low = 0;
+		uint32_t tr_te_comp_j_smatch_high = 0;
+
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 1, 0,
+				       config_info->comp1_primary_input);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 3, 2,
+				       config_info->comp1_secondary_input);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 6, 4,
+				       config_info->comp1_primary_function);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 10, 8,
+				       config_info->comp1_secondary_function);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 13, 12,
+				       config_info->comp1_match_mode);
+		tr_te_comp_j_control = u32_set_fields(
+			tr_te_comp_j_control, 14, 14,
+			config_info->comp1_primary_notify ? 1 : 0);
+		tr_te_comp_j_control = u32_set_fields(
+			tr_te_comp_j_control, 15, 15,
+			config_info->comp1_secondary_notify ? 1 : 0);
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPCONTROLJ(
+					config_info->comp1_filter_number),
+			tr_te_comp_j_control);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_control) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjControl 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_control, encoder_info->base_addr,
+				read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjPMatchLow
+		tr_te_comp_j_pmatch_low =
+			config_info->comp1_primary_match_low_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPPMATCHLOWJ(
+					config_info->comp1_filter_number),
+			tr_te_comp_j_pmatch_low);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_pmatch_low) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjPMatchLow 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_pmatch_low,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjPMatchHigh
+		tr_te_comp_j_pmatch_high =
+			config_info->comp1_primary_match_high_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPPMATCHHIGHJ(
+					config_info->comp1_filter_number),
+			tr_te_comp_j_pmatch_high);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_pmatch_high) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjPMatchHigh 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_pmatch_high,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjSMatchLow
+		tr_te_comp_j_smatch_low =
+			config_info->comp1_secondary_match_low_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPSMATCHLOWJ(
+					config_info->comp1_filter_number),
+			tr_te_comp_j_smatch_low);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_smatch_low) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjSMatchLow 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_smatch_low,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjSMatchHigh
+		tr_te_comp_j_smatch_high =
+			config_info->comp1_secondary_match_high_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPSMATCHHIGHJ(
+					config_info->comp1_filter_number),
+			tr_te_comp_j_smatch_high);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_smatch_high) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjSMatchHigh 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_smatch_high,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+	}
+	if (config_info->comparator2_enable) {
+		uint32_t tr_te_comp_j_control = 0;
+		uint32_t tr_te_comp_j_pmatch_low = 0;
+		uint32_t tr_te_comp_j_pmatch_high = 0;
+		uint32_t tr_te_comp_j_smatch_low = 0;
+		uint32_t tr_te_comp_j_smatch_high = 0;
+
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 1, 0,
+				       config_info->comp2_primary_input);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 3, 2,
+				       config_info->comp2_secondary_input);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 6, 4,
+				       config_info->comp2_primary_function);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 10, 8,
+				       config_info->comp2_secondary_function);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 13, 12,
+				       config_info->comp2_match_mode);
+		tr_te_comp_j_control = u32_set_fields(
+			tr_te_comp_j_control, 14, 14,
+			config_info->comp2_primary_notify ? 1 : 0);
+		tr_te_comp_j_control = u32_set_fields(
+			tr_te_comp_j_control, 15, 15,
+			config_info->comp2_secondary_notify ? 1 : 0);
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPCONTROLJ(
+					config_info->comp2_filter_number),
+			tr_te_comp_j_control);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_control) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompJControl 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_control, encoder_info->base_addr,
+				read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjPMatchLow
+		tr_te_comp_j_pmatch_low =
+			config_info->comp2_primary_match_low_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPPMATCHLOWJ(
+					config_info->comp2_filter_number),
+			tr_te_comp_j_pmatch_low);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_pmatch_low) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjPMatchLow 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_pmatch_low,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjPMatchHigh
+		tr_te_comp_j_pmatch_high =
+			config_info->comp2_primary_match_high_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPPMATCHHIGHJ(
+					config_info->comp2_filter_number),
+			tr_te_comp_j_pmatch_high);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_pmatch_high) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjPMatchHigh 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_pmatch_high,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjSMatchLow
+		tr_te_comp_j_smatch_low =
+			config_info->comp2_secondary_match_low_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPSMATCHLOWJ(
+					config_info->comp2_filter_number),
+			tr_te_comp_j_smatch_low);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_smatch_low) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjSMatchLow 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_smatch_low,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjSMatchHigh
+		tr_te_comp_j_smatch_high =
+			config_info->comp2_secondary_match_high_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPSMATCHHIGHJ(
+					config_info->comp2_filter_number),
+			tr_te_comp_j_smatch_high);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_smatch_high) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjSMatchHigh 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_smatch_high,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+	}
+	if (config_info->comparator3_enable) {
+		uint32_t tr_te_comp_j_control = 0;
+		uint32_t tr_te_comp_j_pmatch_low = 0;
+		uint32_t tr_te_comp_j_pmatch_high = 0;
+		uint32_t tr_te_comp_j_smatch_low = 0;
+		uint32_t tr_te_comp_j_smatch_high = 0;
+
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 1, 0,
+				       config_info->comp3_primary_input);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 3, 2,
+				       config_info->comp3_secondary_input);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 6, 4,
+				       config_info->comp3_primary_function);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 10, 8,
+				       config_info->comp3_secondary_function);
+		tr_te_comp_j_control =
+			u32_set_fields(tr_te_comp_j_control, 13, 12,
+				       config_info->comp3_match_mode);
+		tr_te_comp_j_control = u32_set_fields(
+			tr_te_comp_j_control, 14, 14,
+			config_info->comp3_primary_notify ? 1 : 0);
+		tr_te_comp_j_control = u32_set_fields(
+			tr_te_comp_j_control, 15, 15,
+			config_info->comp3_secondary_notify ? 1 : 0);
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPCONTROLJ(
+					config_info->comp3_filter_number),
+			tr_te_comp_j_control);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_control) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompJControl 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_control, encoder_info->base_addr,
+				read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjPMatchLow
+		tr_te_comp_j_pmatch_low =
+			config_info->comp3_primary_match_low_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPPMATCHLOWJ(
+					config_info->comp3_filter_number),
+			tr_te_comp_j_pmatch_low);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_pmatch_low) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjPMatchLow 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_pmatch_low,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjPMatchHigh
+		tr_te_comp_j_pmatch_high =
+			config_info->comp3_primary_match_high_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPPMATCHHIGHJ(
+					config_info->comp3_filter_number),
+			tr_te_comp_j_pmatch_high);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_pmatch_high) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjPMatchHigh 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_pmatch_high,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjSMatchLow
+		tr_te_comp_j_smatch_low =
+			config_info->comp3_secondary_match_low_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPSMATCHLOWJ(
+					config_info->comp3_filter_number),
+			tr_te_comp_j_smatch_low);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_smatch_low) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjSMatchLow 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_smatch_low,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+		// config trTeCompjSMatchHigh
+		tr_te_comp_j_smatch_high =
+			config_info->comp3_secondary_match_high_value;
+		read_value_tmp = xt_trace_register_readafterwrite(
+			encoder_info->base_addr +
+				OFFSET_TRCOMPSMATCHHIGHJ(
+					config_info->comp3_filter_number),
+			tr_te_comp_j_smatch_high);
+		if (read_value_tmp == -1)
+			return -1;
+		if (read_value_tmp != tr_te_comp_j_smatch_high) {
+			// msg
+			snprintf(str, sizeof(str),
+				"Config trTeCompjSMatchHigh 0x%x for trace encoder(0x%llx) get 0x%x.\n",
+				tr_te_comp_j_smatch_high,
+				encoder_info->base_addr, read_value_tmp);
+			xt_trace_msgout(str);
+			goto config_failed;
+		}
+	}
+
+	/* Add filter i to current Encoder */
+	if (xt_trace_register_read(encoder_info->base_addr +
+					   OFFSET_TRTEINSTFILTERS,
+				   &tr_te_inst_filters))
+		return -1;
+	tr_te_inst_filters |= 1 << config_info->filter_i;
+	if (xt_trace_register_write(encoder_info->base_addr +
+					    OFFSET_TRTEINSTFILTERS,
+				    tr_te_inst_filters))
+		return -1;
+
+	return 0;
+
+config_failed:
 	return 1;
 }
