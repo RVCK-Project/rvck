@@ -1248,6 +1248,36 @@ static void xuantie_ntrace_buffer_free_aux(void *aux)
 	kfree(buf);
 }
 
+static bool xuantie_ntrace_all_sinks_in_iommu_group(struct xuantie_ntrace_drvdata *drvdata)
+{
+	struct xuantie_ntrace_component *comp;
+	struct iommu_group *group;
+	bool all_sinks_ready = true;
+
+	mutex_lock(&xuantie_ntrace_lock);
+	list_for_each_entry(comp, &xuantie_ntrace_controllers, list) {
+		if (comp->type != NTRACE_TYPE_SINK_SMEM)
+			continue;
+
+		if (comp->sink.is_resv_mem)
+			continue;
+
+		if (!dev_iommu_fwspec_get(&comp->pdev->dev))
+			continue;
+
+		group = iommu_group_get(&comp->pdev->dev);
+		if (!group) {
+			dev_warn(&comp->pdev->dev, "Sink not yet in IOMMU group\n");
+			all_sinks_ready = false;
+		} else {
+			iommu_group_put(group);
+		}
+	}
+	mutex_unlock(&xuantie_ntrace_lock);
+
+	return all_sinks_ready;
+}
+
 /*
  * A link endpoint points at another component's firmware node.
  */
@@ -1912,6 +1942,12 @@ static bool xuantie_ntrace_all_devices_probed(struct xuantie_ntrace_drvdata *drv
 	if (drvdata->probed_count < drvdata->expected_count) {
 		pr_err("Components not yet fully probed (%u/%u)\n",
 		       drvdata->probed_count, drvdata->expected_count);
+		return false;
+	}
+
+	// Additional check: all sinks must be in IOMMU groups
+	if (!xuantie_ntrace_all_sinks_in_iommu_group(drvdata)) {
+		pr_err("Not all sinks in IOMMU groups yet\n");
 		return false;
 	}
 

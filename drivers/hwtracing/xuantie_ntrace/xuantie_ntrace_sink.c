@@ -11,12 +11,15 @@
 
 #include "xuantie_ntrace.h"
 
+#define IOMMU_DMA_BUF_SIZE (64 * SZ_1M)
+
 static int xuantie_ntrace_sink_buffer(struct xuantie_ntrace_component *comp)
 {
 	struct platform_device *pdev = comp->pdev;
 	struct device *dev = &pdev->dev;
 	struct xuantie_ntrace_sink_smem *sink = &comp->sink;
 	struct resource *res;
+	dma_addr_t dma_addr;
 	int ret;
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
@@ -63,6 +66,35 @@ static int xuantie_ntrace_sink_buffer(struct xuantie_ntrace_component *comp)
 				 sink->vaddr);
 			return 0;
 		}
+	}
+
+	{
+		u32 dma_buf_size = IOMMU_DMA_BUF_SIZE;
+
+		sink->is_resv_mem = false;
+
+		device_property_read_u32(dev, "iommu-trace-buffer-size",
+					 &dma_buf_size);
+		if (!dma_buf_size)
+			dma_buf_size = IOMMU_DMA_BUF_SIZE;
+
+		/* ntrace sink max-width is 48 */
+		ret = dma_set_coherent_mask(dev, DMA_BIT_MASK(48));
+		if (ret)
+			dev_warn(dev,
+				 "Failed to set 48-bit coherent DMA mask (%d), keeping the default mask\n",
+				 ret);
+		sink->vaddr = dmam_alloc_coherent(dev, dma_buf_size, &dma_addr,
+						  GFP_KERNEL);
+		if (!sink->vaddr) {
+			dev_err(dev, "dmam_alloc_coherent failed (size=0x%x)\n",
+				dma_buf_size);
+			return -ENOMEM;
+		}
+		sink->start_addr = dma_addr;
+		sink->limit_addr = dma_addr + dma_buf_size;
+		dev_info(dev, "dmam_alloc_coherent vaddr=%px dma_addr=%llx size=0x%x\n",
+			 sink->vaddr, sink->start_addr, dma_buf_size);
 	}
 
 	return 0;
