@@ -101,8 +101,71 @@ static struct attribute_group xuantie_ntrace_filter_attr_group = {
 static DEFINE_MUTEX(xuantie_ntrace_owner_mutex);
 static struct task_struct *xuantie_ntrace_owner_task;
 
+static ssize_t commit_store(struct device *dev, struct device_attribute *attr,
+			    const char *buf, size_t count)
+{
+	struct perf_event *event;
+	unsigned long irqflags;
+	ssize_t ret = count;
+	bool committed;
+
+	mutex_lock(&xuantie_ntrace_owner_mutex);
+	xuantie_ntrace_owner_task = current;
+
+	event = xuantie_ntrace_pmu.aux_owner;
+	if (!event) {
+		ret = -ENODEV;
+		goto out;
+	}
+
+	xuantie_ntrace_session_commit(event, true);
+
+	raw_spin_lock_irqsave(&xuantie_ntrace_hw_lock, irqflags);
+	committed = xuantie_ntrace_pmu.session_committed;
+	raw_spin_unlock_irqrestore(&xuantie_ntrace_hw_lock, irqflags);
+
+	if (committed) {
+		/*
+		 * Upper bound: the in-flight committer memcpy()s at most the
+		 * whole sink contents through an uncached ioremap mapping.
+		 * A fixed 10 s covers the typical sink sizes; if much larger
+		 * sinks are deployed, turn this into a dynamic estimate
+		 * scaled by the total sink capacity.
+		 */
+		if (!wait_for_completion_timeout(&xuantie_ntrace_pmu.commit_done,
+						 msecs_to_jiffies(10000))) {
+			pr_warn("Timed out waiting for the in-flight commit\n");
+			ret = -ETIMEDOUT;
+		}
+	}
+
+out:
+	xuantie_ntrace_owner_task = NULL;
+	mutex_unlock(&xuantie_ntrace_owner_mutex);
+	return ret;
+}
+/*
+ * Owner/group writable only: the kernel forbids world-writable sysfs
+ * attributes (VERIFY_OCTAL_PERMISSIONS), so non-root users cannot
+ * trigger the session commit directly. Deployments needing non-root
+ * access can change the attribute's group via a udev rule (kernfs
+ * supports chown/chmod on attribute files), e.g. chgrp it to a
+ * tracing group, or allow the write via sudo/polkit.
+ */
+static DEVICE_ATTR(commit, 0220, NULL, commit_store);
+
+static struct attribute *xuantie_ntrace_ctl_attrs[] = {
+	&dev_attr_commit.attr,
+	NULL
+};
+
+static struct attribute_group xuantie_ntrace_ctl_attr_group = {
+	.attrs = xuantie_ntrace_ctl_attrs,
+};
+
 static const struct attribute_group *xuantie_ntrace_attr_groups[] = {
 	&xuantie_ntrace_filter_attr_group,
+	&xuantie_ntrace_ctl_attr_group,
 	NULL
 };
 
@@ -1020,6 +1083,31 @@ static void xuantie_ntrace_event_stop(struct perf_event *event, int flags)
 }
 
 /*
+ * Called from perf_mmap_close() in the perf tool's context whenever a
+ * buffer mapped over one of this PMU's events is torn down (munmap or
+ * tool exit; the fds are still open at this point, so @event is alive
+ * and perf_aux_output_begin() in the commit path can still succeed -
+ * it fails gracefully once the AUX pages are gone).
+ *
+ * For scenario 2f (perf record killed while the target keeps running)
+ * the primary commit point is the sysfs "commit" trigger, which the
+ * tool fires from its auxtrace snapshot-on-exit hook before the final
+ * buffer flush (see the Note (2f) in event_del()). This hook is only a
+ * backstop for the case that the trigger never fired: by buffer
+ * teardown time perf.data is already being written, so a commit here
+ * may no longer reach the output file, but it still closes the
+ * hardware and the AUX transaction instead of leaking the session.
+ * Runs in process context; only_if_started makes the calls for
+ * sessions that never added an event, or that already committed on
+ * task exit, a no-op.
+ */
+static void xuantie_ntrace_event_unmapped(struct perf_event *event,
+					  struct mm_struct *mm)
+{
+	xuantie_ntrace_session_commit(event, true);
+}
+
+/*
  * aux_buffer_setup() - Setup AUX buffer for diagnostic mode sampling
  * @event:	Event the buffer is setup for, event->cpu == -1 means current
  * @pages:	Array of pointers to buffer pages passed from perf core
@@ -1579,6 +1667,7 @@ static void xuantie_ntrace_try_register_pmu(struct xuantie_ntrace_drvdata *drvda
 	xuantie_ntrace_pmu.pmu.add			= xuantie_ntrace_event_add;
 	xuantie_ntrace_pmu.pmu.del			= xuantie_ntrace_event_del;
 	xuantie_ntrace_pmu.pmu.read			= xuantie_ntrace_event_read;
+	xuantie_ntrace_pmu.pmu.event_unmapped	= xuantie_ntrace_event_unmapped;
 
 	init_completion(&xuantie_ntrace_pmu.commit_done);
 
