@@ -315,6 +315,24 @@ xt_trace_sink_enable(struct xt_trace_sink_control_info *sink_info)
 	return 0;
 }
 
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_funnel_enable(struct xt_trace_funnel_control_info *funnel_info)
+{
+	char str[256];
+
+	if (enable_trace_component(funnel_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to enable the trace funnel(0x%llx).\n",
+			funnel_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
+/**
+ * Disable interface
+ */
 int32_t disable_trace_component(uint64_t base_addr)
 {
 	uint32_t i;
@@ -390,6 +408,24 @@ xt_trace_sink_disable(struct xt_trace_sink_control_info *sink_info)
 	return 0;
 }
 
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_funnel_disable(struct xt_trace_funnel_control_info *funnel_info)
+{
+	char str[256];
+
+	if (disable_trace_component(funnel_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to disable the trace funnel(0x%llx).\n",
+			funnel_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
+/**
+ * Close interface
+ */
 int32_t close_trace_component(uint64_t base_addr)
 {
 	uint32_t i;
@@ -453,6 +489,21 @@ xt_trace_sink_close(struct xt_trace_sink_control_info *sink_info)
 	if (close_trace_component(sink_info->base_addr)) {
 		snprintf(str, sizeof(str), "Fail to close the trace sink(0x%llx).\n",
 			sink_info->base_addr);
+		xt_trace_msgout(str);
+		return -1;
+	}
+
+	return 0;
+}
+
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_funnel_close(struct xt_trace_funnel_control_info *funnel_info)
+{
+	char str[256];
+
+	if (close_trace_component(funnel_info->base_addr)) {
+		snprintf(str, sizeof(str), "Fail to close the trace funnel(0x%llx).\n",
+			funnel_info->base_addr);
 		xt_trace_msgout(str);
 		return -1;
 	}

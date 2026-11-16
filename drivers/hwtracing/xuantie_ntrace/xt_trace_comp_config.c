@@ -293,6 +293,73 @@ config_failed:
  * return 1, Some configurations do not meet expectation(bits error)
  */
 int32_t
+xt_trace_funnel_config(struct xt_trace_funnel_control_info *funnel_info,
+		       struct xt_trace_funnel_config_info *config_info)
+{
+	char str[256] = { '\0' };
+	int32_t tr_funnel_control = 0;
+	int32_t read_value_tmp = 0;
+
+	if (funnel_info->has_detected) {
+		// FIXME: input count means ???
+		if (funnel_info->input_count & config_info->disable_input) {
+			snprintf(str, sizeof(str),
+				"Error: disable input 0x%x for trace funnl(0x%llx) with input %d.\n",
+				config_info->disable_input,
+				funnel_info->base_addr,
+				funnel_info->input_count);
+			xt_trace_msgout(str);
+			return 1;
+		}
+	}
+
+	// enable component
+	tr_funnel_control =
+		primary_enable_trace_component(funnel_info->base_addr);
+	if (tr_funnel_control <= 0) {
+		snprintf(str, sizeof(str),
+			"Failed to primary enable the trace funnl with base addr 0x%llx.\n",
+			funnel_info->base_addr);
+		xt_trace_msgout(str);
+		return tr_funnel_control;
+	}
+
+	read_value_tmp = xt_trace_register_readafterwrite(
+		funnel_info->base_addr + OFFSET_TRFUNNELDISINPUT,
+		config_info->disable_input);
+	if (read_value_tmp == -1)
+		return -1;
+	if (read_value_tmp != config_info->disable_input) {
+		// msg
+		snprintf(str, sizeof(str),
+			"Error: write trFunnelDisinput with 0x%x and get 0x%x with base addr 0x%llx.\n",
+			config_info->disable_input, read_value_tmp,
+			funnel_info->base_addr);
+		xt_trace_msgout(str);
+
+		// disable component
+		tr_funnel_control =
+			reset_trace_component(funnel_info->base_addr);
+		if (tr_funnel_control < 0) {
+			snprintf(str, sizeof(str),
+				"Fail to disable the trace funnel with base addr 0x%llx.\n",
+				funnel_info->base_addr);
+			xt_trace_msgout(str);
+			return tr_funnel_control;
+		}
+
+		return 1;
+	}
+
+	return 0;
+}
+
+/*
+ * return -1, Unrecoverable error(rw trace register error)
+ * return 0, Success
+ * return 1, Some configurations do not meet expectation(bits error)
+ */
+int32_t
 xt_trace_encoder_config(struct xt_trace_encoder_control_info *encoder_info,
 			struct xt_trace_encoder_config_info *config_info)
 {

@@ -62,6 +62,22 @@ xt_init_trace_sink_control_info(struct xt_trace_sink_control_info *sink_info,
 	sink_info->support_async_freq_7 = false;
 }
 
+TRACE_CONTROL_LIB_API void xt_init_trace_funnel_control_info(
+	struct xt_trace_funnel_control_info *funnel_info, uint64_t base_addr)
+{
+	// clear funnel_info
+	memset(funnel_info, 0, sizeof(struct xt_trace_funnel_control_info));
+
+	funnel_info->base_addr = base_addr;
+	funnel_info->has_detected = false;
+	funnel_info->main_ver = 1;
+	funnel_info->minor_ver = 0;
+
+	// info
+	// this is from trFunnelDisInput
+	funnel_info->input_count = 0;
+}
+
 TRACE_CONTROL_LIB_API void xt_init_trace_encoder_control_info(
 	struct xt_trace_encoder_control_info *encoder_info, uint64_t base_addr)
 {
@@ -566,6 +582,111 @@ xt_trace_detect_trace_sink(struct xt_trace_sink_control_info *sink_info)
 			base_addr);
 		xt_trace_msgout(str);
 		return tr_sink_control;
+	}
+
+	return 0;
+}
+
+/*
+ * return -1, Unrecoverable error(rw trace register error)
+ * return 0, Success
+ * return 1, Some implementations do not meet expectation(bits error)
+ */
+TRACE_CONTROL_LIB_API int32_t
+xt_trace_detect_trace_funnel(struct xt_trace_funnel_control_info *funnel_info)
+{
+	char str[256] = { '\0' };
+	int32_t tr_funnel_control = 0;
+	uint32_t tr_funnel_impl = 0;
+	uint32_t tr_funnel_disinput = 0;
+	uint64_t base_addr = funnel_info->base_addr;
+
+	tr_funnel_control = primary_enable_trace_component(base_addr);
+	if (tr_funnel_control <= 0) {
+		snprintf(str, sizeof(str),
+			"Fail to primary enable the trace funnel with base addr 0x%llx\n",
+			base_addr);
+		xt_trace_msgout(str);
+		return tr_funnel_control;
+	}
+
+	if (xt_trace_register_read(base_addr + OFFSET_TRFUNNELIMPL,
+				   &tr_funnel_impl))
+		return -1;
+
+	if (TR_ANY_GET_IMPL_COMP_TYPE(tr_funnel_impl) != TRCOMP_FUNNEL) {
+		// msg
+		snprintf(str, sizeof(str),
+			"This component is not a trace funnel as type in impliment is %d with base addr 0x%llx.\n",
+			TR_ANY_GET_IMPL_COMP_TYPE(tr_funnel_impl), base_addr);
+		xt_trace_msgout(str);
+
+		// disable this component
+		tr_funnel_control = reset_trace_component(base_addr);
+		if (tr_funnel_control < 0) {
+			snprintf(str, sizeof(str),
+				"Fail to disable the component with base addr 0x%llx\n",
+				base_addr);
+			xt_trace_msgout(str);
+			return tr_funnel_control;
+		}
+
+		return 1;
+	}
+
+	if (TR_ANY_GET_IMPL_MAIN_VER(tr_funnel_impl) !=
+		    XT_NTRACE_SPEC_MAIN_VER ||
+	    TR_ANY_GET_IMPL_MINOR_VER(tr_funnel_impl) !=
+		    XT_NTRACE_SPEC_MINOR_VER) {
+		funnel_info->main_ver =
+			TR_ANY_GET_IMPL_MAIN_VER(tr_funnel_impl);
+		funnel_info->minor_ver =
+			TR_ANY_GET_IMPL_MINOR_VER(tr_funnel_impl);
+		snprintf(str, sizeof(str),
+			"Get unknown funnel version %d.%d with base addr 0x%llx.\n",
+			funnel_info->main_ver, funnel_info->minor_ver,
+			base_addr);
+		xt_trace_msgout(str);
+
+		// disable this component
+		tr_funnel_control = reset_trace_component(base_addr);
+		if (tr_funnel_control < 0) {
+			snprintf(str, sizeof(str),
+				"Fail to reset the trace funnel with base addr 0x%llx\n",
+				base_addr);
+			xt_trace_msgout(str);
+			return tr_funnel_control;
+		}
+
+		return 1;
+	}
+
+	funnel_info->has_detected = true;
+	funnel_info->main_ver = XT_NTRACE_SPEC_MAIN_VER;
+	funnel_info->minor_ver = XT_NTRACE_SPEC_MINOR_VER;
+
+	// check disinput
+	tr_funnel_disinput = 0xffffffff;
+	tr_funnel_disinput = xt_trace_register_readafterwrite(
+		base_addr + OFFSET_TRFUNNELDISINPUT, tr_funnel_disinput);
+	if (tr_funnel_disinput == -1)
+		return -1;
+	funnel_info->input_count = tr_funnel_disinput;
+	if (tr_funnel_disinput != 0) {
+		tr_funnel_disinput = 0;
+		if (xt_trace_register_write(base_addr + OFFSET_TRFUNNELDISINPUT,
+					    tr_funnel_disinput))
+			return -1;
+	}
+
+	// disable this component
+	tr_funnel_control = reset_trace_component(base_addr);
+	if (tr_funnel_control < 0) {
+		snprintf(str, sizeof(str),
+			"Failed to disable the trace funnel with addr 0x%llx after detection.\n",
+			base_addr);
+		xt_trace_msgout(str);
+		return tr_funnel_control;
 	}
 
 	return 0;
