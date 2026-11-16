@@ -1,12 +1,35 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 549 个提交
-# 生成时间: 2026-11-12 15:39:57
+# 共 572 个提交
+# 生成时间: 2026-11-16 15:30:16
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-02b14c3d | 2026-11-12 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches
-ea604077 | 2026-11-12 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
-2d0a0908 | 2026-11-12 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config
+64fb19d6 | 2026-11-16 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches
+24288fdd | 2026-11-16 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
+a00ba9c5 | 2026-11-16 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config
+5b695a5c | 2026-10-21 | Feng Jie | drivers/perf: Rename LRW DDR PMU to LeapRise ZF(ZhuFeng) DDR PMU driver
+115a293e | 2026-10-21 | Guo Wu | drivers/perf: Rename LRW PCIe PMU to LeapRise ZF PMU driver
+9b14db35 | 2026-10-13 | He Yilin | perf vendor events riscv: rename lrw/lrw-core to lprs/zf-core
+e259bb5d | 2026-01-25 | Sergey Matyukevich | selftests: riscv: verify ptrace accepts valid vector csr values
+20e7105b | 2026-01-25 | Sergey Matyukevich | selftests: riscv: verify ptrace rejects invalid vector csr inputs
+5ad9bffe | 2026-01-25 | Sergey Matyukevich | selftests: riscv: verify syscalls discard vector context
+e9a6faaf | 2026-01-25 | Sergey Matyukevich | selftests: riscv: verify initial vector state with ptrace
+a0d9085e | 2026-01-25 | Sergey Matyukevich | selftests: riscv: test ptrace vector interface
+ef7c6eb0 | 2026-01-25 | Sergey Matyukevich | riscv: ptrace: validate input vector csr registers
+fe831175 | 2026-01-25 | Sergey Matyukevich | riscv: csr: define vtype register elements
+eb71bd46 | 2026-01-25 | Sergey Matyukevich | riscv: vector: init vector context with proper vlenb
+a46bd83e | 2026-01-25 | Ilya Mamay | riscv: ptrace: return ENODATA for inactive vector extension
+bb768759 | 2025-11-17 | Yong-Xuan Wang | selftests: riscv: Add test for the Vector ptrace interface
+46d5edf4 | 2025-11-17 | Yong-Xuan Wang | riscv: ptrace: Optimize the allocation of vector regset
+a3d9ae08 | 2026-10-27 | lvyating | perf machine: Fix NULL deref in thread__resolve_callchain_sample()
+6d9b105b | 2026-04-03 | Chen Pei | riscv: vdso_cfi: Add .gitignore for build artifacts
+151ee537 | 2026-10-22 | Liu Fei | i2c: Rename LRW I2C driver to LeapRise ZF(ZhuFeng) I2C driver
+bfdbff48 | 2026-10-19 | Liu Wenhong | tty: serial: Rename LRW UART driver to LeapRise ZF(ZhuFeng) UART driver
+38ac9161 | 2025-05-15 | Radim Krčmář | RISC-V: KVM: add KVM_CAP_RISCV_MP_STATE_RESET
+64172498 | 2025-05-15 | Atish Patra | RISC-V: KVM: Remove scounteren initialization
+deacd8dc | 2025-04-03 | Radim Krčmář | KVM: RISC-V: remove unnecessary SBI reset state
+1504bcb2 | 2025-04-03 | Radim Krčmář | KVM: RISC-V: refactor sbi reset request
+c63d7142 | 2025-04-03 | Radim Krčmář | KVM: RISC-V: refactor vector state reset
 99539c3e | 2026-11-05 | Gao Rui | perf: riscv: Fix passing pointer to sbi_ecall in pmu_sbi_check_event
 c44e3852 | 2026-08-18 | Xixin Liu | perf: RISC-V: use BIT_ULL for u64 overflow masks
 3bc16937 | 2025-11-14 | Chen Pei | tools: riscv: Fixed misalignment of CSR related definitions

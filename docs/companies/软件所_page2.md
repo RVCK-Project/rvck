@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 354</li>
-<li><strong>统计时间</strong>: 2026-11-12 15:39:57</li>
+<li><strong>贡献提交数</strong>: 355</li>
+<li><strong>统计时间</strong>: 2026-11-16 15:30:16</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -19,6 +19,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [7b69a9c8](https://github.com/RVCK-Project/rvck/commit/7b69a9c829b439becf55d624532422f01c1d3af3) | 2024-09-01 | David Li | audio: th1520: solve misalignment dma addr problem when HDMI playback |
 | [ff7f9c9d](https://github.com/RVCK-Project/rvck/commit/ff7f9c9d18a6c92c45478b31e0339a3e2f3ef7c7) | 2024-09-01 | Xiangyi Zeng | drivers: i2c-hid: fix rvbook i2c-hid wake-up error |
 | [daa8cb7a](https://github.com/RVCK-Project/rvck/commit/daa8cb7ad466462a2a1af1d3077f2e4d8f42b29b) | 2024-09-01 | Han Gao | th1520_defconfig:Enable lowpower settings |
 | [a353c552](https://github.com/RVCK-Project/rvck/commit/a353c552c67ce3e9c2d1fe14ffbaf7e46a55f428) | 2024-09-01 | Han Gao | th1520_defconfig:Enable ebpf settings |
@@ -175,7 +176,7 @@
 | [cd5b26f0](https://github.com/RVCK-Project/rvck/commit/cd5b26f072062b57eaeda2a7d2296bb015541299) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 354 条提交，显示 201-354**
+**共 355 条提交，显示 201-355**
 
 [1](软件所.md) **[2]**
 
@@ -186,5 +187,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-12 15:39:57*
-*数据来源: 主分支 rvck-6.6@dc246d68*
+*本页面最后更新于 2026-11-16 15:30:16*
+*数据来源: 主分支 rvck-6.6@03d8d36c*

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 549</li>
-<li><strong>统计时间</strong>: 2026-11-12 15:39:57</li>
+<li><strong>贡献提交数</strong>: 572</li>
+<li><strong>统计时间</strong>: 2026-11-16 15:30:16</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,29 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [6622779c](https://github.com/RVCK-Project/rvck/commit/6622779ca168bacb1efb5468f2225ec06d190fdf) | 2025-06-18 | Anup Patel | RISC-V: KVM: Rename and move kvm_riscv_local_tlb_sanitize() |
+| [1c9d235a](https://github.com/RVCK-Project/rvck/commit/1c9d235a80be8baf81805e81b9be22c89a3e61fa) | 2025-06-18 | Anup Patel | RISC-V: KVM: Drop the return value of kvm_riscv_vcpu_aia_init() |
+| [4bc195f8](https://github.com/RVCK-Project/rvck/commit/4bc195f83a7ec563296cb155f81ef1d96fb42967) | 2025-06-18 | Anup Patel | RISC-V: KVM: Check kvm_riscv_vcpu_alloc_vector_context() return value |
+| [bda6905d](https://github.com/RVCK-Project/rvck/commit/bda6905d1e4ef3422dd9d7a16b6da6f741c5d621) | 2025-06-02 | Cyril Bur | riscv: uaccess: Only restore the CSR_STATUS SUM bit |
+| [56d97c9d](https://github.com/RVCK-Project/rvck/commit/56d97c9dfec65688cac1f2a588abb3846244fedd) | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning in __get_user_error() |
+| [5c61c1f0](https://github.com/RVCK-Project/rvck/commit/5c61c1f0415d5d747c9ab010e10ffc41c7b088f8) | 2025-06-10 | Palmer Dabbelt | RISC-V: uaccess: Wrap the get_user_8 uaccess macro |
+| [5e2a5cac](https://github.com/RVCK-Project/rvck/commit/5e2a5cac5b4bf5b3c9b6bdd374550aca4291c6f4) | 2025-07-25 | Aurelien Jarno | riscv: uaccess: fix __put_user_nocheck for unaligned accesses |
+| [d3341938](https://github.com/RVCK-Project/rvck/commit/d3341938f5b73dc984cca06e2c07109b08979a70) | 2025-07-15 | Nathan Chancellor | riscv: uaccess: Fix -Wuninitialized and -Wshadow in __put_user_nocheck |
+| [d5959573](https://github.com/RVCK-Project/rvck/commit/d5959573028f4d8d4427380ac709503e235c6cf7) | 2025-09-03 | Alexandre Ghiti | riscv: Fix sparse warning about different address spaces |
+| [55cc1717](https://github.com/RVCK-Project/rvck/commit/55cc1717053e926fd0bb5f7a2a67fcf319434c81) | 2025-08-05 | Radim Krčmář | RISC-V: KVM: fix stack overrun when loading vlenb |
+| [6bbc7529](https://github.com/RVCK-Project/rvck/commit/6bbc7529f7646ad3efe90c137f27ec7454918ad6) | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: add 'vlenb' Vector CSR |
+| [062632d7](https://github.com/RVCK-Project/rvck/commit/062632d734c237c713d99d59a06197bafe9b60e6) | 2023-12-05 | Daniel Henrique Barboza | RISC-V: KVM: set 'vlenb' in kvm_riscv_vcpu_alloc_vector_context() |
+| [08824f54](https://github.com/RVCK-Project/rvck/commit/08824f5453be82d9db8f424557bd09bc7f1df85c) | 2024-10-21 | Anup Patel | RISC-V: KVM: Use NACL HFENCEs for KVM request based HFENCEs |
+| [96092517](https://github.com/RVCK-Project/rvck/commit/9609251712b23ee79e8524fea30f60e45b799151) | 2024-10-21 | Anup Patel | RISC-V: KVM: Save trap CSRs in kvm_riscv_vcpu_enter_exit() |
+| [0049527f](https://github.com/RVCK-Project/rvck/commit/0049527f9fc388bad148e4d25b6d6e308814930b) | 2024-10-21 | Anup Patel | RISC-V: KVM: Use SBI sync SRET call when available |
+| [3725ff83](https://github.com/RVCK-Project/rvck/commit/3725ff8384aafefb6c4480a48c5ec02a1927fc48) | 2024-10-21 | Anup Patel | RISC-V: KVM: Use nacl_csr_xyz() for accessing AIA CSRs |
+| [c901eee5](https://github.com/RVCK-Project/rvck/commit/c901eee566fb20f2cbdfc0c5033549eb0dc64ed9) | 2024-10-21 | Anup Patel | RISC-V: KVM: Use nacl_csr_xyz() for accessing H-extension CSRs |
+| [5a78f561](https://github.com/RVCK-Project/rvck/commit/5a78f56151798183d415a918e2eb381cc703a653) | 2024-10-21 | Anup Patel | RISC-V: KVM: Add common nested acceleration support |
+| [8123aadd](https://github.com/RVCK-Project/rvck/commit/8123aaddf362b09acd2584dd0e7ff430427eb7bf) | 2024-10-21 | Anup Patel | RISC-V: Add defines for the SBI nested acceleration extension |
+| [be50d7db](https://github.com/RVCK-Project/rvck/commit/be50d7db38df20d228bfc19d431f101fbcf3090e) | 2024-10-21 | Anup Patel | RISC-V: KVM: Don't setup SGEI for zero guest external interrupts |
+| [b982696d](https://github.com/RVCK-Project/rvck/commit/b982696d18dbf2363a6edbdc2f7ef7808897ac17) | 2024-10-21 | Anup Patel | RISC-V: KVM: Replace aia_set_hvictl() with aia_hvictl_value() |
+| [b4378b91](https://github.com/RVCK-Project/rvck/commit/b4378b91851eaa1744a2e3944f2a21d63d605d4a) | 2024-10-21 | Anup Patel | RISC-V: KVM: Break down the __kvm_riscv_switch_to() into macros |
+| [8b24d4ce](https://github.com/RVCK-Project/rvck/commit/8b24d4ce48b0fe1bde1e58a3ae80a622f4cf15f4) | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore SCOUNTEREN in C source |
 | [8014e9b7](https://github.com/RVCK-Project/rvck/commit/8014e9b70473a3232937685b107c85accc228550) | 2024-10-21 | Anup Patel | RISC-V: KVM: Save/restore HSTATUS in C source |
 | [199d5480](https://github.com/RVCK-Project/rvck/commit/199d54801aa1e491355b9a79b32448045a67731d) | 2024-10-21 | Anup Patel | RISC-V: KVM: Order the object files alphabetically |
 | [5c48f72f](https://github.com/RVCK-Project/rvck/commit/5c48f72f8f9d7c5d4960936b61dff6c7265298c7) | 2024-10-15 | Quan Zhou | riscv: KVM: add basic support for host vs guest profiling |
@@ -195,32 +218,9 @@
 | [2f1856b0](https://github.com/RVCK-Project/rvck/commit/2f1856b0965625e070fbd8d3cf99a6803fbc6cff) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_domain_alloc() |
 | [408eeb4a](https://github.com/RVCK-Project/rvck/commit/408eeb4aacfef4ff76e2388605a0ff9d49985278) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_present() |
 | [b28b4278](https://github.com/RVCK-Project/rvck/commit/b28b4278b5474c0bf3c7d22bfc71529d5e9d59da) | 2024-09-02 | Lu Baolu | drm/tegra: Use iommu_paging_domain_alloc() |
-| [0170f6e7](https://github.com/RVCK-Project/rvck/commit/0170f6e72e151eddc1c64fad700b8d6544714a38) | 2024-09-02 | Lu Baolu | drm/rockchip: Use iommu_paging_domain_alloc() |
-| [7dba5a82](https://github.com/RVCK-Project/rvck/commit/7dba5a8216c4073ed7e4d200f4f1e3b2ef0daf04) | 2024-06-10 | Lu Baolu | RDMA/usnic: Use iommu_paging_domain_alloc() |
-| [17bf207d](https://github.com/RVCK-Project/rvck/commit/17bf207d844daebd2ede699c3935a389d51f0e5d) | 2024-08-12 | Lu Baolu | soc: fsl: qbman: Use iommu_paging_domain_alloc() |
-| [abd0d068](https://github.com/RVCK-Project/rvck/commit/abd0d06817f3460e7f25c68f5dcb765ba7694ca1) | 2024-08-12 | Lu Baolu | remoteproc: Use iommu_paging_domain_alloc() |
-| [3aaf62c7](https://github.com/RVCK-Project/rvck/commit/3aaf62c7520c2f3d715fddc017359307ed1071e1) | 2024-08-12 | Lu Baolu | media: venus: firmware: Use iommu_paging_domain_alloc() |
-| [5778d6d5](https://github.com/RVCK-Project/rvck/commit/5778d6d51302492ab27a1ad5d2e97f8641a9520a) | 2024-08-12 | Lu Baolu | media: nvidia: tegra: Use iommu_paging_domain_alloc() |
-| [8ec5262d](https://github.com/RVCK-Project/rvck/commit/8ec5262d465777be76cba7f562c039eb8f22414e) | 2024-08-12 | Lu Baolu | gpu: host1x: Use iommu_paging_domain_alloc() |
-| [239c1226](https://github.com/RVCK-Project/rvck/commit/239c12268b06cbfdb109f454b7c8062200351a49) | 2024-09-02 | Lu Baolu | drm/nouveau/tegra: Use iommu_paging_domain_alloc() |
-| [7157bfd1](https://github.com/RVCK-Project/rvck/commit/7157bfd1e9defe5923b3ecfdc31ebf2f9ac05d82) | 2024-06-10 | Lu Baolu | wifi: ath11k: Use iommu_paging_domain_alloc() |
-| [48041040](https://github.com/RVCK-Project/rvck/commit/480410408f055ac0e5119533cdf855122e4d9c41) | 2024-06-10 | Lu Baolu | wifi: ath10k: Use iommu_paging_domain_alloc() |
-| [f13c54b7](https://github.com/RVCK-Project/rvck/commit/f13c54b71a802aa41548c3d86b16a29781d6d291) | 2024-06-10 | Lu Baolu | drm/msm: Use iommu_paging_domain_alloc() |
-| [10871f01](https://github.com/RVCK-Project/rvck/commit/10871f0128336b04809dceced72e1b135d627815) | 2024-06-10 | Lu Baolu | vhost-vdpa: Use iommu_paging_domain_alloc() |
-| [9412456e](https://github.com/RVCK-Project/rvck/commit/9412456ea9edd60d8bf1e543052106068f999557) | 2024-06-10 | Lu Baolu | vfio/type1: Use iommu_paging_domain_alloc() |
-| [a4c0b21d](https://github.com/RVCK-Project/rvck/commit/a4c0b21db86971dad025ecb546de5d93da6c4f04) | 2024-06-10 | Lu Baolu | iommufd: Use iommu_paging_domain_alloc() |
-| [331e16a0](https://github.com/RVCK-Project/rvck/commit/331e16a02b2654506a83ca1706298a8ae42b46f8) | 2024-06-10 | Lu Baolu | iommu: Add iommu_paging_domain_alloc() interface |
-| [c4ba9a0a](https://github.com/RVCK-Project/rvck/commit/c4ba9a0ad8cca038b314ae545f7f38f531e74f47) | 2025-02-28 | Robin Murphy | iommu: Get DT/ACPI parsing into the proper probe path |
-| [3076a380](https://github.com/RVCK-Project/rvck/commit/3076a380aae78a9c51740fe7b6623f201391da89) | 2025-02-28 | Robin Murphy | iommu: Keep dev-\>iommu state consistent |
-| [467687f6](https://github.com/RVCK-Project/rvck/commit/467687f63852399f8216d25b90e40e545ccea3b5) | 2025-02-28 | Robin Murphy | iommu: Resolve ops in iommu_init_device() |
-| [2334f74f](https://github.com/RVCK-Project/rvck/commit/2334f74faed208cb8d5d52d96992c4b33fdcdc95) | 2025-02-28 | Robin Murphy | iommu: Handle race with default domain setup |
-| [d70add8e](https://github.com/RVCK-Project/rvck/commit/d70add8ecb15ad99d839859cfddf7c1195dedf98) | 2025-02-27 | Robin Murphy | iommu: Unexport iommu_fwspec_free() |
-| [73a4fb1e](https://github.com/RVCK-Project/rvck/commit/73a4fb1e5e01e473dc1074b1e39e12998d3611bd) | 2024-07-02 | Robin Murphy | iommu: Remove iommu_fwspec ops |
-| [8b362048](https://github.com/RVCK-Project/rvck/commit/8b362048345c07dc66345649ae34d4efe755df72) | 2024-07-02 | Robin Murphy | OF: Simplify of_iommu_configure() |
-| [6849161a](https://github.com/RVCK-Project/rvck/commit/6849161a9a3750c96b7d9c976c2336f9f0ddde77) | 2024-07-02 | Robin Murphy | ACPI: Retire acpi_iommu_fwspec_ops() |
 ---
 
-**共 549 条提交，显示 201-400**
+**共 572 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-12 15:39:57*
-*数据来源: 主分支 rvck-6.6@dc246d68*
+*本页面最后更新于 2026-11-16 15:30:16*
+*数据来源: 主分支 rvck-6.6@03d8d36c*

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 549</li>
-<li><strong>统计时间</strong>: 2026-11-12 15:39:57</li>
+<li><strong>贡献提交数</strong>: 572</li>
+<li><strong>统计时间</strong>: 2026-11-16 15:30:16</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,9 +18,32 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [02b14c3d](https://github.com/RVCK-Project/rvck/commit/02b14c3d725f71f3a5a2a22ef61faa429c3923b3) | 2026-11-12 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches |
-| [ea604077](https://github.com/RVCK-Project/rvck/commit/ea60407751cdd2bd226a630a2c62d51a67bdb2ab) | 2026-11-12 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
-| [2d0a0908](https://github.com/RVCK-Project/rvck/commit/2d0a09084d4892e2a91eb454c8e7a97a5d4d5318) | 2026-11-12 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config |
+| [64fb19d6](https://github.com/RVCK-Project/rvck/commit/64fb19d661cee38676495ef666b2488c285b9324) | 2026-11-16 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches |
+| [24288fdd](https://github.com/RVCK-Project/rvck/commit/24288fddb6dbadf0c677cf66ef6fb944995d9e3d) | 2026-11-16 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
+| [a00ba9c5](https://github.com/RVCK-Project/rvck/commit/a00ba9c52a5fbd3f9104e3ec65ee29efaec89d77) | 2026-11-16 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config |
+| [5b695a5c](https://github.com/RVCK-Project/rvck/commit/5b695a5cf9e35067ddacccd886a6eba349a47cb5) | 2026-10-21 | Feng Jie | drivers/perf: Rename LRW DDR PMU to LeapRise ZF(ZhuFeng) DDR PMU driver |
+| [115a293e](https://github.com/RVCK-Project/rvck/commit/115a293e02ea72a706ccdd95fbca22d59db82081) | 2026-10-21 | Guo Wu | drivers/perf: Rename LRW PCIe PMU to LeapRise ZF PMU driver |
+| [9b14db35](https://github.com/RVCK-Project/rvck/commit/9b14db354f8dab842edc5bb72e862507675d04a0) | 2026-10-13 | He Yilin | perf vendor events riscv: rename lrw/lrw-core to lprs/zf-core |
+| [e259bb5d](https://github.com/RVCK-Project/rvck/commit/e259bb5d52a0a64b51b730a899011450d196a3b1) | 2026-01-25 | Sergey Matyukevich | selftests: riscv: verify ptrace accepts valid vector csr values |
+| [20e7105b](https://github.com/RVCK-Project/rvck/commit/20e7105b16510457ee904b83af779fc73384558a) | 2026-01-25 | Sergey Matyukevich | selftests: riscv: verify ptrace rejects invalid vector csr inputs |
+| [5ad9bffe](https://github.com/RVCK-Project/rvck/commit/5ad9bffe31a36c1168ddfacaeb07ea706fb15450) | 2026-01-25 | Sergey Matyukevich | selftests: riscv: verify syscalls discard vector context |
+| [e9a6faaf](https://github.com/RVCK-Project/rvck/commit/e9a6faaf60590a882754c7166d7dcf4a49460cd2) | 2026-01-25 | Sergey Matyukevich | selftests: riscv: verify initial vector state with ptrace |
+| [a0d9085e](https://github.com/RVCK-Project/rvck/commit/a0d9085ec97c0b442d79e671012d87f31261d945) | 2026-01-25 | Sergey Matyukevich | selftests: riscv: test ptrace vector interface |
+| [ef7c6eb0](https://github.com/RVCK-Project/rvck/commit/ef7c6eb047bcc27f7968554720e902e9edb57621) | 2026-01-25 | Sergey Matyukevich | riscv: ptrace: validate input vector csr registers |
+| [fe831175](https://github.com/RVCK-Project/rvck/commit/fe8311751a3f55f7e4614540068080e675ee7121) | 2026-01-25 | Sergey Matyukevich | riscv: csr: define vtype register elements |
+| [eb71bd46](https://github.com/RVCK-Project/rvck/commit/eb71bd4648904e22c08bb211eeb752b9baef1cd0) | 2026-01-25 | Sergey Matyukevich | riscv: vector: init vector context with proper vlenb |
+| [a46bd83e](https://github.com/RVCK-Project/rvck/commit/a46bd83e372661c50066386cad5d4b2872885f6e) | 2026-01-25 | Ilya Mamay | riscv: ptrace: return ENODATA for inactive vector extension |
+| [bb768759](https://github.com/RVCK-Project/rvck/commit/bb768759997ae847fcc2537a2693584cd235b55c) | 2025-11-17 | Yong-Xuan Wang | selftests: riscv: Add test for the Vector ptrace interface |
+| [46d5edf4](https://github.com/RVCK-Project/rvck/commit/46d5edf478c4b619b3832ce16a82b2be566db575) | 2025-11-17 | Yong-Xuan Wang | riscv: ptrace: Optimize the allocation of vector regset |
+| [a3d9ae08](https://github.com/RVCK-Project/rvck/commit/a3d9ae08f9496ad3af640fe0d849045ed73cda9b) | 2026-10-27 | lvyating | perf machine: Fix NULL deref in thread__resolve_callchain_sample() |
+| [6d9b105b](https://github.com/RVCK-Project/rvck/commit/6d9b105b1a6eea4b15b4ff103b8ba8c9daa1a281) | 2026-04-03 | Chen Pei | riscv: vdso_cfi: Add .gitignore for build artifacts |
+| [151ee537](https://github.com/RVCK-Project/rvck/commit/151ee53769fe186328ab2370cda23ebf272211f6) | 2026-10-22 | Liu Fei | i2c: Rename LRW I2C driver to LeapRise ZF(ZhuFeng) I2C driver |
+| [bfdbff48](https://github.com/RVCK-Project/rvck/commit/bfdbff48e0d4c6d4af293896a7f25e2b1b00c9f1) | 2026-10-19 | Liu Wenhong | tty: serial: Rename LRW UART driver to LeapRise ZF(ZhuFeng) UART driver |
+| [38ac9161](https://github.com/RVCK-Project/rvck/commit/38ac9161afd2f36abb19820479db7f878b1eaa4d) | 2025-05-15 | Radim Krčmář | RISC-V: KVM: add KVM_CAP_RISCV_MP_STATE_RESET |
+| [64172498](https://github.com/RVCK-Project/rvck/commit/64172498c391ff4f955236adbfaac3c2c3850599) | 2025-05-15 | Atish Patra | RISC-V: KVM: Remove scounteren initialization |
+| [deacd8dc](https://github.com/RVCK-Project/rvck/commit/deacd8dc6f55042f6fe5a906a0006b9e00d4d35d) | 2025-04-03 | Radim Krčmář | KVM: RISC-V: remove unnecessary SBI reset state |
+| [1504bcb2](https://github.com/RVCK-Project/rvck/commit/1504bcb2c3fda8b27905a0e2efb6b25e9645cb4e) | 2025-04-03 | Radim Krčmář | KVM: RISC-V: refactor sbi reset request |
+| [c63d7142](https://github.com/RVCK-Project/rvck/commit/c63d7142be353570da0038547f833d2244efd8aa) | 2025-04-03 | Radim Krčmář | KVM: RISC-V: refactor vector state reset |
 | [99539c3e](https://github.com/RVCK-Project/rvck/commit/99539c3e0665a6954184dfa392ff2a41cd765a7f) | 2026-11-05 | Gao Rui | perf: riscv: Fix passing pointer to sbi_ecall in pmu_sbi_check_event |
 | [c44e3852](https://github.com/RVCK-Project/rvck/commit/c44e3852ff761ca76b9e266114004d544ecf1878) | 2026-08-18 | Xixin Liu | perf: RISC-V: use BIT_ULL for u64 overflow masks |
 | [3bc16937](https://github.com/RVCK-Project/rvck/commit/3bc1693791d24ab7d552c856425600616980fd2b) | 2025-11-14 | Chen Pei | tools: riscv: Fixed misalignment of CSR related definitions |
@@ -569,7 +592,7 @@
 | [cbf4f664](https://github.com/RVCK-Project/rvck/commit/cbf4f6644bd0355282d69aa396267bbf334cb104) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 549 条提交（显示全部）**
+**共 572 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -578,5 +601,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-12 15:39:57*
-*数据来源: 主分支 rvck-6.6@dc246d68*
+*本页面最后更新于 2026-11-16 15:30:16*
+*数据来源: 主分支 rvck-6.6@03d8d36c*

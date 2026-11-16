@@ -1,8 +1,8 @@
 {
-  "total_commits": 1770,
-  "commits_with_company": 1661,
-  "total_insertions": 1725631,
-  "total_deletions": 97649,
+  "total_commits": 1794,
+  "commits_with_company": 1685,
+  "total_insertions": 1729799,
+  "total_deletions": 100643,
   "companies": {
     "超睿科技": {
       "count": 90,
@@ -3800,15 +3800,15 @@
       ]
     },
     "中兴通讯": {
-      "count": 549,
-      "insertions": 33699,
-      "deletions": 6552,
+      "count": 572,
+      "insertions": 37867,
+      "deletions": 9534,
       "commits": [
         {
-          "hash": "02b14c3d725f71f3a5a2a22ef61faa429c3923b3",
+          "hash": "64fb19d661cee38676495ef666b2488c285b9324",
           "author_name": "Ben Dooks",
           "author_email": "ben.dooks@codethink.co.uk",
-          "date": "2026-11-12 15:41:11 +0800",
+          "date": "2026-11-16 15:31:14 +0800",
           "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
           "insertions": 0,
           "deletions": 0,
@@ -3822,10 +3822,10 @@
           ]
         },
         {
-          "hash": "ea60407751cdd2bd226a630a2c62d51a67bdb2ab",
+          "hash": "24288fddb6dbadf0c677cf66ef6fb944995d9e3d",
           "author_name": "Atish Patra",
           "author_email": "atishp@rivosinc.com",
-          "date": "2026-11-12 15:41:10 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
           "insertions": 0,
           "deletions": 0,
@@ -3838,10 +3838,10 @@
           ]
         },
         {
-          "hash": "2d0a09084d4892e2a91eb454c8e7a97a5d4d5318",
+          "hash": "a00ba9c52a5fbd3f9104e3ec65ee29efaec89d77",
           "author_name": "Mayuresh Chitale",
           "author_email": "mchitale@ventanamicro.com",
-          "date": "2026-11-12 15:41:08 +0800",
+          "date": "2026-11-16 15:31:12 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
           "insertions": 0,
           "deletions": 0,
@@ -3851,6 +3851,347 @@
             "Signed-off-by: yechao-w <wang.yechao255@zte.com.cn>",
             "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
             "Mayuresh Chitale <mchitale@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "5b695a5cf9e35067ddacccd886a6eba349a47cb5",
+          "author_name": "Feng Jie",
+          "author_email": "feng.jie8@zte.com.cn",
+          "date": "2026-10-21 09:39:56 +0800",
+          "subject": "drivers/perf: Rename LRW DDR PMU to LeapRise ZF(ZhuFeng) DDR PMU driver",
+          "insertions": 687,
+          "deletions": 774,
+          "signatures": [
+            "Signed-off-by: Feng Jie <feng.jie8@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "Feng Jie <feng.jie8@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "115a293e02ea72a706ccdd95fbca22d59db82081",
+          "author_name": "Guo Wu",
+          "author_email": "guo.wu1@zte.com.cn",
+          "date": "2026-10-21 15:42:28 +0800",
+          "subject": "drivers/perf: Rename LRW PCIe PMU to LeapRise ZF PMU driver",
+          "insertions": 835,
+          "deletions": 824,
+          "signatures": [
+            "Signed-off-by: Guo Wu <guo.wu1@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "Guo Wu <guo.wu1@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "9b14db354f8dab842edc5bb72e862507675d04a0",
+          "author_name": "He Yilin",
+          "author_email": "he.yilin@zte.com.cn",
+          "date": "2026-10-13 18:48:55 +0800",
+          "subject": "perf vendor events riscv: rename lrw/lrw-core to lprs/zf-core",
+          "insertions": 3,
+          "deletions": 7,
+          "signatures": [
+            "Signed-off-by: He Yilin <he.yilin@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "He Yilin <he.yilin@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "e259bb5d52a0a64b51b730a899011450d196a3b1",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: verify ptrace accepts valid vector csr values",
+          "insertions": 261,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "20e7105b16510457ee904b83af779fc73384558a",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: verify ptrace rejects invalid vector csr inputs",
+          "insertions": 317,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "5ad9bffe31a36c1168ddfacaeb07ea706fb15450",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: verify syscalls discard vector context",
+          "insertions": 123,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "e9a6faaf60590a882754c7166d7dcf4a49460cd2",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: verify initial vector state with ptrace",
+          "insertions": 135,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "a0d9085ec97c0b442d79e671012d87f31261d945",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: test ptrace vector interface",
+          "insertions": 115,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "ef7c6eb047bcc27f7968554720e902e9edb57621",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "riscv: ptrace: validate input vector csr registers",
+          "insertions": 87,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "fe8311751a3f55f7e4614540068080e675ee7121",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "riscv: csr: define vtype register elements",
+          "insertions": 17,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "eb71bd4648904e22c08bb211eeb752b9baef1cd0",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:56 -0700",
+          "subject": "riscv: vector: init vector context with proper vlenb",
+          "insertions": 9,
+          "deletions": 4,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "a46bd83e372661c50066386cad5d4b2872885f6e",
+          "author_name": "Ilya Mamay",
+          "author_email": "mmamayka01@gmail.com",
+          "date": "2026-01-25 21:09:56 -0700",
+          "subject": "riscv: ptrace: return ENODATA for inactive vector extension",
+          "insertions": 8,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Ilya Mamay <mmamayka01@gmail.com>",
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Ilya Mamay <mmamayka01@gmail.com>"
+          ]
+        },
+        {
+          "hash": "bb768759997ae847fcc2537a2693584cd235b55c",
+          "author_name": "Yong-Xuan Wang",
+          "author_email": "yongxuan.wang@sifive.com",
+          "date": "2025-11-17 21:19:30 -0700",
+          "subject": "selftests: riscv: Add test for the Vector ptrace interface",
+          "insertions": 138,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Yong-Xuan Wang <yongxuan.wang@sifive.com>"
+          ]
+        },
+        {
+          "hash": "46d5edf478c4b619b3832ce16a82b2be566db575",
+          "author_name": "Yong-Xuan Wang",
+          "author_email": "yongxuan.wang@sifive.com",
+          "date": "2025-11-17 21:19:29 -0700",
+          "subject": "riscv: ptrace: Optimize the allocation of vector regset",
+          "insertions": 24,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Yong-Xuan Wang <yongxuan.wang@sifive.com>"
+          ]
+        },
+        {
+          "hash": "a3d9ae08f9496ad3af640fe0d849045ed73cda9b",
+          "author_name": "lvyating",
+          "author_email": "lv.yating@zte.com.cn",
+          "date": "2026-10-27 19:47:32 +0800",
+          "subject": "perf machine: Fix NULL deref in thread__resolve_callchain_sample()",
+          "insertions": 1,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: lvyating <lv.yating@zte.com.cn>",
+            "Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>",
+            "Signed-off-by: lvyating <lv.yating@zte.com.cn>",
+            "lvyating <lv.yating@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "6d9b105b1a6eea4b15b4ff103b8ba8c9daa1a281",
+          "author_name": "Chen Pei",
+          "author_email": "cp0613@linux.alibaba.com",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: vdso_cfi: Add .gitignore for build artifacts",
+          "insertions": 8,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Chen Pei <cp0613@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "151ee53769fe186328ab2370cda23ebf272211f6",
+          "author_name": "Liu Fei",
+          "author_email": "liu.fei16@zte.com.cn",
+          "date": "2026-10-22 20:35:01 +0800",
+          "subject": "i2c: Rename LRW I2C driver to LeapRise ZF(ZhuFeng) I2C driver",
+          "insertions": 704,
+          "deletions": 718,
+          "signatures": [
+            "Signed-off-by: Liu Fei <liu.fei16@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "Liu Fei <liu.fei16@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "bfdbff48e0d4c6d4af293896a7f25e2b1b00c9f1",
+          "author_name": "Liu Wenhong",
+          "author_email": "liu.wenhong35@zte.com.cn",
+          "date": "2026-10-19 19:41:21 +0800",
+          "subject": "tty: serial: Rename LRW UART driver to LeapRise ZF(ZhuFeng) UART driver",
+          "insertions": 550,
+          "deletions": 552,
+          "signatures": [
+            "Signed-off-by: Liu Wenhong <liu.wenhong35@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "Liu Wenhong <liu.wenhong35@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "38ac9161afd2f36abb19820479db7f878b1eaa4d",
+          "author_name": "Radim Krčmář",
+          "author_email": "rkrcmar@ventanamicro.com",
+          "date": "2025-05-15 16:37:25 +0200",
+          "subject": "RISC-V: KVM: add KVM_CAP_RISCV_MP_STATE_RESET",
+          "insertions": 60,
+          "deletions": 13,
+          "signatures": [
+            "Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Radim Krčmář <rkrcmar@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "64172498c391ff4f955236adbfaac3c2c3850599",
+          "author_name": "Atish Patra",
+          "author_email": "atishp@rivosinc.com",
+          "date": "2025-05-15 16:11:18 -0700",
+          "subject": "RISC-V: KVM: Remove scounteren initialization",
+          "insertions": 10,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Atish Patra <atishp@rivosinc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Atish Patra <atishp@rivosinc.com>"
+          ]
+        },
+        {
+          "hash": "deacd8dc6f55042f6fe5a906a0006b9e00d4d35d",
+          "author_name": "Radim Krčmář",
+          "author_email": "rkrcmar@ventanamicro.com",
+          "date": "2025-04-03 13:25:22 +0200",
+          "subject": "KVM: RISC-V: remove unnecessary SBI reset state",
+          "insertions": 47,
+          "deletions": 46,
+          "signatures": [
+            "Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Radim Krčmář <rkrcmar@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "1504bcb2c3fda8b27905a0e2efb6b25e9645cb4e",
+          "author_name": "Radim Krčmář",
+          "author_email": "rkrcmar@ventanamicro.com",
+          "date": "2025-04-03 13:25:21 +0200",
+          "subject": "KVM: RISC-V: refactor sbi reset request",
+          "insertions": 16,
+          "deletions": 21,
+          "signatures": [
+            "Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Radim Krčmář <rkrcmar@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "c63d7142be353570da0038547f833d2244efd8aa",
+          "author_name": "Radim Krčmář",
+          "author_email": "rkrcmar@ventanamicro.com",
+          "date": "2025-04-03 13:25:20 +0200",
+          "subject": "KVM: RISC-V: refactor vector state reset",
+          "insertions": 13,
+          "deletions": 11,
+          "signatures": [
+            "Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Radim Krčmář <rkrcmar@ventanamicro.com>"
           ]
         },
         {
@@ -12509,10 +12850,10 @@
       "deletions": 20015,
       "commits": [
         {
-          "hash": "bf0f24cac5d6c8be3235fe371a772ef7b467f1be",
+          "hash": "41bfa2db6902a2bee252e461e012c2ebf808a398",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-12 15:41:10 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -12524,10 +12865,10 @@
           ]
         },
         {
-          "hash": "6c6a89bc84813d58ab3372921a28da915c279314",
+          "hash": "9501020791370c344dba8a8bd6a9399494f8dcd7",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-12 15:41:09 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -12540,10 +12881,10 @@
           ]
         },
         {
-          "hash": "ecf6a13faa011e705dc537a9502d81a4e895f746",
+          "hash": "d5bcb35cafbe3cbbf75ac7a10d4923699a1cc513",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-12 15:41:08 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -20124,10 +20465,23 @@
       ]
     },
     "软件所": {
-      "count": 354,
+      "count": 355,
       "insertions": 1424544,
-      "deletions": 41292,
+      "deletions": 41304,
       "commits": [
+        {
+          "hash": "871f189ccd3c4c4faadda452f1df913633b9e8ed",
+          "author_name": "Chen Wang",
+          "author_email": "wangchen20@iscas.ac.cn",
+          "date": "2026-11-13 16:27:53 +0800",
+          "subject": "usb: dwc3: Delete non-existent RTK entry",
+          "insertions": 0,
+          "deletions": 12,
+          "signatures": [
+            "Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>",
+            "Chen Wang <wangchen20@iscas.ac.cn>"
+          ]
+        },
         {
           "hash": "7f57ff7d6c37e70f630700afc43601e217dcc54e",
           "author_name": "Chen Wang",
@@ -27087,7 +27441,7 @@
       ]
     }
   ],
-  "total_contribution": 1831,
+  "total_contribution": 1856,
   "companies_contribution": {
     "超睿科技": {
       "count": 92,
@@ -27095,10 +27449,10 @@
       "deletions": 814,
       "commits": [
         {
-          "hash": "bf0f24cac5d6c8be3235fe371a772ef7b467f1be",
+          "hash": "41bfa2db6902a2bee252e461e012c2ebf808a398",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-12 15:41:10 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -30913,15 +31267,15 @@
       ]
     },
     "中兴通讯": {
-      "count": 549,
-      "insertions": 33699,
-      "deletions": 6552,
+      "count": 572,
+      "insertions": 37867,
+      "deletions": 9534,
       "commits": [
         {
-          "hash": "02b14c3d725f71f3a5a2a22ef61faa429c3923b3",
+          "hash": "64fb19d661cee38676495ef666b2488c285b9324",
           "author_name": "Ben Dooks",
           "author_email": "ben.dooks@codethink.co.uk",
-          "date": "2026-11-12 15:41:11 +0800",
+          "date": "2026-11-16 15:31:14 +0800",
           "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
           "insertions": 0,
           "deletions": 0,
@@ -30935,10 +31289,10 @@
           ]
         },
         {
-          "hash": "ea60407751cdd2bd226a630a2c62d51a67bdb2ab",
+          "hash": "24288fddb6dbadf0c677cf66ef6fb944995d9e3d",
           "author_name": "Atish Patra",
           "author_email": "atishp@rivosinc.com",
-          "date": "2026-11-12 15:41:10 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
           "insertions": 0,
           "deletions": 0,
@@ -30951,10 +31305,10 @@
           ]
         },
         {
-          "hash": "2d0a09084d4892e2a91eb454c8e7a97a5d4d5318",
+          "hash": "a00ba9c52a5fbd3f9104e3ec65ee29efaec89d77",
           "author_name": "Mayuresh Chitale",
           "author_email": "mchitale@ventanamicro.com",
-          "date": "2026-11-12 15:41:08 +0800",
+          "date": "2026-11-16 15:31:12 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
           "insertions": 0,
           "deletions": 0,
@@ -30964,6 +31318,347 @@
             "Signed-off-by: yechao-w <wang.yechao255@zte.com.cn>",
             "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
             "Mayuresh Chitale <mchitale@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "5b695a5cf9e35067ddacccd886a6eba349a47cb5",
+          "author_name": "Feng Jie",
+          "author_email": "feng.jie8@zte.com.cn",
+          "date": "2026-10-21 09:39:56 +0800",
+          "subject": "drivers/perf: Rename LRW DDR PMU to LeapRise ZF(ZhuFeng) DDR PMU driver",
+          "insertions": 687,
+          "deletions": 774,
+          "signatures": [
+            "Signed-off-by: Feng Jie <feng.jie8@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "Feng Jie <feng.jie8@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "115a293e02ea72a706ccdd95fbca22d59db82081",
+          "author_name": "Guo Wu",
+          "author_email": "guo.wu1@zte.com.cn",
+          "date": "2026-10-21 15:42:28 +0800",
+          "subject": "drivers/perf: Rename LRW PCIe PMU to LeapRise ZF PMU driver",
+          "insertions": 835,
+          "deletions": 824,
+          "signatures": [
+            "Signed-off-by: Guo Wu <guo.wu1@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "Guo Wu <guo.wu1@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "9b14db354f8dab842edc5bb72e862507675d04a0",
+          "author_name": "He Yilin",
+          "author_email": "he.yilin@zte.com.cn",
+          "date": "2026-10-13 18:48:55 +0800",
+          "subject": "perf vendor events riscv: rename lrw/lrw-core to lprs/zf-core",
+          "insertions": 3,
+          "deletions": 7,
+          "signatures": [
+            "Signed-off-by: He Yilin <he.yilin@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "He Yilin <he.yilin@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "e259bb5d52a0a64b51b730a899011450d196a3b1",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: verify ptrace accepts valid vector csr values",
+          "insertions": 261,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "20e7105b16510457ee904b83af779fc73384558a",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: verify ptrace rejects invalid vector csr inputs",
+          "insertions": 317,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "5ad9bffe31a36c1168ddfacaeb07ea706fb15450",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: verify syscalls discard vector context",
+          "insertions": 123,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "e9a6faaf60590a882754c7166d7dcf4a49460cd2",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: verify initial vector state with ptrace",
+          "insertions": 135,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "a0d9085ec97c0b442d79e671012d87f31261d945",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "selftests: riscv: test ptrace vector interface",
+          "insertions": 115,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "ef7c6eb047bcc27f7968554720e902e9edb57621",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "riscv: ptrace: validate input vector csr registers",
+          "insertions": 87,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "fe8311751a3f55f7e4614540068080e675ee7121",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:57 -0700",
+          "subject": "riscv: csr: define vtype register elements",
+          "insertions": 17,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "eb71bd4648904e22c08bb211eeb752b9baef1cd0",
+          "author_name": "Sergey Matyukevich",
+          "author_email": "geomatsi@gmail.com",
+          "date": "2026-01-25 21:09:56 -0700",
+          "subject": "riscv: vector: init vector context with proper vlenb",
+          "insertions": 9,
+          "deletions": 4,
+          "signatures": [
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Sergey Matyukevich <geomatsi@gmail.com>"
+          ]
+        },
+        {
+          "hash": "a46bd83e372661c50066386cad5d4b2872885f6e",
+          "author_name": "Ilya Mamay",
+          "author_email": "mmamayka01@gmail.com",
+          "date": "2026-01-25 21:09:56 -0700",
+          "subject": "riscv: ptrace: return ENODATA for inactive vector extension",
+          "insertions": 8,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Ilya Mamay <mmamayka01@gmail.com>",
+            "Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Ilya Mamay <mmamayka01@gmail.com>"
+          ]
+        },
+        {
+          "hash": "bb768759997ae847fcc2537a2693584cd235b55c",
+          "author_name": "Yong-Xuan Wang",
+          "author_email": "yongxuan.wang@sifive.com",
+          "date": "2025-11-17 21:19:30 -0700",
+          "subject": "selftests: riscv: Add test for the Vector ptrace interface",
+          "insertions": 138,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Yong-Xuan Wang <yongxuan.wang@sifive.com>"
+          ]
+        },
+        {
+          "hash": "46d5edf478c4b619b3832ce16a82b2be566db575",
+          "author_name": "Yong-Xuan Wang",
+          "author_email": "yongxuan.wang@sifive.com",
+          "date": "2025-11-17 21:19:29 -0700",
+          "subject": "riscv: ptrace: Optimize the allocation of vector regset",
+          "insertions": 24,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Yong-Xuan Wang <yongxuan.wang@sifive.com>"
+          ]
+        },
+        {
+          "hash": "a3d9ae08f9496ad3af640fe0d849045ed73cda9b",
+          "author_name": "lvyating",
+          "author_email": "lv.yating@zte.com.cn",
+          "date": "2026-10-27 19:47:32 +0800",
+          "subject": "perf machine: Fix NULL deref in thread__resolve_callchain_sample()",
+          "insertions": 1,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: lvyating <lv.yating@zte.com.cn>",
+            "Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>",
+            "Signed-off-by: lvyating <lv.yating@zte.com.cn>",
+            "lvyating <lv.yating@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "6d9b105b1a6eea4b15b4ff103b8ba8c9daa1a281",
+          "author_name": "Chen Pei",
+          "author_email": "cp0613@linux.alibaba.com",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: vdso_cfi: Add .gitignore for build artifacts",
+          "insertions": 8,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Chen Pei <cp0613@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "151ee53769fe186328ab2370cda23ebf272211f6",
+          "author_name": "Liu Fei",
+          "author_email": "liu.fei16@zte.com.cn",
+          "date": "2026-10-22 20:35:01 +0800",
+          "subject": "i2c: Rename LRW I2C driver to LeapRise ZF(ZhuFeng) I2C driver",
+          "insertions": 704,
+          "deletions": 718,
+          "signatures": [
+            "Signed-off-by: Liu Fei <liu.fei16@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "Liu Fei <liu.fei16@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "bfdbff48e0d4c6d4af293896a7f25e2b1b00c9f1",
+          "author_name": "Liu Wenhong",
+          "author_email": "liu.wenhong35@zte.com.cn",
+          "date": "2026-10-19 19:41:21 +0800",
+          "subject": "tty: serial: Rename LRW UART driver to LeapRise ZF(ZhuFeng) UART driver",
+          "insertions": 550,
+          "deletions": 552,
+          "signatures": [
+            "Signed-off-by: Liu Wenhong <liu.wenhong35@zte.com.cn>",
+            "Signed-off-by: Ye Zhihao <ye.zhihao1@zte.com.cn>",
+            "Liu Wenhong <liu.wenhong35@zte.com.cn>"
+          ]
+        },
+        {
+          "hash": "38ac9161afd2f36abb19820479db7f878b1eaa4d",
+          "author_name": "Radim Krčmář",
+          "author_email": "rkrcmar@ventanamicro.com",
+          "date": "2025-05-15 16:37:25 +0200",
+          "subject": "RISC-V: KVM: add KVM_CAP_RISCV_MP_STATE_RESET",
+          "insertions": 60,
+          "deletions": 13,
+          "signatures": [
+            "Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Radim Krčmář <rkrcmar@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "64172498c391ff4f955236adbfaac3c2c3850599",
+          "author_name": "Atish Patra",
+          "author_email": "atishp@rivosinc.com",
+          "date": "2025-05-15 16:11:18 -0700",
+          "subject": "RISC-V: KVM: Remove scounteren initialization",
+          "insertions": 10,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Atish Patra <atishp@rivosinc.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Atish Patra <atishp@rivosinc.com>"
+          ]
+        },
+        {
+          "hash": "deacd8dc6f55042f6fe5a906a0006b9e00d4d35d",
+          "author_name": "Radim Krčmář",
+          "author_email": "rkrcmar@ventanamicro.com",
+          "date": "2025-04-03 13:25:22 +0200",
+          "subject": "KVM: RISC-V: remove unnecessary SBI reset state",
+          "insertions": 47,
+          "deletions": 46,
+          "signatures": [
+            "Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Radim Krčmář <rkrcmar@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "1504bcb2c3fda8b27905a0e2efb6b25e9645cb4e",
+          "author_name": "Radim Krčmář",
+          "author_email": "rkrcmar@ventanamicro.com",
+          "date": "2025-04-03 13:25:21 +0200",
+          "subject": "KVM: RISC-V: refactor sbi reset request",
+          "insertions": 16,
+          "deletions": 21,
+          "signatures": [
+            "Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Radim Krčmář <rkrcmar@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "c63d7142be353570da0038547f833d2244efd8aa",
+          "author_name": "Radim Krčmář",
+          "author_email": "rkrcmar@ventanamicro.com",
+          "date": "2025-04-03 13:25:20 +0200",
+          "subject": "KVM: RISC-V: refactor vector state reset",
+          "insertions": 13,
+          "deletions": 11,
+          "signatures": [
+            "Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>",
+            "Signed-off-by: Anup Patel <anup@brainfault.org>",
+            "Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>",
+            "Radim Krčmář <rkrcmar@ventanamicro.com>"
           ]
         },
         {
@@ -39617,15 +40312,15 @@
       ]
     },
     "阿里达摩院": {
-      "count": 521,
-      "insertions": 87625,
+      "count": 522,
+      "insertions": 87633,
       "deletions": 25360,
       "commits": [
         {
-          "hash": "bf0f24cac5d6c8be3235fe371a772ef7b467f1be",
+          "hash": "41bfa2db6902a2bee252e461e012c2ebf808a398",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-12 15:41:10 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -39637,10 +40332,10 @@
           ]
         },
         {
-          "hash": "6c6a89bc84813d58ab3372921a28da915c279314",
+          "hash": "9501020791370c344dba8a8bd6a9399494f8dcd7",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-12 15:41:09 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -39653,10 +40348,10 @@
           ]
         },
         {
-          "hash": "ecf6a13faa011e705dc537a9502d81a4e895f746",
+          "hash": "d5bcb35cafbe3cbbf75ac7a10d4923699a1cc513",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-12 15:41:08 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -39666,6 +40361,21 @@
             "Signed-off-by: Anup Patel <anup@brainfault.org>",
             "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
             "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "6d9b105b1a6eea4b15b4ff103b8ba8c9daa1a281",
+          "author_name": "Chen Pei",
+          "author_email": "cp0613@linux.alibaba.com",
+          "date": "2026-04-03 19:28:47 -0600",
+          "subject": "riscv: vdso_cfi: Add .gitignore for build artifacts",
+          "insertions": 8,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>",
+            "Signed-off-by: Paul Walmsley <pjw@kernel.org>",
+            "Signed-off-by: Zhang Cheng <zhang.cheng35@zte.com.cn>",
+            "Chen Pei <cp0613@linux.alibaba.com>"
           ]
         },
         {
@@ -49064,15 +49774,15 @@
       ]
     },
     "软件所": {
-      "count": 397,
+      "count": 398,
       "insertions": 1425040,
-      "deletions": 41494,
+      "deletions": 41506,
       "commits": [
         {
-          "hash": "6c6a89bc84813d58ab3372921a28da915c279314",
+          "hash": "9501020791370c344dba8a8bd6a9399494f8dcd7",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-12 15:41:09 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -49085,10 +49795,10 @@
           ]
         },
         {
-          "hash": "ecf6a13faa011e705dc537a9502d81a4e895f746",
+          "hash": "d5bcb35cafbe3cbbf75ac7a10d4923699a1cc513",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-12 15:41:08 +0800",
+          "date": "2026-11-16 15:31:13 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -49098,6 +49808,19 @@
             "Signed-off-by: Anup Patel <anup@brainfault.org>",
             "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
             "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "871f189ccd3c4c4faadda452f1df913633b9e8ed",
+          "author_name": "Chen Wang",
+          "author_email": "wangchen20@iscas.ac.cn",
+          "date": "2026-11-13 16:27:53 +0800",
+          "subject": "usb: dwc3: Delete non-existent RTK entry",
+          "insertions": 0,
+          "deletions": 12,
+          "signatures": [
+            "Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>",
+            "Chen Wang <wangchen20@iscas.ac.cn>"
           ]
         },
         {
@@ -55197,8 +55920,8 @@
       ]
     }
   },
-  "generated_at": "2026-11-12 15:39:57",
+  "generated_at": "2026-11-16 15:30:16",
   "main_branch": "rvck-6.6",
-  "main_commit": "dc246d68",
+  "main_commit": "03d8d36c",
   "start_tag": "v6.6.161"
 }
