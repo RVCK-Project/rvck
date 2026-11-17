@@ -274,7 +274,6 @@ config LPRS_ZF_DDR_PMU
 
 	  If you are not using LPRS DDR hardware or do not require performance monitoring,
 	  say N.
-endmenu
 
 config LPRS_ZF_PCIE_PMU
 	tristate "Enable LeapRise ZhuFeng PCIe sub-system performance monitoring"
@@ -292,3 +291,4 @@ config LPRS_ZF_PCIE_PMU
 
 	  If you are not using LeapRise PCIe hardware or do not require performance monitoring,
 	  say N.
+endmenu
