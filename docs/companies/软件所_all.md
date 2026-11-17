@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 355</li>
-<li><strong>统计时间</strong>: 2026-11-16 15:30:16</li>
+<li><strong>贡献提交数</strong>: 358</li>
+<li><strong>统计时间</strong>: 2026-11-17 12:46:37</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -19,6 +19,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [d48c1f20](https://github.com/RVCK-Project/rvck/commit/d48c1f20e97ee0d88907e54122aef31ba2413eb2) | 2026-11-16 | Chen Wang | riscv: dts: thead: remove rvbook |
+| [240d81a9](https://github.com/RVCK-Project/rvck/commit/240d81a98ab0309b6dbbe1999c0b813d80c192b9) | 2026-11-16 | Chen Wang | net: rfkill: Remove bt and wlan |
+| [798e9e08](https://github.com/RVCK-Project/rvck/commit/798e9e086b98e5d4ee3017812a496cb1fdfc11c7) | 2026-11-16 | Chen Wang | Revert "drivers: support virtio_vdmabuf" |
 | [871f189c](https://github.com/RVCK-Project/rvck/commit/871f189ccd3c4c4faadda452f1df913633b9e8ed) | 2026-11-13 | Chen Wang | usb: dwc3: Delete non-existent RTK entry |
 | [7f57ff7d](https://github.com/RVCK-Project/rvck/commit/7f57ff7d6c37e70f630700afc43601e217dcc54e) | 2026-10-15 | Chen Wang | remove lib/test_fortify.log |
 | [9e5b40e8](https://github.com/RVCK-Project/rvck/commit/9e5b40e84bc912b86dc3f11e8dd5d9bfdcb6d10d) | 2026-08-27 | Chen Wang | riscv: remove k1_defconfig |
@@ -376,7 +379,7 @@
 | [cd5b26f0](https://github.com/RVCK-Project/rvck/commit/cd5b26f072062b57eaeda2a7d2296bb015541299) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 355 条提交（显示全部）**
+**共 358 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -385,5 +388,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-16 15:30:16*
-*数据来源: 主分支 rvck-6.6@03d8d36c*
+*本页面最后更新于 2026-11-17 12:46:37*
+*数据来源: 主分支 rvck-6.6@98960d88*

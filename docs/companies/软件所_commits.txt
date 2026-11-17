@@ -1,9 +1,12 @@
 # 软件所 提交列表（纯文本视图）
-# 共 355 个提交
-# 生成时间: 2026-11-16 15:30:16
+# 共 358 个提交
+# 生成时间: 2026-11-17 12:46:37
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+d48c1f20 | 2026-11-16 | Chen Wang | riscv: dts: thead: remove rvbook
+240d81a9 | 2026-11-16 | Chen Wang | net: rfkill: Remove bt and wlan
+798e9e08 | 2026-11-16 | Chen Wang | Revert "drivers: support virtio_vdmabuf"
 871f189c | 2026-11-13 | Chen Wang | usb: dwc3: Delete non-existent RTK entry
 7f57ff7d | 2026-10-15 | Chen Wang | remove lib/test_fortify.log
 9e5b40e8 | 2026-08-27 | Chen Wang | riscv: remove k1_defconfig

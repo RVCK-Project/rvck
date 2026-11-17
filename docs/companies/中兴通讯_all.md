@@ -4,7 +4,7 @@
 <p><strong>📊 统计信息</strong></p>
 <ul>
 <li><strong>贡献提交数</strong>: 572</li>
-<li><strong>统计时间</strong>: 2026-11-16 15:30:16</li>
+<li><strong>统计时间</strong>: 2026-11-17 12:46:37</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,9 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [64fb19d6](https://github.com/RVCK-Project/rvck/commit/64fb19d661cee38676495ef666b2488c285b9324) | 2026-11-16 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches |
-| [24288fdd](https://github.com/RVCK-Project/rvck/commit/24288fddb6dbadf0c677cf66ef6fb944995d9e3d) | 2026-11-16 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
-| [a00ba9c5](https://github.com/RVCK-Project/rvck/commit/a00ba9c52a5fbd3f9104e3ec65ee29efaec89d77) | 2026-11-16 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config |
+| [131a39b8](https://github.com/RVCK-Project/rvck/commit/131a39b884671f87bdc91793f5d4564c6aa66af5) | 2026-11-17 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches |
+| [56d43101](https://github.com/RVCK-Project/rvck/commit/56d43101fe326749c796975718a8175bdada603c) | 2026-11-17 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
+| [44f0c211](https://github.com/RVCK-Project/rvck/commit/44f0c21124527ca719d195c399327da0fde617ad) | 2026-11-17 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config |
 | [5b695a5c](https://github.com/RVCK-Project/rvck/commit/5b695a5cf9e35067ddacccd886a6eba349a47cb5) | 2026-10-21 | Feng Jie | drivers/perf: Rename LRW DDR PMU to LeapRise ZF(ZhuFeng) DDR PMU driver |
 | [115a293e](https://github.com/RVCK-Project/rvck/commit/115a293e02ea72a706ccdd95fbca22d59db82081) | 2026-10-21 | Guo Wu | drivers/perf: Rename LRW PCIe PMU to LeapRise ZF PMU driver |
 | [9b14db35](https://github.com/RVCK-Project/rvck/commit/9b14db354f8dab842edc5bb72e862507675d04a0) | 2026-10-13 | He Yilin | perf vendor events riscv: rename lrw/lrw-core to lprs/zf-core |
@@ -601,5 +601,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-16 15:30:16*
-*数据来源: 主分支 rvck-6.6@03d8d36c*
+*本页面最后更新于 2026-11-17 12:46:37*
+*数据来源: 主分支 rvck-6.6@98960d88*

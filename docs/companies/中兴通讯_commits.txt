@@ -1,12 +1,12 @@
 # 中兴通讯 提交列表（纯文本视图）
 # 共 572 个提交
-# 生成时间: 2026-11-16 15:30:16
+# 生成时间: 2026-11-17 12:46:37
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-64fb19d6 | 2026-11-16 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches
-24288fdd | 2026-11-16 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
-a00ba9c5 | 2026-11-16 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config
+131a39b8 | 2026-11-17 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches
+56d43101 | 2026-11-17 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
+44f0c211 | 2026-11-17 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config
 5b695a5c | 2026-10-21 | Feng Jie | drivers/perf: Rename LRW DDR PMU to LeapRise ZF(ZhuFeng) DDR PMU driver
 115a293e | 2026-10-21 | Guo Wu | drivers/perf: Rename LRW PCIe PMU to LeapRise ZF PMU driver
 9b14db35 | 2026-10-13 | He Yilin | perf vendor events riscv: rename lrw/lrw-core to lprs/zf-core
