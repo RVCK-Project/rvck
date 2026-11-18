@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 572</li>
-<li><strong>统计时间</strong>: 2026-11-17 12:46:37</li>
+<li><strong>贡献提交数</strong>: 573</li>
+<li><strong>统计时间</strong>: 2026-11-18 16:16:40</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [dc53c99e](https://github.com/RVCK-Project/rvck/commit/dc53c99ef8dbc7ab1a78ef33cdf109312b04586e) | 2025-06-18 | Anup Patel | RISC-V: KVM: Replace KVM_REQ_HFENCE_GVMA_VMID_ALL with KVM_REQ_TLB_FLUSH |
 | [6622779c](https://github.com/RVCK-Project/rvck/commit/6622779ca168bacb1efb5468f2225ec06d190fdf) | 2025-06-18 | Anup Patel | RISC-V: KVM: Rename and move kvm_riscv_local_tlb_sanitize() |
 | [1c9d235a](https://github.com/RVCK-Project/rvck/commit/1c9d235a80be8baf81805e81b9be22c89a3e61fa) | 2025-06-18 | Anup Patel | RISC-V: KVM: Drop the return value of kvm_riscv_vcpu_aia_init() |
 | [4bc195f8](https://github.com/RVCK-Project/rvck/commit/4bc195f83a7ec563296cb155f81ef1d96fb42967) | 2025-06-18 | Anup Patel | RISC-V: KVM: Check kvm_riscv_vcpu_alloc_vector_context() return value |
@@ -217,10 +218,9 @@
 | [b7062cd7](https://github.com/RVCK-Project/rvck/commit/b7062cd78e77099148a9ca8691ed40fa7704a333) | 2025-03-12 | Robin Murphy | iommu: Don't warn prematurely about dodgy probes |
 | [2f1856b0](https://github.com/RVCK-Project/rvck/commit/2f1856b0965625e070fbd8d3cf99a6803fbc6cff) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_domain_alloc() |
 | [408eeb4a](https://github.com/RVCK-Project/rvck/commit/408eeb4aacfef4ff76e2388605a0ff9d49985278) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_present() |
-| [b28b4278](https://github.com/RVCK-Project/rvck/commit/b28b4278b5474c0bf3c7d22bfc71529d5e9d59da) | 2024-09-02 | Lu Baolu | drm/tegra: Use iommu_paging_domain_alloc() |
 ---
 
-**共 572 条提交，显示 201-400**
+**共 573 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-17 12:46:37*
-*数据来源: 主分支 rvck-6.6@98960d88*
+*本页面最后更新于 2026-11-18 16:16:40*
+*数据来源: 主分支 rvck-6.6@4ac4bd32*
