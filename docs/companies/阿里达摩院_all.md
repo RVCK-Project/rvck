@@ -4,7 +4,7 @@
 <p><strong>📊 统计信息</strong></p>
 <ul>
 <li><strong>贡献提交数</strong>: 409</li>
-<li><strong>统计时间</strong>: 2026-11-18 16:16:40</li>
+<li><strong>统计时间</strong>: 2026-11-18 19:36:43</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,9 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [94f4c5ae](https://github.com/RVCK-Project/rvck/commit/94f4c5ae91d53d7e935bf2b27f47501b9c687b73) | 2026-11-18 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration |
-| [d11c81b8](https://github.com/RVCK-Project/rvck/commit/d11c81b834325cc119de96bf5865d1651ebdfeb3) | 2026-11-18 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_a... |
-| [e53e362a](https://github.com/RVCK-Project/rvck/commit/e53e362a9290405987b7a2e5ae6b1cd32ef04425) | 2026-11-18 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_at... |
+| [a4825f72](https://github.com/RVCK-Project/rvck/commit/a4825f7218e602fe070360196b56447ddbfd44cb) | 2026-11-18 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration |
+| [9b6d9058](https://github.com/RVCK-Project/rvck/commit/9b6d9058fd9c8e15db3d88b1e7129e2b282546fd) | 2026-11-18 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_a... |
+| [bf7da863](https://github.com/RVCK-Project/rvck/commit/bf7da863121586f9bc2a7f9b74facdfaef2b24e4) | 2026-11-18 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_at... |
 | [d8c386c7](https://github.com/RVCK-Project/rvck/commit/d8c386c77b9f00c25d2597b17967d45045f38ea3) | 2026-07-18 | Pengpeng Hou | RISC-V: KVM: Reject overlapping AIA IMSIC address fields |
 | [a6aa65e0](https://github.com/RVCK-Project/rvck/commit/a6aa65e038fb03abbd7b6db1a60fd0e1dd6fe28d) | 2026-07-28 | Yicong Yang | RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW |
 | [26ea757b](https://github.com/RVCK-Project/rvck/commit/26ea757b037965fa50ebec00ab304f23fac588c6) | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized |
@@ -438,5 +438,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-18 16:16:40*
-*数据来源: 主分支 rvck-6.6@4ac4bd32*
+*本页面最后更新于 2026-11-18 19:36:43*
+*数据来源: 主分支 rvck-6.6@820b29c3*

@@ -1,8 +1,8 @@
 {
-  "total_commits": 1798,
-  "commits_with_company": 1689,
-  "total_insertions": 1729800,
-  "total_deletions": 105655,
+  "total_commits": 1799,
+  "commits_with_company": 1690,
+  "total_insertions": 1729807,
+  "total_deletions": 105658,
   "companies": {
     "超睿科技": {
       "count": 90,
@@ -3805,10 +3805,10 @@
       "deletions": 9535,
       "commits": [
         {
-          "hash": "6fe1dd37f547b542d3fa3b9cb06201fcdfc1cd07",
+          "hash": "d3543878b632c8f5a96621c4c7d85f463199322f",
           "author_name": "Ben Dooks",
           "author_email": "ben.dooks@codethink.co.uk",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:38:00 +0800",
           "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
           "insertions": 0,
           "deletions": 0,
@@ -3822,10 +3822,10 @@
           ]
         },
         {
-          "hash": "51df65e4b316fc839a0d9d8efbc8a37fde7a6a3c",
+          "hash": "6246fef34fb3a382d2a85725ba1b70946d3eca3f",
           "author_name": "Atish Patra",
           "author_email": "atishp@rivosinc.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:38:00 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
           "insertions": 0,
           "deletions": 0,
@@ -3838,10 +3838,10 @@
           ]
         },
         {
-          "hash": "fdd4250569f5ce1c2b3dc2f403255afe3814df96",
+          "hash": "73c041e2e21082387dc89bf780ba877314c92655",
           "author_name": "Mayuresh Chitale",
           "author_email": "mchitale@ventanamicro.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:58 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
           "insertions": 0,
           "deletions": 0,
@@ -12863,10 +12863,10 @@
       "deletions": 20015,
       "commits": [
         {
-          "hash": "94f4c5ae91d53d7e935bf2b27f47501b9c687b73",
+          "hash": "a4825f7218e602fe070360196b56447ddbfd44cb",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -12878,10 +12878,10 @@
           ]
         },
         {
-          "hash": "d11c81b834325cc119de96bf5865d1651ebdfeb3",
+          "hash": "9b6d9058fd9c8e15db3d88b1e7129e2b282546fd",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -12894,10 +12894,10 @@
           ]
         },
         {
-          "hash": "e53e362a9290405987b7a2e5ae6b1cd32ef04425",
+          "hash": "bf7da863121586f9bc2a7f9b74facdfaef2b24e4",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:58 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -20478,10 +20478,23 @@
       ]
     },
     "软件所": {
-      "count": 358,
-      "insertions": 1424544,
-      "deletions": 46315,
+      "count": 359,
+      "insertions": 1424551,
+      "deletions": 46318,
       "commits": [
+        {
+          "hash": "eb8d1415cc4768bc2dc99c32b064daa538004c58",
+          "author_name": "Chen Wang",
+          "author_email": "wangchen20@iscas.ac.cn",
+          "date": "2026-11-17 15:29:03 +0800",
+          "subject": "genirq/msi: limit MSI_ALLOC_FLAGS_MSIX_ENABLED only for SG2042/mango",
+          "insertions": 7,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>",
+            "Chen Wang <wangchen20@iscas.ac.cn>"
+          ]
+        },
         {
           "hash": "d48c1f20e97ee0d88907e54122aef31ba2413eb2",
           "author_name": "Chen Wang",
@@ -27493,7 +27506,7 @@
       ]
     }
   ],
-  "total_contribution": 1860,
+  "total_contribution": 1861,
   "companies_contribution": {
     "超睿科技": {
       "count": 92,
@@ -27501,10 +27514,10 @@
       "deletions": 814,
       "commits": [
         {
-          "hash": "94f4c5ae91d53d7e935bf2b27f47501b9c687b73",
+          "hash": "a4825f7218e602fe070360196b56447ddbfd44cb",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -31324,10 +31337,10 @@
       "deletions": 9535,
       "commits": [
         {
-          "hash": "6fe1dd37f547b542d3fa3b9cb06201fcdfc1cd07",
+          "hash": "d3543878b632c8f5a96621c4c7d85f463199322f",
           "author_name": "Ben Dooks",
           "author_email": "ben.dooks@codethink.co.uk",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:38:00 +0800",
           "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
           "insertions": 0,
           "deletions": 0,
@@ -31341,10 +31354,10 @@
           ]
         },
         {
-          "hash": "51df65e4b316fc839a0d9d8efbc8a37fde7a6a3c",
+          "hash": "6246fef34fb3a382d2a85725ba1b70946d3eca3f",
           "author_name": "Atish Patra",
           "author_email": "atishp@rivosinc.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:38:00 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
           "insertions": 0,
           "deletions": 0,
@@ -31357,10 +31370,10 @@
           ]
         },
         {
-          "hash": "fdd4250569f5ce1c2b3dc2f403255afe3814df96",
+          "hash": "73c041e2e21082387dc89bf780ba877314c92655",
           "author_name": "Mayuresh Chitale",
           "author_email": "mchitale@ventanamicro.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:58 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
           "insertions": 0,
           "deletions": 0,
@@ -40382,10 +40395,10 @@
       "deletions": 25360,
       "commits": [
         {
-          "hash": "94f4c5ae91d53d7e935bf2b27f47501b9c687b73",
+          "hash": "a4825f7218e602fe070360196b56447ddbfd44cb",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -40397,10 +40410,10 @@
           ]
         },
         {
-          "hash": "d11c81b834325cc119de96bf5865d1651ebdfeb3",
+          "hash": "9b6d9058fd9c8e15db3d88b1e7129e2b282546fd",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -40413,10 +40426,10 @@
           ]
         },
         {
-          "hash": "e53e362a9290405987b7a2e5ae6b1cd32ef04425",
+          "hash": "bf7da863121586f9bc2a7f9b74facdfaef2b24e4",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:58 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -49839,15 +49852,15 @@
       ]
     },
     "软件所": {
-      "count": 401,
-      "insertions": 1425040,
-      "deletions": 46517,
+      "count": 402,
+      "insertions": 1425047,
+      "deletions": 46520,
       "commits": [
         {
-          "hash": "d11c81b834325cc119de96bf5865d1651ebdfeb3",
+          "hash": "9b6d9058fd9c8e15db3d88b1e7129e2b282546fd",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -49860,10 +49873,10 @@
           ]
         },
         {
-          "hash": "e53e362a9290405987b7a2e5ae6b1cd32ef04425",
+          "hash": "bf7da863121586f9bc2a7f9b74facdfaef2b24e4",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 16:17:37 +0800",
+          "date": "2026-11-18 19:37:58 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -49873,6 +49886,19 @@
             "Signed-off-by: Anup Patel <anup@brainfault.org>",
             "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
             "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "eb8d1415cc4768bc2dc99c32b064daa538004c58",
+          "author_name": "Chen Wang",
+          "author_email": "wangchen20@iscas.ac.cn",
+          "date": "2026-11-17 15:29:03 +0800",
+          "subject": "genirq/msi: limit MSI_ALLOC_FLAGS_MSIX_ENABLED only for SG2042/mango",
+          "insertions": 7,
+          "deletions": 3,
+          "signatures": [
+            "Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>",
+            "Chen Wang <wangchen20@iscas.ac.cn>"
           ]
         },
         {
@@ -56024,8 +56050,8 @@
       ]
     }
   },
-  "generated_at": "2026-11-18 16:16:40",
+  "generated_at": "2026-11-18 19:36:43",
   "main_branch": "rvck-6.6",
-  "main_commit": "4ac4bd32",
+  "main_commit": "820b29c3",
   "start_tag": "v6.6.161"
 }

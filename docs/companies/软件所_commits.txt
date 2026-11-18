@@ -1,9 +1,10 @@
 # 软件所 提交列表（纯文本视图）
-# 共 358 个提交
-# 生成时间: 2026-11-18 16:16:40
+# 共 359 个提交
+# 生成时间: 2026-11-18 19:36:43
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+eb8d1415 | 2026-11-17 | Chen Wang | genirq/msi: limit MSI_ALLOC_FLAGS_MSIX_ENABLED only for SG2042/mango
 d48c1f20 | 2026-11-16 | Chen Wang | riscv: dts: thead: remove rvbook
 240d81a9 | 2026-11-16 | Chen Wang | net: rfkill: Remove bt and wlan
 798e9e08 | 2026-11-16 | Chen Wang | Revert "drivers: support virtio_vdmabuf"

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 358</li>
-<li><strong>统计时间</strong>: 2026-11-18 16:16:40</li>
+<li><strong>贡献提交数</strong>: 359</li>
+<li><strong>统计时间</strong>: 2026-11-18 19:36:43</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -19,6 +19,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [eb8d1415](https://github.com/RVCK-Project/rvck/commit/eb8d1415cc4768bc2dc99c32b064daa538004c58) | 2026-11-17 | Chen Wang | genirq/msi: limit MSI_ALLOC_FLAGS_MSIX_ENABLED only for SG2042/mango |
 | [d48c1f20](https://github.com/RVCK-Project/rvck/commit/d48c1f20e97ee0d88907e54122aef31ba2413eb2) | 2026-11-16 | Chen Wang | riscv: dts: thead: remove rvbook |
 | [240d81a9](https://github.com/RVCK-Project/rvck/commit/240d81a98ab0309b6dbbe1999c0b813d80c192b9) | 2026-11-16 | Chen Wang | net: rfkill: Remove bt and wlan |
 | [798e9e08](https://github.com/RVCK-Project/rvck/commit/798e9e086b98e5d4ee3017812a496cb1fdfc11c7) | 2026-11-16 | Chen Wang | Revert "drivers: support virtio_vdmabuf" |
@@ -379,7 +380,7 @@
 | [cd5b26f0](https://github.com/RVCK-Project/rvck/commit/cd5b26f072062b57eaeda2a7d2296bb015541299) | 2024-01-03 | Emil Renner Berthing | dt-bindings: pinctrl: Add thead,th1520-pinctrl bindings |
 ---
 
-**共 358 条提交（显示全部）**
+**共 359 条提交（显示全部）**
 
 [分页显示](软件所.md) | [纯文本视图](软件所_commits.txt)
 ## 🔙 返回
@@ -388,5 +389,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-18 16:16:40*
-*数据来源: 主分支 rvck-6.6@4ac4bd32*
+*本页面最后更新于 2026-11-18 19:36:43*
+*数据来源: 主分支 rvck-6.6@820b29c3*
