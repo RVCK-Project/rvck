@@ -53,7 +53,7 @@ KCOV_INSTRUMENT_sev.o					:= n
 # should be considered.
 KCOV_INSTRUMENT_machine_kexec_64.o			:= n
 
-CFLAGS_irq.o := -I $(srctree)/$(src)/../include/asm/trace
+CFLAGS_irq.o := -I $(src)/../include/asm/trace
 
 obj-y			+= head_$(BITS).o
 obj-y			+= head$(BITS).o
