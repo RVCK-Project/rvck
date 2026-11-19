@@ -558,8 +558,9 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 			clocks = <&div_clk GATE_CLK_APB_GPIO>,
+				 <&div_clk GATE_CLK_APB_GPIO_INTR>,
 				 <&div_clk GATE_CLK_GPIO_DB>;
-			clock-names = "bus", "db";
+			clock-names = "base_clk", "intr_clk", "db_clk";
 
 			port0a: gpio-controller@0 {
 				compatible = "snps,dw-apb-gpio-port";
@@ -581,8 +582,9 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 			clocks = <&div_clk GATE_CLK_APB_GPIO>,
+				 <&div_clk GATE_CLK_APB_GPIO_INTR>,
 				 <&div_clk GATE_CLK_GPIO_DB>;
-			clock-names = "bus", "db";
+			clock-names = "base_clk", "intr_clk", "db_clk";
 
 			port1a: gpio-controller@0 {
 				compatible = "snps,dw-apb-gpio-port";
@@ -604,8 +606,9 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 			clocks = <&div_clk GATE_CLK_APB_GPIO>,
+				 <&div_clk GATE_CLK_APB_GPIO_INTR>,
 				 <&div_clk GATE_CLK_GPIO_DB>;
-			clock-names = "bus", "db";
+			clock-names = "base_clk", "intr_clk", "db_clk";
 
 			port2a: gpio-controller@0 {
 				compatible = "snps,dw-apb-gpio-port";
