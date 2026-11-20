@@ -15,6 +15,7 @@
 #include <asm/uaccess.h>
 #include <asm/unistd.h>
 #include <asm/vector.h>
+#include <asm/vendor_extensions/leaprise_hwprobe.h>
 #include <asm/vendor_extensions/mips_hwprobe.h>
 #include <asm/vendor_extensions/sifive_hwprobe.h>
 #include <asm/vendor_extensions/thead_hwprobe.h>
@@ -351,6 +352,9 @@ static void hwprobe_one_pair(struct riscv_hwprobe *pair,
 		break;
 	case RISCV_HWPROBE_KEY_VENDOR_EXT_MIPS_0:
 		hwprobe_isa_vendor_ext_mips_0(pair, cpus);
+		break;
+	case RISCV_HWPROBE_KEY_VENDOR_EXT_LEAPRISE_0:
+		hwprobe_isa_vendor_ext_leaprise_0(pair, cpus);
 		break;
 
 	/*

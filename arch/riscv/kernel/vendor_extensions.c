@@ -6,6 +6,7 @@
 #include <asm/vendorid_list.h>
 #include <asm/vendor_extensions.h>
 #include <asm/vendor_extensions/andes.h>
+#include <asm/vendor_extensions/leaprise.h>
 #include <asm/vendor_extensions/mips.h>
 #include <asm/vendor_extensions/thead.h>
 
@@ -15,6 +16,9 @@
 struct riscv_isa_vendor_ext_data_list *riscv_isa_vendor_ext_list[] = {
 #ifdef CONFIG_RISCV_ISA_VENDOR_EXT_ANDES
 	&riscv_isa_vendor_ext_list_andes,
+#endif
+#ifdef CONFIG_RISCV_ISA_VENDOR_EXT_LEAPRISE
+	&riscv_isa_vendor_ext_list_leaprise,
 #endif
 #ifdef CONFIG_RISCV_ISA_VENDOR_EXT_MIPS
 	&riscv_isa_vendor_ext_list_mips,
@@ -47,6 +51,12 @@ bool __riscv_isa_vendor_extension_available(int cpu, unsigned long vendor, unsig
 	case ANDES_VENDOR_ID:
 		bmap = &riscv_isa_vendor_ext_list_andes.all_harts_isa_bitmap;
 		cpu_bmap = &riscv_isa_vendor_ext_list_andes.per_hart_isa_bitmap[cpu];
+		break;
+	#endif
+	#ifdef CONFIG_RISCV_ISA_VENDOR_EXT_LEAPRISE
+	case LEAPRISE_VENDOR_ID:
+		bmap = &riscv_isa_vendor_ext_list_leaprise.all_harts_isa_bitmap;
+		cpu_bmap = riscv_isa_vendor_ext_list_leaprise.per_hart_isa_bitmap;
 		break;
 	#endif
 	#ifdef CONFIG_RISCV_ISA_VENDOR_EXT_MIPS
