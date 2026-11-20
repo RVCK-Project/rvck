@@ -1,3 +1,3 @@
-obj-$(CONFIG_ARCH_SOPHGO)		+= top/top_intc.o
-obj-$(CONFIG_ARCH_SOPHGO)		+= umcu/mcu.o
-obj-$(CONFIG_ARCH_SOPHGO)		+= tach/sophgo-tach.o
+# SPDX-License-Identifier: GPL-2.0
+
+obj-$(CONFIG_SOPHGO_SG2044_TOPSYS)	+= sg2044-topsys.o

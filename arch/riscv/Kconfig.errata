@@ -86,14 +86,14 @@ config ERRATA_THEAD
 
 	  Otherwise, please say "N" here to avoid unnecessary overhead.
 
-config ERRATA_THEAD_PBMT
-	bool "Apply T-Head memory type errata"
+config ERRATA_THEAD_MAE
+	bool "Apply T-Head's memory attribute extension (XTheadMae) errata"
 	depends on ERRATA_THEAD && 64BIT && MMU
 	select RISCV_ALTERNATIVE_EARLY
 	default y
 	help
-	  This will apply the memory type errata to handle the non-standard
-	  memory type bits in page-table-entries on T-Head SoCs.
+	  This will apply the memory attribute extension errata to handle the
+	  non-standard PTE utilization on T-Head SoCs (XTheadMae).
 
 	  If you don't know what to do here, say "Y".
 
@@ -102,6 +102,7 @@ config ERRATA_THEAD_CMO
 	depends on ERRATA_THEAD && MMU
 	select DMA_DIRECT_REMAP
 	select RISCV_DMA_NONCOHERENT
+	select RISCV_NONSTANDARD_CACHE_OPS
 	default y
 	help
 	  This will apply the cache management errata to handle the
@@ -121,5 +122,33 @@ config ERRATA_THEAD_PMU
 	  behaviour via the regular SBI PMU driver and interface.
 
 	  If you don't know what to do here, say "Y".
+
+config ERRATA_THEAD_GHOSTWRITE
+	bool "Apply T-Head Ghostwrite errata"
+	depends on ERRATA_THEAD && RISCV_ISA_XTHEADVECTOR
+	default y
+	help
+	  The T-Head C9xx cores have a vulnerability in the xtheadvector
+	  instruction set. When this errata is enabled, the CPUs will be probed
+	  to determine if they are vulnerable and disable xtheadvector.
+
+	  If you don't know what to do here, say "Y".
+
+config ERRATA_THEAD_WRITE_ONCE
+	bool "Apply T-Head WRITE_ONCE errata"
+	depends on ERRATA_THEAD
+	default y
+	help
+	  The early version of T-Head C9xx cores of sg2042 & th1520 have a store
+	  merge buffer delay problem. The store merge buffer could improve the
+	  store queue performance by merging multi-store requests, but when there
+	  are no continued store requests, the prior single store request would be
+	  waiting in the store queue for a long time. That would cause signifi-
+	  cant problems for communication between multi-cores. Appending a
+	  fence w.o could immediately flush the store merge buffer and let other
+	  cores see the write result.
+
+	  This will apply the WRITE_ONCE errata to handle the non-standard beh-
+	  avior via appending a fence w.o instruction for WRITE_ONCE().
 
 endmenu # "CPU errata selection"
