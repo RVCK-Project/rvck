@@ -477,10 +477,6 @@ int check_vendor_id(struct pci_dev *dev, struct vendor_id_list vendor_id_list[],
 	uint16_t device_vendor_id;
 	uint16_t device_id;
 
-	/* Only apply the allowlist on the Mango platform. */
-	if (!of_machine_is_compatible("sophgo,mango"))
-		return 1;
-
 	if (pci_read_config_word(dev, PCI_VENDOR_ID, &device_vendor_id) != 0) {
 		pr_err("Failed to read device vendor ID\n");
 		return 0;
