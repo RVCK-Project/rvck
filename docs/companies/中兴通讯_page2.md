@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 574</li>
-<li><strong>统计时间</strong>: 2026-11-23 14:50:39</li>
+<li><strong>贡献提交数</strong>: 579</li>
+<li><strong>统计时间</strong>: 2026-11-23 15:06:26</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,11 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [ca3f0958](https://github.com/RVCK-Project/rvck/commit/ca3f09588fe29723dd230e2f39831220346afcf8) | 2025-06-18 | Anup Patel | RISC-V: KVM: Add vmid field to struct kvm_riscv_hfence |
+| [4b8ff22f](https://github.com/RVCK-Project/rvck/commit/4b8ff22fb412fadae0557226db00df43078bd395) | 2025-06-18 | Anup Patel | RISC-V: KVM: Introduce struct kvm_gstage_mapping |
+| [150dde0e](https://github.com/RVCK-Project/rvck/commit/150dde0ef8c6836b1be2441e3541d236a33d39d5) | 2025-06-18 | Anup Patel | RISC-V: KVM: Factor-out MMU related declarations into separate headers |
+| [b597288f](https://github.com/RVCK-Project/rvck/commit/b597288fcebdbd3152b57f45c2c150765a9d36cb) | 2025-06-18 | Anup Patel | RISC-V: KVM: Use ncsr_xyz() in kvm_riscv_vcpu_trap_redirect() |
+| [340cb0c6](https://github.com/RVCK-Project/rvck/commit/340cb0c6d84735388c68cc6cbd95bf256456b265) | 2025-06-18 | Anup Patel | RISC-V: KVM: Implement kvm_arch_flush_remote_tlbs_range() |
 | [d7326196](https://github.com/RVCK-Project/rvck/commit/d7326196754082393b559961eb55765076790480) | 2025-06-18 | Anup Patel | RISC-V: KVM: Don't flush TLB when PTE is unchanged |
 | [dc53c99e](https://github.com/RVCK-Project/rvck/commit/dc53c99ef8dbc7ab1a78ef33cdf109312b04586e) | 2025-06-18 | Anup Patel | RISC-V: KVM: Replace KVM_REQ_HFENCE_GVMA_VMID_ALL with KVM_REQ_TLB_FLUSH |
 | [6622779c](https://github.com/RVCK-Project/rvck/commit/6622779ca168bacb1efb5468f2225ec06d190fdf) | 2025-06-18 | Anup Patel | RISC-V: KVM: Rename and move kvm_riscv_local_tlb_sanitize() |
@@ -213,14 +218,9 @@
 | [0acbffc6](https://github.com/RVCK-Project/rvck/commit/0acbffc66cd759cd1bd85990abf0edcaae0684d6) | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize bswap insns with Zbb support |
 | [5232ff63](https://github.com/RVCK-Project/rvck/commit/5232ff638143ccec1d9c37492dc18c10dfbc9f0f) | 2024-01-15 | Pu Lehui | riscv, bpf: Optimize sign-extention mov insns with Zbb support |
 | [61d21e63](https://github.com/RVCK-Project/rvck/commit/61d21e63fce6f7f025785166d6f5b65c2687309a) | 2024-01-15 | Pu Lehui | riscv, bpf: Add necessary Zbb instructions |
-| [9b509178](https://github.com/RVCK-Project/rvck/commit/9b5091783428841b11dddae1d5f88ebce466cbfc) | 2024-01-15 | Pu Lehui | riscv, bpf: Simplify sext and zext logics in branch instructions |
-| [51d9edf2](https://github.com/RVCK-Project/rvck/commit/51d9edf2b139e3be310e20229730789bd583120a) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit zero-extension to emit_zextw |
-| [5f7c5640](https://github.com/RVCK-Project/rvck/commit/5f7c5640b6037a40273dc186231475d2c5885253) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit sign-extension to emit_sextw |
-| [b7062cd7](https://github.com/RVCK-Project/rvck/commit/b7062cd78e77099148a9ca8691ed40fa7704a333) | 2025-03-12 | Robin Murphy | iommu: Don't warn prematurely about dodgy probes |
-| [2f1856b0](https://github.com/RVCK-Project/rvck/commit/2f1856b0965625e070fbd8d3cf99a6803fbc6cff) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_domain_alloc() |
 ---
 
-**共 574 条提交，显示 201-400**
+**共 579 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-23 14:50:39*
-*数据来源: 主分支 rvck-6.6@d86d146e*
+*本页面最后更新于 2026-11-23 15:06:26*
+*数据来源: 主分支 rvck-6.6@ca67e469*

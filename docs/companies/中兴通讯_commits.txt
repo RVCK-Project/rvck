@@ -1,12 +1,17 @@
 # 中兴通讯 提交列表（纯文本视图）
-# 共 574 个提交
-# 生成时间: 2026-11-23 14:50:39
+# 共 579 个提交
+# 生成时间: 2026-11-23 15:06:26
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-c6416b58 | 2026-11-23 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches
-fd38b640 | 2026-11-23 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
-3f3466bf | 2026-11-23 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config
+dbd3bb6e | 2026-11-23 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches
+054415d2 | 2026-11-23 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
+d047506c | 2026-11-23 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config
+849f8929 | 2025-09-10 | Chen Pei | ACPI: SPCR: Add support for DBG2 RISC-V SBI port subtype
+c14fdee9 | 2025-10-24 | Punit Agrawal | ACPI: SPCR: Check for table version when using precise baudrate
+16e749be | 2025-09-13 | Chen Pei | ACPI: SPCR: Support Precise Baud Rate field
+9f68d6ad | 2024-02-28 | Sia Jee Heng | ACPICA: SPCR: Update the SPCR table to version 4
+8fcd66b6 | 2024-02-28 | Sia Jee Heng | ACPICA: Headers: Add RISC-V SBI Subtype to DBG2
 df6ffb08 | 2026-11-13 | Bai Jian | drivers/perf: add LeapRise ZF(ZhuFeng) ZCN PMU support
 5729ca68 | 2026-11-17 | Ye Zhihao | drivers:perf: fix misplaced endmenu in LPRS PMU Kconfig
 5b695a5c | 2026-10-21 | Feng Jie | drivers/perf: Rename LRW DDR PMU to LeapRise ZF(ZhuFeng) DDR PMU driver

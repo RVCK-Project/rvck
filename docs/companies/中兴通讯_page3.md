@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 574</li>
-<li><strong>统计时间</strong>: 2026-11-23 14:50:39</li>
+<li><strong>贡献提交数</strong>: 579</li>
+<li><strong>统计时间</strong>: 2026-11-23 15:06:26</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,11 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [9b509178](https://github.com/RVCK-Project/rvck/commit/9b5091783428841b11dddae1d5f88ebce466cbfc) | 2024-01-15 | Pu Lehui | riscv, bpf: Simplify sext and zext logics in branch instructions |
+| [51d9edf2](https://github.com/RVCK-Project/rvck/commit/51d9edf2b139e3be310e20229730789bd583120a) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit zero-extension to emit_zextw |
+| [5f7c5640](https://github.com/RVCK-Project/rvck/commit/5f7c5640b6037a40273dc186231475d2c5885253) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit sign-extension to emit_sextw |
+| [b7062cd7](https://github.com/RVCK-Project/rvck/commit/b7062cd78e77099148a9ca8691ed40fa7704a333) | 2025-03-12 | Robin Murphy | iommu: Don't warn prematurely about dodgy probes |
+| [2f1856b0](https://github.com/RVCK-Project/rvck/commit/2f1856b0965625e070fbd8d3cf99a6803fbc6cff) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_domain_alloc() |
 | [408eeb4a](https://github.com/RVCK-Project/rvck/commit/408eeb4aacfef4ff76e2388605a0ff9d49985278) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_present() |
 | [b28b4278](https://github.com/RVCK-Project/rvck/commit/b28b4278b5474c0bf3c7d22bfc71529d5e9d59da) | 2024-09-02 | Lu Baolu | drm/tegra: Use iommu_paging_domain_alloc() |
 | [0170f6e7](https://github.com/RVCK-Project/rvck/commit/0170f6e72e151eddc1c64fad700b8d6544714a38) | 2024-09-02 | Lu Baolu | drm/rockchip: Use iommu_paging_domain_alloc() |
@@ -194,7 +199,7 @@
 | [cbf4f664](https://github.com/RVCK-Project/rvck/commit/cbf4f6644bd0355282d69aa396267bbf334cb104) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 574 条提交，显示 401-574**
+**共 579 条提交，显示 401-579**
 
 [1](中兴通讯.md) [2](中兴通讯_page2.md) **[3]**
 
@@ -205,5 +210,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-23 14:50:39*
-*数据来源: 主分支 rvck-6.6@d86d146e*
+*本页面最后更新于 2026-11-23 15:06:26*
+*数据来源: 主分支 rvck-6.6@ca67e469*
