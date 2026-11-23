@@ -3,8 +3,8 @@
 <div style="background-color: #F4433620; padding: 15px; border-radius: 8px; border-left: 5px solid #F44336;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 409</li>
-<li><strong>统计时间</strong>: 2026-11-18 19:36:43</li>
+<li><strong>贡献提交数</strong>: 429</li>
+<li><strong>统计时间</strong>: 2026-11-23 14:50:39</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,9 +18,29 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [a4825f72](https://github.com/RVCK-Project/rvck/commit/a4825f7218e602fe070360196b56447ddbfd44cb) | 2026-11-18 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration |
-| [9b6d9058](https://github.com/RVCK-Project/rvck/commit/9b6d9058fd9c8e15db3d88b1e7129e2b282546fd) | 2026-11-18 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_a... |
-| [bf7da863](https://github.com/RVCK-Project/rvck/commit/bf7da863121586f9bc2a7f9b74facdfaef2b24e4) | 2026-11-18 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_at... |
+| [c49a01d1](https://github.com/RVCK-Project/rvck/commit/c49a01d10bcb450796cd359e5a3bbcfd555b7fa9) | 2026-11-23 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration |
+| [ec338363](https://github.com/RVCK-Project/rvck/commit/ec338363b1587a4b1f533d2a14fdd6809a2cb5e1) | 2026-11-23 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_a... |
+| [cd4b66e4](https://github.com/RVCK-Project/rvck/commit/cd4b66e4fb19df7b6a3fcdf37be6edc841f9cd40) | 2026-11-23 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_at... |
+| [4990a7ac](https://github.com/RVCK-Project/rvck/commit/4990a7ac83b0fb736df2e77da5929771a42dd728) | 2026-10-29 | Zhiguo Zhu | riscv: dts: zhihe: separate device tree nodes with empty lines |
+| [bee6abbe](https://github.com/RVCK-Project/rvck/commit/bee6abbe063bdd6f63dda26cd1d3a20ace4bcb6d) | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: fix UART pinctrl on Melon Pi and EVB |
+| [317d88e3](https://github.com/RVCK-Project/rvck/commit/317d88e3d7bea228ca621e1d897ccb86004fe6ac) | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: enable second GMAC on Melon Pi |
+| [5da46cbd](https://github.com/RVCK-Project/rvck/commit/5da46cbdfe3dc26f92aafcf97b81d8ed83efaba4) | 2026-10-29 | Zhiguo Zhu | riscv: dts: zhihe: drop unused sensor VCLK pin configs |
+| [44739e05](https://github.com/RVCK-Project/rvck/commit/44739e05a93b70109485ca8586b340659798b474) | 2026-10-29 | Zhiguo Zhu | riscv: dts: zhihe: add A210 GPIO ranges |
+| [d763269c](https://github.com/RVCK-Project/rvck/commit/d763269c68bc46b3f96a0a98c48a4fea18be708a) | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: specify A210 Zicbop block size |
+| [ee22337d](https://github.com/RVCK-Project/rvck/commit/ee22337dc865e6ab511c5de2333bd048e5d07a88) | 2026-10-23 | Zhiguo Zhu | pinctrl: zhihe: accept persistent GPIO state on A210 |
+| [f5a94429](https://github.com/RVCK-Project/rvck/commit/f5a9442981bb1a5a919c46f260733ff3bd548d23) | 2023-12-15 | Emil Renner Berthing | dt-bindings: gpio: dwapb: allow gpio-ranges |
+| [28ff6932](https://github.com/RVCK-Project/rvck/commit/28ff6932a78a1b70ee12bf8d3d0ec09adcfbc2c9) | 2023-10-29 | Daniel Henrique Barboza | dt-bindings: riscv: Document cbop-block-size |
+| [36fd4df1](https://github.com/RVCK-Project/rvck/commit/36fd4df15c64419844f961def7585360f8ed8b0b) | 2026-10-22 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 USB drivers |
+| [516fb495](https://github.com/RVCK-Project/rvck/commit/516fb495cbfe84adf8dc15ab9eed4c496a378fa1) | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: add Melon Pi USB power and Type-C support |
+| [fc8e9141](https://github.com/RVCK-Project/rvck/commit/fc8e9141edacf4a844f63604aff63ab5158e6066) | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 USB support |
+| [3b89a727](https://github.com/RVCK-Project/rvck/commit/3b89a7279c29bf78513745a618eb9a8135f31f1d) | 2026-11-03 | Zhiguo Zhu | usb: dwc3: zhihe: add A210 DWC3 glue driver |
+| [5739c927](https://github.com/RVCK-Project/rvck/commit/5739c92742afd83cb97f80a5bcf2b800120d6bf3) | 2026-11-03 | Zhiguo Zhu | dt-bindings: usb: zhihe: add A210 DWC3 wrapper |
+| [6d50d688](https://github.com/RVCK-Project/rvck/commit/6d50d688134ffb811a780966cd1dba9ff813d002) | 2026-08-18 | Zhiguo Zhu | usb: dwc2: add ZhiHe A210 support |
+| [e2428e69](https://github.com/RVCK-Project/rvck/commit/e2428e69bf5e60ede8512f0a892a06829a30e0be) | 2026-08-18 | Zhiguo Zhu | dt-bindings: usb: dwc2: add ZhiHe A210 |
+| [e3790834](https://github.com/RVCK-Project/rvck/commit/e3790834bc45b38de3977af1dbbe2b30858151f4) | 2026-08-18 | Zhiguo Zhu | phy: zhihe: add A210 USB 3.1 PHY driver |
+| [764d37f1](https://github.com/RVCK-Project/rvck/commit/764d37f1f70e0a23619d4dd017fe8cdb2c13d5dc) | 2026-08-18 | Zhiguo Zhu | phy: zhihe: add A210 USB 2.0 PHY driver |
+| [8743a4b2](https://github.com/RVCK-Project/rvck/commit/8743a4b24ec63e2f3bad4ca9a0237ce9b9be33d6) | 2026-08-18 | Zhiguo Zhu | dt-bindings: phy: zhihe: add A210 USB PHYs |
+| [e46c0b53](https://github.com/RVCK-Project/rvck/commit/e46c0b5357f4f78e5f0db78f217617aebd5d37dd) | 2026-11-16 | Zhiguo Zhu | clk: zhihe: expose A210 USB registers through syscon |
 | [d8c386c7](https://github.com/RVCK-Project/rvck/commit/d8c386c77b9f00c25d2597b17967d45045f38ea3) | 2026-07-18 | Pengpeng Hou | RISC-V: KVM: Reject overlapping AIA IMSIC address fields |
 | [a6aa65e0](https://github.com/RVCK-Project/rvck/commit/a6aa65e038fb03abbd7b6db1a60fd0e1dd6fe28d) | 2026-07-28 | Yicong Yang | RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW |
 | [26ea757b](https://github.com/RVCK-Project/rvck/commit/26ea757b037965fa50ebec00ab304f23fac588c6) | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized |
@@ -429,7 +449,7 @@
 | [ec633acf](https://github.com/RVCK-Project/rvck/commit/ec633acf6cb8c703aa089c9e71eef12fca88079e) | 2024-03-18 | Heiko Stuebner | T-Head C9xx cores implement an older version (0.7.1) of the vector specification... |
 ---
 
-**共 409 条提交（显示全部）**
+**共 429 条提交（显示全部）**
 
 [分页显示](阿里达摩院.md) | [纯文本视图](阿里达摩院_commits.txt)
 ## 🔙 返回
@@ -438,5 +458,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-18 19:36:43*
-*数据来源: 主分支 rvck-6.6@820b29c3*
+*本页面最后更新于 2026-11-23 14:50:39*
+*数据来源: 主分支 rvck-6.6@d86d146e*

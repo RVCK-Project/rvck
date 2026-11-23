@@ -1,12 +1,32 @@
 # 阿里达摩院 提交列表（纯文本视图）
-# 共 409 个提交
-# 生成时间: 2026-11-18 19:36:43
+# 共 429 个提交
+# 生成时间: 2026-11-23 14:50:39
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-a4825f72 | 2026-11-18 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
-9b6d9058 | 2026-11-18 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
-bf7da863 | 2026-11-18 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()
+c49a01d1 | 2026-11-23 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
+ec338363 | 2026-11-23 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
+cd4b66e4 | 2026-11-23 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()
+4990a7ac | 2026-10-29 | Zhiguo Zhu | riscv: dts: zhihe: separate device tree nodes with empty lines
+bee6abbe | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: fix UART pinctrl on Melon Pi and EVB
+317d88e3 | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: enable second GMAC on Melon Pi
+5da46cbd | 2026-10-29 | Zhiguo Zhu | riscv: dts: zhihe: drop unused sensor VCLK pin configs
+44739e05 | 2026-10-29 | Zhiguo Zhu | riscv: dts: zhihe: add A210 GPIO ranges
+d763269c | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: specify A210 Zicbop block size
+ee22337d | 2026-10-23 | Zhiguo Zhu | pinctrl: zhihe: accept persistent GPIO state on A210
+f5a94429 | 2023-12-15 | Emil Renner Berthing | dt-bindings: gpio: dwapb: allow gpio-ranges
+28ff6932 | 2023-10-29 | Daniel Henrique Barboza | dt-bindings: riscv: Document cbop-block-size
+36fd4df1 | 2026-10-22 | Zhiguo Zhu | riscv: rvck_defconfig: enable ZhiHe A210 USB drivers
+516fb495 | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: add Melon Pi USB power and Type-C support
+fc8e9141 | 2026-08-18 | Zhiguo Zhu | riscv: dts: zhihe: add A210 USB support
+3b89a727 | 2026-11-03 | Zhiguo Zhu | usb: dwc3: zhihe: add A210 DWC3 glue driver
+5739c927 | 2026-11-03 | Zhiguo Zhu | dt-bindings: usb: zhihe: add A210 DWC3 wrapper
+6d50d688 | 2026-08-18 | Zhiguo Zhu | usb: dwc2: add ZhiHe A210 support
+e2428e69 | 2026-08-18 | Zhiguo Zhu | dt-bindings: usb: dwc2: add ZhiHe A210
+e3790834 | 2026-08-18 | Zhiguo Zhu | phy: zhihe: add A210 USB 3.1 PHY driver
+764d37f1 | 2026-08-18 | Zhiguo Zhu | phy: zhihe: add A210 USB 2.0 PHY driver
+8743a4b2 | 2026-08-18 | Zhiguo Zhu | dt-bindings: phy: zhihe: add A210 USB PHYs
+e46c0b53 | 2026-11-16 | Zhiguo Zhu | clk: zhihe: expose A210 USB registers through syscon
 d8c386c7 | 2026-07-18 | Pengpeng Hou | RISC-V: KVM: Reject overlapping AIA IMSIC address fields
 a6aa65e0 | 2026-07-28 | Yicong Yang | RISC-V: KVM: Use try_cmpxchg for IMSIC MRIF RMW
 26ea757b | 2026-01-27 | Jiakai Xu | RISC-V: KVM: Skip IMSIC update if vCPU IMSIC state is not initialized

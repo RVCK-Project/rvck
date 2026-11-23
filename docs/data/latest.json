@@ -1,14 +1,27 @@
 {
-  "total_commits": 1799,
-  "commits_with_company": 1690,
-  "total_insertions": 1729807,
-  "total_deletions": 105658,
+  "total_commits": 1821,
+  "commits_with_company": 1712,
+  "total_insertions": 1734668,
+  "total_deletions": 105936,
   "companies": {
     "超睿科技": {
-      "count": 90,
-      "insertions": 10341,
+      "count": 91,
+      "insertions": 10345,
       "deletions": 808,
       "commits": [
+        {
+          "hash": "6f02821fe78b9d81f4438a3fdf87163a16d5bb8d",
+          "author_name": "Xincheng Ji",
+          "author_email": "jixincheng@ultrarisc.com",
+          "date": "2026-11-13 17:41:12 +0800",
+          "subject": "PCI/MSI: Limit the Sophgo device allowlist to the Mango platform",
+          "insertions": 4,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Xincheng Ji <jixincheng@ultrarisc.com>",
+            "Xincheng Ji <jixincheng@ultrarisc.com>"
+          ]
+        },
         {
           "hash": "de27ffd8a034342f9450f2f25d1edc66e33b92cc",
           "author_name": "Jia Wang",
@@ -3800,15 +3813,15 @@
       ]
     },
     "中兴通讯": {
-      "count": 573,
-      "insertions": 37868,
+      "count": 574,
+      "insertions": 40408,
       "deletions": 9535,
       "commits": [
         {
-          "hash": "d3543878b632c8f5a96621c4c7d85f463199322f",
+          "hash": "c6416b58525b7de5030307487259089ac0298ab7",
           "author_name": "Ben Dooks",
           "author_email": "ben.dooks@codethink.co.uk",
-          "date": "2026-11-18 19:38:00 +0800",
+          "date": "2026-11-23 14:51:40 +0800",
           "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
           "insertions": 0,
           "deletions": 0,
@@ -3822,10 +3835,10 @@
           ]
         },
         {
-          "hash": "6246fef34fb3a382d2a85725ba1b70946d3eca3f",
+          "hash": "fd38b640cac16b0b2b140292cec17768acf46693",
           "author_name": "Atish Patra",
           "author_email": "atishp@rivosinc.com",
-          "date": "2026-11-18 19:38:00 +0800",
+          "date": "2026-11-23 14:51:40 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
           "insertions": 0,
           "deletions": 0,
@@ -3838,10 +3851,10 @@
           ]
         },
         {
-          "hash": "73c041e2e21082387dc89bf780ba877314c92655",
+          "hash": "3f3466bfce10bc4c2bdfc1d8562413f20f39ab48",
           "author_name": "Mayuresh Chitale",
           "author_email": "mchitale@ventanamicro.com",
-          "date": "2026-11-18 19:37:58 +0800",
+          "date": "2026-11-23 14:51:38 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
           "insertions": 0,
           "deletions": 0,
@@ -3851,6 +3864,19 @@
             "Signed-off-by: yechao-w <wang.yechao255@zte.com.cn>",
             "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
             "Mayuresh Chitale <mchitale@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "df6ffb085cc87cfa78a264767c8b423a75271cf3",
+          "author_name": "Bai Jian",
+          "author_email": "bai.jian1@zte.com.cn",
+          "date": "2026-11-13 07:44:32 +0000",
+          "subject": "drivers/perf: add LeapRise ZF(ZhuFeng) ZCN PMU support",
+          "insertions": 2540,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Bai Jian <bai.jian1@zte.com.cn>",
+            "Bai Jian <bai.jian1@zte.com.cn>"
           ]
         },
         {
@@ -12858,15 +12884,15 @@
       ]
     },
     "阿里达摩院": {
-      "count": 409,
-      "insertions": 61723,
-      "deletions": 20015,
+      "count": 429,
+      "insertions": 64040,
+      "deletions": 20293,
       "commits": [
         {
-          "hash": "a4825f7218e602fe070360196b56447ddbfd44cb",
+          "hash": "c49a01d10bcb450796cd359e5a3bbcfd555b7fa9",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-18 19:37:59 +0800",
+          "date": "2026-11-23 14:51:39 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -12878,10 +12904,10 @@
           ]
         },
         {
-          "hash": "9b6d9058fd9c8e15db3d88b1e7129e2b282546fd",
+          "hash": "ec338363b1587a4b1f533d2a14fdd6809a2cb5e1",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 19:37:59 +0800",
+          "date": "2026-11-23 14:51:39 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -12894,10 +12920,10 @@
           ]
         },
         {
-          "hash": "bf7da863121586f9bc2a7f9b74facdfaef2b24e4",
+          "hash": "cd4b66e4fb19df7b6a3fcdf37be6edc841f9cd40",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 19:37:58 +0800",
+          "date": "2026-11-23 14:51:38 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -12907,6 +12933,270 @@
             "Signed-off-by: Anup Patel <anup@brainfault.org>",
             "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
             "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "4990a7ac83b0fb736df2e77da5929771a42dd728",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-29 12:59:11 +0800",
+          "subject": "riscv: dts: zhihe: separate device tree nodes with empty lines",
+          "insertions": 41,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "bee6abbe063bdd6f63dda26cd1d3a20ace4bcb6d",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 20:47:26 +0800",
+          "subject": "riscv: dts: zhihe: fix UART pinctrl on Melon Pi and EVB",
+          "insertions": 6,
+          "deletions": 231,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "317d88e3d7bea228ca621e1d897ccb86004fe6ac",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 20:47:22 +0800",
+          "subject": "riscv: dts: zhihe: enable second GMAC on Melon Pi",
+          "insertions": 58,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "5da46cbdfe3dc26f92aafcf97b81d8ed83efaba4",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-29 11:34:12 +0800",
+          "subject": "riscv: dts: zhihe: drop unused sensor VCLK pin configs",
+          "insertions": 0,
+          "deletions": 44,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "44739e05a93b70109485ca8586b340659798b474",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-29 10:31:58 +0800",
+          "subject": "riscv: dts: zhihe: add A210 GPIO ranges",
+          "insertions": 7,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "d763269c68bc46b3f96a0a98c48a4fea18be708a",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 11:39:18 +0800",
+          "subject": "riscv: dts: zhihe: specify A210 Zicbop block size",
+          "insertions": 8,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "ee22337dc865e6ab511c5de2333bd048e5d07a88",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-23 13:57:40 +0800",
+          "subject": "pinctrl: zhihe: accept persistent GPIO state on A210",
+          "insertions": 3,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "f5a9442981bb1a5a919c46f260733ff3bd548d23",
+          "author_name": "Emil Renner Berthing",
+          "author_email": "emil.renner.berthing@canonical.com",
+          "date": "2023-12-15 15:39:02 +0100",
+          "subject": "dt-bindings: gpio: dwapb: allow gpio-ranges",
+          "insertions": 2,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>",
+            "Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>",
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Emil Renner Berthing <emil.renner.berthing@canonical.com>"
+          ]
+        },
+        {
+          "hash": "28ff6932a78a1b70ee12bf8d3d0ec09adcfbc2c9",
+          "author_name": "Daniel Henrique Barboza",
+          "author_email": "dbarboza@ventanamicro.com",
+          "date": "2023-10-29 09:35:00 -0300",
+          "subject": "dt-bindings: riscv: Document cbop-block-size",
+          "insertions": 5,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Daniel Henrique Barboza <dbarboza@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "36fd4df15c64419844f961def7585360f8ed8b0b",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 09:46:21 +0800",
+          "subject": "riscv: rvck_defconfig: enable ZhiHe A210 USB drivers",
+          "insertions": 6,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "516fb495cbfe84adf8dc15ab9eed4c496a378fa1",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 20:47:30 +0800",
+          "subject": "riscv: dts: zhihe: add Melon Pi USB power and Type-C support",
+          "insertions": 187,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "fc8e9141edacf4a844f63604aff63ab5158e6066",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 11:32:48 +0800",
+          "subject": "riscv: dts: zhihe: add A210 USB support",
+          "insertions": 140,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "3b89a7279c29bf78513745a618eb9a8135f31f1d",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-11-03 10:57:40 +0800",
+          "subject": "usb: dwc3: zhihe: add A210 DWC3 glue driver",
+          "insertions": 159,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "5739c92742afd83cb97f80a5bcf2b800120d6bf3",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-11-03 10:57:40 +0800",
+          "subject": "dt-bindings: usb: zhihe: add A210 DWC3 wrapper",
+          "insertions": 107,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "6d50d688134ffb811a780966cd1dba9ff813d002",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 11:32:46 +0800",
+          "subject": "usb: dwc2: add ZhiHe A210 support",
+          "insertions": 18,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "e2428e69bf5e60ede8512f0a892a06829a30e0be",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 12:01:50 +0800",
+          "subject": "dt-bindings: usb: dwc2: add ZhiHe A210",
+          "insertions": 3,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "e3790834bc45b38de3977af1dbbe2b30858151f4",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 11:32:47 +0800",
+          "subject": "phy: zhihe: add A210 USB 3.1 PHY driver",
+          "insertions": 1016,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "764d37f1f70e0a23619d4dd017fe8cdb2c13d5dc",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 11:32:46 +0800",
+          "subject": "phy: zhihe: add A210 USB 2.0 PHY driver",
+          "insertions": 249,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "8743a4b24ec63e2f3bad4ca9a0237ce9b9be33d6",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 12:01:49 +0800",
+          "subject": "dt-bindings: phy: zhihe: add A210 USB PHYs",
+          "insertions": 264,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "e46c0b5357f4f78e5f0db78f217617aebd5d37dd",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-11-16 19:51:26 +0800",
+          "subject": "clk: zhihe: expose A210 USB registers through syscon",
+          "insertions": 38,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
           ]
         },
         {
@@ -27506,18 +27796,18 @@
       ]
     }
   ],
-  "total_contribution": 1861,
+  "total_contribution": 1883,
   "companies_contribution": {
     "超睿科技": {
-      "count": 92,
-      "insertions": 10341,
+      "count": 93,
+      "insertions": 10345,
       "deletions": 814,
       "commits": [
         {
-          "hash": "a4825f7218e602fe070360196b56447ddbfd44cb",
+          "hash": "c49a01d10bcb450796cd359e5a3bbcfd555b7fa9",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-18 19:37:59 +0800",
+          "date": "2026-11-23 14:51:39 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -27526,6 +27816,19 @@
             "Signed-off-by: Anup Patel <anup@brainfault.org>",
             "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
             "Xie Bo <xb@ultrarisc.com>"
+          ]
+        },
+        {
+          "hash": "6f02821fe78b9d81f4438a3fdf87163a16d5bb8d",
+          "author_name": "Xincheng Ji",
+          "author_email": "jixincheng@ultrarisc.com",
+          "date": "2026-11-13 17:41:12 +0800",
+          "subject": "PCI/MSI: Limit the Sophgo device allowlist to the Mango platform",
+          "insertions": 4,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Xincheng Ji <jixincheng@ultrarisc.com>",
+            "Xincheng Ji <jixincheng@ultrarisc.com>"
           ]
         },
         {
@@ -31332,15 +31635,15 @@
       ]
     },
     "中兴通讯": {
-      "count": 573,
-      "insertions": 37868,
+      "count": 574,
+      "insertions": 40408,
       "deletions": 9535,
       "commits": [
         {
-          "hash": "d3543878b632c8f5a96621c4c7d85f463199322f",
+          "hash": "c6416b58525b7de5030307487259089ac0298ab7",
           "author_name": "Ben Dooks",
           "author_email": "ben.dooks@codethink.co.uk",
-          "date": "2026-11-18 19:38:00 +0800",
+          "date": "2026-11-23 14:51:40 +0800",
           "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
           "insertions": 0,
           "deletions": 0,
@@ -31354,10 +31657,10 @@
           ]
         },
         {
-          "hash": "6246fef34fb3a382d2a85725ba1b70946d3eca3f",
+          "hash": "fd38b640cac16b0b2b140292cec17768acf46693",
           "author_name": "Atish Patra",
           "author_email": "atishp@rivosinc.com",
-          "date": "2026-11-18 19:38:00 +0800",
+          "date": "2026-11-23 14:51:40 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
           "insertions": 0,
           "deletions": 0,
@@ -31370,10 +31673,10 @@
           ]
         },
         {
-          "hash": "73c041e2e21082387dc89bf780ba877314c92655",
+          "hash": "3f3466bfce10bc4c2bdfc1d8562413f20f39ab48",
           "author_name": "Mayuresh Chitale",
           "author_email": "mchitale@ventanamicro.com",
-          "date": "2026-11-18 19:37:58 +0800",
+          "date": "2026-11-23 14:51:38 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
           "insertions": 0,
           "deletions": 0,
@@ -31383,6 +31686,19 @@
             "Signed-off-by: yechao-w <wang.yechao255@zte.com.cn>",
             "Signed-off-by: Yanteng Si <si.yanteng@linux.dev>",
             "Mayuresh Chitale <mchitale@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "df6ffb085cc87cfa78a264767c8b423a75271cf3",
+          "author_name": "Bai Jian",
+          "author_email": "bai.jian1@zte.com.cn",
+          "date": "2026-11-13 07:44:32 +0000",
+          "subject": "drivers/perf: add LeapRise ZF(ZhuFeng) ZCN PMU support",
+          "insertions": 2540,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Bai Jian <bai.jian1@zte.com.cn>",
+            "Bai Jian <bai.jian1@zte.com.cn>"
           ]
         },
         {
@@ -40390,15 +40706,15 @@
       ]
     },
     "阿里达摩院": {
-      "count": 522,
-      "insertions": 87633,
-      "deletions": 25360,
+      "count": 542,
+      "insertions": 89950,
+      "deletions": 25638,
       "commits": [
         {
-          "hash": "a4825f7218e602fe070360196b56447ddbfd44cb",
+          "hash": "c49a01d10bcb450796cd359e5a3bbcfd555b7fa9",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-18 19:37:59 +0800",
+          "date": "2026-11-23 14:51:39 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -40410,10 +40726,10 @@
           ]
         },
         {
-          "hash": "9b6d9058fd9c8e15db3d88b1e7129e2b282546fd",
+          "hash": "ec338363b1587a4b1f533d2a14fdd6809a2cb5e1",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 19:37:59 +0800",
+          "date": "2026-11-23 14:51:39 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -40426,10 +40742,10 @@
           ]
         },
         {
-          "hash": "bf7da863121586f9bc2a7f9b74facdfaef2b24e4",
+          "hash": "cd4b66e4fb19df7b6a3fcdf37be6edc841f9cd40",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 19:37:58 +0800",
+          "date": "2026-11-23 14:51:38 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -40439,6 +40755,270 @@
             "Signed-off-by: Anup Patel <anup@brainfault.org>",
             "Signed-off-by: ZhenXing Zhu <zhenxing.zhu@linux.alibaba.com>",
             "Jiakai Xu <jiakaipeanut@gmail.com>"
+          ]
+        },
+        {
+          "hash": "4990a7ac83b0fb736df2e77da5929771a42dd728",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-29 12:59:11 +0800",
+          "subject": "riscv: dts: zhihe: separate device tree nodes with empty lines",
+          "insertions": 41,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "bee6abbe063bdd6f63dda26cd1d3a20ace4bcb6d",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 20:47:26 +0800",
+          "subject": "riscv: dts: zhihe: fix UART pinctrl on Melon Pi and EVB",
+          "insertions": 6,
+          "deletions": 231,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "317d88e3d7bea228ca621e1d897ccb86004fe6ac",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 20:47:22 +0800",
+          "subject": "riscv: dts: zhihe: enable second GMAC on Melon Pi",
+          "insertions": 58,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "5da46cbdfe3dc26f92aafcf97b81d8ed83efaba4",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-29 11:34:12 +0800",
+          "subject": "riscv: dts: zhihe: drop unused sensor VCLK pin configs",
+          "insertions": 0,
+          "deletions": 44,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "44739e05a93b70109485ca8586b340659798b474",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-29 10:31:58 +0800",
+          "subject": "riscv: dts: zhihe: add A210 GPIO ranges",
+          "insertions": 7,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "d763269c68bc46b3f96a0a98c48a4fea18be708a",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 11:39:18 +0800",
+          "subject": "riscv: dts: zhihe: specify A210 Zicbop block size",
+          "insertions": 8,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "ee22337dc865e6ab511c5de2333bd048e5d07a88",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-23 13:57:40 +0800",
+          "subject": "pinctrl: zhihe: accept persistent GPIO state on A210",
+          "insertions": 3,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "f5a9442981bb1a5a919c46f260733ff3bd548d23",
+          "author_name": "Emil Renner Berthing",
+          "author_email": "emil.renner.berthing@canonical.com",
+          "date": "2023-12-15 15:39:02 +0100",
+          "subject": "dt-bindings: gpio: dwapb: allow gpio-ranges",
+          "insertions": 2,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>",
+            "Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>",
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Emil Renner Berthing <emil.renner.berthing@canonical.com>"
+          ]
+        },
+        {
+          "hash": "28ff6932a78a1b70ee12bf8d3d0ec09adcfbc2c9",
+          "author_name": "Daniel Henrique Barboza",
+          "author_email": "dbarboza@ventanamicro.com",
+          "date": "2023-10-29 09:35:00 -0300",
+          "subject": "dt-bindings: riscv: Document cbop-block-size",
+          "insertions": 5,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>",
+            "Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>",
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Daniel Henrique Barboza <dbarboza@ventanamicro.com>"
+          ]
+        },
+        {
+          "hash": "36fd4df15c64419844f961def7585360f8ed8b0b",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 09:46:21 +0800",
+          "subject": "riscv: rvck_defconfig: enable ZhiHe A210 USB drivers",
+          "insertions": 6,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "516fb495cbfe84adf8dc15ab9eed4c496a378fa1",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-10-22 20:47:30 +0800",
+          "subject": "riscv: dts: zhihe: add Melon Pi USB power and Type-C support",
+          "insertions": 187,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "fc8e9141edacf4a844f63604aff63ab5158e6066",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 11:32:48 +0800",
+          "subject": "riscv: dts: zhihe: add A210 USB support",
+          "insertions": 140,
+          "deletions": 2,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "3b89a7279c29bf78513745a618eb9a8135f31f1d",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-11-03 10:57:40 +0800",
+          "subject": "usb: dwc3: zhihe: add A210 DWC3 glue driver",
+          "insertions": 159,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "5739c92742afd83cb97f80a5bcf2b800120d6bf3",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-11-03 10:57:40 +0800",
+          "subject": "dt-bindings: usb: zhihe: add A210 DWC3 wrapper",
+          "insertions": 107,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "6d50d688134ffb811a780966cd1dba9ff813d002",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 11:32:46 +0800",
+          "subject": "usb: dwc2: add ZhiHe A210 support",
+          "insertions": 18,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "e2428e69bf5e60ede8512f0a892a06829a30e0be",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 12:01:50 +0800",
+          "subject": "dt-bindings: usb: dwc2: add ZhiHe A210",
+          "insertions": 3,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "e3790834bc45b38de3977af1dbbe2b30858151f4",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 11:32:47 +0800",
+          "subject": "phy: zhihe: add A210 USB 3.1 PHY driver",
+          "insertions": 1016,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "764d37f1f70e0a23619d4dd017fe8cdb2c13d5dc",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 11:32:46 +0800",
+          "subject": "phy: zhihe: add A210 USB 2.0 PHY driver",
+          "insertions": 249,
+          "deletions": 1,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "8743a4b24ec63e2f3bad4ca9a0237ce9b9be33d6",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-08-18 12:01:49 +0800",
+          "subject": "dt-bindings: phy: zhihe: add A210 USB PHYs",
+          "insertions": 264,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
+          ]
+        },
+        {
+          "hash": "e46c0b5357f4f78e5f0db78f217617aebd5d37dd",
+          "author_name": "Zhiguo Zhu",
+          "author_email": "zhiguo.zhu@linux.alibaba.com",
+          "date": "2026-11-16 19:51:26 +0800",
+          "subject": "clk: zhihe: expose A210 USB registers through syscon",
+          "insertions": 38,
+          "deletions": 0,
+          "signatures": [
+            "Signed-off-by: Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>",
+            "Zhiguo Zhu <zhiguo.zhu@linux.alibaba.com>"
           ]
         },
         {
@@ -49857,10 +50437,10 @@
       "deletions": 46520,
       "commits": [
         {
-          "hash": "9b6d9058fd9c8e15db3d88b1e7129e2b282546fd",
+          "hash": "ec338363b1587a4b1f533d2a14fdd6809a2cb5e1",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 19:37:59 +0800",
+          "date": "2026-11-23 14:51:39 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -49873,10 +50453,10 @@
           ]
         },
         {
-          "hash": "bf7da863121586f9bc2a7f9b74facdfaef2b24e4",
+          "hash": "cd4b66e4fb19df7b6a3fcdf37be6edc841f9cd40",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-18 19:37:58 +0800",
+          "date": "2026-11-23 14:51:38 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -56050,8 +56630,8 @@
       ]
     }
   },
-  "generated_at": "2026-11-18 19:36:43",
+  "generated_at": "2026-11-23 14:50:39",
   "main_branch": "rvck-6.6",
-  "main_commit": "820b29c3",
+  "main_commit": "d86d146e",
   "start_tag": "v6.6.161"
 }

@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 573</li>
-<li><strong>统计时间</strong>: 2026-11-18 19:36:43</li>
+<li><strong>贡献提交数</strong>: 574</li>
+<li><strong>统计时间</strong>: 2026-11-23 14:50:39</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,9 +18,10 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [d3543878](https://github.com/RVCK-Project/rvck/commit/d3543878b632c8f5a96621c4c7d85f463199322f) | 2026-11-18 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches |
-| [6246fef3](https://github.com/RVCK-Project/rvck/commit/6246fef34fb3a382d2a85725ba1b70946d3eca3f) | 2026-11-18 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
-| [73c041e2](https://github.com/RVCK-Project/rvck/commit/73c041e2e21082387dc89bf780ba877314c92655) | 2026-11-18 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config |
+| [c6416b58](https://github.com/RVCK-Project/rvck/commit/c6416b58525b7de5030307487259089ac0298ab7) | 2026-11-23 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches |
+| [fd38b640](https://github.com/RVCK-Project/rvck/commit/fd38b640cac16b0b2b140292cec17768acf46693) | 2026-11-23 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit |
+| [3f3466bf](https://github.com/RVCK-Project/rvck/commit/3f3466bfce10bc4c2bdfc1d8562413f20f39ab48) | 2026-11-23 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config |
+| [df6ffb08](https://github.com/RVCK-Project/rvck/commit/df6ffb085cc87cfa78a264767c8b423a75271cf3) | 2026-11-13 | Bai Jian | drivers/perf: add LeapRise ZF(ZhuFeng) ZCN PMU support |
 | [5729ca68](https://github.com/RVCK-Project/rvck/commit/5729ca6887c2f6fe1177a454357045ab6a22ffd6) | 2026-11-17 | Ye Zhihao | drivers:perf: fix misplaced endmenu in LPRS PMU Kconfig |
 | [5b695a5c](https://github.com/RVCK-Project/rvck/commit/5b695a5cf9e35067ddacccd886a6eba349a47cb5) | 2026-10-21 | Feng Jie | drivers/perf: Rename LRW DDR PMU to LeapRise ZF(ZhuFeng) DDR PMU driver |
 | [115a293e](https://github.com/RVCK-Project/rvck/commit/115a293e02ea72a706ccdd95fbca22d59db82081) | 2026-10-21 | Guo Wu | drivers/perf: Rename LRW PCIe PMU to LeapRise ZF PMU driver |
@@ -593,7 +594,7 @@
 | [cbf4f664](https://github.com/RVCK-Project/rvck/commit/cbf4f6644bd0355282d69aa396267bbf334cb104) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 573 条提交（显示全部）**
+**共 574 条提交（显示全部）**
 
 [分页显示](中兴通讯.md) | [纯文本视图](中兴通讯_commits.txt)
 ## 🔙 返回
@@ -602,5 +603,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-18 19:36:43*
-*数据来源: 主分支 rvck-6.6@820b29c3*
+*本页面最后更新于 2026-11-23 14:50:39*
+*数据来源: 主分支 rvck-6.6@d86d146e*

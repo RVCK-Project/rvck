@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 573</li>
-<li><strong>统计时间</strong>: 2026-11-18 19:36:43</li>
+<li><strong>贡献提交数</strong>: 574</li>
+<li><strong>统计时间</strong>: 2026-11-23 14:50:39</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [d7326196](https://github.com/RVCK-Project/rvck/commit/d7326196754082393b559961eb55765076790480) | 2025-06-18 | Anup Patel | RISC-V: KVM: Don't flush TLB when PTE is unchanged |
 | [dc53c99e](https://github.com/RVCK-Project/rvck/commit/dc53c99ef8dbc7ab1a78ef33cdf109312b04586e) | 2025-06-18 | Anup Patel | RISC-V: KVM: Replace KVM_REQ_HFENCE_GVMA_VMID_ALL with KVM_REQ_TLB_FLUSH |
 | [6622779c](https://github.com/RVCK-Project/rvck/commit/6622779ca168bacb1efb5468f2225ec06d190fdf) | 2025-06-18 | Anup Patel | RISC-V: KVM: Rename and move kvm_riscv_local_tlb_sanitize() |
 | [1c9d235a](https://github.com/RVCK-Project/rvck/commit/1c9d235a80be8baf81805e81b9be22c89a3e61fa) | 2025-06-18 | Anup Patel | RISC-V: KVM: Drop the return value of kvm_riscv_vcpu_aia_init() |
@@ -217,10 +218,9 @@
 | [5f7c5640](https://github.com/RVCK-Project/rvck/commit/5f7c5640b6037a40273dc186231475d2c5885253) | 2024-01-15 | Pu Lehui | riscv, bpf: Unify 32-bit sign-extension to emit_sextw |
 | [b7062cd7](https://github.com/RVCK-Project/rvck/commit/b7062cd78e77099148a9ca8691ed40fa7704a333) | 2025-03-12 | Robin Murphy | iommu: Don't warn prematurely about dodgy probes |
 | [2f1856b0](https://github.com/RVCK-Project/rvck/commit/2f1856b0965625e070fbd8d3cf99a6803fbc6cff) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_domain_alloc() |
-| [408eeb4a](https://github.com/RVCK-Project/rvck/commit/408eeb4aacfef4ff76e2388605a0ff9d49985278) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_present() |
 ---
 
-**共 573 条提交，显示 201-400**
+**共 574 条提交，显示 201-400**
 
 [1](中兴通讯.md) **[2]** [3](中兴通讯_page3.md)
 
@@ -231,5 +231,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-18 19:36:43*
-*数据来源: 主分支 rvck-6.6@820b29c3*
+*本页面最后更新于 2026-11-23 14:50:39*
+*数据来源: 主分支 rvck-6.6@d86d146e*

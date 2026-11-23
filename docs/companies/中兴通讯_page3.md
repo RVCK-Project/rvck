@@ -3,8 +3,8 @@
 <div style="background-color: #FF980020; padding: 15px; border-radius: 8px; border-left: 5px solid #FF9800;">
 <p><strong>📊 统计信息</strong></p>
 <ul>
-<li><strong>贡献提交数</strong>: 573</li>
-<li><strong>统计时间</strong>: 2026-11-18 19:36:43</li>
+<li><strong>贡献提交数</strong>: 574</li>
+<li><strong>统计时间</strong>: 2026-11-23 14:50:39</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,6 +18,7 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
+| [408eeb4a](https://github.com/RVCK-Project/rvck/commit/408eeb4aacfef4ff76e2388605a0ff9d49985278) | 2024-10-09 | Lu Baolu | iommu: Remove iommu_present() |
 | [b28b4278](https://github.com/RVCK-Project/rvck/commit/b28b4278b5474c0bf3c7d22bfc71529d5e9d59da) | 2024-09-02 | Lu Baolu | drm/tegra: Use iommu_paging_domain_alloc() |
 | [0170f6e7](https://github.com/RVCK-Project/rvck/commit/0170f6e72e151eddc1c64fad700b8d6544714a38) | 2024-09-02 | Lu Baolu | drm/rockchip: Use iommu_paging_domain_alloc() |
 | [7dba5a82](https://github.com/RVCK-Project/rvck/commit/7dba5a8216c4073ed7e4d200f4f1e3b2ef0daf04) | 2024-06-10 | Lu Baolu | RDMA/usnic: Use iommu_paging_domain_alloc() |
@@ -193,7 +194,7 @@
 | [cbf4f664](https://github.com/RVCK-Project/rvck/commit/cbf4f6644bd0355282d69aa396267bbf334cb104) | 2024-01-17 | Haibo Xu | ACPICA: SRAT: Add RISC-V RINTC affinity structure |
 ---
 
-**共 573 条提交，显示 401-573**
+**共 574 条提交，显示 401-574**
 
 [1](中兴通讯.md) [2](中兴通讯_page2.md) **[3]**
 
@@ -204,5 +205,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-18 19:36:43*
-*数据来源: 主分支 rvck-6.6@820b29c3*
+*本页面最后更新于 2026-11-23 14:50:39*
+*数据来源: 主分支 rvck-6.6@d86d146e*
