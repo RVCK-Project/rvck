@@ -8,11 +8,13 @@
 #include <linux/err.h>
 #include <linux/init.h>
 #include <linux/io.h>
+#include <linux/mfd/syscon.h>
 #include <linux/module.h>
 #include <linux/of.h>
 #include <linux/of_address.h>
 #include <linux/of_device.h>
 #include <linux/pm_runtime.h>
+#include <linux/regmap.h>
 #include <linux/types.h>
 
 #include <dt-bindings/clock/zhihe,a210-clk.h>
@@ -1477,6 +1479,34 @@ static struct zhihe_clk_subsys npu_clk = CLK_SUBSYS("npu clk", regs_npu,
 static struct zhihe_clk_subsys peri_clk = CLK_SUBSYS("peri clk", regs_peri,
 			info_peri, NULL, 0, 0);
 
+static int a210_register_usb_syscon(struct platform_device *pdev,
+				    struct zhihe_clk_subsys *priv)
+{
+	struct regmap_config config = {
+		.reg_bits = 32,
+		.val_bits = 32,
+		.reg_stride = 4,
+	};
+	struct device *dev = &pdev->dev;
+	struct resource *res;
+	struct regmap *regmap;
+
+	if (!of_device_is_compatible(dev->of_node, "zhihe,a210-usb-clk"))
+		return 0;
+
+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "usb-clk-en");
+	if (!res)
+		return -EINVAL;
+
+	config.max_register = resource_size(res) - sizeof(u32);
+	regmap = devm_regmap_init_mmio(dev, priv->regs[USB_CLK_EN].base,
+				       &config);
+	if (IS_ERR(regmap))
+		return PTR_ERR(regmap);
+
+	return of_syscon_register_regmap(dev->of_node, regmap);
+}
+
 static int a210_clocks_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
@@ -1519,6 +1549,13 @@ static int a210_clocks_probe(struct platform_device *pdev)
 	ret = of_clk_add_provider(np, of_clk_src_onecell_get, priv->clk_data);
 	if (ret) {
 		dev_err(dev, "failed to register A210 clock provider\n");
+		goto unregister_clks;
+	}
+
+	ret = a210_register_usb_syscon(pdev, priv);
+	if (ret) {
+		dev_err(dev, "failed to register A210 USB syscon\n");
+		of_clk_del_provider(np);
 		goto unregister_clks;
 	}
 
