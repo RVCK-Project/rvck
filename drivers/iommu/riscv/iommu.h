@@ -14,10 +14,75 @@
 #include <linux/iommu.h>
 #include <linux/types.h>
 #include <linux/iopoll.h>
+#include <linux/irqdomain.h>
+#include <linux/rcupdate.h>
+#include <linux/sizes.h>
+#include <linux/xarray.h>
 
 #include "iommu-bits.h"
 
+/* IOVA base for the SW MSI reservation */
+#define RISCV_IOMMU_MSI_IOVA_BASE	SZ_16M
+
+/* Timeouts in [us] */
+#define RISCV_IOMMU_QCSR_TIMEOUT	150000
+#define RISCV_IOMMU_QUEUE_TIMEOUT	150000
+#define RISCV_IOMMU_DDTP_TIMEOUT	10000000
+#define RISCV_IOMMU_IOTINVAL_TIMEOUT	90000000
+
+/* Tracks a guest IMSIC GPA mapped into an S2 domain on IOMMUs without MSI_FLAT. */
+struct riscv_iommu_noflat_imsic {
+	phys_addr_t hpa;
+};
+
+struct riscv_iommu_msi_table {
+	/* Protects attachment, interrupt forwarding state, and MSI PTE updates. */
+	raw_spinlock_t lock;
+	unsigned int nr_forwarded_irqs;
+	unsigned int nr_ptes;
+	struct riscv_iommu_msipte *root;
+	u64 msi_addr_mask;
+	u64 msi_addr_pattern;
+	const void *owner;
+	u64 required_caps;
+	struct xarray noflat_imsics;
+};
+
+/* This struct contains protection domain specific IOMMU driver data. */
+struct riscv_iommu_domain {
+	struct iommu_domain domain;
+	struct list_head bonds;
+	raw_spinlock_t lock;		/* protect bonds list updates. */
+	struct mutex mutex;		/* serialize domain state updates */
+	int pscid;
+	int gscid;
+	struct riscv_iommu_msi_table msi_table;
+	bool s2;			/* true if this is a second-stage domain */
+	int numa_node;
+	unsigned int pgd_mode;
+	unsigned long *pgd_root;
+};
+
+#define iommu_domain_to_riscv(iommu_domain) \
+	container_of(iommu_domain, struct riscv_iommu_domain, domain)
+
+/* Private IOMMU data for managed devices, dev_iommu_priv_* */
+struct riscv_iommu_info {
+	struct riscv_iommu_domain __rcu *domain;
+	struct riscv_iommu_dc dc;
+	struct irq_domain *old_msi_parent;
+	unsigned int nr_forwarded_irqs;
+};
+
+static inline bool riscv_iommu_ir_device_enabled(const struct riscv_iommu_info *info)
+{
+	return info->old_msi_parent != NULL;
+}
+
 struct riscv_iommu_device;
+
+#define dev_to_iommu(dev) \
+	iommu_get_iommu_dev(dev, struct riscv_iommu_device, iommu)
 
 struct riscv_iommu_queue {
 	atomic_t prod;				/* unbounded producer allocation index */
@@ -60,11 +125,78 @@ struct riscv_iommu_device {
 	unsigned int ddt_mode;
 	dma_addr_t ddt_phys;
 	u64 *ddt_root;
+
+	/* MSI remapping */
+	struct irq_domain *irqdomain;
+};
+
+/*
+ * Linkage between an iommu_domain and attached devices.
+ *
+ * Protection domain requiring IOATC and DevATC translation cache invalidations,
+ * should be linked to attached devices using a riscv_iommu_bond structure.
+ * Devices should be linked to the domain before first use and unlinked after
+ * the translations from the referenced protection domain can no longer be used.
+ * Blocking and identity domains are not tracked here, as the IOMMU hardware
+ * does not cache negative and/or identity (BARE mode) translations, and DevATC
+ * is disabled for those protection domains.
+ *
+ * The device pointer and IOMMU data remain stable in the bond struct after
+ * _probe_device() where it's attached to the managed IOMMU, up to the
+ * completion of the _release_device() call. The release of the bond structure
+ * is synchronized with the device release.
+ */
+struct riscv_iommu_bond {
+	struct list_head list;
+	struct rcu_head rcu;
+	struct device *dev;
 };
 
 int riscv_iommu_init(struct riscv_iommu_device *iommu);
 void riscv_iommu_remove(struct riscv_iommu_device *iommu);
 void riscv_iommu_disable(struct riscv_iommu_device *iommu);
+
+/* Caller must hold rcu_read_lock() while using the returned pointer. */
+struct riscv_iommu_msi_table *riscv_iommu_msi_table_rcu(struct riscv_iommu_info *info);
+bool riscv_iommu_msi_table_check_caps(struct riscv_iommu_msi_table *msi_table,
+				      u64 iommu_caps);
+struct riscv_iommu_dc *riscv_iommu_get_dc(struct riscv_iommu_device *iommu,
+					  unsigned int devid);
+void riscv_iommu_cmd_send(struct riscv_iommu_device *iommu,
+			  struct riscv_iommu_command *cmd);
+void riscv_iommu_cmd_sync(struct riscv_iommu_device *iommu,
+			  unsigned int timeout_us);
+
+void riscv_iommu_msi_table_inval(struct riscv_iommu_msi_table *msi_table,
+				 unsigned long addr);
+void riscv_iommu_msi_table_inval_all(struct riscv_iommu_msi_table *msi_table);
+void riscv_iommu_msi_table_update(struct riscv_iommu_msi_table *msi_table,
+				  bool activate);
+int riscv_iommu_msi_table_map_gpa(struct riscv_iommu_msi_table *msi_table,
+				  dma_addr_t gpa, phys_addr_t hpa);
+int riscv_iommu_msi_table_replace_gpa_leaf(struct riscv_iommu_msi_table *msi_table,
+					   dma_addr_t gpa, phys_addr_t old_hpa,
+					   phys_addr_t new_hpa);
+
+#ifdef CONFIG_RISCV_IMSIC
+void riscv_iommu_ir_irq_domain_remove(struct riscv_iommu_device *iommu);
+int riscv_iommu_ir_probe_device(struct riscv_iommu_device *iommu,
+				struct device *dev,
+				struct riscv_iommu_info *info);
+void riscv_iommu_ir_release_device(struct device *dev,
+				   struct riscv_iommu_info *info);
+#else
+static inline void riscv_iommu_ir_irq_domain_remove(struct riscv_iommu_device *iommu) { }
+static inline int riscv_iommu_ir_probe_device(struct riscv_iommu_device *iommu,
+					      struct device *dev,
+					      struct riscv_iommu_info *info)
+{
+	info->old_msi_parent = NULL;
+	return 0;
+}
+static inline void riscv_iommu_ir_release_device(struct device *dev,
+						 struct riscv_iommu_info *info) { }
+#endif
 
 #define riscv_iommu_readl(iommu, addr) \
 	readl_relaxed((iommu)->reg + (addr))
