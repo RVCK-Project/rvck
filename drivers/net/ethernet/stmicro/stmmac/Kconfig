@@ -330,4 +330,17 @@ config STMMAC_PCI
 	  If you have a controller with this interface, say Y or M here.
 
 	  If unsure, say N.
+
+config DWMAC_XUANTIE
+	tristate "XuanTie dwxgmac pci support"
+	depends on ARCH_XUANTIE && STMMAC_ETH && PCI
+	help
+	  Support for ethernet controllers on XuanTie RISC-V SoCs (PCI RCiEP).
+
+	  This enables the XuanTie platform specific bus support for the
+	  stmmac driver. This driver is used for XuanTie XGMAC/XLGMAC
+	  ethernet controllers enumerated via PCIe.
+
+	  If unsure, say N.
+
 endif
