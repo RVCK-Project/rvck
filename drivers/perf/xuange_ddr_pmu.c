@@ -15,6 +15,7 @@
 #include <linux/bitops.h>
 #include <linux/cpuhotplug.h>
 #include <linux/cpumask.h>
+#include <linux/delay.h>
 #include <linux/device.h>
 #include <linux/errno.h>
 #include <linux/kernel.h>
@@ -24,7 +25,6 @@
 #include <linux/perf_event.h>
 #include <linux/platform_device.h>
 #include <linux/printk.h>
-#include <linux/delay.h>
 
 #define XUANGE_DDR_PMU_COMMON_MAX_COUNTERS		\
 	(XUANGE_DDR_PMU_PERF_EVENT_MAX_COUNTERS + XUANGE_DDR_PMU_DBG_EVENT_MAX_COUNTERS)
