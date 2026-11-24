@@ -943,4 +943,4 @@ MODULE_AUTHOR("Dong Yan <yandong@linux.alibaba.com>");
 MODULE_AUTHOR("Neng Chen <nengchen@linux.alibaba.com>");
 MODULE_AUTHOR("Shuai Xue <xueshuai@linux.alibaba.com>");
 MODULE_DESCRIPTION("Xuange DDR Sub-System PMU driver");
-MODULE_LICENSE("GPL v2");
+MODULE_LICENSE("GPL");
