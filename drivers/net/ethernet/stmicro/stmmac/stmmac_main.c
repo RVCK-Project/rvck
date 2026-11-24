@@ -7124,6 +7124,17 @@ static int stmmac_hw_init(struct stmmac_priv *priv)
 	if (priv->dma_cap.tsoen)
 		dev_info(priv->device, "TSO supported\n");
 
+	/* Clamp the hardware-reported queue counts to the core's static
+	 * array sizes (dma_conf, queue cfg, IRQ and coalesce tables) so that
+	 * ethtool -L can never select an out-of-bounds queue count.
+	 */
+	priv->dma_cap.number_rx_queues = min_t(unsigned int,
+					       priv->dma_cap.number_rx_queues,
+					       MTL_MAX_RX_QUEUES);
+	priv->dma_cap.number_tx_queues = min_t(unsigned int,
+					       priv->dma_cap.number_tx_queues,
+					       MTL_MAX_TX_QUEUES);
+
 	if (priv->dma_cap.number_rx_queues &&
 	    priv->plat->rx_queues_to_use > priv->dma_cap.number_rx_queues) {
 		dev_warn(priv->device,
