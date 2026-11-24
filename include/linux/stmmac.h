@@ -275,6 +275,12 @@ struct plat_stmmacenet_data {
 	int (*serdes_powerup)(struct net_device *ndev, void *priv);
 	void (*serdes_powerdown)(struct net_device *ndev, void *priv);
 	void (*speed_mode_2500)(struct net_device *ndev, void *priv);
+	/* Called by stmmac_dvr_probe() after hardware init and before
+	 * register_netdev(), so the glue driver can customize the hw->dma
+	 * ops before the device becomes reachable by userspace.
+	 */
+	void (*post_hw_init)(struct net_device *ndev,
+			     struct plat_stmmacenet_data *plat);
 	void (*ptp_clk_freq_config)(struct stmmac_priv *priv);
 	int (*init)(struct platform_device *pdev, void *priv);
 	void (*exit)(struct platform_device *pdev, void *priv);
