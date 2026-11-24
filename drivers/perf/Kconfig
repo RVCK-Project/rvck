@@ -305,9 +305,10 @@ config LPRS_ZF_ZCN_PMU
 
 	  If you are not using LeapRise ZF hardware or do not require
 	  performance monitoring, say N.
+
 config XUANGE_DDR_PMU
 	tristate "Xuange DDR Sub-system PMU driver"
-	depends on RISCV || COMPILE_TEST
+	depends on ARCH_XUANTIE || COMPILE_TEST
 	help
 	  Enable system-wide performance counting for Xuange DDR
 	  controllers through perf. The PMU measures host-interface requests,
