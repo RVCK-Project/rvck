@@ -29,3 +29,5 @@ obj-$(CONFIG_CXL_PMU) += cxl_pmu.o
 obj-$(CONFIG_LPRS_ZF_PCIE_PMU) += lprs_zf_pcie_pmu.o
 obj-$(CONFIG_LPRS_ZF_DDR_PMU) += lprs_zf_ddr_pmu.o
 obj-$(CONFIG_LPRS_ZF_ZCN_PMU) += lprs_zf_zcn_pmu.o
+
+obj-$(CONFIG_XUANGE_DDR_PMU) += xuange_ddr_pmu.o
