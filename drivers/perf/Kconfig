@@ -335,4 +335,18 @@ config XUANGE_DDR_PMU
 
 	  If built as a module, it will be called xuange_ddr_pmu.
 
+config XUANGE_PCIE_BMU_PMU
+	tristate "Xuange PCIe Bus Monitor Unit PMU"
+	depends on ACPI && (ARCH_XUANTIE || COMPILE_TEST)
+	help
+	  Support the PCIe Bus Monitor Unit (BMU) in Xuange systems.
+	  AXI monitors provide transaction, byte, duration and address
+	  handshake latency counters through perf stat.
+	  Firmware describes the BMU topology in PCIe host bridge ACPI
+	  _DSD bmu-entries properties. Completed AXI measurement windows
+	  are collected through hardware interrupts. A4S provides four
+	  free-running message counters with periodic software collection.
+
+	  Say M to build the xuange_pcie_bmu_pmu module, or N if not needed.
+
 endmenu
