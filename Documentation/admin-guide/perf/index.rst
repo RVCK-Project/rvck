@@ -23,3 +23,4 @@ Performance monitor support
    meson-ddr-pmu
    cxl
    xuange-cpm-pmu
+   xuange_ddr_pmu
