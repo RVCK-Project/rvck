@@ -29,9 +29,9 @@ static void mmu_wp_memory_region(struct kvm *kvm, int slot)
 	gstage.vmid = READ_ONCE(kvm->arch.vmid.vmid);
 	gstage.pgd = kvm->arch.pgd;
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 	kvm_riscv_gstage_wp_range(&gstage, start, end);
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 	kvm_flush_remote_tlbs_memslot(kvm, memslot);
 }
 
@@ -68,9 +68,9 @@ int kvm_riscv_mmu_ioremap(struct kvm *kvm, gpa_t gpa, phys_addr_t hpa,
 		if (ret)
 			goto out;
 
-		spin_lock(&kvm->mmu_lock);
+		write_lock(&kvm->mmu_lock);
 		ret = kvm_riscv_gstage_set_pte(&gstage, &pcache, &map);
-		spin_unlock(&kvm->mmu_lock);
+		write_unlock(&kvm->mmu_lock);
 		if (ret)
 			goto out;
 
@@ -91,9 +91,9 @@ void kvm_riscv_mmu_iounmap(struct kvm *kvm, gpa_t gpa, unsigned long size)
 	gstage.vmid = READ_ONCE(kvm->arch.vmid.vmid);
 	gstage.pgd = kvm->arch.pgd;
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 	kvm_riscv_gstage_unmap_range(&gstage, gpa, size, false);
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 }
 
 void kvm_arch_mmu_enable_log_dirty_pt_masked(struct kvm *kvm,
@@ -143,9 +143,9 @@ void kvm_arch_flush_shadow_memslot(struct kvm *kvm,
 	gstage.vmid = READ_ONCE(kvm->arch.vmid.vmid);
 	gstage.pgd = kvm->arch.pgd;
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 	kvm_riscv_gstage_unmap_range(&gstage, gpa, size, false);
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 }
 
 void kvm_arch_commit_memory_region(struct kvm *kvm,
@@ -259,21 +259,20 @@ out:
 bool kvm_unmap_gfn_range(struct kvm *kvm, struct kvm_gfn_range *range)
 {
 	struct kvm_gstage gstage;
-	bool mmu_locked;
 
 	if (!kvm->arch.pgd)
 		return false;
+
+	lockdep_assert_held_write(&kvm->mmu_lock);
 
 	gstage.kvm = kvm;
 	gstage.flags = 0;
 	gstage.vmid = READ_ONCE(kvm->arch.vmid.vmid);
 	gstage.pgd = kvm->arch.pgd;
-	mmu_locked = spin_trylock(&kvm->mmu_lock);
+
 	kvm_riscv_gstage_unmap_range(&gstage, range->start << PAGE_SHIFT,
 				     (range->end - range->start) << PAGE_SHIFT,
 				     range->may_block);
-	if (mmu_locked)
-		spin_unlock(&kvm->mmu_lock);
 	return false;
 }
 
@@ -487,6 +486,81 @@ static unsigned long transparent_hugepage_adjust(struct kvm *kvm,
 	return PAGE_SIZE;
 }
 
+static bool kvm_riscv_mmu_dirty_log_write_fault_fast(struct kvm *kvm,
+						     struct kvm_memory_slot *memslot,
+						     gpa_t gpa,
+						     struct kvm_gstage_mapping *out_map)
+{
+	struct kvm_gstage gstage;
+	unsigned long mmu_seq;
+	pte_t old_pte, new_pte;
+	pte_t *ptep;
+	gfn_t gfn = gpa >> PAGE_SHIFT;
+	u32 ptep_level;
+	bool dirty_marked = false;
+	bool ret;
+
+	gstage.kvm = kvm;
+	gstage.flags = 0;
+	gstage.vmid = READ_ONCE(kvm->arch.vmid.vmid);
+	gstage.pgd = kvm->arch.pgd;
+
+	mmu_seq = kvm->mmu_invalidate_seq;
+
+	read_lock(&kvm->mmu_lock);
+
+	if (mmu_invalidate_retry_hva(kvm, mmu_seq, gfn_to_hva(kvm, gfn))) {
+		ret = false;
+		goto out_unlock;
+	}
+
+	if (!kvm_riscv_gstage_get_leaf(&gstage, gpa, &ptep, &ptep_level) ||
+	    ptep_level) {
+		ret = false;
+		goto out_unlock;
+	}
+
+	for (;;) {
+		old_pte = ptep_get(ptep);
+		if (!(pte_val(old_pte) & _PAGE_LEAF)) {
+			ret = false;
+			break;
+		}
+
+		if (!dirty_marked) {
+			mark_page_dirty_in_slot(kvm, memslot, gfn);
+			dirty_marked = true;
+		}
+
+		if ((pte_val(old_pte) & (_PAGE_WRITE | _PAGE_DIRTY)) ==
+		    (_PAGE_WRITE | _PAGE_DIRTY)) {
+			new_pte = old_pte;
+			ret = true;
+			break;
+		}
+
+		new_pte = pte_mkdirty(pte_mkwrite_novma(old_pte));
+
+		if (kvm_riscv_gstage_try_update_pte(&gstage, ptep_level, gpa,
+						    ptep, old_pte, new_pte)) {
+			ret = true;
+			break;
+		}
+		cpu_relax();
+	}
+
+out_unlock:
+	read_unlock(&kvm->mmu_lock);
+
+	if (ret) {
+		out_map->addr = gpa & PAGE_MASK;
+		out_map->level = 0;
+		out_map->pte = new_pte;
+	}
+
+	return ret;
+}
+
 int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
 		      gpa_t gpa, unsigned long hva, bool is_write,
 		      struct kvm_gstage_mapping *out_map)
@@ -511,6 +585,10 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
 
 	/* Setup initial state of output mapping */
 	memset(out_map, 0, sizeof(*out_map));
+
+	if (is_write && logging &&
+	    kvm_riscv_mmu_dirty_log_write_fault_fast(kvm, memslot, gpa, out_map))
+		return 0;
 
 	/* We need minimum second+third level pages */
 	ret = kvm_mmu_topup_memory_cache(pcache, kvm_riscv_gstage_pgd_levels);
@@ -573,7 +651,7 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
 	if (logging && !is_write)
 		writable = false;
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 
 	if (mmu_invalidate_retry(kvm, mmu_seq))
 		goto out_unlock;
@@ -596,7 +674,7 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *vcpu, struct kvm_memory_slot *memslot,
 		kvm_err("Failed to map in G-stage\n");
 
 out_unlock:
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 	kvm_set_pfn_accessed(hfn);
 	kvm_release_pfn_clean(hfn);
 	return ret;
@@ -626,7 +704,7 @@ void kvm_riscv_mmu_free_pgd(struct kvm *kvm)
 	struct kvm_gstage gstage;
 	void *pgd = NULL;
 
-	spin_lock(&kvm->mmu_lock);
+	write_lock(&kvm->mmu_lock);
 	if (kvm->arch.pgd) {
 		gstage.kvm = kvm;
 		gstage.flags = 0;
@@ -637,7 +715,7 @@ void kvm_riscv_mmu_free_pgd(struct kvm *kvm)
 		kvm->arch.pgd = NULL;
 		kvm->arch.pgd_phys = 0;
 	}
-	spin_unlock(&kvm->mmu_lock);
+	write_unlock(&kvm->mmu_lock);
 
 	if (pgd)
 		free_pages((unsigned long)pgd, get_order(kvm_riscv_gstage_pgd_size));
