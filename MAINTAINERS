@@ -23897,6 +23897,20 @@ S:	Maintained
 F:	drivers/spi/spi-xtensa-xtfpga.c
 F:	sound/soc/xtensa/xtfpga-i2s.c
 
+XUANGE CPM PMU DRIVER
+M:	Dong Yan <yandong@linux.alibaba.com>
+S:	Maintained
+F:	Documentation/admin-guide/perf/xuange-cpm-pmu.rst
+F:	Documentation/devicetree/bindings/perf/xuange,cpm-pmu.yaml
+F:	drivers/perf/xuange_cpm_pmu.c
+
+XUANGE DDR PMU DRIVER
+M:	Dong Yan <yandong@linux.alibaba.com>
+S:	Maintained
+F:	Documentation/admin-guide/perf/xuange_ddr_pmu.rst
+F:	Documentation/devicetree/bindings/perf/xuange,ddr-pmu.yaml
+F:	drivers/perf/xuange_ddr_pmu.c
+
 YAM DRIVER FOR AX.25
 M:	Jean-Paul Roubelat <jpr@f6fbb.org>
 L:	linux-hams@vger.kernel.org
