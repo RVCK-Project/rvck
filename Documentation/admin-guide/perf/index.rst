@@ -22,3 +22,4 @@ Performance monitor support
    nvidia-pmu
    meson-ddr-pmu
    cxl
+   xuange-pcie-bmu-pmu
