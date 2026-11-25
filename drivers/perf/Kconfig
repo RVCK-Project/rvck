@@ -305,4 +305,22 @@ config LPRS_ZF_ZCN_PMU
 
 	  If you are not using LeapRise ZF hardware or do not require
 	  performance monitoring, say N.
+
+config XUANGE_CPM_PMU
+	tristate "Xuange CPM PMU driver"
+	depends on ARCH_XUANTIE || COMPILE_TEST
+	help
+	  Enable support for the Xuange CHI Performance Monitor
+	  (CPM), an uncore PMU providing transaction counters, latency
+	  measurements, and outstanding transaction and link-credit
+	  statistics.
+
+	  The counters are accessible through the perf subsystem using
+	  tools such as perf stat.
+
+	  To compile this driver as a module, choose M here. The module
+	  will be called xuange_cpm_pmu.
+
+	  If unsure, say N.
+
 endmenu
