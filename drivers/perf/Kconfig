@@ -323,4 +323,16 @@ config XUANGE_CPM_PMU
 
 	  If unsure, say N.
 
+config XUANGE_DDR_PMU
+	tristate "Xuange DDR Sub-system PMU driver"
+	depends on ARCH_XUANTIE || COMPILE_TEST
+	help
+	  Enable system-wide performance counting for Xuange DDR
+	  controllers through perf. The PMU measures host-interface requests,
+	  DDR commands and queue/credit minimum and maximum values.
+	  Sampling and per-task counting are not supported. Debug min/max
+	  results are available only after the measurement stops.
+
+	  If built as a module, it will be called xuange_ddr_pmu.
+
 endmenu
