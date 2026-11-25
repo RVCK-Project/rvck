@@ -24,3 +24,4 @@ Performance monitor support
    cxl
    xuange-cpm-pmu
    xuange_ddr_pmu
+   xuange-pcie-bmu-pmu
