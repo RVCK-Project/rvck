@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/perf/xuange,ddr-pmu.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Xuange DDR performance monitor
+
+maintainers:
+  - Dong Yan <yandong@linux.alibaba.com>
+
+description: |
+  Each Xuange DDR controller PMU provides 16 ordinary 64-bit counters
+  and 16 debug slots. Each debug slot records a pair of 16-bit minimum
+  and maximum values with a shared enable bit. The register block includes
+  mode control at 0x00, duration at 0x04/0x08, enables at 0x0c, function
+  selection at 0x10 and software reset at 0x1c. Ordinary counters occupy
+  0x30-0xaf and debug results occupy 0xb0-0xef. The platform maps a 0x2000
+  byte resource for each controller; it must cover these registers.
+
+  Event IDs 0x00-0x3f select an ordinary counter with ID / 4 and its
+  function with ID modulo 4, excluding reserved functions. Debug IDs
+  0x40-0x7d use the same slot encoding and select min/max with bit 0;
+  function values 2 and 3 are reserved. Event names are exported by perf
+  sysfs and are not configured in the device tree.
+
+properties:
+  compatible:
+    const: xuange,ddr-pmu-v1
+
+  reg:
+    maxItems: 1
+
+  interrupts:
+    maxItems: 1
+    description: Optional hardware interrupt, unused in software-stop mode.
+
+  numa-node-id:
+    description: NUMA node local to this DDR controller.
+
+required:
+  - compatible
+  - reg
+
+additionalProperties: false
+
+examples:
+  - |
+    soc {
+        #address-cells = <2>;
+        #size-cells = <2>;
+
+        pmu@593400000 {
+            compatible = "xuange,ddr-pmu-v1";
+            reg = <0x5 0x93400000 0x0 0x2000>;
+        };
+    };
