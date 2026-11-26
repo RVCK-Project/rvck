@@ -514,6 +514,8 @@ static inline void stack_tracer_disable(void) { }
 static inline void stack_tracer_enable(void) { }
 #endif
 
+void ftrace_sync_ipi(void *data);
+
 #ifdef CONFIG_DYNAMIC_FTRACE
 
 void ftrace_arch_code_modify_prepare(void);
@@ -825,7 +827,8 @@ static inline int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec)
 extern int ftrace_make_call(struct dyn_ftrace *rec, unsigned long addr);
 
 #if defined(CONFIG_DYNAMIC_FTRACE_WITH_REGS) || \
-	defined(CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS)
+	defined(CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS) || \
+	defined(CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS)
 /**
  * ftrace_modify_call - convert from one addr to another (no nop)
  * @rec: the call site record (e.g. mcount/fentry)

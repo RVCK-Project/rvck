@@ -8,6 +8,7 @@
 #include <linux/kbuild.h>
 #include <linux/mm.h>
 #include <linux/sched.h>
+#include <linux/ftrace.h>
 #include <linux/suspend.h>
 #include <asm/kvm_host.h>
 #include <asm/thread_info.h>
@@ -497,6 +498,37 @@ void asm_offsets(void)
 	OFFSET(KERNEL_MAP_VIRT_ADDR, kernel_mapping, virt_addr);
 	OFFSET(SBI_HART_BOOT_TASK_PTR_OFFSET, sbi_hart_boot_data, task_ptr);
 	OFFSET(SBI_HART_BOOT_STACK_PTR_OFFSET, sbi_hart_boot_data, stack_ptr);
+
+#ifdef CONFIG_FUNCTION_TRACER
+	DEFINE(FTRACE_OPS_FUNC,         offsetof(struct ftrace_ops, func));
+#ifdef CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
+	DEFINE(FTRACE_OPS_DIRECT_CALL,  offsetof(struct ftrace_ops, direct_call));
+#endif /* CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS */
+#endif
+
+#ifdef CONFIG_DYNAMIC_FTRACE_WITH_ARGS
+	DEFINE(FREGS_SIZE_ON_STACK, ALIGN(sizeof(struct ftrace_regs), STACK_ALIGN));
+	DEFINE(FREGS_EPC,	    offsetof(struct ftrace_regs, epc));
+	DEFINE(FREGS_RA,	    offsetof(struct ftrace_regs, ra));
+	DEFINE(FREGS_SP,	    offsetof(struct ftrace_regs, sp));
+	DEFINE(FREGS_S0,	    offsetof(struct ftrace_regs, s0));
+	DEFINE(FREGS_T1,	    offsetof(struct ftrace_regs, t1));
+#ifdef CONFIG_CC_IS_CLANG
+	DEFINE(FREGS_T2,	    offsetof(struct ftrace_regs, t2));
+	DEFINE(FREGS_T3,	    offsetof(struct ftrace_regs, t3));
+	DEFINE(FREGS_T4,	    offsetof(struct ftrace_regs, t4));
+	DEFINE(FREGS_T5,	    offsetof(struct ftrace_regs, t5));
+	DEFINE(FREGS_T6,	    offsetof(struct ftrace_regs, t6));
+#endif
+	DEFINE(FREGS_A0,	    offsetof(struct ftrace_regs, a0));
+	DEFINE(FREGS_A1,	    offsetof(struct ftrace_regs, a1));
+	DEFINE(FREGS_A2,	    offsetof(struct ftrace_regs, a2));
+	DEFINE(FREGS_A3,	    offsetof(struct ftrace_regs, a3));
+	DEFINE(FREGS_A4,	    offsetof(struct ftrace_regs, a4));
+	DEFINE(FREGS_A5,	    offsetof(struct ftrace_regs, a5));
+	DEFINE(FREGS_A6,	    offsetof(struct ftrace_regs, a6));
+	DEFINE(FREGS_A7,	    offsetof(struct ftrace_regs, a7));
+#endif
 
 #ifdef CONFIG_RISCV_SSE
 	OFFSET(SSE_REG_EVT_STACK, sse_event_arch_data, stack);
