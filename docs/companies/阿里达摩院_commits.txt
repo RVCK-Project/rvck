@@ -1,12 +1,12 @@
 # 阿里达摩院 提交列表（纯文本视图）
 # 共 429 个提交
-# 生成时间: 2026-11-27 12:23:32
+# 生成时间: 2026-11-27 13:26:17
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-95b77318 | 2026-11-27 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
-6d106621 | 2026-11-27 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
-eada37df | 2026-11-27 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()
+e2e164ef | 2026-11-27 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
+54a4ce63 | 2026-11-27 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()
+a27db9ea | 2026-11-27 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()
 4990a7ac | 2026-10-29 | Zhiguo Zhu | riscv: dts: zhihe: separate device tree nodes with empty lines
 bee6abbe | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: fix UART pinctrl on Melon Pi and EVB
 317d88e3 | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: enable second GMAC on Melon Pi
