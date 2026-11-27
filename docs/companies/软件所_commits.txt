@@ -1,9 +1,283 @@
 # 软件所 提交列表（纯文本视图）
-# 共 359 个提交
-# 生成时间: 2026-11-23 15:06:26
+# 共 633 个提交
+# 生成时间: 2026-11-27 12:23:32
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
+71e670f8 | 2026-11-20 | Han Gao | riscv: rvck_defconfig: enable Sophgo SG204x platforms
+f03d0c2c | 2026-08-30 | Han Gao | riscv: dts: sophgo: align SG2044 PCIe windows with EDK2
+edd1806d | 2026-09-16 | Han Gao | dt-bindings: PCI: sophgo,sg2044-pcie: Allow fewer than five ranges
+3a27683f | 2026-11-22 | Han Gao | [STAGED v1] riscv: dts: sophgo: Enable the RTC on SG2042 EVB v2
+4e1dc559 | 2026-11-22 | Han Gao | [STAGED v1] riscv: dts: sophgo: Enable the RTC on SG2042 EVB v1
+86c32c63 | 2026-11-21 | Han Gao | [STAGED v1] riscv: efi: Map runtime MMIO with device attributes
+524183c4 | 2026-09-16 | Han Gao | [STAGED v1] riscv: mm: Apply T-Head PMA memory-type errata to PUD and P4D entries
+e1f456ed | 2026-04-01 | Han Gao | [STAGED v1] PCI: Add quirk to disable PCIe port services on Sophgo SG2042
+eaf33d86 | 2026-04-01 | Han Gao | [STAGED v1] PCI: Add per-device flag to disable native PCIe port services
+7d886f8d | 2026-11-24 | GUO Ren (XuanTie) | [STAGED v7] riscv: errata: Add ERRATA WRITE_ONCE fixup
+a8af8fbf | 2026-10-01 | Han Gao | riscv: dts: sophgo: Limit SG2042 SPI NOR to 12.5 MHz
+40616848 | 2026-10-01 | Hangfan Li | riscv: dts: sophgo: Enable SPI NOR on SRD3-10
+96928e3f | 2026-10-01 | Han Gao | spi: sg2044-nor: Honor SPI clock limits
+b3eefe73 | 2026-10-01 | Han Gao | spi: sg2044-nor: Return transfer errors
+0e5e59aa | 2026-04-01 | Han Gao | dt-bindings: PCI: sophgo: Add dma-coherent property for SG2042
+244d2aa5 | 2026-05-20 | Han Gao | riscv: also select ARCH_KEEP_MEMBLOCK if kexec is selected
+0f8022d1 | 2026-06-06 | Han Gao | riscv: kexec_file: Constrain segment placement to direct map
+7cc99e26 | 2026-04-08 | Icenowy Zheng | riscv: dts: sophgo: reduce SG2042 MSI count to 16
+36e1a4da | 2026-04-26 | Inochi Amaoto | riscv: dts: sophgo: sg2042: use hex for CPU unit address
+69ca8c40 | 2026-04-26 | Inochi Amaoto | riscv: dts: sophgo: sg2044: use hex for CPU unit address
+2a6eb439 | 2026-04-01 | Han Gao | riscv: dts: sophgo: Add dma-coherent to SG2042 PCIe controllers
+03b96861 | 2026-04-01 | Inochi Amaoto | pinctrl: sophgo: pinctrl-sg2044: Fix wrong module description
+17014f30 | 2026-04-01 | Inochi Amaoto | pinctrl: sophgo: pinctrl-sg2042: Fix wrong module description
+ebf87126 | 2026-04-05 | Yao Zi | PCI: sg2042: Avoid L0s and L1 on Sophgo 2042 PCIe Root Ports
+f62911c4 | 2026-04-05 | Yao Zi | PCI: cadence: Add flags for disabling ASPM capability for broken Root Ports
+28cd64ce | 2026-01-09 | Inochi Amaoto | PCI: sophgo: Disable L0s and L1 on Sophgo 2044 PCIe Root Ports
+2f38156d | 2026-01-13 | Inochi Amaoto | riscv: dts: sophgo: fix the node order of SG2042 peripheral
+d8316064 | 2026-01-13 | Inochi Amaoto | riscv: dts: sophgo: Move PLIC and CLINT node into CPU dtsi
+7cd03cc4 | 2026-01-07 | Michael Orlitzky | riscv: dts: sophgo: enable hardware clock (RTC) on the Milk-V Pioneer
+61d81fd5 | 2025-09-16 | Zixian Zeng | riscv: dts: sophgo: Enable SPI NOR node for SG2042_EVB_V2
+6676b949 | 2025-09-16 | Zixian Zeng | riscv: dts: sophgo: Enable SPI NOR node for SG2042_EVB_V1
+fe1573c0 | 2025-09-16 | Zixian Zeng | riscv: dts: sophgo: Enable SPI NOR node for PioneerBox
+79be6e30 | 2025-09-16 | Zixian Zeng | riscv: dts: sophgo: Add SPI NOR node for SG2042
+d8bd710b | 2025-10-20 | Chen Wang | riscv: sophgo: dts: enable PCIe for SG2042_EVB_V2.0
+4e59bedb | 2025-10-20 | Chen Wang | riscv: sophgo: dts: enable PCIe for SG2042_EVB_V1.X
+3a9eb80b | 2025-10-20 | Chen Wang | riscv: sophgo: dts: enable PCIe for PioneerBox
+2c862642 | 2025-10-20 | Chen Wang | riscv: sophgo: dts: add PCIe controllers for SG2042
+c2e0b9ef | 2025-09-29 | Christophe JAILLET | PCI: sg2042: Fix a reference count issue in sg2042_pcie_remove()
+905148b5 | 2025-11-17 | Longbin Li | spi: sophgo: Fix incorrect use of bus width value macros
+844d9b0e | 2025-11-14 | Inochi Amaoto | net: stmmac: dwmac-sophgo: Add phy interface filter
+e53b4b44 | 2025-11-14 | Inochi Amaoto | net: phy: Add helper for fixing RGMII PHY mode based on internal mac delay
+a1afc77f | 2025-11-14 | Inochi Amaoto | dt-bindings: net: sophgo,sg2044-dwmac: add phy mode restriction
+874a6a43 | 2025-09-12 | Chen Wang | PCI: sg2042: Add Sophgo SG2042 PCIe driver
+4d8a655d | 2025-09-12 | Chen Wang | dt-bindings: pci: Add Sophgo SG2042 PCIe host
+6f83d0fa | 2025-09-10 | Han Gao | dts: sophgo: sg2042: added numa id description
+58c0463f | 2025-09-04 | Chen Wang | irqchip/sg2042-msi: Set irq type according to DT configuration
+9899e203 | 2025-09-04 | Chen Wang | riscv: sophgo: dts: sg2044: Change msi irq type to IRQ_TYPE_EDGE_RISING
+2acf8be1 | 2025-09-04 | Chen Wang | riscv: sophgo: dts: sg2042: Change msi irq type to IRQ_TYPE_EDGE_RISING
+0ffdf5cc | 2025-08-28 | Inochi Amaoto | PCI/MSI: Check MSI_FLAG_PCI_MSI_MASK_PARENT in cond_[startup|shutdown]_parent()
+08a4bec2 | 2025-08-14 | Inochi Amaoto | irqchip/sg2042-msi: Set MSI_FLAG_MULTI_PCI_MSI flags for SG2044
+bd949b13 | 2025-08-14 | Inochi Amaoto | irqchip/sg2042-msi: Fix broken affinity setting
+32875738 | 2025-08-14 | Inochi Amaoto | PCI/MSI: Add startup/shutdown for per device domains
+447849db | 2025-08-14 | Inochi Amaoto | genirq: Add irq_chip_(startup/shutdown)_parent()
+e139c54d | 2025-07-13 | Guo Ren (Alibaba DAMO Academy) | riscv: Move vendor errata definitions to new header
+1177a88b | 2025-05-04 | Inochi Amaoto | PCI: dwc: Add Sophgo SG2044 PCIe controller driver in Root Complex mode
+f5dfecb5 | 2025-05-04 | Inochi Amaoto | dt-bindings: pci: Add Sophgo SG2044 PCIe host
+9205ef6d | 2025-07-08 | Inochi Amaoto | net: stmmac: dwmac-sophgo: Add support for Sophgo SG2042 SoC
+6e9982b6 | 2025-07-08 | Inochi Amaoto | dt-bindings: net: sophgo,sg2044-dwmac: Add support for Sophgo SG2042 dwmac
+03980c7e | 2025-06-26 | Thomas Gleixner | irqchip/sg2042-msi: Switch to msi_create_parent_irq_domain()
+539bf130 | 2025-07-03 | Inochi Amaoto | riscv: dts: sophgo: sophgo-srd3-10: reserve uart0 device
+475e20ed | 2025-07-05 | Han Gao | riscv: dts: sophgo: add Sophgo SG2042_EVB_V2.0 board device tree
+b15e371f | 2025-07-05 | Han Gao | riscv: dts: sophgo: add Sophgo SG2042_EVB_V1.X board device tree
+c60013fd | 2025-07-05 | Han Gao | dt-bindings: riscv: add Sophgo SG2042_EVB_V1.X/V2.0 bindings
+541cfaaa | 2025-07-08 | Inochi Amaoto | riscv: dts: sophgo: add ethernet GMAC device for sg2042
+d8793c8f | 2025-07-03 | Inochi Amaoto | riscv: dts: sophgo: sg2044: add pmu configuration
+e579102d | 2025-07-07 | Han Gao | riscv: dts: sophgo: sg2044: add ziccrse extension
+5b31267b | 2025-07-05 | Han Gao | riscv: dts: sophgo: add zfh for sg2042
+5e1eb943 | 2025-07-05 | Han Gao | riscv: dts: sophgo: add ziccrse for sg2042
+3adf1b6a | 2025-07-05 | Han Gao | riscv: dts: sophgo: Add xtheadvector to the sg2042 devicetree
+78e8b6be | 2025-06-18 | Inochi Amaoto | riscv: dts: sophgo: sg2044: add PCIe device support for SG2044
+6073ca20 | 2025-06-18 | Inochi Amaoto | riscv: dts: sophgo: sg2044: add MSI device support for SG2044
+0d55ad18 | 2025-06-12 | Alexander Sverdlin | dt-bindings: soc: sophgo: Move SoCs/boards from riscv into soc, add SG2000
+ab9b892a | 2025-06-13 | Inochi Amaoto | riscv: dts: sophgo: sg2044: Add missing riscv,cbop-block-size property
+5f46bd20 | 2025-06-09 | Longbin Li | riscv: dts: sophgo: add pwm controller for SG2044
+43906808 | 2025-06-09 | Longbin Li | riscv: dts: sophgo: add SG2044 SPI NOR controller driver
+3cf3104b | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sg2044: Add pinctrl device
+646b37bb | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sg2044: Add ethernet control device
+977d6e70 | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sophgo-srd3-10: add HWMON MCU device
+609bd9fa | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sg2044: Add MMC controller device
+319ee44f | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sg2044: add DMA controller device
+b100b671 | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sg2044: Add I2C device
+2cd1d063 | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sg2044: Add GPIO device
+f92ce760 | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sg2044: Add clock controller device
+fecdac43 | 2025-06-09 | Inochi Amaoto | riscv: dts: sophgo: sg2044: Add system controller device
+691e2617 | 2025-05-28 | Longbin Li | pwm: sophgo-sg2042: Add support for SG2044
+aae5d9a2 | 2025-05-28 | Longbin Li | pwm: sophgo-sg2042: Reorganize the code structure
+3c98468e | 2025-05-28 | Longbin Li | dt-bindings: pwm: sophgo: Add pwm controller for SG2044
+d8809fa1 | 2025-07-20 | Zixian Zeng | spi: spi-sg2044-nor: Add SPI-NOR controller for SG2042
+148c1bbd | 2025-07-20 | Zixian Zeng | spi: spi-sg2044-nor: Add configurable chip_info
+860a4057 | 2025-07-20 | Zixian Zeng | spi: dt-bindings: spi-sg2044-nor: Change SOPHGO SG2042
+6ef1e63e | 2025-05-25 | Zixian Zeng | spi: dt-bindings: spi-sg2044-nor: Add SOPHGO SG2042
+c696e8f4 | 2025-04-17 | Siddharth Vadapalli | PCI: cadence-host: Introduce cdns_pcie_host_disable() helper for cleanup
+a18ec117 | 2025-04-14 | Inochi Amaoto | dt-bindings: hwmon: Add Sophgo SG2044 external hardware monitor support
+3685c3ab | 2025-04-14 | Inochi Amaoto | riscv: dts: sophgo: Add initial device tree of Sophgo SRD3-10
+65d54625 | 2025-04-14 | Inochi Amaoto | dt-bindings: riscv: sophgo: Add SG2044 compatible string
+701237f1 | 2025-04-14 | Inochi Amaoto | dt-bindings: interrupt-controller: Add Sophgo SG2044 PLIC
+0a374329 | 2025-04-14 | Inochi Amaoto | dt-bindings: interrupt-controller: Add Sophgo SG2044 CLINT mswi
+4cfdd6fa | 2025-04-25 | Zixian Zeng | riscv: sophgo: dts: Add spi controller for SG2042
+3a887d35 | 2025-02-11 | Inochi Amaoto | riscv: dts: sophgo: sg2042: add pinctrl support
+a93f8ac0 | 2025-04-18 | Inochi Amaoto | soc: sophgo: sg2044: Add support for SG2044 TOP syscon device
+1bcc41f1 | 2025-04-14 | Inochi Amaoto | dt-bindings: reset: sophgo: Add SG2044 bindings.
+c4123d8d | 2025-04-14 | Inochi Amaoto | dt-bindings: i2c: dw: Add Sophgo SG2044 SoC I2C controller
+aa1e3953 | 2025-04-18 | Inochi Amaoto | clk: sophgo: Add clock controller support for SG2044 SoC
+a040ca44 | 2025-04-18 | Inochi Amaoto | clk: sophgo: Add PLL clock controller support for SG2044 SoC
+1bdef626 | 2025-04-18 | Inochi Amaoto | dt-bindings: clock: sophgo: add clock controller for SG2044
+36776f6a | 2025-04-18 | Inochi Amaoto | dt-bindings: soc: sophgo: Add SG2044 top syscon device
+da4429f7 | 2025-05-04 | Inochi Amaoto | dt-bindings: clock: sophgo: Use precise compatible for CV1800 series SoC
+f346092b | 2025-04-14 | Inochi Amaoto | dt-bindings: mmc: sdhci-of-dwcmhsc: Add Sophgo SG2044 support
+24d76597 | 2025-04-14 | Inochi Amaoto | dt-bindings: timer: Add Sophgo SG2044 ACLINT timer
+3c7913b5 | 2025-05-13 | Marc Zyngier | genirq/msi: Add helper for creating MSI-parent irq domains
+f4fda6de | 2025-04-22 | Inochi Amaoto | irqchip/sg2042-msi: Fix wrong type cast in sg2044_msi_irq_ack()
+fac3a284 | 2025-04-14 | Inochi Amaoto | irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller
+a5a68286 | 2025-04-14 | Inochi Amaoto | irqchip/sg2042-msi: Introduce configurable chipinfo for SG2042
+e5464a13 | 2025-04-14 | Inochi Amaoto | irqchip/sg2042-msi: Rename functions and data structures to be SG2042 agnostic
+38f59b8e | 2025-04-14 | Inochi Amaoto | dt-bindings: interrupt-controller: Add Sophgo SG2044 MSI controller
+d705f262 | 2025-04-25 | Zixian Zeng | spi: dt-bindings: snps,dw-apb-ssi: Add compatible for SOPHGO SG2042 SoC
+0c04827e | 2025-04-05 | Inochi Amaoto | irqchip/sg2042-msi: Add missing chip flags
+14fc5f15 | 2025-03-03 | Inochi Amaoto | dt-bindings: dma: snps,dw-axi-dmac: Allow devices to be marked as noncoherent
+ca843709 | 2025-02-11 | Inochi Amaoto | pinctrl: sophgo: add support for SG2044 SoC
+e83401d7 | 2025-02-11 | Inochi Amaoto | pinctrl: sophgo: add support for SG2042 SoC
+e03416c2 | 2025-02-11 | Inochi Amaoto | dt-bindings: pinctrl: Add pinctrl for Sophgo SG2042 series SoC
+8abf4058 | 2025-02-11 | Inochi Amaoto | pinctrl: sophgo: introduce generic probe function
+07bcc556 | 2025-02-11 | Inochi Amaoto | pinctrl: sophgo: generalize shareable code of cv18xx pinctrl driver
+c4e19a79 | 2025-02-11 | Inochi Amaoto | pinctrl: sophgo: introduce generic data structure for cv18xx pinctrl driver
+6968ad36 | 2025-02-11 | Inochi Amaoto | pinctrl: sophgo: avoid to modify untouched bit when setting cv1800 pinconf
+1aba3674 | 2025-02-12 | Chen Wang | riscv: sophgo: dts: add cooling maps for Milk-V Pioneer
+53c36642 | 2025-02-12 | Chen Wang | riscv: sophgo: dts: add pwm-fan for Milk-V Pioneer
+a3d0d6b2 | 2025-02-05 | Chen Wang | riscv: sophgo: dts: add pwm controller for SG2042 SoC
+2143baeb | 2025-03-07 | Inochi Amaoto | net: stmmac: Add glue layer for Sophgo SG2044 SoC
+acecb7ee | 2025-03-07 | Inochi Amaoto | dt-bindings: net: Add support for Sophgo SG2044 dwmac
+12dfe804 | 2025-02-27 | Russell King (Oracle) | net: stmmac: provide generic implementation for set_clk_tx_rate method
+14d9206f | 2025-02-27 | Russell King (Oracle) | net: stmmac: provide set_clk_tx_rate() hook
+f764335d | 2025-02-05 | Chen Wang | pwm: sophgo: add driver for Sophgo SG2042 PWM
+63872883 | 2025-02-05 | Chen Wang | dt-bindings: pwm: sophgo: add PWM controller for SG2042
+cf09219a | 2025-03-14 | Dan Carpenter | spi: sg2044-nor: fix uninitialized variable in probe
+c7c8b471 | 2025-03-14 | Dan Carpenter | spi: sg2044-nor: fix signedness bug in sg2044_spifmc_write()
+ec279288 | 2025-03-13 | Andy Shevchenko | spi: sg2044-nor: Convert to dev_err_probe()
+f2453141 | 2025-03-13 | Andy Shevchenko | spi: sg2044-nor: Fully convert to device managed resources
+e95dd501 | 2025-03-04 | Longbin Li | spi: sophgo: add SG2044 SPI NOR controller driver
+34525ff7 | 2025-03-04 | Longbin Li | dt-bindings: spi: add SG2044 SPI NOR controller driver
+8756d2a2 | 2025-02-26 | Chen Wang | riscv: sophgo: dts: Add msi controller for SG2042
+6d303cb8 | 2025-02-26 | Chen Wang | irqchip: Add the Sophgo SG2042 MSI interrupt controller
+f96b9c76 | 2025-02-26 | Chen Wang | dt-bindings: interrupt-controller: Add Sophgo SG2042 MSI
+d88dc3af | 2025-02-17 | Thomas Gleixner | irqchip/irq-msi-lib: Optionally set default irq_eoi()/irq_ack()
+60af7e36 | 2024-11-13 | Charlie Jenkins | riscv: Add ghostwrite vulnerability
+6266ca0d | 2024-12-05 | Jan Petrous (OSS) | net: phy: Add helper for mapping RGMII link speed to clock rate
+b2503c96 | 2024-10-24 | Inochi Amaoto | dt-bindings: serial: snps-dw-apb-uart: Add Sophgo SG2044 uarts
+d3eb6cae | 2024-11-03 | Alexandre Ghiti | dt-bindings: riscv: Add Ziccrse ISA extension description
+c4f83351 | 2024-10-16 | Thomas Bonnefille | pinctrl: sophgo: fix typo in tristate of SG2002
+58f5594b | 2024-10-19 | Cristian Ciocaltea | clk: Provide devm_clk_bulk_get_all_enabled() helper
+5a3e85ce | 2024-11-01 | Claudiu Beznea | clk: Add devm_clk_hw_register_gate_parent_hw()
+45e6baab | 2024-10-23 | Zichen Xie | clk: sophgo: avoid integer overflow in sg2042_pll_recalc_rate()
+4966f5ae | 2024-09-25 | Philipp Zabel | reset: Add devres helpers to request pre-deasserted reset controls
+ccbcb5eb | 2024-09-25 | Philipp Zabel | reset: replace boolean parameters with flags parameter
+2bf1b8a8 | 2024-01-25 | Philipp Zabel | usb: dwc3-of-simple: Stop using of_reset_control_array_get() directly
+5874985d | 2024-10-08 | Chen Wang | riscv: sophgo: dts: add power key for pioneer box
+fe16c6a9 | 2024-10-22 | Uwe Kleine-König | riscv: dts: Replace deprecated snps,nr-gpios property for snps,dw-apb-gpio-port devices
+c52d335d | 2024-10-10 | Harshit Mogalapalli | pinctrl: sophgo: fix double free in cv1800_pctrl_dt_node_to_map()
+e7731196 | 2024-07-03 | Jinjie Ruan | riscv: Enable generic CPU vulnerabilites support
+780a952e | 2024-08-30 | Inochi Amaoto | pinctrl: sophgo: cv18xx: fix missed __iomem type identifier
+36e2cadd | 2024-08-02 | Inochi Amaoto | pinctrl: sophgo: add support for SG2002 SoC
+db0bafc0 | 2024-08-02 | Inochi Amaoto | pinctrl: sophgo: add support for SG2000 SoC
+00318031 | 2024-08-02 | Inochi Amaoto | pinctrl: sophgo: add support for CV1812H SoC
+0e05db8d | 2024-08-02 | Inochi Amaoto | pinctrl: sophgo: add support for CV1800B SoC
+46ce0924 | 2024-08-02 | Inochi Amaoto | dt-bindings: pinctrl: Add pinctrl for Sophgo CV1800 series SoC.
+02b515ae | 2024-07-18 | Inochi Amaoto | pinctrl: pinconf-generic: Add support for "input-schmitt-microvolt" property
+8f4d13a7 | 2024-08-17 | Inochi Amaoto | hwmon: Add sophgo SG2042 external hardware monitor support
+b23fb615 | 2024-08-17 | Inochi Amaoto | dt-bindings: hwmon: Add Sophgo SG2042 external hardware monitor support
+03aa3875 | 2024-08-05 | Chen Wang | mmc: sdhci-of-dwcmshc: Add support for Sophgo SG2042
+6e76e3e9 | 2024-08-05 | Chen Wang | dt-bindings: mmc: sdhci-of-dwcmhsc: Add Sophgo SG2042 support
+6b4e1e53 | 2024-08-05 | Chen Wang | mmc: sdhci-of-dwcmshc: add dwcmshc_pltfm_data
+e3c60da7 | 2024-08-05 | Chen Wang | mmc: sdhci-of-dwcmshc: factor out code into dwcmshc_rk35xx_init
+72cc1012 | 2024-08-05 | Chen Wang | mmc: sdhci-of-dwcmshc: factor out code for th1520_init()
+5bc67b91 | 2024-08-05 | Chen Wang | mmc: sdhci-of-dwcmshc: move two rk35xx functions
+c9c27893 | 2024-08-05 | Chen Wang | mmc: sdhci-of-dwcmshc: add common bulk optional clocks support
+811f9a0b | 2024-08-17 | Inochi Amaoto | riscv: dts: sophgo: Add mcu device for Milk-V Pioneer
+b00c31f2 | 2024-08-19 | Chen Wang | riscv: sophgo: dts: add gpio controllers for SG2042 SoC
+23ae8b42 | 2024-08-05 | Chen Wang | riscv: sophgo: dts: add mmc controllers for SG2042 SoC
+457d1079 | 2024-07-29 | Inochi Amaoto | riscv: dts: sophgo: Add i2c device support for sg2042
+d3536de1 | 2024-07-29 | Inochi Amaoto | riscv: dts: sophgo: Use common "interrupt-parent" for all peripherals for sg2042
+0cd5e948 | 2024-07-17 | Dan Carpenter | clk: sophgo: clk-sg2042-pll: Fix uninitialized variable in debug output
+43f6779c | 2024-06-23 | Thomas Gleixner | irqchip/irq-msi-lib: Prepare for PCI MSI/MSIX
+cbd6c3aa | 2024-06-23 | Thomas Gleixner | irqchip: Provide irq-msi-lib
+2db05a63 | 2024-06-26 | Shivamurthy Shastri | PCI/MSI: Provide MSI_FLAG_PCI_MSI_MASK_PARENT
+756a6e08 | 2024-06-14 | Herve Codina | irqdomain: Handle domain bus token in irq_domain_create()
+e3719f24 | 2024-06-14 | Herve Codina | irqdomain: Convert __irq_domain_create() to use struct irq_domain_info
+26be6798 | 2024-06-14 | Herve Codina | irqdomain: Use a dedicated function to set the domain name
+01373617 | 2024-06-14 | Herve Codina | irqdomain: Constify parameter in is_fwnode_irqchip()
+d33daac3 | 2024-07-10 | Nathan Chancellor | clk: sophgo: Avoid -Wsometimes-uninitialized in sg2042_clk_pll_set_rate()
+330c851e | 2023-11-24 | Chen Wang | clk: sophgo: Add SG2042 clock driver
+4601de6f | 2023-11-24 | Chen Wang | dt-bindings: clock: sophgo: add clkgen for SG2042
+4bd859a1 | 2024-01-31 | Chen Wang | dt-bindings: clock: sophgo: add RP gate clocks for SG2042
+54a38eee | 2024-01-15 | Chen Wang | dt-bindings: clock: sophgo: add pll clocks for SG2042
+dae84381 | 2024-06-28 | Serge Semin | dt-bindings: net: dwmac: Validate PBL for all IP-cores
+307349f9 | 2023-11-24 | Chen Wang | riscv: dts: add clock generator for Sophgo SG2042 SoC
+7c75e929 | 2024-03-09 | Inochi Amaoto | clk: sophgo: Add clock support for SG2000 SoC
+1ef54477 | 2024-03-09 | Inochi Amaoto | clk: sophgo: Add clock support for CV1810 SoC
+f01fed53 | 2024-03-09 | Inochi Amaoto | clk: sophgo: Add clock support for CV1800 SoC
+eadf7b81 | 2024-03-09 | Inochi Amaoto | dt-bindings: clock: sophgo: Add clock controller of SG2000 series SoC
+3386eb0b | 2024-04-20 | Jisheng Zhang | mmc: sdhci-of-dwcmshc: Add tuning support for Sophgo CV1800B and SG200X
+bc4b6279 | 2024-03-19 | Sergey Khimich | mmc: sdhci-of-dwcmshc: Implement SDHCI CQE support
+1146a10e | 2024-03-19 | Sergey Khimich | mmc: cqhci: Add cqhci set_tran_desc() callback
+fc3313c7 | 2024-04-07 | Christoph Müllner | riscv: thead: Rename T-Head PBMT to MAE
+a43d8929 | 2024-01-30 | Chen Wang | reset: simple: add support for Sophgo SG2042
+9d45479e | 2024-01-30 | Chen Wang | dt-bindings: reset: sophgo: support SG2042
+de03adc0 | 2024-01-04 | Uwe Kleine-König | clk: Add a devm variant of clk_rate_exclusive_get()
+3f103af3 | 2024-02-17 | Jisheng Zhang | mmc: sdhci-of-dwcmshc: Add support for Sophgo CV1800B and SG2002
+5bcc2953 | 2023-11-16 | Nathan Chancellor | mmc: sdhci-of-dwcmshc: Use logical OR instead of bitwise OR in dwcmshc_probe()
+00de168c | 2024-02-17 | Jisheng Zhang | dt-bindings: mmc: sdhci-of-dwcmhsc: Add Sophgo CV1800B and SG2002 support
+5855c4de | 2024-02-14 | Uwe Kleine-König | pwm: Provide pwmchip_alloc() function and a devm variant of it
+3a258272 | 2024-02-14 | Uwe Kleine-König | pwm: Provide wrappers for storing and getting driver private data
+67485228 | 2024-02-14 | Uwe Kleine-König | pwm: Provide an inline function to get the parent device of a given chip
+e203ffa4 | 2024-01-30 | Chen Wang | riscv: dts: add resets property for uart node
+f3ea8b72 | 2024-01-30 | Chen Wang | riscv: dts: add reset generator for Sophgo SG2042 SoC
+5dfd8c21 | 2024-01-26 | Inochi Amaoto | riscv: dts: sophgo: separate sg2042 mtime and mtimecmp to fit aclint format
+6cf6fe4d | 2023-12-04 | Inochi Amaoto | dt-bindings: timer: thead,c900-aclint-mtimer: separate mtime and mtimecmp regs
+bbf8a47a | 2023-11-14 | Jisheng Zhang | riscv: errata: thead: use pa based instructions for CMO
+0632c856 | 2023-11-14 | Jisheng Zhang | riscv: errata: thead: use riscv_nonstd_cache_ops for CMO
+29d2986d | 2023-12-11 | Andy Shevchenko | pinctrl: core: Embed struct pingroup into struct group_desc
+1e17fa1c | 2023-12-19 | Sean Young | pwm: Make it possible to apply PWM changes in atomic context
+9cd0b911 | 2023-12-18 | Inochi Amaoto | dt-bindings: clock: sophgo: Add clock controller of CV1800 series SoC
+1e870d79 | 2023-09-14 | Baoquan He | crash_core: move crashk_*res definition into crash_core.c
+ae3d8b4d | 2023-09-14 | Baoquan He | crash_core: add generic function to do reservation
+348c4b45 | 2023-09-14 | Baoquan He | crash_core: change parse_crashkernel() to support crashkernel=,high|low parsing
+1898521a | 2023-09-14 | Baoquan He | crash_core: change the prototype of function parse_crashkernel()
+9ba5545d | 2023-09-14 | Baoquan He | crash_core.c: remove unnecessary parameter of function
+66577b4d | 2023-10-04 | Chen Wang | riscv: dts: sophgo: add Milk-V Pioneer board device tree
+bae7b53d | 2023-10-07 | Chen Wang | riscv: dts: add initial Sophgo SG2042 SoC device tree
+ab9ab679 | 2023-10-04 | Inochi Amaoto | dt-bindings: interrupt-controller: Add Sophgo sg2042 CLINT mswi
+8d17b7d3 | 2023-10-04 | Inochi Amaoto | dt-bindings: timer: Add Sophgo sg2042 CLINT timer
+64268d6a | 2023-10-04 | Chen Wang | dt-bindings: interrupt-controller: Add Sophgo SG2042 PLIC
+159415c5 | 2023-10-04 | Chen Wang | dt-bindings: riscv: Add T-HEAD C920 compatibles
+250921b1 | 2023-10-04 | Chen Wang | dt-bindings: riscv: add sophgo sg2042 bindings
+12006455 | 2023-10-04 | Chen Wang | dt-bindings: vendor-prefixes: add milkv/sophgo
+115f7f82 | 2023-10-04 | Chen Wang | riscv: Add SOPHGO SOC family Kconfig support
+8130fd34 | 2026-11-20 | Han Gao | riscv: rvck_defconfig: drop legacy Sophgo Mango options
+e4597d64 | 2026-11-20 | Han Gao | Revert "riscv: errata: cmo: add CMO macro variant with both VA and PA"
+0027c179 | 2026-11-20 | Han Gao | Revert "riscv: use VA+PA variant of CMO macros for DMA synchorization"
+d03078b8 | 2026-11-20 | Han Gao | Revert "riscv: use VA+PA variant of CMO macros for DMA page preparation"
+e3dc44f4 | 2026-11-20 | Han Gao | Revert "riscv: errata: thead: Make cache clean to flush"
+f8e3e022 | 2026-11-20 | Han Gao | Revert "riscv: errata: Replace thead cache clean with flush"
+19616443 | 2026-11-20 | Han Gao | Revert "fix: Error: unrecognized opcode cbo.clean (a0)"
+4ffa5b2f | 2026-11-20 | Han Gao | Revert "riscv: Add sophgo sg2042 soc support"
+b58dfae0 | 2026-11-20 | Han Gao | Revert "riscv: sophgo: mango: add xtheadvector for mango-cpus-socket0&1"
+9df338b4 | 2026-11-20 | Han Gao | Revert "dts:sophgo:add i2c-rtc ds1307 device node for single chip"
+0c8a7e7b | 2026-11-20 | Han Gao | Revert "dts:sophgo:x4evb:Apply top interrupt instead of msi on x16 slot"
+aa05a59b | 2026-11-20 | Han Gao | Revert "riscv:dts:capricorn:add i2c-rtc device"
+414a5c14 | 2026-11-20 | Han Gao | Revert "riscv:dts:add i2c4 node for multi chips"
+270580be | 2026-11-20 | Han Gao | Revert "driver: clk: Add sophgo sg2042 soc support"
+cf9bec14 | 2026-11-20 | Han Gao | Revert "riscv:dts:modify dw gpio clock name"
+9f974bcf | 2026-11-20 | Han Gao | Revert "riscv: spinlock: Fix deadlock issue"
+66d20bac | 2026-11-20 | Han Gao | Revert "drivers: clock: Add sophgo sg2042 multi-chip clock synchronous support"
+50c253fd | 2026-11-20 | Han Gao | Revert "driver: clk: Modify the timer clock is turned off defaultly"
+487f524a | 2026-11-20 | Han Gao | Revert "irqchip: Add Sophgo SG2044 MSI controller driver"
+643e86ba | 2026-11-20 | Han Gao | Revert "driver: mmc: Add sophgo sg2042 soc support"
+7deac296 | 2026-11-20 | Han Gao | Revert "driver: mtd: Add sophgo sg2042 soc support"
+b6baa4fd | 2026-11-20 | Han Gao | Revert "driver: spifmc: fix spif bug when bs of dd exceed 64k"
+9aca52c0 | 2026-11-20 | Han Gao | Revert "driver: net: Add sophgo sg2042 soc support"
+42d7f443 | 2026-11-20 | Han Gao | Revert "drivers: pcie: sophgo: Create msi-x whitelist,turn on msi-x for top intr"
+d18c712c | 2026-11-20 | Han Gao | Revert "riscv: pci: msi: fix compile error when disable PCIE_CADENCE_SOPHGO"
+49c6a2af | 2026-11-20 | Han Gao | Revert "driver: pcie: Add sophgo sg2042 soc support"
+7e63b4ae | 2026-11-20 | Han Gao | Revert "drivers: pci/mmc: Fix build errors when ARCH_SOPHGO is disabled"
+b5404fac | 2026-11-20 | Han Gao | Revert "MSIX interrupts are allocated starting from bit 14 of the top register."
+65cd1113 | 2026-11-20 | Han Gao | Revert "drivers:pci:remove the err log of parsing pci"
+4acb69bc | 2026-11-20 | Han Gao | Revert "pcie: whitelist and support mellanox connectx-2"
+ed072861 | 2026-11-20 | Han Gao | Revert "drivers:pci: SC11 support msi-x"
+787d4780 | 2026-11-20 | Han Gao | Revert "Fix compile error" partly for sophgo
+27acc100 | 2026-11-20 | Han Gao | Revert "driver: pinctrl: Add sophgo sg2042 soc support"
+58df5df0 | 2026-11-20 | Han Gao | Revert "driver: reset: Add sophgo sg2042 soc support"
+9b1d38ba | 2026-11-20 | Han Gao | Revert "driver: soc: Add sophgo sg2042 soc support"
+36f62505 | 2026-11-20 | Han Gao | Revert "pwm: sophgo: remove unused .owner field"
+10fe1792 | 2026-11-20 | Han Gao | Revert "add pmbus debugging tool"
+c03e986e | 2026-11-20 | Han Gao | Revert "genirq/msi: limit MSI_ALLOC_FLAGS_MSIX_ENABLED only for SG2042/mango"
+070a616b | 2026-11-23 | Han Gao | Revert "PCI/MSI: Limit the Sophgo device allowlist to the Mango platform"
 eb8d1415 | 2026-11-17 | Chen Wang | genirq/msi: limit MSI_ALLOC_FLAGS_MSIX_ENABLED only for SG2042/mango
 d48c1f20 | 2026-11-16 | Chen Wang | riscv: dts: thead: remove rvbook
 240d81a9 | 2026-11-16 | Chen Wang | net: rfkill: Remove bt and wlan
