@@ -33,6 +33,11 @@ def beijing_timestamp():
     bj_time = utc_now + timedelta(hours=8)
     return bj_time.strftime("%Y-%m-%d %H:%M:%S")
 
+MAX_CLONE_DEPTH = 3000  # 最大克隆深度，RVCK 贡献量超过该数值时需要增大该值
+MAX_CLONE_MARGIN = 100  # 最大值与阈值之间的 “安全空间”
+MAX_CLONE_THRESHOLD = MAX_CLONE_DEPTH - MAX_CLONE_MARGIN  # 最大克隆阈值，超过该数值时需要告警并增大 MAX_CLONE_DEPTH
+MAX_FALLBACK_CLONE_DEPTH = 1000  # 未找到 tag 时的默认统计数量
+
 class ContribStats:
     def __init__(self, main_branch="rvck-6.6", stats_branch="contrib-stats", remote_url=None):
         self.main_branch = main_branch
@@ -41,8 +46,8 @@ class ContribStats:
         self.repo_path = Path(".").absolute()
 
         # 配置参数
-        self.clone_depth = 3000  # 默认克隆深度，rvck 贡献量超过该数值时需要更新
-        self.fallback_count = 1000  # 未找到 tag 时的默认统计数量
+        self.clone_depth = MAX_CLONE_DEPTH
+        self.fallback_count = MAX_FALLBACK_CLONE_DEPTH
 
         # 机构配置
         self.companies = {
@@ -398,6 +403,9 @@ class ContribStats:
                 # 3. 获取提交列表
                 commits = self.get_commits_from_clone(tmp_dir, start_tag)
                 if not commits:
+                    return None
+                if len(commits) >= MAX_CLONE_THRESHOLD:
+                    print(f"注意: 获取的提交数为 {len(commits)}，接近最大克隆深度 {MAX_CLONE_DEPTH}，为避免出现缓存不足问题，请考虑增加 MAX_CLONE_DEPTH 值后再试。")
                     return None
 
                 # 4. 初始化统计数据结构

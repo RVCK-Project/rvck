@@ -107,9 +107,9 @@ self.companies = {
 
 - 修改统计参数
 
-  - 主分支: 修改 `--main-branch` 参数或设置 `MAIN_BRANCH` secret
-  - 克隆深度: 修改 `self.clone_depth` 变量
-  - 克隆深度内未找到 tag 时的默认统计数量: 修改 `self.fallback_count` 变量
+  - 主分支: 修改 `--main-branch` 参数
+  - 克隆深度: 修改 `MAX_CLONE_DEPTH` 常量
+  - 克隆深度内未找到 tag 时的默认统计数量: 修改 `MAX_FALLBACK_CLONE_DEPTH` 常量
 
 # 3. 处理丢弃补丁工具
 
