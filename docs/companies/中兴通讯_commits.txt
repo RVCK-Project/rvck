@@ -1,12 +1,12 @@
 # 中兴通讯 提交列表（纯文本视图）
 # 共 579 个提交
-# 生成时间: 2026-11-27 13:26:17
+# 生成时间: 2026-11-27 15:24:02
 #
 # 格式: 提交哈希 | 日期 | 原始作者 | 标题
 ------------------------------------------------------------------------------------------------------------------------
-15410c5b | 2026-11-27 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches
-ac9c5475 | 2026-11-27 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
-8dff03d0 | 2026-11-27 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config
+f5ceb621 | 2026-11-27 | Ben Dooks | [DROPPED] riscv: save the SR_SUM status over switches
+cc90c2c9 | 2026-11-27 | Atish Patra | [DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit
+8977b5da | 2026-11-27 | Mayuresh Chitale | [DROPPED] RISC-V: KVM: Add kvm_vcpu_config
 849f8929 | 2025-09-10 | Chen Pei | ACPI: SPCR: Add support for DBG2 RISC-V SBI port subtype
 c14fdee9 | 2025-10-24 | Punit Agrawal | ACPI: SPCR: Check for table version when using precise baudrate
 16e749be | 2025-09-13 | Chen Pei | ACPI: SPCR: Support Precise Baud Rate field

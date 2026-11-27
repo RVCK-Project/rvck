@@ -4,7 +4,7 @@
 <p><strong>📊 统计信息</strong></p>
 <ul>
 <li><strong>贡献提交数</strong>: 429</li>
-<li><strong>统计时间</strong>: 2026-11-27 13:26:17</li>
+<li><strong>统计时间</strong>: 2026-11-27 15:24:02</li>
 <li><strong>主分支</strong>: rvck-6.6</li>
 <li><strong>起始标签</strong>: v6.6.161</li>
 </ul>
@@ -18,9 +18,9 @@
 
 | 提交哈希 | 日期 | 原始作者 | 标题 |
 |----------|------|----------|------|
-| [e2e164ef](https://github.com/RVCK-Project/rvck/commit/e2e164ef01e36ebc96a255c88242f9768e0a7c17) | 2026-11-27 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration |
-| [54a4ce63](https://github.com/RVCK-Project/rvck/commit/54a4ce63cef86aedae7b04f1c6c8e320b6ad94f0) | 2026-11-27 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_a... |
-| [a27db9ea](https://github.com/RVCK-Project/rvck/commit/a27db9ea0ccd02fee4a5041594002922b8072b54) | 2026-11-27 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_at... |
+| [c964f52c](https://github.com/RVCK-Project/rvck/commit/c964f52c717a88a71208097e74cd6a00a31f1fe9) | 2026-11-27 | Xie Bo | [DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration |
+| [42abdc4c](https://github.com/RVCK-Project/rvck/commit/42abdc4c0bafe9073800eda3f19b51f09220c26f) | 2026-11-27 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_a... |
+| [cba89d56](https://github.com/RVCK-Project/rvck/commit/cba89d56e2d7a97be9fee4180511b86537e92945) | 2026-11-27 | Jiakai Xu | [DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_at... |
 | [4990a7ac](https://github.com/RVCK-Project/rvck/commit/4990a7ac83b0fb736df2e77da5929771a42dd728) | 2026-10-29 | Zhiguo Zhu | riscv: dts: zhihe: separate device tree nodes with empty lines |
 | [bee6abbe](https://github.com/RVCK-Project/rvck/commit/bee6abbe063bdd6f63dda26cd1d3a20ace4bcb6d) | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: fix UART pinctrl on Melon Pi and EVB |
 | [317d88e3](https://github.com/RVCK-Project/rvck/commit/317d88e3d7bea228ca621e1d897ccb86004fe6ac) | 2026-10-22 | Zhiguo Zhu | riscv: dts: zhihe: enable second GMAC on Melon Pi |
@@ -458,5 +458,5 @@
 
 ---
 
-*本页面最后更新于 2026-11-27 13:26:17*
+*本页面最后更新于 2026-11-27 15:24:02*
 *数据来源: 主分支 rvck-6.6@b420239d*

@@ -3833,10 +3833,10 @@
       "deletions": 9541,
       "commits": [
         {
-          "hash": "15410c5b7ccd177dd888e42c267df517fe253155",
+          "hash": "f5ceb62197de1a193bc9fd087cf0884d717d50d9",
           "author_name": "Ben Dooks",
           "author_email": "ben.dooks@codethink.co.uk",
-          "date": "2026-11-27 13:27:14 +0800",
+          "date": "2026-11-27 15:25:02 +0800",
           "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
           "insertions": 0,
           "deletions": 0,
@@ -3850,10 +3850,10 @@
           ]
         },
         {
-          "hash": "ac9c54754b942a9946cc8b387801f8af0438b5ae",
+          "hash": "cc90c2c9a25b57541c589e868c46379907b5f849",
           "author_name": "Atish Patra",
           "author_email": "atishp@rivosinc.com",
-          "date": "2026-11-27 13:27:14 +0800",
+          "date": "2026-11-27 15:25:01 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
           "insertions": 0,
           "deletions": 0,
@@ -3866,10 +3866,10 @@
           ]
         },
         {
-          "hash": "8dff03d03c05dd3774b956ce629e7c1e239cab15",
+          "hash": "8977b5da5918b4164d47cacdcc85c24f51dbddbd",
           "author_name": "Mayuresh Chitale",
           "author_email": "mchitale@ventanamicro.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:24:58 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
           "insertions": 0,
           "deletions": 0,
@@ -12979,10 +12979,10 @@
       "deletions": 20293,
       "commits": [
         {
-          "hash": "e2e164ef01e36ebc96a255c88242f9768e0a7c17",
+          "hash": "c964f52c717a88a71208097e74cd6a00a31f1fe9",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:25:00 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -12994,10 +12994,10 @@
           ]
         },
         {
-          "hash": "54a4ce63cef86aedae7b04f1c6c8e320b6ad94f0",
+          "hash": "42abdc4c0bafe9073800eda3f19b51f09220c26f",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:25:00 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -13010,10 +13010,10 @@
           ]
         },
         {
-          "hash": "a27db9ea0ccd02fee4a5041594002922b8072b54",
+          "hash": "cba89d56e2d7a97be9fee4180511b86537e92945",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:24:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -31992,10 +31992,10 @@
       "deletions": 826,
       "commits": [
         {
-          "hash": "e2e164ef01e36ebc96a255c88242f9768e0a7c17",
+          "hash": "c964f52c717a88a71208097e74cd6a00a31f1fe9",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:25:00 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -35843,10 +35843,10 @@
       "deletions": 9541,
       "commits": [
         {
-          "hash": "15410c5b7ccd177dd888e42c267df517fe253155",
+          "hash": "f5ceb62197de1a193bc9fd087cf0884d717d50d9",
           "author_name": "Ben Dooks",
           "author_email": "ben.dooks@codethink.co.uk",
-          "date": "2026-11-27 13:27:14 +0800",
+          "date": "2026-11-27 15:25:02 +0800",
           "subject": "[DROPPED] riscv: save the SR_SUM status over switches",
           "insertions": 0,
           "deletions": 0,
@@ -35860,10 +35860,10 @@
           ]
         },
         {
-          "hash": "ac9c54754b942a9946cc8b387801f8af0438b5ae",
+          "hash": "cc90c2c9a25b57541c589e868c46379907b5f849",
           "author_name": "Atish Patra",
           "author_email": "atishp@rivosinc.com",
-          "date": "2026-11-27 13:27:14 +0800",
+          "date": "2026-11-27 15:25:01 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Teardown riscv specific bits after kvm_exit",
           "insertions": 0,
           "deletions": 0,
@@ -35876,10 +35876,10 @@
           ]
         },
         {
-          "hash": "8dff03d03c05dd3774b956ce629e7c1e239cab15",
+          "hash": "8977b5da5918b4164d47cacdcc85c24f51dbddbd",
           "author_name": "Mayuresh Chitale",
           "author_email": "mchitale@ventanamicro.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:24:58 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Add kvm_vcpu_config",
           "insertions": 0,
           "deletions": 0,
@@ -44989,10 +44989,10 @@
       "deletions": 25639,
       "commits": [
         {
-          "hash": "e2e164ef01e36ebc96a255c88242f9768e0a7c17",
+          "hash": "c964f52c717a88a71208097e74cd6a00a31f1fe9",
           "author_name": "Xie Bo",
           "author_email": "xb@ultrarisc.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:25:00 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration",
           "insertions": 0,
           "deletions": 0,
@@ -45004,10 +45004,10 @@
           ]
         },
         {
-          "hash": "54a4ce63cef86aedae7b04f1c6c8e320b6ad94f0",
+          "hash": "42abdc4c0bafe9073800eda3f19b51f09220c26f",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:25:00 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -45020,10 +45020,10 @@
           ]
         },
         {
-          "hash": "a27db9ea0ccd02fee4a5041594002922b8072b54",
+          "hash": "cba89d56e2d7a97be9fee4180511b86537e92945",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:24:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -54762,10 +54762,10 @@
       "deletions": 64934,
       "commits": [
         {
-          "hash": "54a4ce63cef86aedae7b04f1c6c8e320b6ad94f0",
+          "hash": "42abdc4c0bafe9073800eda3f19b51f09220c26f",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:25:00 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_has_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -54778,10 +54778,10 @@
           ]
         },
         {
-          "hash": "a27db9ea0ccd02fee4a5041594002922b8072b54",
+          "hash": "cba89d56e2d7a97be9fee4180511b86537e92945",
           "author_name": "Jiakai Xu",
           "author_email": "jiakaipeanut@gmail.com",
-          "date": "2026-11-27 13:27:13 +0800",
+          "date": "2026-11-27 15:24:59 +0800",
           "subject": "[DROPPED] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()",
           "insertions": 0,
           "deletions": 0,
@@ -65053,7 +65053,7 @@
       ]
     }
   },
-  "generated_at": "2026-11-27 13:26:17",
+  "generated_at": "2026-11-27 15:24:02",
   "main_branch": "rvck-6.6",
   "main_commit": "b420239d",
   "start_tag": "v6.6.161"
