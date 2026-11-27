@@ -347,6 +347,7 @@ struct dw_pcie_host_ops {
 };
 
 struct dw_pcie_rp {
+	bool			bypass_ob_mem_iatu;
 	bool			has_msi_ctrl:1;
 	bool			cfg0_io_shared:1;
 	u64			cfg0_base;
