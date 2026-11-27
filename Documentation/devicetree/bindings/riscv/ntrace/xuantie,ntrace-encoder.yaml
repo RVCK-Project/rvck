@@ -1,0 +1,185 @@
+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/riscv/ntrace/xuantie,ntrace-encoder.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: RISC-V XUANTIE N-Trace encoder controller
+
+maintainers:
+  - Jiangshuai Li <jiangshuai_li@linux.alibaba.com>
+  - Chen Pei <cp0613@linux.alibaba.com>
+
+description: |
+  One node describes the instruction trace encoder of a single hart. The
+  encoder packs the executed-branch trace stream into N-Trace messages and
+  pushes them to the downstream component listed in its output_port.
+
+  Encoder registers are accessed through the memory region given in reg.
+
+properties:
+  compatible:
+    const: xuantie,ntrace-encoder
+
+  reg:
+    maxItems: 1
+    description:
+      Encoder register region.
+
+  cpu:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description:
+      Linux CPU number this encoder belongs to. The driver derives the hart
+      id from it, so the property is mandatory.
+
+  trace_encoder_format:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    minimum: 0
+    maximum: 7
+    default: 1
+    description:
+      Trace encoding format. 1 selects N-Trace, 0 ARM E-trace style encoding,
+      7 vendor defined. Only N-Trace is decoded by the perf tool.
+
+  trace_encoder_inst_mode:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    minimum: 0
+    maximum: 7
+    default: 6
+    description:
+      Instruction tracing level. 3 selects branch trace, 6 branch history
+      trace, 0 disables instruction trace, 7 vendor defined.
+
+  trace_encoder_context:
+    $ref: /schemas/types.yaml#/definitions/string
+    enum: ["true", "false"]
+    default: "true"
+    description:
+      Send context (privilege mode changes) messages. The driver compares the
+      string against "true".
+
+  trace_encoder_inst_stall_enable:
+    $ref: /schemas/types.yaml#/definitions/string
+    enum: ["true", "false"]
+    default: "true"
+    description:
+      Emit stall messages when the hart stops retiring instructions.
+
+  trace_encoder_inhibit_src:
+    $ref: /schemas/types.yaml#/definitions/string
+    enum: ["true", "false"]
+    default: "false"
+    description:
+      Suppress the source identifier in the trace stream. When "false" the
+      src id is emitted.
+
+  trace_encoder_src_id:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description:
+      Source identifier written into the trace stream. Defaults to the value
+      of cpu.
+
+  trace_encoder_inst_sync_mode:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    enum: [0, 1, 2, 3]
+    default: 0
+    description:
+      Periodic synchronisation mode. 0 no sync packets, 1 counted trace
+      messages, 2 counted hart clock cycles, 3 counted 16-bit half-words.
+
+  trace_encoder_inst_sync_max:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description:
+      Period of the sync packets selected by trace_encoder_inst_sync_mode.
+      Mandatory (probe fails) whenever trace_encoder_inst_sync_mode is not 0.
+
+  trace_encoder_inst_trigger_enable:
+    $ref: /schemas/types.yaml#/definitions/string
+    enum: ["true", "false"]
+    default: "true"
+    description:
+      Allow the encoder to be enabled and disabled by a hardware trigger.
+
+  trace_timestamp_enable:
+    $ref: /schemas/types.yaml#/definitions/string
+    enum: ["true", "false"]
+    default: "false"
+    description:
+      Emit timestamp messages.
+
+  trace_timestamp_mode:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    minimum: 0
+    maximum: 7
+    description:
+      Timestamp source. 0 none, 1 external signal, 2 internal system counter,
+      3 internal core counter, 4 shared counter, 7 vendor specific. Mandatory
+      (probe fails) whenever trace_timestamp_enable is "true".
+
+  trace_timestamp_prescale:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    default: 0
+    description:
+      Prescaler applied to the timestamp counter before it is encoded.
+
+  output_port:
+    type: object
+    description:
+      Container of the encoder output ports. Each child node describes one
+      port and must carry an "endpoint" phandle pointing at the downstream
+      funnel or sink node. The phandle identifies that node; the port needs no
+      address cells, because the driver resolves the peer through the node
+      itself.
+
+    patternProperties:
+      ".*":
+        type: object
+        properties:
+          endpoint:
+            $ref: /schemas/types.yaml#/definitions/phandle
+        required:
+          - endpoint
+        additionalProperties: false
+
+  '#address-cells':
+    const: 1
+
+  '#size-cells':
+    const: 0
+
+required:
+  - compatible
+  - reg
+  - cpu
+  - output_port
+
+additionalProperties: false
+
+example:
+  - |
+    encoder0: encoder@2020000000 {
+        compatible = "xuantie,ntrace-encoder";
+        reg = <0x20 0x20000000 0x0 0x1000>;
+        cpu = <0>;
+        trace_encoder_format = <1>;
+        trace_encoder_inst_mode = <6>;
+        trace_encoder_context = "true";
+        trace_encoder_inst_stall_enable = "true";
+        trace_encoder_inhibit_src = "false";
+        trace_encoder_src_id = <0>;
+        trace_encoder_inst_sync_mode = <0>;
+        trace_encoder_inst_trigger_enable = "true";
+        trace_timestamp_enable = "true";
+        trace_timestamp_mode = <2>;
+        trace_timestamp_prescale = <0>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        output_port {
+            encoder_0_1 {
+                endpoint = <&funnel1>;
+            };
+        };
+    };
+
+...

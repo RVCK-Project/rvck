@@ -122,6 +122,8 @@ perf-$(CONFIG_AUXTRACE) += arm-spe-decoder/
 perf-$(CONFIG_AUXTRACE) += hisi-ptt.o
 perf-$(CONFIG_AUXTRACE) += hisi-ptt-decoder/
 perf-$(CONFIG_AUXTRACE) += s390-cpumsf.o
+perf-$(CONFIG_AUXTRACE) += xuantie-ntrace.o
+perf-$(CONFIG_AUXTRACE) += xuantie-ntrace-decoder/
 
 ifdef CONFIG_LIBOPENCSD
 perf-$(CONFIG_AUXTRACE) += cs-etm.o
