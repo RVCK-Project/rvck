@@ -15,9 +15,8 @@
 #include <linux/msi.h>
 #include <linux/slab.h>
 #include <linux/sysfs.h>
-#include <linux/of.h>
 #include <linux/pci.h>
-#include <linux/stddef.h>
+
 #include "internals.h"
 
 /**
@@ -871,6 +870,32 @@ struct irq_domain *msi_create_irq_domain(struct fwnode_handle *fwnode,
 }
 
 /**
+ * msi_create_parent_irq_domain - Create an MSI-parent interrupt domain
+ * @info:		MSI irqdomain creation info
+ * @msi_parent_ops:	MSI parent callbacks and configuration
+ *
+ * Return: pointer to the created &struct irq_domain or %NULL on failure
+ */
+struct irq_domain *msi_create_parent_irq_domain(struct irq_domain_info *info,
+						const struct msi_parent_ops *msi_parent_ops)
+{
+	struct irq_domain *d;
+
+	info->hwirq_max		= max(info->hwirq_max, info->size);
+	info->size		= info->hwirq_max;
+	info->domain_flags	|= IRQ_DOMAIN_FLAG_MSI_PARENT;
+	info->bus_token		= msi_parent_ops->bus_select_token;
+
+	d = irq_domain_instantiate(info);
+	if (IS_ERR(d))
+		return NULL;
+
+	d->msi_parent_ops = msi_parent_ops;
+	return d;
+}
+EXPORT_SYMBOL_GPL(msi_create_parent_irq_domain);
+
+/**
  * msi_parent_init_dev_msi_info - Delegate initialization of device MSI info down
  *				  in the domain hierarchy
  * @dev:		The device for which the domain should be created
@@ -1290,13 +1315,6 @@ static int __msi_domain_alloc_irqs(struct device *dev, struct irq_domain *domain
 	ret = msi_domain_prepare_irqs(domain, dev, ctrl->nirqs, &arg);
 	if (ret)
 		return ret;
-
-#if defined(CONFIG_RISCV) && IS_ENABLED(CONFIG_PCI)
-	struct pci_dev *pdev = container_of(dev, struct pci_dev, dev);
-	if (of_machine_is_compatible("sophgo,mango"))
-		if (pdev->msix_enabled)
-			arg.flags |= MSI_ALLOC_FLAGS_MSIX_ENABLED;
-#endif
 
 	/*
 	 * This flag is set by the PCI layer as we need to activate
