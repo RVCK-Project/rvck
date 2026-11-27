@@ -574,7 +574,7 @@ class ContribStats:
 
 ### 📊 累计代码修改概览
 
-目前 RVCK 基于统计起始点 `{stats['start_tag']}`，已累计合入 {stats['total_commits']} 个补丁，累计合入的补丁涉及代码修改：insert 🟢 +{stats.get('total_insertions', 0)} delete 🔴 -{stats.get('total_deletions', 0)} （截至 {stats['generated_at'][:10]}）。
+目前 RVCK 基于统计起始点 `{stats['start_tag']}`，已累计合入 {stats['total_commits']} 个提交，累计合入的提交涉及代码修改：insert 🟢 +{stats.get('total_insertions', 0)} delete 🔴 -{stats.get('total_deletions', 0)} （截至 {stats['generated_at'][:10]}）。
 
 ### 📌 累计贡献概览
 
