@@ -1,0 +1,670 @@
+[
+    {
+        "MetricExpr": "(topdown.frontend_bound.slots - topdown.bad_speculation.recovery_bubbles * pipeline_width) / topdown.slots",
+        "PublicDescription": "Fraction of slots unused due to the frontend's inability to supply enough uops",
+        "BriefDescription": "Fraction of slots unused due to the frontend's inability to supply enough uops",
+        "MetricGroup": "Common;TopdownL1",
+        "MetricName": "topdown.frontend_bound.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "(uop.spec - uop.ret + topdown.bad_speculation.recovery_bubbles * pipeline_width) / topdown.slots",
+        "PublicDescription": "Fraction of slots wasted due to incorrect speculations",
+        "BriefDescription": "Fraction of slots wasted due to incorrect speculations",
+        "MetricGroup": "Common;TopdownL1",
+        "MetricName": "topdown.bad_speculation.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "uop.ret / topdown.slots",
+        "PublicDescription": "Fraction of slots that retired",
+        "BriefDescription": "Fraction of slots that retired",
+        "MetricGroup": "Common;TopdownL1",
+        "MetricName": "topdown.retiring.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "1 - (topdown.frontend_bound.rate + topdown.bad_speculation.rate + topdown.retiring.rate)",
+        "PublicDescription": "Fraction of slots unused due to a lack of backend resources",
+        "BriefDescription": "Fraction of slots unused due to a lack of backend resources",
+        "MetricGroup": "Common;TopdownL1",
+        "MetricName": "topdown.backend_bound.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.frontend_bound.latency.slots / topdown.slots",
+        "PublicDescription": "Fetch latency bound L2 topdown metric",
+        "BriefDescription": "Fetch latency bound L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.frontend_bound.latency.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.frontend_bound.rate - topdown.frontend_bound.latency.rate",
+        "PublicDescription": "Fetch bandwidth bound L2 topdown metric",
+        "BriefDescription": "Fetch bandwidth bound L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.frontend_bound.bandwidth.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.bad_speculation.rate * inst.mispred.brjmp.spec / (inst.mispred.brjmp.spec + topdown.bad_speculation.exception_flush + topdown.bad_speculation.interrupt_flush + topdown.bad_speculation.other_flush + topdown.bad_speculation.rar_hazard_early_flush + topdown.bad_speculation.raw_hazard_early_flush)",
+        "PublicDescription": "Branch mispredicts L2 topdown metric",
+        "BriefDescription": "Branch mispredicts L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.bad_speculation.branch_mispredicts.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.bad_speculation.rate * (topdown.bad_speculation.raw_hazard_early_flush + topdown.bad_speculation.rar_hazard_early_flush) / (inst.mispred.brjmp.spec + topdown.bad_speculation.exception_flush + topdown.bad_speculation.interrupt_flush + topdown.bad_speculation.other_flush + topdown.bad_speculation.rar_hazard_early_flush + topdown.bad_speculation.raw_hazard_early_flush)",
+        "PublicDescription": "Load/Store early flush L2 topdown metric",
+        "BriefDescription": "Load/Store early flush L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.bad_speculation.ldst_early_flush.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.bad_speculation.rate - (topdown.bad_speculation.branch_mispredicts.rate + topdown.bad_speculation.ldst_early_flush.rate)",
+        "PublicDescription": "Machine clears L2 topdown metric",
+        "BriefDescription": "Machine clears L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.bad_speculation.machine_clears.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.backend_bound.rate * (topdown.backend_bound.memory.load + topdown.backend_bound.memory.store)/cycles.hart",
+        "PublicDescription": "Memory bound L2 topdown metric",
+        "BriefDescription": "Memory bound L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.backend_bound.memory_bound.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.backend_bound.rate - topdown.backend_bound.memory_bound.rate",
+        "PublicDescription": "Core bound L2 topdown metric",
+        "BriefDescription": "Core bound L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.backend_bound.core_bound.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * (inst.int.alu.spec + inst.int.mul.spec + inst.int.div.spec + inst.int.csr.spec) / uop.spec",
+        "PublicDescription": "Integer operations L2 topdown metric",
+        "BriefDescription": "Integer operations L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.retiring.int.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.brjmp.spec / uop.spec",
+        "PublicDescription": "Branch operations L2 topdown metric",
+        "BriefDescription": "Branch operations L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.retiring.brjmp.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.ldst.spec / uop.spec",
+        "PublicDescription": "Load/Store operations L2 topdown metric",
+        "BriefDescription": "Load/Store operations L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.retiring.ldst.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.sca.fp.arith.spec / uop.spec",
+        "PublicDescription": "Scalar float point arithmetic operations L2 topdown metric",
+        "BriefDescription": "Scalar float point arithmetic operations L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.retiring.fp.arith.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.rvv.arith.spec / uop.spec",
+        "PublicDescription": "Vector arithmetic operations L2 topdown metric",
+        "BriefDescription": "Vector arithmetic operations L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.retiring.rvv.arith.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate - topdown.retiring.int.rate - topdown.retiring.brjmp.rate - topdown.retiring.ldst.rate - topdown.retiring.fp.arith.rate - topdown.retiring.rvv.arith.rate",
+        "PublicDescription": "Other operations L2 topdown metric",
+        "BriefDescription": "Other operations L2 topdown metric",
+        "MetricGroup": "TopdownL2",
+        "MetricName": "topdown.retiring.other.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "cache.l1i.rd.miss.latency / cycles.hart",
+        "PublicDescription": "Idle by icache miss L3 topdown metric",
+        "BriefDescription": "Idle by icache miss L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.frontend_bound.latency.data.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "tlb.l1i.miss.latency / cycles.hart",
+        "PublicDescription": "Idle by itlb miss L3 topdown metric",
+        "BriefDescription": "Idle by itlb miss L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.frontend_bound.latency.addr.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "inst.mispred.brjmp.latency / cycles.hart",
+        "PublicDescription": "Idle by fetch pipeline bubbles L3 topdown metric",
+        "BriefDescription": "Idle by fetch pipeline bubbles L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.frontend_bound.latency.redirect.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "inst.mispred.brjmp.spec / inst.brjmp.spec",
+        "PublicDescription": "Branch misprediction rate L3 topdown metric",
+        "BriefDescription": "Branch misprediction rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "inst.mispred.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "inst.mispred.brjmp.spec * 1000 / uop.spec",
+        "PublicDescription": "Branch misprediction per 1000 instructions L3 topdown metric",
+        "BriefDescription": "Branch misprediction per 1000 instructions L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "inst.mispred.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "inst.mispred.branch / inst.brjmp.branch.spec",
+        "PublicDescription": "Condition branch misprediction rate L3 topdown metric",
+        "BriefDescription": "Condition branch misprediction rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "inst.mispred.branch.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "inst.mispred.branch *1000 / uop.spec",
+        "PublicDescription": "Condition branch misprediction per 1000 instructions L3 topdown metric",
+        "BriefDescription": "Condition branch misprediction per 1000 instructions L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "inst.mispred.branch.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "inst.mispred.uncond_branch / inst.brjmp.uncond_branch.spec",
+        "PublicDescription": "Unconditional branch (exclude indirect branch and function return) misprediction rate L3 topdown metric",
+        "BriefDescription": "Unconditional branch (exclude indirect branch and function return) misprediction rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "inst.mispred.uncond_branch.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "inst.mispred.uncond_branch *1000 / uop.spec",
+        "PublicDescription": "Unconditional branch (exclude indirect branch and function return) misprediction per 1000 instructions L3 topdown metric",
+        "BriefDescription": "Unconditional branch (exclude indirect branch and function return) misprediction per 1000 instructions L3 topdown metric",
+        "MetricGroup": "TopdownL3;Per-instruction",
+        "MetricName": "inst.mispred.uncond_branch.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "inst.mispred.ind / inst.brjmp.ind.spec",
+        "PublicDescription": "Indirect branch misprediction rate L3 topdown metric",
+        "BriefDescription": "Indirect branch misprediction rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "inst.mispred.ind.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "inst.mispred.ind *1000 / uop.spec",
+        "PublicDescription": "Indirect branch misprediction per 1000 instructions L3 topdown metric",
+        "BriefDescription": "Indirect branch misprediction per 1000 instructions L3 topdown metric",
+        "MetricGroup": "TopdownL3;Per-instruction",
+        "MetricName": "inst.mispred.ind.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "inst.mispred.ret / inst.brjmp.ret.spec",
+        "PublicDescription": "Function return misprediction rate L3 topdown metric",
+        "BriefDescription": "Function return misprediction rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "inst.mispred.ret.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "inst.mispred.ret *1000 / uop.spec",
+        "PublicDescription": "Function return misprediction per 1000 instructions L3 topdown metric",
+        "BriefDescription": "Function return misprediction per 1000 instructions L3 topdown metric",
+        "MetricGroup": "TopdownL3;Per-instruction",
+        "MetricName": "inst.mispred.ret.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "topdown.bad_speculation.raw_hazard_early_flush / (topdown.bad_speculation.raw_hazard_early_flush + topdown.bad_speculation.rar_hazard_early_flush)",
+        "PublicDescription": "RAW early flush rate L3 topdown metric",
+        "BriefDescription": "RAW early flush rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.bad_speculation.raw_hazard_early_flush.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.bad_speculation.rar_hazard_early_flush / (topdown.bad_speculation.raw_hazard_early_flush + topdown.bad_speculation.rar_hazard_early_flush)",
+        "PublicDescription": "RAR early flush rate L3 topdown metric",
+        "BriefDescription": "RAR early flush rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.bad_speculation.rar_hazard_early_flush.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.bad_speculation.exception_flush / (topdown.bad_speculation.exception_flush + topdown.bad_speculation.interrupt_flush + topdown.bad_speculation.other_flush)",
+        "PublicDescription": "exception flush rate L3 topdown metric",
+        "BriefDescription": "exception flush rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.bad_speculation.exception_flush.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.bad_speculation.interrupt_flush / (topdown.bad_speculation.exception_flush + topdown.bad_speculation.interrupt_flush + topdown.bad_speculation.other_flush)",
+        "PublicDescription": "interrupt flush rate L3 topdown metric",
+        "BriefDescription": "interrupt flush rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.bad_speculation.interrupt_flush.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.bad_speculation.other_flush / (topdown.bad_speculation.exception_flush + topdown.bad_speculation.interrupt_flush + topdown.bad_speculation.other_flush)",
+        "PublicDescription": "other flush rate L3 topdown metric",
+        "BriefDescription": "other flush rate L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.bad_speculation.other_flush.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.int.alu.spec / uop.spec",
+        "PublicDescription": "Arithmetic operations L3 topdown metric",
+        "BriefDescription": "Arithmetic operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.int.alu.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.int.mul.spec / uop.spec",
+        "PublicDescription": "Multiplication operations L3 topdown metric",
+        "BriefDescription": "Multiplication operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.int.mul.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.int.div.spec / uop.spec",
+        "PublicDescription": "Division operations L3 topdown metric",
+        "BriefDescription": "Division operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.int.div.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.int.csr.spec / uop.spec",
+        "PublicDescription": "CSR access operations L3 topdown metric",
+        "BriefDescription": "CSR access operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.int.csr.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.brjmp.branch.spec / uop.spec",
+        "PublicDescription": "Conditional branch operations L3 topdown metric",
+        "BriefDescription": "Conditional branch operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.brjmp.branch.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.brjmp.ind.spec / uop.spec",
+        "PublicDescription": "Indirect branch operations L3 topdown metric",
+        "BriefDescription": "Indirect branch operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.brjmp.ind.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.brjmp.ret.spec / uop.spec",
+        "PublicDescription": "Function return operations L3 topdown metric",
+        "BriefDescription": "Function return operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.brjmp.ret.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.brjmp.uncond_branch.spec / uop.spec",
+        "PublicDescription": "Unconditional branch operations L3 topdown metric",
+        "BriefDescription": "Unconditional branch operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.brjmp.uncond_branch.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.ldst.load.spec / uop.spec",
+        "PublicDescription": "Load operations L3 topdown metric",
+        "BriefDescription": "Load operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.ldst.load.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.ldst.store.spec / uop.spec",
+        "PublicDescription": "Store operations L3 topdown metric",
+        "BriefDescription": "Store operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.ldst.store.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.ldst.float_load.spec / uop.spec",
+        "PublicDescription": "Float load operations L3 topdown metric",
+        "BriefDescription": "Float load operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.ldst.float_load.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.ldst.float_store.spec / uop.spec",
+        "PublicDescription": "Float store operations L3 topdown metric",
+        "BriefDescription": "Float store operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.ldst.float_store.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.ldst.vec_load.spec / uop.spec",
+        "PublicDescription": "Vector load operations L3 topdown metric",
+        "BriefDescription": "Vector load operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.ldst.vec_load.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.retiring.rate * inst.ldst.vec_store.spec / uop.spec",
+        "PublicDescription": "Vector store operations L3 topdown metric",
+        "BriefDescription": "Vector store operations L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.retiring.ldst.vec_store.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.backend_bound.core.barrier_csr / cycles.hart",
+        "PublicDescription": "Core bound barrier stall L3 topdown metric",
+        "BriefDescription": "Core bound barrier stall L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.core.barrier.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.backend_bound.core.highload / cycles.hart",
+        "PublicDescription": "Core bound high load stall L3 topdown metric",
+        "BriefDescription": "Core bound high load stall L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.core.highload.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.backend_bound.core.rob_full / cycles.hart",
+        "PublicDescription": "Core bound rob full stall L3 topdown metric",
+        "BriefDescription": "Core bound rob full stall L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.core.rob_full.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": " topdown.backend_bound.core.div_busy / cycles.hart",
+        "PublicDescription": "Core bound div busy stall L3 topdown metric",
+        "BriefDescription": "Core bound div busy stall L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.core.div_busy.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": " topdown.backend_bound.core.rvv_stall / cycles.hart",
+        "PublicDescription": "Core bound rvv stall L3 topdown metric",
+        "BriefDescription": "Core bound rvv stall L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.core.rvv_stall.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.backend_bound.memory.load.l2_miss / (topdown.backend_bound.memory.load + topdown.backend_bound.memory.store)",
+        "PublicDescription": "External memory bound L3 topdown metric",
+        "BriefDescription": "External memory bound L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.memory.ext_mem_bound.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.backend_bound.memory.load.l1_miss / (topdown.backend_bound.memory.load + topdown.backend_bound.memory.store)",
+        "PublicDescription": "L2 memory bound L3 topdown metric",
+        "BriefDescription": "L2 memory bound L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.memory.l2_bound.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "1 - topdown.backend_bound.memory.ext_mem_bound.rate - topdown.backend_bound.memory.l2_bound.rate - topdown.backend_bound.memory.store_bound.rate",
+        "PublicDescription": "L1 memory bound L3 topdown metric",
+        "BriefDescription": "L1 memory bound L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.memory.l1_bound.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "topdown.backend_bound.memory.store / (topdown.backend_bound.memory.load + topdown.backend_bound.memory.store)",
+        "PublicDescription": "Store bound L3 topdown metric",
+        "BriefDescription": "Store bound L3 topdown metric",
+        "MetricGroup": "TopdownL3",
+        "MetricName": "topdown.backend_bound.memory.store_bound.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "8",
+        "PublicDescription": "Pipeline issue width of the C950 core (slots per cycle)",
+        "BriefDescription": "Pipeline issue width (slots per cycle)",
+        "MetricGroup": "TopdownHelper",
+        "MetricName": "pipeline_width"
+    },
+    {
+        "MetricExpr": "cycles.hart * pipeline_width",
+        "PublicDescription": "Total slots",
+        "BriefDescription": "Total slots",
+        "MetricGroup": "TopdownHelper",
+        "MetricName": "topdown.slots"
+    },
+    {
+        "MetricExpr": "uop.ret / cycles.hart",
+        "PublicDescription": "Instructions per cycle",
+        "BriefDescription": "Instructions per cycle",
+        "MetricGroup": "Common;Per-cycle",
+        "MetricName": "ipc"
+    },
+    {
+        "MetricExpr": "cache.l1d.rd.miss * 1000 / uop.ret",
+        "PublicDescription": "l1 dcache access misses per 1000 instructions",
+        "BriefDescription": "l1 dcache access misses per 1000 instructions",
+        "MetricGroup": "Common;Per-instruction",
+        "MetricName": "cache.l1d.rd.data.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "cache.l1d.wr.miss * 1000 / uop.ret",
+        "PublicDescription": "l1 dcache write access misses per 1000 instructions",
+        "BriefDescription": "l1 dcache write access misses per 1000 instructions",
+        "MetricGroup": "Common;Per-instruction",
+        "MetricName": "cache.l1d.wr.data.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "cache.l1i.rd.miss * 1000 / uop.ret",
+        "PublicDescription": "l1 icache access misses per 1000 instructions",
+        "BriefDescription": "l1 icache access misses per 1000 instructions",
+        "MetricGroup": "Common;Per-instruction",
+        "MetricName": "cache.l1i.rd.code.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "cache.l2.miss * 1000 / uop.ret",
+        "PublicDescription": "l2 cache access misses per 1000 instructions",
+        "BriefDescription": "l2 cache access misses per 1000 instructions",
+        "MetricGroup": "Common;Per-instruction",
+        "MetricName": "cache.l2.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "tlb.l1d.miss * 1000 / uop.ret",
+        "PublicDescription": "L1 TLB misses caused by data loads or stores per 1000 instructions",
+        "BriefDescription": "L1 TLB misses caused by data loads or stores per 1000 instructions",
+        "MetricGroup": "Common;Per-instruction",
+        "MetricName": "tlb.l1d.ldst.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "tlb.l1i.miss * 1000 / uop.ret",
+        "PublicDescription": "L1 TLB misses caused by instruction fetch per 1000 instructions",
+        "BriefDescription": "L1 TLB misses caused by instruction fetch per 1000 instructions",
+        "MetricGroup": "Common;Per-instruction",
+        "MetricName": "tlb.l1i.code.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "r87 * 1000 / uop.ret",
+        "PublicDescription": "Last level TLB misses caused by data loads or stores per 1000 instructions",
+        "BriefDescription": "Last level TLB misses caused by data loads or stores per 1000 instructions",
+        "MetricGroup": "Common;Per-instruction",
+        "MetricName": "tlb.ll.ldst.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "r88 * 1000 / uop.ret",
+        "PublicDescription": "Last level TLB misses caused by instruction fetch per 1000 instructions",
+        "BriefDescription": "Last level TLB misses caused by instruction fetch per 1000 instructions",
+        "MetricGroup": "Common;Per-instruction",
+        "MetricName": "tlb.ll.code.mpki",
+        "ScaleUnit": "1MPKI"
+    },
+    {
+        "MetricExpr": "cache.l1d.rd.miss / cache.l1d.rd.access",
+        "PublicDescription": "l1 dcache access miss rate",
+        "BriefDescription": "l1 dcache access miss rate",
+        "MetricGroup": "Common",
+        "MetricName": "cache.l1d.rd.data.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "cache.l1d.wr.miss / cache.l1d.wr.access",
+        "PublicDescription": "l1 dcache write access miss rate",
+        "BriefDescription": "l1 dcache write access miss rate",
+        "MetricGroup": "Common",
+        "MetricName": "cache.l1d.wr.data.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "cache.l1i.rd.miss / cache.l1i.rd.access",
+        "PublicDescription": "l1 icache access miss rate",
+        "BriefDescription": "l1 icache access miss rate",
+        "MetricGroup": "Common",
+        "MetricName": "cache.l1i.rd.code.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "cache.l2.miss / cache.l2.access",
+        "PublicDescription": "l2 cache access miss rate",
+        "BriefDescription": "l2 cache access miss rate",
+        "MetricGroup": "Common",
+        "MetricName": "cache.l2.rd.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "1 - topdown.backend_bound.memory.demand_read.l3 / topdown.backend_bound.memory.demand_read",
+        "PublicDescription": "LLC access miss rate",
+        "BriefDescription": "LLC access miss rate",
+        "MetricGroup": "Common",
+        "MetricName": "cache.l3.rd.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "tlb.l1d.miss / tlb.l1d.access",
+        "PublicDescription": "L1 TLB misses caused by data loads or stores rate",
+        "BriefDescription": "L1 TLB misses caused by data loads or stores rate",
+        "MetricGroup": "Common",
+        "MetricName": "tlb.l1d.ldst.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "tlb.l1i.miss / tlb.l1i.access",
+        "PublicDescription": "L1 TLB misses caused by instruction fetch rate",
+        "BriefDescription": "L1 TLB misses caused by instruction fetch rate",
+        "MetricGroup": "Common",
+        "MetricName": "tlb.l1i.code.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "r87 / tlb.l1d.miss",
+        "PublicDescription": "Last level TLB misses caused by data loads or stores rate",
+        "BriefDescription": "Last level TLB misses caused by data loads or stores rate",
+        "MetricGroup": "Common",
+        "MetricName": "tlb.ll.ldst.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "r88 / tlb.l1i.miss",
+        "PublicDescription": "Last level TLB misses caused by instruction fetch rate",
+        "BriefDescription": "Last level TLB misses caused by instruction fetch rate",
+        "MetricGroup": "Common",
+        "MetricName": "tlb.ll.code.miss.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": " bus.rd.access / bus.access",
+        "PublicDescription": "Bus read access rate",
+        "BriefDescription": "Bus read access rate",
+        "MetricGroup": "Common",
+        "MetricName": "bus.rd.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": " bus.wr.access / bus.access",
+        "PublicDescription": "Bus write access rate",
+        "BriefDescription": "Bus write access rate",
+        "MetricGroup": "Common",
+        "MetricName": "bus.wr.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "rc6 * pipeline_width / topdown.frontend_bound.latency.slots",
+        "PublicDescription": "Frontend MPR bubble stall rate",
+        "BriefDescription": "Frontend MPR bubble stall rate",
+        "MetricGroup": "Common",
+        "MetricName": "topdown.frontend_bound.latency.bubble_stall.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "rc7 / cycles.hart",
+        "PublicDescription": "Backend MPR bubble stall rate",
+        "BriefDescription": "Backend MPR bubble stall rate",
+        "MetricGroup": "Common",
+        "MetricName": "topdown.backend_bound.core_bound.bubble_stall.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "rc8 / cycles.hart",
+        "PublicDescription": "Backend memory MPR bubble stall rate",
+        "BriefDescription": "Backend memory MPR bubble stall rate",
+        "MetricGroup": "Common",
+        "MetricName": "topdown.backend_bound.memory_bound.bubble_stall.rate",
+        "ScaleUnit": "100%"
+    },
+    {
+        "MetricExpr": "uop.spec_raw - r3a",
+        "PublicDescription": "rename stage issue slots num",
+        "BriefDescription": "rename stage issue slots num",
+        "MetricGroup": "TopdownHelper",
+        "MetricName": "uop.spec"
+    }
+]

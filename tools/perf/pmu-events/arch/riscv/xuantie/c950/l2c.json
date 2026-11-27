@@ -1,0 +1,87 @@
+[
+    {
+        "EventName": "cache.l2.wb",
+        "EventCode": "0x000000a2",
+        "BriefDescription": "L2 Cache write-backs"
+    },
+    {
+        "EventName": "cache.l2.rd",
+        "EventCode": "0x000000a3",
+        "BriefDescription": "L2 Cache reads"
+    },
+    {
+        "EventName": "cache.l2.wr",
+        "EventCode": "0x000000a4",
+        "BriefDescription": "L2 Cache writes"
+    },
+    {
+        "EventName": "cache.l2.refill.rd",
+        "EventCode": "0x000000a5",
+        "BriefDescription": "L2 Cache refills caused by read"
+    },
+    {
+        "EventName": "cache.l2.refill.wr",
+        "EventCode": "0x000000a6",
+        "BriefDescription": "L2 Cache refills caused by write"
+    },
+    {
+        "EventName": "cache.l2.wb.victim",
+        "EventCode": "0x000000a7",
+        "BriefDescription": "L2 Cache write-backs caused by cache replacements"
+    },
+    {
+        "EventName": "cache.l2.wb.clean",
+        "EventCode": "0x000000a8",
+        "BriefDescription": "L2 Cache write-backs caused by CMO or external snoops"
+    },
+    {
+        "EventName": "cache.l2.inval",
+        "EventCode": "0x000000a9",
+        "BriefDescription": "L2 Cache invalidations (by CMO or external snoops included)"
+    },
+    {
+        "EventName": "cache.l2.refill.inst",
+        "EventCode": "0x000000aa",
+        "BriefDescription": "L2 Cache refills caused by instruction cache load miss"
+    },
+    {
+        "EventName": "bus.access",
+        "EventCode": "0x000000ab",
+        "BriefDescription": "All requests sent to the bus"
+    },
+    {
+        "EventName": "bus.rd.access",
+        "EventCode": "0x000000ac",
+        "BriefDescription": "All read requests sent to the bus (prefetch included)"
+    },
+    {
+        "EventName": "bus.wr.access",
+        "EventCode": "0x000000ad",
+        "BriefDescription": "All write requests sent to the bus (eviction by the current core included, but eviction by external snoops not included)"
+    },
+    {
+        "EventName": "topdown.backend_bound.memory.demand_read.l3",
+        "EventCode": "0x000000bb",
+        "BriefDescription": "Cacheable demand read requests served from L3 cache"
+    },
+    {
+        "EventName": "topdown.backend_bound.memory.demand_read.peer_core",
+        "EventCode": "0x000000bc",
+        "BriefDescription": "Cacheable demand read requests served from Peer Core"
+    },
+    {
+        "EventName": "topdown.backend_bound.memory.demand_read.dram",
+        "EventCode": "0x000000bd",
+        "BriefDescription": "Cacheable demand read requests served from DRAM"
+    },
+    {
+        "EventName": "topdown.backend_bound.memory.demand_ostd_read",
+        "EventCode": "0x000000be",
+        "BriefDescription": "Cycles where L2 misses with outstanding cacheable demand read requests"
+    },
+    {
+        "EventName": "topdown.backend_bound.memory.demand_read",
+        "EventCode": "0x000000bf",
+        "BriefDescription": "Cacheable demand read requests issued with L2 miss"
+    }
+]
